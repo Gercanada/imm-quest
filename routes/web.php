@@ -25,7 +25,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/account',  [UserController::class, 'index'])->name('account');
+Route::get('/userinfo', [UserController::class, 'index']);
+Route::get(
+    '/account',
+    function () {
+        return view('users.index');
+    }
+)->name('account');
+
 
 Route::get('/user/edit/:id', [UserController::class, 'edit']);
 

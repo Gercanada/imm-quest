@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -13,7 +16,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users.index');
+
+        $user_id = Auth::user()->id;
+
+        $user = User::findOrFail($user_id);
+
+        return $user;
+
+        //return view('users.index', compact('user'));
+    }
+
+    public function info(){
+
     }
 
     /**
@@ -23,7 +37,6 @@ class UserController extends Controller
      */
     public function create()
     {
-
     }
 
     /**

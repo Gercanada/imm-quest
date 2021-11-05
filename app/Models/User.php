@@ -19,7 +19,28 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
+        'nationalities',
+        'mobile_phone',
+        'lead_source',
+        'watsapp_no',
+        'refered_by',
         'email',
+        'assigned_to',
+        'qualified_for',
+        'secondary_email',
+        'email_out_op',
+        'lead_status_id',
+        'lead_stage_id',
+        'care_agent',
+        'phone',
+        'fax',
+        'has_passport',
+        'passport_expiration_date',
+        'rating',
+        'watsapp_update_option',
+        'agent_id',
+        'description',
         'password',
     ];
 
