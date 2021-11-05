@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/adminlte.css">
 </head>
 
-<body class="layout-navbar-fixed">
+<body @auth class="layout-navbar-fixed" @else class="layout-navbar-fixed sidebar-collapse sidebar-closed" @endauth>
     <div class="wrapper">
 
         <!-- Preloader -->
@@ -28,8 +28,11 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        @include('layouts.aside-l')
+        @if (Auth::user())
+            @include('layouts.aside-l')
+        @endif
 
+    {{--     @yield('content') --}}
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -124,7 +127,7 @@
                     <!-- Main row -->
                     <div class="row">
                         <!-- Left col -->
-                        <section class="col-lg-7 connectedSortable">
+                        {{-- <section class="col-lg-7 connectedSortable">
                             <!-- Custom tabs (Charts with tabs)-->
                             <div class="card">
                                 <div class="card-header">
@@ -668,16 +671,19 @@
                                 <!-- /.card-body -->
                             </div>
                             <!-- /.card -->
-                        </section>
+                        </section> --}}
                         <!-- right col -->
                     </div>
                     <!-- /.row (main row) -->
                 </div><!-- /.container-fluid -->
             </section>
+
+            <div id="app" >
+            </div>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-       @include('layouts.footer')
+        @include('layouts.footer')
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -685,12 +691,12 @@
         </aside>
         <!-- /.control-sidebar -->
     </div>
-    <!-- ./wrapper -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
-
     <script src="js/app.js"></script>
+    <!-- ./wrapper -->
+   {{--  <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script> --}}
+
 </body>
 
 </html>
