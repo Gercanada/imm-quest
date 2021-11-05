@@ -19,12 +19,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-//Route::get('/user/edit/:id', [UserController::class, 'edit']);
+Route::get('/account',  [UserController::class, 'index'])->name('account');
 
-Auth::routes();
+Route::get('/user/edit/:id', [UserController::class, 'edit']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
