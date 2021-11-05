@@ -91,4 +91,4 @@
     </div>
 </nav>
 
-@include('layouts.sidebar')
+{{-- @include('layouts.sidebar') --}}
