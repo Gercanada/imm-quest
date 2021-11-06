@@ -26,15 +26,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/userinfo', [UserController::class, 'index']);
-Route::get(
-    '/account',
-    function () {
+Route::get('/account', function () {
         return view('users.index');
-    }
-)->name('account');
+    })->name('account');
 
 
-Route::get('/user/edit/:id', [UserController::class, 'edit']);
+Route::put('/account', [UserController::class, 'update']);
 
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
