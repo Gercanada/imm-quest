@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-        <img src="images/admin-lte/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        <img src="admin-lte/images/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
@@ -12,9 +12,9 @@
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img class="img-circle elevation-2" alt="User Image" @if (Auth::user()->profile_picture == null)
-                src="images/admin-lte/user2-160x160.jpg" alt="User avatar"/>
+                src="admin-lte/images/user2-160x160.jpg" alt="User avatar"/>
             @else
-                src="{{ asset('images/user/' . Auth::user()->profile_picture) }}"
+                src="{{ asset('admin-lte/images/user/' . Auth::user()->profile_picture) }}"
                 alt="User avatar"/>
                 @endif
             </div>
@@ -47,7 +47,7 @@
                     <a href="pages/widgets.html" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            sumary
+                            Checklists
                             <span class="right badge badge-danger">New</span>
                         </p>
                     </a>

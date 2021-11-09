@@ -13,6 +13,9 @@ try {
     require('bootstrap');
     require('admin-lte');
 
+   // require('jq-mapael');
+
+
 } catch (e) {}
 
 /**

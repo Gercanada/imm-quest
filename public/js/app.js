@@ -5533,9 +5533,137 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      id: "",
       name: "",
       last_name: "",
       nationalities: "",
@@ -5593,13 +5721,6 @@ __webpack_require__.r(__webpack_exports__);
 
       var me = this;
       axios.put("/account", {
-        /*  name: this.name,
-        first_last_name: this.first_last_name,
-        second_lastname: this.second_lastname,
-        email: this.email,
-        contract_type: this.contract_type,
-        code: this.code,
-        active: this.active, */
         name: this.name,
         last_name: this.last_name,
         nationalities: this.nationalities,
@@ -5621,7 +5742,7 @@ __webpack_require__.r(__webpack_exports__);
         passport_expiration_date: this.passport_expiration_date,
         rating: this.rating,
         watsapp_update_option: this.watsapp_update_option,
-        // agent_id: this.agent_id,
+        // agent_id              : this.agent_id,
         description: this.description,
         id: this.id
       }).then(function (response) {
@@ -5634,10 +5755,67 @@ __webpack_require__.r(__webpack_exports__);
     closeModal: function closeModal() {
       //Cerrar modals
       this.modal = 0;
-      this.name = "", this.first_last_name = "", this.second_lastname = "", this.email = "", this.contract_type = "", this.code = "", this.active = false;
+      this.name = "", this.first_last_name = "", this.second_lastname = "", this.email = "", this.contract_type = "", this.code = "", //(this.active = false);
       this.submitted = false;
       this.errors = {};
       this.userInfo();
+    },
+    //Validar campos requeridos
+    valideForm: function valideForm() {
+      if (!this.code) {
+        this.errors.code = "El código es un campo requerido";
+      }
+
+      if (!this.name) {
+        this.errors.name = "El nombre es un campo requerido";
+      }
+
+      this.validateField("name");
+
+      if (!this.last_name) {
+        this.errors.last_name = "Last name is required";
+      }
+
+      this.validateField("last_name");
+
+      if (!this.nationalities) {
+        this.errors.nationalities = "Nationalities is required";
+      }
+
+      this.validateField("nationalities");
+
+      if (!this.phone) {
+        this.errors.phone = "Phone is required";
+      }
+
+      this.validateField("phone");
+
+      if (!this.email) {
+        this.errors.email = "El correo electrónico es un campo requerido";
+      }
+
+      this.validateField("email");
+    },
+    validateField: function validateField(field) {
+      if (field === "email") {
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
+          this.errors.email = "Please enter a valid email address";
+        }
+
+        return;
+      }
+
+      if (field === "secondary_email") {
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.secondary_email)) {
+          this.errors.secondary_email = "Please enter a valid email address";
+        }
+
+        return;
+      }
+
+      if (!/^[A-Za-z\u00C0-\u00FF\-\_]*$/i.test(this.field)) {
+        this.errors[field] = "El campo ".concat(field, " solo admite letras y guiones");
+      }
     },
     openModal: function openModal(model, action) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -5649,10 +5827,10 @@ __webpack_require__.r(__webpack_exports__);
             switch (action) {
               case "update":
                 {
+                  console.log(data);
                   this.modal = 1;
                   this.modalTitle = "Update data";
-                  this.name = data.name, this.first_last_name = data.first_last_name, this.second_lastname = data.second_lastname, this.email = data.email, this.contract_type = data.contract_type, this.code = data.code, this.active = data.active;
-                  this.id = data.id;
+                  this.name = data.name, this.last_name = data.last_name, this.nationalities = data.nationalities, this.mobile_phone = data.mobile_phone, this.watsapp_no = data.watsapp_no, this.lead_source = data.lead_source, this.refered_by = data.refered_by, this.email = data.email, this.assigned_to = data.assigned_to, this.qualified_for = data.qualified_for, this.secondary_email = data.secondary_email, this.email_out_op = data.email_out_op, this.lead_status_id = data.lead_status_id, this.lead_stage_id = data.lead_stage_id, this.care_agent = data.care_agent, this.phone = data.phone, this.fax = data.fax, this.has_passport = data.has_passport, this.passport_expiration_date = data.passport_expiration_date, this.rating = data.rating, this.watsapp_update_option = data.watsapp_update_option, this.agent_id = data.agent_id, this.description = data.description, this.id = data.id;
                   this.actionType = 1;
                   break;
                 }
@@ -5722,7 +5900,8 @@ try {
 
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 
-  __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js");
+  __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js"); // require('jq-mapael');
+
 } catch (e) {}
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -10793,7 +10972,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content {\n  width: 100% !important;\n  position: absolute !important;\n}\n.mostrar {\n  display: list-item !important;\n  opacity: 1 !important;\n  position: absolute !important;\n  background-color: #3c29297a !important;\n}\n.div-error {\n  display: flex;\n  justify-content: center;\n}\n.text-error {\n  color: red !important;\n  font-weight: bold;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content {\n  width: 100% !important;\n  position: fixed !important;\n  overflow-y: visible;\n}\n.mostrar {\n  display: list-item !important;\n  opacity: 1 !important;\n  position: fixed !important;\n  background-color: #3c29297a !important;\n}\n.div-error {\n  display: flex;\n  justify-content: center;\n}\n.text-error {\n  color: red !important;\n  font-weight: bold;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -42355,216 +42534,226 @@ var render = function () {
     { staticClass: "container" },
     [
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("\n          account\n          "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary fas fa-edit float-right",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.openModal("account", "update")
-                    },
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("\n        account\n        "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary fas fa-edit float-right",
+                attrs: { type: "button" },
+                on: {
+                  click: function ($event) {
+                    return _vm.openModal("account", "update", _vm.userObj)
                   },
                 },
-                [_vm._v("\n            Editar\n          ")]
-              ),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "div",
-                { staticStyle: { "overflow-x": "auto", "min-width": "80%" } },
-                [
-                  _c(
-                    "table",
-                    {
-                      staticClass:
-                        "table table-bordered table-striped table-sm",
-                    },
-                    [
-                      _c("thead"),
-                      _vm._v(" "),
-                      _c("tbody", [
-                        _c("tr"),
+              },
+              [_vm._v("\n          Editar\n        ")]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-7 sm-8" }, [
+                _c(
+                  "div",
+                  { staticStyle: { "overflow-x": "auto", "min-width": "80%" } },
+                  [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-bordered table-striped table-sm",
+                      },
+                      [
+                        _c("thead"),
                         _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Name")]),
+                        _c("tbody", [
+                          _c("tr"),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: { textContent: _vm._s(_vm.userObj.name) },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr"),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Last name")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Name")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.name),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.last_name),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Nationalities")]),
+                          _c("tr"),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.nationalities),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Mobile phone")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Last name")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.last_name),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.mobile_phone),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Watsapp number")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Nationalities")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.nationalities),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.watsapp_no),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Email")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Mobile phone")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.mobile_phone),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.email),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Secondary email")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Watsapp number")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.watsapp_no),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.secondary_email),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Lead source")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Email")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.email),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.lead_source),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Refered by")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Secondary email")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(
+                                  _vm.userObj.secondary_email
+                                ),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.refered_by),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Assigned to")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Lead source")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.lead_source),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.assigned_to),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Qualified for")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Refered by")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.refered_by),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.qualified_for),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Care agent")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Assigned to")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.assigned_to),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.care_agent),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Phone")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Qualified for")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.qualified_for),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.phone),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Fax")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Care agent")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.care_agent),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: { textContent: _vm._s(_vm.userObj.fax) },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Passport expiration date")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Phone")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.phone),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(
-                                _vm.userObj.passport_expiration_date
-                              ),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Rating")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Fax")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.fax),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.rating),
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th", [_vm._v("Description")]),
+                          _c("tr", [
+                            _c("th", [_vm._v("Passport expiration date")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(
+                                  _vm.userObj.passport_expiration_date
+                                ),
+                              },
+                            }),
+                          ]),
                           _vm._v(" "),
-                          _c("td", {
-                            domProps: {
-                              textContent: _vm._s(_vm.userObj.description),
-                            },
-                          }),
+                          _c("tr", [
+                            _c("th", [_vm._v("Rating")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.rating),
+                              },
+                            }),
+                          ]),
+                          _vm._v(" "),
+                          _c("tr", [
+                            _c("th", [_vm._v("Description")]),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(_vm.userObj.description),
+                              },
+                            }),
+                          ]),
                         ]),
-                      ]),
-                    ]
-                  ),
-                ]
-              ),
+                      ]
+                    ),
+                  ]
+                ),
+              ]),
             ]),
           ]),
         ]),
@@ -42577,7 +42766,7 @@ var render = function () {
               {
                 staticClass: "modal fade",
                 class: { mostrar: _vm.modal },
-                staticStyle: { display: "none" },
+                staticStyle: { display: "none", "overflow-y": "auto" },
                 attrs: {
                   tabindex: "-1",
                   role: "dialog",
@@ -42682,8 +42871,56 @@ var render = function () {
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "inputEmail2" } },
+                                    [_vm._v("Secondary email")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.secondary_email,
+                                        expression: "secondary_email",
+                                      },
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "email",
+                                      id: "inputEmail2",
+                                      "aria-describedby": "secondary_emailHelp",
+                                      placeholder: "Enter secondary_email",
+                                    },
+                                    domProps: { value: _vm.secondary_email },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.secondary_email =
+                                          $event.target.value
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.secondary_email
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(_vm.errors.secondary_email)
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
                                   _c("label", { attrs: { for: "inputName" } }, [
-                                    _vm._v("Nombre"),
+                                    _vm._v("Name"),
                                   ]),
                                   _vm._v(" "),
                                   _c("input", {
@@ -42700,7 +42937,7 @@ var render = function () {
                                       type: "text",
                                       id: "inputName",
                                       "aria-describedby": "textHelp",
-                                      placeholder: "Ingrese nombre",
+                                      placeholder: "Type your name or names",
                                     },
                                     domProps: { value: _vm.name },
                                     on: {
@@ -42723,51 +42960,10 @@ var render = function () {
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "form-group" }, [
-                                  _c("label", { attrs: { for: "inputcode" } }, [
-                                    _vm._v("Codigo"),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.code,
-                                        expression: "code",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputcode",
-                                      "aria-describedby": "textHelp",
-                                      placeholder: "Ingrese su codigo",
-                                    },
-                                    domProps: { value: _vm.code },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.code = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.code
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [_vm._v(_vm._s(_vm.errors.code))]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
                                   _c(
                                     "label",
-                                    { attrs: { for: "inputFirstLastName" } },
-                                    [_vm._v("Primer apellido")]
+                                    { attrs: { for: "inputLastName" } },
+                                    [_vm._v("Last name")]
                                   ),
                                   _vm._v(" "),
                                   _c("input", {
@@ -42775,38 +42971,212 @@ var render = function () {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.first_last_name,
-                                        expression: "first_last_name",
+                                        value: _vm.last_name,
+                                        expression: "last_name",
                                       },
                                     ],
                                     staticClass: "form-control",
                                     attrs: {
                                       type: "text",
-                                      id: "inputFirstLastName",
+                                      id: "inputLastName",
                                       "aria-describedby": "textHelp",
                                       placeholder: "Ingrese primer apellido",
                                     },
-                                    domProps: { value: _vm.first_last_name },
+                                    domProps: { value: _vm.last_name },
                                     on: {
                                       input: function ($event) {
                                         if ($event.target.composing) {
                                           return
                                         }
-                                        _vm.first_last_name =
-                                          $event.target.value
+                                        _vm.last_name = $event.target.value
                                       },
                                     },
                                   }),
                                   _vm._v(" "),
-                                  _vm.submitted && _vm.errors.first_last_name
+                                  _vm.submitted && _vm.errors.last_name
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [_vm._v(_vm._s(_vm.errors.last_name))]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "inputNationalities" } },
+                                    [_vm._v("Nationalities")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.nationalities,
+                                        expression: "nationalities",
+                                      },
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "inputNationalities",
+                                      "aria-describedby": "textHelp",
+                                      placeholder: "Ingrese primer apellido",
+                                    },
+                                    domProps: { value: _vm.nationalities },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.nationalities = $event.target.value
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.nationalities
                                     ? _c(
                                         "small",
                                         { staticClass: "text-danger font-14" },
                                         [
                                           _vm._v(
-                                            _vm._s(_vm.errors.first_last_name)
+                                            _vm._s(_vm.errors.nationalities)
                                           ),
                                         ]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "inputmobphone" } },
+                                    [_vm._v("Mobile phone")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.mobile_phone,
+                                        expression: "mobile_phone",
+                                      },
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "inputmobphone",
+                                      "aria-describedby": "textHelp",
+                                      placeholder:
+                                        "Type your principal Mobile phone number",
+                                    },
+                                    domProps: { value: _vm.mobile_phone },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.mobile_phone = $event.target.value
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.mobile_phone
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(_vm.errors.mobile_phone)
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "inputphone" } },
+                                    [_vm._v("Phone")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.phone,
+                                        expression: "phone",
+                                      },
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "inputphone",
+                                      "aria-describedby": "textHelp",
+                                      placeholder: "Type your home phone",
+                                    },
+                                    domProps: { value: _vm.phone },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.phone = $event.target.value
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.phone
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [_vm._v(_vm._s(_vm.errors.phone))]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", { attrs: { for: "inputfax" } }, [
+                                    _vm._v("Fax"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.fax,
+                                        expression: "fax",
+                                      },
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "inputfax",
+                                      "aria-describedby": "textHelp",
+                                      placeholder: "Type your fax number",
+                                    },
+                                    domProps: { value: _vm.fax },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.fax = $event.target.value
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.fax
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [_vm._v(_vm._s(_vm.errors.fax))]
                                       )
                                     : _vm._e(),
                                 ]),
@@ -42815,7 +43185,7 @@ var render = function () {
                                   _c(
                                     "label",
                                     { attrs: { for: "inputSecondLastName" } },
-                                    [_vm._v("Segundo paellido")]
+                                    [_vm._v("Watsapp number")]
                                   ),
                                   _vm._v(" "),
                                   _c("input", {
@@ -42823,8 +43193,8 @@ var render = function () {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.second_lastname,
-                                        expression: "second_lastname",
+                                        value: _vm.watsapp_no,
+                                        expression: "watsapp_no",
                                       },
                                     ],
                                     staticClass: "form-control",
@@ -42832,29 +43202,69 @@ var render = function () {
                                       type: "text",
                                       id: "inputSecondLastName",
                                       "aria-describedby": "textHelp",
-                                      placeholder: "Ingrese segundo apellido",
+                                      placeholder:
+                                        "Type number that user for wasapp",
                                     },
-                                    domProps: { value: _vm.second_lastname },
+                                    domProps: { value: _vm.watsapp_no },
                                     on: {
                                       input: function ($event) {
                                         if ($event.target.composing) {
                                           return
                                         }
-                                        _vm.second_lastname =
-                                          $event.target.value
+                                        _vm.watsapp_no = $event.target.value
                                       },
                                     },
                                   }),
                                   _vm._v(" "),
-                                  _vm.submitted && _vm.errors.second_lastname
+                                  _vm.submitted && _vm.errors.watsapp_no
                                     ? _c(
                                         "small",
                                         { staticClass: "text-danger font-14" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(_vm.errors.second_lastname)
-                                          ),
-                                        ]
+                                        [_vm._v(_vm._s(_vm.errors.watsapp_no))]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "inputCareAgent" } },
+                                    [_vm._v("Care agent")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.care_agent,
+                                        expression: "care_agent",
+                                      },
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "inputCareAgent",
+                                      "aria-describedby": "textHelp",
+                                      placeholder:
+                                        "Type number that user for wasapp",
+                                    },
+                                    domProps: { value: _vm.care_agent },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.care_agent = $event.target.value
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.care_agent
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [_vm._v(_vm._s(_vm.errors.care_agent))]
                                       )
                                     : _vm._e(),
                                 ]),
@@ -42865,8 +43275,8 @@ var render = function () {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.active,
-                                        expression: "active",
+                                        value: _vm.email_out_op,
+                                        expression: "email_out_op",
                                       },
                                     ],
                                     staticClass: "form-check-input",
@@ -42875,13 +43285,13 @@ var render = function () {
                                       id: "statusCheck",
                                     },
                                     domProps: {
-                                      checked: Array.isArray(_vm.active)
-                                        ? _vm._i(_vm.active, null) > -1
-                                        : _vm.active,
+                                      checked: Array.isArray(_vm.email_out_op)
+                                        ? _vm._i(_vm.email_out_op, null) > -1
+                                        : _vm.email_out_op,
                                     },
                                     on: {
                                       change: function ($event) {
-                                        var $$a = _vm.active,
+                                        var $$a = _vm.email_out_op,
                                           $$el = $event.target,
                                           $$c = $$el.checked ? true : false
                                         if (Array.isArray($$a)) {
@@ -42889,15 +43299,17 @@ var render = function () {
                                             $$i = _vm._i($$a, $$v)
                                           if ($$el.checked) {
                                             $$i < 0 &&
-                                              (_vm.active = $$a.concat([$$v]))
+                                              (_vm.email_out_op = $$a.concat([
+                                                $$v,
+                                              ]))
                                           } else {
                                             $$i > -1 &&
-                                              (_vm.active = $$a
+                                              (_vm.email_out_op = $$a
                                                 .slice(0, $$i)
                                                 .concat($$a.slice($$i + 1)))
                                           }
                                         } else {
-                                          _vm.active = $$c
+                                          _vm.email_out_op = $$c
                                         }
                                       },
                                     },
@@ -42909,7 +43321,7 @@ var render = function () {
                                       staticClass: "form-check-label",
                                       attrs: { for: "statusCheck" },
                                     },
-                                    [_vm._v("Activo /Inactivo")]
+                                    [_vm._v("Email out option ?")]
                                   ),
                                   _vm._v(" "),
                                   _c(
@@ -42918,56 +43330,144 @@ var render = function () {
                                       staticClass: "form-text text-muted",
                                       attrs: { id: "textHelp" },
                                     },
-                                    [_vm._v("Estado actual")]
+                                    [_vm._v("Now email out is :")]
                                   ),
                                 ]),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "inputContractType" } },
-                                    [_vm._v("Tipo de contrato")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.contract_type,
-                                        expression: "contract_type",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputContractType",
-                                      "aria-describedby": "textHelp",
-                                      placeholder:
-                                        "Ingrese su tipo de contrato",
-                                    },
-                                    domProps: { value: _vm.contract_type },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.contract_type = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.contract_type
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col" }, [
+                                    _c("div", { staticClass: "form-check" }, [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.has_passport,
+                                            expression: "has_passport",
+                                          },
+                                        ],
+                                        staticClass: "form-check-input",
+                                        attrs: {
+                                          type: "checkbox",
+                                          id: "passportCheck",
+                                        },
+                                        domProps: {
+                                          checked: Array.isArray(
+                                            _vm.has_passport
+                                          )
+                                            ? _vm._i(_vm.has_passport, null) >
+                                              -1
+                                            : _vm.has_passport,
+                                        },
+                                        on: {
+                                          change: function ($event) {
+                                            var $$a = _vm.has_passport,
+                                              $$el = $event.target,
+                                              $$c = $$el.checked ? true : false
+                                            if (Array.isArray($$a)) {
+                                              var $$v = null,
+                                                $$i = _vm._i($$a, $$v)
+                                              if ($$el.checked) {
+                                                $$i < 0 &&
+                                                  (_vm.has_passport =
+                                                    $$a.concat([$$v]))
+                                              } else {
+                                                $$i > -1 &&
+                                                  (_vm.has_passport = $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1)))
+                                              }
+                                            } else {
+                                              _vm.has_passport = $$c
+                                            }
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "form-check-label",
+                                          attrs: { for: "passportCheck" },
+                                        },
                                         [
                                           _vm._v(
-                                            _vm._s(_vm.errors.contract_type)
+                                            "Has passport\n                      "
                                           ),
                                         ]
-                                      )
-                                    : _vm._e(),
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "small",
+                                        {
+                                          staticClass: "form-text text-muted",
+                                          attrs: { id: "textHelp" },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Actual status :\n                      "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c(
+                                        "label",
+                                        {
+                                          attrs: {
+                                            for: "inputPassportExpiration",
+                                          },
+                                        },
+                                        [_vm._v("Passport expiration date")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.watsapp_no,
+                                            expression: "watsapp_no",
+                                          },
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "date",
+                                          id: "inputPassportExpiration",
+                                          "aria-describedby": "textHelp",
+                                          placeholder:
+                                            "Type number that user for wasapp",
+                                        },
+                                        domProps: { value: _vm.watsapp_no },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.watsapp_no = $event.target.value
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.submitted && _vm.errors.watsapp_no
+                                        ? _c(
+                                            "small",
+                                            {
+                                              staticClass:
+                                                "text-danger font-14",
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(_vm.errors.watsapp_no)
+                                              ),
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                    ]),
+                                  ]),
                                 ]),
                               ]
                             ),
@@ -43019,7 +43519,38 @@ var render = function () {
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col md-5 sm-8" }, [
+      _c("fieldset", { staticClass: "border-success" }, [
+        _c("legend", [_vm._v("Info")]),
+        _vm._v(" "),
+        _c("div", [
+          _c("p", { staticClass: "bg-danger" }, [
+            _vm._v(
+              "\n                  ! Incomplete profile. Fill required fields to start\n                  leadment. !\n                "
+            ),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("fieldset", { staticClass: "border-success" }, [
+        _c("legend", [_vm._v("Activities")]),
+        _vm._v(" "),
+        _c("div", [_c("p", [_vm._v("Nothing now")])]),
+      ]),
+      _vm._v(" "),
+      _c("fieldset", { staticClass: "border-info" }, [
+        _c("legend", [_vm._v("Comments")]),
+        _vm._v(" "),
+        _c("div", [_c("p", [_vm._v("Nothing now")])]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 

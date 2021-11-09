@@ -1,4 +1,4 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand  navbar-dark">
     <!-- Left navbar links -->
     @if (Route::has('login'))
                     @auth
@@ -50,7 +50,7 @@
                                     <a href="#" class="dropdown-item">
                                         <!-- Message Start -->
                                         <div class="media">
-                                            <img src="images/admin-lte/user1-128x128.jpg" alt="User Avatar"
+                                            <img src="admin-lte/images/user1-128x128.jpg" alt="User Avatar"
                                                 class="img-size-50 mr-3 img-circle">
                                             <div class="media-body">
                                                 <h3 class="dropdown-item-title">
@@ -68,7 +68,7 @@
                                     <a href="#" class="dropdown-item">
                                         <!-- Message Start -->
                                         <div class="media">
-                                            <img src="images/admin-lte/user8-128x128.jpg" alt="User Avatar"
+                                            <img src="admin-lte/images/user8-128x128.jpg" alt="User Avatar"
                                                 class="img-size-50 img-circle mr-3">
                                             <div class="media-body">
                                                 <h3 class="dropdown-item-title">
@@ -86,7 +86,7 @@
                                     <a href="#" class="dropdown-item">
                                         <!-- Message Start -->
                                         <div class="media">
-                                            <img src="images/admin-lte/user3-128x128.jpg" alt="User Avatar"
+                                            <img src="admin-lte/images/user3-128x128.jpg" alt="User Avatar"
                                                 class="img-size-50 img-circle mr-3">
                                             <div class="media-body">
                                                 <h3 class="dropdown-item-title">

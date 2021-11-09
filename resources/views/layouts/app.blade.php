@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>Customers portal | Dashboard</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -14,13 +14,12 @@
     <link rel="stylesheet" href="/css/adminlte.css">
 </head>
 
-<body @auth class="layout-navbar-fixed" @else class="layout-navbar-fixed sidebar-collapse sidebar-closed" @endauth>
+<body @auth class="dark-mode  layout-navbar-fixed" @else class=" dark-mode  layout-navbar-fixed sidebar-collapse sidebar-closed" @endauth>
     <div class="wrapper">
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="images/admin-lte/AdminLTELogo.png" alt="AdminLTELogo" height="60"
-                width="60">
+            <img class="animation__shake" src="images/mapple-leafs.png" alt="AdminLTELogo" height="260" width="260">
         </div>
 
         <!-- Navbar -->
@@ -37,7 +36,7 @@
             @yield('content')
         </div>
         <!-- /.content-wrapper -->
-        <div id="app" >
+        <div id="app">
         </div>
         @include('layouts.footer')
 
@@ -48,10 +47,15 @@
         <!-- /.control-sidebar -->
     </div>
     <script src="js/app.js"></script>
-    <!-- ./wrapper -->
-   {{--  <script>
+
+
+
+
+    {{-- <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script> --}}
+
+
 
 </body>
 
