@@ -2,7 +2,8 @@
     <!-- Left navbar links -->
     @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                       {{--  <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a> --}}
+                        <a href="#" @click="menu=0" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
 
                         <ul class="navbar-nav">
                             <li class="nav-item">
@@ -14,6 +15,9 @@
                             </li>
                             <li class="nav-item d-none d-sm-inline-block">
                                 <a href="#" class="nav-link">Info</a>
+                            </li>
+                            <li class="nav-item d-none d-sm-inline-block">
+                                <a href="#" class="nav-link">Blog</a>
                             </li>
                         </ul>
                         <ul class="navbar-nav ml-auto">

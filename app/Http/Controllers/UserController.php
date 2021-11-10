@@ -22,8 +22,6 @@ class UserController extends Controller
         $user = User::findOrFail($user_id);
 
         return $user;
-
-        //return view('users.index', compact('user'));
     }
 
     public function info(){
@@ -45,7 +43,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         //
     }
@@ -81,6 +79,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $user = User::findOrFail($id);
+
+     // $user::update()
+
         return "this gbe updated";
     }
 
@@ -94,4 +97,6 @@ class UserController extends Controller
     {
         //
     }
+
+
 }

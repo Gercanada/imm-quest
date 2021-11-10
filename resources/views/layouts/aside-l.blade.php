@@ -19,9 +19,12 @@
                 @endif
             </div>
             <div class="info">
-
-                <a href="{{ route('account') }}" class="d-block">{{ Auth::user()->name }}
+                <a href="{{route('account')}}"{{--  @click="menu=1"  --}}class="nav-link d-block">{{ Auth::user()->name }}
                     {{ Auth::user()->father_last_name }} {{ Auth::user()->mother_last_name }}</a>
+
+
+
+
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -79,9 +82,9 @@
                 </li>
 
                 <li class="nav-header">Inmigration profile</li>
-                <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                <li class="nav-item"{{--  @click="menu=2" --}}>
+                    <a href="{{route('documents')}}" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
                         <p>
                             Documents
                             <span class="right badge badge-danger">New</span>
@@ -112,7 +115,7 @@
                     <a href="pages/widgets.html" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                           Request help
+                            Request help
                             <span class="right badge badge-danger">New</span>
                         </p>
                     </a>

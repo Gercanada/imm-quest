@@ -139,7 +139,12 @@
                                         placeholder="Enter email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Sugest</label>
+                                    <label for="exampleInputEmail1">Name</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Enter sugest">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Subject</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1"
                                         placeholder="Enter sugest">
                                 </div>

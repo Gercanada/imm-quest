@@ -435,14 +435,14 @@ export default {
     };
   },
   mounted() {
-    this.userInfo();
+    this.userAccount();
     //console.log("Component mounted.");
   },
   methods: {
-    userInfo() {
+    userAccount() {
       let me = this;
       axios
-        .get("/userinfo")
+        .get("/account")
         .then(function (response) {
           me.userObj = response.data;
         })
@@ -491,7 +491,7 @@ export default {
         })
         .then(function (response) {
           me.closeModal();
-          me.userInfo();
+          me.userAccount();
         })
         .catch(function (error) {
           console.table(error);
@@ -511,7 +511,7 @@ export default {
 
         (this.submitted = false);
       this.errors = {};
-      this.userInfo();
+      this.userAccount();
     },
 
     //Validar campos requeridos
