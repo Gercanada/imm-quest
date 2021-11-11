@@ -16,14 +16,18 @@ use App\Http\Controllers\DocumentController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-
-
 Auth::routes();
+
+
+
+
+
+
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -45,6 +49,11 @@ Route::put('/account', [UserController::class, 'update']);
 Route::get('/documents', [DocumentController::class, 'index'])->name('documents');
 Route::post('/documents', [DocumentController::class, 'store']);
 
+
+Route::group(['middleware' => ['auth', 'permission']], function () {  // user as cp client
+});
+Route::group(['middleware' => ['auth', 'permission']], function () {  // user as cp admin
+});
 
 
 
