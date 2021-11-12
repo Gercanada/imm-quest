@@ -14,7 +14,7 @@ class CPCaseFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 10),
+            'user_id' => 1,
             'applications_created' => '0',
             'gob_main_application_no' => '?',
             'open_date' => $this->faker->date(),
@@ -24,7 +24,7 @@ class CPCaseFactory extends Factory
             'stream' => '?',
             'invoice' => '?',
             'ticket_no' => '?',
-            'status' => '?',
+            'status' => $this->faker->numberBetween(0,1),
             'category' => '?',
             'title' => $this->faker->sentence(),
         ];

@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    Comm board
+@endsection
 
 @section('content')
 

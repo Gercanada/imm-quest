@@ -1,14 +1,10 @@
 @extends('layouts.app')
 
 @section('title')
-    Make a payment
+    CL Item DetailView Upload
 @endsection
-
 
 @section('content')
 
-<h1>Make a payment
-
-</h1>
+    <clitem-component></clitem-component>
 @endsection
-

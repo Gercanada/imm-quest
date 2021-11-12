@@ -14,7 +14,17 @@ class ChecklistFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => 1,
+            'case_id' => $this->faker->numberBetween(1, 5),
+            'subject' => $this->faker->sentence(),
+            'check_list_no' => $this->faker->numberBetween(1, 100),
+            'applicant_full_name' => $this->faker->name(),
+            //'related_to' => $this->faker->name(),
+            //'active_items' => $this->faker->name(),
+            //'pending_items' => $this->faker->name(),
+            //'completed_items' => $this->faker->name(),
+            //'check_list_type' => $this->faker->name(),
+            'completed' => $this->faker->numberBetween(88, 100)
         ];
     }
 }

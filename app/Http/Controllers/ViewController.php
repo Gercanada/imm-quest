@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 
 class ViewController extends Controller
 {
-    public function dashboard()
-    {
-        return view('dashboard');
-    }
+
     public function cases()
     {
         return view('cases.index');
@@ -46,4 +43,25 @@ class ViewController extends Controller
     {
         return view('checklists.show');
     }
+    public function checklist_item()
+    {
+        return view('checklists.items.item-db-upload');
+    }
+    public function checklist_item_ef()
+    {
+        return view('checklists.items.item-dv-e-forms');
+    }
+    public function pending_quotes()
+    {
+        return view('quotes.details.pending');
+    }
+    public function accepted_quotes()
+    {
+        return view('quotes.details.accepted');
+    }
+    public function show_invoice()
+    {
+        return view('invoices.show');
+    }
+
 }

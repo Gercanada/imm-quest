@@ -11,71 +11,14 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($cases as $case)
                 <tr id="1" class="gradeX">
-                    <td>Trident</td>
-                    <td>Internet Explorer 4.0 </td>
-                    <td>Win 95+</td>
+                    <td>{{$case->title}}</td>
+                    <td>{{$case->type}} </td>
+                    <td>{{$case->status}} </td>
                 </tr>
-                <tr id="2" class="gradeC">
-                    <td>Trident</td>
-                    <td>Internet Explorer 5.0</td>
-                    <td>Win 95+</td>
-                </tr>
-                <tr id="3" class="gradeA">
-                    <td>Trident</td>
-                    <td>Internet Explorer 5.5</td>
-                    <td>Win 95+</td>
-                </tr>
-                <tr id="4" class="gradeA">
-                    <td>Trident</td>
-                    <td>Internet Explorer 6</td>
-                    <td>Win 98+</td>
-                </tr>
-                <tr id="5" class="gradeA">
-                    <td>Trident</td>
-                    <td>Internet Explorer 7</td>
-                    <td>Win XP SP2+</td>
-                </tr>
-                <tr id="6" class="gradeA">
-                    <td>Trident</td>
-                    <td>AOL browser (AOL desktop)</td>
-                    <td>Win XP</td>
-                </tr>
-                <tr id="7" class="gradeA">
-                    <td>Gecko</td>
-                    <td>Firefox 1.0</td>
-                    <td>Win 98+ / OSX.2+</td>
-                </tr>
-                <tr id="8" class="gradeA">
-                    <td>Gecko</td>
-                    <td>Firefox 1.5</td>
-                    <td>Win 98+ / OSX.2+</td>
-                </tr>
-                <tr id="9" class="gradeA">
-                    <td>Gecko</td>
-                    <td>Firefox 2.0</td>
-                    <td>Win 98+ / OSX.2+</td>
-                </tr>
-                <tr id="10" class="gradeA">
-                    <td>Gecko</td>
-                    <td>Firefox 3.0</td>
-                    <td>Win 2k+ / OSX.3+</td>
-                </tr>
-                <tr id="11" class="gradeA">
-                    <td>Gecko</td>
-                    <td>Camino 1.0</td>
-                    <td>OSX.2+</td>
-                </tr>
-                <tr id="12" class="gradeA">
-                    <td>Gecko</td>
-                    <td>Camino 1.5</td>
-                    <td>OSX.3+</td>
-                </tr>
-                <tr id="13" class="gradeA">
-                    <td>Gecko</td>
-                    <td>Netscape 7.2</td>
-                    <td>Win 95+ / Mac OS 8.6-9.2</td>
-                </tr>
+
+                @endforeach
             </tbody>
             <tfoot>
                 <tr>

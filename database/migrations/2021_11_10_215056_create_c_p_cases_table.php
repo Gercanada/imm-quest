@@ -16,6 +16,7 @@ class CreateCPCasesTable extends Migration
         Schema::create('c_p_cases', function (Blueprint $table) {
             $table->id();
             $table->uuid('user_id'); //contact id
+
             $table->string('applications_created');
             $table->string('gob_main_application_no');
             $table->date('open_date');

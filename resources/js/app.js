@@ -27,6 +27,8 @@ Vue.component('documets-component', require('./components/DocumentsComponent.vue
 Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
 
+Vue.component('clitem-component', require('./components/CLItemComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

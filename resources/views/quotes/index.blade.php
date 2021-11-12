@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title')
+    Quote {Quote name}
+@endsection
 @section('content')
 
     <div class="card">
@@ -25,7 +28,7 @@
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('pending_quotes') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -36,7 +39,7 @@
                             <td>Jacob</td>
                             <td>Thornton</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('pending_quotes') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -47,7 +50,7 @@
                             <td>Larry</td>
                             <td>the Bird</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('pending_quotes') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -77,7 +80,7 @@
                             <td>Otto</td>
                             <td>Otto</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('accepted_quotes') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -89,7 +92,7 @@
                             <td>Thornton</td>
                             <td>Thornton</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('accepted_quotes') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -101,7 +104,7 @@
                             <td>the Bird</td>
                             <td>the Bird</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('accepted_quotes') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>

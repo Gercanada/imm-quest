@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('title')
+    Checklist xxx01
+@endsection
+
+
 @section('content')
     <div class="card">
         <div class="card">
@@ -16,6 +21,7 @@
                                 <th scope="col">Required by</th>
                                 <th scope="col">Upload</th>
                                 <th scope="col">Help link</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,18 +30,33 @@
                                 <td>Otto</td>
                                 <td>Otto</td>
                                 <td>@mdo</td>
+                                <td>
+                                    <a href="{{route('checklist_item')}}" type="button" class="btn btn-outline-success btn-rounded">
+                                         <i class="fas fa-eye"></i>
+                                     </a>
+                                 </td>
                             </tr>
                             <tr>
                                 <td>Jacob</td>
                                 <td>Jacob</td>
                                 <td>Thornton</td>
                                 <td>@fat</td>
+                                <td>
+                                    <a href="{{route('checklist_item')}}" type="button" class="btn btn-outline-success btn-rounded">
+                                         <i class="fas fa-eye"></i>
+                                     </a>
+                                 </td>
                             </tr>
                             <tr>
                                 <td>Larry</td>
                                 <td>the Bird</td>
                                 <td>the Bird</td>
                                 <td>@twitter</td>
+                                <td>
+                                    <a href="{{route('checklist_item')}}" type="button" class="btn btn-outline-success btn-rounded">
+                                         <i class="fas fa-eye"></i>
+                                     </a>
+                                 </td>
                             </tr>
                         </tbody>
                     </table>
@@ -51,6 +72,7 @@
                             <th scope="col">Required by</th>
                             <th scope="col">Help link</th>
                             <th scope="col">Status</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,18 +81,33 @@
                             <td>Otto</td>
                             <td>Otto</td>
                             <td>@mdo</td>
+                            <td>
+                                <a href="{{route('checklist_item_ef')}}" type="button" class="btn btn-outline-success btn-rounded">
+                                     <i class="fas fa-eye"></i>
+                                 </a>
+                             </td>
                         </tr>
                         <tr>
                             <td>Jacob</td>
                             <td>Thornton</td>
                             <td>Thornton</td>
                             <td>@fat</td>
+                            <td>
+                                <a href="{{route('checklist_item_ef')}}" type="button" class="btn btn-outline-success btn-rounded">
+                                     <i class="fas fa-eye"></i>
+                                 </a>
+                             </td>
                         </tr>
                         <tr>
                             <td>Larry</td>
                             <td>the Bird</td>
                             <td>the Bird</td>
                             <td>@twitter</td>
+                            <td>
+                                <a href="{{route('checklist_item_ef')}}" type="button" class="btn btn-outline-success btn-rounded">
+                                     <i class="fas fa-eye"></i>
+                                 </a>
+                             </td>
                         </tr>
                     </tbody>
                 </table>

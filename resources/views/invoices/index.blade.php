@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('title')
+Invoices
+@endsection
 
 @section('content')
 
@@ -26,7 +28,7 @@
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('show_invoice') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -37,7 +39,7 @@
                             <td>Jacob</td>
                             <td>Thornton</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('show_invoice') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -48,7 +50,7 @@
                             <td>Larry</td>
                             <td>the Bird</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('show_invoice') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -76,7 +78,7 @@
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('show_invoice') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -87,7 +89,7 @@
                             <td>Jacob</td>
                             <td>Thornton</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('show_invoice') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
@@ -98,7 +100,7 @@
                             <td>Larry</td>
                             <td>the Bird</td>
                             <td>
-                                <a href="{{ route('show_checklist') }}" type="button"
+                                <a href="{{ route('show_invoice') }}" type="button"
                                     class="btn btn-outline-success btn-rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>

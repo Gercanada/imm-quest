@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('title')
+    Case [001]
+@endsection
+
+
 @section('content')
     <div class="card">
         <div class="card-body">

@@ -17,15 +17,16 @@ class CreateChecklistsTable extends Migration
             $table->id();
             $table->uuid('user_id'); //contact id
             $table->uuid('case_id'); //contact id
+
             $table->string('subject');
             $table->integer('check_list_no');
             $table->string('applicant_full_name');
-            $table->string('related_to');
-            $table->string('active_items');
-            $table->string('pending_items');
-            $table->string('completed_items');
-            $table->string('check_list_type');
-            $table->string('completed'); //%
+            $table->string('related_to')->nullable();
+            $table->string('active_items')->nullable();
+            $table->string('pending_items')->nullable();
+            $table->string('completed_items')->nullable();
+            $table->string('check_list_type')->nullable();
+            $table->string('completed')->nullable(); //%
             $table->timestamps();
         });
     }

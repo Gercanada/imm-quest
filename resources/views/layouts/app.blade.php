@@ -13,7 +13,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16"
         href="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/favicon.png">
-    <title>Adminpro admin Template - The Ultimate Multipurpose admin template</title>
+    <title>GetCanada CP | @yield('title') </title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/adminpro/" />
 
     <link rel="stylesheet"
@@ -71,14 +71,18 @@
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
-        <div class="page-wrapper">
-            @yield('content')
-            <footer class="footer">
-                © 2020 Admin Pro Admin by wrappixel.com
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
+        <div id="app">
+            @if (Auth::user())
+                <div class="page-wrapper">
+                    @yield('content')
+                    <footer class="footer">
+                        © 2020 Admin Pro Admin by wrappixel.com
+                    </footer>
+                </div>
+            @else
+                @yield('content')
+            @endif
+
         </div>
 
     </div>
@@ -121,6 +125,7 @@
 
     <!-- All scripts -->
     @yield('scripts')
+    <script src="/js/app.js"></script>
 
 
 

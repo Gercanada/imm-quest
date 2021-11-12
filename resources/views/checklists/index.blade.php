@@ -1,9 +1,10 @@
 @extends('layouts.app')
+@section('title')
+    Checklists
+@endsection
 
 @section('content')
-
     <div class="card">
-
         <div class="card-body">
             <h4 class="card-title">My checklists</h4>
             <h6 class="card-subtitle">Here can i see my checklists</h6>

@@ -14,7 +14,8 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->sentence(),
+            'description' => $this->faker->sentence(),
         ];
     }
 }

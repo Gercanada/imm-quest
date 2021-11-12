@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('title')
+    My profile
+@endsection
+
+
 @section('content')
     <section class="content">
         <div class="container-fluid">

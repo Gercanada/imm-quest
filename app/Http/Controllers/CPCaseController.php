@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CPCase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CPCaseController extends Controller
 {
@@ -14,7 +15,20 @@ class CPCaseController extends Controller
      */
     public function index()
     {
-        //
+        $user_id = Auth::user()->id;
+
+        $active_cases = CPCase::where('user_id', $user_id)
+            ->where('status', 1)
+            ->get();
+        $completed_cases = CPCase::where('user_id', $user_id)
+            ->where('status', 0)
+            ->get();
+
+        /*  $active_cases = $cases->where('status', '1')->count(); */
+
+/*
+        return response()->json([$active_cases, $completed_cases]); */
+        return view('cases.index', compact('active_cases', 'completed_cases'));
     }
 
     /**
