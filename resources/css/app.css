@@ -1,2 +1,9 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
+
+/* @import '../templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist/dist/chartist.min.css';
+@import '../templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/chartist/chartist-init.css';
+@import '../templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css';
+@import '../templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/c3/c3.min.css';
+@import '../templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jvectormap/jquery-jvectormap.css';
+@import '../templates/theme-forest-admin-pro/main/admin-pro/dist/css/style.min.css'; */

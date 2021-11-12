@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
 
             //contact
             $table->string('phone_country_code')->nullable();
-            $table->string('mobile_phone');
+            $table->string('mobile_phone')->nullable();
             $table->string('watsapp_no')->nullable();
             $table->string('email')->unique();
             $table->string('secondary_email')->nullable();
@@ -38,21 +38,21 @@ class CreateUsersTable extends Migration
             $table->string('skipe')->nullable();
             $table->string('linkedin')->nullable();
 
-            $table->string('lead_source');
+            $table->string('lead_source')->nullable();;
             $table->string('refered_by')->nullable();
-            $table->string('assigned_to'); //foreign id agent
+            $table->string('assigned_to')->nullable(); //foreign id agent
 
-            $table->string('qualified_for');
-            $table->boolean('email_out_op');
-            $table->string('lead_status_id');
-            $table->string('lead_stage_id');
+            $table->string('qualified_for')->nullable();
+            $table->boolean('email_out_op')->nullable();
+            $table->string('lead_status_id')->nullable();
+            $table->string('lead_stage_id')->nullable();
 
-            $table->string('care_agent');
-            $table->string('has_passport');
-            $table->date('passport_expiration_date');
-            $table->string('rating');
-            $table->string('agent_id');
-            $table->string('description');
+            $table->string('care_agent')->nullable();
+            $table->string('has_passport')->nullable();
+            $table->date('passport_expiration_date')->nullable();
+            $table->string('rating')->nullable();
+            $table->string('agent_id')->nullable();
+            $table->string('description')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

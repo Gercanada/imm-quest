@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+//require('./bootstrap');
 
 window.Vue = require('vue').default;
 
@@ -22,10 +22,10 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // /Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('user-component',    require('./components/UserComponent.vue').default);
-Vue.component('documets-component',    require('./components/DocumentsComponent.vue').default);
-Vue.component('dashboard-component',    require('./components/DashboardComponent.vue').default);
-Vue.component('login-component',    require('./components/LoginComponent.vue').default);
+Vue.component('user-component', require('./components/UserComponent.vue').default);
+Vue.component('documets-component', require('./components/DocumentsComponent.vue').default);
+Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
+Vue.component('login-component', require('./components/LoginComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -35,8 +35,8 @@ Vue.component('login-component',    require('./components/LoginComponent.vue').d
 
 const app = new Vue({
     el: '#app',
-    data:{
-        menu : 0
+    data: {
+        menu: 0
     }
 });
 
