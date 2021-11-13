@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
          \App\Models\Category::factory(3)->create();
          \App\Models\Checklist::factory(8)->create();
          \App\Models\CLItem::factory(8)->create();
+         \App\Models\Payment::factory(2)->create();
 
 
          //Seeder

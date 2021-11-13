@@ -36,6 +36,8 @@ class CreateQuotesTable extends Migration
             $table->string('client_response_quote')->nullable();
             $table->string('number_of_payments')->nullable();
             $table->string('review')->nullable();
+            $table->boolean('accepted')->default(false);
+            $table->date('accepted_date');
             $table->timestamps();
         });
     }

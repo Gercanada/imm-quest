@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,12 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $user_id = Auth::user()->id;
+
+        $open_invoices = Invoice::where('user_id', $user_id)->where('paid', false)->get();
+        $paid_invoices = Invoice::where('user_id', $user_id)->where('paid', true)->get();
+
+        return view('invoices.index', compact('open_invoices', 'paid_invoices'));
     }
 
     /**

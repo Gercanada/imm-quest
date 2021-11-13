@@ -9,4 +9,7 @@ class Checklist extends Model
 {
     use HasFactory;
 
+    public function case(){
+       return $this->belongsTo(CPCase::class, 'case_id');
+    }
 }

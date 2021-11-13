@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Invoices
+    Invoices
 @endsection
 
 @section('content')
@@ -23,39 +23,20 @@ Invoices
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>
-                                <a href="{{ route('show_invoice') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>
-                                <a href="{{ route('show_invoice') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>
-                                <a href="{{ route('show_invoice') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        @foreach ($open_invoices as $openInvoice)
+                            <tr>
+                                <td>{{ $openInvoice->subject }}</td>
+                                <td>{{ $openInvoice->subtotal }}</td>
+                                <td>{{ $openInvoice->paid }}</td>
+                                <td></td>
+                                <td>
+                                    <a href="{{ route('show_invoice') }}" type="button"
+                                        class="btn btn-outline-success btn-rounded">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -73,39 +54,19 @@ Invoices
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>
-                                <a href="{{ route('show_invoice') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>
-                                <a href="{{ route('show_invoice') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>
-                                <a href="{{ route('show_invoice') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        @foreach ($paid_invoices as $paidInvoice)
+                            <tr>
+                                <td>{{ $openInvoice->subject }}</td>
+                                <td>{{ $openInvoice->subtotal }}</td>
+                                <td>{{ $openInvoice->paid }}</td>
+                                <td>
+                                    <a href="{{ route('show_invoice') }}" type="button"
+                                        class="btn btn-outline-success btn-rounded">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -24,7 +24,7 @@ class CreatePaymentsTable extends Migration
             $table->double('amount');
             $table->date('payment_date');
             $table->string('payment_method');
-            $table->string('payment_type');
+            $table->string('payment_type')->nullable();
             $table->timestamps();
         });
     }

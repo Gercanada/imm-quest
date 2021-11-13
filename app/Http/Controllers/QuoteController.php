@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuoteController extends Controller
 {
@@ -14,7 +15,18 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        //
+        $user_id = Auth::user()->id;
+
+        $open_quotes = Quote::where('user_id', $user_id)
+            ->where('accepted', false)
+            ->get();
+
+
+        $accepted_quotes = Quote::where('user_id', $user_id)
+            ->where('accepted', true)
+            ->get();
+
+        return view('quotes.index', compact('open_quotes', 'accepted_quotes'));
     }
 
     /**

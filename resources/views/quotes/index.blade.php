@@ -10,8 +10,7 @@
         <div class="card-body">
             <h4 class="card-title">My Quotes</h4>
             <h6 class="card-subtitle">Here can i see my quotes</h6>
-            <h6 class="card-title mt-5"><i class="mr-1 font-18 mdi mdi-numeric-1-box-multiple-outline"></i> My open quotes
-            </h6>
+            <h6 class="card-title mt-5"><i class="mr-1 font-18 mdi mdi-numeric-1-box-multiple-outline"></i> My open quotes</h6>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -23,39 +22,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>
-                                <a href="{{ route('pending_quotes') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>
-                                <a href="{{ route('pending_quotes') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>
-                                <a href="{{ route('pending_quotes') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        @foreach ($open_quotes as $openQuote)
+                            <tr>
+                                <td>{{ $openQuote->title }}</td>
+                                <td>{{ $openQuote->total }}</td>
+                                <td>{{ $openQuote->accepted }}</td>
+                                <td>
+                                    <a href="{{ route('pending_quotes') }}" type="button"
+                                        class="btn btn-outline-success btn-rounded">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -74,42 +54,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>Otto</td>
-                            <td>
-                                <a href="{{ route('accepted_quotes') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>Thornton</td>
-                            <td>
-                                <a href="{{ route('accepted_quotes') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>the Bird</td>
-                            <td>
-                                <a href="{{ route('accepted_quotes') }}" type="button"
-                                    class="btn btn-outline-success btn-rounded">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        @foreach ($accepted_quotes as $acceptedQuote)
+                            <tr>
+                                <td>{{ $openQuote->title }}</td>
+                                <td>{{ $openQuote->total }}</td>
+                                <td>{{ $openQuote->accepted }}</td>
+                                <td>{{ $openQuote->accepted_date }}</td>
+                                <td>
+                                    <a href="{{ route('accepted_quotes') }}" type="button"
+                                        class="btn btn-outline-success btn-rounded">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -25,6 +25,8 @@ class QuoteFactory extends Factory
             //'discount_amount' => $this->faker->name(),
             //'s_h_amount' => $this->faker->name(),
             'currency' => 'MXN',
+            'accepted' => $this->faker->boolean(),
+            'accepted_date' => $this->faker->date(),
             //'pte_tax_total' => $this->faker->name(),
             //'tax' => $this->faker->name(),
             //'professional_services' => $this->faker->name(),

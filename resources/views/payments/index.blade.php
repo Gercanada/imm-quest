@@ -29,27 +29,15 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($payments as $payment)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>2021/12/11</td>
-                        <td>Card</td>
-                        <td>1000</td>
-                        <td>MXN</td>
+                        <td>{{$payment->invoice->id}}</td>
+                        <td>{{$payment->payment_date}}</td>
+                        <td>{{$payment->payment_method}}</td>
+                        <td>{{$payment->amount}}</td>
+                        <td>{{$payment->currency}}</td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>2021/12/11</td>
-                        <td>Card</td>
-                        <td>1000</td>
-                        <td>MXN</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>2021/12/11</td>
-                        <td>Card</td>
-                        <td>1000</td>
-                        <td>MXN</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

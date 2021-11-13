@@ -21,6 +21,7 @@ class InvoiceFactory extends Factory
             'subject' => $this->faker->sentence(),
             'invoice_date' => $this->faker->date(),
             'due_date' => $this->faker->date(),
+            'paid' => $this->faker->boolean(),
             'discount_percent' => $this->faker->numberBetween(10,60),
             'currency' => 'MXN',
         ];

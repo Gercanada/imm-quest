@@ -40,6 +40,7 @@ class CreateInvoicesTable extends Migration
             $table->string('taxes')->nullable();
             $table->string('gob_fees_due')->nullable();
             $table->string('prof_serv_due')->nullable();
+            $table->boolean('paid')->default(false);
             $table->timestamps();
         });
     }

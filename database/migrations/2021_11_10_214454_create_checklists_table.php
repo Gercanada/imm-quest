@@ -18,6 +18,7 @@ class CreateChecklistsTable extends Migration
             $table->uuid('user_id'); //contact id
             $table->uuid('case_id'); //contact id
 
+            $table->string('title');
             $table->string('subject');
             $table->integer('check_list_no');
             $table->string('applicant_full_name');
@@ -25,7 +26,7 @@ class CreateChecklistsTable extends Migration
             $table->string('active_items')->nullable();
             $table->string('pending_items')->nullable();
             $table->string('completed_items')->nullable();
-            $table->string('check_list_type')->nullable();
+            $table->string('type')->nullable();
             $table->string('completed')->nullable(); //%
             $table->timestamps();
         });

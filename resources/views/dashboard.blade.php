@@ -11,8 +11,7 @@
         <div class="row page-titles">
             <div class="col-md-5 col-12 align-self-center">
                 <h3 class="text-themecolor mb-0">Dashboard </h3>
-            </div>{{--
-            <div class="col-md-7 col-12 align-self-center d-none d-md-block">
+            </div>{{-- <div class="col-md-7 col-12 align-self-center d-none d-md-block">
                 <ol class="breadcrumb mb-0 p-0 bg-transparent float-right">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
                     <li class="breadcrumb-item active">Dashboard 2</li>
@@ -25,21 +24,25 @@
         <!-- Start Row -->
         <div class="row">
             <div class="col-lg-4 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="mr-3 align-self-center"><span class="lstick d-inline-block align-middle"></span><img
-                                    src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/income.png"
-                                    alt="Income" /></div>
-                            <div class="align-self-center">
-                                <h6 class="text-muted mt-2 mb-0">Active checklists</h6>
-                                <h2 class="info">{{$checklists}}</h2>
+                <a href="#">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <div class="mr-3 align-self-center"><span
+                                        class="lstick d-inline-block align-middle"></span><img
+                                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/income.png"
+                                        alt="Income" /></div>
+                                <div class="align-self-center">
+                                    <h6 class="text-muted mt-2 mb-0">Active checklists</h6>
+                                    <h2 class="info">{{ $checklists }}</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-lg-4 col-md-6">
+                <a href="#">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex no-block">
@@ -48,13 +51,15 @@
                                     alt="Income" /></div>
                             <div class="align-self-center">
                                 <h6 class="text-muted mt-2 mb-0">Pending items</h6>
-                                <h2 class="warning">{{$cl_items}}</h2>
+                                <h2 class="warning">{{ $cl_items }}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
+                </a>
             </div>
             <div class="col-lg-4 col-md-6">
+                <a href="#">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex no-block">
@@ -63,13 +68,13 @@
                                     alt="Income" /></div>
                             <div class="align-self-center">
                                 <h6 class="text-muted mt-2 mb-0">Active cases</h6>
-                                <h2 class="success">{{$active_cases}}</h2>
+                                <h2 class="success">{{ $active_cases }}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
+            </a>
             </div>
-
         </div>
         <!-- End Row -->
         <!-- Start row -->

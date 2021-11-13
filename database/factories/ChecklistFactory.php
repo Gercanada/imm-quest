@@ -16,6 +16,7 @@ class ChecklistFactory extends Factory
         return [
             'user_id' => 1,
             'case_id' => $this->faker->numberBetween(1, 5),
+            'title' => $this->faker->sentence(),
             'subject' => $this->faker->sentence(),
             'check_list_no' => $this->faker->numberBetween(1, 100),
             'applicant_full_name' => $this->faker->name(),

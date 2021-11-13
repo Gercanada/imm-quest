@@ -9,7 +9,7 @@
                         aria-expanded="false">
                         <img src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/profile.png"
                             alt="user">
-                        <span class="hide-menu">Steve Jobs </span>
+                        <span class="hide-menu">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</span>
                     </a>
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
