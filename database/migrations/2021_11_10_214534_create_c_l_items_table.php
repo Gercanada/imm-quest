@@ -17,7 +17,7 @@ class CreateCLItemsTable extends Migration
             $table->id();
             $table->uuid('user_id'); //contact id
             $table->uuid('case_id'); //contact id
-            $table->uuid('chech_list_id'); //check list id ?
+            $table->uuid('check_list_id'); //check list id ?
 
             $table->string('subject');
             $table->string('cli_item_no');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Invoice {XXX01}
+    Invoice {{$invoice->title}}
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="card-header">
             <a href="{{ route('invoices') }}" class="btn btn-outline-info btn-rounded float-left"><i
                     class=" fas fa-arrow-circle-left">Back</i></a>
-            <h4 class="card-title mb-3">My invoices <b>Invoice xx01</b></h4>
+            <h4 class="card-title mb-3">My invoices <b>{{$invoice->title}}</b></h4>
         </div>
     </div>
     {{-- <div class="card">
@@ -79,24 +79,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($invoice->payments as $invoice_payment)
                         <tr>
-                            <td>2021/11/12</td>
-                            <td>Visa Card</td>
-                            <td>1000</td>
-                            <td>USD</td>
+                            <td>{{ $invoice_payment->payment_date}}</td>
+                            <td>{{ $invoice_payment->payment_method}}</td>
+                            <td>{{ $invoice_payment->amount}}</td>
+                            <td>{{ $invoice_payment->currency}}</td>
                         </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Cash</td>
-                            <td>1000</td>
-                            <td>USD</td>
-                        </tr>
-                        <tr>
-                            <td>Larry</td>
-                            <td>Master card</td>
-                            <td>1000</td>
-                            <td>USD</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

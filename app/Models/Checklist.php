@@ -12,4 +12,8 @@ class Checklist extends Model
     public function case(){
        return $this->belongsTo(CPCase::class, 'case_id');
     }
+
+    public function clitems(){
+        return $this->hasMany(CLItem::class, 'check_list_id');
+    }
 }

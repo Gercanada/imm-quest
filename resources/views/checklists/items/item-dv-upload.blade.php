@@ -5,6 +5,5 @@
 @endsection
 
 @section('content')
-
     <clitem-component></clitem-component>
 @endsection

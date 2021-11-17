@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quote;
+use App\Models\PaymentPlan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class QuoteController extends Controller
+class PaymentPlanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,18 +14,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        $user_id = Auth::user()->id;
-
-        $open_quotes = Quote::where('user_id', $user_id)
-            ->where('accepted', false)
-            ->get();
-
-
-        $accepted_quotes = Quote::where('user_id', $user_id)
-            ->where('accepted', true)
-            ->get();
-
-        return view('quotes.index', compact('open_quotes', 'accepted_quotes'));
+        //
     }
 
     /**
@@ -53,32 +41,21 @@ class QuoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Quote  $quote
+     * @param  \App\Models\PaymentPlan  $paymentPlan
      * @return \Illuminate\Http\Response
      */
-    public function show(Quote $quote, $id)
-    {
-        $get_quote = Quote::where('id', $id)/* ->with('payments') */->firstOrFail();
-
-        if($get_quote->accepted){
-            return view('quotes.details.accepted', compact('get_quote'));
-        }else{
-            return view('quotes.details.pending', compact('get_quote'));
-
-        }
-    }
-  /*   public function accepted_quotes(Quote $quote, $id)
+    public function show(PaymentPlan $paymentPlan)
     {
         //
-    } */
+    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Quote  $quote
+     * @param  \App\Models\PaymentPlan  $paymentPlan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Quote $quote)
+    public function edit(PaymentPlan $paymentPlan)
     {
         //
     }
@@ -87,10 +64,10 @@ class QuoteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Quote  $quote
+     * @param  \App\Models\PaymentPlan  $paymentPlan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Quote $quote)
+    public function update(Request $request, PaymentPlan $paymentPlan)
     {
         //
     }
@@ -98,10 +75,10 @@ class QuoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Quote  $quote
+     * @param  \App\Models\PaymentPlan  $paymentPlan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Quote $quote)
+    public function destroy(PaymentPlan $paymentPlan)
     {
         //
     }

@@ -22,7 +22,9 @@ class DashboardController extends Controller
             ->where('completed', 100)->get()->count();
 
         $cl_items = CLItem::where('user_id', $user_id)
-            ->where('status', 0)->get()->count();
+            ->where('status', 0)
+            ->orderBy('created_at','desc')
+            ->get()->count();
 
 
         $active_cases = $cases->where('status', '1')->count();
@@ -30,7 +32,7 @@ class DashboardController extends Controller
       /*   return response()->json(
             [['cases' => $cases], ['checklists' => $checklists], ['cl_items' => $cl_items], ['active_cases' => $active_cases]]
         );
- */
+         */
         return view('dashboard', compact('active_cases', 'cases', 'checklists', 'cl_items'));
     }
 }

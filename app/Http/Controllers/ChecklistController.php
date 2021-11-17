@@ -16,7 +16,6 @@ class ChecklistController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-
         $active_checklists = Checklist::where('user_id', $user_id)
             ->with('case')
             ->where('completed', '!=', 100)
@@ -24,8 +23,6 @@ class ChecklistController extends Controller
         $completed_checklists = Checklist::where('user_id', $user_id)
             ->with('case')
             ->where('completed', 100)->get();
-
-
         return view('checklists.index', compact('active_checklists', 'completed_checklists'));
     }
 
@@ -56,9 +53,14 @@ class ChecklistController extends Controller
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Http\Response
      */
-    public function show(Checklist $checklist)
+    public function show(Checklist $checklist, $id)
     {
-        //
+
+        $check_list = Checklist::where('id', $id)
+        ->with('clitems')
+        ->firstOrFail();
+        //return $checklist;
+        return view('checklists.show', compact('check_list'));
     }
 
     /**

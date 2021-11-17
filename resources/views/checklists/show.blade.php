@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Checklist xxx01
+    Checklist {{ $check_list->title }}
 @endsection
 
 
@@ -9,7 +9,7 @@
     <div class="card">
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title">Checklist <b>XXX 01</b></h2>
+                <h2 class="card-title">Checklist <b>{{ $check_list->title }}</b></h2>
                 <h6 class="card-subtitle">Some case and checklist details <i>ok</i> </h6>
                 <h3 class="card-title mt-5"><i class="mr-1 font-18 mdi mdi-numeric-1-box-multiple-outline"></i> Pending items
                 </h3>
@@ -25,39 +25,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>
-                                    <a href="{{route('checklist_item')}}" type="button" class="btn btn-outline-success btn-rounded">
-                                         <i class="fas fa-eye"></i>
-                                     </a>
-                                 </td>
-                            </tr>
-                            <tr>
-                                <td>Jacob</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>
-                                    <a href="{{route('checklist_item')}}" type="button" class="btn btn-outline-success btn-rounded">
-                                         <i class="fas fa-eye"></i>
-                                     </a>
-                                 </td>
-                            </tr>
-                            <tr>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                                <td>
-                                    <a href="{{route('checklist_item')}}" type="button" class="btn btn-outline-success btn-rounded">
-                                         <i class="fas fa-eye"></i>
-                                     </a>
-                                 </td>
-                            </tr>
+                            @foreach ($check_list->clitems as $clitem)
+                                @if ($clitem->status != 'Pending')
+                                    <tr>
+                                        <td>{{ $clitem->subject }}</td>
+                                        <td>{{ $clitem->required_to }}</td>
+                                        <td><a href="#" class="btn"> <i class="fas fa-upload"></i></a></td>
+                                        <td>{{ $clitem->help_link }}</td>
+                                        <td>
+                                            <a href="{{ route('checklist_item', [$check_list], [$clitem->id]) }}"
+                                                type="button" class="btn btn-outline-success btn-rounded">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -76,39 +59,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>
-                                <a href="{{route('checklist_item_ef')}}" type="button" class="btn btn-outline-success btn-rounded">
-                                     <i class="fas fa-eye"></i>
-                                 </a>
-                             </td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td>
-                                <a href="{{route('checklist_item_ef')}}" type="button" class="btn btn-outline-success btn-rounded">
-                                     <i class="fas fa-eye"></i>
-                                 </a>
-                             </td>
-                        </tr>
-                        <tr>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                            <td>
-                                <a href="{{route('checklist_item_ef')}}" type="button" class="btn btn-outline-success btn-rounded">
-                                     <i class="fas fa-eye"></i>
-                                 </a>
-                             </td>
-                        </tr>
+                        @foreach ($check_list->clitems as $clitem)
+                            @if ($clitem->status != 'Accepted')
+                                <tr>
+                                    <td>{{ $clitem->subject }}</td>
+                                    <td>{{ $clitem->required_to }}</td>
+                                    <td>{{ $clitem->help_link }}</td>
+                                    <td>{{ $clitem->status }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -124,21 +84,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+
+                        @foreach ($check_list->clitems as $clitem)
+                            @if ($clitem->status != 'Completed')
+                                <tr>
+                                    <td>{{ $clitem->subject }}</td>
+                                    <td>{{ $clitem->status }}</td>
+                                    <td>{{ $clitem->file_name }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>

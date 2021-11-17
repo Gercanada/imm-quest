@@ -14,7 +14,7 @@ class CLItemController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -44,9 +44,11 @@ class CLItemController extends Controller
      * @param  \App\Models\CLItem  $cLItem
      * @return \Illuminate\Http\Response
      */
-    public function show(CLItem $cLItem)
+    public function show(/* CLItem $cLItem, $id */ Request $request)
     {
-        //
+        return $request;
+        $cl_item = CLItem::where('id', $id)->firstOrFail();
+        return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
 
     /**

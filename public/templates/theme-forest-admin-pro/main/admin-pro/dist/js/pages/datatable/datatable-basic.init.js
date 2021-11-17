@@ -63,6 +63,11 @@ $('#alt_pagination').DataTable({
     "pagingType": "full_numbers"
 });
 
+
+$('.dt_alt_pagination').DataTable({
+    "pagingType": "full_numbers"
+});
+
 /****************************************
  *     vertical scroll Table    *
  ****************************************/

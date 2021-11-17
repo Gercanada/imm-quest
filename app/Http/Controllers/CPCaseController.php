@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checklist;
 use App\Models\CPCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,7 @@ class CPCaseController extends Controller
 
         /*  $active_cases = $cases->where('status', '1')->count(); */
 
-/*
+        /*
         return response()->json([$active_cases, $completed_cases]); */
         return view('cases.index', compact('active_cases', 'completed_cases'));
     }
@@ -58,9 +59,20 @@ class CPCaseController extends Controller
      * @param  \App\Models\CPCase  $cPCase
      * @return \Illuminate\Http\Response
      */
-    public function show(CPCase $cPCase)
+    public function show(CPCase $cPCase, $id)
     {
-        //
+
+        $user_id = Auth::user()->id;
+
+        $case = CPCase::where('id', $id)->firstOrFail();
+
+        $checklists = Checklist::where('case_id', $case->id)
+        ->with('clitems')
+        ->with('case')
+        //->where('clitems.status', 'pending')
+        ->get();
+
+        return view('cases.show', compact('case', 'checklists'));
     }
 
     /**

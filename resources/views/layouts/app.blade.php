@@ -124,8 +124,8 @@
     <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/dashboards/dashboard2.js"></script>
 
     <!-- All scripts -->
-    @yield('scripts')
     <script src="/js/app.js"></script>
+    @yield('scripts')
 
 
 

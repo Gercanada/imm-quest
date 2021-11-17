@@ -43,44 +43,74 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <a href="#">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="mr-3 align-self-center"><span class="lstick d-inline-block align-middle"></span><img
-                                    src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/expense.png"
-                                    alt="Income" /></div>
-                            <div class="align-self-center">
-                                <h6 class="text-muted mt-2 mb-0">Pending items</h6>
-                                <h2 class="warning">{{ $cl_items }}</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <div class="mr-3 align-self-center"><span
+                                        class="lstick d-inline-block align-middle"></span><img
+                                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/expense.png"
+                                        alt="Income" /></div>
+                                <div class="align-self-center">
+                                    <h6 class="text-muted mt-2 mb-0">Pending items</h6>
+                                    <h2 class="warning">{{ $cl_items }}</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </a>
             </div>
             <div class="col-lg-4 col-md-6">
                 <a href="#">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex no-block">
-                            <div class="mr-3 align-self-center"><span class="lstick d-inline-block align-middle"></span><img
-                                    src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/assets.png"
-                                    alt="Income" /></div>
-                            <div class="align-self-center">
-                                <h6 class="text-muted mt-2 mb-0">Active cases</h6>
-                                <h2 class="success">{{ $active_cases }}</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <div class="mr-3 align-self-center"><span
+                                        class="lstick d-inline-block align-middle"></span><img
+                                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/assets.png"
+                                        alt="Income" /></div>
+                                <div class="align-self-center">
+                                    <h6 class="text-muted mt-2 mb-0">Active cases</h6>
+                                    <h2 class="success">{{ $active_cases }}</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
             </div>
         </div>
         <!-- End Row -->
         <!-- Start row -->
         <div class="row">
             <div class="col-lg-9">
-                @include('features.datatable')
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Case title</th>
+                                <th>Case type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($cases as $case)
+                                <tr id="1" class="gradeX">
+                                    <td> <a href="{{ route('show_case', [$case->id])}}"> {{ $case->title }}</a></td>
+                                    <td>{{ $case->type }} </td>
+                                    <td>{{ $case->status }} </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>Case title</th>
+                                <th>Case type</th>
+                                <th>Status</th>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
             </div>
             <!-- ============================================================== -->
             <!-- visit charts-->
