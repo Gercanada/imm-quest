@@ -44,11 +44,9 @@ class CLItemController extends Controller
      * @param  \App\Models\CLItem  $cLItem
      * @return \Illuminate\Http\Response
      */
-    public function show(/* CLItem $cLItem, $id */ Request $request)
+    public function show(CLItem $cLItem)
     {
-        return $request;
-        $cl_item = CLItem::where('id', $id)->firstOrFail();
-        return view('checklists.items.item-dv-upload', compact('cl_item'));
+
     }
 
     /**
@@ -57,9 +55,10 @@ class CLItemController extends Controller
      * @param  \App\Models\CLItem  $cLItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(CLItem $cLItem)
+    public function dvupload($id)
     {
-        //
+        $cl_item = CLItem::where('id', $id)->firstOrFail();
+        return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
 
     /**

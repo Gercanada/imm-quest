@@ -42,6 +42,7 @@ class User extends Authenticatable
         'agent_id',
         'description',
         'password',
+        'refresh_token',
     ];
 
     /**

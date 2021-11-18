@@ -6,4 +6,5 @@
 
 @section('content')
     <clitem-component></clitem-component>
+  {{--  <uploader-component></uploader-component> --}}
 @endsection

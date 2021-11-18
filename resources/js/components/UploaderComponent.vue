@@ -7,7 +7,7 @@
         class="btn btn-outline-info btn-rounded float-left"
         ><i class="fas fa-arrow-circle-left">Back</i></a
       >
-      <h2 class="card-title">CL Item <b v-text="subject"></b></h2>
+      <h2 class="card-title">CL Item <b>XXX 01</b></h2>
     </div>
     <div class="card-body">
       <div class="card-row">
@@ -137,10 +137,7 @@ export default {
 
       id: "",
       user_id: "",
-      checklist_id: "",
-
       title: "",
-      subject: "",
       description: "",
       url_files: "",
       expiry_date: "",
@@ -222,13 +219,12 @@ export default {
     },
 
     ////////////////////////
-    userFiles(id) {
+    userFiles() {
       let me = this;
       axios
-        //.get("/documents")
-        .get("/checklist/" + this.checklist_id + "/item/" + this.id)
+        .get("/documents")
         .then(function (response) {
-          console.log( me.id );
+          console.log({ response });
           me.userObj = response.data;
         })
         .catch(function (error) {

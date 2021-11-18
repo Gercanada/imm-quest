@@ -16,13 +16,13 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) { // users or contacts
             $table->id();
             //about
-            $table->string('user_name')->unique();
+            $table->string('user_name')->unique()->nullable();
             $table->string('prefered_name')->nullable();
-            $table->string('name');
-            $table->string('last_name');
-            $table->string('nationalities');
-            $table->string('avatar');//user image
-            $table->string('password');
+            $table->string('name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('nationalities')->nullable();
+            $table->string('avatar')->nullable();//user image
+            $table->string('password')->nullable();
 
             //contact
             $table->string('phone_country_code')->nullable();
@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('secondary_email')->nullable();
             $table->string('phone')->nullable();
             $table->string('fax')->nullable();
-            $table->string('watsapp_update_option');
+            $table->string('watsapp_update_option')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
             $table->string('skipe')->nullable();
@@ -55,6 +55,7 @@ class CreateUsersTable extends Migration
             $table->string('description')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('refresh_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

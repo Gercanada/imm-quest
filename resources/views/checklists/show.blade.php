@@ -33,7 +33,7 @@
                                         <td><a href="#" class="btn"> <i class="fas fa-upload"></i></a></td>
                                         <td>{{ $clitem->help_link }}</td>
                                         <td>
-                                            <a href="{{ route('checklist_item', [$check_list], [$clitem->id]) }}"
+                                            <a href="{{ route('checklist_item', [$check_list->id, $clitem->id],) }}"
                                                 type="button" class="btn btn-outline-success btn-rounded">
                                                 <i class="fas fa-eye"></i>
                                             </a>

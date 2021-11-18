@@ -14,6 +14,6 @@ class Checklist extends Model
     }
 
     public function clitems(){
-        return $this->hasMany(CLItem::class, 'check_list_id');
+        return $this->hasMany(CLItem::class);
     }
 }

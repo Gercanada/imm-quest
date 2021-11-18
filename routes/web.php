@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\CPCaseController;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +12,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CLItemController;
+use App\Http\Controllers\GoogleDriveController;
 
 use App\Http\Controllers\ViewController;
 
@@ -31,11 +33,17 @@ use App\Http\Controllers\ViewController;
 
 Auth::routes();
 
+//Google Drive Routes
+Route::get('/login/google', [LoginController::class, 'redirectToProvider'])->name('login.google');
+Route::get('/login/google/callback', [LoginController::class, 'handleProviderCallback']);
 
-Route::group(['middleware' => ['guest']], function () {
-    /*   Route::get('/', function () {
-        return view('welcome');
-    }); */
+
+Route::middleware('auth')->group(function () {
+    Route::get('/drive/all', [GoogleDriveController::class, 'getFolders'])->name('google.folders');
+    Route::get('/drive/empty', [GoogleDriveController::class, 'isEmpty']);
+    //Route::get('/drive/upload', [GoogleDriveController::class, 'uploadFiles']);
+    Route::post('/drive/upload', [GoogleDriveController::class, 'upload']);
+    Route::post('/drive/delete', [GoogleDriveController::class, 'delete']);
 });
 
 
@@ -73,7 +81,7 @@ Route::get('/case/{id}', [CPCaseController::class, 'show'])->middleware(['auth']
 Route::get('/checklists', [ChecklistController::class, 'index'])->middleware(['auth'])->name('checklists');
 Route::get('/checklist/{id}', [ChecklistController::class, 'show'])->middleware(['auth'])->name('show_checklist');
 
-Route::get('/checklist/{check_list}/item/{clitem}', [CLItemController::class, 'show'])->middleware(['auth'])->name('checklist_item');
+Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupload'])->middleware(['auth'])->name('checklist_item');
 
 
 Route::get('/quotes', [QuoteController::class, 'index'])->middleware(['auth'])->name('quotes');

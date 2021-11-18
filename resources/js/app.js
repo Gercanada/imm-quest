@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//require('./bootstrap');
+require('./bootstrap');
 
 window.Vue = require('vue').default;
 
@@ -28,6 +28,7 @@ Vue.component('dashboard-component', require('./components/DashboardComponent.vu
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
 
 Vue.component('clitem-component', require('./components/CLItemComponent.vue').default);
+Vue.component('uploader-component', require('./components/UploaderComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

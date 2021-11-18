@@ -4,7 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Google\Service\Docs\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Facades\Socialite;
+
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
+
+
 
 class LoginController extends Controller
 {
@@ -37,4 +45,46 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function redirectToProvider()
+    {
+        $parameters = ['access_type' => 'offline'];
+        return Socialite::driver('google')->scopes(["https://www.googleapis.com/auth/drive"])->with($parameters)->redirect();
+    }
+
+    /**
+     * Obtain the user information from Google.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback()
+    {
+        $userLogin = Socialite::driver('google')->stateless()->user();
+
+        //dd($userLogin);
+        $user = User::updateOrCreate(
+            [
+                'email' => $userLogin->email
+            ],
+
+            [
+                'refresh_token' => $userLogin->token,
+                'name' => $userLogin->name
+            ]
+        );
+
+        Auth::login($user, true);
+        return redirect()->to('/');
+
+    }
+
+  /*   public function logout(Request $request)
+    {
+        session('g_token', '');
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/');
+    } */
 }

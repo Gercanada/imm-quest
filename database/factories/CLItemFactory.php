@@ -16,7 +16,7 @@ class CLItemFactory extends Factory
         return [
             'user_id' => 1,
             'case_id' => $this->faker->numberBetween(1,5),
-            'check_list_id' => $this->faker->numberBetween(1,8),
+            'checklist_id' => $this->faker->numberBetween(1,8),
             'subject' => $this->faker->sentence(),
             'cli_item_no' => $this->faker->numberBetween(1,999),
             'catagory_id' => $this->faker->numberBetween(1,3),
