@@ -39,6 +39,7 @@ return [
         'client_secret'               => env('GOOGLE_CLIENT_SECRET'),
         'redirect'                    => env('GOOGLE_REDIRECT'),
         'redirect_uris'               => [env('GOOGLE_REDIRECT')],
+        'folderId'                    => '1MomlvNHowRiB0QDHzV2mofvh_p6Ik5AS'
     ],
 
 ];

@@ -39,11 +39,19 @@ Route::get('/login/google/callback', [LoginController::class, 'handleProviderCal
 
 
 Route::middleware('auth')->group(function () {
+    //user
+
+    Route::get('/profile', [UserController::class, 'index'])->name('profile');
+    Route::get('/account', [UserController::class, 'account']);
+    Route::put('/account', [UserController::class, 'update']);
+
+    // GDrive
     Route::get('/drive/all', [GoogleDriveController::class, 'getFolders'])->name('google.folders');
     Route::get('/drive/empty', [GoogleDriveController::class, 'isEmpty']);
-    //Route::get('/drive/upload', [GoogleDriveController::class, 'uploadFiles']);
     Route::post('/drive/upload', [GoogleDriveController::class, 'upload']);
     Route::post('/drive/delete', [GoogleDriveController::class, 'delete']);
+
+    
 });
 
 
@@ -65,7 +73,7 @@ Route::get('/commboard', [ViewController::class, 'commboard'])->middleware(['aut
 
 
 
-Route::put('/account', [UserController::class, 'update']);
+
 
 Route::post('/documents', [DocumentController::class, 'store']);
 
