@@ -130,8 +130,7 @@ export default {
         addRemoveLinks: true,
         dictRemoveFile: "Remove file",
         headers: {
-          "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]")
-            .content,
+          "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]").content,
         },
       },
 

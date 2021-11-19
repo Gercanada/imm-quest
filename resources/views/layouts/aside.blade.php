@@ -13,12 +13,12 @@
                     </a>
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link p-0">
+                            <a href="{{route('profile')}}" class="sidebar-link p-0">
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu"> My Profile </span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                       {{--  <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link p-0">
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu"> My Balance </span>
@@ -29,7 +29,7 @@
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu"> Inbox </span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link p-0">
                                 <i class="mdi mdi-adjust"></i>

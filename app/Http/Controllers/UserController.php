@@ -16,16 +16,16 @@ class UserController extends Controller
      */
     public function index()
     {
+        return view('users.index');
+    }
 
+    public function account()
+    {
         $user_id = Auth::user()->id;
 
         $user = User::findOrFail($user_id);
 
         return $user;
-    }
-
-    public function info(){
-
     }
 
     /**
@@ -82,7 +82,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-     // $user::update()
+        // $user::update()
 
         return "this gbe updated";
     }
@@ -97,6 +97,4 @@ class UserController extends Controller
     {
         //
     }
-
-
 }

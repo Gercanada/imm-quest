@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "laravel-drive-api",
+  "private_key_id": "d31dae76201021c499530c59b86a7f491093cb81",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDLqKLloTG3MXkf\nlFs/O8y1kKpBQRnta2deaepuvbgGi//Np16nK4rSzg1fHrgMhBRgSBnwa6G7sK7C\n6BxPZvLEUO+Doe5Ct42LLpIdhMZRIox0BMjZIsVaWLGa988Hs+PPhGvoTgXyw7Xg\nYdzCbgbabwG5D0bOucwb8ASKjkFjsL/DKaUX3aIQZKPD6Cj6CpiUCZwAo2c0Bmu1\nPfI73soda7rDfHHGXqRlcb4sLSAlqBoPU1lXct2kfM79MukdBCAZXB4/4IFgfAoA\nbdylYtmRVOw/pcKwXl75ZrTIXZCLHUwPt6KIa89QwHmT3z0ryWrpKMGapysgQaVH\nGiJcGJmXAgMBAAECggEAYqYX6cUP8N28/wf8vv93ZEdjwOII7hEFbB0/2k55kmpE\nCVjWJ4GW6A+5OGcH3cAooo6qSePI3sJxlKWb+PY0B9XwfsF0SMrifBWd30COU4S5\npgUfSNZn5CBsP1Vj6iY/5igNoOQSS4pzUfH1XhSvqyT0H7D/qmkjLjEv8fGASQnZ\noWCXyJmxiLowLVk9seZoIpiNGaot+nsFQ02NVJwk0t0HktxokbkLKPFzSwNl/P0/\niH9fU/KG4YLxd4/Hc5zKESRruQGK+lS1U3Qi2o17UI+XhAKop8sPInJPRU+gzVS/\nMsI7fDUXl0JmFQx/enUY+7QS1WIpZX5tm9OWrP1aIQKBgQD3PjECFemHhwZweRQK\n5gU7EVlWScpLF0am4xFysLo6Cp603948mZQXe2ln4K2+bcDE+EMT1dMWDlRCtHAI\nmkZIufgeSQz42xrHdhsCzXWEkTjfqx+o57/znZ9LmCOvxtB/D0/f1iNCZNMH3gtG\njkWB24daFVaIo3vtiGkMLQarsQKBgQDS30HFLrLCAwUEuZRs9CBAUV68rS9R1MJq\nfZbaSAMXtMn0ftKrmwyGbj3Auzr9GwLywav+atPgS46siYX5v6pFnJQMPhqrE9A+\nOYIIT+/M/w3MiXlxSQtkb2+gKE7LuCq7qtssnfDQHDVVlim7B2DV2ITP7uJfs7MO\nZLFnuZsTxwKBgCGYQL6AzbeNoFFeElwcvy80f0gbRLKJWh9JEVDdNKC4WrJHDQJ8\n98NtEHh97f3HGf9poGusjT8c+VQLAoIYvF4bbtxmnq2dz/i0Up1B36sAtJKnxOiF\nfO6UR1XVOVwkDqaFJRxME4RtAMO75xpSMJ2hf7W82oI8fJVdCLEP2S0xAoGBAL6d\nM02ztcCsjBfGTUXjs1eQdkulXRXidc9fMUKlP65pLPlGvtaCdGL8OfQDCwKKLTMV\nIIz9MgMZKaILOkEVISyFqkoaxW6JnX7x6vnqkEDE+Us/pbhip9qk5MloRjnegzpa\n6n49UtY7+XYhJB29QKptaziunpCV1rCXEspJO8Y3AoGAOkcHGI+wyEHRTQMU11SZ\nye/SJipiUix2D2alNSacAzHicMAaDNc2aYu25jkVLWbz5Pr3cAg3OujRLO5aTiPK\n11/Tw/VfgfulNjcW0ku00hLQw2q7eZ+fR5bzOHguaSKFXnzLW5QCyzPG3epOmlZl\nPOksjbvMNZqRByt8pzngDg8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "laravel-cp@laravel-drive-api.iam.gserviceaccount.com",
+  "client_id": "112528468444493060651",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/laravel-cp%40laravel-drive-api.iam.gserviceaccount.com"
+}
