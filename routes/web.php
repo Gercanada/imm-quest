@@ -79,9 +79,12 @@ Route::get('/case/{id}', [CPCaseController::class, 'show'])->middleware(['auth']
 
 
 Route::get('/checklists', [ChecklistController::class, 'index'])->middleware(['auth'])->name('checklists');
-Route::get('/checklist/{id}', [ChecklistController::class, 'show'])->middleware(['auth'])->name('show_checklist');
+
 
 Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupload'])->middleware(['auth'])->name('checklist_item');
+Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupload'])->middleware(['auth'])->name('checklist_item');
+
+Route::get('/checklist/item', [CLItemController::class, 'show'])->middleware(['auth']);
 
 
 Route::get('/quotes', [QuoteController::class, 'index'])->middleware(['auth'])->name('quotes');

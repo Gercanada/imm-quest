@@ -7,7 +7,7 @@
         class="btn btn-outline-info btn-rounded float-left"
         ><i class="fas fa-arrow-circle-left">Back</i></a
       >
-      <h2 class="card-title">CL Item <b>XXX 01</b></h2>
+      <h2 class="card-title">CL Item <b v-text="userObj"></b></h2>
     </div>
     <div class="card-body">
       <div class="card-row">

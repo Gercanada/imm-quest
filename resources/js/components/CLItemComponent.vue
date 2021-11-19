@@ -226,7 +226,11 @@ export default {
       let me = this;
       axios
         //.get("/documents")
-        .get("/checklist/" + this.checklist_id + "/item/" + this.id)
+         .get("/checklist/item", {
+              id: id,
+            })
+
+        /* .get("/checklist/" + this.checklist_id + "/item/" + this.id) */
         .then(function (response) {
           console.log( me.id );
           me.userObj = response.data;

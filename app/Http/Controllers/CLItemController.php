@@ -46,7 +46,7 @@ class CLItemController extends Controller
      */
     public function show(CLItem $cLItem)
     {
-
+        return $cLItem;
     }
 
     /**

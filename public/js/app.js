@@ -3123,7 +3123,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     userFiles: function userFiles(id) {
       var me = this;
       axios //.get("/documents")
-      .get("/checklist/" + this.checklist_id + "/item/" + this.id).then(function (response) {
+      .get("/checklist/item", {
+        id: id
+      })
+      /* .get("/checklist/" + this.checklist_id + "/item/" + this.id) */
+      .then(function (response) {
         console.log(me.id);
         me.userObj = response.data;
       })["catch"](function (error) {
@@ -24119,7 +24123,14 @@ var render = function () {
     "div",
     { staticClass: "card" },
     [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("h2", { staticClass: "card-title" }, [
+          _vm._v("CL Item "),
+          _c("b", { domProps: { textContent: _vm._s(_vm.userObj) } }),
+        ]),
+      ]),
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
@@ -24277,21 +24288,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-outline-info btn-rounded float-left",
-          attrs: { href: "/checklist:id" },
-        },
-        [_c("i", { staticClass: "fas fa-arrow-circle-left" }, [_vm._v("Back")])]
-      ),
-      _vm._v(" "),
-      _c("h2", { staticClass: "card-title" }, [
-        _vm._v("CL Item "),
-        _c("b", [_vm._v("XXX 01")]),
-      ]),
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "btn btn-outline-info btn-rounded float-left",
+        attrs: { href: "/checklist:id" },
+      },
+      [_c("i", { staticClass: "fas fa-arrow-circle-left" }, [_vm._v("Back")])]
+    )
   },
   function () {
     var _vm = this
