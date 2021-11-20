@@ -14,7 +14,7 @@ class QuoteFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => 1,
+            'user_id' => 2,
             //'invoice_id' => $this->faker->numberBetween(1,4),
             'total' => $this->faker->numberBetween(100, 10000),
             'quote_no' => $this->faker->numberBetween(1,100),

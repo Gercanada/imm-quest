@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class CLItem extends Model
 {
     use HasFactory;
+
+    protected $fillable =[
+        'cli_file'
+    ];
 }

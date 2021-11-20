@@ -24,7 +24,7 @@ class UserFactory extends Factory
             'avatar' => 'https://lorempixel.com/200/200',
             'password' => bcrypt('12345678'),
             'phone_country_code' => $this->faker->numberBetween(11,99),
-            'mobile_phone' => $this->faker->phoneNumber(),
+            //'mobile_phone' => $this->faker->phoneNumber(),
             'watsapp_no' => $this->faker->phoneNumber(),
             'email' => $this->faker->email(),
             'phone' => $this->faker->phoneNumber(),

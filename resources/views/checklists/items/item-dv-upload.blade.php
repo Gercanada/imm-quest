@@ -5,6 +5,6 @@
 @endsection
 
 @section('content')
-    <clitem-component :csrf-token="{{ csrf_token() }}"></clitem-component>
+    <clitem-component ></clitem-component>
   {{--  <uploader-component></uploader-component> --}}
 @endsection

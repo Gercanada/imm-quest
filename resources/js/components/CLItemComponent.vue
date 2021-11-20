@@ -13,6 +13,7 @@
       <div class="card-row">
         <div class="col border py-2">
           <p>Case & checklist info</p>
+          <p v-text="userObj"></p>
         </div>
         <div class="col border py-2">
           <p>CL info</p>
@@ -189,7 +190,7 @@ export default {
       let me = this;
 
       axios
-        .post("/drive/upload", file)
+        .post("/drive/upload", { file, id: data.id })
         .then(function (response) {
           console.log({ response });
           me.closeModal();
@@ -225,14 +226,9 @@ export default {
     userFiles(id) {
       let me = this;
       axios
-        //.get("/documents")
-         .get("/checklist/item", {
-              id: id,
-            })
-
-        /* .get("/checklist/" + this.checklist_id + "/item/" + this.id) */
+        .post("/cl-item", { id: 3 })
         .then(function (response) {
-          console.log( me.id );
+          console.log("here");
           me.userObj = response.data;
         })
         .catch(function (error) {

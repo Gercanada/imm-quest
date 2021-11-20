@@ -43,15 +43,17 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [UserController::class, 'index'])->name('profile');
     Route::get('/account', [UserController::class, 'account']);
-    Route::put('/account', [UserController::class, 'update']);
+    Route::post('/account', [UserController::class, 'update']);
 
     // GDrive
     Route::get('/drive/all', [GoogleDriveController::class, 'getFolders'])->name('google.folders');
     Route::get('/drive/empty', [GoogleDriveController::class, 'isEmpty']);
-    Route::post('/drive/upload', [GoogleDriveController::class, 'upload']);
+    Route::post('/drive/upload/', [GoogleDriveController::class, 'upload']);
     Route::post('/drive/delete', [GoogleDriveController::class, 'delete']);
 
-    
+    Route::post('/cl-item', [CLItemController::class, 'show'])->middleware(['auth']);
+
+
 });
 
 
@@ -87,12 +89,14 @@ Route::get('/case/{id}', [CPCaseController::class, 'show'])->middleware(['auth']
 
 
 Route::get('/checklists', [ChecklistController::class, 'index'])->middleware(['auth'])->name('checklists');
+Route::get('/checklist/{id}', [ChecklistController::class, 'show'])->middleware(['auth'])->name('show_checklist');
+
 
 
 Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupload'])->middleware(['auth'])->name('checklist_item');
-Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupload'])->middleware(['auth'])->name('checklist_item');
+// /Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupload'])->middleware(['auth'])->name('checklist_item');
 
-Route::get('/checklist/item', [CLItemController::class, 'show'])->middleware(['auth']);
+
 
 
 Route::get('/quotes', [QuoteController::class, 'index'])->middleware(['auth'])->name('quotes');

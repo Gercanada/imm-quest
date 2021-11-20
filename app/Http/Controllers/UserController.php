@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
+use App\Models\UserDetail;
+use App\Models\UserCF;
+use App\Models\UserSubDetail;
+use Exception;
 
 class UserController extends Controller
 {
@@ -22,53 +26,15 @@ class UserController extends Controller
     public function account()
     {
         $user_id = Auth::user()->id;
-
-        $user = User::findOrFail($user_id);
-
+        $user = User::with('contact_address')
+            ->with('contact_details')
+            //->with('contact_cf')
+            ->with('contact_sub_details')
+            ->findOrFail($user_id);
         return $user;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return view('users.edit');
-    }
 
     /**
      * Update the specified resource in storage.
@@ -77,14 +43,69 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        try {
+            $user = User::where('id', Auth::user()->id)
+                ->with('contact_address')
+                ->with('contact_details')
+                //->with('contact_cf')
+                ->with('contact_sub_details')
+                ->firstOrFail();
+            $anotherMail = false;
 
-        $user = User::findOrFail($id);
 
-        // $user::update()
+            if ($request->secondary_email) {
+                $anotherMail = true;
+            }
 
-        return "this gbe updated";
+
+            $updateDetails = UserDetail::updateOrCreate(['contactid' =>  $user->id], [
+                //'contactid'     => $user->id,
+                'otheremail'     => $anotherMail,
+                'secondaryemail' => $request->secondary_email,
+                'mobile'         => $request->mobile_phone,
+                'contact_no'     => $user->id,
+                'lastname'       => $user->last_name ?? $request->last_name,
+            ]);
+
+            $updateCF = UserCF::updateOrCreate(['contactid' =>  $user->id]);
+            $updateSub = UserSubDetail::updateOrCreate('contactsubscriptionid', $user->id);
+
+            return 200;
+        } catch (Exception $e) {
+            return response()->json($e, 500);
+        }
+
+
+        //$updateDetails->email               = $request->email;
+        /*  $updateDetails->phone               = $request->phone;
+        $updateDetails->title               = $request->title;
+        $updateDetails->department          = $request->department;
+        $updateDetails->fax                 = $request->fax;
+        $updateDetails->reportsto           = $request->reportsto;
+        $updateDetails->training            = $request->training;
+        $updateDetails->usertype            = $request->usertype;
+        $updateDetails->contacttype         = $request->contacttype; */
+        /* $updateDetails->donotcall           = $request->donotcall; */
+        /* $updateDetails->emailoptout         = $request->emailoptout; */
+        /* $updateDetails->imagename           = $request->imagename; */
+        /* $updateDetails->reference           = $request->reference; */
+        /* $updateDetails->notify_owner        = $request->notify_owner; */
+        /* $updateDetails->isconvertedfromlead = $request->isconvertedfromlead; */
+
+        //$updateCF->contactid = $user->id;
+
+        //$updateSub->contactsubscriptionid = $user->id;
+        /* $updateSub->contactsubscriptionid   =$request->any;
+        $updateSub->homephone               =$request->any;
+        $updateSub->otherphone              =$request->any;
+        $updateSub->assistant               =$request->any;
+        $updateSub->assistantphone          =$request->any;
+        $updateSub->birthday                =$request->any;
+        $updateSub->laststayintouchrequest  =$request->any;
+        $updateSub->laststayintouchsavedate =$request->any;
+        $updateSub->leadsource              =$request->any; */
     }
 
     /**

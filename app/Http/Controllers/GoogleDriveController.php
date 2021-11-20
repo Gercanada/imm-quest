@@ -6,6 +6,8 @@ use Exception;
 use Google_Client;
 use Google_Service_Drive;
 use Google_Service_Drive_DriveFile;
+
+use App\Models\CLItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -66,6 +68,7 @@ class GoogleDriveController extends Controller
 
     public function upload(Request $request)
     {
+        return $request;
         if ($request->file('file')) {
 
             $files = $request->file('file');
@@ -75,7 +78,7 @@ class GoogleDriveController extends Controller
 
             $fileList = array();
 
-           /*  $fileMetadata = new Google_Service_Drive_DriveFile(array(
+            /*  $fileMetadata = new Google_Service_Drive_DriveFile(array(
                 'name' => 'GerFiles',
                 'parents' => array(env('GOOGLE_DRIVE_FOLDER_ID')),
                 'mimeType' => 'application/vnd.google-apps.folder'
@@ -108,8 +111,13 @@ class GoogleDriveController extends Controller
 
                 $fileArray[] = $fileId;
 
-                    array_push($fileList, $fileArray);
+                array_push($fileList, $fileArray);
             }
+
+            //$clitem = CLItem::where('id', $id)->firstOrFail();
+            //CLItem::where('id', $request->id)->update('cli_file', $fileList);
+
+            //cli_file
 
             return $fileList;
         } else {
@@ -117,7 +125,8 @@ class GoogleDriveController extends Controller
         }
     }
 
-    public function delete (Request $request){
+    public function delete(Request $request)
+    {
 
         Storage::disk('google')->delete($item->items['fileId']);
     }

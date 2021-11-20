@@ -30,14 +30,9 @@
                                     <tr>
                                         <td>{{ $clitem->subject }}</td>
                                         <td>{{ $clitem->required_to }}</td>
-                                        <td><a href="#" class="btn"> <i class="fas fa-upload"></i></a></td>
+                                        <td><a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
+                                                class="btn btn-outline-success btn-rounded"> <i class="fas fa-upload"></i></a></td>
                                         <td>{{ $clitem->help_link }}</td>
-                                        <td>
-                                            <a href="{{ route('checklist_item', [$check_list->id, $clitem->id],) }}"
-                                                type="button" class="btn btn-outline-success btn-rounded">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                        </td>
                                     </tr>
                                 @endif
                             @endforeach

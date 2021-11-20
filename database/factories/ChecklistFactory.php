@@ -14,7 +14,7 @@ class ChecklistFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => 1,
+            'user_id' => 2,
             'case_id' => $this->faker->numberBetween(1, 5),
             'title' => $this->faker->sentence(),
             'subject' => $this->faker->sentence(),

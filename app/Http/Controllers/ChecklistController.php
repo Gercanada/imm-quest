@@ -55,7 +55,6 @@ class ChecklistController extends Controller
      */
     public function show(Checklist $checklist, $id)
     {
-
         $check_list = Checklist::where('id', $id)
         ->with('clitems')
         ->firstOrFail();

@@ -66,7 +66,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 mt-2 text-center">
                                 <div class="social mb-3">
                                     <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="Login with Facebook"> <i aria-hidden="true" class="fab fa-facebook-f"></i> </a>
-                                    <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="Login with Google"> <i aria-hidden="true" class="fab fa-google-plus"></i> </a>
+                                    <a href="{{route('login.google')}}" class="btn btn-googleplus" data-toggle="tooltip" title="Login with Google"> <i aria-hidden="true" class="fab fa-google"></i> </a>
                                 </div>
                             </div>
                         </div>

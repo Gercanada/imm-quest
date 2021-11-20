@@ -24,7 +24,7 @@ class UserTableSeeder extends Seeder
             'avatar' => 'https://lorempixel.com/200/200',
             'password' => bcrypt('12345678'),
             'phone_country_code' => '52',
-            'mobile_phone' => '2999644288',
+            //'mobile_phone' => '2999644288',
             'watsapp_no' => '2999644288',
             'email' => 'goetia@gmail.com',
             'phone' => '2999644288',

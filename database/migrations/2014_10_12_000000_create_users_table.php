@@ -26,10 +26,10 @@ class CreateUsersTable extends Migration
 
             //contact
             $table->string('phone_country_code')->nullable();
-            $table->string('mobile_phone')->nullable();
+            //$table->string('mobile_phone')->nullable();
             $table->string('watsapp_no')->nullable();
             $table->string('email')->unique();
-            $table->string('secondary_email')->nullable();
+            //$table->string('secondary_email')->nullable();
             $table->string('phone')->nullable();
             $table->string('fax')->nullable();
             $table->string('watsapp_update_option')->nullable();

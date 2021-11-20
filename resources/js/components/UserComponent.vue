@@ -46,7 +46,7 @@
                     <tr></tr>
                     <tr>
                       <th>Last name</th>
-                      <td v-text="userObj.last_name"></td>
+                      <td v-text="userObj.contact_details.lastname"></td>
                     </tr>
                     <tr>
                       <th>Nationalities</th>
@@ -54,7 +54,7 @@
                     </tr>
                     <tr>
                       <th>Mobile phone</th>
-                      <td v-text="userObj.mobile_phone"></td>
+                      <td v-text="userObj.contact_details.mobile"></td>
                     </tr>
                     <tr>
                       <th>Watsapp number</th>
@@ -66,7 +66,7 @@
                     </tr>
                     <tr>
                       <th>Secondary email</th>
-                      <td v-text="userObj.secondary_email"></td>
+                      <td v-text="userObj.contact_details.secondaryemail"></td>
                     </tr>
                     <tr>
                       <th>Lead source</th>
@@ -148,11 +148,11 @@
             <div class="modal-body">
               <form enctype="multipart/form-data" class="form-horizontal">
                 <div style="overflow-x: auto; overflow-y: auto; min-width: 80%">
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label for="inputEmail">Email address</label>
                     <input
                       type="email"
-                      class="form-control"
+                      class="form-control disabled"
                       id="inputEmail"
                       aria-describedby="emailHelp"
                       placeholder="Enter email"
@@ -163,7 +163,7 @@
                       class="text-danger font-14"
                       >{{ errors.email }}</small
                     >
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <label for="inputEmail2">Secondary email</label>
                     <input
@@ -180,11 +180,11 @@
                       >{{ errors.secondary_email }}</small
                     >
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label for="inputName">Name</label>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control disabled"
                       id="inputName"
                       aria-describedby="textHelp"
                       placeholder="Type your name or names"
@@ -214,7 +214,7 @@
                   </div>
                   <div class="form-group">
                     <label for="inputNationalities">Nationalities</label>
-                    <!-- Be dropdown -->
+
                     <input
                       type="text"
                       class="form-control"
@@ -228,7 +228,7 @@
                       class="text-danger font-14"
                       >{{ errors.nationalities }}</small
                     >
-                  </div>
+                  </div> -->
 
                   <div class="form-group">
                     <label for="inputmobphone">Mobile phone</label>
@@ -246,7 +246,7 @@
                       >{{ errors.mobile_phone }}</small
                     >
                   </div>
-                  <div class="form-group">
+                  <!--  <div class="form-group">
                     <label for="inputphone">Phone</label>
                     <input
                       type="text"
@@ -277,9 +277,9 @@
                       class="text-danger font-14"
                       >{{ errors.fax }}</small
                     >
-                  </div>
+                  </div> -->
 
-                  <div class="form-group">
+                  <!--  <div class="form-group">
                     <label for="inputSecondLastName">Watsapp number</label>
                     <input
                       type="text"
@@ -310,9 +310,9 @@
                       class="text-danger font-14"
                       >{{ errors.care_agent }}</small
                     >
-                  </div>
+                  </div> -->
 
-                  <div class="form-check">
+                  <!-- <div class="form-check">
                     <input
                       type="checkbox"
                       class="form-check-input"
@@ -325,9 +325,9 @@
                     <small id="textHelp" class="form-text text-muted"
                       >Now email out is :</small
                     >
-                  </div>
+                  </div> -->
 
-                  <div class="row">
+                  <!--  <div class="row">
                     <div class="col">
                       <div class="form-check">
                         <input
@@ -364,7 +364,7 @@
                         >
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </form>
             </div>
@@ -454,7 +454,7 @@ export default {
     updateAccount() {
       this.submitted = true;
       this.errors = {};
-      this.valideForm();
+      //this.valideForm();
 
       console.log(Object.keys(this.errors));
       if (Object.keys(this.errors).length) {
@@ -462,19 +462,19 @@ export default {
       }
       let me = this;
       axios
-        .put("/account", {
-          name: this.name,
+        .post("/account", {
+          /*  name: this.name,
           last_name: this.last_name,
-          nationalities: this.nationalities,
+          nationalities: this.nationalities, */
           mobile_phone: this.mobile_phone,
-          lead_source: this.lead_source,
+          /*  lead_source: this.lead_source,
           watsapp_no: this.watsapp_no,
           refered_by: this.refered_by,
           email: this.email,
           assigned_to: this.assigned_to,
-          qualified_for: this.qualified_for,
+          qualified_for: this.qualified_for, */
           secondary_email: this.secondary_email,
-          email_out_op: this.email_out_op,
+          /* email_out_op: this.email_out_op,
           lead_status_id: this.lead_status_id,
           lead_stage_id: this.lead_stage_id,
           care_agent: this.name,
@@ -485,7 +485,7 @@ export default {
           rating: this.rating,
           watsapp_update_option: this.watsapp_update_option,
           // agent_id              : this.agent_id,
-          description: this.description,
+          description: this.description, */
 
           id: this.id,
         })
@@ -505,7 +505,6 @@ export default {
         (this.first_last_name = ""),
         (this.second_lastname = ""),
         (this.email = ""),
-        (this.contract_type = ""),
         (this.code = ""),
         //(this.active = false);
 
@@ -526,20 +525,17 @@ export default {
       this.validateField("name");
 
       if (!this.last_name) {
-        this.errors.last_name =
-          "Last name is required";
+        this.errors.last_name = "Last name is required";
       }
       this.validateField("last_name");
 
       if (!this.nationalities) {
-        this.errors.nationalities =
-          "Nationalities is required";
+        this.errors.nationalities = "Nationalities is required";
       }
       this.validateField("nationalities");
 
       if (!this.phone) {
-        this.errors.phone =
-          "Phone is required";
+        this.errors.phone = "Phone is required";
       }
       this.validateField("phone");
 

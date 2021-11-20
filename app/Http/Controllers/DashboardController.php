@@ -15,8 +15,7 @@ class DashboardController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $cases = CPCase::where('user_id', $user_id)
-            ->get();
+        $cases = CPCase::where('user_id', $user_id)->get();
 
         $checklists = Checklist::where('user_id', $user_id)
             ->where('completed', 100)->get()->count();

@@ -2963,6 +2963,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3059,7 +3060,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log("done here");
                 this.$refs.myVueDropzone.processQueue();
                 me = this;
-                axios.post("/drive/upload", file).then(function (response) {
+                axios.post("/drive/upload", {
+                  file: file,
+                  id: data.id
+                }).then(function (response) {
                   console.log({
                     response: response
                   });
@@ -3122,13 +3126,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     ////////////////////////
     userFiles: function userFiles(id) {
       var me = this;
-      axios //.get("/documents")
-      .get("/checklist/item", {
-        id: id
-      })
-      /* .get("/checklist/" + this.checklist_id + "/item/" + this.id) */
-      .then(function (response) {
-        console.log(me.id);
+      axios.post("/cl-item", {
+        id: 3
+      }).then(function (response) {
+        console.log("here");
         me.userObj = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -3645,12 +3646,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
        this.submitted = true;
        this.errors = {};
        this.valideForm();
-         console.log(Object.keys(this.errors));
+        console.log(Object.keys(this.errors));
        if (Object.keys(this.errors).length) {
          return;
        }
        let me = this;
-         axios
+        axios
          .post("/documents", {
            title: this.title,
            last_name: this.last_name,
@@ -4646,8 +4647,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateAccount: function updateAccount() {
       this.submitted = true;
-      this.errors = {};
-      this.valideForm();
+      this.errors = {}; //this.valideForm();
+
       console.log(Object.keys(this.errors));
 
       if (Object.keys(this.errors).length) {
@@ -4655,19 +4656,21 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var me = this;
-      axios.put("/account", {
-        name: this.name,
+      axios.post("/account", {
+        /*  name: this.name,
         last_name: this.last_name,
-        nationalities: this.nationalities,
+        nationalities: this.nationalities, */
         mobile_phone: this.mobile_phone,
-        lead_source: this.lead_source,
+
+        /*  lead_source: this.lead_source,
         watsapp_no: this.watsapp_no,
         refered_by: this.refered_by,
         email: this.email,
         assigned_to: this.assigned_to,
-        qualified_for: this.qualified_for,
+        qualified_for: this.qualified_for, */
         secondary_email: this.secondary_email,
-        email_out_op: this.email_out_op,
+
+        /* email_out_op: this.email_out_op,
         lead_status_id: this.lead_status_id,
         lead_stage_id: this.lead_stage_id,
         care_agent: this.name,
@@ -4678,7 +4681,7 @@ __webpack_require__.r(__webpack_exports__);
         rating: this.rating,
         watsapp_update_option: this.watsapp_update_option,
         // agent_id              : this.agent_id,
-        description: this.description,
+        description: this.description, */
         id: this.id
       }).then(function (response) {
         me.closeModal();
@@ -4690,7 +4693,7 @@ __webpack_require__.r(__webpack_exports__);
     closeModal: function closeModal() {
       //Cerrar modals
       this.modal = 0;
-      this.name = "", this.first_last_name = "", this.second_lastname = "", this.email = "", this.contract_type = "", this.code = "", //(this.active = false);
+      this.name = "", this.first_last_name = "", this.second_lastname = "", this.email = "", this.code = "", //(this.active = false);
       this.submitted = false;
       this.errors = {};
       this.userAccount();
@@ -4868,7 +4871,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content {\r\n  width: 100% !important;\r\n  position: fixed !important;\r\n  overflow-y: visible;\n}\n.mostrar {\r\n  display: list-item !important;\r\n  opacity: 1 !important;\r\n  position: fixed !important;\r\n  background-color: #3c29297a !important;\n}\n.div-error {\r\n  display: flex;\r\n  justify-content: center;\n}\n.text-error {\r\n  color: red !important;\r\n  font-weight: bold;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content {\n  width: 100% !important;\n  position: fixed !important;\n  overflow-y: visible;\n}\n.mostrar {\n  display: list-item !important;\n  opacity: 1 !important;\n  position: fixed !important;\n  background-color: #3c29297a !important;\n}\n.div-error {\n  display: flex;\n  justify-content: center;\n}\n.text-error {\n  color: red !important;\n  font-weight: bold;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4892,7 +4895,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content {\r\n  width: 100% !important;\r\n  position: fixed !important;\r\n  overflow-y: visible;\n}\n.mostrar {\r\n  display: list-item !important;\r\n  opacity: 1 !important;\r\n  position: fixed !important;\r\n  background-color: #3c29297a !important;\n}\n.div-error {\r\n  display: flex;\r\n  justify-content: center;\n}\n.text-error {\r\n  color: red !important;\r\n  font-weight: bold;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content {\n  width: 100% !important;\n  position: fixed !important;\n  overflow-y: visible;\n}\n.mostrar {\n  display: list-item !important;\n  opacity: 1 !important;\n  position: fixed !important;\n  background-color: #3c29297a !important;\n}\n.div-error {\n  display: flex;\n  justify-content: center;\n}\n.text-error {\n  color: red !important;\n  font-weight: bold;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4940,7 +4943,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content {\r\n  width: 100% !important;\r\n  position: fixed !important;\r\n  overflow-y: visible;\n}\n.mostrar {\r\n  display: list-item !important;\r\n  opacity: 1 !important;\r\n  position: fixed !important;\r\n  background-color: #3c29297a !important;\n}\n.div-error {\r\n  display: flex;\r\n  justify-content: center;\n}\n.text-error {\r\n  color: red !important;\r\n  font-weight: bold;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content {\n  width: 100% !important;\n  position: fixed !important;\n  overflow-y: visible;\n}\n.mostrar {\n  display: list-item !important;\n  opacity: 1 !important;\n  position: fixed !important;\n  background-color: #3c29297a !important;\n}\n.div-error {\n  display: flex;\n  justify-content: center;\n}\n.text-error {\n  color: red !important;\n  font-weight: bold;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23379,7 +23382,17 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _vm._m(1),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "card-row" }, [
+          _c("div", { staticClass: "col border py-2" }, [
+            _c("p", [_vm._v("Case & checklist info")]),
+            _vm._v(" "),
+            _c("p", { domProps: { textContent: _vm._s(_vm.userObj) } }),
+          ]),
+          _vm._v(" "),
+          _vm._m(1),
+        ]),
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-footer" }, [
         _c(
@@ -23548,16 +23561,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "card-row" }, [
-        _c("div", { staticClass: "col border py-2" }, [
-          _c("p", [_vm._v("Case & checklist info")]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col border py-2" }, [
-          _c("p", [_vm._v("CL info")]),
-        ]),
-      ]),
+    return _c("div", { staticClass: "col border py-2" }, [
+      _c("p", [_vm._v("CL info")]),
     ])
   },
 ]
@@ -24397,7 +24402,9 @@ var render = function () {
                             _vm._v(" "),
                             _c("td", {
                               domProps: {
-                                textContent: _vm._s(_vm.userObj.last_name),
+                                textContent: _vm._s(
+                                  _vm.userObj.contact_details.lastname
+                                ),
                               },
                             }),
                           ]),
@@ -24417,7 +24424,9 @@ var render = function () {
                             _vm._v(" "),
                             _c("td", {
                               domProps: {
-                                textContent: _vm._s(_vm.userObj.mobile_phone),
+                                textContent: _vm._s(
+                                  _vm.userObj.contact_details.mobile
+                                ),
                               },
                             }),
                           ]),
@@ -24448,7 +24457,7 @@ var render = function () {
                             _c("td", {
                               domProps: {
                                 textContent: _vm._s(
-                                  _vm.userObj.secondary_email
+                                  _vm.userObj.contact_details.secondaryemail
                                 ),
                               },
                             }),
@@ -24637,49 +24646,6 @@ var render = function () {
                                 _c("div", { staticClass: "form-group" }, [
                                   _c(
                                     "label",
-                                    { attrs: { for: "inputEmail" } },
-                                    [_vm._v("Email address")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.email,
-                                        expression: "email",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "email",
-                                      id: "inputEmail",
-                                      "aria-describedby": "emailHelp",
-                                      placeholder: "Enter email",
-                                    },
-                                    domProps: { value: _vm.email },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.email = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.email
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [_vm._v(_vm._s(_vm.errors.email))]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
                                     { attrs: { for: "inputEmail2" } },
                                     [_vm._v("Secondary email")]
                                   ),
@@ -24719,137 +24685,6 @@ var render = function () {
                                         [
                                           _vm._v(
                                             _vm._s(_vm.errors.secondary_email)
-                                          ),
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c("label", { attrs: { for: "inputName" } }, [
-                                    _vm._v("Name"),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.name,
-                                        expression: "name",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputName",
-                                      "aria-describedby": "textHelp",
-                                      placeholder: "Type your name or names",
-                                    },
-                                    domProps: { value: _vm.name },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.name = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.name
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [_vm._v(_vm._s(_vm.errors.name))]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "inputLastName" } },
-                                    [_vm._v("Last name")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.last_name,
-                                        expression: "last_name",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputLastName",
-                                      "aria-describedby": "textHelp",
-                                      placeholder: "Ingrese primer apellido",
-                                    },
-                                    domProps: { value: _vm.last_name },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.last_name = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.last_name
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [_vm._v(_vm._s(_vm.errors.last_name))]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "inputNationalities" } },
-                                    [_vm._v("Nationalities")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.nationalities,
-                                        expression: "nationalities",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputNationalities",
-                                      "aria-describedby": "textHelp",
-                                      placeholder: "Ingrese primer apellido",
-                                    },
-                                    domProps: { value: _vm.nationalities },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.nationalities = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.nationalities
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(_vm.errors.nationalities)
                                           ),
                                         ]
                                       )
@@ -24902,379 +24737,6 @@ var render = function () {
                                         ]
                                       )
                                     : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "inputphone" } },
-                                    [_vm._v("Phone")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.phone,
-                                        expression: "phone",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputphone",
-                                      "aria-describedby": "textHelp",
-                                      placeholder: "Type your home phone",
-                                    },
-                                    domProps: { value: _vm.phone },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.phone = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.phone
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [_vm._v(_vm._s(_vm.errors.phone))]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c("label", { attrs: { for: "inputfax" } }, [
-                                    _vm._v("Fax"),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.fax,
-                                        expression: "fax",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputfax",
-                                      "aria-describedby": "textHelp",
-                                      placeholder: "Type your fax number",
-                                    },
-                                    domProps: { value: _vm.fax },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.fax = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.fax
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [_vm._v(_vm._s(_vm.errors.fax))]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "inputSecondLastName" } },
-                                    [_vm._v("Watsapp number")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.watsapp_no,
-                                        expression: "watsapp_no",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputSecondLastName",
-                                      "aria-describedby": "textHelp",
-                                      placeholder:
-                                        "Type number that user for wasapp",
-                                    },
-                                    domProps: { value: _vm.watsapp_no },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.watsapp_no = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.watsapp_no
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [_vm._v(_vm._s(_vm.errors.watsapp_no))]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "inputCareAgent" } },
-                                    [_vm._v("Care agent")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.care_agent,
-                                        expression: "care_agent",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputCareAgent",
-                                      "aria-describedby": "textHelp",
-                                      placeholder:
-                                        "Type number that user for wasapp",
-                                    },
-                                    domProps: { value: _vm.care_agent },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.care_agent = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.care_agent
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [_vm._v(_vm._s(_vm.errors.care_agent))]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-check" }, [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.email_out_op,
-                                        expression: "email_out_op",
-                                      },
-                                    ],
-                                    staticClass: "form-check-input",
-                                    attrs: {
-                                      type: "checkbox",
-                                      id: "statusCheck",
-                                    },
-                                    domProps: {
-                                      checked: Array.isArray(_vm.email_out_op)
-                                        ? _vm._i(_vm.email_out_op, null) > -1
-                                        : _vm.email_out_op,
-                                    },
-                                    on: {
-                                      change: function ($event) {
-                                        var $$a = _vm.email_out_op,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = null,
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              (_vm.email_out_op = $$a.concat([
-                                                $$v,
-                                              ]))
-                                          } else {
-                                            $$i > -1 &&
-                                              (_vm.email_out_op = $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1)))
-                                          }
-                                        } else {
-                                          _vm.email_out_op = $$c
-                                        }
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass: "form-check-label",
-                                      attrs: { for: "statusCheck" },
-                                    },
-                                    [_vm._v("Email out option ?")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "small",
-                                    {
-                                      staticClass: "form-text text-muted",
-                                      attrs: { id: "textHelp" },
-                                    },
-                                    [_vm._v("Now email out is :")]
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "row" }, [
-                                  _c("div", { staticClass: "col" }, [
-                                    _c("div", { staticClass: "form-check" }, [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.has_passport,
-                                            expression: "has_passport",
-                                          },
-                                        ],
-                                        staticClass: "form-check-input",
-                                        attrs: {
-                                          type: "checkbox",
-                                          id: "passportCheck",
-                                        },
-                                        domProps: {
-                                          checked: Array.isArray(
-                                            _vm.has_passport
-                                          )
-                                            ? _vm._i(_vm.has_passport, null) >
-                                              -1
-                                            : _vm.has_passport,
-                                        },
-                                        on: {
-                                          change: function ($event) {
-                                            var $$a = _vm.has_passport,
-                                              $$el = $event.target,
-                                              $$c = $$el.checked ? true : false
-                                            if (Array.isArray($$a)) {
-                                              var $$v = null,
-                                                $$i = _vm._i($$a, $$v)
-                                              if ($$el.checked) {
-                                                $$i < 0 &&
-                                                  (_vm.has_passport =
-                                                    $$a.concat([$$v]))
-                                              } else {
-                                                $$i > -1 &&
-                                                  (_vm.has_passport = $$a
-                                                    .slice(0, $$i)
-                                                    .concat($$a.slice($$i + 1)))
-                                              }
-                                            } else {
-                                              _vm.has_passport = $$c
-                                            }
-                                          },
-                                        },
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass: "form-check-label",
-                                          attrs: { for: "passportCheck" },
-                                        },
-                                        [
-                                          _vm._v(
-                                            "Has passport\n                      "
-                                          ),
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "small",
-                                        {
-                                          staticClass: "form-text text-muted",
-                                          attrs: { id: "textHelp" },
-                                        },
-                                        [
-                                          _vm._v(
-                                            "Actual status :\n                      "
-                                          ),
-                                        ]
-                                      ),
-                                    ]),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col" }, [
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c(
-                                        "label",
-                                        {
-                                          attrs: {
-                                            for: "inputPassportExpiration",
-                                          },
-                                        },
-                                        [_vm._v("Passport expiration date")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.watsapp_no,
-                                            expression: "watsapp_no",
-                                          },
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "date",
-                                          id: "inputPassportExpiration",
-                                          "aria-describedby": "textHelp",
-                                          placeholder:
-                                            "Type number that user for wasapp",
-                                        },
-                                        domProps: { value: _vm.watsapp_no },
-                                        on: {
-                                          input: function ($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.watsapp_no = $event.target.value
-                                          },
-                                        },
-                                      }),
-                                      _vm._v(" "),
-                                      _vm.submitted && _vm.errors.watsapp_no
-                                        ? _c(
-                                            "small",
-                                            {
-                                              staticClass:
-                                                "text-danger font-14",
-                                            },
-                                            [
-                                              _vm._v(
-                                                _vm._s(_vm.errors.watsapp_no)
-                                              ),
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                    ]),
-                                  ]),
                                 ]),
                               ]
                             ),
@@ -37540,7 +37002,7 @@ Vue.compile = compileToFunctions;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"_args":[["axios@0.21.4","C:\\\\Users\\\\Heriberto\\\\Documents\\\\Development\\\\gerCanada\\\\customers-portal"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"C:\\\\Users\\\\Heriberto\\\\Documents\\\\Development\\\\gerCanada\\\\customers-portal","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
+module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"axios@^0.21","name":"axios","escapedName":"axios","rawSpec":"^0.21","saveSpec":null,"fetchSpec":"^0.21"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_shasum":"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575","_spec":"axios@^0.21","_where":"C:\\\\laragon\\\\www\\\\customers-portal","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundleDependencies":false,"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"deprecated":false,"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
 /***/ })
 

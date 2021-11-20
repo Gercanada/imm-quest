@@ -90,11 +90,11 @@
                                 <tbody>
                                     @foreach ($completed_cases as $completed_case)
                                         <tr>
-                                            <td>{{ $active_case->title }}</td>
-                                            <td>{{ $active_case->type }}</td>
-                                            <td>{{ $active_case->status }}</td>
+                                            <td>{{ $completed_case->title }}</td>
+                                            <td>{{ $completed_case->type }}</td>
+                                            <td>{{ $completed_case->status }}</td>
                                             <td>
-                                                <a href="{{ route('show_case', [$active_case->id])}}" type="button"
+                                                <a href="{{ route('show_case', [$completed_case->id])}}" type="button"
                                                     class="btn btn-outline-success btn-rounded">
                                                     <i class="fas fa-eye"></i>
                                                 </a>

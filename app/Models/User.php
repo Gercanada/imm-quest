@@ -21,14 +21,14 @@ class User extends Authenticatable
         'name',
         'last_name',
         'nationalities',
-        'mobile_phone',
+        //'mobile_phone',
         'lead_source',
         'watsapp_no',
         'refered_by',
         'email',
         'assigned_to',
         'qualified_for',
-        'secondary_email',
+        //'secondary_email',
         'email_out_op',
         'lead_status_id',
         'lead_stage_id',
@@ -63,4 +63,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     public function contact_address(){
+         return $this->belongsTo(UserAddres::class, 'contactaddressid');
+     }
+     public function contact_details(){
+         return $this->hasOne(UserDetail::class, 'contactid');
+     }
+     public function contact_cf(){
+         return $this->hasOne(UserCF::class, 'contactid');
+     }
+     public function contact_sub_details(){
+         return $this->hasOne(UserSubDetail::class, 'contactsubscriptionid');
+     }
 }
