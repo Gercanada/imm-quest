@@ -2966,6 +2966,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
+var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2984,7 +2985,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]").content
         }
       },
-      id: "",
+      id: urlParams[4],
       user_id: "",
       checklist_id: "",
       title: "",
@@ -3057,12 +3058,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return");
 
               case 6:
-                console.log("done here");
                 this.$refs.myVueDropzone.processQueue();
                 me = this;
                 axios.post("/drive/upload", {
-                  file: file,
-                  id: data.id
+                  file: file
                 }).then(function (response) {
                   console.log({
                     response: response
@@ -3073,7 +3072,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.table(error);
                 });
 
-              case 10:
+              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -3093,11 +3092,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                formData.append("id", this.id);
                 formData.append("email", this.email);
                 formData.append("message", this.message);
                 formData.append("recipient", this.recipient);
 
-              case 3:
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -3124,12 +3124,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     ////////////////////////
-    userFiles: function userFiles(id) {
+    userFiles: function userFiles() {
+      /*  const urlParams = window.location.pathname.split("/");
+      console.log(urlParams); */
       var me = this;
       axios.post("/cl-item", {
-        id: 3
+        id: this.id
       }).then(function (response) {
-        console.log("here");
         me.userObj = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -23402,7 +23403,7 @@ var render = function () {
             attrs: { type: "button" },
             on: {
               click: function ($event) {
-                return _vm.openModal("documents", "store")
+                return _vm.openModal("documents", "store", _vm.userObj.id)
               },
             },
           },

@@ -8,6 +8,7 @@ use Google_Service_Drive;
 use Google_Service_Drive_DriveFile;
 
 use App\Models\CLItem;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -18,6 +19,7 @@ class GoogleDriveController extends Controller
 {
 
     private $drive;
+    private $statusCode;
     public function __construct(Google_Client $client)
     {
         $this->middleware(function ($request, $next) use ($client) {
@@ -68,60 +70,68 @@ class GoogleDriveController extends Controller
 
     public function upload(Request $request)
     {
-        return $request;
-        if ($request->file('file')) {
+        try {
+            if ($request->file('file')) {
 
-            $files = $request->file('file');
-            if (!is_array($files)) {
-                $files = [$files];
-            }
+                $files = $request->file('file');
+                if (!is_array($files)) {
+                    $files = [$files];
+                }
 
-            $fileList = array();
+                $fileList = array();
 
-            /*  $fileMetadata = new Google_Service_Drive_DriveFile(array(
-                'name' => 'GerFiles',
-                'parents' => array(env('GOOGLE_DRIVE_FOLDER_ID')),
-                'mimeType' => 'application/vnd.google-apps.folder'
-            ));
-
-            $folderId = $this->drive->files->create($fileMetadata, array(
-                'fields' => 'id'
-            )); */
-
-            for ($i = 0; $i < count($files); $i++) {
-
-                $fileArray = array();
-
-                $file = $files[$i];
-                $filename = $file->getClientOriginalName();
-
-                $fileMetadata = new Google_Service_Drive_DriveFile(array(
-                    'name' => $filename,
-                    // /'parents' => array($folderId)
+                /*  $fileMetadata = new Google_Service_Drive_DriveFile(array(
+                    'name' => 'GerFiles',
+                    'parents' => array(env('GOOGLE_DRIVE_FOLDER_ID')),
+                    'mimeType' => 'application/vnd.google-apps.folder'
                 ));
 
-                $contentFile = file_get_contents($file);
-
-                $fileId = $this->drive->files->create($fileMetadata, array(
-                    'data' => $contentFile,
-                    //'mimeType' => 'image/jpeg',
-                    'uploadType' => 'multipart',
+                $folderId = $this->drive->files->create($fileMetadata, array(
                     'fields' => 'id'
-                ));
+                )); */
 
-                $fileArray[] = $fileId;
+                for ($i = 0; $i < count($files); $i++) {
 
-                array_push($fileList, $fileArray);
+                    $fileArray = array();
+
+                    $file = $files[$i];
+                    $filename = $file->getClientOriginalName();
+
+                    $fileMetadata = new Google_Service_Drive_DriveFile(array(
+                        'name' => $filename,
+                        'parents' => '1oJB03Sz59I-JvjoxisTgtlBCAp6OOawn'
+                        // 'parents' => array($folderId)
+                    ));
+
+                    $contentFile = file_get_contents($file);
+
+                    $fileId = $this->drive->files->create($fileMetadata, array(
+                        'data' => $contentFile,
+                        //'mimeType' => 'image/jpeg',
+                        'uploadType' => 'multipart',
+                        'fields' => 'id'
+                    ));
+
+                    $fileArray[] = $fileId;
+                    array_push($fileList, $fileArray[0]->id);
+                }
+
+
+                $updatedItem = CLItem::Where('id', $request->id)->Update([
+                    'cli_file'=> implode(',', $fileList)
+                ]);
+
+
+                //$clitem = CLItem::where('id', $request->id)->firstOrFail();
+                //CLItem::where('id', $request->id)->update('cli_file', implode(',', $fileList));
+
+                //cli_file
+
+                return response()->json($updatedItem);
             }
-
-            //$clitem = CLItem::where('id', $id)->firstOrFail();
-            //CLItem::where('id', $request->id)->update('cli_file', $fileList);
-
-            //cli_file
-
-            return $fileList;
-        } else {
-            return ' oh no';
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error de autenticacion, intente iniciar sesion de nuevo', 401]);
+            //return redirect()->route('logout', ['id'=>Auth::user()->id]);
         }
     }
 

@@ -25,7 +25,7 @@
       <button
         type="button"
         class="btn btn-primary fas fa-edit float-right"
-        @click="openModal('documents', 'store')"
+        @click="openModal('documents', 'store', userObj.id)"
       >
         New document
       </button>
@@ -114,6 +114,7 @@
 <script>
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
+const urlParams= window.location.pathname.split("/");
 
 export default {
   data() {
@@ -136,7 +137,7 @@ export default {
         },
       },
 
-      id: "",
+      id: urlParams[4],
       user_id: "",
       checklist_id: "",
 
@@ -182,15 +183,12 @@ export default {
         console.log(this.errors);
         return;
       }
-
-      console.log("done here");
-
       this.$refs.myVueDropzone.processQueue();
 
       let me = this;
 
       axios
-        .post("/drive/upload", { file, id: data.id })
+        .post("/drive/upload", { file})
         .then(function (response) {
           console.log({ response });
           me.closeModal();
@@ -201,6 +199,7 @@ export default {
         });
     },
     sendMessage: async function (files, xhr, formData) {
+      formData.append("id", this.id);
       formData.append("email", this.email);
       formData.append("message", this.message);
       formData.append("recipient", this.recipient);
@@ -223,12 +222,15 @@ export default {
     },
 
     ////////////////////////
-    userFiles(id) {
+    userFiles() {
+      /*  const urlParams = window.location.pathname.split("/");
+      console.log(urlParams); */
+
+
       let me = this;
       axios
-        .post("/cl-item", { id: 3 })
+        .post("/cl-item", { id:this.id })
         .then(function (response) {
-          console.log("here");
           me.userObj = response.data;
         })
         .catch(function (error) {
