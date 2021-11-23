@@ -24404,7 +24404,9 @@ var render = function () {
                             _c("td", {
                               domProps: {
                                 textContent: _vm._s(
-                                  _vm.userObj.contact_details.lastname
+                                  _vm.userObj.contact_details
+                                    ? _vm.userObj.contact_details.lastname
+                                    : ""
                                 ),
                               },
                             }),
@@ -24426,7 +24428,9 @@ var render = function () {
                             _c("td", {
                               domProps: {
                                 textContent: _vm._s(
-                                  _vm.userObj.contact_details.mobile
+                                  _vm.userObj.contact_details
+                                    ? _vm.userObj.contact_details.mobile
+                                    : ""
                                 ),
                               },
                             }),
@@ -24458,7 +24462,9 @@ var render = function () {
                             _c("td", {
                               domProps: {
                                 textContent: _vm._s(
-                                  _vm.userObj.contact_details.secondaryemail
+                                  _vm.userObj.contact_details
+                                    ? _vm.userObj.contact_details.secondaryemail
+                                    : ""
                                 ),
                               },
                             }),

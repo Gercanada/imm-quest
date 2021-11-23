@@ -15,6 +15,7 @@ use App\Http\Controllers\CLItemController;
 use App\Http\Controllers\GoogleDriveController;
 
 use App\Http\Controllers\ViewController;
+use App\Http\Controllers\VtigerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +54,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/cl-item', [CLItemController::class, 'show'])->middleware(['auth']);
 
+    // vtiger
 
+    Route::get('/vtiger', [VtigerController::class, 'index']);
+    Route::get('/vtiger/{type}', [VtigerController::class, 'getType']);
+    Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes');
 });
 
 

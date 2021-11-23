@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9751d73c6e5427739b966ed9ab5571d1",
+    "content-hash": "47f8c9da80dfa9c759e218a827415963",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1185,6 +1185,55 @@
                 }
             ],
             "time": "2021-10-06T17:43:30+00:00"
+        },
+        {
+            "name": "jbtje/vtiger-laravel",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JBtje/vtiger-laravel.git",
+                "reference": "419b3a1aefa8c5d64866da04f875e0dfd996630a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JBtje/vtiger-laravel/zipball/419b3a1aefa8c5d64866da04f875e0dfd996630a",
+                "reference": "419b3a1aefa8c5d64866da04f875e0dfd996630a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.4",
+                "php": "^7.4|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JBtje\\VtigerLaravel\\VtigerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JBtje\\VtigerLaravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "JBtje",
+                    "email": "jbtjee@outlook.com"
+                }
+            ],
+            "description": "A vtiger api wrapper",
+            "support": {
+                "issues": "https://github.com/JBtje/vtiger-laravel/issues",
+                "source": "https://github.com/JBtje/vtiger-laravel/tree/v0.1.0"
+            },
+            "time": "2021-11-01T10:46:56+00:00"
         },
         {
             "name": "laravel/framework",

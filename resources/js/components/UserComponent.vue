@@ -46,7 +46,7 @@
                     <tr></tr>
                     <tr>
                       <th>Last name</th>
-                      <td v-text="userObj.contact_details.lastname"></td>
+                      <td v-text="userObj.contact_details ? userObj.contact_details.lastname : ''"></td>
                     </tr>
                     <tr>
                       <th>Nationalities</th>
@@ -54,7 +54,7 @@
                     </tr>
                     <tr>
                       <th>Mobile phone</th>
-                      <td v-text="userObj.contact_details.mobile"></td>
+                      <td v-text="userObj.contact_details ? userObj.contact_details.mobile :''"></td>
                     </tr>
                     <tr>
                       <th>Watsapp number</th>
@@ -66,7 +66,7 @@
                     </tr>
                     <tr>
                       <th>Secondary email</th>
-                      <td v-text="userObj.contact_details.secondaryemail"></td>
+                      <td v-text="userObj.contact_details ? userObj.contact_details.secondaryemail : ''"></td>
                     </tr>
                     <tr>
                       <th>Lead source</th>
