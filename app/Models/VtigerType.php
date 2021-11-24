@@ -12,6 +12,7 @@ class VtigerType extends Model
     protected $primary = 'name';
 
     protected $fillable = [
+        'user_id',
         'name',
         'is_active'
     ];

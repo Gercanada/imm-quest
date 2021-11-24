@@ -15,6 +15,7 @@ class CreateVtigerTypesTable extends Migration
     {
         Schema::create('vtiger_types', function (Blueprint $table) {
             $table->id();
+            $table->uuid('user_id');
             $table->string('name')->required();
             $table->boolean('is_active')->default(false);
             $table->timestamps();

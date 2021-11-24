@@ -1,36 +1,48 @@
 @extends('layouts.app')
+
 @section('title')
     Enable/Disable modules
 @endsection
 
-@section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        Enable or disable tools
-                    </div>
-                    <form method="POST" action="{{ route('configTypes') }}">
-                        @csrf
-                        <div class="card-body">
-                            @foreach ($vt_types as $type)
-                                <div class="form-group">
-                                    <input type="checkbox" id="typeID{{ $type->name }}" name="{{ $type->name }}"
-                                        class="chk-col-indigo material-inputs" value="{{ $type->name }}"
+@section('styles')
+    <link rel="stylesheet"
+        href="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css">
 
-                                        @if ($type->active == 0) checked @endif
-                                       >
-                                    <label for="typeID{{ $type->name }}">{{ $type->name }}</label>
-                                </div>
-                            @endforeach
-                        </div>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-primary" type="submit"><i class=" fas fa-save"></i> Save</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <link rel="stylesheet" type="text/css" --}}
+        href="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/css/select2.min.css">
+
+    <link href="/templates/theme-forest-admin-pro/main/admin-pro/dist/css/style.min.css" rel="stylesheet">
+@endsection
+
+@section('content')
+    <user-portal-tools></user-portal-tools>
+@endsection
+
+@section('scripts')
+    <!-- apps -->
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.min.js"></script>
+    {{-- <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.stylish-menu.js"></script> --}}
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <!--Menu sidebar -->
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/sidebar-stylish.js"></script>
+    <!-- This Page JS -->
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.full.min.js">
+    </script>
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js"></script>
+
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.full.min.js">
+    </script>
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.min.js">
+    </script>
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
+    </script>
+
+    <script
+        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/datatables/media/js/jquery.dataTables.min.js">
+    </script>
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/datatable/custom-datatable.js"></script>
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/datatable/datatable-basic.init.js">
+    </script>
+
 @endsection

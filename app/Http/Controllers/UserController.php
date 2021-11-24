@@ -13,12 +13,13 @@ use Exception;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Request $request){
+        $users = User::all();
+        return $users;
+    }
+
+    public function profile()
     {
         return view('users.index');
     }

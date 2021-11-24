@@ -27,6 +27,7 @@
         href="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jvectormap/jquery-jvectormap.css">
     <link rel="stylesheet" href="/templates/theme-forest-admin-pro/main/admin-pro/dist/css/style.min.css">
 
+    @yield('styles')
     <!-- Vector CSS -->
     <!-- Custom CSS -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -124,8 +125,17 @@
     <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/dashboards/dashboard2.js"></script>
 
     <!-- All scripts -->
+
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.full.min.js">
+    </script>
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.min.js">
+    </script>
+    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
+    </script>
+
     <script src="/js/app.js"></script>
     @yield('scripts')
+
 
 
 

@@ -39,10 +39,15 @@ Route::get('/login/google', [LoginController::class, 'redirectToProvider'])->nam
 Route::get('/login/google/callback', [LoginController::class, 'handleProviderCallback']);
 
 
+//Route::group(['middleware' => ['auth', 'permission']], function () {  //Routes for CP Admin
+    Route::get('/users', [UserController::class,"index"]);
+
+//});
+
+
 Route::middleware('auth')->group(function () {
     //user
-
-    Route::get('/profile', [UserController::class, 'index'])->name('profile');
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('/account', [UserController::class, 'account']);
     Route::post('/account', [UserController::class, 'update']);
 
@@ -55,10 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/cl-item', [CLItemController::class, 'show'])->middleware(['auth']);
 
     // vtiger
-
-    Route::get('/vtiger', [VtigerController::class, 'index']);
+    Route::get('/user_types_access', [VtigerController::class, 'index']);
     Route::get('/vtiger/{type}', [VtigerController::class, 'getType']);
-    Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes');
 });
 
 
