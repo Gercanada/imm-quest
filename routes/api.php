@@ -19,5 +19,7 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 }); */
 
-Route::get('/vtiger/types/{user_id}', [VtigerController::class, "types"]);
-Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes');
+
+//Route group admin
+/* Route::get('/vtiger/types/{user_id}', [VtigerController::class, "types"]);
+Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes'); */

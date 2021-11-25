@@ -34,7 +34,8 @@
                                         alt="Income" /></div>
                                 <div class="align-self-center">
                                     <h6 class="text-muted mt-2 mb-0">Active checklists</h6>
-                                    <h2 class="info">{{ $checklists }}</h2>
+                                    {{-- <h2 class="info">{{ $checklists }}</h2> --}}
+                                    <h2 class="info">{{ $vt_checklists }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +53,8 @@
                                         alt="Income" /></div>
                                 <div class="align-self-center">
                                     <h6 class="text-muted mt-2 mb-0">Pending items</h6>
-                                    <h2 class="warning">{{ $cl_items }}</h2>
+                                   {{--  <h2 class="warning">{{ $cl_items }}</h2> --}}
+                                    <h2 class="warning">{{ $vt_cl_items }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +72,7 @@
                                         alt="Income" /></div>
                                 <div class="align-self-center">
                                     <h6 class="text-muted mt-2 mb-0">Active cases</h6>
-                                    <h2 class="success">{{ $active_cases }}</h2>
+                                    <h2 class="success">{{ $vt_active_cases }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -92,13 +94,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($cases as $case)
+                            @foreach ($vtCases as $case)
+                                <tr id="1" class="gradeX">
+                                    <td> <a href="{{ route('show_case', [$case->id])}}"> {{ $case->ticket_title }}</a></td>
+                                    <td>{{ $case->ticketcategories }} </td>
+                                    <td>{{ $case->ticketstatus }} </td>
+                                </tr>
+                            @endforeach
+                            {{-- @foreach ($cases as $case)
                                 <tr id="1" class="gradeX">
                                     <td> <a href="{{ route('show_case', [$case->id])}}"> {{ $case->title }}</a></td>
                                     <td>{{ $case->type }} </td>
                                     <td>{{ $case->status }} </td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
 
                         <tfoot>

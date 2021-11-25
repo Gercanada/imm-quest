@@ -4,34 +4,70 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use JBtje\VtigerLaravel\Vtiger;
 
 use App\Models\CPCase;
 use App\Models\Checklist;
 use App\Models\CLItem;
+use App\Models\VtigerType;
 
 class DashboardController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $user_id = Auth::user()->id;
+        $user = Auth::user();
+        $user_id = $user->id;
 
-        $cases = CPCase::where('user_id', $user_id)->get();
+        ///vamo a ver
+        $vtiger = new Vtiger();
+        //Get contact data of this user
+        $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
+        $contact = $vtiger->search($userQuery);
 
-        $checklists = Checklist::where('user_id', $user_id)
-            ->where('completed', 100)->get()->count();
+        //Cases
+        $casesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->result[0]->id);
+        $vtCases = $vtiger->search($casesQuery)->result;
+        $vtCasesIdArr = [];
 
-        $cl_items = CLItem::where('user_id', $user_id)
-            ->where('status', 0)
-            ->orderBy('created_at','desc')
-            ->get()->count();
+        foreach ($vtCases as $case) {
+            array_push($vtCasesIdArr, $case->id);
+        }
+        array_push($vtCasesIdArr, '17x3558'); //only test
+        //Count cases
+        $vt_active_cases =  count(array_keys($vtCases, ('Closed' || 'Cancelled' || 'Completed')));
+        //['Closed','Cancelled','Completed']
 
+        //Count CheckLists
+        $checklistsQuery = DB::table('Checklist')->select('*')->whereIn('cf_1199', $vtCasesIdArr);
+        $vtChecklists    = $vtiger->search($checklistsQuery);
+        $vt_checklists   = count(array_keys($vtChecklists->result));
+        // count clitems
+        $vtCLItemIdArr = [];
+        $vtCLItemNoArr = [];
 
-        $active_cases = $cases->where('status', '1')->count();
+        foreach ($vtChecklists->result as $clist) {
+            if ($clist->id != "") {
+                array_push($vtCLItemIdArr, $clist->id);
+            }
+        }
+        foreach ($vtChecklists->result as $clist) {
+            if ($clist->checklistno != "") {
+                array_push($vtCLItemNoArr, $clist->checklistno);
+            }
+        }
+        //return $vtCLItemNoArr;
 
-      /*   return response()->json(
-            [['cases' => $cases], ['checklists' => $checklists], ['cl_items' => $cl_items], ['active_cases' => $active_cases]]
-        );
-         */
-        return view('dashboard', compact('active_cases', 'cases', 'checklists', 'cl_items'));
+        $clitemsQuery = DB::table('CLItems')->select('*')->whereIn('cf_1216', $vtCLItemIdArr)->orWhereIn('cf_1217', $vtCasesIdArr);
+        $vtCLItems    = $vtiger->search($clitemsQuery);
+        $vt_cl_items = count(array_keys($vtCLItems->result));
+
+        return view('dashboard', compact('vtCases', 'vt_active_cases', 'vt_checklists', 'vt_cl_items'));
     }
 }

@@ -11,14 +11,15 @@
                             alt="user">
                         <span class="hide-menu">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</span>
                     </a>
+
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
-                            <a href="{{route('profile')}}" class="sidebar-link p-0">
+                            <a href="{{ route('profile') }}" class="sidebar-link p-0">
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu"> My Profile </span>
                             </a>
                         </li>
-                       {{--  <li class="sidebar-item">
+                        {{-- <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link p-0">
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu"> My Balance </span>
@@ -38,10 +39,13 @@
                         </li>
                     </ul>
                 </li>
+                {{--  --}}
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                         href="{{ route('dashboard') }}" aria-expanded="false"><i data-feather="home"
                             class="feather-icon"></i>
-                        <span class="hide-menu">Dashboard</span></a></li>
+                        <span class="hide-menu">Dashboard</span></a>
+                </li>
+
 
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                         href="{{ route('cases') }}" aria-expanded="false"><i data-feather="briefcase"
@@ -90,6 +94,7 @@
                     </form>
                 </li>
             </ul>
+           {{--  <user-aside-tools></user-aside-tools> --}}
         </nav>
         <!-- End Sidebar navigation -->
     </div>

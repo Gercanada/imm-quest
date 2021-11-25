@@ -2,51 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use JBtje\VtigerLaravel\Vtiger;
 use App\Models\VtigerType;
+use Exception;
 
 class VtigerController extends Controller
 {
+    /* public function __construct()
+    {
+        $this->middleware('auth');
+    } */
+
     public function index()
     {
-        // Get all Vtiger types
-        /*  $vtiger = new Vtiger();
-        $data = $vtiger->listTypes();
-
-        //List types enabled on laravel
-        $CPTypes = VtigerType::all();
-        $enableTipeArr = array();
-
-        foreach ($CPTypes as $enabledType) {
-            $typeArray = $enabledType->name;
-            array_push($enableTipeArr, $typeArray);
-        }
-        // returns enableTipeArr (enabled types)
-
-        $types = $data->result->types;
-
-        //$enabled_types = array();
-        $vt_types = array();
-        foreach ($types as $type) {
-            $enabledArr = array();
-
-            if (in_array($type, $enableTipeArr)) {
-                $enabledObj = (object) array('name' => $type, 'active' => 1);
-                array_push($vt_types, $enabledObj);
-            } else {
-                $enabledObj = (object) array('name' => $type, 'active' => 1);
-                array_push($vt_types, $enabledObj);
-            }
-        } */
-
-        return view('admin.settings'/* , compact('vt_types') */);
+        return view('admin.settings');
     }
 
     public function types(Request $request, $user_id)
     {
-
-        //return $user_id;
         // Get all Vtiger types
         $vtiger = new Vtiger();
         $data = $vtiger->listTypes();
@@ -64,12 +41,9 @@ class VtigerController extends Controller
         // returns enableTipeArr (enabled types)
 
         $types = $data->result->types;
-
-        //$enabled_types = array();
         $vt_types = array();
         foreach ($types as $type) {
-            $enabledArr = array();
-
+            //$enabledArr = array();
             if (in_array($type, $enableTipeArr)) {
                 $enabledObj = (object) array('name' => $type, 'active' => 1);
                 array_push($vt_types, $enabledObj);
@@ -78,11 +52,8 @@ class VtigerController extends Controller
                 array_push($vt_types, $enabledObj);
             }
         }
-
         return $vt_types;
     }
-
-
 
 
     public function getType(Request $request, $type)
@@ -94,30 +65,75 @@ class VtigerController extends Controller
 
     public function configTypes(Request $request)
     {
+        try {
 
-        $requestedTypes = $request->object;
-
-        $vtiger = new Vtiger();
-        $data = $vtiger->listTypes();
-
-        $types = $data->result->types;
-        $beDeleted  = [];
-
-        foreach ($types as $type) {
-            if (in_array($type, $requestedTypes)) {
-                VtigerType::updateOrCreate(
-                    ['name' => $type],
-                    [
-                        'user_id' => $request->id,
-                        'is_active' => true
-                    ]
-                );
-            } else {
-                $beDeleted = VtigerType::Where($type)->get();
-                //$beDeleted = VtigerType::Where('name', $type)/* ->where('user_id', $request->id) */->get();
+            if($request->vtid){
+              $user= User::where('id', $request->id)->firstOrFail();
+              $user->vtiger_contact_id = $request->vtid;
+              $user->save();
             }
-        }
 
-        return $beDeleted;
+            $requestedTypes = $request->object;
+            $vtiger = new Vtiger();
+            $data = $vtiger->listTypes();
+
+            $types = $data->result->types;
+            $beDeleted  = [];
+
+            $beDeleted = VtigerType::where("user_id", $request->id)->get();
+
+            $namesArr = [];
+            foreach ($beDeleted as $del) {
+                array_push($namesArr, $del->name);
+            }
+
+            foreach ($types as $type) {
+                if (in_array($type, $requestedTypes)) {
+                    VtigerType::updateOrCreate(
+                        ['name' => $type],
+                        [
+                            'user_id' => $request->id,
+                            'is_active' => true
+                        ]
+                    );
+                } else {
+
+                    foreach ($namesArr as $name) {
+                        if (!in_array($name, $requestedTypes)) {
+                            VtigerType::where('name', $name)->delete();
+                        }
+                    }
+                }
+            }
+            return response()->json('ok', 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e], 500);
+        }
+    }
+
+    public function userTools()
+    {
+
+
+        $user_id = Auth::user()->id;
+        $types = VtigerType::where('user_id', $user_id)->get();
+
+        $nameTypes = [];
+        foreach ($types as $type) {
+            array_push($nameTypes, $type->name);
+        }
+        return $nameTypes;
+    }
+
+    public function goType($type)
+    {
+
+        // apply permissions
+        $vtiger = new Vtiger();
+
+        $query = DB::table($type)->select('*');
+        // $query = DB::table($type)->select('id', 'firstname', 'lastname')->where('firstname', 'John');
+        $data = $vtiger->search($query);
+        return $data;
     }
 }

@@ -1,25 +1,28 @@
 @extends('layouts.app')
 
 @section('title')
-    Case [001]
+    {{ $case->ticket_title }}
 @endsection
 
 
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Case {{$case->title}}</h4>
+            <h4 class="card-title">Case {{ $case->ticket_title }}</h4>
             <h6 class="card-subtitle">Some info abouth this case as read only</h6>
 
             <ul class="nav nav-tabs nav-bordered mb-3 customtab">
                 @foreach ($checklists as $count => $checklist)
-                    <li class="nav-item">
-
-                        <a href="#tab_{{ $checklist->id }}" data-toggle="tab" @if ($count == 0)  aria-expanded="true" class="nav-link active" @else aria-expanded="false" class="nav-link" @endif>
-                            <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
-                            <span class="d-none d-lg-block">{{ $checklist->title }}</span>
-                        </a>
+                    @if ($checklist)
+                        <li class="nav-item">
+                            <a href="#tab_{{ $checklist->id }}" data-toggle="tab" @if ($count == 0) aria-expanded="true" class="nav-link active"
+                            @else aria-expanded="false" class="nav-link"
+                    @endif>
+                    <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
+                    <span class="d-none d-lg-block">{{ $checklist->name }}</span>
+                    </a>
                     </li>
+                @endif
                 @endforeach
             </ul>
 
@@ -52,8 +55,10 @@
                     @else
                         class="tab-pane"
                 @endif
-
-                id="tab_{{ $checklist->id }}">
+                @if ($checklist != null)
+                    id="tab_{{ $checklist->id }}"
+                @endif
+                >
                 <h6 class="card-title mt-5"><i class="mr-1 font-18 mdi mdi-numeric-1-box-multiple-outline"></i>
                     Pending items</h6>
 
@@ -70,14 +75,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($checklist->clitems as $clitem)
-                                        @if ($clitem->status != 'Pending')
+                                    @foreach ($clitems as $clitem)
+                                        @if ($clitem != null && $clitem->cf_1578 != 'Pending')
                                             <tr>
-                                                <td>{{ $clitem->subject }}</td>
-                                                <td>{{ $clitem->required_to }}</td>
+                                                <td>{{ $clitem->name }}</td>
+                                                <td>{{ $clitem->cf_1202 }}</td>
                                                 <td>file uploaded <a href="#" class="btn"><i
                                                             class="fas fa-file"></i></a></td>
-                                                <td>{{ $clitem->help_link }}</td>
+                                                <td>{{ $clitem->cf_1212 }}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -98,13 +103,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($checklist->clitems as $clitem)
-                                    @if ($clitem->status != 'Accepted')
+                                @foreach ($clitems as $clitem)
+                                    @if ($clitem && $clitem->cf_1578 != 'Accepted')
                                         <tr>
-                                            <td>{{ $clitem->subject }}</td>
-                                            <td>{{ $clitem->required_to }}</td>
-                                            <td>{{ $clitem->help_link }}</td>
-                                            <td>{{ $clitem->status }}</td>
+                                            <td>{{ $clitem->name }}</td>
+                                            <td>{{ $clitem->cf_1202 }}</td>
+                                            <td>{{ $clitem->cf_1212 }}</td>
+                                            <td>{{ $clitem->cf_1578 }}</td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -124,12 +129,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($checklist->clitems as $clitem)
-                                    @if ($clitem->status != 'Completed')
+                                @foreach ($clitems as $clitem)
+                                    @if ($clitem && $clitem->cf_1578 != 'Completed')
                                         <tr>
-                                            <td>{{ $clitem->subject }}</td>
-                                            <td>{{ $clitem->status }}</td>
-                                            <td>{{ $clitem->file_name }}</td>
+                                            <td>{{ $clitem->name }}</td>
+                                            <td>{{ $clitem->cf_1578 }}</td>
+                                            <td>{{ $clitem->cf_1970 }}</td>
                                         </tr>
                                     @endif
                                 @endforeach

@@ -41,9 +41,9 @@
                                 <tbody>
                                     @foreach ($active_cases as $active_case)
                                         <tr>
-                                            <td>{{ $active_case->title }}</td>
-                                            <td>{{ $active_case->type }}</td>
-                                            <td>{{ $active_case->status }}</td>
+                                            <td>{{ $active_case->ticket_title }}</td>
+                                            <td>{{ $active_case->ticketcategories }}</td>
+                                            <td>{{ $active_case->ticketstatus }}</td>
                                             <td>
                                                 <a href="{{ route('show_case', [$active_case->id])}}" type="button"
                                                     class="btn btn-outline-success btn-rounded">
@@ -90,9 +90,9 @@
                                 <tbody>
                                     @foreach ($completed_cases as $completed_case)
                                         <tr>
-                                            <td>{{ $completed_case->title }}</td>
-                                            <td>{{ $completed_case->type }}</td>
-                                            <td>{{ $completed_case->status }}</td>
+                                            <td>{{ $completed_case->ticket_title }}</td>
+                                            <td>{{ $completed_case->ticketcategories }}</td>
+                                            <td>{{ $completed_case->ticketstatus }}</td>
                                             <td>
                                                 <a href="{{ route('show_case', [$completed_case->id])}}" type="button"
                                                     class="btn btn-outline-success btn-rounded">

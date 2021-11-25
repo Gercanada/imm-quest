@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'last_name',
         'nationalities',
+        'vtiger_contact_id',
         //'mobile_phone',
         'lead_source',
         'watsapp_no',
@@ -64,16 +65,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-     public function contact_address(){
-         return $this->belongsTo(UserAddres::class, 'contactaddressid');
-     }
-     public function contact_details(){
-         return $this->hasOne(UserDetail::class, 'contactid');
-     }
-     public function contact_cf(){
-         return $this->hasOne(UserCF::class, 'contactid');
-     }
-     public function contact_sub_details(){
-         return $this->hasOne(UserSubDetail::class, 'contactsubscriptionid');
-     }
+    public function contact_address()
+    {
+        return $this->belongsTo(UserAddres::class, 'contactaddressid');
+    }
+    public function contact_details()
+    {
+        return $this->hasOne(UserDetail::class, 'contactid');
+    }
+    public function contact_cf()
+    {
+        return $this->hasOne(UserCF::class, 'contactid');
+    }
+    public function contact_sub_details()
+    {
+        return $this->hasOne(UserSubDetail::class, 'contactsubscriptionid');
+    }
 }

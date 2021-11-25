@@ -40,12 +40,18 @@ Route::get('/login/google/callback', [LoginController::class, 'handleProviderCal
 
 
 //Route::group(['middleware' => ['auth', 'permission']], function () {  //Routes for CP Admin
-    Route::get('/users', [UserController::class,"index"]);
+Route::get('/users', [UserController::class, "index"]);
 
 //});
 
 
 Route::middleware('auth')->group(function () {
+    //vtiger
+    Route::get('/user/tools', [VtigerController::class, "userTools"]);
+    Route::get('/vtiger/types/{user_id}', [VtigerController::class, "types"]);
+    Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes');
+
+    Route::get('/gototype/{type}',[VtigerController::class, 'goType']);
     //user
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('/account', [UserController::class, 'account']);

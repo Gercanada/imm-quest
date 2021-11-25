@@ -30,6 +30,7 @@ Vue.component('login-component', require('./components/LoginComponent.vue').defa
 
 Vue.component('clitem-component', require('./components/CLItemComponent.vue').default);
 Vue.component('uploader-component', require('./components/UploaderComponent.vue').default);
+Vue.component('user-aside-tools', require('./components/UserAsideTools.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

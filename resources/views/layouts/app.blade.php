@@ -64,6 +64,7 @@
         <!-- End Topbar header -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
+        <div id="app">
         {{-- @include('layouts.side-panel') --}}
         @if (Auth::user())
             @include('layouts.aside')
@@ -72,7 +73,6 @@
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
-        <div id="app">
             @if (Auth::user())
                 <div class="page-wrapper">
                     @yield('content')

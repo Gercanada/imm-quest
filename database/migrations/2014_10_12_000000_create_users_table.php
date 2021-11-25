@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();//user image
             $table->string('password')->nullable();
 
+            $table->string('vtiger_contact_id')->nullable();
+
             //contact
             $table->string('phone_country_code')->nullable();
             //$table->string('mobile_phone')->nullable();

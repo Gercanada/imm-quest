@@ -83,10 +83,6 @@
               </div>
 
               <div class="modal-body">
-                <!--  <form
-                      enctype="multipart/form-data"
-                      class="form-horizontal"
-                    ></form> -->
                 <div class="flex flex-wrap -m-2">
                   <div class="p-2 w-full">
                     <div class="relative">
@@ -96,12 +92,16 @@
                             <tr>
                               <th>Name</th>
                               <th>email</th>
+                              <th>Contact ID</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <td v-text="name"></td>
                               <td v-text="email"></td>
+                              <td>
+                                <input type="text"  v-model="vtContactId" />
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -136,9 +136,6 @@
                           </select>
                         </div>
                       </div>
-
-                      <!-- <vue-select class="vue-select1" name="select1">
-                          </vue-select> -->
                     </div>
                   </div>
                 </div>
@@ -174,8 +171,6 @@
 </template>
 
 <script type="text/JavaScript">
-import { ServerTable, ClientTable, Event } from "vue-tables-2";
-
 export default {
   data() {
     return {
@@ -191,7 +186,10 @@ export default {
       modalTitle: "",
       actionType: 0,
       selected: [],
+      newOptions: [],
       user_id: 0,
+
+      vtContactId: 0,
     };
   },
 
@@ -227,7 +225,16 @@ export default {
               this.name = data["name"];
               this.email = data["email"];
               this.actionType = 1;
+              this.vtContactId = data["vtiger_contact_id"];
               this.selectTypes(data["id"]);
+
+              //const newOptions = $(".select2").change().val();
+
+              $(".select2").on("change", function (e) {
+                // console.log($(".select2").val());
+                this.newOptions = $(".select2").val();
+                console.log({ options: this.newOptions });
+              });
             }
           }
       }
@@ -236,7 +243,7 @@ export default {
     selectTypes(user_id) {
       let me = this;
       axios
-        .get(`/api/vtiger/types/${user_id}`)
+        .get(`/vtiger/types/${user_id}`)
         .then(function (response) {
           let selectedArr = [];
           let optionsArr = [];
@@ -260,22 +267,14 @@ export default {
     },
 
     updateTypes() {
-      const newOptions = $(".select2").val();
-
-      for (let i = 0; i < newOptions.length; i++) {
-        if (!this.selected.includes(newOptions[i])) {
-          this.selected.push(newOptions[i]);
-        }
-      }
-
-      /*  console.log($(".select2").val());
-      console.log("here"); */
+      const newOptions = $(".select2").change().val();
+      this.selected = newOptions;
       let me = this;
-      //me.selected.push()
       axios
-        .post("/api/vtiger_config", {
+        .post("/vtiger_config", {
           id: me.user_id,
           object: me.selected,
+          vtid: me.vtContactId,
         })
         .then(function (response) {
           me.closeModal();
