@@ -32,11 +32,15 @@
                             <tbody>
                                 @foreach ($active_checklists as $activeChecklist)
                                     <tr>
-                                        <td>{{ $activeChecklist->case->id }}</td>
-                                        <td>{{ $activeChecklist->title }}</td>
-                                        <td>{{ $activeChecklist->type }}</td>
-                                        <td>{{ $activeChecklist->type }}</td>
-                                        <td><span class="bg-warning">{{ $activeChecklist->completed }}%</span> </td>
+                                        <td>{{ $activeChecklist->cf_1199 }}</td>
+                                        <td>{{ $activeChecklist->name }}</td>
+                                        <td>{{ $activeChecklist->cf_1706 }}</td>
+                                        <td>{{ $activeChecklist->cf_1181 }}</td>
+                                        <td>
+                                            @if ($activeChecklist->cf_2079)
+                                            <span class="bg-warning">{{ $activeChecklist->cf_2079 }}%</span>
+                                            @endif
+                                         </td>
                                         <td>
                                             <a href="{{ route('show_checklist', [$activeChecklist->id]) }}" type="button"
                                                 class="btn btn-outline-success btn-rounded">
@@ -84,11 +88,11 @@
                             <tbody>
                                 @foreach ($completed_checklists as $completed_cl)
                                     <tr>
-                                        <td>{{ $activeChecklist->case->id }}</td>
-                                        <td>{{ $activeChecklist->title }}</td>
-                                        <td>{{ $activeChecklist->type }}</td>
-                                        <td>{{ $activeChecklist->type }}</td>
-                                        <td><span class="bg-success">{{ $activeChecklist->completed }}</span> </td>
+                                        <td>{{ $activeChecklist->cf_1199 }}</td>
+                                        <td>{{ $activeChecklist->name }}</td>
+                                        <td>{{ $activeChecklist->cf_1706 }}</td>
+                                        <td>{{ $activeChecklist->cf_1181 }}</td>
+                                        <td><span class="bg-success">{{ $activeChecklist->cf_2079 }}</span> </td>
                                         <td>
                                             <a href="{{ route('show_checklist', [$activeChecklist->id]) }}" type="button"
                                                 class="btn btn-outline-success btn-rounded">

@@ -38,11 +38,11 @@
                             <tbody>
                                 @foreach ($payments as $payment)
                                     <tr>
-                                        <td>{{ $payment->invoice->id }}</td>
-                                        <td>{{ $payment->payment_date }}</td>
-                                        <td>{{ $payment->payment_method }}</td>
-                                        <td>{{ $payment->amount }}</td>
-                                        <td>{{ $payment->currency }}</td>
+                                        <td>{{ $payment->cf_1141 }}</td>
+                                        <td>{{ $payment->cf_1146 }}</td>
+                                        <td>{{ $payment->cf_1148 }}</td>
+                                        <td>{{ $payment->cf_1144 }}</td>
+                                        <td>{{ $payment->cf_2077 }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

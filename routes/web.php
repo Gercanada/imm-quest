@@ -100,6 +100,7 @@ Route::post('/documents', [DocumentController::class, 'store']);
 Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 Route::get('/cases', [CPCaseController::class, 'index'])->middleware(['auth'])->name('cases');
 Route::get('/case/{id}', [CPCaseController::class, 'show'])->middleware(['auth'])->name('show_case');
+Route::get('/details_case/{id}', [CPCaseController::class, 'details'])->middleware(['auth']);
 
 
 Route::get('/checklists', [ChecklistController::class, 'index'])->middleware(['auth'])->name('checklists');
@@ -114,7 +115,7 @@ Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupl
 
 
 Route::get('/quotes', [QuoteController::class, 'index'])->middleware(['auth'])->name('quotes');
-Route::get('/quotes/{id}', [QuoteController::class, 'show'])->middleware(['auth'])->name('pending_quotes');
+Route::get('/quotes/{id}', [QuoteController::class, 'show'])->middleware(['auth'])->name('showQuote');
 
 Route::get('/invoices', [InvoiceController::class, 'index'])->middleware(['auth'])->name('invoices');
 Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->middleware(['auth'])->name('show_invoice');

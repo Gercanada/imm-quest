@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Accepted quotes | Quote xx01
+    Accepted quotes | Quote{{$quote->subject}}
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="card-header">
             <a href="{{ route('quotes') }}" class="btn btn-outline-info btn-rounded float-left"><i
                     class=" fas fa-arrow-circle-left">Back</i></a>
-            <h4 class="card-title mb-3">My quotes <b>Quote xx01</b></h4>
+            <h4 class="card-title mb-3">Accepted Quote <b> {{$quote->subject}}</b></h4>
         </div>
     </div>
     {{-- <div class="card">

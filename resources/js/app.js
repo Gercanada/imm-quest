@@ -29,6 +29,7 @@ Vue.component('dashboard-component', require('./components/DashboardComponent.vu
 Vue.component('login-component', require('./components/LoginComponent.vue').default);
 
 Vue.component('clitem-component', require('./components/CLItemComponent.vue').default);
+Vue.component('show-case-component', require('./components/ShowCaseComponent.vue').default);
 Vue.component('uploader-component', require('./components/UploaderComponent.vue').default);
 Vue.component('user-aside-tools', require('./components/UserAsideTools.vue').default);
 

@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title"> My open
-                        invpices</h4>
+                        invoices</h4>
                     <div class="table-responsive">
                         <table class="table dt_alt_pagination table-striped table-bordered display" style="width:100%">
                             <thead>
@@ -31,8 +31,8 @@
                                 @foreach ($open_invoices as $openInvoice)
                                     <tr>
                                         <td>{{ $openInvoice->subject }}</td>
-                                        <td>{{ $openInvoice->subtotal }}</td>
-                                        <td>{{ $openInvoice->paid }}</td>
+                                        <td>{{ $openInvoice->hdnSubTotal }}</td>
+                                        <td>{{ $openInvoice->invoicestatus }}</td>
                                         <td></td>
                                         <td>
                                             <a href="{{ route('show_invoice', [$openInvoice->id]) }}" type="button"
@@ -53,7 +53,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Invoices Paid in Full</h4>
                         <div class="table-responsive">
-                            <table class="table dt_alt_pagination table-striped table-bordered displa">
+                            <table class="table dt_alt_pagination table-striped table-bordered display">
                                 <thead>
                                     <tr>
                                         <th scope="col">Invoice Title</th>
@@ -66,8 +66,8 @@
                                     @foreach ($paid_invoices as $paidInvoice)
                                         <tr>
                                             <td>{{ $openInvoice->subject }}</td>
-                                            <td>{{ $openInvoice->subtotal }}</td>
-                                            <td>{{ $openInvoice->paid }}</td>
+                                            <td>{{ $openInvoice->hdnSubTotal }}</td>
+                                            <td>{{ $openInvoice->invoicestatus }}</td>
                                             <td>
                                                 <a href="{{ route('show_invoice', [$openInvoice->id]) }}" type="button"
                                                     class="btn btn-outline-success btn-rounded">
@@ -79,7 +79,6 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>

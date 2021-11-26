@@ -18,15 +18,6 @@ class CPCaseController extends Controller
      */
     public function index()
     {
-        $user_id = Auth::user()->id;
-
-        /* $active_cases = CPCase::where('user_id', $user_id)
-            ->where('status', 1)
-            ->get();
-        $completed_cases = CPCase::where('user_id', $user_id)
-            ->where('status', 0)
-            ->get(); */
-
         $user = Auth::user();
         $user_id = $user->id;
 
@@ -72,64 +63,82 @@ class CPCaseController extends Controller
      * @param  \App\Models\CPCase  $cPCase
      * @return \Illuminate\Http\Response
      */
-    public function show(CPCase $cPCase, $id)
+    public function show($id)
     {
 
         $user = Auth::user();
         $user_id = $user->id;
 
-        /*   $case = CPCase::where('id', $id)->firstOrFail();
-
-
-        $checklists = Checklist::where('case_id', $case->id)
-            ->with('clitems')
-            ->with('case')
-            //->where('clitems.status', 'pending')
-            ->get();
- */
-        //here go
         $vtiger = new Vtiger();
         $casesQuery = DB::table('HelpDesk')->select('*')->where('id', $id)
 
             ->take(1);
         $case = $vtiger->search($casesQuery)->result[0];
 
-        /*  $vtCasesIdArr = [];
-
-        foreach ($case as $case) {
-            array_push($vtCasesIdArr, $case->id);
-        }
-        array_push($vtCasesIdArr, '17x3558'); //only test */
-        //return $case->id;
-
-        //where('column', 'ilike', '%' . $value . '%')
         $checklistsQuery = DB::table('Checklist')
-            ->where('cf_1199', $case->id)
-            ->orWhere('cf_1199', '17x3558') //test
+            ->where('cf_1199', $case->id) // case_id
+            //->orWhere('cf_1199', '17x3558') //test
+            ->orWhere('id', '43x9828') // test
             ->select('*');
-        //$checklists    = $vtiger->search($checklistsQuery);
+
         $checklists    = $vtiger->search($checklistsQuery)->result;
 
-        //return $checklists;
         $vtCLItemIdArr = [];
         foreach ($checklists as $clist) {
             if ($clist->id != "") {
                 array_push($vtCLItemIdArr, $clist->id);
             }
         }
-
-
-        $clitemsQuery = DB::table('CLItems')
-        ->select('*')
-        ->where('clitemsno','!=','any'); //example
-           /*  ->whereIn('cf_1216', $vtCLItemIdArr)
-            ->orWhere('cf_1217',  $case->id); */
-        $clitems    = $vtiger->search($clitemsQuery)->result;
-
-       // return $clitems;
-
+        //return $vtCLItemIdArr;
+        $clitems = [];
+        if ($vtCLItemIdArr !== []) {
+            $clitemsQuery = DB::table('CLItems')
+                ->select('*')
+                ->whereIn('cf_1216', $vtCLItemIdArr) //checklist_id
+                //->orWhere('cf_1217',  $case->id) // case_id
+            ;
+            $clitems    = $vtiger->search($clitemsQuery)->result;
+        }
+        //return [$case,$clitems, $clitems];
 
         return view('cases.show', compact('case', 'checklists', 'clitems'));
+    }
+
+    public function details($id)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $vtiger = new Vtiger();
+        $casesQuery = DB::table('HelpDesk')->select('*')->where('id', $id)
+            ->take(1);
+        $case = $vtiger->search($casesQuery)->result[0];
+
+        $checklistsQuery = DB::table('Checklist')
+            ->where('cf_1199', $case->id) // case_id
+            //->orWhere('cf_1199', '17x3558') //test
+            ->orWhere('id', '43x9828') // test
+            ->select('*');
+
+        $checklists    = $vtiger->search($checklistsQuery)->result;
+
+        $vtCLItemIdArr = [];
+        foreach ($checklists as $clist) {
+            if ($clist->id != "") {
+                array_push($vtCLItemIdArr, $clist->id);
+            }
+        }
+        //return $vtCLItemIdArr;
+        $clitems = [];
+        if ($vtCLItemIdArr !== []) {
+            $clitemsQuery = DB::table('CLItems')
+                ->select('*')
+                ->whereIn('cf_1216', $vtCLItemIdArr) //checklist_id
+                //->orWhere('cf_1217',  $case->id) // case_id
+            ;
+            $clitems    = $vtiger->search($clitemsQuery)->result;
+        }
+        return [$case, $checklists, $clitems];
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CLItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use JBtje\VtigerLaravel\Vtiger;
 
 class CLItemController extends Controller
 {
@@ -43,9 +45,17 @@ class CLItemController extends Controller
      * @param  \App\Models\CLItem  $cLItem
      * @return \Illuminate\Http\Response
      */
-    public function show(/* CLItem $cLItem, $id */ Request $request)
+    public function show(/* CLItem $cLItem, $id */Request $request)
     {
-        $item = CLItem::where('id', $request->id)->firstOrFail();
+        $vtiger = new Vtiger();
+        $clitemQuery =  DB::table('CLItems')->select('*')
+            ->where('id', $request->id)
+            ->take(1);
+
+        $item = null;
+        if (count(array_keys($vtiger->search($clitemQuery)->result)) !== 0) {
+            $item = $vtiger->search($clitemQuery)->result[0];
+        }
         return $item;
     }
 
@@ -57,7 +67,25 @@ class CLItemController extends Controller
      */
     public function dvupload($id)
     {
-        $cl_item = CLItem::where('id', $id)->firstOrFail();
+        //$cl_item = CLItem::where('id', $id)->firstOrFail();
+
+        $vtiger = new Vtiger();
+        $clitemQuery =  DB::table('CLItems')->select('*')
+            // /->where('id', $id)
+            ->take(1);
+
+        $cl_item = null;
+        if (count(array_keys($vtiger->search($clitemQuery)->result)) !== 0) {
+            $cl_item = $vtiger->search($clitemQuery)->result[0];
+        }
+
+        //return $cl_item;
+        // /return$cl_item;
+        /*  if($cl_item->length()>>0 ){
+            $cl_item = $cl_item[0];
+        } */
+
+
         return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
 

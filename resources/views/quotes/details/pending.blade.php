@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('title')
-    Pending quotes | Quote {{$get_quote->subject}}
+    Pending quotes | Quote {{ $quote->subject }}
 @endsection
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <a href="{{route('quotes')}}" class="btn btn-outline-info btn-rounded float-left"><i class=" fas fa-arrow-circle-left">Back</i></a>
-            <h4 class="card-title mb-3">My quotes <b>{{$get_quote->subject}}</b></h4>
+            <a href="{{ route('quotes') }}" class="btn btn-outline-info btn-rounded float-left"><i
+                    class=" fas fa-arrow-circle-left">Back</i></a>
+            <h4 class="card-title mb-3">Pending Quote <b>{{ $quote->subject }}</b></h4>
         </div>
     </div>
 
@@ -41,8 +42,8 @@
             </div>
             <br>
             <a class="btn btn-secondary"><i class="feather feather-edit-3 feather-icon">Accept and sign quote</i></a>
-        </br>
-        </br>
+            </br>
+            </br>
             <div class="card">
                 <div class="card-body">
                     Quote product details
@@ -75,7 +76,7 @@
                             <td>Larry</td>
                             <td>the Bird</td>
                             <td>the Bird</td>
-                            <td><span class ="bg-success">100 %</span> </td>
+                            <td><span class="bg-success">100 %</span> </td>
                         </tr>
                     </tbody>
                 </table>

@@ -28,28 +28,31 @@
                             required order listeners to the TH element suitable for that column.
                         </h6>
                         <div class="table-responsive">
-                            <table  class="table dt_alt_pagination table-striped table-bordered display"
-                                style="width:100%">
+                            <table class="table dt_alt_pagination table-striped table-bordered display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Case title</th>
                                         <th>Case type</th>
                                         <th>Status</th>
-                                        <th>options</th>
+                                        {{-- <th>options</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($active_cases as $active_case)
                                         <tr>
-                                            <td>{{ $active_case->ticket_title }}</td>
+                                            <td>
+                                                <a href="{{ route('show_case', [$active_case->id]) }}">
+                                                    {{ $active_case->ticket_title }}
+                                                </a>
+                                            </td>
                                             <td>{{ $active_case->ticketcategories }}</td>
                                             <td>{{ $active_case->ticketstatus }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 <a href="{{ route('show_case', [$active_case->id])}}" type="button"
                                                     class="btn btn-outline-success btn-rounded">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -58,7 +61,6 @@
                                         <th>Case title</th>
                                         <th>Case type</th>
                                         <th>Status</th>
-                                        <th>options</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -77,24 +79,26 @@
                             required order listeners to the TH element suitable for that column.
                         </h6>
                         <div class="table-responsive">
-                            <table class="table dt_alt_pagination table-striped table-bordered display"
-                                style="width:100%">
+                            <table class="table dt_alt_pagination table-striped table-bordered display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Case title</th>
                                         <th>Case type</th>
                                         <th>Status</th>
-                                        <th>Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($completed_cases as $completed_case)
                                         <tr>
-                                            <td>{{ $completed_case->ticket_title }}</td>
+                                            <td>
+                                                {{ $completed_case->ticket_title }}
+                                                <a href="{{ route('show_case', [$completed_case->id]) }}">
+                                                </a>
+                                            </td>
                                             <td>{{ $completed_case->ticketcategories }}</td>
                                             <td>{{ $completed_case->ticketstatus }}</td>
                                             <td>
-                                                <a href="{{ route('show_case', [$completed_case->id])}}" type="button"
+                                                <a href="{{ route('show_case', [$completed_case->id]) }}" type="button"
                                                     class="btn btn-outline-success btn-rounded">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
@@ -107,7 +111,6 @@
                                         <th>Case title</th>
                                         <th>Case type</th>
                                         <th>Status</th>
-                                        <th>Options</th>
                                     </tr>
                                 </tfoot>
                             </table>

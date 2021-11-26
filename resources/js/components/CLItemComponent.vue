@@ -3,7 +3,7 @@
   <div class="card">
     <div class="card-header">
       <a
-        href="/checklist:id"
+        :href="'/checklist/'+userObj.cf_1216"
         class="btn btn-outline-info btn-rounded float-left"
         ><i class="fas fa-arrow-circle-left">Back</i></a
       >
@@ -114,7 +114,7 @@
 <script>
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
-const urlParams= window.location.pathname.split("/");
+const urlParams = window.location.pathname.split("/");
 
 export default {
   data() {
@@ -188,7 +188,7 @@ export default {
       let me = this;
 
       axios
-        .post("/drive/upload", { file})
+        .post("/drive/upload", { file })
         .then(function (response) {
           console.log({ response });
           me.closeModal();
@@ -226,11 +226,11 @@ export default {
       /*  const urlParams = window.location.pathname.split("/");
       console.log(urlParams); */
 
-
       let me = this;
       axios
-        .post("/cl-item", { id:this.id })
+        .post("/cl-item", { id: me.id })
         .then(function (response) {
+        //   /console.log(response.data);
           me.userObj = response.data;
         })
         .catch(function (error) {

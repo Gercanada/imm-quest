@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Invoice {{$invoice->title}}
+    Invoice {{ $invoice->subject }}
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="card-header">
             <a href="{{ route('invoices') }}" class="btn btn-outline-info btn-rounded float-left"><i
                     class=" fas fa-arrow-circle-left">Back</i></a>
-            <h4 class="card-title mb-3">My invoices <b>{{$invoice->title}}</b></h4>
+            <h4 class="card-title mb-3"> Invoice <b>{{ $invoice->subject }}</b></h4>
         </div>
     </div>
     {{-- <div class="card">
@@ -53,10 +53,12 @@
 
             <div class="card">
                 <div class="btn-list float-rigth">
-                    <a type="button" class="btn btn-secondary btn-sm waves-effect waves-light btn-sm "><i class="feather feather-edit-3 feather-icon">Report
+                    <a type="button" class="btn btn-secondary btn-sm waves-effect waves-light btn-sm "><i
+                            class="feather feather-edit-3 feather-icon">Report
                             a payment</i></a>
-                            <a type="button"  class="btn btn-secondary btn-sm waves-effect waves-light btn-sm"><i class="feather feather-edit-3 feather-icon">Make
-                                    a payment</i></a>
+                    <a type="button" class="btn btn-secondary btn-sm waves-effect waves-light btn-sm"><i
+                            class="feather feather-edit-3 feather-icon">Make
+                            a payment</i></a>
                 </div>
             </div>
             </br>
@@ -79,13 +81,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($invoice->payments as $invoice_payment)
-                        <tr>
-                            <td>{{ $invoice_payment->payment_date}}</td>
-                            <td>{{ $invoice_payment->payment_method}}</td>
-                            <td>{{ $invoice_payment->amount}}</td>
-                            <td>{{ $invoice_payment->currency}}</td>
-                        </tr>
+                        @foreach ($payments as $invoice_payment)
+                            <tr>
+                                <td>{{ $invoice_payment->cf_1146}}</td>
+                                <td>{{ $invoice_payment->cf_1148}}</td>
+                                <td>{{ $invoice_payment->cf_1144}}</td>
+                                <td>{{ $invoice_payment->cf_1150
+                                }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

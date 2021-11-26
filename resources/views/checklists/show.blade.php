@@ -1,15 +1,14 @@
 @extends('layouts.app')
 
 @section('title')
-    Checklist {{ $check_list->title }}
+    Checklist {{ $check_list->name }}
 @endsection
-
 
 @section('content')
     <div class="card">
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title">Checklist <b>{{ $check_list->title }}</b></h2>
+                <h2 class="card-title">Checklist <b>{{ $check_list->name }}</b></h2>
                 <h6 class="card-subtitle">Some case and checklist details <i>ok</i> </h6>
                 <h3 class="card-title mt-5"><i class="mr-1 font-18 mdi mdi-numeric-1-box-multiple-outline"></i> Pending items
                 </h3>
@@ -25,22 +24,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($check_list->clitems as $clitem)
-                                @if ($clitem->status != 'Pending')
+                            @foreach ($clitems as $clitem)
+                                @if ($clitem->cf_1578 != 'Pending')
                                     <tr>
-                                        <td>{{ $clitem->subject }}</td>
-                                        <td>{{ $clitem->required_to }}</td>
+                                        <td>{{ $clitem->name }}</td>
+                                        <td>{{ $clitem->cf_1202 }}</td>
                                         <td><a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
-                                                class="btn btn-outline-success btn-rounded"> <i class="fas fa-upload"></i></a></td>
-                                        <td>{{ $clitem->help_link }}</td>
+                                                class="btn btn-outline-success btn-rounded"> <i
+                                                    class="fas fa-upload"></i></a></td>
+                                        <td>{{ $clitem->cf_1212}}</td>
                                     </tr>
                                 @endif
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                <h3 class="card-title"><i class="mr-1 font-18 mdi mdi-numeric-2-box-multiple-outline"></i> Electronic
-                    forms</h3>
+                <h3 class="card-title"><i class="mr-1 font-18 mdi mdi-numeric-2-box-multiple-outline"></i> Electronic forms</h3>
             </div>
             <div class="table-responsive">
                 <table class="table">
@@ -54,13 +53,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($check_list->clitems as $clitem)
-                            @if ($clitem->status != 'Accepted')
+                        @foreach ($clitems as $clitem)
+                            @if ($clitem->cf_1578 != 'Accepted')
                                 <tr>
-                                    <td>{{ $clitem->subject }}</td>
-                                    <td>{{ $clitem->required_to }}</td>
-                                    <td>{{ $clitem->help_link }}</td>
-                                    <td>{{ $clitem->status }}</td>
+                                    <td>{{ $clitem->name }}</td>
+                                    <td>{{ $clitem->cf_1202 }}</td>
+                                    <td>{{ $clitem->cf_1212 }}</td>
+                                    <td>{{ $clitem->cf_1578 }}</td>
                                 </tr>
                             @endif
                         @endforeach
@@ -80,12 +79,12 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($check_list->clitems as $clitem)
-                            @if ($clitem->status != 'Completed')
+                        @foreach ($clitems as $clitem)
+                            @if ($clitem->cf_1578 != 'Completed')
                                 <tr>
-                                    <td>{{ $clitem->subject }}</td>
-                                    <td>{{ $clitem->status }}</td>
-                                    <td>{{ $clitem->file_name }}</td>
+                                    <td>{{ $clitem->name }}</td>
+                                    <td>{{ $clitem->cf_1578 }}</td>
+                                    <td>{{ $clitem->cf_1970 }}</td>
                                 </tr>
                             @endif
                         @endforeach
