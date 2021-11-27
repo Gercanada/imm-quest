@@ -1,114 +1,154 @@
-
 <template>
-  <div class="card">
-    <div class="card-header">
-      <a
-        :href="'/checklist/'+userObj.cf_1216"
-        class="btn btn-outline-info btn-rounded float-left"
-        ><i class="fas fa-arrow-circle-left">Back</i></a
-      >
-      <h2 class="card-title">CL Item <b v-text="subject"></b></h2>
-    </div>
-    <div class="card-body">
-      <div class="card-row">
-        <div class="col border py-2">
-          <p>Case & checklist info</p>
-          <p v-text="userObj"></p>
-        </div>
-        <div class="col border py-2">
-          <p>CL info</p>
+  <main class="main">
+    <div v-if="loading" style="heigth: 100%">
+      <div class="card">
+        <div class="card-body d-flex justify-content-around">
+          <div class="spinner-grow text-success center" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="card-footer">
-      <button
-        type="button"
-        class="btn btn-primary fas fa-edit float-right"
-        @click="openModal('documents', 'store', userObj.id)"
-      >
-        New document
-      </button>
-    </div>
-
-    <!-- Modal edit acount -->
-    <template v-if="actionType == 1">
-      <div
-        class="modal fade"
-        tabindex="-1"
-        :class="{ mostrar: modal }"
-        role="dialog"
-        aria-labelledby="myModalLabel"
-        style="display: none; overflow-y: auto"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-primary modal-lg"
-          style="padding-top: 55px"
-          role="document"
-        >
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" v-text="modalTitle"></h4>
-              <button
-                type="button"
-                class="close"
-                @click="closeModal()"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
+    <div v-else>
+      <div class="card">
+        <div class="card-header">
+          <a
+            :href="'/checklist/' + clitem.cf_1216"
+            class="btn btn-outline-info btn-rounded float-left"
+            ><i class="fas fa-arrow-circle-left">Go to checklists</i></a
+          >
+          <h2 class="card-title">CL Item <b v-text="subject"></b></h2>
+        </div>
+        <div class="card-body">
+          <div class="card-row">
+            <div class="col border py-2">
+              <h2>Case & checklist info</h2>
+              <p v-text="caseObj"></p>
+              <p v-text="checklistObj"></p>
             </div>
-            <div class="modal-body">
-              <form
-                enctype="multipart/form-data"
-                class="form-horizontal"
-              ></form>
-              <div class="flex flex-wrap -m-2">
-                <div class="p-2 w-full">
-                  <div class="relative">
-                    <label
-                      for="attachment"
-                      class="leading-7 text-sm text-gray-600"
-                      >Attachments</label
-                    ><br />
-                    <vue-dropzone
-                      ref="myVueDropzone"
-                      id="dropzone"
-                      :options="dropzoneOptions"
-                      @vdropzone-complete="afterUploadComplete"
-                      @vdropzone-sending-multiple="sendMessage"
-                    ></vue-dropzone>
+            <div class="col border py-2">
+              <h2>CL Item info</h2>
+              <p v-text="clitem"></p>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer"></div>
+
+        <!-- Modal edit acount -->
+        <!--   <template v-if="actionType == 1"> -->
+
+        <!-- </template> -->
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card" v-if="clitem.cf_1200 == 'IMM Form'">
+            <div class="col border py-2">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <p>Helplink</p>
+                    br
+                  </div>
+                  <div class="row">
+                    <p>Status</p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <p>Link</p>
+                  </div>
+                  <div class="row">
+                    <p>Pending</p>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div v-else-if="clitem.cf_1578 === 'Pending'">
+            <button
+              type="button"
+              class="btn btn-primary btn-lg fas fa-edit float-right"
+              data-toggle="modal"
+              :data-target="'#modal_' + clitem.id"
+              @click="openModal('documents', 'store', clitem.id)"
+            >
+              New document
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      :id="'modal_' + clitem.id"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="scrollableModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" v-text="modalTitle"></h4>
 
-            <div class="modal-footer">
-              <button
-                v-if="actionType == 1"
-                type="button"
-                class="btn btn-primary fas fa-save"
-                @click="shootMessage"
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                v-if="actionType == 1"
-                class="btn btn-danger"
-                @click="closeModal()"
-              >
-                Close
-              </button>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              @click="closeModal()"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form enctype="multipart/form-data" class="form-horizontal"></form>
+            <div class="flex flex-wrap -m-2">
+              <div class="p-2 w-full">
+                <div class="relative">
+                  <label
+                    for="attachment"
+                    class="leading-7 text-sm text-gray-600"
+                    >Attachments</label
+                  ><br />
+                  <vue-dropzone
+                    ref="myVueDropzone"
+                    id="dropzone"
+                    :options="dropzoneOptions"
+                    @vdropzone-complete="afterUploadComplete"
+                    @vdropzone-sending-multiple="sendMessage"
+                  ></vue-dropzone>
+                </div>
+              </div>
             </div>
           </div>
-          <!-- /.modal-content -->
+
+          <div class="modal-footer">
+            <button
+              v-if="actionType == 1"
+              type="button"
+              class="btn btn-primary fas fa-save"
+              @click="shootMessage"
+            >
+              Save
+            </button>
+            <button
+              @click="closeModal()"
+              type="button"
+              v-if="actionType == 1"
+              class="btn btn-danger"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
       </div>
-    </template>
-  </div>
+      <!-- /.modal-dialog -->
+    </div>
+  </main>
 </template>
 
 <script>
@@ -149,12 +189,16 @@ export default {
       issued_date: "",
 
       //
-      userObj: {},
+      clitem: {},
+      caseObj: {},
+      checklistObj: {},
       modal: 0,
       modalTitle: "",
       actionType: 0,
       submitted: false,
       errors: {},
+
+      loading: false,
     };
   },
   components: {
@@ -227,26 +271,30 @@ export default {
       console.log(urlParams); */
 
       let me = this;
+      this.loading = true;
       axios
         .post("/cl-item", { id: me.id })
         .then(function (response) {
-        //   /console.log(response.data);
-          me.userObj = response.data;
+          console.log(response.data);
+          me.clitem = response.data[0];
+          me.caseObj = response.data[1];
+          me.checklistObj = response.data[2];
         })
         .catch(function (error) {
           console.log(error);
-        });
+        })
+        .finally(() => (this.loading = false));
     },
     closeModal() {
       //Cerrar modals
       this.modal = 0;
-      (this.title = ""),
-        (this.description = ""),
-        (this.expiry_date = ""),
-        (this.issued_date = ""),
-        //(this.active = false);
+      this.title = "";
+      this.description = "";
+      this.expiry_date = "";
+      this.issued_date = "";
+      //(this.active = false);
 
-        (this.submitted = false);
+      this.submitted = false;
       this.errors = {};
       this.userFiles();
     },
@@ -279,7 +327,7 @@ export default {
     },
 
     openModal(model, action, data = []) {
-      //console.log(action);
+      console.log(action);
       switch (model) {
         case "documents": {
           switch (action) {
@@ -295,7 +343,7 @@ export default {
               this.actionType = 1;
               break;
             }
-            case "update": {
+            /*  case "update": {
               this.modal = 1;
               this.modalTitle = "Upload documents";
               this.title = data.title;
@@ -316,7 +364,7 @@ export default {
               this.id = data.id;
               this.actionType = 2;
               break;
-            }
+            } */
           }
         }
       }
@@ -325,25 +373,4 @@ export default {
 };
 </script>
 
-<style>
-.modal-content {
-  width: 100% !important;
-  position: fixed !important;
-  overflow-y: visible;
-}
-.mostrar {
-  display: list-item !important;
-  opacity: 1 !important;
-  position: fixed !important;
-  background-color: #3c29297a !important;
-}
-.div-error {
-  display: flex;
-  justify-content: center;
-}
-.text-error {
-  color: red !important;
-  font-weight: bold;
-}
-</style>
 

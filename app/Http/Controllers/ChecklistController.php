@@ -19,13 +19,6 @@ class ChecklistController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
-        /* $active_checklists = Checklist::where('user_id', $user_id)
-            ->with('case')
-            ->where('completed', '!=', 100)
-            ->get();
-        $completed_checklists = Checklist::where('user_id', $user_id)
-            ->with('case')
-            ->where('completed', 100)->get(); */
         $vtiger = new Vtiger();
         $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
         $contact = $vtiger->search($userQuery);
@@ -43,6 +36,7 @@ class ChecklistController extends Controller
         //Count CheckLists
         $checklistsQuery = DB::table('Checklist')->select('*')
             //->whereIn('cf_1199', $vtCasesIdArr)
+            ->Where('id', '43x9828') // test
         ;
         $vtChecklists    = $vtiger->search($checklistsQuery)->result;
 
@@ -63,27 +57,6 @@ class ChecklistController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Checklist  $checklist
@@ -97,7 +70,9 @@ class ChecklistController extends Controller
         //return $checklist;
         $vtiger = new Vtiger();
         $checklistsQuery = DB::table('Checklist')->select('*')
-            ->where('id', $id)->take(1);
+        //->where('id','43x10157')//test TODO Remove this
+            ->where('id', $id)
+            ->take(1);
         $check_list    = $vtiger->search($checklistsQuery)->result[0];
 
         $clitemsQuery =  DB::table('CLItems')->select('*')

@@ -39,40 +39,40 @@
 </head>
 
 <body>
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
+    <div id="app">
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
         </div>
-    </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    <div id="main-wrapper">
         <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        @if (Auth::user())
-            <header class="topbar">
-                @include('layouts.navbar')
-            </header>
-        @endif
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <div id="app">
-        {{-- @include('layouts.side-panel') --}}
-        @if (Auth::user())
-            @include('layouts.aside')
-        @endif
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
+        <div id="main-wrapper">
+            <!-- ============================================================== -->
+            <!-- Topbar header - style you can find in pages.scss -->
+            <!-- ============================================================== -->
+            @if (Auth::user())
+                <header class="topbar">
+                    @include('layouts.navbar')
+                </header>
+            @endif
+            <!-- ============================================================== -->
+            <!-- End Topbar header -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            {{-- @include('layouts.side-panel') --}}
+            @if (Auth::user())
+                @include('layouts.aside')
+            @endif
+            <!-- ============================================================== -->
+            <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
             @if (Auth::user())
                 <div class="page-wrapper">
                     @yield('content')
@@ -86,60 +86,54 @@
 
         </div>
 
+        <!-- ============================================================== -->
+        <!-- End Wrapper -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- customizer Panel -->
+        <!-- ============================================================== -->
+        <div class="chat-windows"></div>
+        <!-- ============================================================== -->
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- customizer Panel -->
-    <!-- ============================================================== -->
-    <div class="chat-windows"></div>
-    <!-- ============================================================== -->
-
-
-    <!-- Popper JS -->
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jquery/dist/jquery.min.js"></script>
-
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/popper.js/dist/umd/popper.min.js">
-    </script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/bootstrap/dist/js/bootstrap.min.js">
-    </script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.min.js"></script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.js"></script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app-style-switcher.js"></script>
-    <script
-        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js">
-    </script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/extra-libs/sparkline/sparkline.js"></script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/waves.js"></script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/sidebarmenu.js"></script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/feather.min.js"></script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/custom.js"></script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist/dist/chartist.min.js"></script>
-    <script
-        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js">
-    </script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/d3/dist/d3.min.js"></script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/c3/c3.min.js"></script>
-
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/dashboards/dashboard2.js"></script>
-
-    <!-- All scripts -->
-
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.full.min.js">
-    </script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.min.js">
-    </script>
-    <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
-    </script>
-
-    <script src="/js/app.js"></script>
-    @yield('scripts')
-
-
-
-
-
 </body>
+
+<!-- Popper JS -->
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jquery/dist/jquery.min.js"></script>
+
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/popper.js/dist/umd/popper.min.js">
+</script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/bootstrap/dist/js/bootstrap.min.js">
+</script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.min.js"></script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.js"></script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app-style-switcher.js"></script>
+<script
+src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js">
+</script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/extra-libs/sparkline/sparkline.js"></script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/waves.js"></script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/sidebarmenu.js"></script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/feather.min.js"></script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/custom.js"></script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist/dist/chartist.min.js"></script>
+<script
+src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js">
+</script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/d3/dist/d3.min.js"></script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/c3/c3.min.js"></script>
+
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/dashboards/dashboard2.js"></script>
+
+<!-- All scripts -->
+
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.full.min.js">
+</script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.min.js">
+</script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
+</script>
+
+<script src="/js/app.js"></script>
+@yield('scripts')
 
 </html>

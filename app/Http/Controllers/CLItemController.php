@@ -52,11 +52,37 @@ class CLItemController extends Controller
             ->where('id', $request->id)
             ->take(1);
 
-        $item = null;
+        $item = [];
+        $case = [];
+        $checklist = [];
         if (count(array_keys($vtiger->search($clitemQuery)->result)) !== 0) {
             $item = $vtiger->search($clitemQuery)->result[0];
+
+
+            $casesQuery =  DB::table('HelpDesk')
+                ->select('*')
+                ->where(
+                    'id',
+                    $item->cf_1217
+                )
+                ->take(1);
+
+            $case = $vtiger->search($casesQuery)->result[0];
+
+            $checklistQuery =  DB::table('Checklist')
+                ->select('*')
+                ->where(
+                    'id',
+                    $item->cf_1216
+
+                )
+                ->take(1);
+
+            $checklist = $vtiger->search($checklistQuery)->result[0];
         }
-        return $item;
+
+
+        return [$item, $case, $checklist];
     }
 
     /**
@@ -67,25 +93,15 @@ class CLItemController extends Controller
      */
     public function dvupload($id)
     {
-        //$cl_item = CLItem::where('id', $id)->firstOrFail();
-
         $vtiger = new Vtiger();
         $clitemQuery =  DB::table('CLItems')->select('*')
-            // /->where('id', $id)
+            ->where('id', $id)
             ->take(1);
 
         $cl_item = null;
         if (count(array_keys($vtiger->search($clitemQuery)->result)) !== 0) {
             $cl_item = $vtiger->search($clitemQuery)->result[0];
         }
-
-        //return $cl_item;
-        // /return$cl_item;
-        /*  if($cl_item->length()>>0 ){
-            $cl_item = $cl_item[0];
-        } */
-
-
         return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
 

@@ -36,28 +36,7 @@ class CPCaseController extends Controller
         return view('cases.index', compact('active_cases', 'completed_cases'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
+     /**
      * Display the specified resource.
      *
      * @param  \App\Models\CPCase  $cPCase
@@ -77,7 +56,7 @@ class CPCaseController extends Controller
 
         $checklistsQuery = DB::table('Checklist')
             ->where('cf_1199', $case->id) // case_id
-            //->orWhere('cf_1199', '17x3558') //test
+            ->orWhere('cf_1199', '17x3558') //test
             ->orWhere('id', '43x9828') // test
             ->select('*');
 
@@ -116,7 +95,7 @@ class CPCaseController extends Controller
 
         $checklistsQuery = DB::table('Checklist')
             ->where('cf_1199', $case->id) // case_id
-            //->orWhere('cf_1199', '17x3558') //test
+            ->orWhere('cf_1199', '17x3558') //test
             ->orWhere('id', '43x9828') // test
             ->select('*');
 
@@ -141,37 +120,4 @@ class CPCaseController extends Controller
         return [$case, $checklists, $clitems];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\CPCase  $cPCase
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(CPCase $cPCase)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CPCase  $cPCase
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, CPCase $cPCase)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\CPCase  $cPCase
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(CPCase $cPCase)
-    {
-        //
-    }
 }

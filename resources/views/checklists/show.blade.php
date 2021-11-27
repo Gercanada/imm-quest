@@ -25,21 +25,22 @@
                         </thead>
                         <tbody>
                             @foreach ($clitems as $clitem)
-                                @if ($clitem->cf_1578 != 'Pending')
+                                @if ($clitem->cf_1578 === 'Pending')
                                     <tr>
                                         <td>{{ $clitem->name }}</td>
                                         <td>{{ $clitem->cf_1202 }}</td>
                                         <td><a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
                                                 class="btn btn-outline-success btn-rounded"> <i
                                                     class="fas fa-upload"></i></a></td>
-                                        <td>{{ $clitem->cf_1212}}</td>
+                                        <td>{{ $clitem->cf_1212 }}</td>
                                     </tr>
                                 @endif
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                <h3 class="card-title"><i class="mr-1 font-18 mdi mdi-numeric-2-box-multiple-outline"></i> Electronic forms</h3>
+                <h3 class="card-title"><i class="mr-1 font-18 mdi mdi-numeric-2-box-multiple-outline"></i> Electronic
+                    forms</h3>
             </div>
             <div class="table-responsive">
                 <table class="table">
@@ -54,9 +55,10 @@
                     </thead>
                     <tbody>
                         @foreach ($clitems as $clitem)
-                            @if ($clitem->cf_1578 != 'Accepted')
+                            @if ($clitem->cf_1200 === 'IMM Form')
                                 <tr>
-                                    <td>{{ $clitem->name }}</td>
+                                    <td><a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}">{{ $clitem->name }} </a></td>
+                                    {{-- <td>{{ $clitem->name }}</td> --}}
                                     <td>{{ $clitem->cf_1202 }}</td>
                                     <td>{{ $clitem->cf_1212 }}</td>
                                     <td>{{ $clitem->cf_1578 }}</td>
@@ -80,7 +82,7 @@
                     <tbody>
 
                         @foreach ($clitems as $clitem)
-                            @if ($clitem->cf_1578 != 'Completed')
+                            @if ($clitem->cf_1578 === ('Received' || 'Accepted'))
                                 <tr>
                                     <td>{{ $clitem->name }}</td>
                                     <td>{{ $clitem->cf_1578 }}</td>
