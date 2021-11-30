@@ -45,11 +45,49 @@
         <div class="tab-pane" id="home-b1">
             <div class="card ">
                 <div class="card-body">
-                    Invoice info read only fields
+                    {{-- Invoice info read only fields --}}
+                    <table class="table v-middle fs-3 mb-0 mt-4">
+                        <tbody>
+                            <tr>
+                                <td>Invoice Number</td>
+                                <td class="text-end font-weight-medium">{{ $invoice->invoice_no }}</td>
+                            </tr>
+                            <tr>
+                                <td>Invoice Date</td>
+                                <td class="text-end font-weight-medium">{{ $invoice->invoicedate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Number of Payments</td>
+                                <td class="text-end font-weight-medium">{{ $invoice->cf_2121 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Professional Services</td>
+                                <td class="text-end font-weight-medium">{{ $invoice->cf_1574 }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Government Fee Subtotal</td>
+                                <td class="text-end font-weight-medium">{{ $invoice->cf_1572 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Taxes</td>
+                                <td class="text-end font-weight-medium">{{ $invoice->cf_2123 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Invoice Balance</td>
+                                <td class="text-end font-weight-medium">{{ $invoice->cf_905 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Payments Received</td>
+                                <td class="text-end font-weight-medium">{{ $invoice->cf_901 }}</td>
+                            </tr>
+
+                            <tr></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <br>
-
 
             <div class="card">
                 <div class="btn-list float-rigth">
@@ -83,11 +121,10 @@
                     <tbody>
                         @foreach ($payments as $invoice_payment)
                             <tr>
-                                <td>{{ $invoice_payment->cf_1146}}</td>
-                                <td>{{ $invoice_payment->cf_1148}}</td>
-                                <td>{{ $invoice_payment->cf_1144}}</td>
-                                <td>{{ $invoice_payment->cf_1150
-                                }}</td>
+                                <td>{{ $invoice_payment->cf_1146 }}</td>
+                                <td>{{ $invoice_payment->cf_1148 }}</td>
+                                <td>{{ $invoice_payment->cf_1144 }}</td>
+                                <td>{{ $invoice_payment->cf_1150 }}</td>
                             </tr>
                         @endforeach
                     </tbody>

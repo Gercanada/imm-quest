@@ -28,7 +28,8 @@ class UserTableSeeder extends Seeder
             'watsapp_no' => '2999644288',
             'email' => 'goetia@gmail.com',
             'phone' => '2999644288',
-            'watsapp_update_option' => 'y'
+            'watsapp_update_option' => 'y',
+            'vtiger_contact_id' => '12x77'
         ]);
     }
 }

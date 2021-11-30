@@ -7,38 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Document;
+use App\Models\User;
+
 class CLItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -106,15 +81,55 @@ class CLItemController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CLItem  $cLItem
-     * @return \Illuminate\Http\Response
+     * This method allows upload files related with clitem
      */
-    public function update(Request $request, CLItem $cLItem)
+    public function uploadFile(Request $request)
     {
-        //
+        try {
+            $user = Auth::user();
+            //$user_id = $user->id;
+            $vtiger = new Vtiger();
+            $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
+            $contact = $vtiger->search($userQuery);
+
+            $clitemsQuery =  DB::table('CLItems')->select('*')
+                ->where('id', $request->id)
+                ->take(1);
+
+            $contact_id = $contact->result[0]->id;
+            $clitem = $vtiger->search($clitemsQuery)->result[0];
+
+            if ($request->file('file')) {
+                /* Multiple file upload */
+                $files = $request->file('file');
+                if (!is_array($files)) {
+                    $files = [$files];
+                }
+
+                $fileList = array();
+
+                $destination = "documents/$contact_id/clitems/$clitem->id";
+                //loop throu the array
+                foreach ($files as $file) {
+                    //return $file;
+                    $filename = $file->getClientOriginalName();
+                    $filename = str_replace(' ', '', $filename);
+
+                    $file->storeAs($destination, $filename);
+                    $fileUrl = "$destination/$filename";
+                    array_push($fileList, $fileUrl);
+                }
+
+                $document = Document::create([
+                    'contact_id' => $contact_id,
+                    'url_files' => json_encode($fileList)
+                ]);
+
+                return response()->json(200);
+            }
+        } catch (\Exception $e) {
+            return  response()->json(['message' => 'error uploading file', $e], 503);
+        }
     }
 
     /**

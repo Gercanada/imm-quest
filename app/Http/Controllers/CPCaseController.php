@@ -21,7 +21,6 @@ class CPCaseController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        ///vamo a ver
         $vtiger = new Vtiger();
         //Get contact data of this user
         $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);

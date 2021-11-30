@@ -1,10 +1,24 @@
 
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-12">
+  <div v-if="loading">
+    <div v-if="loading" style="heigth: 100%">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-body d-flex justify-content-around">
+            <div class="spinner-grow text-success center" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div v-else>
+    <div class="row">
+      <div class="card">
         <div class="card-header">
-          documents
+          <h3 class="text-themecolor mb-0">Documents</h3>
           <button
             type="button"
             class="btn btn-primary fas fa-edit float-right"
@@ -15,184 +29,187 @@
         </div>
 
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-8 sm-8">
-              <div style="overflow-x: auto; min-width: 80%">
-                <table class="table table-bordered table-striped table-sm">
-                  <thead></thead>
-                  <tbody>
-                    <tr></tr>
-                    <tr>
-                      <th>Title</th>
-                      <td v-text="userObj.name"></td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                      <th>Description</th>
-                      <td v-text="userObj.last_name"></td>
-                    </tr>
-                    <tr>
-                      <th>Issued date</th>
-                      <td v-text="userObj.last_name"></td>
-                    </tr>
-                    <tr>
-                      <th>Expiry date</th>
-                      <td v-text="userObj.last_name"></td>
-                    </tr>
-                    <tr>
-                      <th>Files</th>
-                      <td v-text="userObj.nationalities"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Payments</th>
+                  <th scope="col">Invoices</th>
+                  <th scope="col">File Type</th>
+                  <th scope="col">File Name</th>
+                  <th scope="col">Document No</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="doument in docsArr"
+                  :key="doument.id"
+                  :value="doument.id"
+                >
+                  <td v-text="doument.notes_title"></td>
+                  <td v-text="doument.cf_1490"></td>
+                  <td v-text="doument.cf_2129"></td>
+                  <td v-text="doument.filetype"></td>
+                  <td v-text="doument.filename"></td>
+                  <td v-text="doument.note_no"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+
+          <!--  <div class="row">
+            <div class="col-md-8 sm-8">
+              <div style="overflow-x: auto; min-width: 80%"></div>
+            </div>
+          </div> -->
         </div>
+
+        <!-- Modal edit acount -->
+        <template v-if="actionType == 1">
+          <div
+            class="modal fade"
+            tabindex="-1"
+            :class="{ mostrar: modal }"
+            role="dialog"
+            aria-labelledby="myModalLabel"
+            style="display: none; overflow-y: auto"
+            aria-hidden="true"
+          >
+            <div
+              class="modal-dialog modal-primary modal-lg"
+              style="padding-top: 55px"
+              role="document"
+            >
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" v-text="modalTitle"></h4>
+                  <button
+                    type="button"
+                    class="close"
+                    @click="closeModal()"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form enctype="multipart/form-data" class="form-horizontal">
+                    <div
+                      style="overflow-x: auto; overflow-y: auto; min-width: 80%"
+                    >
+                      <div class="form-group">
+                        <label for="inputTitle">Title</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="inputTitle"
+                          aria-describedby="textHelp"
+                          placeholder="Document title"
+                          v-model="title"
+                        />
+                        <small
+                          v-if="submitted && errors.title"
+                          class="text-danger font-14"
+                          >{{ errors.title }}</small
+                        >
+                      </div>
+                      <div class="form-group">
+                        <label for="inputIssued">Issued date</label>
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="inputIssued"
+                          aria-describedby="textHelp"
+                          placeholder="2021/02/19"
+                          v-model="issued_date"
+                        />
+                        <small
+                          v-if="submitted && errors.issued_date"
+                          class="text-danger font-14"
+                          >{{ errors.issued_date }}</small
+                        >
+                      </div>
+                      <div class="form-group">
+                        <label for="inputExpiry">Expiry date</label>
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="inputExpiry"
+                          aria-describedby="textHelp"
+                          placeholder="2025/02/19"
+                          v-model="expiry_date"
+                        />
+                        <small
+                          v-if="submitted && errors.expiry_date"
+                          class="text-danger font-14"
+                          >{{ errors.expiry_date }}</small
+                        >
+                      </div>
+                      <div class="form-group">
+                        <label for="inputDescription">Description</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="inputDescription"
+                          aria-describedby="textHelp"
+                          placeholder="Type description about"
+                          v-model="description"
+                        />
+                        <small
+                          v-if="submitted && errors.description"
+                          class="text-danger font-14"
+                          >{{ errors.description }}</small
+                        >
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="flex flex-wrap -m-2">
+                  <div class="p-2 w-full">
+                    <div class="relative">
+                      <label
+                        for="attachment"
+                        class="leading-7 text-sm text-gray-600"
+                        >Attachments</label
+                      ><br />
+                      <vue-dropzone
+                        ref="myVueDropzone"
+                        id="dropzone"
+                        :options="dropzoneOptions"
+                        @vdropzone-complete="afterUploadComplete"
+                        @vdropzone-sending-multiple="sendMessage"
+                      ></vue-dropzone>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    v-if="actionType == 1"
+                    type="button"
+                    class="btn btn-primary fas fa-save"
+                    @click="shootMessage"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    v-if="actionType == 1"
+                    class="btn btn-danger"
+                    @click="closeModal()"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+        </template>
       </div>
     </div>
-
-    <!-- Modal edit acount -->
-    <template v-if="actionType == 1">
-      <div
-        class="modal fade"
-        tabindex="-1"
-        :class="{ mostrar: modal }"
-        role="dialog"
-        aria-labelledby="myModalLabel"
-        style="display: none; overflow-y: auto"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-primary modal-lg"
-          style="padding-top: 55px"
-          role="document"
-        >
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" v-text="modalTitle"></h4>
-              <button
-                type="button"
-                class="close"
-                @click="closeModal()"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form enctype="multipart/form-data" class="form-horizontal">
-                <div style="overflow-x: auto; overflow-y: auto; min-width: 80%">
-                  <div class="form-group">
-                    <label for="inputTitle">Title</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="inputTitle"
-                      aria-describedby="textHelp"
-                      placeholder="Document title"
-                      v-model="title"
-                    />
-                    <small
-                      v-if="submitted && errors.title"
-                      class="text-danger font-14"
-                      >{{ errors.title }}</small
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="inputIssued">Issued date</label>
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="inputIssued"
-                      aria-describedby="textHelp"
-                      placeholder="2021/02/19"
-                      v-model="issued_date"
-                    />
-                    <small
-                      v-if="submitted && errors.issued_date"
-                      class="text-danger font-14"
-                      >{{ errors.issued_date }}</small
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="inputExpiry">Expiry date</label>
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="inputExpiry"
-                      aria-describedby="textHelp"
-                      placeholder="2025/02/19"
-                      v-model="expiry_date"
-                    />
-                    <small
-                      v-if="submitted && errors.expiry_date"
-                      class="text-danger font-14"
-                      >{{ errors.expiry_date }}</small
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="inputDescription">Description</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="inputDescription"
-                      aria-describedby="textHelp"
-                      placeholder="Type description about"
-                      v-model="description"
-                    />
-                    <small
-                      v-if="submitted && errors.description"
-                      class="text-danger font-14"
-                      >{{ errors.description }}</small
-                    >
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="flex flex-wrap -m-2">
-              <div class="p-2 w-full">
-                <div class="relative">
-                  <label
-                    for="attachment"
-                    class="leading-7 text-sm text-gray-600"
-                    >Attachments</label
-                  ><br />
-                  <vue-dropzone
-                    ref="myVueDropzone"
-                    id="dropzone"
-                    :options="dropzoneOptions"
-                    @vdropzone-complete="afterUploadComplete"
-                    @vdropzone-sending-multiple="sendMessage"
-                  ></vue-dropzone>
-                </div>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button
-                v-if="actionType == 1"
-                type="button"
-                class="btn btn-primary fas fa-save"
-                @click="shootMessage"
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                v-if="actionType == 1"
-                class="btn btn-danger"
-                @click="closeModal()"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-    </template>
   </div>
 </template>
 
@@ -231,11 +248,13 @@ export default {
 
       //
       userObj: {},
+      docsArr: [],
       modal: 0,
       modalTitle: "",
       actionType: 0,
       submitted: false,
       errors: {},
+      loading: false,
     };
   },
   components: {
@@ -261,11 +280,11 @@ export default {
 
       console.log(Object.keys(this.errors));
       if (Object.keys(this.errors).length) {
-          console.log(this.errors);
+        console.log(this.errors);
         return;
       }
 
-      console.log('done here');
+      console.log("done here");
 
       this.$refs.myVueDropzone.processQueue();
 
@@ -286,7 +305,6 @@ export default {
         .catch(function (error) {
           console.table(error);
         });
-
     },
     sendMessage: async function (files, xhr, formData) {
       formData.append("email", this.email);
@@ -297,18 +315,20 @@ export default {
     ////////////////////////
     userFiles() {
       let me = this;
+      this.loading = true;
       axios
-        .get("/documents")
+        .get("/get_documents")
         .then(function (response) {
           console.log({ response });
-          me.userObj = response.data;
+          me.docsArr = response.data;
         })
+        .finally(() => (this.loading = false))
         .catch(function (error) {
           console.log(error);
         });
     },
 
-   /*  updateAccount() {
+    /*  updateAccount() {
       this.submitted = true;
       this.errors = {};
       this.valideForm();

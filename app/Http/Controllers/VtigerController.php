@@ -67,10 +67,10 @@ class VtigerController extends Controller
     {
         try {
 
-            if($request->vtid){
-              $user= User::where('id', $request->id)->firstOrFail();
-              $user->vtiger_contact_id = $request->vtid;
-              $user->save();
+            if ($request->vtid) {
+                $user = User::where('id', $request->id)->firstOrFail();
+                $user->vtiger_contact_id = $request->vtid;
+                $user->save();
             }
 
             $requestedTypes = $request->object;
@@ -125,15 +125,25 @@ class VtigerController extends Controller
         return $nameTypes;
     }
 
-    public function goType($type)
+    public function goType($type, $where)
     {
+        $vtiger = new Vtiger();
+        //return $where;
+        // /cf_2129
+
+        $pieces = explode(",", $where);
+        //return $pieces;
 
         // apply permissions
-        $vtiger = new Vtiger();
-
-        $query = DB::table($type)->select('*');
-        // $query = DB::table($type)->select('id', 'firstname', 'lastname')->where('firstname', 'John');
-        $data = $vtiger->search($query);
-        return $data;
+        if ($where == 'all') {
+            $query = DB::table($type)->select('*');
+            // $query = DB::table($type)->select('id', 'firstname', 'lastname')->where('firstname', 'John');
+            $data = $vtiger->search($query);
+            return $data;
+        } else {
+            $query = DB::table($type)->select('*')->where($pieces[0],$pieces[1]);
+            $data = $vtiger->search($query);
+            return  $data;
+        }
     }
 }

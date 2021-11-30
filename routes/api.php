@@ -15,11 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-}); */
+});
 
-
-//Route group admin
-/* Route::get('/vtiger/types/{user_id}', [VtigerController::class, "types"]);
-Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes'); */

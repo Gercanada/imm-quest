@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use JBtje\VtigerLaravel\Vtiger;
 
 use App\Models\User;
 use App\Models\UserDetail;
@@ -14,10 +16,47 @@ use Exception;
 class UserController extends Controller
 {
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $users = User::all();
         return $users;
     }
+
+    public function listVTUsers()
+    {
+        // if user has permision
+
+
+        $user = Auth::user();
+        $user_id = $user->id;
+        $vtiger = new Vtiger();
+
+        $cpUsers = User::Select('vtiger_contact_id')->get(); //->select('vtiger_contact_id');
+
+        //return $cpUsers;
+
+        //Get contact data of this user
+        $userQuery = DB::table('Contacts')->select('*');
+            //->WhereNotIn('id', $cpUsers);
+        $allContacts = $vtiger->search($userQuery)->result;
+        $contacts = array();
+
+        foreach ($allContacts as $contact){
+            if(in_array($contact->id, $cpUsers)){
+                //array_push( $contacts, $contact);
+
+            }
+        }
+
+        return $contacts;
+    }
+    public function importVTUsers(Request $request)
+    {
+    }
+
+
+
+
 
     public function profile()
     {

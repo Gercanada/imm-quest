@@ -45,6 +45,7 @@
             <div class="col-lg-4 col-md-6">
                 <a href="#">
                     <div class="card">
+
                         <div class="card-body">
                             <div class="d-flex no-block">
                                 <div class="mr-3 align-self-center"><span
@@ -53,7 +54,7 @@
                                         alt="Income" /></div>
                                 <div class="align-self-center">
                                     <h6 class="text-muted mt-2 mb-0">Pending items</h6>
-                                   {{--  <h2 class="warning">{{ $cl_items }}</h2> --}}
+                                    {{-- <h2 class="warning">{{ $cl_items }}</h2> --}}
                                     <h2 class="warning">{{ $vt_cl_items }}</h2>
                                 </div>
                             </div>
@@ -64,6 +65,7 @@
             <div class="col-lg-4 col-md-6">
                 <a href="#">
                     <div class="card">
+
                         <div class="card-body">
                             <div class="d-flex no-block">
                                 <div class="mr-3 align-self-center"><span
@@ -84,41 +86,95 @@
         <!-- Start row -->
         <div class="row">
             <div class="col-lg-9">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Case title</th>
-                                <th>Case type</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($vtCases as $case)
-                                <tr id="1" class="gradeX">
-                                    <td> <a href="{{ route('show_case', [$case->id])}}"> {{ $case->ticket_title }}</a></td>
-                                    <td>{{ $case->ticketcategories }} </td>
-                                    <td>{{ $case->ticketstatus }} </td>
-                                </tr>
-                            @endforeach
-                            {{-- @foreach ($cases as $case)
-                                <tr id="1" class="gradeX">
-                                    <td> <a href="{{ route('show_case', [$case->id])}}"> {{ $case->title }}</a></td>
-                                    <td>{{ $case->type }} </td>
-                                    <td>{{ $case->status }} </td>
-                                </tr>
-                            @endforeach --}}
-                        </tbody>
 
-                        <tfoot>
-                            <tr>
-                                <th>Case title</th>
-                                <th>Case type</th>
-                                <th>Status</th>
-                            </tr>
-                        </tfoot>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>My cases</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Case title</th>
+                                        <th>Case type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($vtCases as $case)
+                                        <tr id="1" class="gradeX">
+                                            <td> <a href="{{ route('show_case', [$case->id]) }}">
+                                                    {{ $case->ticket_title }}</a></td>
+                                            <td>{{ $case->ticketcategories }} </td>
+                                            <td>{{ $case->ticketstatus }} </td>
+                                        </tr>
+                                    @endforeach
+                                    {{-- @foreach ($cases as $case)
+                                        <tr id="1" class="gradeX">
+                                            <td> <a href="{{ route('show_case', [$case->id])}}"> {{ $case->title }}</a></td>
+                                            <td>{{ $case->type }} </td>
+                                            <td>{{ $case->status }} </td>
+                                        </tr>
+                                    @endforeach --}}
+                                </tbody>
 
-                    </table>
+                                <tfoot>
+                                    <tr>
+                                        <th>Case title</th>
+                                        <th>Case type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Submit pending documents</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Case title</th>
+                                        <th>Case type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($vtCases as $case)
+                                        <tr id="1" class="gradeX">
+                                            <td> <a href="{{ route('show_case', [$case->id]) }}">
+                                                    {{ $case->ticket_title }}</a></td>
+                                            <td>{{ $case->ticketcategories }} </td>
+                                            <td>{{ $case->ticketstatus }} </td>
+                                        </tr>
+                                    @endforeach
+                                    {{-- @foreach ($cases as $case)
+                                        <tr id="1" class="gradeX">
+                                            <td> <a href="{{ route('show_case', [$case->id])}}"> {{ $case->title }}</a></td>
+                                            <td>{{ $case->type }} </td>
+                                            <td>{{ $case->status }} </td>
+                                        </tr>
+                                    @endforeach --}}
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <th>Case title</th>
+                                        <th>Case type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- ============================================================== -->

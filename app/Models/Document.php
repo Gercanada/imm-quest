@@ -11,6 +11,7 @@ class Document extends Model
 
     protected $fillable = [
         'user_id',
+        'contact_id',
         'title',
         'description',
         'url_files',

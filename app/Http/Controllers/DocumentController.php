@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use JBtje\VtigerLaravel\Vtiger;
 use App\Models\User;
 use App\Models\Document;
 
@@ -12,15 +14,33 @@ class DocumentController extends Controller
 {
     public function index(Request $request)
     {
-        $user_id = Auth::user()->id;
-        $documents = Document::where('user_id', $user_id)->get();
+        return view('users.documents');
+    }
 
-        return view('users.documents', compact('documents'));
+    public function getDocuments()
+    {
+        $user = Auth::user();
+
+        $vtiger = new Vtiger();
+        //Get contact data of this user
+        $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
+        $contact = $vtiger->search($userQuery);
+
+        //Documents
+        $documentsQuery = DB::table('Documents')->select('*')
+            ->where('cf_1488', $contact->result[0]->id)
+            ->orWhere('cf_1488', '12x2427')
+            ;
+        $documents = $vtiger->search($documentsQuery)->result;
+
+        return $documents;
     }
 
     public function store(Request $request)
     {
         try {
+            $userId = 'userId';
+
             if ($request->file('file')) {
 
                 /* Multiple file upload */
@@ -40,13 +60,14 @@ class DocumentController extends Controller
 
                     $file->storeAs('documents', $filename);
 
-                    $fileArray[] = $filename;
+                    //$fileArray[] = $filename;
+                    $fileUrl = "/documents/.$userId./.$filename.";
+                    $fileUrl = "/documents/.$filename.";
 
-                    array_push($fileList, $fileArray);
+                    array_push($fileList, $filename);
                 }
 
-                return $fileList;
-
+                //return $fileList;
                 $document = new Document;
                 $document->user_id = $request['uuid'];
                 $document->title = $request['title'];
@@ -62,7 +83,7 @@ class DocumentController extends Controller
             } else {
                 return response()->json(['message' => 'error uploading file'], 503);
             }
-        } catch (Throwable $e) {
+        } catch (Exception $e) {
             return  response()->json(['message' => 'error uploading file', $e], 503);
         }
     }

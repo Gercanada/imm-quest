@@ -15,14 +15,13 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->uuid('user_id'); //contact id
-            $table->uuid('case_id'); //contact id
-            $table->string('title');
-            $table->string('file_name');
-            $table->string('file_type');
-            $table->string('file_size');
-            $table->string('document_no');
-            //$table->json('url_files');
+            $table->uuid('user_id')->nullable();
+            $table->string('contact_id')->nullable(); //contact id
+            $table->string('file_name')->nullable();
+            $table->string('file_type')->nullable();
+            $table->string('file_size')->nullable();
+            $table->string('document_no')->nullable();
+            $table->json('url_files')->nullable();
             //$table->date('expiry_date');
             //$table->date('issued_date');
             $table->timestamps();

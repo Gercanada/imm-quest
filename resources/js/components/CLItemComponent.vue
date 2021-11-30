@@ -23,13 +23,255 @@
         <div class="card-body">
           <div class="card-row">
             <div class="col border py-2">
-              <h2>Case & checklist info</h2>
-              <p v-text="caseObj"></p>
-              <p v-text="checklistObj"></p>
+              <h4>Case</h4>
+              <table class="table v-middle fs-3 mb-0 mt-4">
+                <tbody>
+                  <tr>
+                    <td>Case No</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.ticket_no"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Case title</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.ticket_title"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Category</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.ticketcategories"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Subcategory</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.cf_890"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Status</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.ticketstatus"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>No of Applicantions</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.cf_888"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Government App No</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.cf_884"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Open Date</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.cf_866"
+                    ></td>
+                  </tr>
+
+                  <tr>
+                    <td>Case type</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.ticketcategories"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Description</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="caseObj.description"
+                    ></td>
+                  </tr>
+
+                  <tr></tr>
+                </tbody>
+              </table>
+
+            </div>
+            <div class="col border py-2">
+              <h4>Checklist</h4>
+              <table class="table v-middle fs-3 mb-0 mt-4">
+                <tbody>
+                  <tr>
+                    <td>Checklist No</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="checklistObj.checklistno"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Subject</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="checklistObj.name"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>% Completed</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="checklistObj.cf_2079"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Checklist Type</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="checklistObj.cf_1706"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Applicant Full Name</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="checklistObj.cf_1181"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Completed Items</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="checklistObj.cf_1189"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Pending Items</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="checklistObj.cf_1187"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Status</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="checklistObj.cf_1179"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Related to</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="checklistObj.cf_1183"
+                    ></td>
+                  </tr>
+                  <tr></tr>
+                </tbody>
+              </table>
             </div>
             <div class="col border py-2">
               <h2>CL Item info</h2>
-              <p v-text="clitem"></p>
+
+              <table class="table v-middle fs-3 mb-0 mt-4">
+                <tbody>
+                  <tr>
+                    <td>CLItems No</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.clitemsno"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Subject</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.name"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Description</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.cf_acf_rtf_1208"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Category</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.cf_1200"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Item Status</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.cf_1578"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Required To</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.cf_1202"
+                    ></td>
+                  </tr>
+
+                  <tr>
+                    <td>Required by</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.cf_1204"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Help Link</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.cf_1212"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td>Message to Client</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.cf_1898"
+                    ></td>
+                  </tr>
+
+                  <tr>
+                    <!-- Editables on CP -->
+                    <td>Upload file</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.cf_acf_ulf_1778"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <!-- Editables on CP -->
+                    <td>Uploaded date</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.modifiedtime"
+                    ></td>
+                    <!-- Modified date -->
+                  </tr>
+                  <tr>
+                    <!-- Editables on CP -->
+                    <td>Original File Name</td>
+                    <td
+                      class="text-end font-weight-medium"
+                      v-text="clitem.cf_1970"
+                    ></td>
+                  </tr>
+                  <tr></tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -48,7 +290,7 @@
                 <div class="col-md-6">
                   <div class="row">
                     <p>Helplink</p>
-                    br
+                    b
                   </div>
                   <div class="row">
                     <p>Status</p>
@@ -160,7 +402,8 @@ export default {
   data() {
     return {
       dropzoneOptions: {
-        url: "/drive/upload",
+        // url: "/drive/upload",
+        url: "/cl-item/upload/file",
         thumbnailWidth: 150,
         maxFilesize: 5,
         parallelUploads: 3,
@@ -206,11 +449,10 @@ export default {
   },
   mounted() {
     this.userFiles();
-    //console.log("Component mounted.");
   },
   methods: {
     afterUploadComplete: async function (response) {
-      if (response.status == "success") {
+      if (response.status == "200") {
         console.log("upload successful");
         this.sendSuccess = true;
       } else {
@@ -232,11 +474,18 @@ export default {
       let me = this;
 
       axios
-        .post("/drive/upload", { file })
+        //.post("/drive/upload", { file })
+        .post("/cl-item/upload/file", {
+          title: this.title,
+          last_name: this.last_name,
+          description: this.description,
+          expiry_date: this.expiry_date,
+          id: this.id,
+        })
         .then(function (response) {
           console.log({ response });
           me.closeModal();
-          me.userFiles();
+          //me.userFiles();
         })
         .catch(function (error) {
           console.table(error);
@@ -292,6 +541,7 @@ export default {
       this.description = "";
       this.expiry_date = "";
       this.issued_date = "";
+      this.dropzone = null;
       //(this.active = false);
 
       this.submitted = false;
@@ -332,10 +582,8 @@ export default {
         case "documents": {
           switch (action) {
             case "store": {
-              //  / console.log(data);
               this.modal = 1;
               this.modalTitle = "Upload documents";
-
               this.title = data.title;
               this.description = data.description;
               this.expiry_date = data.expiry_date;
@@ -343,28 +591,6 @@ export default {
               this.actionType = 1;
               break;
             }
-            /*  case "update": {
-              this.modal = 1;
-              this.modalTitle = "Upload documents";
-              this.title = data.title;
-              this.description = data.description;
-              this.expiry_date = data.expiry_date;
-              this.issued_date = data.issued_date;
-              this.id = data.id;
-              this.actionType = 2;
-              break;
-            }
-            case "update": {
-              this.modal = 1;
-              this.modalTitle = "Upload documents";
-              this.title = data.title;
-              this.description = data.description;
-              this.expiry_date = data.expiry_date;
-              this.issued_date = data.issued_date;
-              this.id = data.id;
-              this.actionType = 2;
-              break;
-            } */
           }
         }
       }

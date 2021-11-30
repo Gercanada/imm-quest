@@ -8,7 +8,7 @@
     >
       <a
         class="sidebar-link waves-effect waves-dark sidebar-link"
-        :href="'/gototype/' + type"
+        :href="'/vtiger/list/' + type"
         aria-expanded="false"
         ><i data-feather="home" class="feather-icon"></i>
         <span class="hide-menu"> {{ type }}</span></a

@@ -37,7 +37,69 @@
         <div class="tab-pane" id="home-b1">
             <div class="card">
                 <div class="card-body">
-                    Quote info read only fields
+                    <table class="table v-middle fs-3 mb-0 mt-4">
+                        <tbody>
+                            <tr>
+                                <td>Title</td>
+                                <td class="text-end font-weight-medium">{{ $quote->subject }}</td>
+                            </tr>
+                            <tr>
+                                <td>Quote Number</td>
+                                <td class="text-end font-weight-medium">
+                                    {{ $quote->quote_no }}</td>
+                            </tr>
+                            <tr>
+                                <td>Proposal Date</td>
+                                <td class="text-end font-weight-medium">
+                                    {{ $quote->cf_966 }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Valid Until</td>
+                                <td class="text-end font-weight-medium">
+                                    {{ $quote->validtill }}</td>
+                            </tr>
+                            <tr>
+                                <td>Number of Payments</td>
+                                <td class="text-end font-weight-medium">
+                                    {{ $quote->cf_1877 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Revision</td>
+                                <td class="text-end font-weight-medium">
+                                    {{ $quote->cf_2170 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Professional Services</td>
+                                <td class="text-end font-weight-medium">
+                                    {{ $quote->cf_962 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Government Fee Subtotal</td>
+                                <td class="text-end font-weight-medium">
+                                    {{ $quote->cf_964 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Taxes</td>
+                                <td class="text-end font-weight-medium">
+                                    {{ $quote->cf_1576 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Client Approval Date</td>
+                                <td class="text-end font-weight-medium"></td>
+                            </tr>
+                            <tr>
+                                <td>Client Response to Quote</td>
+                                <td class="text-end font-weight-medium"></td>
+                            </tr>
+                            <tr>
+                                <td>Client Approval Signature</td>
+                                <td class="text-end font-weight-medium"></td>
+                            </tr>
+
+                            <tr></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <br>
