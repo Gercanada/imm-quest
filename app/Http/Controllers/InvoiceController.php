@@ -63,26 +63,6 @@ class InvoiceController extends Controller
         return view('invoices.index', compact('open_invoices', 'paid_invoices'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -92,7 +72,25 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice, $id)
     {
+        $user = Auth::user();
+        $user_id = $user->id;
+
         $vtiger = new Vtiger();
+
+        $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
+        $contact = $vtiger->search($userQuery);
+
+        //Cases
+        $casesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->result[0]->id);
+        $vtCases = $vtiger->search($casesQuery)->result;
+        $vtCasesIdArr = [];
+
+        foreach ($vtCases as $case) {
+            array_push($vtCasesIdArr, $case->id);
+        }
+
+
+
         $invoiceQuery = DB::table('Invoice')->select('*')
             ->where('id', $id);
 
@@ -104,40 +102,17 @@ class InvoiceController extends Controller
 
         $payments = $vtiger->search($paymentsQuery)->result;
 
-        return view('invoices.show', compact('invoice', 'payments'));
-    }
+        $invoiceIDArr = [];
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Invoice $invoice)
-    {
-        //
-    }
+        $documentsQuery = DB::table('Documents')->select('*')
+            ->where('cf_2129', $invoice->id)
+            ->WhereIn('cf_1487', $vtCasesIdArr)
+            ->orWhere('cf_1487', "17x3541") //test
+        ;
+        $documents = $vtiger->search($documentsQuery)->result;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Invoice $invoice)
-    {
-        //
-    }
+        /* return $documents; */
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Invoice $invoice)
-    {
-        //
+        return view('invoices.show', compact('invoice', 'payments', 'documents'));
     }
 }

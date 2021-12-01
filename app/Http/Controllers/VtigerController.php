@@ -28,15 +28,18 @@ class VtigerController extends Controller
         $vtiger = new Vtiger();
         $data = $vtiger->listTypes();
 
+        return $data;
+
         //List types enabled on laravel
         $CPTypes = VtigerType::where('user_id', $user_id)->get();
 
         //$CPTypes = VtigerType::all();
         $enableTipeArr = array();
-
-        foreach ($CPTypes as $enabledType) {
-            $typeArray = $enabledType->name;
-            array_push($enableTipeArr, $typeArray);
+        if(sizeof($enableTipeArr)>=1){
+            foreach ($CPTypes as $enabledType) {
+                $typeArray = $enabledType->name;
+                array_push($enableTipeArr, $typeArray);
+            }
         }
         // returns enableTipeArr (enabled types)
 
@@ -44,7 +47,7 @@ class VtigerController extends Controller
         $vt_types = array();
         foreach ($types as $type) {
             //$enabledArr = array();
-            if (in_array($type, $enableTipeArr)) {
+            if (in_array($type, $enableTipeArr) && sizeof($enableTipeArr)>=1) {
                 $enabledObj = (object) array('name' => $type, 'active' => 1);
                 array_push($vt_types, $enabledObj);
             } else {

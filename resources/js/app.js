@@ -6,6 +6,8 @@
 
 require('./bootstrap');
 
+require('../css/vue_modal.css');
+
 window.Vue = require('vue').default;
 
 
@@ -40,7 +42,8 @@ Vue.component('user-aside-tools', require('./components/UserAsideTools.vue').def
  */
 
 const app = new Vue({
-    el: '#app',
+    //el: '#app',
+    el: '#main-wrapper',
     data: {
         menu: 0
     },

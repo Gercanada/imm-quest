@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\UserCF;
 use App\Models\UserSubDetail;
+use Illuminate\Support\Facades\Hash;
 use Exception;
 
 class UserController extends Controller
@@ -25,26 +26,32 @@ class UserController extends Controller
     public function listVTUsers()
     {
         // if user has permision
-
-
         $user = Auth::user();
         $user_id = $user->id;
         $vtiger = new Vtiger();
 
-        $cpUsers = User::Select('vtiger_contact_id')->get(); //->select('vtiger_contact_id');
+        $cpUsers = User::Select('vtiger_contact_id')->get();
+        $cpusersIdArr = array();
 
-        //return $cpUsers;
+        foreach ($cpUsers as $cpuser) {
+            array_push($cpusersIdArr, $cpuser->vtiger_contact_id);
+        }
 
         //Get contact data of this user
-        $userQuery = DB::table('Contacts')->select('*');
-            //->WhereNotIn('id', $cpUsers);
+        $userQuery = DB::table('Contacts')->select(
+            'salutationtype',
+            'firstname',
+            'lastname',
+            'email',
+            'id'
+        )->take(100);
+        //->WhereNotIn('id', $cpUsers);
         $allContacts = $vtiger->search($userQuery)->result;
         $contacts = array();
 
-        foreach ($allContacts as $contact){
-            if(in_array($contact->id, $cpUsers)){
-                //array_push( $contacts, $contact);
-
+        foreach ($allContacts as $contact) {
+            if ($contact->id && $contact->email && !in_array($contact->id, $cpusersIdArr)) {
+                array_push($contacts, $contact);
             }
         }
 
@@ -52,8 +59,34 @@ class UserController extends Controller
     }
     public function importVTUsers(Request $request)
     {
-    }
+        $newUsers =  $request->newUsers;
+        $newPassword = $request->newPassword;
 
+        $userFullName = '';
+        $existing= null;
+
+        foreach ($newUsers as $new_user) {
+
+            if ($new_user['salutationtype']) $userFullName = $new_user['salutationtype'];
+            if ($new_user['firstname']) $userFullName .= ' ' . $new_user['firstname'];
+            if ($new_user['lastname']) $userFullName .= ' ' . $new_user['lastname'];
+
+            if ($new_user['email'] && $new_user['id']) { // in this case only be imported if has email
+                $existing = User::where('email', $new_user['email'])->first();
+                if(!$existing){
+                    User::create([
+                        'name' => $new_user['firstname'],
+                        'last_name' => $new_user['lastname'],
+                        'vtiger_contact_id' => $new_user['id'],
+                        'email' => $new_user['email'],
+                        'description' => $userFullName,
+                        'password' => Hash::make($newPassword),
+                    ]);
+                }
+            }
+            //TODOsend email for each user to change his password
+        }
+    }
 
 
 

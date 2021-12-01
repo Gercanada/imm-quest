@@ -24,7 +24,7 @@
         <!-- Start Row -->
         <div class="row">
             <div class="col-lg-4 col-md-6">
-                <a href="#">
+                <a href="{{ route('checklists') }}">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex no-block">
@@ -43,7 +43,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-md-6">
-                <a href="#">
+                <a href="{{ route('checklists') }}">
                     <div class="card">
 
                         <div class="card-body">
@@ -55,7 +55,7 @@
                                 <div class="align-self-center">
                                     <h6 class="text-muted mt-2 mb-0">Pending items</h6>
                                     {{-- <h2 class="warning">{{ $cl_items }}</h2> --}}
-                                    <h2 class="warning">{{ $vt_cl_items }}</h2>
+                                    <h2 class="warning">{{ count($vt_cl_items) }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-md-6">
-                <a href="#">
+                <a href="{{ route('cases') }}">
                     <div class="card">
 
                         <div class="card-body">
@@ -110,13 +110,6 @@
                                             <td>{{ $case->ticketstatus }} </td>
                                         </tr>
                                     @endforeach
-                                    {{-- @foreach ($cases as $case)
-                                        <tr id="1" class="gradeX">
-                                            <td> <a href="{{ route('show_case', [$case->id])}}"> {{ $case->title }}</a></td>
-                                            <td>{{ $case->type }} </td>
-                                            <td>{{ $case->status }} </td>
-                                        </tr>
-                                    @endforeach --}}
                                 </tbody>
 
                                 <tfoot>
@@ -141,32 +134,44 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Case title</th>
-                                        <th>Case type</th>
-                                        <th>Status</th>
+                                        <th>Checklist name</th>
+                                        <th>Pending items</th>
+                                        <th>Completed items</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($vtCases as $case)
+
+                                  {{--   @foreach ($vt_cl_items as $item)
+
+                                    @endforeach
+                                    @php
+                                    foreach ($vt_cl_items as $item) {
+                                        $pendingsArr = array();
+                                        if($item['cf_1216'] == )
+                                        if( $item['cf_1578']== "Pending"){
+
+                                        }
+
+                                        if($item['cf_1200']== "Document"){
+
+                                        }
+                                    }
+
+                                    @endphp --}}
+
+                                    @foreach ($pending_checklists as $checklist)
                                         <tr id="1" class="gradeX">
-                                            <td> <a href="{{ route('show_case', [$case->id]) }}">
-                                                    {{ $case->ticket_title }}</a></td>
-                                            <td>{{ $case->ticketcategories }} </td>
-                                            <td>{{ $case->ticketstatus }} </td>
+                                            <td> <a href="{{ route('show_checklist', [$checklist->id]) }}">
+                                                    {{ $checklist->name }}</a></td>
+                                            <td>{{ $checklist->cf_1187 }} </td>
+                                            <td>{{ $checklist->cf_1189 }} </td>
                                         </tr>
                                     @endforeach
-                                    {{-- @foreach ($cases as $case)
-                                        <tr id="1" class="gradeX">
-                                            <td> <a href="{{ route('show_case', [$case->id])}}"> {{ $case->title }}</a></td>
-                                            <td>{{ $case->type }} </td>
-                                            <td>{{ $case->status }} </td>
-                                        </tr>
-                                    @endforeach --}}
                                 </tbody>
 
                                 <tfoot>
                                     <tr>
-                                        <th>Case title</th>
+                                        <th>Checklist name</th>
                                         <th>Case type</th>
                                         <th>Status</th>
                                     </tr>

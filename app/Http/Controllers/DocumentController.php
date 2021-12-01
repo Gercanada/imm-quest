@@ -83,7 +83,7 @@ class DocumentController extends Controller
             } else {
                 return response()->json(['message' => 'error uploading file'], 503);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return  response()->json(['message' => 'error uploading file', $e], 503);
         }
     }

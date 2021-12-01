@@ -16,33 +16,33 @@
         <div class="card-body"> --}}
     <ul class="nav nav-tabs nav-bordered mb-3 customtab">
         <li class="nav-item">
-            <a href="#home-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
-                <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
+            <a href="#invoice-details" data-toggle="tab" aria-expanded="false" class="nav-link">
+                <i class="mdi mdi-file-document d-lg-none d-block mr-1"></i>
                 <span class="d-none d-lg-block">Invoice details</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#profile-b1" data-toggle="tab" aria-expanded="true" class="nav-link active">
-                <i class="mdi mdi-account-circle d-lg-none d-block mr-1"></i>
+            <a href="#invoice-payments" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                <i class="mdi mdi-cash-multiple d-lg-none d-block mr-1"></i>
                 <span class="d-none d-lg-block">Payments</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#settings-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
-                <i class="mdi mdi-settings-outline d-lg-none d-block mr-1"></i>
+            <a href="#invoice-paymentplan" data-toggle="tab" aria-expanded="false" class="nav-link">
+                <i class="mdi mdi-square-inc-cash d-lg-none d-block mr-1"></i>
                 <span class="d-none d-lg-block">Payment plan</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#receipts-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
-                <i class="mdi mdi-settings-outline d-lg-none d-block mr-1"></i>
+            <a href="#invoice-receipts" data-toggle="tab" aria-expanded="false" class="nav-link">
+                <i class="mdimdi-receipt d-lg-none d-block mr-1"></i>
                 <span class="d-none d-lg-block">Receipts and account statement</span>
             </a>
         </li>
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane" id="home-b1">
+        <div class="tab-pane" id="invoice-details">
             <div class="card ">
                 <div class="card-body">
                     {{-- Invoice info read only fields --}}
@@ -106,7 +106,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane show active" id="profile-b1">
+        <div class="tab-pane show active" id="invoice-payments">
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -131,7 +131,7 @@
                 </table>
             </div>
         </div>
-        <div class="tab-pane" id="settings-b1">
+        <div class="tab-pane" id="invoice-paymentplan">
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -161,7 +161,7 @@
                 </table>
             </div>
         </div>
-        <div class="tab-pane" id="receipts-b1">
+        <div class="tab-pane" id="invoice-receipts">
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -173,30 +173,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>PDF</td>
-                            <td>Otto.pdf</td>
-                            <td>2021/10/10</td>
-                            <td>
-                                <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>DOC</td>
-                            <td>Thornton.doc</td>
-                            <td>2021/10/10</td>
-                            <td>
-                                <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>PDF</td>
-                            <td>the Bird.pdf</td>
-                            <td>2021/10/10</td>
-                            <td>
-                                <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
-                            </td>
-                        </tr>
+                        @foreach ($documents as $document)
+                            <tr>
+                                <td>{{ $document->filetype }}</td>
+                                <td>{{ $document->filename }}</td>
+                                <td>{{ $document->cf_2134 }}</td>
+                                <td><a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a></td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

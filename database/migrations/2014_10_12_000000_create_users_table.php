@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();//user image
             $table->string('password')->nullable();
 
-            $table->string('vtiger_contact_id')->nullable();
+            $table->string('vtiger_contact_id')->nullable()->unique();
 
             //contact
             $table->string('phone_country_code')->nullable();
@@ -54,7 +54,7 @@ class CreateUsersTable extends Migration
             $table->date('passport_expiration_date')->nullable();
             $table->string('rating')->nullable();
             $table->string('agent_id')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('refresh_token')->nullable();

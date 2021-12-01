@@ -7,7 +7,7 @@
 @section('content')
     <div class="row page-titles">
         <div class="col-md-5 col-12 align-self-center">
-            <h3 class="text-themecolor mb-0">My checklists</h3>
+            <h3 class="text-themecolor mb-0">My Invoices</h3>
         </div>
     </div>
     <div class="row">

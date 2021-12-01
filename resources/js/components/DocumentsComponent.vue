@@ -445,7 +445,7 @@ export default {
 </script>
 
 <style>
-.modal-content {
+/* .modal-content {
   width: 100% !important;
   position: fixed !important;
   overflow-y: visible;
@@ -463,6 +463,6 @@ export default {
 .text-error {
   color: red !important;
   font-weight: bold;
-}
+} */
 </style>
 

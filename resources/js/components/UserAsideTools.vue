@@ -60,7 +60,7 @@ export default {
 
 
 <style>
-.modal-content {
+/* .modal-content {
   width: 100% !important;
   position: absolute !important;
 }
@@ -77,5 +77,5 @@ export default {
 .text-error {
   color: red !important;
   font-weight: bold;
-}
+} */
 </style>

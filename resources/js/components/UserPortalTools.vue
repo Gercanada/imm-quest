@@ -11,11 +11,11 @@
 
   <div v-else>
     <div class="row">
-      <div class="col-12">
+      <div class="col-md-12 col-lg-62">
         <div class="card">
           <div class="row card-header">
             <div class="col-md-8">
-              <h2>Enable or disable tools for users</h2>
+              <h2>Customer portal users</h2>
             </div>
             <div class="col-md-4">
               <button
@@ -28,8 +28,8 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="table-responsive">
-              <div class="table-header">Users</div>
+            <div class="table table-striped table-bordered table-responsive">
+              <!-- <div class="table-header">Users</div> -->
               <table
                 class="
                   table
@@ -43,7 +43,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Type</th>
+                   <!--  <th>Type</th> -->
                     <th>options</th>
                   </tr>
                 </thead>
@@ -51,7 +51,7 @@
                   <tr v-for="user in ArrayUsers" :key="user.id">
                     <td v-text="user.name"></td>
                     <td v-text="user.email"></td>
-                    <td v-text="user.type"></td>
+                    <!-- <td v-text="user.type"></td> -->
                     <!-- user status(Contact, lead, etc ..)  -->
                     <td>
                       <button
@@ -68,7 +68,7 @@
                   <tr>
                     <th>Case title</th>
                     <th>Case type</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
                     <th>options</th>
                   </tr>
                 </tfoot>
@@ -123,9 +123,10 @@
                             <tr>
                               <td v-text="name"></td>
                               <td v-text="email"></td>
-                              <td>
-                                <input type="text" v-model="vtContactId" />
-                              </td>
+                              <td v-text="vtContactId"></td>
+                              <!--  <td>
+                                <input type="text" v-model="" />
+                              </td> -->
                             </tr>
                           </tbody>
                         </table>
@@ -236,16 +237,27 @@
                               v-for="user in newUsersArr"
                               :key="user"
                               :value="user"
+                              :v-model="newUsersArr"
                             >
-                              <td v-text="user.firstname + +user.lastname"></td>
+                              <td>
+                                <p
+                                  class="d-inline p-1"
+                                  v-if="user.salutationtype"
+                                  v-text="user.salutationtype"
+                                ></p>
+                                <p
+                                  class="d-inline p-1"
+                                  v-if="user.firstname"
+                                  v-text="user.firstname"
+                                ></p>
+                                <p
+                                  class="d-inline p-1"
+                                  v-if="user.lastname"
+                                  v-text="user.lastname"
+                                ></p>
+                              </td>
                               <td v-text="user.email"></td>
                               <td v-text="user.id"></td>
-
-                              <!--  <td v-text="name"></td>
-                              <td v-text="email"></td>
-                              <td>
-                                <input type="text" v-model="vtContactId" />
-                              </td> -->
                             </tr>
                           </tbody>
                         </table>
@@ -256,19 +268,40 @@
               </div>
 
               <div class="modal-footer bg-info">
+                <div class="bg-info text-left">
+                  <label for="newPass">Set password for new users</label>
+                  <input
+                    class="text-left"
+                    type="text"
+                    name=""
+                    id="newPass"
+                    v-model="newPassword"
+                    required
+                  />
+                  <br />
+                  <small
+                    v-if="submitted && errors.newPassword"
+                    class="text-danger font-14"
+                    >{{ errors.newPassword }}</small
+                  >
+                </div>
+                <!--  <label for="sync-btn" class="text-left"
+                  >Import <b>965</b> Users to CP</label
+                > -->
                 <button
+                  id="sync-btm"
                   type="button"
-                  class="btn btn-primary fas fa-save"
+                  class="btn btn-primary"
                   @click="importUsers()"
                 >
-                  Save
+                  <i class="fas fa-sync">Import All</i>
                 </button>
                 <button
                   type="button"
                   class="btn btn-danger"
                   @click="closeModal()"
                 >
-                  Close
+                  <i class="far fa-window-close">Close</i>
                 </button>
               </div>
             </div>
@@ -304,6 +337,17 @@ export default {
 
       vtContactId: 0,
       loading: false,
+
+      user_salutationtype: "",
+      user_firstname: "",
+      user_lastname: "",
+      user_email: "",
+      user_id: "",
+
+      newPassword: "",
+
+      submitted: false,
+      errors: {},
     };
   },
 
@@ -366,11 +410,7 @@ export default {
               this.email = data["email"];
               this.actionType = 2; //import
               this.vtContactId = data["vtiger_contact_id"];
-              //this.selectTypes(data["id"]);
-
-              console.log(this.actionType);
               break;
-              //const newOptions = $(".select2").change().val();
             }
           }
       }
@@ -434,8 +474,32 @@ export default {
           console.table(error);
         });
     },
-    impoprtUsers() {
-      console.log("to import");
+    importUsers() {
+      this.submitted = true;
+      this.errors = {};
+      this.valideForm();
+      console.log(Object.keys(this.errors));
+      if (Object.keys(this.errors).length) {
+        return;
+      }
+
+      let me = this;
+      axios
+        .post("/imm/contacts", {
+          newUsers: me.newUsersArr,
+          newPassword: me.newPassword,
+        })
+        .then(function (response) {
+          me.closeModal();
+        })
+        .catch(function (error) {
+          console.table(error);
+        });
+    },
+    valideForm() {
+      if (!this.newPassword) {
+        this.errors.newPassword = "Password for all users is required";
+      }
     },
   },
 
@@ -445,24 +509,3 @@ export default {
 };
 </script>
 
-
-<style>
-.modal-content {
-  width: 100% !important;
-  position: absolute !important;
-}
-.mostrar {
-  display: list-item !important;
-  opacity: 1 !important;
-  position: absolute !important;
-  background-color: #3c29297a !important;
-}
-.div-error {
-  display: flex;
-  justify-content: center;
-}
-.text-error {
-  color: red !important;
-  font-weight: bold;
-}
-</style>
