@@ -28,14 +28,12 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex no-block">
-                                <div class="mr-3 align-self-center"><span
-                                        class="lstick d-inline-block align-middle"></span><img
-                                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/income.png"
-                                        alt="Income" /></div>
+                                <div class="mr-3 align-self-center"><span class="lstick d-inline-block align-middle"></span>
+                                    <i class="fas fa-clipboard-check fa-3x"></i>
+                                </div>
                                 <div class="align-self-center">
                                     <h6 class="text-muted mt-2 mb-0">Active checklists</h6>
-                                    {{-- <h2 class="info">{{ $checklists }}</h2> --}}
-                                    <h2 class="info">{{ $vt_checklists }}</h2>
+                                    <h2 class="text-center">{{ $vt_checklists }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -49,13 +47,12 @@
                         <div class="card-body">
                             <div class="d-flex no-block">
                                 <div class="mr-3 align-self-center"><span
-                                        class="lstick d-inline-block align-middle"></span><img
-                                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/expense.png"
-                                        alt="Income" /></div>
+                                        class="lstick d-inline-block align-middle">
+                                    </span>
+                                    <i style="font-size: 36px; rotate(180deg);" class="mdi mdi-timer-sand "></i></div>
                                 <div class="align-self-center">
                                     <h6 class="text-muted mt-2 mb-0">Pending items</h6>
-                                    {{-- <h2 class="warning">{{ $cl_items }}</h2> --}}
-                                    <h2 class="warning">{{ count($vt_cl_items) }}</h2>
+                                    <h2 class="text-center">{{ count($vt_cl_items) }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -69,12 +66,11 @@
                         <div class="card-body">
                             <div class="d-flex no-block">
                                 <div class="mr-3 align-self-center"><span
-                                        class="lstick d-inline-block align-middle"></span><img
-                                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/assets.png"
-                                        alt="Income" /></div>
+                                        class="lstick d-inline-block align-middle"></span><i
+                                        class="fas fa-ticket-alt fa-3x"></i></div>
                                 <div class="align-self-center">
                                     <h6 class="text-muted mt-2 mb-0">Active cases</h6>
-                                    <h2 class="success">{{ $vt_active_cases }}</h2>
+                                    <h2 class="text-center">{{ $vt_active_cases }}</h2>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +137,7 @@
                                 </thead>
                                 <tbody>
 
-                                  {{--   @foreach ($vt_cl_items as $item)
+                                    {{-- @foreach ($vt_cl_items as $item)
 
                                     @endforeach
                                     @php

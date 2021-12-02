@@ -55,8 +55,8 @@ class CPCaseController extends Controller
 
         $checklistsQuery = DB::table('Checklist')
             ->where('cf_1199', $case->id) // case_id
-            ->orWhere('cf_1199', '17x3558') //test
-            ->orWhere('id', '43x9828') // test
+            //->orWhere('cf_1199', '17x3558') //test
+            //->orWhere('id', '43x9828') // test
             ->select('*');
 
         $checklists    = $vtiger->search($checklistsQuery)->result;
@@ -94,7 +94,7 @@ class CPCaseController extends Controller
 
         $checklistsQuery = DB::table('Checklist')
             ->where('cf_1199', $case->id) // case_id
-            ->orWhere('cf_1199', '17x3558') //test
+            //->orWhere('cf_1199', '17x3558') //test
             ->orWhere('id', '43x9828') // test
             ->select('*');
 

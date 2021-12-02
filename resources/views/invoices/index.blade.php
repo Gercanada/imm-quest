@@ -24,20 +24,20 @@
                                     <th scope="col">Grand Total</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Make or Report A Payment</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($open_invoices as $openInvoice)
                                     <tr>
-                                        <td>{{ $openInvoice->subject }}</td>
+                                        <td> <a href="{{ route('show_invoice', [$openInvoice->id]) }}">
+                                                {{ $openInvoice->subject }}
+                                            </a>
+                                        </td>
                                         <td>{{ $openInvoice->hdnSubTotal }}</td>
                                         <td>{{ $openInvoice->invoicestatus }}</td>
-                                        <td></td>
-                                        <td>
-                                            <a href="{{ route('show_invoice', [$openInvoice->id]) }}" type="button"
-                                                class="btn btn-outline-success btn-rounded">
-                                                <i class="fas fa-eye"></i>
+                                        <td class="text-center">
+                                            <a href="" type="button" class="btn btn-outline-success btn-rounded">
+                                                <i class="fas fa-dollar-sign "></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -47,38 +47,35 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Invoices Paid in Full</h4>
-                        <div class="table-responsive">
-                            <table class="table dt_alt_pagination table-striped table-bordered display">
-                                <thead>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Invoices Paid in Full</h4>
+                    <div class="table-responsive">
+                        <table  class="table dt_alt_pagination table-striped table-bordered display">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Invoice Title</th>
+                                    <th scope="col">Grand Total</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($paid_invoices as $paidInvoice)
                                     <tr>
-                                        <th scope="col">Invoice Title</th>
-                                        <th scope="col">Grand Total</th>
-                                        <th scope="col">Status</th>
-                                        <th></th>
+                                        <td>
+                                            <a href="{{ route('show_invoice', [$paidInvoice->id]) }}">
+                                                {{ $paidInvoice->subject }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $paidInvoice->hdnSubTotal }}</td>
+                                        <td>{{ $paidInvoice->invoicestatus }}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($paid_invoices as $paidInvoice)
-                                        <tr>
-                                            <td>{{ $openInvoice->subject }}</td>
-                                            <td>{{ $openInvoice->hdnSubTotal }}</td>
-                                            <td>{{ $openInvoice->invoicestatus }}</td>
-                                            <td>
-                                                <a href="{{ route('show_invoice', [$openInvoice->id]) }}" type="button"
-                                                    class="btn btn-outline-success btn-rounded">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

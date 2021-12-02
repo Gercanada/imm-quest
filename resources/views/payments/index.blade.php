@@ -28,6 +28,7 @@
                         <table class="table dt_alt_pagination table-striped table-bordered display" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Case</th>
                                     <th>Invoice No</th>
                                     <th>Payment date</th>
                                     <th>Payment method</th>
@@ -38,11 +39,12 @@
                             <tbody>
                                 @foreach ($payments as $payment)
                                     <tr>
+                                        <td>{{ $payment->cf_1140 }}</td>
                                         <td>{{ $payment->cf_1141 }}</td>
                                         <td>{{ $payment->cf_1146 }}</td>
                                         <td>{{ $payment->cf_1148 }}</td>
                                         <td>{{ $payment->cf_1144 }}</td>
-                                        <td>{{ $payment->cf_2077 }}</td>
+                                        <td>{{ $payment->cf_1150 }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -108,7 +108,7 @@ class CLItemController extends Controller
 
                 $fileList = array();
 
-                $destination = "documents/$contact_id/clitems/$clitem->id";
+                $destination = "documents/contact_$contact_id/clitems/$clitem->id";
                 //loop throu the array
                 foreach ($files as $file) {
                     //return $file;

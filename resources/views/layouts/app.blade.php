@@ -52,6 +52,9 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
+    @if (!Auth::user())
+    @yield('content'){{-- login view --}}
+    @endif
     <div id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->

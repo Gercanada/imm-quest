@@ -12,6 +12,10 @@ use App\Models\UserDetail;
 use App\Models\UserCF;
 use App\Models\UserSubDetail;
 use Illuminate\Support\Facades\Hash;
+
+
+
+use App\Mail\SendMail;
 use Exception;
 
 class UserController extends Controller
@@ -63,7 +67,7 @@ class UserController extends Controller
         $newPassword = $request->newPassword;
 
         $userFullName = '';
-        $existing= null;
+        $existing = null;
 
         foreach ($newUsers as $new_user) {
 
@@ -73,7 +77,7 @@ class UserController extends Controller
 
             if ($new_user['email'] && $new_user['id']) { // in this case only be imported if has email
                 $existing = User::where('email', $new_user['email'])->first();
-                if(!$existing){
+                if (!$existing) {
                     User::create([
                         'name' => $new_user['firstname'],
                         'last_name' => $new_user['lastname'],
@@ -84,7 +88,6 @@ class UserController extends Controller
                     ]);
                 }
             }
-            //TODOsend email for each user to change his password
         }
     }
 
@@ -149,36 +152,35 @@ class UserController extends Controller
         } catch (Exception $e) {
             return response()->json($e, 500);
         }
+    }
+
+    /**
+     * This method is by vtier called as webservice to create user in CP DB
+     */
+    public function createUser(Request $request)
+    {
+
+        try {
+            /*   $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            $out->write($request);
+            return $request; */
+
+            User::create([
+                'user_name' => $request->user,
+                'vtiger_contact_id' =>  $request->cid,
+                'password' => Hash::make($request->pass),
+            ]);
 
 
-        //$updateDetails->email               = $request->email;
-        /*  $updateDetails->phone               = $request->phone;
-        $updateDetails->title               = $request->title;
-        $updateDetails->department          = $request->department;
-        $updateDetails->fax                 = $request->fax;
-        $updateDetails->reportsto           = $request->reportsto;
-        $updateDetails->training            = $request->training;
-        $updateDetails->usertype            = $request->usertype;
-        $updateDetails->contacttype         = $request->contacttype; */
-        /* $updateDetails->donotcall           = $request->donotcall; */
-        /* $updateDetails->emailoptout         = $request->emailoptout; */
-        /* $updateDetails->imagename           = $request->imagename; */
-        /* $updateDetails->reference           = $request->reference; */
-        /* $updateDetails->notify_owner        = $request->notify_owner; */
-        /* $updateDetails->isconvertedfromlead = $request->isconvertedfromlead; */
+            return response()->json('exitoso', 200);
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+    public function removeUser(Request $request)
+    {
 
-        //$updateCF->contactid = $user->id;
-
-        //$updateSub->contactsubscriptionid = $user->id;
-        /* $updateSub->contactsubscriptionid   =$request->any;
-        $updateSub->homephone               =$request->any;
-        $updateSub->otherphone              =$request->any;
-        $updateSub->assistant               =$request->any;
-        $updateSub->assistantphone          =$request->any;
-        $updateSub->birthday                =$request->any;
-        $updateSub->laststayintouchrequest  =$request->any;
-        $updateSub->laststayintouchsavedate =$request->any;
-        $updateSub->leadsource              =$request->any; */
+        return $request;
     }
 
     /**

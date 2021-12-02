@@ -26,27 +26,25 @@
                                     <th>Checklist type</th>
                                     <th>Checklist for</th>
                                     <th> % Completed</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($active_checklists as $activeChecklist)
                                     <tr>
                                         <td>{{ $activeChecklist->cf_1199 }}</td>
-                                        <td>{{ $activeChecklist->name }}</td>
+                                        <td>
+                                            <a href="{{ route('show_checklist', [$activeChecklist->id]) }}">
+                                                {{ $activeChecklist->name }}
+                                            </a>
+                                        </td>
                                         <td>{{ $activeChecklist->cf_1706 }}</td>
                                         <td>{{ $activeChecklist->cf_1181 }}</td>
                                         <td>
                                             @if ($activeChecklist->cf_2079)
-                                            <span class="bg-warning">{{ $activeChecklist->cf_2079 }}%</span>
+                                                <span class="bg-warning">{{ $activeChecklist->cf_2079 }}%</span>
                                             @endif
-                                         </td>
-                                        <td>
-                                            <a href="{{ route('show_checklist', [$activeChecklist->id]) }}" type="button"
-                                                class="btn btn-outline-success btn-rounded">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
                                         </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -57,7 +55,6 @@
                                     <th>Checklist type</th>
                                     <th>Checklist for</th>
                                     <th> % Completed</th>
-                                    <th></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -82,23 +79,20 @@
                                     <th>Checklist type</th>
                                     <th>Checklist for</th>
                                     <th> % Completed</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($completed_checklists as $completed_cl)
                                     <tr>
                                         <td>{{ $activeChecklist->cf_1199 }}</td>
-                                        <td>{{ $activeChecklist->name }}</td>
+                                        <td> <a href="{{ route('show_checklist', [$activeChecklist->id]) }}">
+                                                {{ $activeChecklist->name }}
+                                            </a>
+
+                                        </td>
                                         <td>{{ $activeChecklist->cf_1706 }}</td>
                                         <td>{{ $activeChecklist->cf_1181 }}</td>
                                         <td><span class="bg-success">{{ $activeChecklist->cf_2079 }}</span> </td>
-                                        <td>
-                                            <a href="{{ route('show_checklist', [$activeChecklist->id]) }}" type="button"
-                                                class="btn btn-outline-success btn-rounded">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -109,7 +103,6 @@
                                     <th>Checklist type</th>
                                     <th>Checklist for</th>
                                     <th> % Completed</th>
-                                    <th></th>
                                 </tr>
                             </tfoot>
                         </table>

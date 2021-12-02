@@ -14,7 +14,7 @@
 
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
-                            <a href="{{ route('profile') }}" class="sidebar-link p-0">
+                            <a href="{{-- {{ route('profile') }} --}}" class="sidebar-link p-0">
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu"> My Profile </span>
                             </a>
@@ -68,7 +68,7 @@
                             class="feather-icon"></i><span class="hide-menu">Payments</span></a></li>
 
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{ route('commboard') }}" aria-expanded="false"><i data-feather="message-square"
+                        href="#" aria-expanded="false"><i data-feather="message-square"
                             class="feather-icon"></i><span class="hide-menu">Comm board</span></a></li>
 
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"

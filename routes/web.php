@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\CPCaseController;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +14,6 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CLItemController;
 use App\Http\Controllers\GoogleDriveController;
 
-use App\Http\Controllers\ViewController;
 use App\Http\Controllers\VtigerController;
 
 /*
@@ -27,21 +26,16 @@ use App\Http\Controllers\VtigerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-
-
-
 Auth::routes();
 
 //Google Drive Routes
-Route::get('/login/google', [LoginController::class, 'redirectToProvider'])->name('login.google');
+/* Route::get('/login/google', [LoginController::class, 'redirectToProvider'])->name('login.google');
 Route::get('/login/google/callback', [LoginController::class, 'handleProviderCallback']);
-
+ */
 
 //Route::group(['middleware' => ['auth', 'permission']], function () {  //Routes for CP Admin
-Route::get('/users', [UserController::class, "index"]);
-
+/* Route::get('/users', [UserController::class, "index"]);
+ */
 //});
 
 Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
@@ -107,19 +101,3 @@ Route::middleware('auth')->group(function () {
     Route::post('/drive/delete', [GoogleDriveController::class, 'delete']);
 });
 
-
-//Route::get('/checklist:id', [ViewController::class, 'show_checklist'])->middleware(['auth'])->name('show_checklist');
-//Route::get('/checklist:id/item/:id', [ViewController::class, 'checklist_item'])->middleware(['auth'])->name('checklist_item');
-Route::get('/checklist:id/item-ef/:id', [ViewController::class, 'checklist_item_ef'])->middleware(['auth'])->name('checklist_item_ef');
-
-
-// Route::get('/quotes:id/pending', [ViewController::class, 'pending_quotes'])->middleware(['auth'])->name('pending_quotes');
-Route::get('/quotes:id/accepted', [ViewController::class, 'accepted_quotes'])->middleware(['auth'])->name('accepted_quotes');
-
-
-//Route::get('/documents', [ViewController::class, 'documents'])->middleware(['auth'])->name('documents');
-Route::get('/commboard', [ViewController::class, 'commboard'])->middleware(['auth'])->name('commboard');
-
-
-/* Route::get('/invoices:id', [ViewController::class, 'show_invoice'])->middleware(['auth'])->name('show_invoice'); */
-Route::post('/documents', [DocumentController::class, 'store']);
