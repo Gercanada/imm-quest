@@ -102,11 +102,11 @@ class UserController extends Controller
     public function account()
     {
         $user_id = Auth::user()->id;
-        $user = User::with('contact_address')
-            ->with('contact_details')
-            //->with('contact_cf')
-            ->with('contact_sub_details')
-            ->findOrFail($user_id);
+        $user = User::findOrFail($user_id);
+        //with('contact_address')
+        //->with('contact_details')
+        //->with('contact_cf')
+        //->with('contact_sub_details')
         return $user;
     }
 
@@ -161,7 +161,7 @@ class UserController extends Controller
     {
 
         try {
-            /*   $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+             /*  $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->write($request);
             return $request; */
 
@@ -169,6 +169,8 @@ class UserController extends Controller
                 'user_name' => $request->user,
                 'vtiger_contact_id' =>  $request->cid,
                 'password' => Hash::make($request->pass),
+                'name'=>$request->firstname,
+                'last_name'=>$request->lastname,
             ]);
 
 
@@ -192,5 +194,28 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function newPassword(Request $request)
+    {
+        return $request;
+        //return view('auth.passwords.change-password');
+    }
+    public function newUserName(Request $request)
+    {
+        try {
+            $user = Auth::user();
+
+            if (User::where('alternative_username', $request->alternative_username)->firstOrFail()) {
+                return 'Username already in use, try another';
+            } else {
+                $update = User::where('id', $user->id)->firstOrFail();
+                $update->alternative_username = $request->alternative_username;
+                $update->save();
+            }
+        } catch (\Exception $e) {
+            return response()->json([$e, 500]);
+        }
     }
 }

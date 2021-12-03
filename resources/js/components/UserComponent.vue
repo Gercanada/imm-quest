@@ -46,7 +46,13 @@
                     <tr></tr>
                     <tr>
                       <th>Last name</th>
-                      <td v-text="userObj.contact_details ? userObj.contact_details.lastname : ''"></td>
+                      <td
+                        v-text="
+                          userObj.contact_details
+                            ? userObj.contact_details.lastname
+                            : ''
+                        "
+                      ></td>
                     </tr>
                     <tr>
                       <th>Nationalities</th>
@@ -54,7 +60,13 @@
                     </tr>
                     <tr>
                       <th>Mobile phone</th>
-                      <td v-text="userObj.contact_details ? userObj.contact_details.mobile :''"></td>
+                      <td
+                        v-text="
+                          userObj.contact_details
+                            ? userObj.contact_details.mobile
+                            : ''
+                        "
+                      ></td>
                     </tr>
                     <tr>
                       <th>Watsapp number</th>
@@ -66,7 +78,13 @@
                     </tr>
                     <tr>
                       <th>Secondary email</th>
-                      <td v-text="userObj.contact_details ? userObj.contact_details.secondaryemail : ''"></td>
+                      <td
+                        v-text="
+                          userObj.contact_details
+                            ? userObj.contact_details.secondaryemail
+                            : ''
+                        "
+                      ></td>
                     </tr>
                     <tr>
                       <th>Lead source</th>
@@ -148,235 +166,119 @@
             <div class="modal-body">
               <form enctype="multipart/form-data" class="form-horizontal">
                 <div style="overflow-x: auto; overflow-y: auto; min-width: 80%">
-                  <!-- <div class="form-group">
-                    <label for="inputEmail">Email address</label>
-                    <input
-                      type="email"
-                      class="form-control disabled"
-                      id="inputEmail"
-                      aria-describedby="emailHelp"
-                      placeholder="Enter email"
-                      v-model="email"
-                    />
-                    <small
-                      v-if="submitted && errors.email"
-                      class="text-danger font-14"
-                      >{{ errors.email }}</small
-                    >
-                  </div> -->
                   <div class="form-group">
-                    <label for="inputEmail2">Secondary email</label>
+                    <!-- here shows username assigned by immcase, this cant be changed -->
+                    <label for="inputEmail2">User name</label>
                     <input
-                      type="email"
+                      type="text"
                       class="form-control"
                       id="inputEmail2"
                       aria-describedby="secondary_emailHelp"
-                      placeholder="Enter secondary_email"
-                      v-model="secondary_email"
+                      placeholder="Default username"
+                      v-model="user_name"
+                      disabled
                     />
-                    <small
-                      v-if="submitted && errors.secondary_email"
-                      class="text-danger font-14"
-                      >{{ errors.secondary_email }}</small
-                    >
-                  </div>
-                  <!-- <div class="form-group">
-                    <label for="inputName">Name</label>
-                    <input
-                      type="text"
-                      class="form-control disabled"
-                      id="inputName"
-                      aria-describedby="textHelp"
-                      placeholder="Type your name or names"
-                      v-model="name"
-                    />
-                    <small
-                      v-if="submitted && errors.name"
-                      class="text-danger font-14"
-                      >{{ errors.name }}</small
-                    >
                   </div>
                   <div class="form-group">
-                    <label for="inputLastName">Last name</label>
+                    <!-- alternative username -->
+                    <label for="alternative-username"
+                      >Alternative username</label
+                    >
                     <input
                       type="text"
                       class="form-control"
-                      id="inputLastName"
-                      aria-describedby="textHelp"
-                      placeholder="Ingrese primer apellido"
-                      v-model="last_name"
+                      id="alternative-username"
+                      aria-describedby="alternative username"
+                      placeholder="Enter alternative username"
+                      v-model="alternative_username"
                     />
                     <small
-                      v-if="submitted && errors.last_name"
+                      v-if="submitted && errors.alternative_username"
                       class="text-danger font-14"
-                      >{{ errors.last_name }}</small
+                      >{{ errors.alternative_username }}</small
                     >
                   </div>
-                  <div class="form-group">
-                    <label for="inputNationalities">Nationalities</label>
 
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="inputNationalities"
-                      aria-describedby="textHelp"
-                      placeholder="Ingrese primer apellido"
-                      v-model="nationalities"
-                    />
-                    <small
-                      v-if="submitted && errors.nationalities"
-                      class="text-danger font-14"
-                      >{{ errors.nationalities }}</small
-                    >
-                  </div> -->
-
-                  <div class="form-group">
-                    <label for="inputmobphone">Mobile phone</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="inputmobphone"
-                      aria-describedby="textHelp"
-                      placeholder="Type your principal Mobile phone number"
-                      v-model="mobile_phone"
-                    />
-                    <small
-                      v-if="submitted && errors.mobile_phone"
-                      class="text-danger font-14"
-                      >{{ errors.mobile_phone }}</small
-                    >
-                  </div>
-                  <!--  <div class="form-group">
-                    <label for="inputphone">Phone</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="inputphone"
-                      aria-describedby="textHelp"
-                      placeholder="Type your home phone"
-                      v-model="phone"
-                    />
-                    <small
-                      v-if="submitted && errors.phone"
-                      class="text-danger font-14"
-                      >{{ errors.phone }}</small
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="inputfax">Fax</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="inputfax"
-                      aria-describedby="textHelp"
-                      placeholder="Type your fax number"
-                      v-model="fax"
-                    />
-                    <small
-                      v-if="submitted && errors.fax"
-                      class="text-danger font-14"
-                      >{{ errors.fax }}</small
-                    >
-                  </div> -->
-
-                  <!--  <div class="form-group">
-                    <label for="inputSecondLastName">Watsapp number</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="inputSecondLastName"
-                      aria-describedby="textHelp"
-                      placeholder="Type number that user for wasapp"
-                      v-model="watsapp_no"
-                    />
-                    <small
-                      v-if="submitted && errors.watsapp_no"
-                      class="text-danger font-14"
-                      >{{ errors.watsapp_no }}</small
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="inputCareAgent">Care agent</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="inputCareAgent"
-                      aria-describedby="textHelp"
-                      placeholder="Type number that user for wasapp"
-                      v-model="care_agent"
-                    />
-                    <small
-                      v-if="submitted && errors.care_agent"
-                      class="text-danger font-14"
-                      >{{ errors.care_agent }}</small
-                    >
-                  </div> -->
-
-                  <!-- <div class="form-check">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="statusCheck"
-                      v-model="email_out_op"
-                    />
-                    <label class="form-check-label" for="statusCheck"
-                      >Email out option ?</label
-                    >
-                    <small id="textHelp" class="form-text text-muted"
-                      >Now email out is :</small
-                    >
-                  </div> -->
-
-                  <!--  <div class="row">
-                    <div class="col">
-                      <div class="form-check">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="passportCheck"
-                          v-model="has_passport"
-                        />
-                        <label class="form-check-label" for="passportCheck"
-                          >Has passport
-                        </label>
-                        <small id="textHelp" class="form-text text-muted"
-                          >Actual status :
-                        </small>
-                      </div>
+                  <div class="form-group text-center mt-4">
+                    <div class="col-xs-12">
+                      <button
+                        v-if="actionType == 1"
+                        type="button"
+                        class="btn btn-primary fas fa-user"
+                        v-on:click="updateUsername()"
+                      >
+                        Update username
+                      </button>
                     </div>
-                    <div class="col">
-                      <div class="form-group">
-                        <label for="inputPassportExpiration"
-                          >Passport expiration date</label
-                        >
-                        <input
-                          type="date"
-                          class="form-control"
-                          id="inputPassportExpiration"
-                          aria-describedby="textHelp"
-                          placeholder="Type number that user for wasapp"
-                          v-model="watsapp_no"
-                        />
-                        <small
-                          v-if="submitted && errors.watsapp_no"
-                          class="text-danger font-14"
-                          >{{ errors.watsapp_no }}</small
-                        >
-                      </div>
+                  </div>
+                  <!--  -->
+                  <div class="form-group row">
+                    <label
+                      for="password"
+                      class="col-md-4 col-form-label text-md-right"
+                    >
+                      Password</label
+                    >
+
+                    <div class="col-md-6">
+                      <input
+                        type="password"
+                        class="
+                          form-control
+                          @error('password')
+                          is-invalid
+                          @enderror
+                        "
+                        v-model="password"
+                        required
+                        autocomplete="new-password"
+                      />
+
+                      <!-- @error('password') -->
+
+                      <!--  @enderror -->
                     </div>
-                  </div> -->
+                  </div>
+
+                  <div class="form-group row">
+                    <label
+                      for="password-confirm"
+                      class="col-md-4 col-form-label text-md-right"
+                      >Confirm Password</label
+                    >
+
+                    <div class="col-md-6">
+                      <input
+                        type="password"
+                        class="form-control"
+                        required
+                        v-model="confirm_password"
+                        autocomplete="new-password"
+                      />
+
+                      <small
+                        v-if="submitted && errors.password"
+                        class="text-danger font-14"
+                        >{{ errors.password }}</small
+                      >
+                    </div>
+                  </div>
+                  <div class="form-group text-center mt-4">
+                    <div class="col-xs-12">
+                      <button
+                        v-if="actionType == 1"
+                        type="button"
+                        class="btn btn-primary fas fa-key"
+                        v-on:click="updatePassword()"
+                      >
+                        Change password
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
-              <button
-                v-if="actionType == 1"
-                type="button"
-                class="btn btn-primary fas fa-save"
-                v-on:click="updateAccount()"
-              >
-                Save
-              </button>
               <button
                 type="button"
                 v-if="actionType == 1"
@@ -399,6 +301,12 @@
 export default {
   data() {
     return {
+      alternative_username: "",
+      message: "",
+      password: "",
+      confirm_password: "",
+      user_name: "",
+      ////
       id: "",
       name: "",
       last_name: "",
@@ -444,7 +352,13 @@ export default {
       axios
         .get("/account")
         .then(function (response) {
-          me.userObj = response.data;
+          console.log("here");
+          console.log(response.data);
+          console.log(response.data.user_name);
+          /*    me.userObj = response.data; */
+
+          me.user_name = response.data.user_name;
+          me.alternative_username = response.data.alternative_username;
         })
         .catch(function (error) {
           console.log(error);
@@ -498,6 +412,47 @@ export default {
         });
     },
 
+    updateUsername() {
+      this.submitted = true;
+      this.errors = {};
+      this.valideUsername();
+      console.log(Object.keys(this.errors));
+      if (Object.keys(this.errors).length) {
+        return;
+      }
+      axios
+        .post("/new_username", {
+          alternative_username: this.alternative_username,
+        })
+        .then(function (response) {
+          me.closeModal();
+        })
+        .catch(function (error) {
+          console.table(error);
+        });
+    },
+
+    updatePassword() {
+      this.submitted = true;
+      this.errors = {};
+      this.validePass();
+      console.log(Object.keys(this.errors));
+      if (Object.keys(this.errors).length) {
+        return;
+      }
+      axios
+        .post("/new_password", {
+          new_password: this.new_password,
+          confirm_password: this.confirm_password,
+        })
+        .then(function (response) {
+          me.closeModal();
+        })
+        .catch(function (error) {
+          console.table(error);
+        });
+    },
+
     closeModal() {
       //Cerrar modals
       this.modal = 0;
@@ -510,60 +465,24 @@ export default {
 
         (this.submitted = false);
       this.errors = {};
-      this.userAccount();
+      //this.userAccount();
     },
 
     //Validar campos requeridos
-    valideForm() {
-      if (!this.code) {
-        this.errors.code = "El código es un campo requerido";
+    validePass() {
+      if (!this.password && !this.confirm_password) {
+        this.errors.password = "Password fields cant be blank";
       }
-
-      if (!this.name) {
-        this.errors.name = "El nombre es un campo requerido";
+      if (this.password) {
+        if (this.password !== this.confirm_password) {
+          this.errors.password = "Password and  confirm not equals";
+        }
       }
-      this.validateField("name");
-
-      if (!this.last_name) {
-        this.errors.last_name = "Last name is required";
-      }
-      this.validateField("last_name");
-
-      if (!this.nationalities) {
-        this.errors.nationalities = "Nationalities is required";
-      }
-      this.validateField("nationalities");
-
-      if (!this.phone) {
-        this.errors.phone = "Phone is required";
-      }
-      this.validateField("phone");
-
-      if (!this.email) {
-        this.errors.email = "El correo electrónico es un campo requerido";
-      }
-      this.validateField("email");
     },
-    validateField(field) {
-      if (field === "email") {
-        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
-          this.errors.email = "Please enter a valid email address";
-        }
-        return;
-      }
-      if (field === "secondary_email") {
-        if (
-          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-            this.secondary_email
-          )
-        ) {
-          this.errors.secondary_email = "Please enter a valid email address";
-        }
-        return;
-      }
-
-      if (!/^[A-Za-z\u00C0-\u00FF\-\_]*$/i.test(this.field)) {
-        this.errors[field] = `El campo ${field} solo admite letras y guiones`;
+    valideUsername() {
+      if (!this.alternative_username) {
+        this.errors.alternative_username =
+          "Alternative username field cant be empty";
       }
     },
 
@@ -578,7 +497,9 @@ export default {
               this.modalTitle = "Update data";
 
               (this.name = data.name),
-                (this.last_name = data.last_name),
+                (this.user_name = data.user_name),
+                (this.alternative_username = data.alternative_username),
+                /* (this.last_name = data.last_name),
                 (this.nationalities = data.nationalities),
                 (this.mobile_phone = data.mobile_phone),
                 (this.watsapp_no = data.watsapp_no),
@@ -599,7 +520,7 @@ export default {
                 (this.rating = data.rating),
                 (this.watsapp_update_option = data.watsapp_update_option),
                 (this.agent_id = data.agent_id),
-                (this.description = data.description),
+                (this.description = data.description), */
                 (this.id = data.id);
               this.actionType = 1;
               break;
@@ -613,6 +534,5 @@ export default {
 </script>
 
 <style>
-
 </style>
 

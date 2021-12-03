@@ -16,6 +16,7 @@ class Document extends Model
         'description',
         'url_files',
         'expiry_date',
-        'issued_date'
+        'issued_date',
+        'syncronized'
     ];
 }

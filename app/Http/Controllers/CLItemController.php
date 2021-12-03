@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\CLItem;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
 use App\Models\User;
@@ -87,10 +89,10 @@ class CLItemController extends Controller
     {
         try {
             $user = Auth::user();
-            //$user_id = $user->id;
             $vtiger = new Vtiger();
-            $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
+            $userQuery = DB::table('Contacts')->select('id', 'contact_no')->where("contact_no", $user->vtiger_contact_id)->take(1);
             $contact = $vtiger->search($userQuery);
+            //return $contact;
 
             $clitemsQuery =  DB::table('CLItems')->select('*')
                 ->where('id', $request->id)
@@ -99,6 +101,8 @@ class CLItemController extends Controller
             $contact_id = $contact->result[0]->id;
             $clitem = $vtiger->search($clitemsQuery)->result[0];
 
+
+
             if ($request->file('file')) {
                 /* Multiple file upload */
                 $files = $request->file('file');
@@ -106,9 +110,12 @@ class CLItemController extends Controller
                     $files = [$files];
                 }
 
-                $fileList = array();
 
-                $destination = "documents/contact_$contact_id/clitems/$clitem->id";
+                $fileList = array();
+                $contact_no = $contact->result[0]->contact_no;
+
+                $destination = "documents/contact/$contact_no/clitems/$clitem->id";
+                //return $destination;
                 //loop throu the array
                 foreach ($files as $file) {
                     //return $file;
@@ -130,6 +137,22 @@ class CLItemController extends Controller
         } catch (\Exception $e) {
             return  response()->json(['message' => 'error uploading file', $e], 503);
         }
+    }
+
+
+
+    public function downloadFile($contact)
+    {
+        $directory = "/documents/contact/$contact";
+
+        $files = Storage::disk('local')->allFiles($directory);
+
+        $urlFiles = [];
+
+        foreach ($files as $file) {
+            array_push($urlFiles, asset(Storage::url($file)));
+        }
+        return $urlFiles;
     }
 
     /**

@@ -5214,107 +5214,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      alternative_username: "",
+      message: "",
+      password: "",
+      confirm_password: "",
+      user_name: "",
+      ////
       id: "",
       name: "",
       last_name: "",
@@ -5356,7 +5264,13 @@ __webpack_require__.r(__webpack_exports__);
     userAccount: function userAccount() {
       var me = this;
       axios.get("/account").then(function (response) {
-        me.userObj = response.data;
+        console.log("here");
+        console.log(response.data);
+        console.log(response.data.user_name);
+        /*    me.userObj = response.data; */
+
+        me.user_name = response.data.user_name;
+        me.alternative_username = response.data.alternative_username;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -5406,69 +5320,65 @@ __webpack_require__.r(__webpack_exports__);
         console.table(error);
       });
     },
+    updateUsername: function updateUsername() {
+      this.submitted = true;
+      this.errors = {};
+      this.valideUsername();
+      console.log(Object.keys(this.errors));
+
+      if (Object.keys(this.errors).length) {
+        return;
+      }
+
+      axios.post("/new_username", {
+        alternative_username: this.alternative_username
+      }).then(function (response) {
+        me.closeModal();
+      })["catch"](function (error) {
+        console.table(error);
+      });
+    },
+    updatePassword: function updatePassword() {
+      this.submitted = true;
+      this.errors = {};
+      this.validePass();
+      console.log(Object.keys(this.errors));
+
+      if (Object.keys(this.errors).length) {
+        return;
+      }
+
+      axios.post("/new_password", {
+        new_password: this.new_password,
+        confirm_password: this.confirm_password
+      }).then(function (response) {
+        me.closeModal();
+      })["catch"](function (error) {
+        console.table(error);
+      });
+    },
     closeModal: function closeModal() {
       //Cerrar modals
       this.modal = 0;
       this.name = "", this.first_last_name = "", this.second_lastname = "", this.email = "", this.code = "", //(this.active = false);
       this.submitted = false;
-      this.errors = {};
-      this.userAccount();
+      this.errors = {}; //this.userAccount();
     },
     //Validar campos requeridos
-    valideForm: function valideForm() {
-      if (!this.code) {
-        this.errors.code = "El código es un campo requerido";
+    validePass: function validePass() {
+      if (!this.password && !this.confirm_password) {
+        this.errors.password = "Password fields cant be blank";
       }
 
-      if (!this.name) {
-        this.errors.name = "El nombre es un campo requerido";
+      if (this.password) {
+        if (this.password !== this.confirm_password) {
+          this.errors.password = "Password and  confirm not equals";
+        }
       }
-
-      this.validateField("name");
-
-      if (!this.last_name) {
-        this.errors.last_name = "Last name is required";
-      }
-
-      this.validateField("last_name");
-
-      if (!this.nationalities) {
-        this.errors.nationalities = "Nationalities is required";
-      }
-
-      this.validateField("nationalities");
-
-      if (!this.phone) {
-        this.errors.phone = "Phone is required";
-      }
-
-      this.validateField("phone");
-
-      if (!this.email) {
-        this.errors.email = "El correo electrónico es un campo requerido";
-      }
-
-      this.validateField("email");
     },
-    validateField: function validateField(field) {
-      if (field === "email") {
-        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
-          this.errors.email = "Please enter a valid email address";
-        }
-
-        return;
-      }
-
-      if (field === "secondary_email") {
-        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.secondary_email)) {
-          this.errors.secondary_email = "Please enter a valid email address";
-        }
-
-        return;
-      }
-
-      if (!/^[A-Za-z\u00C0-\u00FF\-\_]*$/i.test(this.field)) {
-        this.errors[field] = "El campo ".concat(field, " solo admite letras y guiones");
+    valideUsername: function valideUsername() {
+      if (!this.alternative_username) {
+        this.errors.alternative_username = "Alternative username field cant be empty";
       }
     },
     openModal: function openModal(model, action) {
@@ -5484,7 +5394,30 @@ __webpack_require__.r(__webpack_exports__);
                   console.log(data);
                   this.modal = 1;
                   this.modalTitle = "Update data";
-                  this.name = data.name, this.last_name = data.last_name, this.nationalities = data.nationalities, this.mobile_phone = data.mobile_phone, this.watsapp_no = data.watsapp_no, this.lead_source = data.lead_source, this.refered_by = data.refered_by, this.email = data.email, this.assigned_to = data.assigned_to, this.qualified_for = data.qualified_for, this.secondary_email = data.secondary_email, this.email_out_op = data.email_out_op, this.lead_status_id = data.lead_status_id, this.lead_stage_id = data.lead_stage_id, this.care_agent = data.care_agent, this.phone = data.phone, this.fax = data.fax, this.has_passport = data.has_passport, this.passport_expiration_date = data.passport_expiration_date, this.rating = data.rating, this.watsapp_update_option = data.watsapp_update_option, this.agent_id = data.agent_id, this.description = data.description, this.id = data.id;
+                  this.name = data.name, this.user_name = data.user_name, this.alternative_username = data.alternative_username,
+                  /* (this.last_name = data.last_name),
+                  (this.nationalities = data.nationalities),
+                  (this.mobile_phone = data.mobile_phone),
+                  (this.watsapp_no = data.watsapp_no),
+                  (this.lead_source = data.lead_source),
+                  (this.refered_by = data.refered_by),
+                  (this.email = data.email),
+                  (this.assigned_to = data.assigned_to),
+                  (this.qualified_for = data.qualified_for),
+                  (this.secondary_email = data.secondary_email),
+                  (this.email_out_op = data.email_out_op),
+                  (this.lead_status_id = data.lead_status_id),
+                  (this.lead_stage_id = data.lead_stage_id),
+                  (this.care_agent = data.care_agent),
+                  (this.phone = data.phone),
+                  (this.fax = data.fax),
+                  (this.has_passport = data.has_passport),
+                  (this.passport_expiration_date = data.passport_expiration_date),
+                  (this.rating = data.rating),
+                  (this.watsapp_update_option = data.watsapp_update_option),
+                  (this.agent_id = data.agent_id),
+                  (this.description = data.description), */
+                  this.id = data.id;
                   this.actionType = 1;
                   break;
                 }
@@ -27184,7 +27117,7 @@ var render = function () {
                                   _c(
                                     "label",
                                     { attrs: { for: "inputEmail2" } },
-                                    [_vm._v("Secondary email")]
+                                    [_vm._v("User name")]
                                   ),
                                   _vm._v(" "),
                                   _c("input", {
@@ -27192,89 +27125,237 @@ var render = function () {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.secondary_email,
-                                        expression: "secondary_email",
+                                        value: _vm.user_name,
+                                        expression: "user_name",
                                       },
                                     ],
                                     staticClass: "form-control",
                                     attrs: {
-                                      type: "email",
+                                      type: "text",
                                       id: "inputEmail2",
                                       "aria-describedby": "secondary_emailHelp",
-                                      placeholder: "Enter secondary_email",
+                                      placeholder: "Default username",
+                                      disabled: "",
                                     },
-                                    domProps: { value: _vm.secondary_email },
+                                    domProps: { value: _vm.user_name },
                                     on: {
                                       input: function ($event) {
                                         if ($event.target.composing) {
                                           return
                                         }
-                                        _vm.secondary_email =
+                                        _vm.user_name = $event.target.value
+                                      },
+                                    },
+                                  }),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "alternative-username" } },
+                                    [_vm._v("Alternative username")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.alternative_username,
+                                        expression: "alternative_username",
+                                      },
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "alternative-username",
+                                      "aria-describedby":
+                                        "alternative username",
+                                      placeholder: "Enter alternative username",
+                                    },
+                                    domProps: {
+                                      value: _vm.alternative_username,
+                                    },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.alternative_username =
                                           $event.target.value
                                       },
                                     },
                                   }),
                                   _vm._v(" "),
-                                  _vm.submitted && _vm.errors.secondary_email
+                                  _vm.submitted &&
+                                  _vm.errors.alternative_username
                                     ? _c(
                                         "small",
                                         { staticClass: "text-danger font-14" },
                                         [
                                           _vm._v(
-                                            _vm._s(_vm.errors.secondary_email)
+                                            _vm._s(
+                                              _vm.errors.alternative_username
+                                            )
                                           ),
                                         ]
                                       )
                                     : _vm._e(),
                                 ]),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group text-center mt-4",
+                                  },
+                                  [
+                                    _c("div", { staticClass: "col-xs-12" }, [
+                                      _vm.actionType == 1
+                                        ? _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "btn btn-primary fas fa-user",
+                                              attrs: { type: "button" },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.updateUsername()
+                                                },
+                                              },
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                      Update username\n                    "
+                                              ),
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group row" }, [
                                   _c(
                                     "label",
-                                    { attrs: { for: "inputmobphone" } },
-                                    [_vm._v("Mobile phone")]
+                                    {
+                                      staticClass:
+                                        "col-md-4 col-form-label text-md-right",
+                                      attrs: { for: "password" },
+                                    },
+                                    [_vm._v("\n                    Password")]
                                   ),
                                   _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.mobile_phone,
-                                        expression: "mobile_phone",
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.password,
+                                          expression: "password",
+                                        },
+                                      ],
+                                      staticClass:
+                                        "\n                        form-control\n                        @error('password')\n                        is-invalid\n                        @enderror\n                      ",
+                                      attrs: {
+                                        type: "password",
+                                        required: "",
+                                        autocomplete: "new-password",
                                       },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputmobphone",
-                                      "aria-describedby": "textHelp",
-                                      placeholder:
-                                        "Type your principal Mobile phone number",
-                                    },
-                                    domProps: { value: _vm.mobile_phone },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.mobile_phone = $event.target.value
+                                      domProps: { value: _vm.password },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.password = $event.target.value
+                                        },
                                       },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted && _vm.errors.mobile_phone
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(_vm.errors.mobile_phone)
-                                          ),
-                                        ]
-                                      )
-                                    : _vm._e(),
+                                    }),
+                                  ]),
                                 ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group row" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass:
+                                        "col-md-4 col-form-label text-md-right",
+                                      attrs: { for: "password-confirm" },
+                                    },
+                                    [_vm._v("Confirm Password")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.confirm_password,
+                                          expression: "confirm_password",
+                                        },
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "password",
+                                        required: "",
+                                        autocomplete: "new-password",
+                                      },
+                                      domProps: { value: _vm.confirm_password },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.confirm_password =
+                                            $event.target.value
+                                        },
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.submitted && _vm.errors.password
+                                      ? _c(
+                                          "small",
+                                          {
+                                            staticClass: "text-danger font-14",
+                                          },
+                                          [_vm._v(_vm._s(_vm.errors.password))]
+                                        )
+                                      : _vm._e(),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group text-center mt-4",
+                                  },
+                                  [
+                                    _c("div", { staticClass: "col-xs-12" }, [
+                                      _vm.actionType == 1
+                                        ? _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "btn btn-primary fas fa-key",
+                                              attrs: { type: "button" },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.updatePassword()
+                                                },
+                                              },
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                      Change password\n                    "
+                                              ),
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                    ]),
+                                  ]
+                                ),
                               ]
                             ),
                           ]
@@ -27282,22 +27363,6 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-footer" }, [
-                        _vm.actionType == 1
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary fas fa-save",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.updateAccount()
-                                  },
-                                },
-                              },
-                              [_vm._v("\n              Save\n            ")]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
                         _vm.actionType == 1
                           ? _c(
                               "button",

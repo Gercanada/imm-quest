@@ -64,7 +64,9 @@ class LoginController extends Controller
         //dd($userLogin);
         $user = User::updateOrCreate(
             [
-                'email' => $userLogin->email
+                //'email' => $userLogin->email
+                'user_name' => $userLogin->user_name,
+                //'alternative_username' => $userLogin->alternative_username
             ],
 
             [

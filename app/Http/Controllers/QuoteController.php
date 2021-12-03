@@ -20,12 +20,10 @@ class QuoteController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
         $vtiger = new Vtiger();
-        $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
+        $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
         $contact = $vtiger->search($userQuery);
 
-        $quotesQuery = DB::table('Quotes')->select('*')
-            //->where('contact_id', $contact->result[0]->id)
-        ;
+        $quotesQuery = DB::table('Quotes')->select('*')->where('contact_id', $contact->result[0]->id);
         $vtquotes = $vtiger->search($quotesQuery)->result;
 
         $vtQuotesAcceptedStates = [];
@@ -56,39 +54,7 @@ class QuoteController extends Controller
                 array_push($open_quotes, $quote);
             }
         }
-
-        // return[ $accepted_quotes, $open_quotes];
-        /* $open_quotes = Quote::where('user_id', $user_id)
-            ->where('accepted', false)
-            ->get();
-
-
-        $accepted_quotes = Quote::where('user_id', $user_id)
-            ->where('accepted', true)
-            ->get(); */
-
         return view('quotes.index', compact('open_quotes', 'accepted_quotes'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -99,15 +65,6 @@ class QuoteController extends Controller
      */
     public function show(Quote $quote, $id)
     {
-        // $get_quote = Quote::where('id', $id)/* ->with('payments') */->firstOrFail();
-
-        // if ($get_quote->accepted) {
-        //     return view('quotes.details.accepted', compact('get_quote'));
-        // } else {
-        //     return view('quotes.details.pending', compact('get_quote'));
-        // }
-
-
         $vtiger = new Vtiger();
         $quotesQuery = DB::table('Quotes')->select('*')
             ->where('id', $id)
@@ -128,43 +85,5 @@ class QuoteController extends Controller
         ) {
             return view('quotes.details.pending', compact('quote'));
         }
-    }
-    /*   public function accepted_quotes(Quote $quote, $id)
-    {
-        //
-    } */
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Quote  $quote
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Quote $quote)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Quote  $quote
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Quote $quote)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Quote  $quote
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Quote $quote)
-    {
-        //
     }
 }

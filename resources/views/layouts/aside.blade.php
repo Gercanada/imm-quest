@@ -14,7 +14,7 @@
 
                     <ul aria-expanded="false" class="collapse  first-level">
                         <li class="sidebar-item">
-                            <a href="{{-- {{ route('profile') }} --}}" class="sidebar-link p-0">
+                            <a href="{{ route('profile') }}" class="sidebar-link p-0">
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu"> My Profile </span>
                             </a>

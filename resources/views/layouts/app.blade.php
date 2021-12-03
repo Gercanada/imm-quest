@@ -40,58 +40,59 @@
 
 <body>
     {{-- <div id="app"> --}}
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    @if (!Auth::user())
-    @yield('content'){{-- login view --}}
-    @endif
+
     <div id="main-wrapper">
         <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- Preloader - style you can find in spinners.css -->
         <!-- ============================================================== -->
-        @if (Auth::user())
-            <header class="topbar">
-                @include('layouts.navbar')
-            </header>
-        @endif
 
-        @if (Auth::user())
-            @include('layouts.aside')
-        @endif
-        <div class="page-wrapper">
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- End Topbar header -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                {{-- @include('layouts.side-panel') --}}
-
-                <!-- ============================================================== -->
-                <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-
-                @if (Auth::user())
-                    @yield('content')
-
-                @else
-                    @yield('content')
-                @endif
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
             </div>
-            <footer class="footer">
-                © 2020 Admin Pro Admin by wrappixel.com
-            </footer>
         </div>
+        <!-- ============================================================== -->
+        <!-- Main wrapper - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        @if (!Auth::user())
+            @yield('content'){{-- login view --}}
+        @else
+
+            <!-- ============================================================== -->
+            <!-- Topbar header - style you can find in pages.scss -->
+            <!-- ============================================================== -->
+            @if (Auth::user())
+                <header class="topbar">
+                    @include('layouts.navbar')
+                </header>
+            @endif
+
+            @if (Auth::user())
+                @include('layouts.aside')
+            @endif
+            <div class="page-wrapper">
+                <div class="container-fluid">
+                    <!-- ============================================================== -->
+                    <!-- End Topbar header -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    {{-- @include('layouts.side-panel') --}}
+
+                    <!-- ============================================================== -->
+                    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+
+                    @if (Auth::user())
+                        @yield('content')
+                    @endif
+                </div>
+                <footer class="footer">
+                    © 2020 Admin Pro Admin by wrappixel.com
+                </footer>
+            </div>
+        @endif
 
     </div>
     <!-- ============================================================== -->

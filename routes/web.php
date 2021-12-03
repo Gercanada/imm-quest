@@ -26,12 +26,13 @@ use App\Http\Controllers\VtigerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
 //Google Drive Routes
 /* Route::get('/login/google', [LoginController::class, 'redirectToProvider'])->name('login.google');
 Route::get('/login/google/callback', [LoginController::class, 'handleProviderCallback']);
- */
+*/
 
 //Route::group(['middleware' => ['auth', 'permission']], function () {  //Routes for CP Admin
 /* Route::get('/users', [UserController::class, "index"]);
@@ -69,6 +70,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/account', [UserController::class, 'account']);
     Route::post('/account', [UserController::class, 'update']);
 
+    Route::post('/new_password', [UserController::class, 'newPassword']);
+    Route::post('/new_username', [UserController::class, 'newUserName']);
+
     //documents
     Route::get('/documents', [DocumentController::class, 'index'])->middleware(['auth'])->name('documents');
     Route::get('/get_documents', [DocumentController::class, 'getDocuments'])->middleware(['auth']);
@@ -95,9 +99,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/payments', [PaymentController::class, 'index'])->middleware(['auth'])->name('payments');
 
     // GDrive
-    Route::get('/drive/all', [GoogleDriveController::class, 'getFolders'])->name('google.folders');
+    /* Route::get('/drive/all', [GoogleDriveController::class, 'getFolders'])->name('google.folders');
     Route::get('/drive/empty', [GoogleDriveController::class, 'isEmpty']);
     Route::post('/drive/upload/', [GoogleDriveController::class, 'upload']);
-    Route::post('/drive/delete', [GoogleDriveController::class, 'delete']);
+    Route::post('/drive/delete', [GoogleDriveController::class, 'delete']); */
 });
 
+
+    Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);

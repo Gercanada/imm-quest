@@ -22,11 +22,11 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">My active cases</h4>
-                        <h6 class="card-subtitle">When using tables to display data, you will often wish to
+                        {{-- <h6 class="card-subtitle">When using tables to display data, you will often wish to
                             display column information in groups. DataTables fully supports
                             <code> colspan</code> and <code> rowspan</code> in the table's header, assigning the
                             required order listeners to the TH element suitable for that column.
-                        </h6>
+                        </h6> --}}
                         <div class="table-responsive">
                             <table class="table dt_alt_pagination table-striped table-bordered display" style="width:100%">
                                 <thead>
@@ -73,11 +73,11 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">My completed case</h4>
-                        <h6 class="card-subtitle">When using tables to display data, you will often wish to
+                        {{-- <h6 class="card-subtitle">When using tables to display data, you will often wish to
                             display column information in groups. DataTables fully supports
                             <code> colspan</code> and <code> rowspan</code> in the table's header, assigning the
                             required order listeners to the TH element suitable for that column.
-                        </h6>
+                        </h6> --}}
                         <div class="table-responsive">
                             <table class="table dt_alt_pagination table-striped table-bordered display" style="width:100%">
                                 <thead>

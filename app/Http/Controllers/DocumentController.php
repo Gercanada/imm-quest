@@ -23,7 +23,7 @@ class DocumentController extends Controller
 
         $vtiger = new Vtiger();
         //Get contact data of this user
-        $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
+        $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
         $contact = $vtiger->search($userQuery);
 
         //Documents
@@ -113,4 +113,17 @@ class DocumentController extends Controller
         }
         return response()->json($respuesta);
     }
+
+
+    ///Api methods
+    public function checkDocuments(Request $request){
+        $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
+        $documents = Document::where('user_id', $user->id)->where('syncronized', false)->get();
+
+        return response()->json($documents , 200);
+
+        /* if($file->sy) */
+    }
+
+    //public function importDocuments()
 }

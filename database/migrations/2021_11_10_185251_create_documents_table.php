@@ -22,6 +22,7 @@ class CreateDocumentsTable extends Migration
             $table->string('file_size')->nullable();
             $table->string('document_no')->nullable();
             $table->json('url_files')->nullable();
+            $table->boolean('syncronized')->default(false);
             //$table->date('expiry_date');
             //$table->date('issued_date');
             $table->timestamps();

@@ -131,7 +131,9 @@ class VtigerController extends Controller
     public function goType($type, $where)
     {
         $vtiger = new Vtiger();
-        //return $where;
+
+        $condWhere = explode(";", $where);
+
         // /cf_2129
 
         $pieces = explode(",", $where);
@@ -142,11 +144,25 @@ class VtigerController extends Controller
             $query = DB::table($type)->select('*');
             // $query = DB::table($type)->select('id', 'firstname', 'lastname')->where('firstname', 'John');
             $data = $vtiger->search($query);
-            return $data;
+            //return $data;
         } else {
-            $query = DB::table($type)->select('*')->where($pieces[0],$pieces[1]);
+            //$query ='';
+
+           /*  if(count($condWhere)==2){
+                $query = DB::table($type)->select('*')->where($condWhere[0],$condWhere[1]);
+
+            }
+            if(count($condWhere)==3){
+                $query = DB::table($type)->select('*')->where($condWhere[0],$condWhere[1],$condWhere[1]);
+            }
+
+            if(count($condWhere)!=2 || count($condWhere)!=2){
+                return "Invalid query params try 'user_id;1 or user_id;!=;1' ";
+            } */
+            $query = DB::table('Contacts')->select('*')->where("contact_no", "2156717");
+
             $data = $vtiger->search($query);
-            return  $data;
         }
+        return  $data;
     }
 }

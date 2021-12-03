@@ -22,43 +22,30 @@ class InvoiceController extends Controller
         $user_id = $user->id;
         $vtiger = new Vtiger();
 
-        $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
+        $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
         $contact = $vtiger->search($userQuery);
 
         //Invoices
         $invoicesStatusOpen = [
             "20 - On Track - Original Payment Plan",
-            /*  "25 - On Track - Final Payment", */
-            "35 - On Track - Last Payment until Decision",
-            /* "70 - Closed - Paid in Full",
-            "75 - Closed - Not Recoverable", */
-            /*  "65 - Cancelled",
-            "65 - Cancelled" */
+            "35 - On Track - Last Payment until Decision"
         ];
 
         $invoicesStatusClosed = [
-            /* "20 - On Track - Original Payment Plan", */
             "25 - On Track - Final Payment",
             "35 - On Track - Last Payment until Decision",
-            "70 - Closed - Paid in Full",
-            /* "75 - Closed - Not Recoverable",
-            "65 - Cancelled",
-            "65 - Cancelled" */
+            "70 - Closed - Paid in Full"
         ];
 
         $OpenInvoicesQuery = DB::table('Invoice')->select('*')
-            //->where('contact_id', $contact->result[0]->id)   //TODO Enable this
+            ->where('contact_id', $contact->result[0]->id)   //TODO Enable this
             ->whereIn('invoicestatus', $invoicesStatusOpen);
         $open_invoices = $vtiger->search($OpenInvoicesQuery)->result;
 
         $closedInvoicesQuery = DB::table('Invoice')->select('*')
-            //->where('contact_id', $contact->result[0]->id)//TODO Enable this
+            ->where('contact_id', $contact->result[0]->id) //TODO Enable this
             ->whereIn('invoicestatus', $invoicesStatusClosed);
         $paid_invoices = $vtiger->search($closedInvoicesQuery)->result;
-
-
-        /*   $open_invoices = Invoice::where('user_id', $user_id)->where('paid', false)->get();
-        $paid_invoices = Invoice::where('user_id', $user_id)->where('paid', true)->get(); */
 
         return view('invoices.index', compact('open_invoices', 'paid_invoices'));
     }
@@ -77,7 +64,7 @@ class InvoiceController extends Controller
 
         $vtiger = new Vtiger();
 
-        $userQuery = DB::table('Contacts')->select('id')->where("id", $user->vtiger_contact_id)->take(1);
+        $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
         $contact = $vtiger->search($userQuery);
 
         //Cases
@@ -107,7 +94,7 @@ class InvoiceController extends Controller
         $documentsQuery = DB::table('Documents')->select('*')
             ->where('cf_2129', $invoice->id)
             ->WhereIn('cf_1487', $vtCasesIdArr)
-            ->orWhere('cf_1487', "17x3541") //test
+            //->orWhere('cf_1487', "17x3541") //test
         ;
         $documents = $vtiger->search($documentsQuery)->result;
 

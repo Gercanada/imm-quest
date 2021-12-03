@@ -399,15 +399,15 @@
                             </div>
                         </li>
                         <li role="separator" class="dropdown-divider"></li>
-                        <li class="user-list"><a class="px-3 py-2"{{--  href="{{route('profile')}} --}}"><i class="ti-user"></i>
-                                My Profile</a></li>
-                      {{--   <li class="user-list"><a class="px-3 py-2" href="#"><i class="ti-wallet"></i>
-                                My Balance</a></li>
-                        <li class="user-list"><a class="px-3 py-2" href="#"><i class="ti-email"></i>
-                                Inbox</a></li> --}}
+                        <li class="user-list"><a class="px-3 py-2" href="{{ route('profile') }}">
+
+                                <span class="fa-stack">
+                                    <i class="ti-settings fa-stack-2x fa-inverse"></i>
+                                    <i class="ti-user fa-stack-2x "></i>
+                                </span>
+                                My Account Setting</a>
+                        </li>
                         <li role="separator" class="dropdown-divider"></li>
-                        <li class="user-list"><a class="px-3 py-2" href="#"><i class="ti-settings"></i>
-                                Account Setting</a></li>
                         <li role="separator" class="dropdown-divider"></li>
                         <li class="user-list"><a class="px-3 py-2" href="#"><i class="fa fa-power-off"></i>
                                 Logout</a></li>
