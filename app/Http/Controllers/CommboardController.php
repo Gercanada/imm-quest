@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Commboard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use JBtje\VtigerLaravel\Vtiger;
 
 class CommboardController extends Controller
 {
@@ -12,74 +15,35 @@ class CommboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function sendComment(Request $request)
     {
-        //
-    }
+        try {
+            $user = Auth::user();
+            $user_id = $user->id;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+            $vtiger = new Vtiger();
+            //Get contact data of this user
+            $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $user->vtiger_contact_id)->take(1);
+            $contact = $vtiger->search($userQuery)->result[0];
+            //return $contact;
+            $vtiger = new Vtiger();
+            $data = [
+                "assigned_user_id"=> "19x29",
+                'cf_2218' => $request->threadid, //threadid
+                'cf_2224' => "$contact->firstname $contact->lastname",
+                'description' => $request->comment
+            ];
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            $any = [];
+            /* $newComment = */ array_push($any, json_encode($data));
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Commboard  $commboard
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Commboard $commboard)
-    {
-        //
-    }
+            //return $newComment;
+            $data = $vtiger->create( "CommBoard", $data);
+            //$data = $vtiger->create( $MODULE_NAME, json_encode( $data ) );
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Commboard  $commboard
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Commboard $commboard)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Commboard  $commboard
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Commboard $commboard)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Commboard  $commboard
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Commboard $commboard)
-    {
-        //
+            return redirect('/');
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
 }

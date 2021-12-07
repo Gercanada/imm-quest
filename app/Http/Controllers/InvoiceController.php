@@ -63,10 +63,8 @@ class InvoiceController extends Controller
         $user_id = $user->id;
 
         $vtiger = new Vtiger();
-
         $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
         $contact = $vtiger->search($userQuery);
-
         //Cases
         $casesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->result[0]->id);
         $vtCases = $vtiger->search($casesQuery)->result;
@@ -76,30 +74,28 @@ class InvoiceController extends Controller
             array_push($vtCasesIdArr, $case->id);
         }
 
-
-
-        $invoiceQuery = DB::table('Invoice')->select('*')
-            ->where('id', $id);
-
+        //Invoices
+        $invoiceQuery = DB::table('Invoice')->select('*')->where('id', $id);
         $invoice = $vtiger->search($invoiceQuery)->result[0];
 
         // Get invoice payments
-        $paymentsQuery = DB::table('Payments')->select('*')
-            ->where('cf_1141', $invoice->id);
-
+        $paymentsQuery = DB::table('Payments')->select('*')->where('cf_1141', $invoice->id);
         $payments = $vtiger->search($paymentsQuery)->result;
 
-        $invoiceIDArr = [];
+        $paymentIdArr = [];
+        foreach ($payments as $payment) {
+            array_push($paymentIdArr, $payment->id);
+        }
 
         $documentsQuery = DB::table('Documents')->select('*')
             ->where('cf_2129', $invoice->id)
-            ->WhereIn('cf_1487', $vtCasesIdArr)
-            //->orWhere('cf_1487', "17x3541") //test
-        ;
+            ->orWhereIn('cf_1490', $paymentIdArr)
+            ->orWhereIn('cf_1487', $vtCasesIdArr);
         $documents = $vtiger->search($documentsQuery)->result;
 
-        /* return $documents; */
-
-        return view('invoices.show', compact('invoice', 'payments', 'documents'));
+        //Payment plan
+        $itrackerQuery = DB::table('InstallmentTracker')->select('*')->where('cf_1176', $id);
+        $iTrackers = $vtiger->search($itrackerQuery)->result;
+        return view('invoices.show', compact('invoice', 'payments', 'documents', 'iTrackers'));
     }
 }

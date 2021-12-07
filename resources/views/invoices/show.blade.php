@@ -142,21 +142,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($iTrackers as $itracker)
                         <tr>
-                            <td>2021/10/10</td>
-                            <td>1000</td>
-                            <td>Otto.pdf</td>
+                            <td>{{ $itracker->cf_1165 }}</td>
+                            <td>{{ number_format($itracker->cf_1163, 2) }}</td>
+                            <td>{{ $itracker->description }}</td>
                         </tr>
-                        <tr>
-                            <td>2021/10/10</td>
-                            <td>1000</td>
-                            <td>Thornton.doc</td>
-                        </tr>
-                        <tr>
-                            <td>2021/10/10</td>
-                            <td>1000</td>
-                            <td>the Bird.pdf</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -35,7 +35,7 @@ class VtigerController extends Controller
 
         //$CPTypes = VtigerType::all();
         $enableTipeArr = array();
-        if(sizeof($enableTipeArr)>=1){
+        if (sizeof($enableTipeArr) >= 1) {
             foreach ($CPTypes as $enabledType) {
                 $typeArray = $enabledType->name;
                 array_push($enableTipeArr, $typeArray);
@@ -47,7 +47,7 @@ class VtigerController extends Controller
         $vt_types = array();
         foreach ($types as $type) {
             //$enabledArr = array();
-            if (in_array($type, $enableTipeArr) && sizeof($enableTipeArr)>=1) {
+            if (in_array($type, $enableTipeArr) && sizeof($enableTipeArr) >= 1) {
                 $enabledObj = (object) array('name' => $type, 'active' => 1);
                 array_push($vt_types, $enabledObj);
             } else {
@@ -116,8 +116,6 @@ class VtigerController extends Controller
 
     public function userTools()
     {
-
-
         $user_id = Auth::user()->id;
         $types = VtigerType::where('user_id', $user_id)->get();
 
@@ -144,22 +142,18 @@ class VtigerController extends Controller
             $query = DB::table($type)->select('*');
             // $query = DB::table($type)->select('id', 'firstname', 'lastname')->where('firstname', 'John');
             $data = $vtiger->search($query);
-            //return $data;
         } else {
-            //$query ='';
-
-           /*  if(count($condWhere)==2){
-                $query = DB::table($type)->select('*')->where($condWhere[0],$condWhere[1]);
-
+            if (count($condWhere) == 2) {
+                $query = DB::table($type)->select('*')->where($condWhere[0], $condWhere[1]);
             }
-            if(count($condWhere)==3){
-                $query = DB::table($type)->select('*')->where($condWhere[0],$condWhere[1],$condWhere[1]);
+            if (count($condWhere) == 3) {
+                $query = DB::table($type)->select('*')->where($condWhere[0], $condWhere[1], $condWhere[1]);
             }
 
-            if(count($condWhere)!=2 || count($condWhere)!=2){
+            if (count($condWhere) != 2 || count($condWhere) != 2) {
                 return "Invalid query params try 'user_id;1 or user_id;!=;1' ";
-            } */
-            $query = DB::table('Contacts')->select('*')->where("contact_no", "2156717");
+            }
+            // /$query = DB::table($type)->select('*')->where("installmenttrackerno", "PP2113670");
 
             $data = $vtiger->search($query);
         }

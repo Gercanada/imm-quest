@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
 use App\Models\User;
+use App\Models\Test;
 use App\Models\Document;
 
 class DocumentController extends Controller
@@ -117,13 +118,34 @@ class DocumentController extends Controller
 
     ///Api methods
     public function checkDocuments(Request $request){
-        $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
-        $documents = Document::where('user_id', $user->id)->where('syncronized', false)->get();
+        try{
+            $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
+            $documents = Document::where('user_id', $user->id)/* ->where('syncronized', false) */->get();
+            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            $out->write("===============\n");
+            $out->write($request);
+            $out->write("---------------\n");
+            $out->write($documents);
+            $out->write("________________\n");
 
-        return response()->json($documents , 200);
+            return response()->json($documents , 200);
 
-        /* if($file->sy) */
+        }catch(\Exception $e){
+            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            $out->write($e);
+        }
     }
+
+    public function getResponse(Request $request){
+
+        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            $out->write($request);
+
+        Test::create([
+            'info'=>$request
+        ]);
+    }
+
 
     //public function importDocuments()
 }

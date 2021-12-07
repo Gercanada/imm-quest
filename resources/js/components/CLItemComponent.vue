@@ -11,7 +11,7 @@
 
   <div v-else>
     <div class="row">
-      <div class="col-md-12 ">
+      <div class="col-md-12">
         <div class="card">
           <div class="card-header">
             <a
@@ -418,7 +418,7 @@ export default {
         uploadMultiple: true,
         autoProcessQueue: false,
 
-        acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg,.pdf",
+        acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg,.pdf,.doc,.docx",
         addRemoveLinks: true,
         dictRemoveFile: "Remove file",
         headers: {
@@ -447,6 +447,7 @@ export default {
       actionType: 0,
       submitted: false,
       errors: {},
+      sendSuccess: false,
 
       loading: false,
     };
@@ -459,11 +460,29 @@ export default {
   },
   methods: {
     afterUploadComplete: async function (response) {
-      if (response.status == "200") {
+      if (
+        response.status == 200 ||
+        response.status == "success" ||
+        response.status == "200"
+      ) {
+        Swal.fire({
+          type: "success",
+          title: "Upload successfull!",
+          timer: 2000,
+          showConfirmButton: false,
+        });
         console.log("upload successful");
         this.sendSuccess = true;
+        this.closeModal();
       } else {
+        Swal.fire({
+          type: "error",
+          title: "Upload failed !",
+          timer: 2000,
+          showConfirmButton: false,
+        });
         console.log("upload failed");
+        this.closeModal();
       }
     },
     shootMessage: async function () {
@@ -479,20 +498,16 @@ export default {
       this.$refs.myVueDropzone.processQueue();
 
       let me = this;
-
       axios
-        //.post("/drive/upload", { file })
         .post("/cl-item/upload/file", {
-          title: this.title,
-          last_name: this.last_name,
-          description: this.description,
-          expiry_date: this.expiry_date,
-          id: this.id,
+          title: me.title,
+          last_name: me.last_name,
+          description: me.description,
+          expiry_date: me.expiry_date,
+          id: me.id,
         })
         .then(function (response) {
-          console.log({ response });
-          me.closeModal();
-          //me.userFiles();
+          /* me.closeModal(); */
         })
         .catch(function (error) {
           console.table(error);
@@ -500,38 +515,26 @@ export default {
     },
     sendMessage: async function (files, xhr, formData) {
       formData.append("id", this.id);
-      formData.append("email", this.email);
-      formData.append("message", this.message);
-      formData.append("recipient", this.recipient);
     },
 
     removedfile: function (file, respuesta) {
-      console.log(file);
-
       const params = {
         imagen: file.nombreServidor,
         uuid: document.querySelector("#dropzone").value,
       };
 
       axios.post("/drive/delete", params).then((respuesta) => {
-        console.log(respuesta);
-
         // Eliminar del DOM
         file.previewElement.parentNode.removeChild(file.previewElement);
       });
     },
 
-    ////////////////////////
     userFiles() {
-      /*  const urlParams = window.location.pathname.split("/");
-      console.log(urlParams); */
-
       let me = this;
       this.loading = true;
       axios
         .post("/cl-item", { id: me.id })
         .then(function (response) {
-          console.log(response.data);
           me.clitem = response.data[0];
           me.caseObj = response.data[1];
           me.checklistObj = response.data[2];
@@ -556,35 +559,7 @@ export default {
       this.userFiles();
     },
 
-    //Validar campos requeridos
-    valideForm() {
-      if (!this.title) {
-        this.errors.title = "Title field is required";
-      }
-      this.validateField("title");
-
-      if (!this.description) {
-        this.errors.description = "Description is required";
-      }
-      this.validateField("description");
-
-      if (!this.issued_date) {
-        this.errors.issued_date = "Issued date is required";
-      }
-      this.validateField("issued_date");
-      if (!this.expiry_date) {
-        this.errors.expiry_date = "Expiry date is required";
-      }
-      this.validateField("expiry_date");
-    },
-    validateField(field) {
-      if ("" == this.field) {
-        this.errors[field] = `El campo ${field} solo admite letras y guiones`;
-      }
-    },
-
     openModal(model, action, data = []) {
-      console.log(action);
       switch (model) {
         case "documents": {
           switch (action) {
@@ -596,8 +571,6 @@ export default {
               this.expiry_date = data.expiry_date;
               this.issued_date = data.issued_date;
               this.actionType = 1;
-
-              console.log(1);
               break;
             }
           }

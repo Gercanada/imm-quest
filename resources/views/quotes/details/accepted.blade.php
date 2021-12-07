@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Accepted quotes | Quote{{$quote->subject}}
+    Accepted quotes | Quote{{ $quote->subject }}
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="card-header">
             <a href="{{ route('quotes') }}" class="btn btn-outline-info btn-rounded float-left"><i
                     class=" fas fa-arrow-circle-left">Back</i></a>
-            <h4 class="card-title mb-3">Accepted Quote <b> {{$quote->subject}}</b></h4>
+            <h4 class="card-title mb-3">Accepted Quote <b> {{ $quote->subject }}</b></h4>
         </div>
     </div>
     {{-- <div class="card">
@@ -69,21 +69,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>x-Mark</td>
-                            <td>Otto</td>
-                            <td>Otto</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>Thornton</td>
-                        </tr>
-                        <tr>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>the Bird</td>
-                        </tr>
+                        @foreach ($iTrackers as $itracker)
+                            <tr>
+                                <td>{{ $itracker->cf_1165 }}</td>
+                                <td>{{ number_format($itracker->cf_1163, 2) }}</td>
+                                <td>{{ $itracker->description }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -101,30 +93,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>PDF</td>
-                            <td>Otto.pdf</td>
-                            <td>2021/10/10</td>
-                            <td>
-                                <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>DOC</td>
-                            <td>Thornton.doc</td>
-                            <td>2021/10/10</td>
-                            <td>
-                                <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>PDF</td>
-                            <td>the Bird.pdf</td>
-                            <td>2021/10/10</td>
-                            <td>
-                                <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
-                            </td>
-                        </tr>
+                        @foreach ($itDocuments as $document)
+                            <tr>
+                                {{-- <td>{{ $document->filetype }}</td> --}}
+                                <td>{{ $document->cf_1491 }}</td>
+                                <td>{{ $document->filename }}</td>
+                                <td>{{ $document->cf_2134 }}</td>
+                               {{--  <td>{{ $document->filelocationtype }}}</td> --}}
+                                <td>
+                                    <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
+                                </td>
+                            </tr>
+
+                        @endforeach
                     </tbody>
                 </table>
             </div>

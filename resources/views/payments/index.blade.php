@@ -50,6 +50,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>Case</th>
                                     <th>Invoice No</th>
                                     <th>Payment date</th>
                                     <th>Payment method</th>

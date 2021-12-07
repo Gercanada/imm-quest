@@ -22,7 +22,8 @@ use App\Http\Controllers\UserController;
     return $request->user();
 }); */
 
-Route::get('/documents', [DocumentController ::class], 'checkDocuments');
+Route::post('/documents', [DocumentController::class , 'checkDocuments']);
+Route::post('/getresponse', [DocumentController::class , 'getResponse']);
 
 Route::post('/create_user', [UserController::class, 'createUser']);
 

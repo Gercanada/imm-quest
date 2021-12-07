@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
 use App\Models\User;
+Use Carbon\Carbon;
 
 class CLItemController extends Controller
 {
@@ -92,7 +93,6 @@ class CLItemController extends Controller
             $vtiger = new Vtiger();
             $userQuery = DB::table('Contacts')->select('id', 'contact_no')->where("contact_no", $user->vtiger_contact_id)->take(1);
             $contact = $vtiger->search($userQuery);
-            //return $contact;
 
             $clitemsQuery =  DB::table('CLItems')->select('*')
                 ->where('id', $request->id)
@@ -101,8 +101,6 @@ class CLItemController extends Controller
             $contact_id = $contact->result[0]->id;
             $clitem = $vtiger->search($clitemsQuery)->result[0];
 
-
-
             if ($request->file('file')) {
                 /* Multiple file upload */
                 $files = $request->file('file');
@@ -110,29 +108,28 @@ class CLItemController extends Controller
                     $files = [$files];
                 }
 
-
                 $fileList = array();
                 $contact_no = $contact->result[0]->contact_no;
 
-                $destination = "documents/contact/$contact_no/clitems/$clitem->id";
-                //return $destination;
-                //loop throu the array
+                $destination = "documents/contact/$contact_no/clitem/$clitem->id";
+
                 foreach ($files as $file) {
-                    //return $file;
+
                     $filename = $file->getClientOriginalName();
                     $filename = str_replace(' ', '', $filename);
+                    $filename = str_replace('-', '_', $filename);
 
-                    $file->storeAs($destination, $filename);
+                    $file->storeAs("/public/$destination", $filename);
                     $fileUrl = "$destination/$filename";
                     array_push($fileList, $fileUrl);
+
+                    Document::create([
+                        'user_id'=>$user->id,
+                        'contact_id' => $contact_id,
+                        'url_file' => $fileUrl
+                    ]);
                 }
-
-                $document = Document::create([
-                    'contact_id' => $contact_id,
-                    'url_files' => json_encode($fileList)
-                ]);
-
-                return response()->json(200);
+                return response()->json(["List" => $fileList, 200]);
             }
         } catch (\Exception $e) {
             return  response()->json(['message' => 'error uploading file', $e], 503);
@@ -145,8 +142,8 @@ class CLItemController extends Controller
     {
         $directory = "/documents/contact/$contact";
 
-        $files = Storage::disk('local')->allFiles($directory);
-
+        $files = Storage::disk('public')->allFiles($directory);
+        //return $files;
         $urlFiles = [];
 
         foreach ($files as $file) {

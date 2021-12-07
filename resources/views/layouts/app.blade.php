@@ -140,8 +140,19 @@ src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-p
 </script>
 <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.min.js">
 </script>
+
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/sweetalert2/dist/sweetalert2.all.min.js">
+</script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src//assets/extra-libs/sweetalert2/sweet-alert.init.js">
+</script>
+
+
 <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
 </script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
+</script>
+
+
 
 <script src="/js/app.js"></script>
 @yield('scripts')

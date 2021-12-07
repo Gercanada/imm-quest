@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Google\Service\Docs\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\DB;
+use JBtje\VtigerLaravel\Vtiger;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -57,7 +59,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback()
+  /*   public function handleProviderCallback()
     {
         $userLogin = Socialite::driver('google')->stateless()->user();
 
@@ -75,12 +77,23 @@ class LoginController extends Controller
             ]
         );
 
-        Auth::login($user, true);
-        return redirect()->to('/');
+       /*  $vtiger = new Vtiger();
+        //Get contact data of this user
 
-    }
+        //vars
+        $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
+        $contact = $vtiger->search($userQuery);
 
-  /*   public function logout(Request $request)
+        if (count($contact->result) === 0) {
+            Auth::logout();
+           // return ["Contact not found", 404];
+        } else {
+            Auth::login($user, true);
+            return redirect()->to('/');
+        } * /
+    } * /
+
+    /*   public function logout(Request $request)
     {
         session('g_token', '');
         $this->guard()->logout();

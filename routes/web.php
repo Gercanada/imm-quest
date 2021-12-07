@@ -12,8 +12,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CLItemController;
-use App\Http\Controllers\GoogleDriveController;
-
+use App\Http\Controllers\CommboardController;
 use App\Http\Controllers\VtigerController;
 
 /*
@@ -28,16 +27,6 @@ use App\Http\Controllers\VtigerController;
 */
 
 Auth::routes();
-
-//Google Drive Routes
-/* Route::get('/login/google', [LoginController::class, 'redirectToProvider'])->name('login.google');
-Route::get('/login/google/callback', [LoginController::class, 'handleProviderCallback']);
-*/
-
-//Route::group(['middleware' => ['auth', 'permission']], function () {  //Routes for CP Admin
-/* Route::get('/users', [UserController::class, "index"]);
- */
-//});
 
 Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
     //vtiger
@@ -63,6 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/cases', [CPCaseController::class, 'index'])->middleware(['auth'])->name('cases');
     Route::get('/case/{id}', [CPCaseController::class, 'show'])->middleware(['auth'])->name('show_case');
     Route::get('/details_case/{id}', [CPCaseController::class, 'details'])->middleware(['auth']);
+    //Commboard
+    Route::post('/comment', [CommboardController::class, 'sendComment'])->name('send_comment');
 
 
     //user
@@ -97,13 +88,5 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/payments', [PaymentController::class, 'index'])->middleware(['auth'])->name('payments');
-
-    // GDrive
-    /* Route::get('/drive/all', [GoogleDriveController::class, 'getFolders'])->name('google.folders');
-    Route::get('/drive/empty', [GoogleDriveController::class, 'isEmpty']);
-    Route::post('/drive/upload/', [GoogleDriveController::class, 'upload']);
-    Route::post('/drive/delete', [GoogleDriveController::class, 'delete']); */
 });
-
-
-    Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);
+    // Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);

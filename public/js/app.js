@@ -3268,7 +3268,7 @@ var urlParams = window.location.pathname.split("/");
         maxFiles: 3,
         uploadMultiple: true,
         autoProcessQueue: false,
-        acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg,.pdf",
+        acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg,.pdf,.doc,.docx",
         addRemoveLinks: true,
         dictRemoveFile: "Remove file",
         headers: {
@@ -3293,6 +3293,7 @@ var urlParams = window.location.pathname.split("/");
       actionType: 0,
       submitted: false,
       errors: {},
+      sendSuccess: false,
       loading: false
     };
   },
@@ -3309,11 +3310,25 @@ var urlParams = window.location.pathname.split("/");
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (response.status == "200") {
+                if (response.status == 200 || response.status == "success" || response.status == "200") {
+                  Swal.fire({
+                    type: "success",
+                    title: "Upload successfull!",
+                    timer: 2000,
+                    showConfirmButton: false
+                  });
                   console.log("upload successful");
                   this.sendSuccess = true;
+                  this.closeModal();
                 } else {
+                  Swal.fire({
+                    type: "error",
+                    title: "Upload failed !",
+                    timer: 2000,
+                    showConfirmButton: false
+                  });
                   console.log("upload failed");
+                  this.closeModal();
                 }
 
               case 1:
@@ -3353,18 +3368,14 @@ var urlParams = window.location.pathname.split("/");
               case 6:
                 this.$refs.myVueDropzone.processQueue();
                 me = this;
-                axios //.post("/drive/upload", { file })
-                .post("/cl-item/upload/file", {
-                  title: this.title,
-                  last_name: this.last_name,
-                  description: this.description,
-                  expiry_date: this.expiry_date,
-                  id: this.id
+                axios.post("/cl-item/upload/file", {
+                  title: me.title,
+                  last_name: me.last_name,
+                  description: me.description,
+                  expiry_date: me.expiry_date,
+                  id: me.id
                 }).then(function (response) {
-                  console.log({
-                    response: response
-                  });
-                  me.closeModal(); //me.userFiles();
+                  /* me.closeModal(); */
                 })["catch"](function (error) {
                   console.table(error);
                 });
@@ -3390,11 +3401,8 @@ var urlParams = window.location.pathname.split("/");
             switch (_context3.prev = _context3.next) {
               case 0:
                 formData.append("id", this.id);
-                formData.append("email", this.email);
-                formData.append("message", this.message);
-                formData.append("recipient", this.recipient);
 
-              case 4:
+              case 1:
               case "end":
                 return _context3.stop();
             }
@@ -3409,29 +3417,23 @@ var urlParams = window.location.pathname.split("/");
       return sendMessage;
     }(),
     removedfile: function removedfile(file, respuesta) {
-      console.log(file);
       var params = {
         imagen: file.nombreServidor,
         uuid: document.querySelector("#dropzone").value
       };
       axios.post("/drive/delete", params).then(function (respuesta) {
-        console.log(respuesta); // Eliminar del DOM
-
+        // Eliminar del DOM
         file.previewElement.parentNode.removeChild(file.previewElement);
       });
     },
-    ////////////////////////
     userFiles: function userFiles() {
       var _this = this;
 
-      /*  const urlParams = window.location.pathname.split("/");
-      console.log(urlParams); */
       var me = this;
       this.loading = true;
       axios.post("/cl-item", {
         id: me.id
       }).then(function (response) {
-        console.log(response.data);
         me.clitem = response.data[0];
         me.caseObj = response.data[1];
         me.checklistObj = response.data[2];
@@ -3454,40 +3456,8 @@ var urlParams = window.location.pathname.split("/");
       this.errors = {};
       this.userFiles();
     },
-    //Validar campos requeridos
-    valideForm: function valideForm() {
-      if (!this.title) {
-        this.errors.title = "Title field is required";
-      }
-
-      this.validateField("title");
-
-      if (!this.description) {
-        this.errors.description = "Description is required";
-      }
-
-      this.validateField("description");
-
-      if (!this.issued_date) {
-        this.errors.issued_date = "Issued date is required";
-      }
-
-      this.validateField("issued_date");
-
-      if (!this.expiry_date) {
-        this.errors.expiry_date = "Expiry date is required";
-      }
-
-      this.validateField("expiry_date");
-    },
-    validateField: function validateField(field) {
-      if ("" == this.field) {
-        this.errors[field] = "El campo ".concat(field, " solo admite letras y guiones");
-      }
-    },
     openModal: function openModal(model, action) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-      console.log(action);
 
       switch (model) {
         case "documents":
@@ -3502,7 +3472,6 @@ var urlParams = window.location.pathname.split("/");
                   this.expiry_date = data.expiry_date;
                   this.issued_date = data.issued_date;
                   this.actionType = 1;
-                  console.log(1);
                   break;
                 }
             }
@@ -24671,7 +24640,7 @@ var render = function () {
           "div",
           { staticClass: "row" },
           [
-            _c("div", { staticClass: "col-md-12 " }, [
+            _c("div", { staticClass: "col-md-12" }, [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c(

@@ -15,20 +15,16 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $user_id = $user->id;
 
         $vtiger = new Vtiger();
         //Get contact data of this user
-
-        //vars
         $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
         $contact = $vtiger->search($userQuery);
         //Cases
-
-        /* if($contact){ */
         $casesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->result[0]->id);
         $vtCases = $vtiger->search($casesQuery)->result;
         $vtCasesIdArr = [];
@@ -39,6 +35,9 @@ class DashboardController extends Controller
         //array_push($vtCasesIdArr, '17x3558'); //only test
         //Count cases
         $vt_active_cases =  count(array_keys($vtCases, ('Closed' || 'Cancelled' || 'Completed')));
+        $vt_checklists  = 0;
+        $vt_cl_items = [];
+        $pending_checklists = [];
 
         if (count($vtCasesIdArr) >= 1) {
             $checklistsQuery = DB::table('Checklist')->select('*')
@@ -50,8 +49,6 @@ class DashboardController extends Controller
             $vtCLItemIdArr = [];
             $vtCLItemNoArr = [];
 
-            $vt_cl_items = [];
-            $pending_checklists = [];
 
             foreach ($vtChecklists->result as $clist) {
                 if ($clist->id != "") {
@@ -97,12 +94,45 @@ class DashboardController extends Controller
                 }
             }
         }
+
+
+        foreach ($vtCases as $case) {
+            array_push($vtCasesIdArr, $case->id);
+        }
+
+        //Invoices
+        $invoiceQuery = DB::table('Invoice')->select('*')->where('contact_id',  $contact->result[0]->id);
+        $invoices = $vtiger->search($invoiceQuery)->result;
+
+        //return $invoices;
+        $invoiceIdArr = [];
+        foreach ($invoices as $invoice) {
+            array_push($invoiceIdArr, $invoice->id);
+        }
+
+        // Get invoice payments
+        $paymentsQuery = DB::table('Payments')->select('*')->where('cf_1139', $contact->result[0]->id)->orWhereIn('cf_1141', $invoiceIdArr)->orWhereIn('cf_1140', $vtCasesIdArr);
+        $payments = $vtiger->search($paymentsQuery)->result;
+
+        $paymentIdArr = [];
+        foreach ($payments as $payment) {
+            array_push($paymentIdArr, $payment->id);
+        }
+
+
+        $commboardQuery = DB::table('CommBoard')->select('*')
+            ->whereIn('cf_2218', $vtCasesIdArr)
+            ->orWhereIn('cf_2218', $paymentIdArr);
+
+        $commboards    = $vtiger->search($commboardQuery)->result;
+
         return view('dashboard', compact(
             'vtCases',
             'vt_active_cases',
             'vt_checklists',
             'vt_cl_items',
-            'pending_checklists'
+            'pending_checklists',
+            'commboards'
         ));
     }
 }

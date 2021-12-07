@@ -71,19 +71,29 @@ class QuoteController extends Controller
             ->take(1);
         $quote = $vtiger->search($quotesQuery)->result[0];
 
-        //return $quote;
+        $itrackerQuery = DB::table('InstallmentTracker')->select('*')
+        ->where('cf_1175', $id);
+
+        $iTrackers = $vtiger->search( $itrackerQuery)->result;
+
+
+        $itDocumentQuery = DB::table('Documents')->select('*')
+        ->where('cf_1488', $quote->contact_id);
+
+        $itDocuments = $vtiger->search( $itDocumentQuery)->result;
+
         if (
             $quote->quotestage == "3 - Accepted"
             || $quote->quotestage == "4 - Accepted - Converted to Invoice"
         ) {
             /*  array_push($vtQuotesAcceptedStates, $quote->quotestage); */
-            return view('quotes.details.accepted', compact('quote'));
+            return view('quotes.details.accepted', compact('quote','iTrackers', 'itDocuments'));
         } else
             if (
             $quote->quotestage !== "7 - Client Banned"
             || $quote->quotestage !== "6 - Client Not Interested"
         ) {
-            return view('quotes.details.pending', compact('quote'));
+            return view('quotes.details.pending', compact('quote' ,'iTrackers','itDocuments'));
         }
     }
 }

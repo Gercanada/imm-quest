@@ -14,9 +14,7 @@ class Document extends Model
         'contact_id',
         'title',
         'description',
-        'url_files',
-        'expiry_date',
-        'issued_date',
+        'url_file',
         'syncronized'
     ];
 }
