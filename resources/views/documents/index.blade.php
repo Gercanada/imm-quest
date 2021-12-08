@@ -7,7 +7,7 @@
         My documents
     </div>
 
-    <div class="card">
+    <div class="card shadow-lg p-1">
         <div class="table-responsive">
             <table class="table">
                 <thead>

@@ -22,15 +22,18 @@ class DashboardController extends Controller
 
         $vtiger = new Vtiger();
         //Get contact data of this user
-        $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
-        $contact = $vtiger->search($userQuery);
+        $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname')->where("contact_no", $user->vtiger_contact_id)->take(1);
+        $contact = $vtiger->search($userQuery)->result[0];
+
         //Cases
-        $casesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->result[0]->id);
+        $casesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->id);
         $vtCases = $vtiger->search($casesQuery)->result;
         $vtCasesIdArr = [];
+        $vtCasesNOArr = [];
 
         foreach ($vtCases as $case) {
             array_push($vtCasesIdArr, $case->id);
+            array_push($vtCasesNOArr, $case->ticket_no);
         }
         //array_push($vtCasesIdArr, '17x3558'); //only test
         //Count cases
@@ -49,22 +52,18 @@ class DashboardController extends Controller
             $vtCLItemIdArr = [];
             $vtCLItemNoArr = [];
 
-
             foreach ($vtChecklists->result as $clist) {
                 if ($clist->id != "") {
                     array_push($vtCLItemIdArr, $clist->id);
                 }
-            }
-
-            foreach ($vtChecklists->result as $clist) {
                 if ($clist->checklistno != "") {
                     array_push($vtCLItemNoArr, $clist->checklistno);
                 }
             }
 
-            if (count($vtCLItemIdArr) >= 1) {
+            if (count($vtCLItemIdArr) > 0) {
                 $clitemsQuery = DB::table('CLItems')->select('*')
-                    ->whereIn('cf_1216', $vtCLItemIdArr)
+                    ->orWhereIn('cf_1216', $vtCLItemIdArr)
                     ->orWhereIn('cf_1217', $vtCasesIdArr)
                     ->where('cf_1578', 'Pending')
                     ->where('cf_1200', 'Document');
@@ -73,8 +72,9 @@ class DashboardController extends Controller
 
                 $pendingChecklistQuery = DB::table('Checklist')->select('*')
                     ->whereIn('cf_1199', $vtCasesIdArr) //TODO enable
-                    ->where('cf_1187', '>=', '1')
-                    ->where('cf_1189', '>=', '1');
+                    //->where('cf_1187', '>=', '1')
+                    //->where('cf_1189', '>=', '1')
+                    ;
 
                 $checklists = $vtiger->search($pendingChecklistQuery)->result;
                 $pending_checklists = array();
@@ -95,13 +95,10 @@ class DashboardController extends Controller
             }
         }
 
-
-        foreach ($vtCases as $case) {
-            array_push($vtCasesIdArr, $case->id);
-        }
+        //return  $vt_cl_items;
 
         //Invoices
-        $invoiceQuery = DB::table('Invoice')->select('*')->where('contact_id',  $contact->result[0]->id);
+        $invoiceQuery = DB::table('Invoice')->select('*')->where('contact_id',  $contact->id);
         $invoices = $vtiger->search($invoiceQuery)->result;
 
         //return $invoices;
@@ -111,18 +108,20 @@ class DashboardController extends Controller
         }
 
         // Get invoice payments
-        $paymentsQuery = DB::table('Payments')->select('*')->where('cf_1139', $contact->result[0]->id)->orWhereIn('cf_1141', $invoiceIdArr)->orWhereIn('cf_1140', $vtCasesIdArr);
+        $paymentsQuery = DB::table('Payments')->select('*')->where('cf_1139', $contact->id)->orWhereIn('cf_1141', $invoiceIdArr)->orWhereIn('cf_1140', $vtCasesIdArr);
         $payments = $vtiger->search($paymentsQuery)->result;
 
         $paymentIdArr = [];
+        $paymentNOArr = [];
         foreach ($payments as $payment) {
             array_push($paymentIdArr, $payment->id);
+            array_push($paymentNOArr, $payment->cf_1142);
         }
-
-
         $commboardQuery = DB::table('CommBoard')->select('*')
-            ->whereIn('cf_2218', $vtCasesIdArr)
-            ->orWhereIn('cf_2218', $paymentIdArr);
+            ->whereIn('cf_2218', $vtCasesIdArr) //find by case id
+            ->orWhereIn('cf_2218', $paymentIdArr) //Find by payment id
+            ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
+            ->orWhereIn('cf_2218', $vtCasesNOArr); //find by caseNo
 
         $commboards    = $vtiger->search($commboardQuery)->result;
 
@@ -132,7 +131,8 @@ class DashboardController extends Controller
             'vt_checklists',
             'vt_cl_items',
             'pending_checklists',
-            'commboards'
+            'commboards',
+            'contact'
         ));
     }
 }

@@ -4,16 +4,14 @@
 @endsection
 
 @section('content')
-
     <div class="card">
         <div class="card-header">
             <a href="{{ route('quotes') }}" class="btn btn-outline-info btn-rounded float-left"><i
                     class=" fas fa-arrow-circle-left">Back</i></a>
-            <h4 class="card-title mb-3">Accepted Quote <b> {{ $quote->subject }}</b></h4>
+            <h4 class="card-title mb-3"> <span class="lstick d-inline-block align-middle"></span> Accepted Quote <b>
+                    {{ $quote->subject }}</b></h4>
         </div>
     </div>
-    {{-- <div class="card">
-        <div class="card-body"> --}}
     <ul class="nav nav-tabs nav-bordered mb-3 customtab">
         <li class="nav-item">
             <a href="#home-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
@@ -35,7 +33,7 @@
         </li>
     </ul>
 
-    <div class="tab-content">
+    <div class="tab-content shadow-lg p-1">
         <div class="tab-pane" id="home-b1">
             <div class="card ">
                 <div class="card-body">
@@ -43,12 +41,8 @@
                 </div>
             </div>
             <br>
-
-
-            <div class="card">
-                <div class="col-md-4 float-right ml-3 bg-secondary">
-                    <p>Accepted and signed at <b>2021/11/19</b></p>
-                </div>
+            <div class="col-md-4 float-right ml-3 bg-secondary">
+                <p>Accepted and signed at <b>2021/11/19</b></p>
             </div>
             </br>
             <div class="card ">
@@ -99,7 +93,7 @@
                                 <td>{{ $document->cf_1491 }}</td>
                                 <td>{{ $document->filename }}</td>
                                 <td>{{ $document->cf_2134 }}</td>
-                               {{--  <td>{{ $document->filelocationtype }}}</td> --}}
+                                {{-- <td>{{ $document->filelocationtype }}}</td> --}}
                                 <td>
                                     <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
                                 </td>

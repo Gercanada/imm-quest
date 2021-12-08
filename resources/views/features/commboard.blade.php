@@ -1,7 +1,7 @@
  <!-- ============================================================== -->
  <!-- Activity widget find scss into widget folder-->
  <!-- ============================================================== -->
- <div class="card">
+ <div class="card shadow-lg p-1">
      <div class="card-body">
          <div class="d-flex align-items-center">
              <h4 class="card-title"><span class="lstick  d-inline-block align-middle"></span>Comm board</h4>

@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" style="heigth: 100%">
-    <div class="card">
+    <div class="card shadow-lg p-1">
       <div class="card-body d-flex justify-content-around">
         <div class="spinner-grow text-success center" role="status">
           <span class="sr-only">Loading...</span>
@@ -12,7 +12,7 @@
   <div v-else>
     <div class="row">
       <div class="col-md-12 col-lg-62">
-        <div class="card">
+        <div class="card shadow-lg p-1">
           <div class="row card-header">
             <div class="col-md-8">
               <h2>Customer portal users</h2>
@@ -132,7 +132,7 @@
                         </table>
                       </div>
 
-                      <div class="card">
+                      <div class="card shadow-lg p-1">
                         <div class="card-body">
                           <h4 class="card-title">
                             Accesible modules for this user

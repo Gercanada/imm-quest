@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" style="heigth: 100%">
-    <div class="card">
+    <div class="card shadow-lg p-1">
       <div class="card-body d-flex justify-content-around">
         <div class="spinner-grow text-success center" role="status">
           <span class="sr-only">Loading...</span>
@@ -12,7 +12,7 @@
   <div v-else>
     <div class="row">
       <div class="col-md-12">
-        <div class="card">
+        <div class="card shadow-lg p-1">
           <div class="card-header">
             <a
               :href="'/checklist/' + clitem.cf_1216"
@@ -282,9 +282,9 @@
 
           <!-- </template> -->
         </div>
-        <div class="card">
+        <div class="card shadow-lg p-1">
           <div class="card-body">
-            <div class="card" v-if="clitem.cf_1200 == 'IMM Form'">
+            <div class="card shadow-lg p-1" v-if="clitem.cf_1200 == 'IMM Form'">
               <div class="col border py-2">
                 <div class="row">
                   <div class="col-md-6">

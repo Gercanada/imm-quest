@@ -128,8 +128,9 @@ class VtigerController extends Controller
 
     public function goType($type, $where)
     {
-        $vtiger = new Vtiger();
 
+        $user  =Auth::user();
+        $vtiger = new Vtiger();
         $condWhere = explode(";", $where);
 
         // /cf_2129
@@ -150,10 +151,11 @@ class VtigerController extends Controller
                 $query = DB::table($type)->select('*')->where($condWhere[0], $condWhere[1], $condWhere[1]);
             }
 
-            if (count($condWhere) != 2 || count($condWhere) != 2) {
+            /*   if (count($condWhere) != 2 || count($condWhere) != 2) {
                 return "Invalid query params try 'user_id;1 or user_id;!=;1' ";
-            }
+            } */
             // /$query = DB::table($type)->select('*')->where("installmenttrackerno", "PP2113670");
+            $query = DB::table("CLItems")->select('*')->where("cf_1217", "!==","");
 
             $data = $vtiger->search($query);
         }

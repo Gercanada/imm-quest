@@ -1,6 +1,6 @@
 
 <template>
-  <div class="card">
+  <div class="card shadow-lg p-1">
     <div class="card-header">
       <a
         href="/checklist:id"

@@ -88,5 +88,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/payments', [PaymentController::class, 'index'])->middleware(['auth'])->name('payments');
+
+    Route::get('/commboard', [CommboardController::class, 'index'])->name('commboard');
 });
     // Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);

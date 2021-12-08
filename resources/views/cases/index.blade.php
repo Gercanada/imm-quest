@@ -12,21 +12,17 @@
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-md-5 col-12 align-self-center">
-                <h3 class="text-themecolor mb-0">My cases</h3>
+                <h3 class="card-title text-themecolor mb-0"><span class="lstick d-inline-block align-middle"></span>My cases
+                </h3>
             </div>
         </div>
         <!-- Start row -->
-
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card shadow-lg p-1">
                     <div class="card-body">
-                        <h4 class="card-title">My active cases</h4>
-                        {{-- <h6 class="card-subtitle">When using tables to display data, you will often wish to
-                            display column information in groups. DataTables fully supports
-                            <code> colspan</code> and <code> rowspan</code> in the table's header, assigning the
-                            required order listeners to the TH element suitable for that column.
-                        </h6> --}}
+                        <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span>My active cases
+                        </h4>
                         <div class="table-responsive">
                             <table class="table dt_alt_pagination table-striped table-bordered display" style="width:100%">
                                 <thead>
@@ -34,7 +30,6 @@
                                         <th>Case title</th>
                                         <th>Case type</th>
                                         <th>Status</th>
-                                        {{-- <th>options</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,14 +65,10 @@
 
             </div>
             <div class="col-md-12">
-                <div class="card">
+                <div class="card shadow-lg p-1">
                     <div class="card-body">
-                        <h4 class="card-title">My completed case</h4>
-                        {{-- <h6 class="card-subtitle">When using tables to display data, you will often wish to
-                            display column information in groups. DataTables fully supports
-                            <code> colspan</code> and <code> rowspan</code> in the table's header, assigning the
-                            required order listeners to the TH element suitable for that column.
-                        </h6> --}}
+                        <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span>My completed case
+                        </h4>
                         <div class="table-responsive">
                             <table class="table dt_alt_pagination table-striped table-bordered display" style="width:100%">
                                 <thead>
@@ -121,6 +112,4 @@
             </div>
         </div>
     </div>
-
-
 @endsection

@@ -4363,12 +4363,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -24641,7 +24635,7 @@ var render = function () {
           { staticClass: "row" },
           [
             _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card shadow-lg p-1" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _c(
                     "a",
@@ -25063,10 +25057,12 @@ var render = function () {
                 _c("div", { staticClass: "card-footer" }),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card shadow-lg p-1" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _vm.clitem.cf_1200 == "IMM Form"
-                    ? _c("div", { staticClass: "card" }, [_vm._m(1)])
+                    ? _c("div", { staticClass: "card shadow-lg p-1" }, [
+                        _vm._m(1),
+                      ])
                     : _vm.clitem.cf_1578 === "Pending"
                     ? _c("div", [
                         _c(
@@ -25251,7 +25247,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
+    return _c("div", { staticClass: "card shadow-lg p-1" }, [
       _c("div", { staticClass: "card-body d-flex justify-content-around" }, [
         _c(
           "div",
@@ -25320,7 +25316,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card shadow-lg p-1" }, [
             _c("div", { staticClass: "card-header" }, [
               _vm._v("Example Component"),
             ]),
@@ -25366,7 +25362,7 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "card" },
+            { staticClass: "card shadow-lg p-1" },
             [
               _c("div", { staticClass: "card-header" }, [
                 _c("h3", { staticClass: "text-themecolor mb-0" }, [
@@ -25860,7 +25856,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
+    return _c("div", { staticClass: "card shadow-lg p-1" }, [
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "card-body d-flex justify-content-around" }, [
           _c(
@@ -25928,7 +25924,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card shadow-lg p-1" }, [
             _c("div", { staticClass: "card-header" }, [
               _vm._v("Example Component"),
             ]),
@@ -25972,15 +25968,20 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _c("h3", {
-                staticClass: "text-themecolor mb-0",
-                domProps: { textContent: _vm._s(_vm.tkcase.ticket_title) },
-              }),
+              _c("h3", { staticClass: "card-title text-themecolor mb-0 " }, [
+                _c("span", {
+                  staticClass: "lstick d-inline-block align-middle",
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  domProps: { textContent: _vm._s(_vm.tkcase.ticket_title) },
+                }),
+              ]),
             ]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12" }, [
-            _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card shadow-lg p-1" }, [
               _c("div", { staticClass: "card-body" }, [
                 _c("table", { staticClass: "table v-middle fs-3 mb-0 mt-4" }, [
                   _c("tbody", [
@@ -26045,178 +26046,90 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _c(
-                      "ul",
-                      {
-                        staticClass: "nav nav-tabs nav-bordered mb-3 customtab",
-                      },
-                      _vm._l(_vm.ArrayChecklist, function (checklist) {
-                        return _c(
-                          "li",
-                          {
-                            key: checklist.name,
-                            staticClass: "nav-item",
-                            attrs: { value: checklist.name },
-                          },
-                          [
-                            checklist
-                              ? _c(
-                                  "a",
-                                  {
-                                    staticClass: "nav-link",
-                                    class: {
-                                      active: _vm.isActive(checklist.name),
-                                    },
-                                    attrs: {
-                                      href: "#tab_" + checklist.id,
-                                      "data-toggle": "tab",
-                                      "aria-expanded": true,
-                                    },
-                                    on: {
-                                      click: function ($event) {
-                                        $event.preventDefault()
-                                        return _vm.setActive(checklist.name)
-                                      },
-                                    },
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass:
-                                        "mdi mdi-clipboard-check d-lg-none d-block mr-1",
-                                    }),
-                                    _vm._v(" "),
-                                    _c("span", {
-                                      staticClass: "d-none d-lg-block",
-                                      domProps: {
-                                        textContent: _vm._s(checklist.name),
-                                      },
-                                    }),
-                                  ]
-                                )
-                              : _vm._e(),
-                          ]
-                        )
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
+            _c("div", { staticClass: "card  shadow-lg p-1" }, [
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _c(
+                    "ul",
+                    { staticClass: "nav nav-tabs nav-bordered mb-3 customtab" },
                     _vm._l(_vm.ArrayChecklist, function (checklist) {
                       return _c(
-                        "div",
+                        "li",
                         {
-                          key: checklist.id,
-                          staticClass: "tab-content",
-                          attrs: { value: checklist.id },
+                          key: checklist.name,
+                          staticClass: "nav-item",
+                          attrs: { value: checklist.name },
                         },
                         [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "tab-pane",
-                              class: {
-                                "show active": _vm.isActive(checklist.name),
-                              },
-                              attrs: { id: "tab_" + checklist.id },
-                            },
-                            [
-                              _vm._m(2, true),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "card" }, [
-                                _c("div", { staticClass: "card-body" }, [
-                                  _c(
-                                    "div",
-                                    { staticClass: "table-responsive" },
-                                    [
-                                      _c("table", { staticClass: "table" }, [
-                                        _vm._m(3, true),
-                                        _vm._v(" "),
-                                        _c(
-                                          "tbody",
-                                          _vm._l(
-                                            _vm.CLItemsArray,
-                                            function (clitem) {
-                                              return _c(
-                                                "tr",
-                                                {
-                                                  key: clitem.id,
-                                                  attrs: { value: clitem.id },
-                                                },
-                                                [
-                                                  clitem.cf_1216 ===
-                                                    checklist.id &&
-                                                  clitem.cf_1578 === "Pending"
-                                                    ? [
-                                                        _c("td", {
-                                                          domProps: {
-                                                            textContent: _vm._s(
-                                                              clitem.name
-                                                            ),
-                                                          },
-                                                        }),
-                                                        _vm._v(" "),
-                                                        _c("td", {
-                                                          domProps: {
-                                                            textContent: _vm._s(
-                                                              clitem.cf_1202
-                                                            ),
-                                                          },
-                                                        }),
-                                                        _vm._v(" "),
-                                                        _c("td", [
-                                                          _c(
-                                                            "a",
-                                                            {
-                                                              staticClass:
-                                                                "btn btn-outline-success btn-rounded",
-                                                              attrs: {
-                                                                href:
-                                                                  "/checklist/" +
-                                                                  checklist.id +
-                                                                  "/item/" +
-                                                                  clitem.id,
-                                                              },
-                                                            },
-                                                            [
-                                                              _c("i", {
-                                                                staticClass:
-                                                                  "fas fa-upload",
-                                                              }),
-                                                            ]
-                                                          ),
-                                                        ]),
-                                                        _vm._v(" "),
-                                                        _c("td", {
-                                                          domProps: {
-                                                            textContent: _vm._s(
-                                                              clitem.cf_1212
-                                                            ),
-                                                          },
-                                                        }),
-                                                      ]
-                                                    : _vm._e(),
-                                                ],
-                                                2
-                                              )
-                                            }
-                                          ),
-                                          0
-                                        ),
-                                      ]),
-                                    ]
-                                  ),
+                          checklist
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass: "nav-link",
+                                  class: {
+                                    active: _vm.isActive(checklist.name),
+                                  },
+                                  attrs: {
+                                    href: "#tab_" + checklist.id,
+                                    "data-toggle": "tab",
+                                    "aria-expanded": true,
+                                  },
+                                  on: {
+                                    click: function ($event) {
+                                      $event.preventDefault()
+                                      return _vm.setActive(checklist.name)
+                                    },
+                                  },
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass:
+                                      "mdi mdi-clipboard-check d-lg-none d-block mr-1",
+                                  }),
                                   _vm._v(" "),
-                                  _vm._m(4, true),
-                                ]),
-                                _vm._v(" "),
+                                  _c("span", {
+                                    staticClass: "d-none d-lg-block",
+                                    domProps: {
+                                      textContent: _vm._s(checklist.name),
+                                    },
+                                  }),
+                                ]
+                              )
+                            : _vm._e(),
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.ArrayChecklist, function (checklist) {
+                    return _c(
+                      "div",
+                      {
+                        key: checklist.id,
+                        staticClass: "tab-content",
+                        attrs: { value: checklist.id },
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "tab-pane",
+                            class: {
+                              "show active": _vm.isActive(checklist.name),
+                            },
+                            attrs: { id: "tab_" + checklist.id },
+                          },
+                          [
+                            _vm._m(2, true),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "card" }, [
+                              _c("div", { staticClass: "card-body" }, [
                                 _c("div", { staticClass: "table-responsive" }, [
                                   _c("table", { staticClass: "table" }, [
-                                    _vm._m(5, true),
+                                    _vm._m(3, true),
                                     _vm._v(" "),
                                     _c(
                                       "tbody",
@@ -26230,92 +26143,8 @@ var render = function () {
                                               attrs: { value: clitem.id },
                                             },
                                             [
-                                              clitem &&
-                                              clitem.cf_1216 == checklist.id &&
-                                              clitem.cf_1200 === "IMM Form"
-                                                ? [
-                                                    _c("td", [
-                                                      _c("a", {
-                                                        attrs: {
-                                                          href:
-                                                            "/checklist/" +
-                                                            clitem.cf_1216 +
-                                                            "/item/" +
-                                                            clitem.id,
-                                                        },
-                                                        domProps: {
-                                                          textContent: _vm._s(
-                                                            clitem.name
-                                                          ),
-                                                        },
-                                                      }),
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1202
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1212
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1578
-                                                        ),
-                                                      },
-                                                    }),
-                                                  ]
-                                                : _vm._e(),
-                                            ],
-                                            2
-                                          )
-                                        }
-                                      ),
-                                      0
-                                    ),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _vm._m(6, true),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "table-responsive" }, [
-                                  _c("table", { staticClass: "table" }, [
-                                    _vm._m(7, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "tbody",
-                                      _vm._l(
-                                        _vm.CLItemsArray,
-                                        function (clitem) {
-                                          return _c(
-                                            "tr",
-                                            {
-                                              key: clitem.id,
-                                              attrs: {
-                                                value: clitem.id,
-                                                "v-if":
-                                                  clitem &&
-                                                  clitem.cf_1216 ==
-                                                    checklist.id &&
-                                                  clitem.cf_1578 ===
-                                                    ("Received" || 0),
-                                              },
-                                            },
-                                            [
-                                              clitem &&
-                                              clitem.cf_1216 == checklist.id &&
-                                              clitem.cf_1578 ===
-                                                ("Received" || 0)
+                                              clitem.cf_1216 === checklist.id &&
+                                              clitem.cf_1578 === "Pending"
                                                 ? [
                                                     _c("td", {
                                                       domProps: {
@@ -26328,15 +26157,38 @@ var render = function () {
                                                     _c("td", {
                                                       domProps: {
                                                         textContent: _vm._s(
-                                                          clitem.cf_1578
+                                                          clitem.cf_1202
                                                         ),
                                                       },
                                                     }),
                                                     _vm._v(" "),
+                                                    _c("td", [
+                                                      _c(
+                                                        "a",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-outline-success btn-rounded",
+                                                          attrs: {
+                                                            href:
+                                                              "/checklist/" +
+                                                              checklist.id +
+                                                              "/item/" +
+                                                              clitem.id,
+                                                          },
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "fas fa-upload",
+                                                          }),
+                                                        ]
+                                                      ),
+                                                    ]),
+                                                    _vm._v(" "),
                                                     _c("td", {
                                                       domProps: {
                                                         textContent: _vm._s(
-                                                          clitem.cf_1970
+                                                          clitem.cf_1212
                                                         ),
                                                       },
                                                     }),
@@ -26351,16 +26203,149 @@ var render = function () {
                                     ),
                                   ]),
                                 ]),
+                                _vm._v(" "),
+                                _vm._m(4, true),
                               ]),
-                            ]
-                          ),
-                        ]
-                      )
-                    }),
-                  ],
-                  2
-                ),
-              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "table-responsive" }, [
+                                _c("table", { staticClass: "table" }, [
+                                  _vm._m(5, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "tbody",
+                                    _vm._l(_vm.CLItemsArray, function (clitem) {
+                                      return _c(
+                                        "tr",
+                                        {
+                                          key: clitem.id,
+                                          attrs: { value: clitem.id },
+                                        },
+                                        [
+                                          clitem &&
+                                          clitem.cf_1216 == checklist.id &&
+                                          clitem.cf_1200 === "IMM Form"
+                                            ? [
+                                                _c("td", [
+                                                  _c("a", {
+                                                    attrs: {
+                                                      href:
+                                                        "/checklist/" +
+                                                        clitem.cf_1216 +
+                                                        "/item/" +
+                                                        clitem.id,
+                                                    },
+                                                    domProps: {
+                                                      textContent: _vm._s(
+                                                        clitem.name
+                                                      ),
+                                                    },
+                                                  }),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      clitem.cf_1202
+                                                    ),
+                                                  },
+                                                }),
+                                                _vm._v(" "),
+                                                _c("td", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      clitem.cf_1212
+                                                    ),
+                                                  },
+                                                }),
+                                                _vm._v(" "),
+                                                _c("td", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      clitem.cf_1578
+                                                    ),
+                                                  },
+                                                }),
+                                              ]
+                                            : _vm._e(),
+                                        ],
+                                        2
+                                      )
+                                    }),
+                                    0
+                                  ),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(6, true),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "table-responsive" }, [
+                                _c("table", { staticClass: "table" }, [
+                                  _vm._m(7, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "tbody",
+                                    _vm._l(_vm.CLItemsArray, function (clitem) {
+                                      return _c(
+                                        "tr",
+                                        {
+                                          key: clitem.id,
+                                          attrs: {
+                                            value: clitem.id,
+                                            "v-if":
+                                              clitem &&
+                                              clitem.cf_1216 == checklist.id &&
+                                              clitem.cf_1578 ===
+                                                ("Received" || 0),
+                                          },
+                                        },
+                                        [
+                                          clitem &&
+                                          clitem.cf_1216 == checklist.id &&
+                                          clitem.cf_1578 ===
+                                            ("Received" || 0)
+                                            ? [
+                                                _c("td", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      clitem.name
+                                                    ),
+                                                  },
+                                                }),
+                                                _vm._v(" "),
+                                                _c("td", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      clitem.cf_1578
+                                                    ),
+                                                  },
+                                                }),
+                                                _vm._v(" "),
+                                                _c("td", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      clitem.cf_1970
+                                                    ),
+                                                  },
+                                                }),
+                                              ]
+                                            : _vm._e(),
+                                        ],
+                                        2
+                                      )
+                                    }),
+                                    0
+                                  ),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
             ]),
           ]),
         ]),
@@ -26405,10 +26390,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "card-title mt-5" }, [
       _c("i", {
-        staticClass:
-          "\n                      mr-1\n                      font-18\n                      mdi mdi-numeric-1-box-multiple-outline\n                    ",
+        staticClass: "mr-1 font-18 mdi mdi-numeric-1-box-multiple-outline",
       }),
-      _vm._v("\n                  Pending items\n                "),
+      _vm._v("\n                Pending items\n              "),
     ])
   },
   function () {
@@ -26434,9 +26418,9 @@ var staticRenderFns = [
     return _c("h6", { staticClass: "card-title" }, [
       _c("i", {
         staticClass:
-          "\n                          mr-1\n                          font-18\n                          mdi mdi-numeric-2-box-multiple-outline\n                        ",
+          "\n                        mr-1\n                        font-18\n                        mdi mdi-numeric-2-box-multiple-outline\n                      ",
       }),
-      _vm._v("\n                      Electronic forms\n                    "),
+      _vm._v("\n                    Electronic forms\n                  "),
     ])
   },
   function () {
@@ -26462,9 +26446,9 @@ var staticRenderFns = [
     return _c("h6", { staticClass: "card-title" }, [
       _c("i", {
         staticClass:
-          "\n                        mr-1\n                        font-18\n                        mdi mdi-numeric-2-box-multiple-outline\n                      ",
+          "\n                      mr-1\n                      font-18\n                      mdi mdi-numeric-2-box-multiple-outline\n                    ",
       }),
-      _vm._v("Submited items\n                  "),
+      _vm._v("Submited items\n                "),
     ])
   },
   function () {
@@ -26506,7 +26490,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "card" },
+    { staticClass: "card shadow-lg p-1" },
     [
       _c("div", { staticClass: "card-header" }, [
         _vm._m(0),
@@ -27421,7 +27405,7 @@ var render = function () {
           { staticClass: "row" },
           [
             _c("div", { staticClass: "col-md-12 col-lg-62" }, [
-              _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card shadow-lg p-1" }, [
                 _c("div", { staticClass: "row card-header" }, [
                   _vm._m(1),
                   _vm._v(" "),
@@ -27616,108 +27600,115 @@ var render = function () {
                                         ]
                                       ),
                                       _vm._v(" "),
-                                      _c("div", { staticClass: "card" }, [
-                                        _c(
-                                          "div",
-                                          { staticClass: "card-body" },
-                                          [
-                                            _c(
-                                              "h4",
-                                              { staticClass: "card-title" },
-                                              [
-                                                _vm._v(
-                                                  "\n                          Accesible modules for this user\n                        "
-                                                ),
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "h6",
-                                              { staticClass: "card-subtitle" },
-                                              [
-                                                _vm._v(
-                                                  "\n                          Select each modules that this user need to get\n                          access\n                        "
-                                                ),
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "select",
-                                              {
-                                                directives: [
-                                                  {
-                                                    name: "model",
-                                                    rawName: "v-model",
-                                                    value: _vm.selected,
-                                                    expression: "selected",
-                                                  },
-                                                ],
-                                                staticClass:
-                                                  "select2 form-control",
-                                                staticStyle: {
-                                                  height: "36px",
-                                                  width: "100%",
-                                                },
-                                                attrs: {
-                                                  multiple: "multiple",
-                                                  options: _vm.ArrayTypes,
-                                                  id: "selectTypes",
-                                                },
-                                                on: {
-                                                  change: function ($event) {
-                                                    var $$selectedVal =
-                                                      Array.prototype.filter
-                                                        .call(
-                                                          $event.target.options,
-                                                          function (o) {
-                                                            return o.selected
-                                                          }
-                                                        )
-                                                        .map(function (o) {
-                                                          var val =
-                                                            "_value" in o
-                                                              ? o._value
-                                                              : o.value
-                                                          return val
-                                                        })
-                                                    _vm.selected = $event.target
-                                                      .multiple
-                                                      ? $$selectedVal
-                                                      : $$selectedVal[0]
-                                                  },
-                                                },
-                                              },
-                                              _vm._l(
-                                                _vm.ArrayTypes,
-                                                function (type) {
-                                                  return _c(
-                                                    "option",
-                                                    {
-                                                      key: type.id,
-                                                      staticClass: "selected",
-                                                      attrs: {
-                                                        "v-if":
-                                                          type.status == 1,
-                                                      },
-                                                      domProps: {
-                                                        value: type.id,
-                                                      },
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                            " +
-                                                          _vm._s(type.text) +
-                                                          "\n                          "
-                                                      ),
-                                                    ]
-                                                  )
-                                                }
+                                      _c(
+                                        "div",
+                                        { staticClass: "card shadow-lg p-1" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "card-body" },
+                                            [
+                                              _c(
+                                                "h4",
+                                                { staticClass: "card-title" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                          Accesible modules for this user\n                        "
+                                                  ),
+                                                ]
                                               ),
-                                              0
-                                            ),
-                                          ]
-                                        ),
-                                      ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "h6",
+                                                {
+                                                  staticClass: "card-subtitle",
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                          Select each modules that this user need to get\n                          access\n                        "
+                                                  ),
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "select",
+                                                {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value: _vm.selected,
+                                                      expression: "selected",
+                                                    },
+                                                  ],
+                                                  staticClass:
+                                                    "select2 form-control",
+                                                  staticStyle: {
+                                                    height: "36px",
+                                                    width: "100%",
+                                                  },
+                                                  attrs: {
+                                                    multiple: "multiple",
+                                                    options: _vm.ArrayTypes,
+                                                    id: "selectTypes",
+                                                  },
+                                                  on: {
+                                                    change: function ($event) {
+                                                      var $$selectedVal =
+                                                        Array.prototype.filter
+                                                          .call(
+                                                            $event.target
+                                                              .options,
+                                                            function (o) {
+                                                              return o.selected
+                                                            }
+                                                          )
+                                                          .map(function (o) {
+                                                            var val =
+                                                              "_value" in o
+                                                                ? o._value
+                                                                : o.value
+                                                            return val
+                                                          })
+                                                      _vm.selected = $event
+                                                        .target.multiple
+                                                        ? $$selectedVal
+                                                        : $$selectedVal[0]
+                                                    },
+                                                  },
+                                                },
+                                                _vm._l(
+                                                  _vm.ArrayTypes,
+                                                  function (type) {
+                                                    return _c(
+                                                      "option",
+                                                      {
+                                                        key: type.id,
+                                                        staticClass: "selected",
+                                                        attrs: {
+                                                          "v-if":
+                                                            type.status == 1,
+                                                        },
+                                                        domProps: {
+                                                          value: type.id,
+                                                        },
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                            " +
+                                                            _vm._s(type.text) +
+                                                            "\n                          "
+                                                        ),
+                                                      ]
+                                                    )
+                                                  }
+                                                ),
+                                                0
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      ),
                                     ]),
                                   ]),
                                 ]
@@ -28035,7 +28026,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
+    return _c("div", { staticClass: "card shadow-lg p-1" }, [
       _c("div", { staticClass: "card-body d-flex justify-content-around" }, [
         _c(
           "div",

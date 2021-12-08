@@ -19,23 +19,16 @@
                                 <span class="hide-menu"> My Profile </span>
                             </a>
                         </li>
-                        {{-- <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link p-0">
-                                <i class="mdi mdi-adjust"></i>
-                                <span class="hide-menu"> My Balance </span>
-                            </a>
-                        </li>
+
                         <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link p-0">
-                                <i class="mdi mdi-adjust"></i>
-                                <span class="hide-menu"> Inbox </span>
-                            </a>
-                        </li> --}}
-                        <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link p-0">
-                                <i class="mdi mdi-adjust"></i>
-                                <span class="hide-menu"> Logout </span>
-                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="sidebar-link p-0" href="route('logout')" onclick="event.preventDefault();
+                                this.closest('form').submit();" aria-expanded="false">
+                                    <i class="mdi mdi-adjust"></i>
+                                    <span class="hide-menu"> Logout </span>
+                                </a>
+                            </form>
                         </li>
                     </ul>
                 </li>
@@ -67,9 +60,9 @@
                         href="{{ route('payments') }}" aria-expanded="false"><i data-feather="credit-card"
                             class="feather-icon"></i><span class="hide-menu">Payments</span></a></li>
 
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="#" aria-expanded="false"><i data-feather="message-square"
-                            class="feather-icon"></i><span class="hide-menu">Comm board</span></a></li>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"  href="{{ route('commboard') }}"
+                        aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
+                            class="hide-menu">Comm board</span></a></li>
 
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                         href="{{ route('documents') }}" aria-expanded="false"><i data-feather="file"
@@ -85,16 +78,13 @@
                         @csrf
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="route('logout')" onclick="event.preventDefault();
                         this.closest('form').submit();" aria-expanded="false">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <i data-feather="log-out" class="feather-icon"></i><span class="hide-menu">Log
-                                    Out</span>
+                            <i data-feather="log-out" class="feather-icon"></i>
+                            <span class="hide-menu"> Log Out</span>
                         </a>
-
                     </form>
                 </li>
             </ul>
-           {{--  <user-aside-tools></user-aside-tools> --}}
+            {{-- <user-aside-tools></user-aside-tools> --}}
         </nav>
         <!-- End Sidebar navigation -->
     </div>

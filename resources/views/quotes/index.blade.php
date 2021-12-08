@@ -1,21 +1,21 @@
 @extends('layouts.app')
 @include('features.datatable')
 @section('title')
-    Quote {Quote name}
+    Quotes
 @endsection
 @section('content')
 
     <div class="row page-titles">
         <div class="col-md-5 col-12 align-self-center">
-            <h3 class="text-themecolor mb-0">My Quotes</h3>
+            <h3 class="text-themecolor mb-0"><span class="lstick d-inline-block align-middle"></span>My Quotes</h3>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card shadow-lg p-1">
                 <div class="card-body">
-                    <h4 class="card-title">My Open Quotes</h4>
+                    <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span>My Open Quotes</h4>
                     <div class="table-responsive">
                         <table class="table dt_alt_pagination table-striped table-bordered display">
                             <thead>
@@ -48,9 +48,9 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div class="card">
+            <div class="card shadow-lg p-1">
                 <div class="card-body">
-                    <h4 class="card-title">My Accepted Quotes</h4>
+                    <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span>My Accepted Quotes</h4>
                     <div class="table-responsive">
                         <table class="table dt_alt_pagination table-striped table-bordered display">
                             <thead>
