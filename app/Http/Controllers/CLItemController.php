@@ -23,7 +23,7 @@ class CLItemController extends Controller
      * @param  \App\Models\CLItem  $cLItem
      * @return \Illuminate\Http\Response
      */
-    public function show(/* CLItem $cLItem, $id */Request $request)
+    public function show(Request $request)
     {
         $vtiger = new Vtiger();
         $clitemQuery =  DB::table('CLItems')->select('*')
@@ -35,7 +35,6 @@ class CLItemController extends Controller
         $checklist = [];
         if (count(array_keys($vtiger->search($clitemQuery)->result)) !== 0) {
             $item = $vtiger->search($clitemQuery)->result[0];
-
 
             $casesQuery =  DB::table('HelpDesk')
                 ->select('*')
@@ -52,9 +51,7 @@ class CLItemController extends Controller
                 ->where(
                     'id',
                     $item->cf_1216
-
-                )
-                ->take(1);
+                )->take(1);
 
             $checklist = $vtiger->search($checklistQuery)->result[0];
         }

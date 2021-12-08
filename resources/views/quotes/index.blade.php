@@ -32,12 +32,7 @@
                                                 {{ $openQuote->subject }}</a></td>
                                         <td>{{ $openQuote->hdnGrandTotal }}</td>
                                         <td>{{ $openQuote->quotestage }}</td>
-                                        {{-- <td>
-                                            <a href="{{ route('pending_quotes', [$openQuote->id]) }}" type="button"
-                                                class="btn btn-outline-success btn-rounded">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                        </td> --}}
+
                                     </tr>
 
                                 @endforeach
@@ -50,7 +45,8 @@
         <div class="col-md-12">
             <div class="card shadow-lg p-1">
                 <div class="card-body">
-                    <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span>My Accepted Quotes</h4>
+                    <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span>My Accepted Quotes
+                    </h4>
                     <div class="table-responsive">
                         <table class="table dt_alt_pagination table-striped table-bordered display">
                             <thead>
@@ -59,7 +55,6 @@
                                     <th scope="col">Grand Total</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">AProposal Date</th>
-                                    {{-- <th scope="col">Accepted date</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,12 +65,7 @@
                                         <td>{{ $acceptedQuote->hdnGrandTotal }}</td>
                                         <td>{{ $acceptedQuote->quotestage }}</td>
                                         <td>{{ $acceptedQuote->cf_966 }}</td>
-                                        {{-- <td>
-                                            <a href="{{ route('pending_quotes', [$acceptedQuote->id]) }}" type="button"
-                                                class="btn btn-outline-success btn-rounded">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                        </td> --}}
+
                                     </tr>
 
                                 @endforeach

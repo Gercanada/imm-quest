@@ -11,6 +11,9 @@ use JBtje\VtigerLaravel\Vtiger;
 
 class CommboardController extends Controller
 {
+    /**
+     * Show a list of comments between contact and immManager about following up on a contact.
+     */
     public function index(){
         $user = Auth::user();
         $user_id = $user->id;
@@ -33,17 +36,17 @@ class CommboardController extends Controller
           //Invoices
           $invoiceQuery = DB::table('Invoice')->select('*')->where('contact_id',  $contact->id);
           $invoices = $vtiger->search($invoiceQuery)->result;
-  
+
           //return $invoices;
           $invoiceIdArr = [];
           foreach ($invoices as $invoice) {
               array_push($invoiceIdArr, $invoice->id);
           }
-  
+
           // Get invoice payments
           $paymentsQuery = DB::table('Payments')->select('*')->where('cf_1139', $contact->id)->orWhereIn('cf_1141', $invoiceIdArr)->orWhereIn('cf_1140', $vtCasesIdArr);
           $payments = $vtiger->search($paymentsQuery)->result;
-  
+
           $paymentIdArr = [];
           $paymentNOArr = [];
           foreach ($payments as $payment) {
@@ -55,7 +58,7 @@ class CommboardController extends Controller
               ->orWhereIn('cf_2218', $paymentIdArr) //Find by payment id
               ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
               ->orWhereIn('cf_2218', $vtCasesNOArr); //find by caseNo
-  
+
           $commboards    = $vtiger->search($commboardQuery)->result;
 
         return view('commboard.index', compact('commboards','contact'));
@@ -68,7 +71,6 @@ class CommboardController extends Controller
     public function sendComment(Request $request)
     {
         try {
-
            $request->validate([
                 'name' => 'required|max:255',
                 'description' => 'required',
@@ -91,8 +93,7 @@ class CommboardController extends Controller
                 'description' => $request->comment,
                 'cf_2226'=>Carbon::today(),//timestamps
             ];
-           /*  $any = [];
-            array_push($any, json_encode($data)); */
+            //array_push($any, json_encode($data));
             $data = $vtiger->create( "CommBoard", $data);
             return redirect('/');
         } catch (\Exception $e) {

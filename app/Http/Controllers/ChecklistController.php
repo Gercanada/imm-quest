@@ -11,7 +11,7 @@ use JBtje\VtigerLaravel\Vtiger;
 class ChecklistController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the checklist active and completed of a contact.
      *
      * @return \Illuminate\Http\Response
      */
@@ -52,34 +52,26 @@ class ChecklistController extends Controller
                 }
             }
         }
-
         return view('checklists.index', compact('active_checklists', 'completed_checklists'));
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified checklist.
      *
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Http\Response
      */
     public function show(Checklist $checklist, $id)
     {
-        /* $check_list = Checklist::where('id', $id)
-            ->with('clitems')
-            ->firstOrFail(); */
-        //return $checklist;
         $vtiger = new Vtiger();
         $checklistsQuery = DB::table('Checklist')->select('*')
-            //->where('id','43x10157')//test TODO Remove this
             ->where('id', $id)
             ->take(1);
         $check_list    = $vtiger->search($checklistsQuery)->result[0];
-
         $clitemsQuery =  DB::table('CLItems')->select('*')
             ->where('cf_1216', $id);
 
         $clitems = $vtiger->search($clitemsQuery)->result;
-        //return $clitems;
 
         return view(
             'checklists.show',
