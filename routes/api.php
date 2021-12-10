@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\VtigerController;
+use App\Http\Controllers\CloneDBController;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
@@ -28,3 +30,5 @@ Route::post('/getresponse', [DocumentController::class , 'getResponse']);
 Route::post('/create_user', [UserController::class, 'createUser']);
 
 Route::post('/remove_user', [UserController::class, 'removeUser']);
+
+Route::post('/viger/clonedb', [CloneDBController::class, 'createTable']);
