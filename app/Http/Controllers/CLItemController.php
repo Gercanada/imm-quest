@@ -55,9 +55,7 @@ class CLItemController extends Controller
 
             $checklist = $vtiger->search($checklistQuery)->result[0];
         }
-
-
-        return [$item, $case, $checklist];
+       return [$item, $case, $checklist];
     }
 
     /**

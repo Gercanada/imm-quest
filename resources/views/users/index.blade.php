@@ -4,14 +4,6 @@
     My profile
 @endsection
 
-
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row" id="app">
-                <user-component></user-component>
-            </div>
-        </div>
-    </section>
-
+    <user-component></user-component>
 @endsection

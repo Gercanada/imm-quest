@@ -1,374 +1,693 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-12">
-        <div class="card-header">
-          account
-          <button
-            type="button"
-            class="btn btn-primary fas fa-edit float-right"
-            @click="openModal('account', 'update', userObj)"
-          >
-            Editar
-          </button>
+  <div v-if="loading" style="heigth: 100%">
+    <div class="card shadow-lg p-1">
+      <div class="card-body d-flex justify-content-around">
+        <div class="spinner-grow text-success center" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col md-5 sm-8">
-              <fieldset class="border-success">
-                <legend>Info</legend>
-                <div>
-                  <p class="bg-danger">
-                    ! Incomplete profile. Fill required fields to start
-                    leadment. !
-                  </p>
+      </div>
+    </div>
+  </div>
+
+  <div v-else>
+    <div class="row page-titles">
+      <div class="col-md-5 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">Profile</h3>
+      </div>
+    </div>
+    <!-- Row -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card shadow-lg p-1">
+          <!-- Tabs -->
+          <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="pills-timeline-tab"
+                data-toggle="pill"
+                href="#current-month"
+                role="tab"
+                aria-controls="pills-timeline"
+                aria-selected="false"
+              >
+                <i class="fas fa-chart-line"></i> Timeline</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="pills-profile-tab"
+                data-toggle="pill"
+                href="#last-month"
+                role="tab"
+                aria-controls="pills-profile"
+                aria-selected="true"
+                ><i class="fas fa-child"></i> Profile</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="pills-setting-tab"
+                data-toggle="pill"
+                href="#previous-month"
+                role="tab"
+                aria-controls="pills-setting"
+                aria-selected="false"
+                ><i class="fas fa-cogs"></i> Setting</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="pills-setting-tab"
+                data-toggle="pill"
+                href="#password-tab"
+                role="tab"
+                aria-controls="pills-setting"
+                aria-selected="false"
+                ><i class="fas fa-key"></i> Password</a
+              >
+            </li>
+          </ul>
+          <!-- Tabs -->
+          <div class="tab-content" id="pills-tabContent">
+            <div
+              class="tab-pane fade"
+              id="current-month"
+              role="tabpanel"
+              aria-labelledby="pills-timeline-tab"
+            >
+              <div class="card-body">
+                <div class="profiletimeline mt-0">
+                  <div class="sl-item">
+                    <div class="sl-left">
+                      <img
+                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
+                        alt="user"
+                        class="rounded-circle"
+                      />
+                    </div>
+                    <div class="sl-right">
+                      <div>
+                        <a href="javascript:void(0)" class="link">John Doe</a>
+                        <span class="sl-date">5 minutes ago</span>
+                        <p>
+                          assign a new task
+                          <a href="javascript:void(0)"> Design weblayout</a>
+                        </p>
+                        <div class="row">
+                          <div class="col-lg-3 col-md-6 mb-3">
+                            <img
+                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img1.jpg"
+                              class="img-fluid rounded"
+                            />
+                          </div>
+                          <div class="col-lg-3 col-md-6 mb-3">
+                            <img
+                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img2.jpg"
+                              class="img-fluid rounded"
+                            />
+                          </div>
+                          <div class="col-lg-3 col-md-6 mb-3">
+                            <img
+                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img3.jpg"
+                              class="img-fluid rounded"
+                            />
+                          </div>
+                          <div class="col-lg-3 col-md-6 mb-3">
+                            <img
+                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img4.jpg"
+                              class="img-fluid rounded"
+                            />
+                          </div>
+                        </div>
+                        <div class="like-comm">
+                          <a href="javascript:void(0)" class="link mr-2"
+                            >2 comment</a
+                          >
+                          <a href="javascript:void(0)" class="link mr-2"
+                            ><i class="fa fa-heart text-danger"></i> 5 Love</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="sl-item">
+                    <div class="sl-left">
+                      <img
+                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/2.jpg"
+                        alt="user"
+                        class="rounded-circle"
+                      />
+                    </div>
+                    <div class="sl-right">
+                      <div>
+                        <a href="javascript:void(0)" class="link">John Doe</a>
+                        <span class="sl-date">5 minutes ago</span>
+                        <div class="mt-3 row">
+                          <div class="col-md-3 col-xs-12">
+                            <img
+                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img1.jpg"
+                              alt="user"
+                              class="img-fluid rounded"
+                            />
+                          </div>
+                          <div class="col-md-9 col-xs-12">
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Integer nec odio. Praesent libero. Sed
+                              cursus ante dapibus diam.
+                            </p>
+                            <a
+                              href="javascript:void(0)"
+                              class="btn btn-success"
+                            >
+                              Design weblayout</a
+                            >
+                          </div>
+                        </div>
+                        <div class="like-comm mt-3">
+                          <a href="javascript:void(0)" class="link mr-2"
+                            >2 comment</a
+                          >
+                          <a href="javascript:void(0)" class="link mr-2"
+                            ><i class="fa fa-heart text-danger"></i> 5 Love</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="sl-item">
+                    <div class="sl-left">
+                      <img
+                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/3.jpg"
+                        alt="user"
+                        class="rounded-circle"
+                      />
+                    </div>
+                    <div class="sl-right">
+                      <div>
+                        <a href="javascript:void(0)" class="link">John Doe</a>
+                        <span class="sl-date">5 minutes ago</span>
+                        <p class="mt-2">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Integer nec odio. Praesent libero. Sed cursus
+                          ante dapibus diam. Sed nisi. Nulla quis sem at nibh
+                          elementum imperdiet. Duis sagittis ipsum. Praesent
+                          mauris. Fusce nec tellus sed augue semper
+                        </p>
+                      </div>
+                      <div class="like-comm mt-3">
+                        <a href="javascript:void(0)" class="link mr-2"
+                          >2 comment</a
+                        >
+                        <a href="javascript:void(0)" class="link mr-2"
+                          ><i class="fa fa-heart text-danger"></i> 5 Love</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="sl-item">
+                    <div class="sl-left">
+                      <img
+                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/4.jpg"
+                        alt="user"
+                        class="rounded-circle"
+                      />
+                    </div>
+                    <div class="sl-right">
+                      <div>
+                        <a href="javascript:void(0)" class="link">John Doe</a>
+                        <span class="sl-date">5 minutes ago</span>
+                        <blockquote class="mt-2">
+                          Lorem ipsum dolor sit amet, consectetur adipisicing
+                          elit, sed do eiusmod tempor incididunt
+                        </blockquote>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </fieldset>
-              <fieldset class="border-success">
-                <legend>Activities</legend>
-                <div><p>Nothing now</p></div>
-              </fieldset>
-              <fieldset class="border-info">
-                <legend>Comments</legend>
-                <div><p>Nothing now</p></div>
-              </fieldset>
+              </div>
             </div>
-            <div class="col-md-7 sm-8">
-              <div style="overflow-x: auto; min-width: 80%">
-                <table class="table table-bordered table-striped table-sm">
-                  <thead></thead>
-                  <tbody>
-                    <tr></tr>
-                    <tr>
-                      <th>Name</th>
-                      <td v-text="userObj.name"></td>
-                    </tr>
-                    <tr></tr>
-                    <tr>
-                      <th>Last name</th>
-                      <td
-                        v-text="
-                          userObj.contact_details
-                            ? userObj.contact_details.lastname
-                            : ''
-                        "
-                      ></td>
-                    </tr>
-                    <tr>
-                      <th>Nationalities</th>
-                      <td v-text="userObj.nationalities"></td>
-                    </tr>
-                    <tr>
-                      <th>Mobile phone</th>
-                      <td
-                        v-text="
-                          userObj.contact_details
-                            ? userObj.contact_details.mobile
-                            : ''
-                        "
-                      ></td>
-                    </tr>
-                    <tr>
-                      <th>Watsapp number</th>
-                      <td v-text="userObj.watsapp_no"></td>
-                    </tr>
-                    <tr>
-                      <th>Email</th>
-                      <td v-text="userObj.email"></td>
-                    </tr>
-                    <tr>
-                      <th>Secondary email</th>
-                      <td
-                        v-text="
-                          userObj.contact_details
-                            ? userObj.contact_details.secondaryemail
-                            : ''
-                        "
-                      ></td>
-                    </tr>
-                    <tr>
-                      <th>Lead source</th>
-                      <td v-text="userObj.lead_source"></td>
-                    </tr>
-                    <tr>
-                      <th>Refered by</th>
-                      <td v-text="userObj.refered_by"></td>
-                    </tr>
-                    <tr>
-                      <th>Assigned to</th>
-                      <td v-text="userObj.assigned_to"></td>
-                    </tr>
-                    <tr>
-                      <th>Qualified for</th>
-                      <td v-text="userObj.qualified_for"></td>
-                    </tr>
-                    <tr>
-                      <th>Care agent</th>
-                      <td v-text="userObj.care_agent"></td>
-                    </tr>
-                    <tr>
-                      <th>Phone</th>
-                      <td v-text="userObj.phone"></td>
-                    </tr>
-                    <tr>
-                      <th>Fax</th>
-                      <td v-text="userObj.fax"></td>
-                    </tr>
-                    <tr>
-                      <th>Passport expiration date</th>
-                      <td v-text="userObj.passport_expiration_date"></td>
-                    </tr>
-                    <tr>
-                      <th>Rating</th>
-                      <td v-text="userObj.rating"></td>
-                    </tr>
-                    <tr>
-                      <th>Description</th>
-                      <td v-text="userObj.description"></td>
-                    </tr>
-                  </tbody>
-                </table>
+            <div
+              class="tab-pane fade active show"
+              id="last-month"
+              role="tabpanel"
+              aria-labelledby="pills-profile-tab"
+            >
+              <div class="card">
+                <div class="card-body">
+                  <center class="mt-4">
+                    <img
+                      src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/5.jpg"
+                      class="rounded-circle"
+                      width="150"
+                    />
+                    <h4 class="card-title mt-2">
+                      <b v-text="userObj.firstname"></b><b></b>
+                      <b v-text="userObj.lastname"></b>
+                    </h4>
+                    <h6 class="card-subtitle" v-text="userObj.cf_1704"></h6>
+                    <div
+                      class="row text-center justify-content-md-center"
+                    ></div>
+                  </center>
+                </div>
+                <div>
+                  <hr />
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <small class="text-muted">Email </small>
+                      <h6 v-text="userObj.email"></h6>
+                      <small class="text-muted pt-4 db">Mobile phone</small>
+                      <h6 v-text="userObj.mobile"></h6>
+                      <small class="text-muted pt-4 db">Address</small>
+                      <h6 v-text="userObj.mailingstreet"></h6>
+                    </div>
+
+                    <div class="col-md-6">
+                      <small class="text-muted">Alternate Email </small>
+                      <h6 v-text="userObj.secondaryemail"></h6>
+                      <small class="text-muted pt-4 db">Date of birth</small>
+                      <h6 v-text="userObj.birthday"></h6>
+                      <small class="text-muted pt-4 db">Age</small>
+                      <h6 v-text="userObj.cf_1334"></h6>
+                    </div>
+                  </div>
+
+                  <small class="text-muted pt-4 db">Social Profile</small>
+                  <br />
+                  <a
+                    class="btn btn-circle btn-secondary"
+                    type="btn"
+                    data-toggle="tooltip"
+                    :title="userObj.cf_2246"
+                    :href="userObj.cf_2246"
+                  >
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+
+                  <a
+                    class="btn btn-circle btn-secondary"
+                    type="btn"
+                    data-toggle="tooltip"
+                    :title="userObj.cf_2252"
+                    :href="userObj.cf_2252"
+                  >
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                  <a
+                    class="btn btn-circle btn-secondary"
+                    type="btn"
+                    data-toggle="tooltip"
+                    :title="userObj.cf_2250"
+                    :href="userObj.cf_2250"
+                  >
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                  <a
+                    class="btn btn-circle btn-secondary"
+                    type="btn"
+                    data-toggle="tooltip"
+                    :title="userObj.cf_2254"
+                    :href="userObj.cf_2254"
+                  >
+                    <i class="fab fa-skype"></i>
+                  </a>
+                  <a
+                    class="btn btn-circle btn-secondary"
+                    type="btn"
+                    data-toggle="tooltip"
+                    :title="userObj.cf_2248"
+                    :href="userObj.cf_2248"
+                  >
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                  <a
+                    class="btn btn-circle btn-secondary"
+                    type="btn"
+                    data-toggle="tooltip"
+                    :title="userObj.cf_1945"
+                    :href="userObj.cf_1945"
+                  >
+                    <i class="fab fa-whatsapp"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Edit profile -->
+            <div
+              class="tab-pane fade"
+              id="previous-month"
+              role="tabpanel"
+              aria-labelledby="pills-setting-tab"
+            >
+              <div class="card-body">
+                <form
+                  class="form-horizontal form-material"
+                  enctype="multipart/form-data"
+                  autocomplete="nope"
+                >
+                  <input
+                    autocomplete="off"
+                    name="hidden"
+                    type="text"
+                    style="display: none"
+                  />
+                  <div class="form-group" autocomplete="none">
+                    <label class="col-md-12" for="secondaryemail"
+                      >Alternative email</label
+                    >
+                    <div class="col-md-12">
+                      <input
+                        type="email"
+                        placeholder="name@mail.com"
+                        class="form-control form-control-line"
+                        id="secondaryemail"
+                        v-model="userObj.secondaryemail"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group" autocomplete="none">
+                    <label class="col-md-12" for="mobile">Mobile</label>
+                    <div class="col-md-12">
+                      <input
+                        type="tel"
+                        placeholder="123 456 7890"
+                        class="form-control form-control-line"
+                        id="mobile"
+                        v-model="userObj.mobile"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group" autocomplete="none">
+                    <label for="whatsapp" class="col-md-12">WhatsApp</label>
+                    <div class="col-md-12">
+                      <input
+                        type="tel"
+                        placeholder="123 456 7890"
+                        class="form-control form-control-line"
+                        id="whatsapp"
+                        v-model="userObj.cf_1945"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group" autocomplete="none">
+                    <label class="col-md-12" for="skypeLink">Skype </label>
+                    <div class="col-md-12">
+                      <input
+                        id="skypeLink"
+                        autocomplete="off"
+                        type="url"
+                        placeholder="skype.com/profile.01"
+                        class="form-control form-control-line"
+                        v-model="userObj.cf_2254"
+                      />
+
+                      <small
+                        v-if="submitted && errors.skype"
+                        class="text-danger font-14"
+                        >{{ errors.skype }}</small
+                      >
+                    </div>
+                  </div>
+                  <div class="form-group" autocomplete="none">
+                    <label class="col-md-12" for="inputfb">Facebook </label>
+                    <div class="col-md-12">
+                      <input
+                        id="inputfb"
+                        type="url"
+                        placeholder="facebook.com/profile.01"
+                        class="form-control form-control-line"
+                        v-model="userObj.cf_2246"
+                        autocomplete="off"
+                      />
+                      <small
+                        v-if="submitted && errors.facebook"
+                        class="text-danger font-14"
+                        >{{ errors.facebook }}</small
+                      >
+                    </div>
+                  </div>
+                  <div class="form-group" autocomplete="none">
+                    <label class="col-md-12" for="instagramLink"
+                      >Instagram
+                    </label>
+                    <div class="col-md-12">
+                      <input
+                        type="url"
+                        id="instagramLink"
+                        placeholder="instagram.com/profile.01"
+                        class="form-control form-control-line"
+                        v-model="userObj.cf_2252"
+                        autocomplete="off"
+                      />
+                      <small
+                        v-if="submitted && errors.instagram"
+                        class="text-danger font-14"
+                        >{{ errors.instagram }}</small
+                      >
+                    </div>
+                  </div>
+                  <div class="form-group" autocomplete="off">
+                    <label class="col-md-12" for="gotolinkedin"
+                      >Linkedin
+                    </label>
+                    <div class="col-md-12">
+                      <input
+                        v-model="userObj.cf_2250"
+                        name="gotolinkedin"
+                        placeholder="linkedin.com/profile.01"
+                        class="form-control form-control-line"
+                        type="url"
+                        autocomplete="off"
+                      />
+                      <small
+                        v-if="submitted && errors.linkedin"
+                        class="text-danger font-14"
+                        >{{ errors.linkedin }}</small
+                      >
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group" autocomplete="none">
+                        <label class="col-md-12">CommBoard Notifications</label>
+
+                        <div class="switch col-md-12">
+                          <label
+                            >OFF
+                            <input
+                              id="user_donotcall"
+                              v-model="user_donotcall"
+                              true-value="yes"
+                              false-value="no"
+                              type="checkbox"
+                            /><span class="lever"></span>ON</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group" autocomplete="none">
+                        <label class="col-md-12">SMS</label>
+                        <div class="switch col-md-12">
+                          <label
+                            >OFF
+                            <input
+                              type="checkbox"
+                              v-model="user_emailoptout"
+                              true-value="yes"
+                              false-value="no"
+                            /><span class="lever"></span>ON</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <a
+                        href="#"
+                        class="btn btn-success"
+                        v-on:click="updateAccount()"
+                      >
+                        Update Profile
+                      </a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- change password -->
+            <div
+              class="tab-pane fade"
+              id="password-tab"
+              role="tabpanel"
+              aria-labelledby="pills-setting-tab"
+            >
+              <div class="card-body">
+                <form
+                  class="form-horizontal form-material"
+                  method="get"
+                  autocomplete="nope"
+                >
+                  <input
+                    autocomplete="off"
+                    name="hidden"
+                    type="text"
+                    style="display: none"
+                  />
+                  <section autocomplete="disabled">
+                    <div class="form-group" autocomplete="nope">
+                      <label class="col-md-12" for="inputPass"
+                        >Old password</label
+                      >
+                      <div class="col-md-12">
+                        <input
+                          class="form-control form-control-line"
+                          v-model="old_password"
+                          name="inputPass"
+                          type="password"
+                          autocomplete="nope"
+                          required
+                        />
+                        <small
+                          v-if="submitted && errors.old_password"
+                          class="text-danger font-14"
+                          >{{ errors.old_password }}</small
+                        >
+                      </div>
+                    </div>
+                    <div class="form-group" autocomplete="nope">
+                      <label class="col-md-12" for="inputPass"
+                        >New Password</label
+                      >
+                      <div class="col-md-12">
+                        <input
+                          class="form-control form-control-line"
+                          v-model="new_password"
+                          name="inputPass"
+                          type="password"
+                          autocomplete="nope"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group" autocomplete="nope">
+                      <label class="col-md-12" for="inputPass"
+                        >Confirm new Password</label
+                      >
+                      <div class="col-md-12">
+                        <input
+                          class="form-control form-control-line"
+                          v-model="confirm_password"
+                          name="inputPass"
+                          type="password"
+                          autocomplete="nope"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <small
+                      v-if="submitted && errors.password"
+                      class="text-danger font-14"
+                      >{{ errors.password }}</small
+                    >
+                  </section>
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <a
+                        href="#"
+                        class="btn btn-success"
+                        v-on:click="updatePassword()"
+                      >
+                        Update Password
+                      </a>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Column -->
     </div>
-
-    <!-- Modal edit acount -->
-    <template v-if="actionType == 1">
-      <div
-        class="modal fade"
-        tabindex="-1"
-        :class="{ mostrar: modal }"
-        role="dialog"
-        aria-labelledby="myModalLabel"
-        style="display: none; overflow-y: auto"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-primary modal-lg"
-          style="padding-top: 55px"
-          role="document"
-        >
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" v-text="modalTitle"></h4>
-              <button
-                type="button"
-                class="close"
-                @click="closeModal()"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form enctype="multipart/form-data" class="form-horizontal">
-                <div style="overflow-x: auto; overflow-y: auto; min-width: 80%">
-                  <div class="form-group">
-                    <!-- here shows username assigned by immcase, this cant be changed -->
-                    <label for="inputEmail2">User name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="inputEmail2"
-                      aria-describedby="secondary_emailHelp"
-                      placeholder="Default username"
-                      v-model="user_name"
-                      disabled
-                    />
-                  </div>
-                  <div class="form-group">
-                    <!-- alternative username -->
-                    <label for="alternative-username"
-                      >Alternative username</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="alternative-username"
-                      aria-describedby="alternative username"
-                      placeholder="Enter alternative username"
-                      v-model="alternative_username"
-                    />
-                    <small
-                      v-if="submitted && errors.alternative_username"
-                      class="text-danger font-14"
-                      >{{ errors.alternative_username }}</small
-                    >
-                  </div>
-
-                  <div class="form-group text-center mt-4">
-                    <div class="col-xs-12">
-                      <button
-                        v-if="actionType == 1"
-                        type="button"
-                        class="btn btn-primary fas fa-user"
-                        v-on:click="updateUsername()"
-                      >
-                        Update username
-                      </button>
-                    </div>
-                  </div>
-                  <!--  -->
-                  <div class="form-group row">
-                    <label
-                      for="password"
-                      class="col-md-4 col-form-label text-md-right"
-                    >
-                      Password</label
-                    >
-
-                    <div class="col-md-6">
-                      <input
-                        type="password"
-                        class="
-                          form-control
-                          @error('password')
-                          is-invalid
-                          @enderror
-                        "
-                        v-model="password"
-                        required
-                        autocomplete="new-password"
-                      />
-
-                      <!-- @error('password') -->
-
-                      <!--  @enderror -->
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label
-                      for="password-confirm"
-                      class="col-md-4 col-form-label text-md-right"
-                      >Confirm Password</label
-                    >
-
-                    <div class="col-md-6">
-                      <input
-                        type="password"
-                        class="form-control"
-                        required
-                        v-model="confirm_password"
-                        autocomplete="new-password"
-                      />
-
-                      <small
-                        v-if="submitted && errors.password"
-                        class="text-danger font-14"
-                        >{{ errors.password }}</small
-                      >
-                    </div>
-                  </div>
-                  <div class="form-group text-center mt-4">
-                    <div class="col-xs-12">
-                      <button
-                        v-if="actionType == 1"
-                        type="button"
-                        class="btn btn-primary fas fa-key"
-                        v-on:click="updatePassword()"
-                      >
-                        Change password
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                v-if="actionType == 1"
-                class="btn btn-danger"
-                @click="closeModal()"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-    </template>
   </div>
 </template>
 
 <script>
+import DisableAutocomplete from "vue-disable-autocomplete";
+Vue.use(DisableAutocomplete);
+
 export default {
   data() {
     return {
+      loading: false,
+      id: "",
       alternative_username: "",
       message: "",
-      password: "",
+      new_password: "",
+      old_password: "",
       confirm_password: "",
-      user_name: "",
-      ////
-      id: "",
-      name: "",
-      last_name: "",
-      nationalities: "",
-      mobile_phone: "",
-      watsapp_no: "",
-      lead_source: "",
-      refered_by: "",
-      email: "",
-      assigned_to: "",
-      qualified_for: "",
-      secondary_email: "",
-      email_out_op: "",
-      lead_status_id: "",
-      lead_stage_id: "",
-      care_agent: "",
-      phone: "",
-      fax: "",
-      has_passport: "",
-      passport_expiration_date: "",
-      rating: "",
-      watsapp_update_option: "",
-      agent_id: "",
-      description: "",
 
-      //
+      user_donotcall: false,
+      user_emailoptout: false,
+
       userObj: {},
-      modal: 0,
-      modalTitle: "",
-      actionType: 0,
-      arrayEmployes: [],
       submitted: false,
       errors: {},
     };
   },
   mounted() {
     this.userAccount();
-    //console.log("Component mounted.");
   },
+
   methods: {
     userAccount() {
       let me = this;
+      this.loading = true;
       axios
         .get("/account")
         .then(function (response) {
-          console.log("here");
-          console.log(response.data);
-          console.log(response.data.user_name);
-          /*    me.userObj = response.data; */
+          me.userObj = response.data;
 
-          me.user_name = response.data.user_name;
-          me.alternative_username = response.data.alternative_username;
+          if (me.userObj["donotcall"] == 0 || false) {
+            me.user_donotcall === "yes";
+          } else {
+            me.user_donotcall = "no";
+          }
+
+          if (me.userObj["emailoptout"] == 0 || false) {
+            me.user_emailoptout = "yes";
+          } else {
+            me.user_emailoptout = "no";
+          }
         })
         .catch(function (error) {
           console.log(error);
-        });
+        })
+        .finally(() => (this.loading = false));
     },
 
     updateAccount() {
       this.submitted = true;
       this.errors = {};
-      //this.valideForm();
+      this.valideForm();
 
       console.log(Object.keys(this.errors));
       if (Object.keys(this.errors).length) {
@@ -377,58 +696,37 @@ export default {
       let me = this;
       axios
         .post("/account", {
-          /*  name: this.name,
-          last_name: this.last_name,
-          nationalities: this.nationalities, */
-          mobile_phone: this.mobile_phone,
-          /*  lead_source: this.lead_source,
-          watsapp_no: this.watsapp_no,
-          refered_by: this.refered_by,
-          email: this.email,
-          assigned_to: this.assigned_to,
-          qualified_for: this.qualified_for, */
-          secondary_email: this.secondary_email,
-          /* email_out_op: this.email_out_op,
-          lead_status_id: this.lead_status_id,
-          lead_stage_id: this.lead_stage_id,
-          care_agent: this.name,
-          phone: this.phone,
-          fax: this.fax,
-          has_passport: this.has_passport,
-          passport_expiration_date: this.passport_expiration_date,
-          rating: this.rating,
-          watsapp_update_option: this.watsapp_update_option,
-          // agent_id              : this.agent_id,
-          description: this.description, */
+          secondaryemail: me.userObj.secondaryemail,
+          mobile: me.userObj.mobile,
+          cf_1945: me.userObj.cf_1945,
+          cf_2254: me.userObj.cf_2254,
+          cf_2246: me.userObj.cf_2246,
+          cf_2252: me.userObj.cf_2252,
+          cf_2250: me.userObj.cf_2250,
 
-          id: this.id,
+          user_donotcall: me.user_donotcall,
+          user_emailoptout: me.user_emailoptout,
+
+          contact_no: me.userObj.contact_no,
         })
         .then(function (response) {
-          me.closeModal();
+          Swal.fire({
+            type: "success",
+            title: "Account updated",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+          //debugger;
           me.userAccount();
         })
         .catch(function (error) {
-          console.table(error);
-        });
-    },
-
-    updateUsername() {
-      this.submitted = true;
-      this.errors = {};
-      this.valideUsername();
-      console.log(Object.keys(this.errors));
-      if (Object.keys(this.errors).length) {
-        return;
-      }
-      axios
-        .post("/new_username", {
-          alternative_username: this.alternative_username,
-        })
-        .then(function (response) {
-          me.closeModal();
-        })
-        .catch(function (error) {
-          console.table(error);
+          Swal.fire({
+            type: "error",
+            title: "Account wasn't updated !",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+          console.log(error);
         });
     },
 
@@ -442,97 +740,63 @@ export default {
       }
       axios
         .post("/new_password", {
+          contact_no: this.userObj.contact_no,
+          old_password: this.old_password,
           new_password: this.new_password,
           confirm_password: this.confirm_password,
         })
         .then(function (response) {
-          me.closeModal();
+          Swal.fire({
+            type: "success",
+            title: "Password changed",
+            timer: 2000,
+            showConfirmButton: false,
+          });
         })
         .catch(function (error) {
+          Swal.fire({
+            type: "error",
+            title: "Password not was updated !",
+            timer: 2000,
+            showConfirmButton: false,
+          });
           console.table(error);
         });
     },
 
-    closeModal() {
-      //Cerrar modals
-      this.modal = 0;
-      (this.name = ""),
-        (this.first_last_name = ""),
-        (this.second_lastname = ""),
-        (this.email = ""),
-        (this.code = ""),
-        //(this.active = false);
-
-        (this.submitted = false);
-      this.errors = {};
-      //this.userAccount();
-    },
-
     //Validar campos requeridos
     validePass() {
+      if (this.old_password !== this.userObj.cf_1780) {
+        this.errors.old_password = "Incorrect old password";
+      }
       if (!this.password && !this.confirm_password) {
         this.errors.password = "Password fields cant be blank";
       }
-      if (this.password) {
-        if (this.password !== this.confirm_password) {
-          this.errors.password = "Password and  confirm not equals";
-        }
-      }
-    },
-    valideUsername() {
-      if (!this.alternative_username) {
-        this.errors.alternative_username =
-          "Alternative username field cant be empty";
+      if (this.new_password !== this.confirm_password) {
+        this.errors.password = "Password and  confirm not equals";
       }
     },
 
-    openModal(model, action, data = []) {
-      console.log(action);
-      switch (model) {
-        case "account": {
-          switch (action) {
-            case "update": {
-              console.log(data);
-              this.modal = 1;
-              this.modalTitle = "Update data";
+    valideForm() {
+      this.valideUrlField("userObj.cf_2254", "skype");
+      this.valideUrlField("userObj.cf_2246", "facebook");
+      this.valideUrlField("userObj.cf_2252", "instagram");
+      this.valideUrlField("userObj.cf_2250", "linkedin");
+    },
 
-              (this.name = data.name),
-                (this.user_name = data.user_name),
-                (this.alternative_username = data.alternative_username),
-                /* (this.last_name = data.last_name),
-                (this.nationalities = data.nationalities),
-                (this.mobile_phone = data.mobile_phone),
-                (this.watsapp_no = data.watsapp_no),
-                (this.lead_source = data.lead_source),
-                (this.refered_by = data.refered_by),
-                (this.email = data.email),
-                (this.assigned_to = data.assigned_to),
-                (this.qualified_for = data.qualified_for),
-                (this.secondary_email = data.secondary_email),
-                (this.email_out_op = data.email_out_op),
-                (this.lead_status_id = data.lead_status_id),
-                (this.lead_stage_id = data.lead_stage_id),
-                (this.care_agent = data.care_agent),
-                (this.phone = data.phone),
-                (this.fax = data.fax),
-                (this.has_passport = data.has_passport),
-                (this.passport_expiration_date = data.passport_expiration_date),
-                (this.rating = data.rating),
-                (this.watsapp_update_option = data.watsapp_update_option),
-                (this.agent_id = data.agent_id),
-                (this.description = data.description), */
-                (this.id = data.id);
-              this.actionType = 1;
-              break;
-            }
-          }
-        }
+    valideUrlField(field, as) {
+      let fail;
+      if (field === "userObj.cf_2254") fail = this.userObj.cf_2254;
+      if (field === "userObj.cf_2246") fail = this.userObj.cf_2246;
+      if (field === "userObj.cf_2252") fail = this.userObj.cf_2252;
+      if (field === "userObj.cf_2250") fail = this.userObj.cf_2250;
+
+      if (!/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/i.test(fail)) {
+        this.errors[as] = `The ${as} field is not valid url. try some 'http://${as}.com/profile'`;
       }
     },
   },
 };
 </script>
 
-<style>
-</style>
 

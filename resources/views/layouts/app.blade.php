@@ -28,19 +28,10 @@
     <link rel="stylesheet" href="/templates/theme-forest-admin-pro/main/admin-pro/dist/css/style.min.css">
 
     @yield('styles')
-    <!-- Vector CSS -->
-    <!-- Custom CSS -->
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+
 </head>
 
 <body>
-    {{-- <div id="app"> --}}
-
     <div id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
@@ -58,32 +49,19 @@
         @if (!Auth::user())
             @yield('content'){{-- login view --}}
         @else
-
-            <!-- ============================================================== -->
             <!-- Topbar header - style you can find in pages.scss -->
-            <!-- ============================================================== -->
             @if (Auth::user())
                 <header class="topbar">
                     @include('layouts.navbar')
                 </header>
             @endif
-
+                {{-- aside --}}
             @if (Auth::user())
                 @include('layouts.aside')
             @endif
+            {{-- body --}}
             <div class="page-wrapper">
                 <div class="container-fluid">
-                    <!-- ============================================================== -->
-                    <!-- End Topbar header -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    {{-- @include('layouts.side-panel') --}}
-
-                    <!-- ============================================================== -->
-                    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-
                     @if (Auth::user())
                         @yield('content')
                     @endif
@@ -95,16 +73,10 @@
         @endif
 
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- customizer Panel -->
-    <!-- ============================================================== -->
-    <div class="chat-windows"></div>
-    <!-- ============================================================== -->
 
-    {{-- </div> --}}
+    <!-- ============================================================== -->
+    {{-- <div class="chat-windows"></div> --}}
+    <!-- ============================================================== -->
 </body>
 
 <!-- Popper JS -->
@@ -143,16 +115,13 @@ src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-p
 
 <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/sweetalert2/dist/sweetalert2.all.min.js">
 </script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src//assets/extra-libs/sweetalert2/sweet-alert.init.js">
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/extra-libs/sweetalert2/sweet-alert.init.js">
 </script>
-
 
 <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
 </script>
 <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
 </script>
-
-
 
 <script src="/js/app.js"></script>
 @yield('scripts')

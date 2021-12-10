@@ -20,8 +20,8 @@ class DashboardController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        $vtiger = new Vtiger();
-        //Get contact data of this user
+        $vtiger = new Vtiger();//Get contact data of this user
+
         $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname')->where("contact_no", $user->vtiger_contact_id)->take(1);
         $contact = $vtiger->search($userQuery)->result[0];
 
@@ -95,13 +95,10 @@ class DashboardController extends Controller
             }
         }
 
-        //return  $vt_cl_items;
-
         //Invoices
         $invoiceQuery = DB::table('Invoice')->select('*')->where('contact_id',  $contact->id);
         $invoices = $vtiger->search($invoiceQuery)->result;
 
-        //return $invoices;
         $invoiceIdArr = [];
         foreach ($invoices as $invoice) {
             array_push($invoiceIdArr, $invoice->id);

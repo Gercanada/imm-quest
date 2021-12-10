@@ -174,7 +174,7 @@
                                                 <h5 class="mb-1 border-bottom px-3">{{ $comm->name }}</h5>
                                                 <p class="mb-1 overflow-hidden px-3">{{ $comm->description }}</p>
                                                 <div class="comment-footer"> <span
-                                                        class="text-muted pull-right">{{ $comm->cf_2226 }}</span> <span
+                                                        class="text-muted pull-right">{{ $comm->createdtime }}</span> <span
                                                         class="badge badge-info rounded-pill">{{ $comm->cf_2220 }}</span>
                                                 </div>
                                             </div>
@@ -243,7 +243,7 @@
                                                 <h5 class="mb-1 border-bottom">{{ $comm->name }}</h5>
                                                 <p class="mb-1 overflow-hidden px'3">{{ $comm->description }}</p>
                                                 <div class="comment-footer"> <span
-                                                        class="text-muted pull-right">{{ $comm->cf_2226 }}</span> <span
+                                                        class="text-muted pull-right">{{ $comm->createdtime }}</span> <span
                                                         class="badge badge-info rounded-pill">{{ $comm->cf_2220 }}</span>
                                                 </div>
                                             </div>

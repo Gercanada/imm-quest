@@ -4878,6 +4878,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vue_disable_autocomplete__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-disable-autocomplete */ "./node_modules/vue-disable-autocomplete/dist/vue-disable-autocomplete.js");
 //
 //
 //
@@ -5177,71 +5178,391 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+Vue.use(vue_disable_autocomplete__WEBPACK_IMPORTED_MODULE_0__["default"]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      loading: false,
+      id: "",
       alternative_username: "",
       message: "",
-      password: "",
+      new_password: "",
+      old_password: "",
       confirm_password: "",
-      user_name: "",
-      ////
-      id: "",
-      name: "",
-      last_name: "",
-      nationalities: "",
-      mobile_phone: "",
-      watsapp_no: "",
-      lead_source: "",
-      refered_by: "",
-      email: "",
-      assigned_to: "",
-      qualified_for: "",
-      secondary_email: "",
-      email_out_op: "",
-      lead_status_id: "",
-      lead_stage_id: "",
-      care_agent: "",
-      phone: "",
-      fax: "",
-      has_passport: "",
-      passport_expiration_date: "",
-      rating: "",
-      watsapp_update_option: "",
-      agent_id: "",
-      description: "",
-      //
+      user_donotcall: false,
+      user_emailoptout: false,
       userObj: {},
-      modal: 0,
-      modalTitle: "",
-      actionType: 0,
-      arrayEmployes: [],
       submitted: false,
       errors: {}
     };
   },
   mounted: function mounted() {
-    this.userAccount(); //console.log("Component mounted.");
+    this.userAccount();
   },
   methods: {
     userAccount: function userAccount() {
-      var me = this;
-      axios.get("/account").then(function (response) {
-        console.log("here");
-        console.log(response.data);
-        console.log(response.data.user_name);
-        /*    me.userObj = response.data; */
+      var _this = this;
 
-        me.user_name = response.data.user_name;
-        me.alternative_username = response.data.alternative_username;
+      var me = this;
+      this.loading = true;
+      axios.get("/account").then(function (response) {
+        me.userObj = response.data;
+
+        if (me.userObj["donotcall"] == 0 || false) {
+          me.user_donotcall === "yes";
+        } else {
+          me.user_donotcall = "no";
+        }
+
+        if (me.userObj["emailoptout"] == 0 || false) {
+          me.user_emailoptout = "yes";
+        } else {
+          me.user_emailoptout = "no";
+        }
       })["catch"](function (error) {
         console.log(error);
+      })["finally"](function () {
+        return _this.loading = false;
       });
     },
     updateAccount: function updateAccount() {
       this.submitted = true;
-      this.errors = {}; //this.valideForm();
-
+      this.errors = {};
+      this.valideForm();
       console.log(Object.keys(this.errors));
 
       if (Object.keys(this.errors).length) {
@@ -5250,55 +5571,33 @@ __webpack_require__.r(__webpack_exports__);
 
       var me = this;
       axios.post("/account", {
-        /*  name: this.name,
-        last_name: this.last_name,
-        nationalities: this.nationalities, */
-        mobile_phone: this.mobile_phone,
-
-        /*  lead_source: this.lead_source,
-        watsapp_no: this.watsapp_no,
-        refered_by: this.refered_by,
-        email: this.email,
-        assigned_to: this.assigned_to,
-        qualified_for: this.qualified_for, */
-        secondary_email: this.secondary_email,
-
-        /* email_out_op: this.email_out_op,
-        lead_status_id: this.lead_status_id,
-        lead_stage_id: this.lead_stage_id,
-        care_agent: this.name,
-        phone: this.phone,
-        fax: this.fax,
-        has_passport: this.has_passport,
-        passport_expiration_date: this.passport_expiration_date,
-        rating: this.rating,
-        watsapp_update_option: this.watsapp_update_option,
-        // agent_id              : this.agent_id,
-        description: this.description, */
-        id: this.id
+        secondaryemail: me.userObj.secondaryemail,
+        mobile: me.userObj.mobile,
+        cf_1945: me.userObj.cf_1945,
+        cf_2254: me.userObj.cf_2254,
+        cf_2246: me.userObj.cf_2246,
+        cf_2252: me.userObj.cf_2252,
+        cf_2250: me.userObj.cf_2250,
+        user_donotcall: me.user_donotcall,
+        user_emailoptout: me.user_emailoptout,
+        contact_no: me.userObj.contact_no
       }).then(function (response) {
-        me.closeModal();
+        Swal.fire({
+          type: "success",
+          title: "Account updated",
+          timer: 2000,
+          showConfirmButton: false
+        }); //debugger;
+
         me.userAccount();
       })["catch"](function (error) {
-        console.table(error);
-      });
-    },
-    updateUsername: function updateUsername() {
-      this.submitted = true;
-      this.errors = {};
-      this.valideUsername();
-      console.log(Object.keys(this.errors));
-
-      if (Object.keys(this.errors).length) {
-        return;
-      }
-
-      axios.post("/new_username", {
-        alternative_username: this.alternative_username
-      }).then(function (response) {
-        me.closeModal();
-      })["catch"](function (error) {
-        console.table(error);
+        Swal.fire({
+          type: "error",
+          title: "Account wasn't updated !",
+          timer: 2000,
+          showConfirmButton: false
+        });
+        console.log(error);
       });
     },
     updatePassword: function updatePassword() {
@@ -5312,80 +5611,56 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios.post("/new_password", {
+        contact_no: this.userObj.contact_no,
+        old_password: this.old_password,
         new_password: this.new_password,
         confirm_password: this.confirm_password
       }).then(function (response) {
-        me.closeModal();
+        Swal.fire({
+          type: "success",
+          title: "Password changed",
+          timer: 2000,
+          showConfirmButton: false
+        });
       })["catch"](function (error) {
+        Swal.fire({
+          type: "error",
+          title: "Password not was updated !",
+          timer: 2000,
+          showConfirmButton: false
+        });
         console.table(error);
       });
     },
-    closeModal: function closeModal() {
-      //Cerrar modals
-      this.modal = 0;
-      this.name = "", this.first_last_name = "", this.second_lastname = "", this.email = "", this.code = "", //(this.active = false);
-      this.submitted = false;
-      this.errors = {}; //this.userAccount();
-    },
     //Validar campos requeridos
     validePass: function validePass() {
+      if (this.old_password !== this.userObj.cf_1780) {
+        this.errors.old_password = "Incorrect old password";
+      }
+
       if (!this.password && !this.confirm_password) {
         this.errors.password = "Password fields cant be blank";
       }
 
-      if (this.password) {
-        if (this.password !== this.confirm_password) {
-          this.errors.password = "Password and  confirm not equals";
-        }
+      if (this.new_password !== this.confirm_password) {
+        this.errors.password = "Password and  confirm not equals";
       }
     },
-    valideUsername: function valideUsername() {
-      if (!this.alternative_username) {
-        this.errors.alternative_username = "Alternative username field cant be empty";
-      }
+    valideForm: function valideForm() {
+      this.valideUrlField("userObj.cf_2254", "skype");
+      this.valideUrlField("userObj.cf_2246", "facebook");
+      this.valideUrlField("userObj.cf_2252", "instagram");
+      this.valideUrlField("userObj.cf_2250", "linkedin");
     },
-    openModal: function openModal(model, action) {
-      var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-      console.log(action);
+    valideUrlField: function valideUrlField(field, as) {
+      var fail;
+      if (field === "userObj.cf_2254") fail = this.userObj.cf_2254;
+      if (field === "userObj.cf_2246") fail = this.userObj.cf_2246;
+      if (field === "userObj.cf_2252") fail = this.userObj.cf_2252;
+      if (field === "userObj.cf_2250") fail = this.userObj.cf_2250;
 
-      switch (model) {
-        case "account":
-          {
-            switch (action) {
-              case "update":
-                {
-                  console.log(data);
-                  this.modal = 1;
-                  this.modalTitle = "Update data";
-                  this.name = data.name, this.user_name = data.user_name, this.alternative_username = data.alternative_username,
-                  /* (this.last_name = data.last_name),
-                  (this.nationalities = data.nationalities),
-                  (this.mobile_phone = data.mobile_phone),
-                  (this.watsapp_no = data.watsapp_no),
-                  (this.lead_source = data.lead_source),
-                  (this.refered_by = data.refered_by),
-                  (this.email = data.email),
-                  (this.assigned_to = data.assigned_to),
-                  (this.qualified_for = data.qualified_for),
-                  (this.secondary_email = data.secondary_email),
-                  (this.email_out_op = data.email_out_op),
-                  (this.lead_status_id = data.lead_status_id),
-                  (this.lead_stage_id = data.lead_stage_id),
-                  (this.care_agent = data.care_agent),
-                  (this.phone = data.phone),
-                  (this.fax = data.fax),
-                  (this.has_passport = data.has_passport),
-                  (this.passport_expiration_date = data.passport_expiration_date),
-                  (this.rating = data.rating),
-                  (this.watsapp_update_option = data.watsapp_update_option),
-                  (this.agent_id = data.agent_id),
-                  (this.description = data.description), */
-                  this.id = data.id;
-                  this.actionType = 1;
-                  break;
-                }
-            }
-          }
+      if (!/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/i.test(fail)) {
+        this.errors[as] = "The ".concat(as, " field is not valid url. try some 'http://").concat(as, ".com/profile'");
       }
     }
   }
@@ -23933,6 +24208,52 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-disable-autocomplete/dist/vue-disable-autocomplete.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/vue-disable-autocomplete/dist/vue-disable-autocomplete.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const disableAutocomplete = {
+    install(Vue) {
+        Vue.mixin({
+            mounted() {
+                this.disableAutoComplete();
+            },
+
+            methods: {
+                disableAutoComplete() {
+                    let elements = document.querySelectorAll('[autocomplete="off"]');
+
+                    if (!elements) {
+                        return;
+                    }
+
+                    elements.forEach(element => {
+                        element.setAttribute('readonly', 'readonly');
+                        element.style.backgroundColor = 'inherit';
+
+                        window.addEventListener('load', () => {
+                            setTimeout(() => {
+                                element.removeAttribute('readonly');
+                            }, 500);
+                        });
+                    });
+                }
+            }
+        });
+    }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (disableAutocomplete);
+
+/***/ }),
+
 /***/ "./resources/js/components/CLItemComponent.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/CLItemComponent.vue ***!
@@ -26758,550 +27079,972 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("\n        account\n        "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary fas fa-edit float-right",
-                attrs: { type: "button" },
-                on: {
-                  click: function ($event) {
-                    return _vm.openModal("account", "update", _vm.userObj)
-                  },
-                },
-              },
-              [_vm._v("\n          Editar\n        ")]
-            ),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(0),
+  return _vm.loading
+    ? _c("div", { staticStyle: { heigth: "100%" } }, [_vm._m(0)])
+    : _c("div", [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card shadow-lg p-1" }, [
+              _vm._m(2),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-7 sm-8" }, [
-                _c(
-                  "div",
-                  { staticStyle: { "overflow-x": "auto", "min-width": "80%" } },
-                  [
-                    _c(
-                      "table",
-                      {
-                        staticClass:
-                          "table table-bordered table-striped table-sm",
-                      },
-                      [
-                        _c("thead"),
-                        _vm._v(" "),
-                        _c("tbody", [
-                          _c("tr"),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Name")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.name),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr"),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Last name")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(
-                                  _vm.userObj.contact_details
-                                    ? _vm.userObj.contact_details.lastname
-                                    : ""
-                                ),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Nationalities")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.nationalities),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Mobile phone")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(
-                                  _vm.userObj.contact_details
-                                    ? _vm.userObj.contact_details.mobile
-                                    : ""
-                                ),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Watsapp number")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.watsapp_no),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Email")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.email),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Secondary email")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(
-                                  _vm.userObj.contact_details
-                                    ? _vm.userObj.contact_details.secondaryemail
-                                    : ""
-                                ),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Lead source")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.lead_source),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Refered by")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.refered_by),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Assigned to")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.assigned_to),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Qualified for")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.qualified_for),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Care agent")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.care_agent),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Phone")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.phone),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Fax")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.fax),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Passport expiration date")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(
-                                  _vm.userObj.passport_expiration_date
-                                ),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Rating")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.rating),
-                              },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("th", [_vm._v("Description")]),
-                            _vm._v(" "),
-                            _c("td", {
-                              domProps: {
-                                textContent: _vm._s(_vm.userObj.description),
-                              },
-                            }),
-                          ]),
-                        ]),
-                      ]
-                    ),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _vm.actionType == 1
-        ? [
-            _c(
-              "div",
-              {
-                staticClass: "modal fade",
-                class: { mostrar: _vm.modal },
-                staticStyle: { display: "none", "overflow-y": "auto" },
-                attrs: {
-                  tabindex: "-1",
-                  role: "dialog",
-                  "aria-labelledby": "myModalLabel",
-                  "aria-hidden": "true",
+              _c(
+                "div",
+                {
+                  staticClass: "tab-content",
+                  attrs: { id: "pills-tabContent" },
                 },
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "modal-dialog modal-primary modal-lg",
-                    staticStyle: { "padding-top": "55px" },
-                    attrs: { role: "document" },
-                  },
-                  [
-                    _c("div", { staticClass: "modal-content" }, [
-                      _c("div", { staticClass: "modal-header" }, [
-                        _c("h4", {
-                          staticClass: "modal-title",
-                          domProps: { textContent: _vm._s(_vm.modalTitle) },
-                        }),
-                        _vm._v(" "),
+                [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade active show",
+                      attrs: {
+                        id: "last-month",
+                        role: "tabpanel",
+                        "aria-labelledby": "pills-profile-tab",
+                      },
+                    },
+                    [
+                      _c("div", { staticClass: "card" }, [
                         _c(
-                          "button",
-                          {
-                            staticClass: "close",
-                            attrs: { type: "button", "aria-label": "Close" },
-                            on: {
-                              click: function ($event) {
-                                return _vm.closeModal()
+                          "div",
+                          { staticClass: "card-body" },
+                          [
+                            _c("center", { staticClass: "mt-4" }, [
+                              _c("img", {
+                                staticClass: "rounded-circle",
+                                attrs: {
+                                  src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/5.jpg",
+                                  width: "150",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("h4", { staticClass: "card-title mt-2" }, [
+                                _c("b", {
+                                  domProps: {
+                                    textContent: _vm._s(_vm.userObj.firstname),
+                                  },
+                                }),
+                                _c("b"),
+                                _vm._v(" "),
+                                _c("b", {
+                                  domProps: {
+                                    textContent: _vm._s(_vm.userObj.lastname),
+                                  },
+                                }),
+                              ]),
+                              _vm._v(" "),
+                              _c("h6", {
+                                staticClass: "card-subtitle",
+                                domProps: {
+                                  textContent: _vm._s(_vm.userObj.cf_1704),
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("div", {
+                                staticClass:
+                                  "row text-center justify-content-md-center",
+                              }),
+                            ]),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "card-body" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("small", { staticClass: "text-muted" }, [
+                                _vm._v("Email "),
+                              ]),
+                              _vm._v(" "),
+                              _c("h6", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.userObj.email),
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "small",
+                                { staticClass: "text-muted pt-4 db" },
+                                [_vm._v("Mobile phone")]
+                              ),
+                              _vm._v(" "),
+                              _c("h6", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.userObj.mobile),
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "small",
+                                { staticClass: "text-muted pt-4 db" },
+                                [_vm._v("Address")]
+                              ),
+                              _vm._v(" "),
+                              _c("h6", {
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.userObj.mailingstreet
+                                  ),
+                                },
+                              }),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("small", { staticClass: "text-muted" }, [
+                                _vm._v("Alternate Email "),
+                              ]),
+                              _vm._v(" "),
+                              _c("h6", {
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.userObj.secondaryemail
+                                  ),
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "small",
+                                { staticClass: "text-muted pt-4 db" },
+                                [_vm._v("Date of birth")]
+                              ),
+                              _vm._v(" "),
+                              _c("h6", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.userObj.birthday),
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "small",
+                                { staticClass: "text-muted pt-4 db" },
+                                [_vm._v("Age")]
+                              ),
+                              _vm._v(" "),
+                              _c("h6", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.userObj.cf_1334),
+                                },
+                              }),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("small", { staticClass: "text-muted pt-4 db" }, [
+                            _vm._v("Social Profile"),
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-circle btn-secondary",
+                              attrs: {
+                                type: "btn",
+                                "data-toggle": "tooltip",
+                                title: _vm.userObj.cf_2246,
+                                href: _vm.userObj.cf_2246,
                               },
+                            },
+                            [_c("i", { staticClass: "fab fa-facebook-f" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-circle btn-secondary",
+                              attrs: {
+                                type: "btn",
+                                "data-toggle": "tooltip",
+                                title: _vm.userObj.cf_2252,
+                                href: _vm.userObj.cf_2252,
+                              },
+                            },
+                            [_c("i", { staticClass: "fab fa-instagram" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-circle btn-secondary",
+                              attrs: {
+                                type: "btn",
+                                "data-toggle": "tooltip",
+                                title: _vm.userObj.cf_2250,
+                                href: _vm.userObj.cf_2250,
+                              },
+                            },
+                            [_c("i", { staticClass: "fab fa-linkedin" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-circle btn-secondary",
+                              attrs: {
+                                type: "btn",
+                                "data-toggle": "tooltip",
+                                title: _vm.userObj.cf_2254,
+                                href: _vm.userObj.cf_2254,
+                              },
+                            },
+                            [_c("i", { staticClass: "fab fa-skype" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-circle btn-secondary",
+                              attrs: {
+                                type: "btn",
+                                "data-toggle": "tooltip",
+                                title: _vm.userObj.cf_2248,
+                                href: _vm.userObj.cf_2248,
+                              },
+                            },
+                            [_c("i", { staticClass: "fab fa-twitter" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-circle btn-secondary",
+                              attrs: {
+                                type: "btn",
+                                "data-toggle": "tooltip",
+                                title: _vm.userObj.cf_1945,
+                                href: _vm.userObj.cf_1945,
+                              },
+                            },
+                            [_c("i", { staticClass: "fab fa-whatsapp" })]
+                          ),
+                        ]),
+                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade",
+                      attrs: {
+                        id: "previous-month",
+                        role: "tabpanel",
+                        "aria-labelledby": "pills-setting-tab",
+                      },
+                    },
+                    [
+                      _c("div", { staticClass: "card-body" }, [
+                        _c(
+                          "form",
+                          {
+                            staticClass: "form-horizontal form-material",
+                            attrs: {
+                              enctype: "multipart/form-data",
+                              autocomplete: "nope",
                             },
                           },
                           [
-                            _c("span", { attrs: { "aria-hidden": "true" } }, [
-                              _vm._v("×"),
+                            _c("input", {
+                              staticStyle: { display: "none" },
+                              attrs: {
+                                autocomplete: "off",
+                                name: "hidden",
+                                type: "text",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-group",
+                                attrs: { autocomplete: "none" },
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-md-12",
+                                    attrs: { for: "secondaryemail" },
+                                  },
+                                  [_vm._v("Alternative email")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.userObj.secondaryemail,
+                                        expression: "userObj.secondaryemail",
+                                      },
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-line",
+                                    attrs: {
+                                      type: "email",
+                                      placeholder: "name@mail.com",
+                                      id: "secondaryemail",
+                                      autocomplete: "off",
+                                    },
+                                    domProps: {
+                                      value: _vm.userObj.secondaryemail,
+                                    },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.userObj,
+                                          "secondaryemail",
+                                          $event.target.value
+                                        )
+                                      },
+                                    },
+                                  }),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-group",
+                                attrs: { autocomplete: "none" },
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-md-12",
+                                    attrs: { for: "mobile" },
+                                  },
+                                  [_vm._v("Mobile")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.userObj.mobile,
+                                        expression: "userObj.mobile",
+                                      },
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-line",
+                                    attrs: {
+                                      type: "tel",
+                                      placeholder: "123 456 7890",
+                                      id: "mobile",
+                                      autocomplete: "off",
+                                    },
+                                    domProps: { value: _vm.userObj.mobile },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.userObj,
+                                          "mobile",
+                                          $event.target.value
+                                        )
+                                      },
+                                    },
+                                  }),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-group",
+                                attrs: { autocomplete: "none" },
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-md-12",
+                                    attrs: { for: "whatsapp" },
+                                  },
+                                  [_vm._v("WhatsApp")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.userObj.cf_1945,
+                                        expression: "userObj.cf_1945",
+                                      },
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-line",
+                                    attrs: {
+                                      type: "tel",
+                                      placeholder: "123 456 7890",
+                                      id: "whatsapp",
+                                      autocomplete: "off",
+                                    },
+                                    domProps: { value: _vm.userObj.cf_1945 },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.userObj,
+                                          "cf_1945",
+                                          $event.target.value
+                                        )
+                                      },
+                                    },
+                                  }),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-group",
+                                attrs: { autocomplete: "none" },
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-md-12",
+                                    attrs: { for: "skypeLink" },
+                                  },
+                                  [_vm._v("Skype ")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.userObj.cf_2254,
+                                        expression: "userObj.cf_2254",
+                                      },
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-line",
+                                    attrs: {
+                                      id: "skypeLink",
+                                      autocomplete: "off",
+                                      type: "url",
+                                      placeholder: "skype.com/profile.01",
+                                    },
+                                    domProps: { value: _vm.userObj.cf_2254 },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.userObj,
+                                          "cf_2254",
+                                          $event.target.value
+                                        )
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.skype
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [_vm._v(_vm._s(_vm.errors.skype))]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-group",
+                                attrs: { autocomplete: "none" },
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-md-12",
+                                    attrs: { for: "inputfb" },
+                                  },
+                                  [_vm._v("Facebook ")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.userObj.cf_2246,
+                                        expression: "userObj.cf_2246",
+                                      },
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-line",
+                                    attrs: {
+                                      id: "inputfb",
+                                      type: "url",
+                                      placeholder: "facebook.com/profile.01",
+                                      autocomplete: "off",
+                                    },
+                                    domProps: { value: _vm.userObj.cf_2246 },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.userObj,
+                                          "cf_2246",
+                                          $event.target.value
+                                        )
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.facebook
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [_vm._v(_vm._s(_vm.errors.facebook))]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-group",
+                                attrs: { autocomplete: "none" },
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-md-12",
+                                    attrs: { for: "instagramLink" },
+                                  },
+                                  [_vm._v("Instagram\n                  ")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.userObj.cf_2252,
+                                        expression: "userObj.cf_2252",
+                                      },
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-line",
+                                    attrs: {
+                                      type: "url",
+                                      id: "instagramLink",
+                                      placeholder: "instagram.com/profile.01",
+                                      autocomplete: "off",
+                                    },
+                                    domProps: { value: _vm.userObj.cf_2252 },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.userObj,
+                                          "cf_2252",
+                                          $event.target.value
+                                        )
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.instagram
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [_vm._v(_vm._s(_vm.errors.instagram))]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-group",
+                                attrs: { autocomplete: "off" },
+                              },
+                              [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "col-md-12",
+                                    attrs: { for: "gotolinkedin" },
+                                  },
+                                  [_vm._v("Linkedin\n                  ")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-md-12" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.userObj.cf_2250,
+                                        expression: "userObj.cf_2250",
+                                      },
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-line",
+                                    attrs: {
+                                      name: "gotolinkedin",
+                                      placeholder: "linkedin.com/profile.01",
+                                      type: "url",
+                                      autocomplete: "off",
+                                    },
+                                    domProps: { value: _vm.userObj.cf_2250 },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.userObj,
+                                          "cf_2250",
+                                          $event.target.value
+                                        )
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.submitted && _vm.errors.linkedin
+                                    ? _c(
+                                        "small",
+                                        { staticClass: "text-danger font-14" },
+                                        [_vm._v(_vm._s(_vm.errors.linkedin))]
+                                      )
+                                    : _vm._e(),
+                                ]),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-md-6" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    attrs: { autocomplete: "none" },
+                                  },
+                                  [
+                                    _c("label", { staticClass: "col-md-12" }, [
+                                      _vm._v("CommBoard Notifications"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "switch col-md-12" },
+                                      [
+                                        _c("label", [
+                                          _vm._v(
+                                            "OFF\n                          "
+                                          ),
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.user_donotcall,
+                                                expression: "user_donotcall",
+                                              },
+                                            ],
+                                            attrs: {
+                                              id: "user_donotcall",
+                                              "true-value": "yes",
+                                              "false-value": "no",
+                                              type: "checkbox",
+                                            },
+                                            domProps: {
+                                              checked: Array.isArray(
+                                                _vm.user_donotcall
+                                              )
+                                                ? _vm._i(
+                                                    _vm.user_donotcall,
+                                                    null
+                                                  ) > -1
+                                                : _vm._q(
+                                                    _vm.user_donotcall,
+                                                    "yes"
+                                                  ),
+                                            },
+                                            on: {
+                                              change: function ($event) {
+                                                var $$a = _vm.user_donotcall,
+                                                  $$el = $event.target,
+                                                  $$c = $$el.checked
+                                                    ? "yes"
+                                                    : "no"
+                                                if (Array.isArray($$a)) {
+                                                  var $$v = null,
+                                                    $$i = _vm._i($$a, $$v)
+                                                  if ($$el.checked) {
+                                                    $$i < 0 &&
+                                                      (_vm.user_donotcall =
+                                                        $$a.concat([$$v]))
+                                                  } else {
+                                                    $$i > -1 &&
+                                                      (_vm.user_donotcall = $$a
+                                                        .slice(0, $$i)
+                                                        .concat(
+                                                          $$a.slice($$i + 1)
+                                                        ))
+                                                  }
+                                                } else {
+                                                  _vm.user_donotcall = $$c
+                                                }
+                                              },
+                                            },
+                                          }),
+                                          _c("span", { staticClass: "lever" }),
+                                          _vm._v("ON"),
+                                        ]),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-6" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    attrs: { autocomplete: "none" },
+                                  },
+                                  [
+                                    _c("label", { staticClass: "col-md-12" }, [
+                                      _vm._v("SMS"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "switch col-md-12" },
+                                      [
+                                        _c("label", [
+                                          _vm._v(
+                                            "OFF\n                          "
+                                          ),
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.user_emailoptout,
+                                                expression: "user_emailoptout",
+                                              },
+                                            ],
+                                            attrs: {
+                                              type: "checkbox",
+                                              "true-value": "yes",
+                                              "false-value": "no",
+                                            },
+                                            domProps: {
+                                              checked: Array.isArray(
+                                                _vm.user_emailoptout
+                                              )
+                                                ? _vm._i(
+                                                    _vm.user_emailoptout,
+                                                    null
+                                                  ) > -1
+                                                : _vm._q(
+                                                    _vm.user_emailoptout,
+                                                    "yes"
+                                                  ),
+                                            },
+                                            on: {
+                                              change: function ($event) {
+                                                var $$a = _vm.user_emailoptout,
+                                                  $$el = $event.target,
+                                                  $$c = $$el.checked
+                                                    ? "yes"
+                                                    : "no"
+                                                if (Array.isArray($$a)) {
+                                                  var $$v = null,
+                                                    $$i = _vm._i($$a, $$v)
+                                                  if ($$el.checked) {
+                                                    $$i < 0 &&
+                                                      (_vm.user_emailoptout =
+                                                        $$a.concat([$$v]))
+                                                  } else {
+                                                    $$i > -1 &&
+                                                      (_vm.user_emailoptout =
+                                                        $$a
+                                                          .slice(0, $$i)
+                                                          .concat(
+                                                            $$a.slice($$i + 1)
+                                                          ))
+                                                  }
+                                                } else {
+                                                  _vm.user_emailoptout = $$c
+                                                }
+                                              },
+                                            },
+                                          }),
+                                          _c("span", { staticClass: "lever" }),
+                                          _vm._v("ON"),
+                                        ]),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("div", { staticClass: "col-sm-12" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn btn-success",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.updateAccount()
+                                      },
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                      Update Profile\n                    "
+                                    ),
+                                  ]
+                                ),
+                              ]),
                             ]),
                           ]
                         ),
                       ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "modal-body" }, [
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade",
+                      attrs: {
+                        id: "password-tab",
+                        role: "tabpanel",
+                        "aria-labelledby": "pills-setting-tab",
+                      },
+                    },
+                    [
+                      _c("div", { staticClass: "card-body" }, [
                         _c(
                           "form",
                           {
-                            staticClass: "form-horizontal",
-                            attrs: { enctype: "multipart/form-data" },
+                            staticClass: "form-horizontal form-material",
+                            attrs: { method: "get", autocomplete: "nope" },
                           },
                           [
-                            _c(
-                              "div",
-                              {
-                                staticStyle: {
-                                  "overflow-x": "auto",
-                                  "overflow-y": "auto",
-                                  "min-width": "80%",
-                                },
+                            _c("input", {
+                              staticStyle: { display: "none" },
+                              attrs: {
+                                autocomplete: "off",
+                                name: "hidden",
+                                type: "text",
                               },
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "section",
+                              { attrs: { autocomplete: "disabled" } },
                               [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "inputEmail2" } },
-                                    [_vm._v("User name")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.user_name,
-                                        expression: "user_name",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "inputEmail2",
-                                      "aria-describedby": "secondary_emailHelp",
-                                      placeholder: "Default username",
-                                      disabled: "",
-                                    },
-                                    domProps: { value: _vm.user_name },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.user_name = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "alternative-username" } },
-                                    [_vm._v("Alternative username")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.alternative_username,
-                                        expression: "alternative_username",
-                                      },
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "alternative-username",
-                                      "aria-describedby":
-                                        "alternative username",
-                                      placeholder: "Enter alternative username",
-                                    },
-                                    domProps: {
-                                      value: _vm.alternative_username,
-                                    },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.alternative_username =
-                                          $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.submitted &&
-                                  _vm.errors.alternative_username
-                                    ? _c(
-                                        "small",
-                                        { staticClass: "text-danger font-14" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.errors.alternative_username
-                                            )
-                                          ),
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
                                 _c(
                                   "div",
                                   {
-                                    staticClass: "form-group text-center mt-4",
+                                    staticClass: "form-group",
+                                    attrs: { autocomplete: "nope" },
                                   },
                                   [
-                                    _c("div", { staticClass: "col-xs-12" }, [
-                                      _vm.actionType == 1
-                                        ? _c(
-                                            "button",
-                                            {
-                                              staticClass:
-                                                "btn btn-primary fas fa-user",
-                                              attrs: { type: "button" },
-                                              on: {
-                                                click: function ($event) {
-                                                  return _vm.updateUsername()
-                                                },
-                                              },
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                      Update username\n                    "
-                                              ),
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                    ]),
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group row" }, [
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass:
-                                        "col-md-4 col-form-label text-md-right",
-                                      attrs: { for: "password" },
-                                    },
-                                    [_vm._v("\n                    Password")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-md-6" }, [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.password,
-                                          expression: "password",
-                                        },
-                                      ],
-                                      staticClass:
-                                        "\n                        form-control\n                        @error('password')\n                        is-invalid\n                        @enderror\n                      ",
-                                      attrs: {
-                                        type: "password",
-                                        required: "",
-                                        autocomplete: "new-password",
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "col-md-12",
+                                        attrs: { for: "inputPass" },
                                       },
-                                      domProps: { value: _vm.password },
-                                      on: {
-                                        input: function ($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.password = $event.target.value
-                                        },
-                                      },
-                                    }),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group row" }, [
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass:
-                                        "col-md-4 col-form-label text-md-right",
-                                      attrs: { for: "password-confirm" },
-                                    },
-                                    [_vm._v("Confirm Password")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "col-md-6" }, [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.confirm_password,
-                                          expression: "confirm_password",
-                                        },
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "password",
-                                        required: "",
-                                        autocomplete: "new-password",
-                                      },
-                                      domProps: { value: _vm.confirm_password },
-                                      on: {
-                                        input: function ($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.confirm_password =
-                                            $event.target.value
-                                        },
-                                      },
-                                    }),
+                                      [_vm._v("Old password")]
+                                    ),
                                     _vm._v(" "),
-                                    _vm.submitted && _vm.errors.password
-                                      ? _c(
-                                          "small",
+                                    _c("div", { staticClass: "col-md-12" }, [
+                                      _c("input", {
+                                        directives: [
                                           {
-                                            staticClass: "text-danger font-14",
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.old_password,
+                                            expression: "old_password",
                                           },
-                                          [_vm._v(_vm._s(_vm.errors.password))]
-                                        )
-                                      : _vm._e(),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "form-group text-center mt-4",
-                                  },
-                                  [
-                                    _c("div", { staticClass: "col-xs-12" }, [
-                                      _vm.actionType == 1
+                                        ],
+                                        staticClass:
+                                          "form-control form-control-line",
+                                        attrs: {
+                                          name: "inputPass",
+                                          type: "password",
+                                          autocomplete: "nope",
+                                          required: "",
+                                        },
+                                        domProps: { value: _vm.old_password },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.old_password =
+                                              $event.target.value
+                                          },
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.submitted && _vm.errors.old_password
                                         ? _c(
-                                            "button",
+                                            "small",
                                             {
                                               staticClass:
-                                                "btn btn-primary fas fa-key",
-                                              attrs: { type: "button" },
-                                              on: {
-                                                click: function ($event) {
-                                                  return _vm.updatePassword()
-                                                },
-                                              },
+                                                "text-danger font-14",
                                             },
                                             [
                                               _vm._v(
-                                                "\n                      Change password\n                    "
+                                                _vm._s(_vm.errors.old_password)
                                               ),
                                             ]
                                           )
@@ -27309,70 +28052,572 @@ var render = function () {
                                     ]),
                                   ]
                                 ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    attrs: { autocomplete: "nope" },
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "col-md-12",
+                                        attrs: { for: "inputPass" },
+                                      },
+                                      [_vm._v("New Password")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-md-12" }, [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.new_password,
+                                            expression: "new_password",
+                                          },
+                                        ],
+                                        staticClass:
+                                          "form-control form-control-line",
+                                        attrs: {
+                                          name: "inputPass",
+                                          type: "password",
+                                          autocomplete: "nope",
+                                          required: "",
+                                        },
+                                        domProps: { value: _vm.new_password },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.new_password =
+                                              $event.target.value
+                                          },
+                                        },
+                                      }),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-group",
+                                    attrs: { autocomplete: "nope" },
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "col-md-12",
+                                        attrs: { for: "inputPass" },
+                                      },
+                                      [_vm._v("Confirm new Password")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-md-12" }, [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.confirm_password,
+                                            expression: "confirm_password",
+                                          },
+                                        ],
+                                        staticClass:
+                                          "form-control form-control-line",
+                                        attrs: {
+                                          name: "inputPass",
+                                          type: "password",
+                                          autocomplete: "nope",
+                                          required: "",
+                                        },
+                                        domProps: {
+                                          value: _vm.confirm_password,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.confirm_password =
+                                              $event.target.value
+                                          },
+                                        },
+                                      }),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm.submitted && _vm.errors.password
+                                  ? _c(
+                                      "small",
+                                      { staticClass: "text-danger font-14" },
+                                      [_vm._v(_vm._s(_vm.errors.password))]
+                                    )
+                                  : _vm._e(),
                               ]
                             ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("div", { staticClass: "col-sm-12" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn btn-success",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.updatePassword()
+                                      },
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                      Update Password\n                    "
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                            ]),
                           ]
                         ),
                       ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "modal-footer" }, [
-                        _vm.actionType == 1
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.closeModal()
-                                  },
-                                },
-                              },
-                              [_vm._v("\n              Close\n            ")]
-                            )
-                          : _vm._e(),
-                      ]),
-                    ]),
-                  ]
-                ),
-              ]
-            ),
-          ]
-        : _vm._e(),
-    ],
-    2
-  )
+                    ]
+                  ),
+                ]
+              ),
+            ]),
+          ]),
+        ]),
+      ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col md-5 sm-8" }, [
-      _c("fieldset", { staticClass: "border-success" }, [
-        _c("legend", [_vm._v("Info")]),
-        _vm._v(" "),
-        _c("div", [
-          _c("p", { staticClass: "bg-danger" }, [
-            _vm._v(
-              "\n                  ! Incomplete profile. Fill required fields to start\n                  leadment. !\n                "
-            ),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("fieldset", { staticClass: "border-success" }, [
-        _c("legend", [_vm._v("Activities")]),
-        _vm._v(" "),
-        _c("div", [_c("p", [_vm._v("Nothing now")])]),
-      ]),
-      _vm._v(" "),
-      _c("fieldset", { staticClass: "border-info" }, [
-        _c("legend", [_vm._v("Comments")]),
-        _vm._v(" "),
-        _c("div", [_c("p", [_vm._v("Nothing now")])]),
+    return _c("div", { staticClass: "card shadow-lg p-1" }, [
+      _c("div", { staticClass: "card-body d-flex justify-content-around" }, [
+        _c(
+          "div",
+          {
+            staticClass: "spinner-grow text-success center",
+            attrs: { role: "status" },
+          },
+          [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+        ),
       ]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row page-titles" }, [
+      _c("div", { staticClass: "col-md-5 col-12 align-self-center" }, [
+        _c("h3", { staticClass: "text-themecolor mb-0" }, [_vm._v("Profile")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      {
+        staticClass: "nav nav-pills custom-pills",
+        attrs: { id: "pills-tab", role: "tablist" },
+      },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "pills-timeline-tab",
+                "data-toggle": "pill",
+                href: "#current-month",
+                role: "tab",
+                "aria-controls": "pills-timeline",
+                "aria-selected": "false",
+              },
+            },
+            [_c("i", { staticClass: "fas fa-chart-line" }), _vm._v(" Timeline")]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active",
+              attrs: {
+                id: "pills-profile-tab",
+                "data-toggle": "pill",
+                href: "#last-month",
+                role: "tab",
+                "aria-controls": "pills-profile",
+                "aria-selected": "true",
+              },
+            },
+            [_c("i", { staticClass: "fas fa-child" }), _vm._v(" Profile")]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "pills-setting-tab",
+                "data-toggle": "pill",
+                href: "#previous-month",
+                role: "tab",
+                "aria-controls": "pills-setting",
+                "aria-selected": "false",
+              },
+            },
+            [_c("i", { staticClass: "fas fa-cogs" }), _vm._v(" Setting")]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                id: "pills-setting-tab",
+                "data-toggle": "pill",
+                href: "#password-tab",
+                role: "tab",
+                "aria-controls": "pills-setting",
+                "aria-selected": "false",
+              },
+            },
+            [_c("i", { staticClass: "fas fa-key" }), _vm._v(" Password")]
+          ),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "tab-pane fade",
+        attrs: {
+          id: "current-month",
+          role: "tabpanel",
+          "aria-labelledby": "pills-timeline-tab",
+        },
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "profiletimeline mt-0" }, [
+            _c("div", { staticClass: "sl-item" }, [
+              _c("div", { staticClass: "sl-left" }, [
+                _c("img", {
+                  staticClass: "rounded-circle",
+                  attrs: {
+                    src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg",
+                    alt: "user",
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "sl-right" }, [
+                _c("div", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "link",
+                      attrs: { href: "javascript:void(0)" },
+                    },
+                    [_vm._v("John Doe")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "sl-date" }, [
+                    _vm._v("5 minutes ago"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      "\n                        assign a new task\n                        "
+                    ),
+                    _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                      _vm._v(" Design weblayout"),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-3 col-md-6 mb-3" }, [
+                      _c("img", {
+                        staticClass: "img-fluid rounded",
+                        attrs: {
+                          src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img1.jpg",
+                        },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3 col-md-6 mb-3" }, [
+                      _c("img", {
+                        staticClass: "img-fluid rounded",
+                        attrs: {
+                          src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img2.jpg",
+                        },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3 col-md-6 mb-3" }, [
+                      _c("img", {
+                        staticClass: "img-fluid rounded",
+                        attrs: {
+                          src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img3.jpg",
+                        },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3 col-md-6 mb-3" }, [
+                      _c("img", {
+                        staticClass: "img-fluid rounded",
+                        attrs: {
+                          src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img4.jpg",
+                        },
+                      }),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "like-comm" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "link mr-2",
+                        attrs: { href: "javascript:void(0)" },
+                      },
+                      [_vm._v("2 comment")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "link mr-2",
+                        attrs: { href: "javascript:void(0)" },
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-heart text-danger" }),
+                        _vm._v(" 5 Love"),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "sl-item" }, [
+              _c("div", { staticClass: "sl-left" }, [
+                _c("img", {
+                  staticClass: "rounded-circle",
+                  attrs: {
+                    src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/2.jpg",
+                    alt: "user",
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "sl-right" }, [
+                _c("div", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "link",
+                      attrs: { href: "javascript:void(0)" },
+                    },
+                    [_vm._v("John Doe")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "sl-date" }, [
+                    _vm._v("5 minutes ago"),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mt-3 row" }, [
+                    _c("div", { staticClass: "col-md-3 col-xs-12" }, [
+                      _c("img", {
+                        staticClass: "img-fluid rounded",
+                        attrs: {
+                          src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img1.jpg",
+                          alt: "user",
+                        },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-9 col-xs-12" }, [
+                      _c("p", [
+                        _vm._v(
+                          "\n                            Lorem ipsum dolor sit amet, consectetur adipiscing\n                            elit. Integer nec odio. Praesent libero. Sed\n                            cursus ante dapibus diam.\n                          "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-success",
+                          attrs: { href: "javascript:void(0)" },
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Design weblayout"
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "like-comm mt-3" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "link mr-2",
+                        attrs: { href: "javascript:void(0)" },
+                      },
+                      [_vm._v("2 comment")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "link mr-2",
+                        attrs: { href: "javascript:void(0)" },
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-heart text-danger" }),
+                        _vm._v(" 5 Love"),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "sl-item" }, [
+              _c("div", { staticClass: "sl-left" }, [
+                _c("img", {
+                  staticClass: "rounded-circle",
+                  attrs: {
+                    src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/3.jpg",
+                    alt: "user",
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "sl-right" }, [
+                _c("div", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "link",
+                      attrs: { href: "javascript:void(0)" },
+                    },
+                    [_vm._v("John Doe")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "sl-date" }, [
+                    _vm._v("5 minutes ago"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "mt-2" }, [
+                    _vm._v(
+                      "\n                        Lorem ipsum dolor sit amet, consectetur adipiscing\n                        elit. Integer nec odio. Praesent libero. Sed cursus\n                        ante dapibus diam. Sed nisi. Nulla quis sem at nibh\n                        elementum imperdiet. Duis sagittis ipsum. Praesent\n                        mauris. Fusce nec tellus sed augue semper\n                      "
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "like-comm mt-3" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "link mr-2",
+                      attrs: { href: "javascript:void(0)" },
+                    },
+                    [_vm._v("2 comment")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "link mr-2",
+                      attrs: { href: "javascript:void(0)" },
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-heart text-danger" }),
+                      _vm._v(" 5 Love"),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "sl-item" }, [
+              _c("div", { staticClass: "sl-left" }, [
+                _c("img", {
+                  staticClass: "rounded-circle",
+                  attrs: {
+                    src: "/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/4.jpg",
+                    alt: "user",
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "sl-right" }, [
+                _c("div", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "link",
+                      attrs: { href: "javascript:void(0)" },
+                    },
+                    [_vm._v("John Doe")]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "sl-date" }, [
+                    _vm._v("5 minutes ago"),
+                  ]),
+                  _vm._v(" "),
+                  _c("blockquote", { staticClass: "mt-2" }, [
+                    _vm._v(
+                      "\n                        Lorem ipsum dolor sit amet, consectetur adipisicing\n                        elit, sed do eiusmod tempor incididunt\n                      "
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("hr")])
   },
 ]
 render._withStripped = true
