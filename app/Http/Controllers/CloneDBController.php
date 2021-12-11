@@ -16,7 +16,7 @@ class CloneDBController extends Controller
 
         $data = $vtiger->listTypes();
         $types = $data->result->types;
-        //return $types;
+        //return $types;//[]
 
         foreach ($types as $type) {
             // $type = 'Documents';
@@ -26,6 +26,7 @@ class CloneDBController extends Controller
                 $list = $vtiger->search($query)->result;
 
                 $contactField = 'contact_id';
+
                 if ($type === 'Documents') {
                     $contactField = 'cf_1488';
                 }
@@ -62,7 +63,7 @@ class CloneDBController extends Controller
         return "dataCloned";
     }
 
-    //////////////////
+    /* Functions */
     static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID)
     {
         $nameFields = [];
@@ -92,12 +93,12 @@ class CloneDBController extends Controller
                 foreach ($toUpdate as $toup) {
                     foreach ($toup as $key => $val) {
                         DB::update("UPDATE vt_$tablename set $key = '$val' WHERE  $contactField = '$contactID';");
+
+                        //if not exist on vt will delete here
                     }
                 }
-                return "value updated";
             } else {
                 DB::insert("INSERT INTO vt_$tablename ($names) VALUES ($data);");
-                return "value inserted";
             }
         }
     }

@@ -30,11 +30,10 @@ class DocumentController extends Controller
         //Documents
         $documentsQuery = DB::table('Documents')->select('*')
             ->where('cf_1488', $contact->result[0]->id)
-            ->orWhere('cf_1488', '12x2427')
-            ;
+            ->orWhere('cf_1488', '12x2427');
         $documents = $vtiger->search($documentsQuery)->result;
-
-        return $documents;
+        return response()->json($documents, 200);
+        //return ;
     }
 
     public function store(Request $request)
@@ -117,8 +116,9 @@ class DocumentController extends Controller
 
 
     ///Api methods
-    public function checkDocuments(Request $request){
-        try{
+    public function checkDocuments(Request $request)
+    {
+        try {
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $documents = Document::where('user_id', $user->id)/* ->where('syncronized', false) */->get();
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
@@ -128,24 +128,21 @@ class DocumentController extends Controller
             $out->write($documents);
             $out->write("________________\n");
 
-            return response()->json($documents , 200);
-
-        }catch(\Exception $e){
+            return response()->json($documents, 200);
+        } catch (\Exception $e) {
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->write($e);
         }
     }
 
-    public function getResponse(Request $request){
+    public function getResponse(Request $request)
+    {
 
         $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-            $out->write($request);
+        $out->write($request);
 
         Test::create([
-            'info'=>$request
+            'info' => $request
         ]);
     }
-
-
-    //public function importDocuments()
 }

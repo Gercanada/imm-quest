@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\ChecklistController;
-use App\Http\Controllers\CPCaseController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\CPCaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DashboardController;
@@ -34,17 +34,12 @@ Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */func
     Route::get('/vtiger/describe/types/{user_id}', [VtigerController::class, "types"]);
     Route::get('/vtiger/list/{type}/{where}', [VtigerController::class, 'goType']);
 
-
-
     Route::get('/imm/contacts', [UserController::class, 'listVTUsers']);
     Route::post('/imm/contacts', [UserController::class, 'importVTUsers']);
 
     Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes'); // Config access for users ((not required now))
-
     Route::get('/user_types_access', [VtigerController::class, 'index']);
     Route::get('/vtiger/describe/{type}', [VtigerController::class, 'getType']);
-
-
 });
 
 
@@ -69,28 +64,22 @@ Route::middleware('auth')->group(function () {
     //documents
     Route::get('/documents', [DocumentController::class, 'index'])->middleware(['auth'])->name('documents');
     Route::get('/get_documents', [DocumentController::class, 'getDocuments'])->middleware(['auth']);
-
     //checklists
     Route::get('/checklists', [ChecklistController::class, 'index'])->middleware(['auth'])->name('checklists');
     Route::get('/checklist/{id}', [ChecklistController::class, 'show'])->middleware(['auth'])->name('show_checklist');
-
-
-
     Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupload'])->middleware(['auth'])->name('checklist_item');
-
     //cl items
     Route::post('/cl-item', [CLItemController::class, 'show'])->middleware(['auth']);
     Route::post('/cl-item/upload/file', [CLItemController::class, 'uploadFile'])->middleware(['auth']);
-
+    //quotes
     Route::get('/quotes', [QuoteController::class, 'index'])->middleware(['auth'])->name('quotes');
     Route::get('/quotes/{id}', [QuoteController::class, 'show'])->middleware(['auth'])->name('showQuote');
-
+    //invoices
     Route::get('/invoices', [InvoiceController::class, 'index'])->middleware(['auth'])->name('invoices');
     Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->middleware(['auth'])->name('show_invoice');
-
-
+    //payments
     Route::get('/payments', [PaymentController::class, 'index'])->middleware(['auth'])->name('payments');
-
+    //commbboard
     Route::get('/commboard', [CommboardController::class, 'index'])->name('commboard');
 });
     // Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);
