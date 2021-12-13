@@ -32,24 +32,23 @@
 </head>
 
 <body>
-    <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
 
-        <div class="preloader">
-            <div class="lds-ripple">
-                <div class="lds-pos"></div>
-                <div class="lds-pos"></div>
-            </div>
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
         </div>
+    </div>
+    <div id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
         @if (!Auth::user())
             @yield('content'){{-- login view --}}
         @else
-            <!-- Topbar header - style you can find in pages.scss -->
             @if (Auth::user())
                 <header class="topbar">
                     @include('layouts.navbar')
@@ -87,7 +86,7 @@
 <script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/bootstrap/dist/js/bootstrap.min.js">
 </script>
 <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.min.js"></script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.js"></script>
+<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.darks5.js"></script>
 <script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app-style-switcher.js"></script>
 <script
 src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js">
