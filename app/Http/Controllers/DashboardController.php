@@ -20,6 +20,8 @@ class DashboardController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
+
+
         $vtiger = new Vtiger();//Get contact data of this user
 
         $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname')->where("contact_no", $user->vtiger_contact_id)->take(1);

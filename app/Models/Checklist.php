@@ -11,6 +11,8 @@ class Checklist extends Model
 {
     use HasFactory;
 
+    protected $table = 'vt_checklist';
+
     public function case(){
        return $this->belongsTo(CPCase::class, 'case_id');
     }

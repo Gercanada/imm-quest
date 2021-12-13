@@ -82,4 +82,4 @@ Route::middleware('auth')->group(function () {
     //commbboard
     Route::get('/commboard', [CommboardController::class, 'index'])->name('commboard');
 });
-    // Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);
+ Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);

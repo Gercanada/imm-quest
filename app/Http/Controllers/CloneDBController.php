@@ -8,6 +8,12 @@ use JBtje\VtigerLaravel\Vtiger;
 
 class CloneDBController extends Controller
 {
+    /**
+     * This function be called as webservice
+     * Be created all required by a contact tables for customer portal
+     * 1. The tables be created if not exists
+     * 2. The dta be inserted
+     */
     public function createTable(Request $request)
     {
         $vtiger = new Vtiger();
@@ -20,12 +26,16 @@ class CloneDBController extends Controller
 
         foreach ($types as $type) {
             // $type = 'Documents';
-            if (($type === 'Documents') || ($type === 'Checklist') || ($type === 'Payments') || ($type === 'CLItems')) {
+            if (($type === 'Documents') || ($type === 'Checklist') || ($type === 'Payments') || ($type === 'CLItems')|| ($type === 'Contacts')) {
                 $description = $vtiger->describe($type);   // get table description to clone (docs in this example)
                 $query = DB::table($type)->select('*');
                 $list = $vtiger->search($query)->result;
 
                 $contactField = 'contact_id';
+
+                if ($type === 'Contacts') {
+                    $contactField = 'id';
+                }
 
                 if ($type === 'Documents') {
                     $contactField = 'cf_1488';
@@ -57,10 +67,13 @@ class CloneDBController extends Controller
                     array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
                 }
                 $fieldsArrtoSqlStr = implode(", ", $fieldsArr); //Convert fields to mysql string
-                self::jsonToMysqlTable($description->result->name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id);
+               self::jsonToMysqlTable($description->result->name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id);
             }
         }
-        return "dataCloned";
+     //return "dataCloned";
+
+     return "https://2d38-187-212-215-190.ngrok.io";
+
     }
 
     /* Functions */
@@ -73,32 +86,45 @@ class CloneDBController extends Controller
 
         DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)");
 
+
+
         foreach ($tableData as $row) {
             foreach ($row as $key => $val) {
                 if ($contactField === $key && ($val != null)) {
                     $contactID = $val;
                 }
-                if ($key != 'imageattachmentids') {
+             /*    if($key ===  "salutationtype"){
+                }
+                if($key ===  "imageattachmentids"){
+                } */
+                if (in_array($key, explode($sqlStr,' '))) {
                     array_push($nameFields, $key);
                     array_push($dataFields, "'$val'");
                     array_push($toUpdate, [$key => $val]);
                 }
+
+              /*   if (($key != 'imageattachmentids') || ($key != "salutationtype")) {
+                    array_push($nameFields, $key);
+                    array_push($dataFields, "'$val'");
+                    array_push($toUpdate, [$key => $val]);
+                } */
             }
 
             $names =   implode(", ", $nameFields);
             $data =   implode(", ", $dataFields);
+
+            //return[$nameFields, $dataFields];
 
             $table = DB::select("SELECT COUNT('$contactField') as total FROM vt_$tablename WHERE $contactField = '$contactID' ;");
             if ($table[0]->total > 0) {
                 foreach ($toUpdate as $toup) {
                     foreach ($toup as $key => $val) {
                         DB::update("UPDATE vt_$tablename set $key = '$val' WHERE  $contactField = '$contactID';");
-
                         //if not exist on vt will delete here
                     }
                 }
             } else {
-                DB::insert("INSERT INTO vt_$tablename ($names) VALUES ($data);");
+                DB::insert("INSERT INTO vt_$tablename($names) VALUES ($data);");
             }
         }
     }

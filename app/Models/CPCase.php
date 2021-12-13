@@ -14,4 +14,5 @@ class CPCase extends Model
     public $timestamps = false;
 
     protected $primaryKey = 'ticketid'; */
+
 }
