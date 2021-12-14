@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class CloneDBController extends Controller
 {
@@ -17,7 +19,7 @@ class CloneDBController extends Controller
     public function createTable(Request $request)
     {
         $vtiger = new Vtiger();
-        $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname')->where("contact_no", $request->contact_no)->take(1);
+        $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("contact_no", $request->contact_no)->take(1);
         $contact = $vtiger->search($userQuery)->result[0];
 
         $data = $vtiger->listTypes();
@@ -26,17 +28,13 @@ class CloneDBController extends Controller
 
         foreach ($types as $type) {
             // $type = 'Documents';
-            if (($type === 'Documents') || ($type === 'Checklist') || ($type === 'Payments') || ($type === 'CLItems')|| ($type === 'Contacts')) {
+            if (($type === 'Documents') || ($type === 'Checklist') || ($type === 'Payments') || ($type === 'CLItems') || ($type === 'Contacts') || ($type === 'HelpDesk')) {
                 $description = $vtiger->describe($type);   // get table description to clone (docs in this example)
-                $query = DB::table($type)->select('*');
-                $list = $vtiger->search($query)->result;
-
                 $contactField = 'contact_id';
 
                 if ($type === 'Contacts') {
                     $contactField = 'id';
                 }
-
                 if ($type === 'Documents') {
                     $contactField = 'cf_1488';
                 }
@@ -51,6 +49,7 @@ class CloneDBController extends Controller
                 }
 
                 $query = DB::table($type)->select('*')->where($contactField, $contact->id);
+                $list = $vtiger->search($query)->result;
                 $fields = $description->result->fields;
 
                 $fieldsArr = [];
@@ -67,63 +66,68 @@ class CloneDBController extends Controller
                     array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
                 }
                 $fieldsArrtoSqlStr = implode(", ", $fieldsArr); //Convert fields to mysql string
-               self::jsonToMysqlTable($description->result->name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id);
+
+                self::jsonToMysqlTable($description->result->name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id, $contact->contact_no);
             }
         }
-     //return "dataCloned";
-
-     return "https://2d38-187-212-215-190.ngrok.io";
-
+        return "dataCloned";
     }
 
     /* Functions */
-    static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID)
+    static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID, $contactNo)
     {
-        $nameFields = [];
-        $dataFields = [];
-        $toUpdate = [];
-        $contactID = null;
-
         DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)");
 
-
-
         foreach ($tableData as $row) {
+            $nameFields = [];
+            $dataFields = [];
+            $toUpdate   = [];
+
             foreach ($row as $key => $val) {
                 if ($contactField === $key && ($val != null)) {
                     $contactID = $val;
                 }
-             /*    if($key ===  "salutationtype"){
-                }
-                if($key ===  "imageattachmentids"){
-                } */
-                if (in_array($key, explode($sqlStr,' '))) {
+                if (str_contains($sqlStr, $key)) {
                     array_push($nameFields, $key);
                     array_push($dataFields, "'$val'");
                     array_push($toUpdate, [$key => $val]);
                 }
-
-              /*   if (($key != 'imageattachmentids') || ($key != "salutationtype")) {
-                    array_push($nameFields, $key);
-                    array_push($dataFields, "'$val'");
-                    array_push($toUpdate, [$key => $val]);
-                } */
             }
 
             $names =   implode(", ", $nameFields);
-            $data =   implode(", ", $dataFields);
-
-            //return[$nameFields, $dataFields];
+            $data  =   implode(", ", $dataFields);
 
             $table = DB::select("SELECT COUNT('$contactField') as total FROM vt_$tablename WHERE $contactField = '$contactID' ;");
-            if ($table[0]->total > 0) {
-                foreach ($toUpdate as $toup) {
-                    foreach ($toup as $key => $val) {
+
+            $username = null;
+            $userPass = null;
+            foreach ($toUpdate as $toup) {
+                foreach ($toup as $key => $val) {
+                    if ($table[0]->total > 0) {
                         DB::update("UPDATE vt_$tablename set $key = '$val' WHERE  $contactField = '$contactID';");
-                        //if not exist on vt will delete here
+                    }
+                    //if not exist on vt will delete here
+                    if ($tablename === 'Contacts') {
+                        if ($key === 'cf_1888') {
+                            $username = $val;
+                        }
+                        if ($key === 'cf_1780') {
+                            $userPass = $val;
+                        }
+                    }
+                }                //
+                if ($tablename === 'Contacts' && $table[0]->total == 0) { //Create CPuser from contact
+                    if ($username !== null && $userPass !== null) {
+                        User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
+                            'user_name' => $username,
+                            'vtiger_contact_id' =>  $contactNo,
+                            'password' => Hash::make($userPass),
+                        ]);
                     }
                 }
-            } else {
+            } //end loop
+            if ($table[0]->total <= 0) {
+                //Insertion data as string
                 DB::insert("INSERT INTO vt_$tablename($names) VALUES ($data);");
             }
         }

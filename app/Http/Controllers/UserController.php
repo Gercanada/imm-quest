@@ -138,6 +138,27 @@ class UserController extends Controller
         }
     }
 
+    public function createUser(Request $request)
+    {
+
+        try {
+            /*   $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            $out->write($request);
+            return $request; */
+
+            User::create([
+                'user_name' => $request->user,
+                'vtiger_contact_id' =>  $request->cid,
+                'password' => Hash::make($request->pass),
+            ]);
+
+
+            return response()->json('exitoso', 200);
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+
     public function newPassword(Request $request)
     {
 
