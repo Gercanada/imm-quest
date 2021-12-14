@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
+use App\Models\Contact;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -95,8 +96,10 @@ class UserController extends Controller
         $user = Auth::user();
         $vtiger = new Vtiger();
         //Get contact data of this user
-        $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $user->vtiger_contact_id)->take(1);
-        $contact = $vtiger->search($userQuery)->result[0];
+       // $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $user->vtiger_contact_id)->take(1);
+       // $contact = $vtiger->search($userQuery)->result[0];
+
+        $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
 
         return $contact;
     }
@@ -140,19 +143,12 @@ class UserController extends Controller
 
     public function createUser(Request $request)
     {
-
         try {
-            /*   $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-            $out->write($request);
-            return $request; */
-
             User::create([
                 'user_name' => $request->user,
                 'vtiger_contact_id' =>  $request->cid,
                 'password' => Hash::make($request->pass),
             ]);
-
-
             return response()->json('exitoso', 200);
         } catch (\Exception $e) {
             return $e;
