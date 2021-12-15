@@ -24,7 +24,6 @@ class CloneDBController extends Controller
 
         $data = $vtiger->listTypes();
         $types = $data->result->types;
-        //return $types;//[]
 
         $casequery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->id);
         $cases = $vtiger->search($casequery)->result;
@@ -114,8 +113,8 @@ class CloneDBController extends Controller
 
 
         foreach ($tableData as $row) {
-            if($tablename ==='Checklist'){
-                 $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row->id' ;");
+            if ($tablename === 'Checklist') {
+                $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row->id' ;");
             }
 
             $nameFields = [];
@@ -158,6 +157,16 @@ class CloneDBController extends Controller
                 }                //
                 if ($tablename === 'Contacts' /* && $table[0]->total == 0 */) { //Create CPuser from contact
                     if ($username !== null && $userPass !== null) {
+
+                        DB::unprepared("CREATE TABLE IF NOT EXISTS users( user_name VARCHAR(255) DEFAULT '',
+                        email VARCHAR(255) DEFAULT '',
+                        description VARCHAR(255) DEFAULT '',
+                        id VARCHAR(255) DEFAULT '',
+                        password VARCHAR(255) DEFAULT '0.00000',
+                        vtiger_contact_id VARCHAR(255) NULL,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);");
+
                         User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
                             'user_name' => $username,
                             'vtiger_contact_id' =>  $contactNo,
@@ -183,7 +192,7 @@ class CloneDBController extends Controller
             'boolean' => 'BOOL',
             'array' => 'LONGBLOB',
             'object' => 'LONGBLOB',
-            'null' => 'NULL',
+            //'null' => 'NULL',
             'resource' => 'LONGBLOB',
             'file' => 'LONGBLOB'
         ];
@@ -202,13 +211,15 @@ class CloneDBController extends Controller
             'nullable' => 'NULL',
             'default' => "DEFAULT"
         ];
+        $arr = [];
 
         foreach ($value as $keyA => $x) {
             foreach ($PHP_mysql_attr as $keyB => $attr) {
+                array_push($arr, $attr);
                 if ($keyA == $keyB && $keyA == 'default') {
                     return "$attr '$x'";
                 }
-                if ($keyA == $keyB && ($x !== false)) {
+                if ($keyA == $keyB && ($x !== false) && (!in_array($attr, $arr))) {
                     return  $attr;
                 }
             }

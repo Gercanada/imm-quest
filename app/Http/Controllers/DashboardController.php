@@ -78,7 +78,7 @@ class DashboardController extends Controller
                     }
 
                     foreach ($checklists as $checklist) {
-                        if (in_array($checklist->id, $pendingArr)) {
+                        if (($checklist != null) && (in_array($checklist, $pendingArr)) ) {
                             array_push($pending_checklists, $checklist);
                         }
                     }
@@ -109,7 +109,7 @@ class DashboardController extends Controller
             ->whereIn('cf_2218', $vtCasesIdArr) //find by case id
             ->orWhereIn('cf_2218', $paymentIdArr) //Find by payment id
             ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
-            ->orWhereIn('cf_2218', $vtCasesNOArr)->get(); //find by caseNo
+            ->orWhereIn('cf_2218', $vtCasesNOArr); //find by caseNo
 
         $commboards    = $vtiger->search($commboardQuery)->result;
 

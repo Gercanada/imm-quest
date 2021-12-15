@@ -12,20 +12,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16"
-        href="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/favicon.png">
+        href="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/favicon.png">
     <title>GetCanada CP | @yield('title') </title>
-    <link rel="canonical" href="https://www.wrappixel.com/templates/adminpro/" />
-
+    <link rel="canonical" href="https://www.wrappixel.com{{env('ASSET_URL')}}/templates/adminpro/" />
     <link rel="stylesheet"
-        href="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist/dist/chartist.min.css">
+        href="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist/dist/chartist.min.css">
     <link rel="stylesheet"
-        href="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/chartist/chartist-init.css">
+        href="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/chartist/chartist-init.css">
     <link rel="stylesheet"
-        href="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
-    <link rel="stylesheet" href="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/c3/c3.min.css">
+        href="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+    <link rel="stylesheet" href="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/c3/c3.min.css">
     <link rel="stylesheet"
-        href="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jvectormap/jquery-jvectormap.css">
-    <link rel="stylesheet" href="/templates/theme-forest-admin-pro/main/admin-pro/dist/css/style.min.css">
+        href="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/css/style.min.css">
 
     @yield('styles')
 
@@ -54,7 +53,7 @@
                     @include('layouts.navbar')
                 </header>
             @endif
-                {{-- aside --}}
+            {{-- aside --}}
             @if (Auth::user())
                 @include('layouts.aside')
             @endif
@@ -79,50 +78,50 @@
 </body>
 
 <!-- Popper JS -->
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jquery/dist/jquery.min.js"></script>
 
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/popper.js/dist/umd/popper.min.js">
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/popper.js/dist/umd/popper.min.js">
 </script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/bootstrap/dist/js/bootstrap.min.js">
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/bootstrap/dist/js/bootstrap.min.js">
 </script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.min.js"></script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.darks5.js"></script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app-style-switcher.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.min.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.darks5.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/app-style-switcher.js"></script>
 <script
-src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js">
+src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js">
 </script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/extra-libs/sparkline/sparkline.js"></script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/waves.js"></script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/sidebarmenu.js"></script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/feather.min.js"></script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/custom.js"></script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist/dist/chartist.min.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/extra-libs/sparkline/sparkline.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/waves.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/sidebarmenu.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/feather.min.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/custom.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist/dist/chartist.min.js"></script>
 <script
-src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js">
+src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js">
 </script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/d3/dist/d3.min.js"></script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/c3/c3.min.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/d3/dist/d3.min.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/c3/c3.min.js"></script>
 
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/dashboards/dashboard2.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/dashboards/dashboard2.js"></script>
 
 <!-- All scripts -->
 
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.full.min.js">
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.full.min.js">
 </script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.min.js">
-</script>
-
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/sweetalert2/dist/sweetalert2.all.min.js">
-</script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/extra-libs/sweetalert2/sweet-alert.init.js">
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.min.js">
 </script>
 
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/sweetalert2/dist/sweetalert2.all.min.js">
 </script>
-<script src="/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/extra-libs/sweetalert2/sweet-alert.init.js">
 </script>
 
-<script src="/js/app.js"></script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
+</script>
+<script src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
+</script>
+
+<script src="{{env('ASSET_URL')}}/js/app.js"></script>
 @yield('scripts')
 
 </html>
