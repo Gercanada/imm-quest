@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     public $incrementing = false;
-    protected $table = 'vt_payments';
+    protected $table = 'vt_Payments';
 
     /* public function invoice()
     {

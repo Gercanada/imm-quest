@@ -142,7 +142,7 @@ class CLItemController extends Controller
         $urlFiles = [];
 
         foreach ($files as $file) {
-            array_push($urlFiles, asset(Storage::url($file)));
+            array_push($urlFiles, (Storage::url($file)));
         }
         return $urlFiles;
     }

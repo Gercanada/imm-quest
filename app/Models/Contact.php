@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     public $incrementing = false;
-    protected $table = 'vt_contacts';
+    protected $table = 'vt_Contacts';
 }

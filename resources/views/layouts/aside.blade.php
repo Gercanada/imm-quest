@@ -7,7 +7,7 @@
                 <li class="sidebar-item user-profile">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
                         aria-expanded="false">
-                        <img src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/profile.png"
+                        <img src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/profile.png"
                             alt="user">
                         <span class="hide-menu">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</span>
                     </a>

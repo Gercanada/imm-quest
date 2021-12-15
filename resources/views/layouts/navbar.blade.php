@@ -8,22 +8,22 @@
             <!-- Logo icon -->
             <b class="logo-icon">
                 <!--You can put here icon as well  -->
-                <img src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-icon.png"
+                <img src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-icon.png"
                     alt="homepage" class="dark-logo" />
 
-                    <img src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-light-icon.png"
+                    <img src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-light-icon.png"
                     alt="homepage" class="light-logoo" />
             </b>
             <!--End Logo icon -->
             <!-- Logo text -->
             <span class="logo-text">
                 <!-- dark Logo text -->
-                {{-- <img src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-icon.pn"
+                {{-- <img src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-icon.pn"
                 class="dark-logo"  alt="homepage" /> --}}
-                {{-- <img src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-text.png" alt="homepage" class="dark-logo" /> --}}
+                {{-- <img src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-text.png" alt="homepage" class="dark-logo" /> --}}
                 <h4>CP GerCanada</h4>
                 <!-- Light Logo text -->
-               {{--  <img src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-light-text.png"
+               {{--  <img src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-light-text.png"
                     class="light-logo" alt="homepage" /> --}}
             </span>
         </a>
@@ -69,7 +69,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <img src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg" alt="user"
+                    <img src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg" alt="user"
                         width="30" class="profile-pic rounded-circle" />
                 </a>
                 <div class="dropdown-menu mailbox dropdown-menu-right animated bounceInDown">
@@ -77,7 +77,7 @@
                         <li>
                             <div class="dw-user-box p-3 d-flex">
                                 <div class="u-img"><img
-                                        src="{{env('ASSET_URL')}}/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
+                                        src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
                                         alt="user" class="rounded" width="80"></div>
                                 <div class="u-text ml-2">
                                     <h4 class="mb-0">{{ Auth::user()->name }}

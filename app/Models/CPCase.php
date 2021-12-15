@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class CPCase extends Model
 {
     public $incrementing = false;
-    protected $table = 'vt_helpdesk';
+    protected $table = 'vt_HelpDesk';
 }

@@ -10,7 +10,7 @@ class CLItem extends Model
     use HasFactory;
 
     public $incrementing = false;
-    protected $table = 'vt_clitems';
+    protected $table = 'vt_CLItems';
 
     protected $fillable =[
         'cli_file'

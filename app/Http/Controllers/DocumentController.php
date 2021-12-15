@@ -10,6 +10,7 @@ use JBtje\VtigerLaravel\Vtiger;
 use App\Models\User;
 use App\Models\Test;
 use App\Models\Document;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
@@ -119,16 +120,34 @@ class DocumentController extends Controller
     public function checkDocuments(Request $request)
     {
         try {
+            $vtiger = new Vtiger();
+
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
-            $documents = Document::/* where('user_id', $user->id) *//* ->where('syncronized', false) */get();
-            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            //$documents = Document::where('user_id', $user->id)/* ->where('syncronized', false) */->get();
+            /*  $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->write("===============\n");
             //$out->write($request);
             $out->write("---------------\n");
             $out->write($documents);
-            $out->write("________________\n");
+            $out->write("________________\n"); */
 
-            return response()->json($documents, 'success');
+
+            /*  $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
+                $contact = $vtiger->search($userQuery)->result[0]; */
+            //$contact->id
+
+            $directory = "/documents/contact/$user->vtiger_contact_id";
+            $files = Storage::disk('public')->allFiles($directory);
+            //return $files;
+            $urlFiles = [];
+
+            foreach ($files as $file) {
+                array_push($urlFiles, asset(Storage::url($file)));
+            }
+            return response()->json($urlFiles, 200);
+
+
+           // return response()->json($documents, 200);
         } catch (\Exception $e) {
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->write($e);

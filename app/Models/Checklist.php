@@ -10,7 +10,7 @@ use JBtje\VtigerLaravel\Vtiger;
 class Checklist extends Model
 {
     public $incrementing = false;
-    protected $table = 'vt_checklist';
+    protected $table = 'vt_Checklist';
 
     public function case(){
        return $this->belongsTo(CPCase::class, 'case_id');

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     public $incrementing = false;
-    protected $table = 'vt_invoice';
+    protected $table = 'vt_Invoice';
 
     /* public function payments(){
         return $this->hasMany(Payment::class);

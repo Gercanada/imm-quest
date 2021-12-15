@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
 use App\Models\Contact;
-use App\Models\CPcase;
+use App\Models\CPCase;
 use App\Models\Checklist;
 use App\Models\CLItem;
 use App\Models\Invoice;
@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $contact = Contact::select('id', 'firstname', 'lastname')->where("contact_no", $user->vtiger_contact_id)->firstOrFail();
 
         //Cases
-        $vtCases = CPcase::select('*')->where('contact_id', $contact->id)->get();
+        $vtCases = CPCase::select('*')->where('contact_id', $contact->id)->get();
         $vtCasesIdArr = [];
         $vtCasesNOArr = [];
 

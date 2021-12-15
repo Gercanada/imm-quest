@@ -32,3 +32,17 @@ Route::post('/create_user', [UserController::class, 'createUser']);
 Route::post('/remove_user', [UserController::class, 'removeUser']);
 
 Route::post('/viger/clonedb', [CloneDBController::class, 'createTable']);
+
+
+Route::get('/migrate', function(){
+   \Artisan::call('migrate:fresh');
+    return('migrated!');
+});
+Route::get('/optimize', function(){
+   \Artisan::call('optimize:clear');
+    return('migrated!');
+});
+Route::get('/keygen', function(){
+    \Artisan::call('key:generate');
+     return('Key generated!');
+ });
