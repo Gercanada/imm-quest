@@ -26,9 +26,20 @@ class CloneDBController extends Controller
         $types = $data->result->types;
         //return $types;//[]
 
+        $casequery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->id);
+        $cases = $vtiger->search($casequery)->result;
+
         foreach ($types as $type) {
             // $type = 'Documents';
-            if (($type === 'Documents') || ($type === 'Checklist') || ($type === 'Payments') || ($type === 'CLItems') || ($type === 'Contacts') || ($type === 'HelpDesk')) {
+            if (
+                ($type === 'Documents') ||
+                ($type === 'Checklist') ||
+                ($type === 'Payments') ||
+                ($type === 'Contacts') ||
+                ($type === 'HelpDesk') ||
+                ($type === 'Invoice') ||
+                ($type === 'CLItems')
+            ) {
                 $description = $vtiger->describe($type);   // get table description to clone (docs in this example)
                 $contactField = 'contact_id';
 
@@ -49,8 +60,22 @@ class CloneDBController extends Controller
                 }
 
                 $query = DB::table($type)->select('*')->where($contactField, $contact->id);
+
+                if ($type === 'Checklist') {
+                    $list1 = [];
+                    if ($cases) {
+                        foreach ($cases as $case) {
+                            array_push($list1, $case->id);
+                        }
+                    }
+                    $query = DB::table($type)->select('*')->whereIn('cf_1199', $list1)->select('*'); //is in cases id arr
+                }
+
                 $list = $vtiger->search($query)->result;
                 $fields = $description->result->fields;
+                $fieldNames = [];
+
+
 
                 $fieldsArr = [];
                 foreach ($fields as $key => $field) {
@@ -63,22 +88,36 @@ class CloneDBController extends Controller
                     }
                     $attrtoStr = implode(" ", $fieldAtrs);
                     $fieldType = self::toMysqlType($field->type->name); //Function to convert datatypes
-                    array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
+                    if (str_contains($field->name, '&')) {
+                        $field->name = str_replace('&', '', $field->name); // MySql cant write & in fieldname
+                    }
+                    if (!in_array("$field->name $fieldType $attrtoStr", $fieldsArr)) {
+                        array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
+                        array_push($fieldNames, "$field->name");
+                    }
                 }
                 $fieldsArrtoSqlStr = implode(", ", $fieldsArr); //Convert fields to mysql string
 
-                self::jsonToMysqlTable($description->result->name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id, $contact->contact_no);
+                $fieldsArrtoSqlStr = "$fieldsArrtoSqlStr, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP";
+                self::jsonToMysqlTable($description->result->name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id, $contact->contact_no, $fieldNames);
             }
         }
         return "dataCloned";
     }
 
     /* Functions */
-    static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID, $contactNo)
+    static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID, $contactNo, $fields)
     {
         DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)");
 
+        $table = DB::select("SELECT COUNT('$contactField') as total FROM vt_$tablename WHERE $contactField = '$contactID' ;");
+
+
         foreach ($tableData as $row) {
+            if($tablename ==='Checklist'){
+                 $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row->id' ;");
+            }
+
             $nameFields = [];
             $dataFields = [];
             $toUpdate   = [];
@@ -87,7 +126,7 @@ class CloneDBController extends Controller
                 if ($contactField === $key && ($val != null)) {
                     $contactID = $val;
                 }
-                if (str_contains($sqlStr, $key)) {
+                if (in_array($key, $fields)) {
                     array_push($nameFields, $key);
                     array_push($dataFields, "'$val'");
                     array_push($toUpdate, [$key => $val]);
@@ -97,10 +136,11 @@ class CloneDBController extends Controller
             $names =   implode(", ", $nameFields);
             $data  =   implode(", ", $dataFields);
 
-            $table = DB::select("SELECT COUNT('$contactField') as total FROM vt_$tablename WHERE $contactField = '$contactID' ;");
+
 
             $username = null;
             $userPass = null;
+
             foreach ($toUpdate as $toup) {
                 foreach ($toup as $key => $val) {
                     if ($table[0]->total > 0) {
@@ -116,7 +156,7 @@ class CloneDBController extends Controller
                         }
                     }
                 }                //
-                if ($tablename === 'Contacts' && $table[0]->total == 0) { //Create CPuser from contact
+                if ($tablename === 'Contacts' /* && $table[0]->total == 0 */) { //Create CPuser from contact
                     if ($username !== null && $userPass !== null) {
                         User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
                             'user_name' => $username,
@@ -126,9 +166,10 @@ class CloneDBController extends Controller
                     }
                 }
             } //end loop
-            if ($table[0]->total <= 0) {
+
+            if ($table[0]->total == 0) {
+                DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
                 //Insertion data as string
-                DB::insert("INSERT INTO vt_$tablename($names) VALUES ($data);");
             }
         }
     }

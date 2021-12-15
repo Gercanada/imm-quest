@@ -304,6 +304,7 @@ export default {
       axios
         .get("/details_case/" + me.id)
         .then(function (response) {
+            console.log({response});
           me.tkcase = response.data[0];
           me.ArrayChecklist = response.data[1];
           me.CLItemsArray = response.data[2];

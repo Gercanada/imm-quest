@@ -34,8 +34,8 @@ Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */func
     Route::get('/vtiger/describe/types/{user_id}', [VtigerController::class, "types"]);
     Route::get('/vtiger/list/{type}/{where}', [VtigerController::class, 'goType']);
 
-    Route::get('/imm/contacts', [UserController::class, 'listVTUsers']);
-    Route::post('/imm/contacts', [UserController::class, 'importVTUsers']);
+    //Route::get('/imm/contacts', [UserController::class, 'listVTUsers']);
+    //Route::post('/imm/contacts', [UserController::class, 'importVTUsers']);
 
     Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes'); // Config access for users ((not required now))
     Route::get('/user_types_access', [VtigerController::class, 'index']);

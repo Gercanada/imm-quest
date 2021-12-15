@@ -120,15 +120,15 @@ class DocumentController extends Controller
     {
         try {
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
-            $documents = Document::where('user_id', $user->id)/* ->where('syncronized', false) */->get();
+            $documents = Document::/* where('user_id', $user->id) *//* ->where('syncronized', false) */get();
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->write("===============\n");
-            $out->write($request);
+            //$out->write($request);
             $out->write("---------------\n");
             $out->write($documents);
             $out->write("________________\n");
 
-            return response()->json($documents, 200);
+            return response()->json($documents, 'success');
         } catch (\Exception $e) {
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->write($e);

@@ -9,8 +9,7 @@ use JBtje\VtigerLaravel\Vtiger;
 
 class Checklist extends Model
 {
-    use HasFactory;
-
+    public $incrementing = false;
     protected $table = 'vt_checklist';
 
     public function case(){

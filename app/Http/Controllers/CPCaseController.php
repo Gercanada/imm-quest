@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Checklist;
+use App\Models\CLItem;
 use App\Models\CPCase;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use JBtje\VtigerLaravel\Vtiger;
 
@@ -20,25 +22,16 @@ class CPCaseController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
-
-        $vtiger = new Vtiger();
         //Get contact data of this user
-        $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
-        $contact = $vtiger->search($userQuery);
-        /* if(count($contact->result)===0){
-            return ["Contact not found", 404];
-        } */
-
+        $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         //Cases
-        $activeCasesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->result[0]->id)->where('ticketstatus', '!=', 'Completed');
-        $active_cases = $vtiger->search($activeCasesQuery)->result;
 
-        $completedCasesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->result[0]->id)->where('ticketstatus', 'Completed');
-        $completed_cases = $vtiger->search($completedCasesQuery)->result;
+        $active_cases = CPcase::select('*')->where('contact_id', $contact->id)->where('ticketstatus', '!=', 'Completed')->get();
+        $completed_cases =  CPcase::select('*')->where('contact_id', $contact->id)->where('ticketstatus', 'Completed')->get();
         return view('cases.index', compact('active_cases', 'completed_cases'));
     }
 
-     /**
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\CPCase  $cPCase
@@ -49,19 +42,10 @@ class CPCaseController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        $vtiger = new Vtiger();
-        $casesQuery = DB::table('HelpDesk')->select('*')->where('id', $id)
+        $case =  CPcase::select('*')->where('id', $id)->firstOrFail();
 
-            ->take(1);
-        $case = $vtiger->search($casesQuery)->result[0];
-
-        $checklistsQuery = DB::table('Checklist')
-            ->where('cf_1199', $case->id) // case_id
-            //->orWhere('cf_1199', '17x3558') //test
-            //->orWhere('id', '43x9828') // test
-            ->select('*');
-
-        $checklists    = $vtiger->search($checklistsQuery)->result;
+        $checklists  = Checklist::where('cf_1199', $case->id) // case_id
+            ->get();
 
         $vtCLItemIdArr = [];
         foreach ($checklists as $clist) {
@@ -72,15 +56,8 @@ class CPCaseController extends Controller
 
         $clitems = [];
         if ($vtCLItemIdArr !== []) {
-            $clitemsQuery = DB::table('CLItems')
-                ->select('*')
-                ->whereIn('cf_1216', $vtCLItemIdArr) //checklist_id
-                //->orWhere('cf_1217',  $case->id) // case_id
-            ;
-            $clitems    = $vtiger->search($clitemsQuery)->result;
+            $clitems  = CLItem::whereIn('cf_1216', $vtCLItemIdArr)->get();
         }
-
-
         return view('cases.show', compact('case', 'checklists', 'clitems'));
     }
 
@@ -90,15 +67,13 @@ class CPCaseController extends Controller
         $user_id = $user->id;
 
         $vtiger = new Vtiger();
-        $casesQuery = DB::table('HelpDesk')->select('*')->where('id', $id)
-            ->take(1);
-        $case = $vtiger->search($casesQuery)->result[0];
+        $case = CPCase::where('id', $id)->firstOrFail();
+        // $case = $vtiger->search($casesQuery)->result[0];
+        $checklists = Checklist::where('cf_1199', $case->id)->get(); // case_id
 
-        $checklistsQuery = DB::table('Checklist')
-            ->where('cf_1199', $case->id) // case_id
-            ->select('*');
+        //return $checklists;
 
-        $checklists    = $vtiger->search($checklistsQuery)->result;
+        //$checklists    = $vtiger->search($checklistsQuery)->result;
 
         $vtCLItemIdArr = [];
         foreach ($checklists as $clist) {
@@ -106,17 +81,14 @@ class CPCaseController extends Controller
                 array_push($vtCLItemIdArr, $clist->id);
             }
         }
-
+        //return [$vtCLItemIdArr];
         $clitems = [];
-        if ($vtCLItemIdArr !== []) {
-            $clitemsQuery = DB::table('CLItems')
-                ->select('*')
-                ->whereIn('cf_1216', $vtCLItemIdArr) //checklist_id
-                ->orWhere('cf_1217',  $case->id) // case_id
-            ;
-            $clitems    = $vtiger->search($clitemsQuery)->result;
+
+        if (count($vtCLItemIdArr) > 0) {
+            $clitems  = CLItem::whereIn('cf_1216', $vtCLItemIdArr) //checklist_id
+                ->orWhere('cf_1217',  $case->id)->get(); // case_id
         }
+
         return [$case, $checklists, $clitems];
     }
-
 }

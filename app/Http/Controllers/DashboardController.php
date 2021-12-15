@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
+use App\Models\Contact;
+use App\Models\CPcase;
+use App\Models\Checklist;
+use App\Models\CLItem;
+use App\Models\Invoice;
+use App\Models\Payment;
 
 
 class DashboardController extends Controller
@@ -19,17 +25,10 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
-
-
-
-        $vtiger = new Vtiger();//Get contact data of this user
-
-        $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname')->where("contact_no", $user->vtiger_contact_id)->take(1);
-        $contact = $vtiger->search($userQuery)->result[0];
+        $contact = Contact::select('id', 'firstname', 'lastname')->where("contact_no", $user->vtiger_contact_id)->firstOrFail();
 
         //Cases
-        $casesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->id);
-        $vtCases = $vtiger->search($casesQuery)->result;
+        $vtCases = CPcase::select('*')->where('contact_id', $contact->id)->get();
         $vtCasesIdArr = [];
         $vtCasesNOArr = [];
 
@@ -37,24 +36,20 @@ class DashboardController extends Controller
             array_push($vtCasesIdArr, $case->id);
             array_push($vtCasesNOArr, $case->ticket_no);
         }
-        //array_push($vtCasesIdArr, '17x3558'); //only test
         //Count cases
-        $vt_active_cases =  count(array_keys($vtCases, ('Closed' || 'Cancelled' || 'Completed')));
+        $vt_active_cases =  count($vtCases/* , ('Closed' || 'Cancelled' || 'Completed') */);
         $vt_checklists  = 0;
         $vt_cl_items = [];
         $pending_checklists = [];
 
         if (count($vtCasesIdArr) >= 1) {
-            $checklistsQuery = DB::table('Checklist')->select('*')
-                ->whereIn('cf_1199', $vtCasesIdArr);
-
-            $vtChecklists    = $vtiger->search($checklistsQuery);
-            $vt_checklists   = count(array_keys($vtChecklists->result));
+            $vtChecklists = Checklist::select('*')->whereIn('cf_1199', $vtCasesIdArr)->get();
+            $vt_checklists   = count($vtChecklists);
             // count clitems
             $vtCLItemIdArr = [];
             $vtCLItemNoArr = [];
 
-            foreach ($vtChecklists->result as $clist) {
+            foreach ($vtChecklists as $clist) {
                 if ($clist->id != "") {
                     array_push($vtCLItemIdArr, $clist->id);
                 }
@@ -64,21 +59,15 @@ class DashboardController extends Controller
             }
 
             if (count($vtCLItemIdArr) > 0) {
-                $clitemsQuery = DB::table('CLItems')->select('*')
+                $vt_cl_items  = CLItem::select('*')
                     ->orWhereIn('cf_1216', $vtCLItemIdArr)
                     ->orWhereIn('cf_1217', $vtCasesIdArr)
                     ->where('cf_1578', 'Pending')
-                    ->where('cf_1200', 'Document');
-                $vtCLItems    = $vtiger->search($clitemsQuery);
-                $vt_cl_items = $vtCLItems->result;
+                    ->where('cf_1200', 'Document')->get();
 
-                $pendingChecklistQuery = DB::table('Checklist')->select('*')
-                    ->whereIn('cf_1199', $vtCasesIdArr) //TODO enable
-                    //->where('cf_1187', '>=', '1')
-                    //->where('cf_1189', '>=', '1')
-                    ;
+                $checklists = DB::table('Checklist')->select('*')
+                    ->whereIn('cf_1199', $vtCasesIdArr);
 
-                $checklists = $vtiger->search($pendingChecklistQuery)->result;
                 $pending_checklists = array();
 
                 $pendingArr = array();
@@ -98,8 +87,7 @@ class DashboardController extends Controller
         }
 
         //Invoices
-        $invoiceQuery = DB::table('Invoice')->select('*')->where('contact_id',  $contact->id);
-        $invoices = $vtiger->search($invoiceQuery)->result;
+        $invoices = Invoice::select('*')->where('contact_id',  $contact->id)->get();
 
         $invoiceIdArr = [];
         foreach ($invoices as $invoice) {
@@ -107,20 +95,21 @@ class DashboardController extends Controller
         }
 
         // Get invoice payments
-        $paymentsQuery = DB::table('Payments')->select('*')->where('cf_1139', $contact->id)->orWhereIn('cf_1141', $invoiceIdArr)->orWhereIn('cf_1140', $vtCasesIdArr);
-        $payments = $vtiger->search($paymentsQuery)->result;
-
+        $payments = Payment::select('*')->where('cf_1139', $contact->id)->orWhereIn('cf_1141', $invoiceIdArr)->orWhereIn('cf_1140', $vtCasesIdArr)->get();
         $paymentIdArr = [];
         $paymentNOArr = [];
         foreach ($payments as $payment) {
             array_push($paymentIdArr, $payment->id);
             array_push($paymentNOArr, $payment->cf_1142);
         }
-        $commboardQuery = DB::table('CommBoard')->select('*')
+
+
+        $vtiger = new Vtiger();
+        $commboardQuery = DB::table('CommBoard')->select('*')   //TODO Clone commboard
             ->whereIn('cf_2218', $vtCasesIdArr) //find by case id
             ->orWhereIn('cf_2218', $paymentIdArr) //Find by payment id
             ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
-            ->orWhereIn('cf_2218', $vtCasesNOArr); //find by caseNo
+            ->orWhereIn('cf_2218', $vtCasesNOArr)->get(); //find by caseNo
 
         $commboards    = $vtiger->search($commboardQuery)->result;
 

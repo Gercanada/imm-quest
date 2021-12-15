@@ -15,77 +15,6 @@ use Exception;
 
 class UserController extends Controller
 {
-
-    public function index(Request $request)
-    {
-        $users = User::all();
-        return $users;
-    }
-
-    public function listVTUsers()
-    {
-        // if user has permision
-        $user = Auth::user();
-        $user_id = $user->id;
-        $vtiger = new Vtiger();
-
-        $cpUsers = User::Select('vtiger_contact_id')->get();
-        $cpusersIdArr = array();
-
-        foreach ($cpUsers as $cpuser) {
-            array_push($cpusersIdArr, $cpuser->vtiger_contact_id);
-        }
-
-        //Get contact data of this user
-        $userQuery = DB::table('Contacts')->select(
-            'salutationtype',
-            'firstname',
-            'lastname',
-            'email',
-            'id'
-        )->take(100);
-        //->WhereNotIn('id', $cpUsers);
-        $allContacts = $vtiger->search($userQuery)->result;
-        $contacts = array();
-
-        foreach ($allContacts as $contact) {
-            if ($contact->id && $contact->email && !in_array($contact->id, $cpusersIdArr)) {
-                array_push($contacts, $contact);
-            }
-        }
-
-        return $contacts;
-    }
-    public function importVTUsers(Request $request)
-    {
-        $newUsers =  $request->newUsers;
-        $newPassword = $request->newPassword;
-
-        $userFullName = '';
-        $existing = null;
-
-        foreach ($newUsers as $new_user) {
-
-            if ($new_user['salutationtype']) $userFullName = $new_user['salutationtype'];
-            if ($new_user['firstname']) $userFullName .= ' ' . $new_user['firstname'];
-            if ($new_user['lastname']) $userFullName .= ' ' . $new_user['lastname'];
-
-            if ($new_user['email'] && $new_user['id']) { // in this case only be imported if has email
-                $existing = User::where('email', $new_user['email'])->first();
-                if (!$existing) {
-                    User::create([
-                        'name' => $new_user['firstname'],
-                        'last_name' => $new_user['lastname'],
-                        'vtiger_contact_id' => $new_user['id'],
-                        'email' => $new_user['email'],
-                        'description' => $userFullName,
-                        'password' => Hash::make($newPassword),
-                    ]);
-                }
-            }
-        }
-    }
-
     public function profile()
     {
         return view('users.index');
@@ -94,13 +23,7 @@ class UserController extends Controller
     public function account()
     {
         $user = Auth::user();
-        $vtiger = new Vtiger();
-        //Get contact data of this user
-       // $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $user->vtiger_contact_id)->take(1);
-       // $contact = $vtiger->search($userQuery)->result[0];
-
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
-
         return $contact;
     }
 
@@ -116,32 +39,25 @@ class UserController extends Controller
     {
         try {
             $user = Auth::user();
-            $vtiger = new Vtiger();
-            //Get contact data of this user
-            $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $request->contact_no)->take(1);
-            $contact = $vtiger->search($userQuery)->result[0];
+            $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
+            $contact->secondaryemail = $request->secondaryemail;
+            $contact->mobile = $request->mobile;
+            $contact->cf_1945 = $request->cf_1945;
+            $contact->cf_2254 = $request->cf_2254;
+            $contact->cf_2246 = $request->cf_2246;
+            $contact->cf_2252 = $request->cf_2252;
+            $contact->cf_2250 = $request->cf_2250;
+            $contact->donotcall = $request->user_donotcall;
+            $contact->emailoptout = $request->user_emailoptout;
 
-            $vtiger = new Vtiger();
-            $obj = $vtiger->retrieve($contact->id);
-            //Then update the object:
-            $obj->result->secondaryemail = $request->secondaryemail;
-            $obj->result->mobile = $request->mobile;
-            $obj->result->cf_1945 = $request->cf_1945;
-            $obj->result->cf_2254 = $request->cf_2254;
-            $obj->result->cf_2246 = $request->cf_2246;
-            $obj->result->cf_2252 = $request->cf_2252;
-            $obj->result->cf_2250 = $request->cf_2250;
-            $obj->result->user_donotcall = $request->user_donotcall;
-            $obj->result->user_emailoptout = $request->user_emailoptout;
-
-            $data = $vtiger->update($obj->result);
+            $contact->save();
             return 200;
         } catch (Exception $e) {
-            return response()->json("Error", 500);
+            return response()->json($e, 500);
         }
     }
 
-    public function createUser(Request $request)
+    public function createUser(Request $request) //Create user by ws from vt
     {
         try {
             User::create([
@@ -157,21 +73,15 @@ class UserController extends Controller
 
     public function newPassword(Request $request)
     {
-
         $user = Auth::user();
-        $vtiger = new Vtiger();
-        //Get contact data of this user
-        $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $request->contact_no)->take(1);
-        $contact = $vtiger->search($userQuery)->result[0];
-
+        $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
+        if (!$contact) return 404;
         if ($request->old_password !== $contact->cf_1780) return 403;
         if ($request->new_password !== $request->confirm_password) return 403;
 
-        $vtiger = new Vtiger();
-        $obj = $vtiger->retrieve($contact->id);
-        $obj->result->cf_1780 = $request->new_password;
+        $contact->cf_1780 = Hash::make($request->new_password);
+        $contact->save();
 
-        $data = $vtiger->update($obj->result);
         return 200;
     }
 }

@@ -4387,6 +4387,9 @@ var urlParams = window.location.pathname.split("/");
       this.loading = true; //the loading begin
 
       axios.get("/details_case/" + me.id).then(function (response) {
+        console.log({
+          response: response
+        });
         me.tkcase = response.data[0];
         me.ArrayChecklist = response.data[1];
         me.CLItemsArray = response.data[2];

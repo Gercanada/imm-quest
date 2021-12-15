@@ -42,12 +42,6 @@
                                             </td>
                                             <td>{{ $active_case->ticketcategories }}</td>
                                             <td>{{ $active_case->ticketstatus }}</td>
-                                            {{-- <td>
-                                                <a href="{{ route('show_case', [$active_case->id])}}" type="button"
-                                                    class="btn btn-outline-success btn-rounded">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>

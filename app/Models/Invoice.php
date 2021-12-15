@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    use HasFactory;
+    public $incrementing = false;
+    protected $table = 'vt_invoice';
 
-    public function payments(){
+    /* public function payments(){
         return $this->hasMany(Payment::class);
-    }
+    } */
 }

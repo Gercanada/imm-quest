@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    use HasFactory;
+    public $incrementing = false;
+    protected $table = 'vt_payments';
 
-    public function invoice()
+    /* public function invoice()
     {
         return $this->belongsTo(Invoice::class, 'invoice_id');
-    }
+    } */
 }
