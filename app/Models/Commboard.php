@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commboard extends Model
 {
-    use HasFactory;
+    public $incrementing = false;
+    protected $table = 'vt_CommBoard';
+
+    protected $fillable = [
+        'assigned_user_id',
+        'name',
+        'cf_2218',
+        'cf_2224',
+        'description',
+        'cf_2226'
+    ];
 }

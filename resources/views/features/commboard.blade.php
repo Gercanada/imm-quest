@@ -23,8 +23,8 @@
              <!-- Activity item-->
              <div class="activity-item mb-4 d-flex">
                  <div class="round mr-3"><img
-                         src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/2.jpg" alt="user"
-                         width="50" class="rounded-circle" /></div>
+                         src="{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/2.jpg"
+                         alt="user" width="50" class="rounded-circle" /></div>
                  <div class="mt-2">
                      <h5 class="mb-0 font-weight-medium">Mark Freeman <span class="text-muted font-14 ml-2">| &nbsp;
                              6:30 PM</span></h5>
@@ -32,7 +32,7 @@
                      <table class="table v-middle table-borderless mb-0 table-responsive">
                          <tr>
                              <td class="mr-2"><img
-                                     src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/zip.png"
+                                     src="{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/icon/zip.png"
                                      alt="user" /></td>
                              <td>
                                  <h5 class="mb-0 font-weight-medium ">Homepage.zip</h5>
@@ -46,8 +46,8 @@
              <!-- Activity item-->
              <div class="activity-item mb-4 d-flex">
                  <div class="round mr-3"><img
-                         src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/3.jpg" alt="user"
-                         width="50" class="rounded-circle" /></div>
+                         src="{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/3.jpg"
+                         alt="user" width="50" class="rounded-circle" /></div>
                  <div class="mt-2">
                      <h5 class="mb-1 font-weight-medium">Emma Smith <span class="text-muted font-14 ml-2">| &nbsp; 6:30
                              PM</span></h5>
@@ -56,11 +56,11 @@
                              @maxcage, @maxcage,+3</a></h6>
                      <span class="image-list mt-2">
                          <a href="javascript:void(0)" class="align-middle position-relative">
-                             <img src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
+                             <img src="{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
                                  class="rounded-circle" alt="user" width="50" />
                          </a>
                          <a href="javascript:void(0)" class="align-middle position-relative">
-                             <img src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/4.jpg"
+                             <img src="{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/4.jpg"
                                  class="rounded-circle" alt="user" width="50" />
                          </a>
                          <a href="javascript:void(0)" class="align-middle position-relative">
@@ -76,31 +76,29 @@
                  </div>
              </div>
              <!-- Activity item-->
-             <!-- Activity item-->
              <div class="activity-item mb-4 d-flex">
                  <div class="round mr-3"><img
-                         src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/4.jpg" alt="user"
-                         width="50" class="rounded-circle" /></div>
+                         src="{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/4.jpg"
+                         alt="user" width="50" class="rounded-circle" /></div>
                  <div class="mt-2">
                      <h5 class="mb-0 font-weight-medium">David R. Jones <span class="text-muted font-14 ml-2">| &nbsp;
                              6:30 PM</span></h5>
                      <h6 class="text-muted">uploaded this file </h6>
                      <span>
                          <a href="javascript:void(0)" class="mr-2"><img
-                                 src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img1.jpg"
+                                 src="{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img1.jpg"
                                  alt="user" width="60"></a>
                          <a href="javascript:void(0)" class="mr-2"><img
-                                 src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img2.jpg"
+                                 src="{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img2.jpg"
                                  alt="user" width="60"></a>
                      </span>
                  </div>
              </div>
              <!-- Activity item-->
-             <!-- Activity item-->
              <div class="activity-item d-flex mb-2">
                  <div class="round mr-3"><img
-                         src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/6.jpg" alt="user"
-                         width="50" class="rounded-circle" /></div>
+                         src="{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/6.jpg"
+                         alt="user" width="50" class="rounded-circle" /></div>
                  <div class="mt-2">
                      <h5 class="mb-1 font-weight-medium">David R. Jones <span class="text-muted font-14 ml-2">| &nbsp;
                              6:30 PM</span></h5>

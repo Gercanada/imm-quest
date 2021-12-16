@@ -25,11 +25,18 @@ class CloneDBController extends Controller
         $data = $vtiger->listTypes();
         $types = $data->result->types;
 
+
         $casequery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->id);
         $cases = $vtiger->search($casequery)->result;
 
+        $invoicequery = DB::table('Invoice')->select('*')->where('contact_id', $contact->id);
+        $invoices = $vtiger->search($invoicequery)->result;
+        $quotequery = DB::table('Quotes')->select('*')->where('contact_id', $contact->id);
+        $quotes = $vtiger->search($quotequery)->result;
+
+
+        $typeArr = [];
         foreach ($types as $type) {
-            // $type = 'Documents';
             if (
                 ($type === 'Documents') ||
                 ($type === 'Checklist') ||
@@ -37,6 +44,9 @@ class CloneDBController extends Controller
                 ($type === 'Contacts') ||
                 ($type === 'HelpDesk') ||
                 ($type === 'Invoice') ||
+                ($type === 'Quotes') ||
+                ($type === 'InstallmentTracker') ||
+                ($type === 'CommBoard') ||
                 ($type === 'CLItems')
             ) {
                 $description = $vtiger->describe($type);   // get table description to clone (docs in this example)
@@ -48,79 +58,129 @@ class CloneDBController extends Controller
                 if ($type === 'Documents') {
                     $contactField = 'cf_1488';
                 }
-                if ($type === 'Checklist') {
-                    $contactField = 'cf_contacts_id';
-                }
                 if ($type === 'Payments') {
                     $contactField = 'cf_1139';
                 }
                 if ($type === 'CLItems') {
                     $contactField = 'cf_contacts_id';
                 }
-
                 $query = DB::table($type)->select('*')->where($contactField, $contact->id);
 
-                if ($type === 'Checklist') {
+                if (($type === 'Checklist') ||
+                    ($type === 'InstallmentTracker') ||
+                    ($type === 'CommBoard')
+                ) {
                     $list1 = [];
+                    $list2 = [];
+                    $list3 = [];
+
                     if ($cases) {
                         foreach ($cases as $case) {
                             array_push($list1, $case->id);
                         }
                     }
-                    $query = DB::table($type)->select('*')->whereIn('cf_1199', $list1)->select('*'); //is in cases id arr
-                }
+                    if ($type === 'Checklist') {
+                        $contactField = 'cf_contacts_id';
+                        $query = DB::table($type)->select('*')->whereIn('cf_1199', $list1); //is in cases id arr
+                    }
 
-                $list = $vtiger->search($query)->result;
-                $fields = $description->result->fields;
-                $fieldNames = [];
+                    if ($type === 'InstallmentTracker') {
 
-
-
-                $fieldsArr = [];
-                foreach ($fields as $key => $field) {
-                    $fieldAtrs = [];
-                    foreach ($field as $key2 => $val) {
-                        if (($key2 === 'name') || ($key2 === 'type') || ($key2 === 'label')) {
-                        } else {
-                            array_push($fieldAtrs, self::toMysqlAtr([$key2 => $val])); // Function to convert field attributes
+                        if (count($invoices) > 0) {
+                            foreach ($invoices as $key => $val) {
+                                foreach ($invoices as $invoice) {
+                                    array_push($list2, $invoice->id);
+                                }
+                                $query = DB::table($type)->select('*')->whereIn('cf_1176', $list2); //Installment trackers of quote
+                                self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
+                            }
+                        }
+                        if (count($quotes) > 0) {
+                            foreach ($invoices as $key => $val) {
+                                foreach ($quotes as $quote) {
+                                    array_push($list3, $quote->id);
+                                }
+                                $query = DB::table($type)->select('*')->whereIn('cf_1175', $list3); //Installment trackers of invoice
+                                self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
+                            }
                         }
                     }
-                    $attrtoStr = implode(" ", $fieldAtrs);
-                    $fieldType = self::toMysqlType($field->type->name); //Function to convert datatypes
-                    if (str_contains($field->name, '&')) {
-                        $field->name = str_replace('&', '', $field->name); // MySql cant write & in fieldname
+                    if ($type === 'CommBoard') {
+                        $query =  DB::table($type)->select('*')->whereIn('cf_2218', $list1);
+                        self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
                     }
-                    if (!in_array("$field->name $fieldType $attrtoStr", $fieldsArr)) {
-                        array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
-                        array_push($fieldNames, "$field->name");
-                    }
+                } else {
+                    self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
                 }
-                $fieldsArrtoSqlStr = implode(", ", $fieldsArr); //Convert fields to mysql string
-
-                $fieldsArrtoSqlStr = "$fieldsArrtoSqlStr, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP";
-                self::jsonToMysqlTable($description->result->name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id, $contact->contact_no, $fieldNames);
             }
         }
         return "dataCloned";
     }
 
     /* Functions */
+    static function getData($query, $fields, $contact,  $contactField, $table_name)
+    {
+        $vtiger = new Vtiger();
+        $list = $vtiger->search($query)->result;
+        $fields = $fields;
+        $fieldNames = [];
+        $fieldsArr = [];
+
+        foreach ($fields as $key => $field) {
+            $fieldAtrs = [];
+            foreach ($field as $key2 => $val) {
+                if (($key2 === 'name') || ($key2 === 'type') || ($key2 === 'label')) {
+                } else {
+                    array_push($fieldAtrs, self::toMysqlAtr([$key2 => $val])); // Function to convert field attributes
+                }
+            }
+            $attrtoStr = implode(" ", $fieldAtrs);
+            $fieldType = self::toMysqlType($field->type->name); //Function to convert datatypes
+            if (str_contains($field->name, '&')) {
+                $field->name = str_replace('&', '', $field->name); // MySql cant write & in fieldname
+            }
+            if (!in_array("$field->name $fieldType $attrtoStr", $fieldsArr)) {
+                array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
+                array_push($fieldNames, "$field->name");
+            }
+        }
+        $fieldsArrtoSqlStr = implode(", ", $fieldsArr); //Convert fields to mysql string
+
+        $fieldsArrtoSqlStr = "$fieldsArrtoSqlStr, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP";
+        self::jsonToMysqlTable($table_name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id, $contact->contact_no, $fieldNames);
+    }
+
     static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID, $contactNo, $fields)
     {
         DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)");
 
-        $table = DB::select("SELECT COUNT('$contactField') as total FROM vt_$tablename WHERE $contactField = '$contactID' ;");
-
-
         foreach ($tableData as $row) {
-            if ($tablename === 'Checklist') {
-                $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row->id' ;");
-            }
-
+            $table = null;
+            $username = null;
+            $userPass = null;
+            $firstname = null;
+            $last_name = null;
             $nameFields = [];
             $dataFields = [];
             $toUpdate   = [];
 
+            if (($tablename === 'Checklist')  || ($tablename === 'InstallmentTracker')) {
+                if ($tablename === 'Checklist') {
+                    $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row->id';");
+                }
+                if ($tablename === 'InstallmentTracker') {
+                    foreach ($tableData as $row2) {
+                        if ($row2->cf_1175 != '') {
+                            $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
+                        }
+                        if ($row2->cf_1176 != '') {
+                            $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
+                        }
+                    }
+                }
+            } else {
+                $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE  id = '$row->id';"); //$contactField = '$contactID' AND
+            }
             foreach ($row as $key => $val) {
                 if ($contactField === $key && ($val != null)) {
                     $contactID = $val;
@@ -131,55 +191,52 @@ class CloneDBController extends Controller
                     array_push($toUpdate, [$key => $val]);
                 }
             }
-
             $names =   implode(", ", $nameFields);
             $data  =   implode(", ", $dataFields);
 
-
-
-            $username = null;
-            $userPass = null;
+            if ($table[0]->total === 0) { //If noting found be created
+                DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
+            }
 
             foreach ($toUpdate as $toup) {
                 foreach ($toup as $key => $val) {
-                    if ($table[0]->total > 0) {
-                        DB::update("UPDATE vt_$tablename set $key = '$val' WHERE  $contactField = '$contactID';");
+                    if ($table[0]->total > 0) { //If table has founded row be updated
+                        $id = null;
+                        if ($key === 'id') {
+                            $id = $val;
+                        }
+                        if (($tablename === 'Checklist') || ($tablename === 'InstallmentTracker')) { //If table hasnt contact field
+                            DB::update("UPDATE vt_$tablename set $key = '$val' WHERE id = '$id';");
+                        } else {
+                            DB::update("UPDATE vt_$tablename set $key = '$val' WHERE  $contactField = '$contactID' AND id = '$id';");
+                        }
                     }
                     //if not exist on vt will delete here
-                    if ($tablename === 'Contacts') {
+                    if ($tablename === 'Contacts') { //Create user from contacts
                         if ($key === 'cf_1888') {
                             $username = $val;
                         }
                         if ($key === 'cf_1780') {
                             $userPass = $val;
                         }
-                    }
-                }                //
-                if ($tablename === 'Contacts' /* && $table[0]->total == 0 */) { //Create CPuser from contact
-                    if ($username !== null && $userPass !== null) {
-
-                        DB::unprepared("CREATE TABLE IF NOT EXISTS users( user_name VARCHAR(255) DEFAULT '',
-                        email VARCHAR(255) DEFAULT '',
-                        description VARCHAR(255) DEFAULT '',
-                        id VARCHAR(255) DEFAULT '',
-                        password VARCHAR(255) DEFAULT '0.00000',
-                        vtiger_contact_id VARCHAR(255) NULL,
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);");
-
-                        User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
-                            'user_name' => $username,
-                            'vtiger_contact_id' =>  $contactNo,
-                            'password' => Hash::make($userPass),
-                        ]);
+                        if ($key === 'firstname') {
+                            $firstname = $val;
+                        }
+                        if ($key === 'lastname') {
+                            $last_name = $val;
+                        }
+                        if ($username !== null && $userPass !== null) {
+                            User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
+                                'user_name' => $username,
+                                'vtiger_contact_id' =>  $contactNo,
+                                'name' =>  $firstname,
+                                'last_name' =>  $last_name,
+                                'password' => Hash::make($userPass),
+                            ]);
+                        }
                     }
                 }
             } //end loop
-
-            if ($table[0]->total == 0) {
-                DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
-                //Insertion data as string
-            }
         }
     }
 

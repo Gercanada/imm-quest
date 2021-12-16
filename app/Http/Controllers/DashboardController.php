@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use JBtje\VtigerLaravel\Vtiger;
+
 use App\Models\Contact;
 use App\Models\CPCase;
 use App\Models\Checklist;
 use App\Models\CLItem;
 use App\Models\Invoice;
 use App\Models\Payment;
+use App\Models\Commboard;
 
 
 class DashboardController extends Controller
@@ -78,7 +79,7 @@ class DashboardController extends Controller
                     }
 
                     foreach ($checklists as $checklist) {
-                        if (($checklist != null) && (in_array($checklist, $pendingArr)) ) {
+                        if (($checklist != null) && (in_array($checklist, $pendingArr))) {
                             array_push($pending_checklists, $checklist);
                         }
                     }
@@ -104,14 +105,13 @@ class DashboardController extends Controller
         }
 
 
-        $vtiger = new Vtiger();
+        /* $vtiger = new Vtiger();
         $commboardQuery = DB::table('CommBoard')->select('*')   //TODO Clone commboard
             ->whereIn('cf_2218', $vtCasesIdArr) //find by case id
             ->orWhereIn('cf_2218', $paymentIdArr) //Find by payment id
             ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
-            ->orWhereIn('cf_2218', $vtCasesNOArr); //find by caseNo
-
-        $commboards    = $vtiger->search($commboardQuery)->result;
+            ->orWhereIn('cf_2218', $vtCasesNOArr); //find by caseNo */
+        $commboards = Commboard::WhereIn('cf_2218', $vtCasesIdArr)->get();
 
         return view('dashboard', compact(
             'vtCases',

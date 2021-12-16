@@ -181,7 +181,7 @@
                                             <div class="p-1">
                                                 <span data-toggle="tooltip" title="From me"
                                                     class="round text-white d-inline-block text-center rounded-circle bg-info">
-                                                    <img src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
+                                                    <img src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
                                                         class="rounded-circle" alt="user" width="50"></span>
                                             </div>
                                         </div>
@@ -235,7 +235,7 @@
                                             <div class="p-1">
                                                 <span
                                                     class="round text-white d-inline-block text-center rounded-circle bg-info">
-                                                    <img src="{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
+                                                    <img src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
                                                         class="rounded-circle" alt="user" width="50"></span>
                                             </div>
                                             <div class="comment-text w-100 px-2 pt-1">

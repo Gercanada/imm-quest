@@ -132,12 +132,6 @@ class VtigerController extends Controller
         $user  =Auth::user();
         $vtiger = new Vtiger();
         $condWhere = explode(";", $where);
-
-        // /cf_2129
-
-        $pieces = explode(",", $where);
-        //return $pieces;
-
         // apply permissions
         if ($where == 'all') {
             $query = DB::table($type)->select('*');
@@ -154,8 +148,8 @@ class VtigerController extends Controller
             /*   if (count($condWhere) != 2 || count($condWhere) != 2) {
                 return "Invalid query params try 'user_id;1 or user_id;!=;1' ";
             } */
-            // /$query = DB::table($type)->select('*')->where("installmenttrackerno", "PP2113670");
-            $query = DB::table("CLItems")->select('*')->where("cf_1217", "!==","");
+            $query = DB::table($type)->select('*')->where("cf_1176", "7x65598");
+            //$query = DB::table("CLItems")->select('*')->where("cf_1217", "!==","");
 
             $data = $vtiger->search($query);
         }

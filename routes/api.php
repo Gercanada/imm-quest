@@ -25,6 +25,7 @@ use App\Http\Controllers\UserController;
 }); */
 
 Route::post('/documents', [DocumentController::class , 'checkDocuments']);
+Route::post('/remove_document', [DocumentController::class , 'destroy']);
 Route::post('/getresponse', [DocumentController::class , 'getResponse']);
 
 Route::post('/create_user', [UserController::class, 'createUser']);

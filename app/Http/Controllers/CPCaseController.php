@@ -64,16 +64,8 @@ class CPCaseController extends Controller
     public function details($id)
     {
         $user = Auth::user();
-        $user_id = $user->id;
-
-        $vtiger = new Vtiger();
         $case = CPCase::where('id', $id)->firstOrFail();
-        // $case = $vtiger->search($casesQuery)->result[0];
         $checklists = Checklist::where('cf_1199', $case->id)->get(); // case_id
-
-        //return $checklists;
-
-        //$checklists    = $vtiger->search($checklistsQuery)->result;
 
         $vtCLItemIdArr = [];
         foreach ($checklists as $clist) {
@@ -81,7 +73,6 @@ class CPCaseController extends Controller
                 array_push($vtCLItemIdArr, $clist->id);
             }
         }
-        //return [$vtCLItemIdArr];
         $clitems = [];
 
         if (count($vtCLItemIdArr) > 0) {

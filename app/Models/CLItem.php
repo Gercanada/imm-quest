@@ -11,8 +11,7 @@ class CLItem extends Model
 
     public $incrementing = false;
     protected $table = 'vt_CLItems';
-
-    protected $fillable =[
+   /*  protected $fillable =[
         'cli_file'
-    ];
+    ]; */
 }

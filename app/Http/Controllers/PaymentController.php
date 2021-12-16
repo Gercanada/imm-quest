@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
+use App\Models\Payment;
+use App\Models\Contact;
+use App\Models\CPCase;
+use App\Models\Invoice;
 
 class PaymentController extends Controller
 {
@@ -19,17 +22,10 @@ class PaymentController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
-        $vtiger = new Vtiger();
 
-        $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
-        $contact = $vtiger->search($userQuery);
-
-        // $paymentsQuery = DB::table('Payments')->select('*')->where('cf_1139', $contact->result[0]->id);
-        //$payments = $vtiger->search($paymentsQuery)->result;
-
+        $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         //Cases
-        $casesQuery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->result[0]->id);
-        $vtCases = $vtiger->search($casesQuery)->result;
+        $vtCases = CPCase::where('contact_id', $contact->id)->get();
         $vtCasesIdArr = [];
 
         foreach ($vtCases as $case) {
@@ -37,8 +33,7 @@ class PaymentController extends Controller
         }
 
         //Invoices
-        $invoiceQuery = DB::table('Invoice')->select('*')->where('contact_id',  $contact->result[0]->id);
-        $invoices = $vtiger->search($invoiceQuery)->result;
+        $invoices = Invoice::where('contact_id',  $contact->id)->get();
 
         //return $invoices;
         $invoiceIdArr = [];
@@ -47,8 +42,7 @@ class PaymentController extends Controller
         }
 
         // Get invoice payments
-        $paymentsQuery = DB::table('Payments')->select('*')->where('cf_1139', $contact->result[0]->id)->orWhereIn('cf_1141', $invoiceIdArr)->orWhereIn('cf_1140', $vtCasesIdArr);
-        $payments = $vtiger->search($paymentsQuery)->result;
+        $payments = Payment::where('cf_1139', $contact->id)->orWhereIn('cf_1141', $invoiceIdArr)->orWhereIn('cf_1140', $vtCasesIdArr)->get();
 
         return view('payments.index', compact('payments'));
     }

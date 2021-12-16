@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Quote extends Model
 {
-    use HasFactory;
+    public $incrementing = false;
+    protected $table = 'vt_Quotes';
 
-  /*   public function payments()
+    /*   public function payments()
     {
         return $this->hasMany(Payment::class, 'quote_id');
     } */

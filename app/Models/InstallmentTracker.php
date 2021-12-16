@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class InstallmentTracker extends Model
 {
-    use HasFactory;
+    public $incrementing = false;
+    protected $table = 'vt_InstallmentTracker';
 }

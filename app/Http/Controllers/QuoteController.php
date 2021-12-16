@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use JBtje\VtigerLaravel\Vtiger;
+use App\Models\Quote;
+use App\Models\Contact;
+use App\Models\InstallmentTracker;
 
 class QuoteController extends Controller
 {
@@ -19,12 +20,8 @@ class QuoteController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
-        $vtiger = new Vtiger();
-        $userQuery = DB::table('Contacts')->select('id')->where("contact_no", $user->vtiger_contact_id)->take(1);
-        $contact = $vtiger->search($userQuery);
-
-        $quotesQuery = DB::table('Quotes')->select('*')->where('contact_id', $contact->result[0]->id);
-        $vtquotes = $vtiger->search($quotesQuery)->result;
+        $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
+        $vtquotes = Quote::select('*')->where('contact_id', $contact->id)->get();
 
         $vtQuotesAcceptedStates = [];
         $vtQuotesOpenedStates = [];
@@ -58,42 +55,29 @@ class QuoteController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource about quote, status, documents and payment lan.
      *
      * @param  \App\Models\Quote  $quote
      * @return \Illuminate\Http\Response
      */
-    public function show(Quote $quote, $id)
+    public function show($id)
     {
-        $vtiger = new Vtiger();
-        $quotesQuery = DB::table('Quotes')->select('*')
-            ->where('id', $id)
-            ->take(1);
-        $quote = $vtiger->search($quotesQuery)->result[0];
+        $quote = Quote::where('id', $id)->firstOrFail();
+        $iTrackers = InstallmentTracker::where('cf_1175', $id)->get();
 
-        $itrackerQuery = DB::table('InstallmentTracker')->select('*')
-        ->where('cf_1175', $id);
-
-        $iTrackers = $vtiger->search( $itrackerQuery)->result;
-
-
-        $itDocumentQuery = DB::table('Documents')->select('*')
-        ->where('cf_1488', $quote->contact_id);
-
-        $itDocuments = $vtiger->search( $itDocumentQuery)->result;
+        $itDocuments = DB::table('vt_Documents')->select('*')->where('cf_1488', $quote->contact_id)->get();
 
         if (
             $quote->quotestage == "3 - Accepted"
             || $quote->quotestage == "4 - Accepted - Converted to Invoice"
         ) {
-            /*  array_push($vtQuotesAcceptedStates, $quote->quotestage); */
-            return view('quotes.details.accepted', compact('quote','iTrackers', 'itDocuments'));
+            return view('quotes.details.accepted', compact('quote', 'iTrackers', 'itDocuments'));
         } else
             if (
             $quote->quotestage !== "7 - Client Banned"
             || $quote->quotestage !== "6 - Client Not Interested"
         ) {
-            return view('quotes.details.pending', compact('quote' ,'iTrackers','itDocuments'));
+            return view('quotes.details.pending', compact('quote', 'iTrackers', 'itDocuments'));
         }
     }
 }

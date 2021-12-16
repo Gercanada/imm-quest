@@ -5,7 +5,7 @@
 @section('content')
     <!-- ============================================================== -->
     <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
-        style="background:url({{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/background/login-register.jpg) no-repeat center center; background-size: cover;">
+        style="background:url(/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/background/login-register.jpg) no-repeat center center; background-size: cover;">
         <div class="auth-box p-4 bg-white rounded">
             <div id="loginform">
                 <div class="logo">
