@@ -7,12 +7,19 @@
                 <li class="sidebar-item user-profile">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
                         aria-expanded="false">
-                        <img src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/profile.png"
-                            alt="user">
+                        {{-- <img src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/profile.png"
+                            alt="user"> --}}
+                        <span class="round text-white d-inline-block text-center rounded-circle bg-success">
+                            {{ substr(Auth::user()->name, 0, 1) }} {{ substr(Auth::user()->last_name, 0, 1) }}
+                        </span>
+
                         <span class="hide-menu">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</span>
                     </a>
 
                     <ul aria-expanded="false" class="collapse  first-level">
+                        <li class="sidebar-item">
+                            <change_themme></change_themme>
+                        </li>
                         <li class="sidebar-item">
                             <a href="{{ route('profile') }}" class="sidebar-link p-0">
                                 <i class="mdi mdi-adjust"></i>
@@ -60,9 +67,9 @@
                         href="{{ route('payments') }}" aria-expanded="false"><i data-feather="credit-card"
                             class="feather-icon"></i><span class="hide-menu">Payments</span></a></li>
 
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"  href="{{ route('commboard') }}"
-                        aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
-                            class="hide-menu">Comm board</span></a></li>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                        href="{{ route('commboard') }}" aria-expanded="false"><i data-feather="message-square"
+                            class="feather-icon"></i><span class="hide-menu">Comm board</span></a></li>
 
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                         href="{{ route('documents') }}" aria-expanded="false"><i data-feather="file"
@@ -84,7 +91,6 @@
                     </form>
                 </li>
             </ul>
-            {{-- <user-aside-tools></user-aside-tools> --}}
         </nav>
         <!-- End Sidebar navigation -->
     </div>

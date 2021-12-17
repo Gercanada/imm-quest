@@ -23,17 +23,12 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// /Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('user-portal-tools', require('./components/UserPortalTools.vue').default);
 Vue.component('user-component', require('./components/UserComponent.vue').default);
 Vue.component('documets-component', require('./components/DocumentsComponent.vue').default);
-Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
-Vue.component('login-component', require('./components/LoginComponent.vue').default);
 
 Vue.component('clitem-component', require('./components/CLItemComponent.vue').default);
 Vue.component('show-case-component', require('./components/ShowCaseComponent.vue').default);
-Vue.component('uploader-component', require('./components/UploaderComponent.vue').default);
-Vue.component('user-aside-tools', require('./components/UserAsideTools.vue').default);
+Vue.component('change_themme', require('./components/ChangeThemmeComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

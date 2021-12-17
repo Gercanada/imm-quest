@@ -40,8 +40,7 @@
     36 => 'App\\Providers\\AuthServiceProvider',
     37 => 'App\\Providers\\EventServiceProvider',
     38 => 'App\\Providers\\RouteServiceProvider',
-    39 => 'App\\Providers\\GoogleClientProvider',
-    40 => 'Spatie\\Permission\\PermissionServiceProvider',
+    39 => 'Spatie\\Permission\\PermissionServiceProvider',
   ),
   'eager' => 
   array (
@@ -68,8 +67,7 @@
     20 => 'App\\Providers\\AuthServiceProvider',
     21 => 'App\\Providers\\EventServiceProvider',
     22 => 'App\\Providers\\RouteServiceProvider',
-    23 => 'App\\Providers\\GoogleClientProvider',
-    24 => 'Spatie\\Permission\\PermissionServiceProvider',
+    23 => 'Spatie\\Permission\\PermissionServiceProvider',
   ),
   'deferred' => 
   array (

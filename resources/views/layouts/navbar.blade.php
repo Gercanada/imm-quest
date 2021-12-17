@@ -1,36 +1,25 @@
 <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-    <div class="navbar-header" >
+    <div class="navbar-header">
         <!-- This is for the sidebar toggle which is visible on mobile only -->
         <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
-            class="ti-menu ti-close"></i></a>
+                class="ti-menu ti-close"></i></a>
         <!-- Logo -->
         <a class="navbar-brand" href="{{ route('dashboard') }}">
             <!-- Logo icon -->
             <b class="logo-icon">
                 <!--You can put here icon as well  -->
-                <img src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-icon.png"
+                <img src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-icon.png"
                     alt="homepage" class="dark-logo" />
 
-                    <img src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-light-icon.png"
+                <img src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-light-icon.png"
                     alt="homepage" class="light-logoo" />
             </b>
             <!--End Logo icon -->
             <!-- Logo text -->
             <span class="logo-text">
-                <!-- dark Logo text -->
-                {{-- <img src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-icon.pn"
-                class="dark-logo"  alt="homepage" /> --}}
-                {{-- <img src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-text.png" alt="homepage" class="dark-logo" /> --}}
                 <h4>CP GerCanada</h4>
-                <!-- Light Logo text -->
-               {{--  <img src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-light-text.png"
-                    class="light-logo" alt="homepage" /> --}}
             </span>
         </a>
-        <!-- ============================================================== -->
-        <!-- End Logo -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
         <!-- Toggle which is visible on mobile only -->
         <!-- ============================================================== -->
         <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
@@ -40,7 +29,7 @@
     <!-- ============================================================== -->
     <!-- End Logo -->
     <!-- ============================================================== -->
-    <div class="navbar-collapse collapse" id="navbarSupportedContent" >
+    <div class="navbar-collapse collapse" id="navbarSupportedContent">
         <!-- ============================================================== -->
         <!-- toggle and nav items -->
         <!-- ============================================================== -->
@@ -56,36 +45,39 @@
             <!-- ============================================================== -->
             <!-- Search -->
             <!-- ============================================================== -->
-            <li class="nav-item d-none d-md-block search-box"> <a
-                class="nav-link d-none d-md-block waves-effect waves-dark" href="javascript:void(0)"><i
-                    class="ti-search"></i></a>
-            <form class="app-search">
-                <input type="text" class="form-control" placeholder="Search & enter">
-                <a class="srh-btn"><i class="ti-close"></i></a>
-            </form>
-        </li>
+            {{-- <li class="nav-item d-none d-md-block search-box"> <a
+                    class="nav-link d-none d-md-block waves-effect waves-dark" href="javascript:void(0)"><i
+                        class="ti-search"></i></a>
+                <form class="app-search">
+                    <input type="text" class="form-control" placeholder="Search & enter">
+                    <a class="srh-btn"><i class="ti-close"></i></a>
+                </form>
+            </li> --}}
             <!-- Profile -->
             <!-- ============================================================== -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <img src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg" alt="user"
-                        width="30" class="profile-pic rounded-circle" />
+                    <img src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
+                        alt="user" width="30" class="profile-pic rounded-circle" />
                 </a>
                 <div class="dropdown-menu mailbox dropdown-menu-right animated bounceInDown">
                     <ul class="dropdown-user list-style-none">
                         <li>
                             <div class="dw-user-box p-3 d-flex">
-                                <div class="u-img"><img
-                                        src="/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
-                                        alt="user" class="rounded" width="80"></div>
+                                <div class="u-img">
+                                    <span class="round text-white d-inline-block text-center rounded-circle bg-success">
+                                        {{ substr(Auth::user()->name, 0, 1) }}
+                                        {{ substr(Auth::user()->last_name, 0, 1) }}
+                                    </span>
+                                    {{-- <img
+                                        src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
+                                        alt="user" class="rounded" width="80"> --}}
+                                </div>
                                 <div class="u-text ml-2">
                                     <h4 class="mb-0">{{ Auth::user()->name }}
                                         {{ Auth::user()->last_name }}</h4>
                                     <p class="text-muted mb-1 font-14">{{ Auth::user()->email }} </p>
-                                    <a href="pages-profile.html"
-                                        class="btn btn-rounded btn-danger btn-sm text-white d-inline-block">View
-                                        Profile</a>
                                 </div>
                             </div>
                         </li>
@@ -98,6 +90,7 @@
                                 </span>
                                 My Account Setting</a>
                         </li>
+
                         <li role="separator" class="dropdown-divider"></li>
                         <li class="user-list">
                             <form method="POST" action="{{ route('logout') }}">

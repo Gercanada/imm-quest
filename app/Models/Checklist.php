@@ -11,12 +11,4 @@ class Checklist extends Model
 {
     public $incrementing = false;
     protected $table = 'vt_Checklist';
-
-    public function case(){
-       return $this->belongsTo(CPCase::class, 'case_id');
-    }
-
-    public function clitems(){
-        return $this->hasMany(CLItem::class);
-    }
 }

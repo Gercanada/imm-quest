@@ -6,12 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
-use App\Models\Test;
 use App\Models\Document;
 use App\Models\Contact;
 use Exception;
-use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
@@ -45,7 +44,6 @@ class DocumentController extends Controller
                 $fileList = array();
                 //loop throu the array
                 for ($i = 0; $i < count($files); $i++) {
-
                     $file = $files[$i];
                     $filename = $file->getClientOriginalName();
                     $filename = str_replace(' ', '', $filename);
@@ -101,27 +99,20 @@ class DocumentController extends Controller
             $urlFiles = [];
 
             foreach ($files as $file) {
-                //array_push($urlFiles, (Storage::url($file)));
-                array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+                if (env('APP_ENV') === 'local') {
+                    array_push($urlFiles, (Storage::url($file)));
+                } else {
+                    array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+                }
             }
-            if(count($urlFiles)>0){
+            if (count($urlFiles) > 0) {
                 return response()->json($urlFiles, 200);
-            }else{
-                return ;
+            } else {
+                return;
             }
         } catch (\Exception $e) {
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->write($e);
         }
-    }
-
-    public function getResponse(Request $request)
-    {
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->write($request);
-
-        Test::create([
-            'info' => $request
-        ]);
     }
 }

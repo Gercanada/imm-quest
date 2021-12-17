@@ -6,12 +6,11 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <div class="row">
-                <h4 class="card-title mb-3"><span class="lstick d-inline-block align-middle"></span>Pending Quote
+            <a href="{{ route('quotes') }}" class="btn btn-outline-success btn-rounded">
+                <i class=" fas fa-arrow-circle-left"></i></a>
+                <h4 class="card-title mb-3">
+                    <span class="lstick d-inline-block align-middle"></span>Pending Quote
                     <b>{{ $quote->subject }}</b></h4>
-            </div>
-            <a href="{{ route('quotes') }}" class="btn btn-outline-info btn-rounded float-left"><i
-                    class=" fas fa-arrow-circle-left">Back to checklists</i></a>
         </div>
     </div>
 
@@ -36,7 +35,7 @@
                 </a>
             </li>
         </ul>
-    
+
         <div class="tab-content ">
             <div class="tab-pane" id="home-b1">
                 <div class="card">
@@ -57,7 +56,7 @@
                                     <td class="text-end font-weight-medium">
                                         {{ $quote->cf_966 }}</td>
                                 </tr>
-    
+
                                 <tr>
                                     <td>Valid Until</td>
                                     <td class="text-end font-weight-medium">
@@ -100,7 +99,7 @@
                                     <td>Client Approval Signature</td>
                                     <td class="text-end font-weight-medium"></td>
                                 </tr>
-    
+
                                 <tr></tr>
                             </tbody>
                         </table>
@@ -163,7 +162,7 @@
                                         <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
                                     </td>
                                 </tr>
-    
+
                             @endforeach
                         </tbody>
                     </table>

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use JBtje\VtigerLaravel\Vtiger;
 use App\Models\Contact;
 
 use App\Models\User;
@@ -73,7 +71,8 @@ class UserController extends Controller
 
     public function newPassword(Request $request)
     {
-        $user = Auth::user();
+        $user = User::where('id', Auth::user()->id)->firstOrFail();
+
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         if (!$contact) return 404;
         if ($request->old_password !== $contact->cf_1780) return 403;
@@ -82,6 +81,22 @@ class UserController extends Controller
         $contact->cf_1780 = Hash::make($request->new_password);
         $contact->save();
 
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
         return 200;
+    }
+
+    public function getThemme()
+    {
+        $user = Auth::user();
+        return $user->themme_layout;
+    }
+    public function setThemme(Request $request)
+    {
+        $user = User::where('id', Auth::user()->id)->firstOrFail();
+        $user->themme_layout = $request->themme_layout;
+        $user->save();
     }
 }

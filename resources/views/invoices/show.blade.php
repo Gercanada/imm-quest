@@ -5,15 +5,13 @@
 
 @section('content')
 
-    <div class="card">
+    <div class="card shadow-lg p-1">
         <div class="card-header">
-            <h4 class="card-title mb-3"><span class="lstick d-inline-block align-middle"></span> Invoice <b>{{ $invoice->subject }}</b></h4>
-            <a href="{{ route('invoices') }}" class="btn btn-outline-info btn-rounded float-left"><i
-                    class=" fas fa-arrow-circle-left">Back to invoices</i></a>
+            <a href="{{ route('invoices') }}" class="btn btn-outline-success btn-rounded"><i
+                    class=" fas fa-arrow-circle-left"></i></a>
+            <h4 class="card-title mb-3"><span class="lstick d-inline-block align-middle"></span> Invoice
+                <b>{{ $invoice->subject }}</b></h4>
         </div>
-    </div>
-
-    <div class="card  shadow-lg p-1">
         <ul class="nav nav-tabs nav-bordered mb-3 customtab">
             <li class="nav-item">
                 <a href="#invoice-details" data-toggle="tab" aria-expanded="false" class="nav-link">
@@ -40,7 +38,7 @@
                 </a>
             </li>
         </ul>
-    
+
         <div class="tab-content">
             <div class="tab-pane" id="invoice-details">
                 <div class="card ">
@@ -64,7 +62,7 @@
                                     <td>Professional Services</td>
                                     <td class="text-end font-weight-medium">{{ $invoice->cf_1574 }}</td>
                                 </tr>
-    
+
                                 <tr>
                                     <td>Government Fee Subtotal</td>
                                     <td class="text-end font-weight-medium">{{ $invoice->cf_1572 }}</td>
@@ -80,13 +78,13 @@
                                 <tr>
                                     <td>Payments Received</td>
                                     <td class="text-end font-weight-medium">{{ $invoice->cf_901 }}</td>
-                                </tr>    
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <br>
-    
+
                 <div class="card">
                     <div class="btn-list float-rigth">
                         <a type="button" class="btn btn-secondary btn-sm waves-effect waves-light btn-sm "><i
@@ -141,11 +139,11 @@
                         </thead>
                         <tbody>
                             @foreach ($iTrackers as $itracker)
-                            <tr>
-                                <td>{{ $itracker->cf_1165 }}</td>
-                                <td>{{ number_format($itracker->cf_1163, 2) }}</td>
-                                <td>{{ $itracker->description }}</td>
-                            </tr>
+                                <tr>
+                                    <td>{{ $itracker->cf_1165 }}</td>
+                                    <td>{{ number_format($itracker->cf_1163, 2) }}</td>
+                                    <td>{{ $itracker->description }}</td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -168,7 +166,8 @@
                                     <td>{{ $document->filetype }}</td>
                                     <td>{{ $document->filename }}</td>
                                     <td>{{ $document->cf_2134 }}</td>
-                                    <td><a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a></td>
+                                    <td><a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

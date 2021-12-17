@@ -15,15 +15,17 @@
 
   <div v-else>
     <div class="row">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title text-themecolor mb-0 ">
-              <span class="lstick d-inline-block align-middle"></span> <span v-text="tkcase.ticket_title"></span>
-          </h3>
-        </div>
-      </div>
       <div class="col-md-12">
         <div class="card shadow-lg p-1">
+          <div class="card-header">
+            <a href="/cases" class="btn btn-outline-success btn-rounded"
+              ><i class="fas fa-arrow-circle-left"></i
+            ></a>
+            <h4 class="card-title text-themecolor mb-0">
+              <span class="lstick d-inline-block align-middle"></span>
+              <span v-text="tkcase.ticket_title"></span>
+            </h4>
+          </div>
           <!-- Case info read only data v-if ? -->
           <div class="card-body">
             <table class="table v-middle fs-3 mb-0 mt-4">
@@ -77,7 +79,7 @@
         </div>
       </div>
       <div class="col-md-12">
-        <div class="card  shadow-lg p-1">
+        <div class="card shadow-lg p-1">
           <div class="card-body">
             <ul class="nav nav-tabs nav-bordered mb-3 customtab">
               <li
@@ -304,7 +306,7 @@ export default {
       axios
         .get("/details_case/" + me.id)
         .then(function (response) {
-            console.log({response});
+          console.log({ response });
           me.tkcase = response.data[0];
           me.ArrayChecklist = response.data[1];
           me.CLItemsArray = response.data[2];

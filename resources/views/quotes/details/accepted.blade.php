@@ -6,8 +6,8 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <a href="{{ route('quotes') }}" class="btn btn-outline-info btn-rounded float-left"><i
-                    class=" fas fa-arrow-circle-left">Back</i></a>
+            <a href="{{ route('quotes') }}" class="btn btn-outline-success btn-rounded"><i
+                    class=" fas fa-arrow-circle-left"></i></a>
             <h4 class="card-title mb-3"> <span class="lstick d-inline-block align-middle"></span> Accepted Quote <b>
                     {{ $quote->subject }}</b></h4>
         </div>

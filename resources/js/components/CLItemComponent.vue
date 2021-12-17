@@ -10,17 +10,20 @@
   </div>
 
   <div v-else>
+      <div class="card shadow-lg p-1">
+           <div class="card-header">
+            <a
+              :href="'/checklist/' + clitem.cf_1216"
+              class="btn btn-outline-success btn-rounded"
+              ><i class="fas fa-arrow-circle-left"></i></a
+            >
+            <h2 class="card-title">CL Item <b v-text="clitem.name"></b></h2>
+          </div>
+      </div>
+
     <div class="row">
       <div class="col-md-12">
         <div class="card shadow-lg p-1">
-          <div class="card-header">
-            <a
-              :href="'/checklist/' + clitem.cf_1216"
-              class="btn btn-outline-info btn-rounded float-left"
-              ><i class="fas fa-arrow-circle-left">Go to checklists</i></a
-            >
-            <h2 class="card-title">CL Item <b v-text="subject"></b></h2>
-          </div>
           <div class="card-body">
             <div class="card-row">
               <div class="col border py-2">

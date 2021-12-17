@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 use App\Models\Checklist;
 use App\Models\CLItem;
-use App\Models\Document;
 use App\Models\CPCase;
 use App\Models\Contact;
 
@@ -70,12 +69,6 @@ class CLItemController extends Controller
                     $file->storeAs("/public/$destination", $filename);
                     $fileUrl = "$destination/$filename";
                     array_push($fileList, $fileUrl);
-
-                    /* Document::create([
-                        'user_id' => $user->id,
-                        'contact_id' => $contact_id,
-                        'url_file' => $fileUrl
-                    ]); */
                 }
                 return response()->json(["List" => $fileList, 200]);
             }
@@ -88,25 +81,15 @@ class CLItemController extends Controller
     {
         $directory = "/documents/contact/$contact";
         $files = Storage::disk('public')->allFiles($directory);
-
-        //return $files;
         $urlFiles = [];
 
         foreach ($files as $file) {
-            array_push($urlFiles, (Storage::url($file)));
-            // array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+            if (env('APP_ENV') === 'local') {
+                array_push($urlFiles, (Storage::url($file)));
+            } else {
+                array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+            }
         }
         return $urlFiles;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\CLItem  $cLItem
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(CLItem $cLItem)
-    {
-        //
     }
 }

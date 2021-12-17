@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'description',
+        'themme_layout',
         'vtiger_contact_id',
         'refresh_token',
     ];

@@ -6,11 +6,15 @@
 
 @section('content')
     <div class="card shadow-lg p-1">
-        <div class="card-body">
-            <h2 class="card-title"><span class="lstick d-inline-block align-middle"></span> Checklist
+        <div class="card-header">
+            <a href="{{ route('checklists') }}" class="btn btn-outline-success btn-rounded"><i
+                    class=" fas fa-arrow-circle-left"></i></a>
+            <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span> Checklist
                 <b>{{ $check_list->name }}</b>
-            </h2>
-            <h6 class="card-subtitle">Some case and checklist details <i>ok</i> </h6>
+            </h4>
+        </div>
+        <div class="card-body">
+            {{-- <h6 class="card-subtitle">Some case and checklist details <i>ok</i> </h6> --}}
             <h3 class="card-title mt-5"><i class="mr-1 font-18 mdi mdi-numeric-1-box-multiple-outline"></i> Pending items
             </h3>
             <div class="table-responsive">

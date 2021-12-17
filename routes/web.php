@@ -61,6 +61,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/new_password', [UserController::class, 'newPassword']);
     Route::post('/new_username', [UserController::class, 'newUserName']);
 
+    Route::get('/user_themme', [UserController::class, 'getThemme']);
+    Route::post('/user_themme', [UserController::class, 'setThemme']);
+
     //documents
     Route::get('/documents', [DocumentController::class, 'index'])->middleware(['auth'])->name('documents');
     Route::get('/get_documents', [DocumentController::class, 'getDocuments'])->middleware(['auth']);

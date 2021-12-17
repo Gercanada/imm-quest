@@ -10,8 +10,4 @@ class Quote extends Model
     public $incrementing = false;
     protected $table = 'vt_Quotes';
 
-    /*   public function payments()
-    {
-        return $this->hasMany(Payment::class, 'quote_id');
-    } */
 }
