@@ -135,14 +135,14 @@ class CloneDBController extends Controller
             $obj = $vtiger->retrieve($contact->id);
             //Then update the object:
             $obj->result->secondaryemail =  $cp_contact->secondaryemail;
-            $obj->result->mobile =  $cp_contact->mobile;
-            $obj->result->cf_1945 =  $cp_contact->cf_1945;
-            $obj->result->cf_2254 =  $cp_contact->cf_2254;
-            $obj->result->cf_2246 =  $cp_contact->cf_2246;
-            $obj->result->cf_2252 =  $cp_contact->cf_2252;
-            $obj->result->cf_2250 =  $cp_contact->cf_2250;
-            $obj->result->cf_1780  =  $cp_contact->cf_1780 ;
-            $obj->result->user_donotcall =  $cp_contact->user_donotcall;
+            $obj->result->mobile           =  $cp_contact->mobile;
+            $obj->result->cf_1945          =  $cp_contact->cf_1945;
+            $obj->result->cf_2254          =  $cp_contact->cf_2254;
+            $obj->result->cf_2246          =  $cp_contact->cf_2246;
+            $obj->result->cf_2252          =  $cp_contact->cf_2252;
+            $obj->result->cf_2250          =  $cp_contact->cf_2250;
+            $obj->result->cf_1780          =  $cp_contact->cf_1780 ;
+            $obj->result->user_donotcall   =  $cp_contact->user_donotcall;
             $obj->result->user_emailoptout =  $cp_contact->user_emailoptout;
 
             $data = $vtiger->update($obj->result);
