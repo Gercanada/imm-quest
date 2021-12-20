@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Contact;
-
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+
+use App\Models\Contact;
+use App\Models\User;
 
 use Exception;
 
@@ -24,7 +24,6 @@ class UserController extends Controller
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         return $contact;
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -72,7 +71,6 @@ class UserController extends Controller
     public function newPassword(Request $request)
     {
         $user = User::where('id', Auth::user()->id)->firstOrFail();
-
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         if (!$contact) return 404;
         if ($request->old_password !== $contact->cf_1780) return 403;
@@ -80,11 +78,8 @@ class UserController extends Controller
 
         $contact->cf_1780 = Hash::make($request->new_password);
         $contact->save();
-
-
         $user->password = Hash::make($request->new_password);
         $user->save();
-
         return 200;
     }
 

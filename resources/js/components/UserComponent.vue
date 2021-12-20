@@ -23,19 +23,6 @@
           <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
             <li class="nav-item">
               <a
-                class="nav-link"
-                id="pills-timeline-tab"
-                data-toggle="pill"
-                href="#current-month"
-                role="tab"
-                aria-controls="pills-timeline"
-                aria-selected="false"
-              >
-                <i class="fas fa-chart-line"></i> Timeline</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
                 class="nav-link active"
                 id="pills-profile-tab"
                 data-toggle="pill"
@@ -73,167 +60,7 @@
           </ul>
           <!-- Tabs -->
           <div class="tab-content" id="pills-tabContent">
-            <div
-              class="tab-pane fade"
-              id="current-month"
-              role="tabpanel"
-              aria-labelledby="pills-timeline-tab"
-            >
-              <div class="card-body">
-                <div class="profiletimeline mt-0">
-                  <div class="sl-item">
-                    <div class="sl-left">
-                      <img
-                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
-                        alt="user"
-                        class="rounded-circle"
-                      />
-                    </div>
-                    <div class="sl-right">
-                      <div>
-                        <a href="javascript:void(0)" class="link">John Doe</a>
-                        <span class="sl-date">5 minutes ago</span>
-                        <p>
-                          assign a new task
-                          <a href="javascript:void(0)"> Design weblayout</a>
-                        </p>
-                        <div class="row">
-                          <div class="col-lg-3 col-md-6 mb-3">
-                            <img
-                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img1.jpg"
-                              class="img-fluid rounded"
-                            />
-                          </div>
-                          <div class="col-lg-3 col-md-6 mb-3">
-                            <img
-                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img2.jpg"
-                              class="img-fluid rounded"
-                            />
-                          </div>
-                          <div class="col-lg-3 col-md-6 mb-3">
-                            <img
-                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img3.jpg"
-                              class="img-fluid rounded"
-                            />
-                          </div>
-                          <div class="col-lg-3 col-md-6 mb-3">
-                            <img
-                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img4.jpg"
-                              class="img-fluid rounded"
-                            />
-                          </div>
-                        </div>
-                        <div class="like-comm">
-                          <a href="javascript:void(0)" class="link mr-2"
-                            >2 comment</a
-                          >
-                          <a href="javascript:void(0)" class="link mr-2"
-                            ><i class="fa fa-heart text-danger"></i> 5 Love</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <div class="sl-item">
-                    <div class="sl-left">
-                      <img
-                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/2.jpg"
-                        alt="user"
-                        class="rounded-circle"
-                      />
-                    </div>
-                    <div class="sl-right">
-                      <div>
-                        <a href="javascript:void(0)" class="link">John Doe</a>
-                        <span class="sl-date">5 minutes ago</span>
-                        <div class="mt-3 row">
-                          <div class="col-md-3 col-xs-12">
-                            <img
-                              src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/big/img1.jpg"
-                              alt="user"
-                              class="img-fluid rounded"
-                            />
-                          </div>
-                          <div class="col-md-9 col-xs-12">
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Integer nec odio. Praesent libero. Sed
-                              cursus ante dapibus diam.
-                            </p>
-                            <a
-                              href="javascript:void(0)"
-                              class="btn btn-success"
-                            >
-                              Design weblayout</a
-                            >
-                          </div>
-                        </div>
-                        <div class="like-comm mt-3">
-                          <a href="javascript:void(0)" class="link mr-2"
-                            >2 comment</a
-                          >
-                          <a href="javascript:void(0)" class="link mr-2"
-                            ><i class="fa fa-heart text-danger"></i> 5 Love</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <div class="sl-item">
-                    <div class="sl-left">
-                      <img
-                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/3.jpg"
-                        alt="user"
-                        class="rounded-circle"
-                      />
-                    </div>
-                    <div class="sl-right">
-                      <div>
-                        <a href="javascript:void(0)" class="link">John Doe</a>
-                        <span class="sl-date">5 minutes ago</span>
-                        <p class="mt-2">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Integer nec odio. Praesent libero. Sed cursus
-                          ante dapibus diam. Sed nisi. Nulla quis sem at nibh
-                          elementum imperdiet. Duis sagittis ipsum. Praesent
-                          mauris. Fusce nec tellus sed augue semper
-                        </p>
-                      </div>
-                      <div class="like-comm mt-3">
-                        <a href="javascript:void(0)" class="link mr-2"
-                          >2 comment</a
-                        >
-                        <a href="javascript:void(0)" class="link mr-2"
-                          ><i class="fa fa-heart text-danger"></i> 5 Love</a
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <div class="sl-item">
-                    <div class="sl-left">
-                      <img
-                        src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/4.jpg"
-                        alt="user"
-                        class="rounded-circle"
-                      />
-                    </div>
-                    <div class="sl-right">
-                      <div>
-                        <a href="javascript:void(0)" class="link">John Doe</a>
-                        <span class="sl-date">5 minutes ago</span>
-                        <blockquote class="mt-2">
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit, sed do eiusmod tempor incididunt
-                        </blockquote>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
             <div
               class="tab-pane fade active show"
               id="last-month"
@@ -243,11 +70,15 @@
               <div class="card">
                 <div class="card-body">
                   <center class="mt-4">
-                    <img
+                    <!-- <img
                       src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/5.jpg"
                       class="rounded-circle"
                       width="150"
-                    />
+                    /> -->
+                    <span class="rounded-circle bg-success text-center display-1 w-100 p-3 font-weight-bold" width="150"
+                    v-text="userObj.firstname.substring(0,1) + userObj.lastname.substring(0,1)">
+
+                        </span>
                     <h4 class="card-title mt-2">
                       <b v-text="userObj.firstname"></b><b></b>
                       <b v-text="userObj.lastname"></b>
@@ -791,8 +622,14 @@ export default {
       if (field === "userObj.cf_2252") fail = this.userObj.cf_2252;
       if (field === "userObj.cf_2250") fail = this.userObj.cf_2250;
 
-      if (!/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/i.test(fail)) {
-        this.errors[as] = `The ${as} field is not valid url. try some 'http://${as}.com/profile'`;
+      if (
+        !/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/i.test(
+          fail
+        )
+      ) {
+        this.errors[
+          as
+        ] = `The ${as} field is not valid url. try some 'http://${as}.com/profile'`;
       }
     },
   },

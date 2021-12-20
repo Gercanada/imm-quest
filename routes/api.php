@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\VtigerController;
 use App\Http\Controllers\CloneDBController;
-use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +30,8 @@ Route::post('/create_user', [UserController::class, 'createUser']);
 
 Route::post('/remove_user', [UserController::class, 'removeUser']);
 
-Route::post('/viger/clonedb', [CloneDBController::class, 'createTable']);
+Route::post('/viger/clonedb', [CloneDBController::class, 'cloneImmcaseContactData']);
+Route::post('/viger/update_contact', [CloneDBController::class, 'updateOnImmcase']);
 
 
 Route::get('/migrate', function(){

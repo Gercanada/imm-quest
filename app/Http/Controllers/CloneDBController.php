@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
+use App\Models\Contact;
+
+use Exception;
 
 class CloneDBController extends Controller
 {
@@ -16,7 +21,7 @@ class CloneDBController extends Controller
      * 1. The tables be created if not exists
      * 2. The dta be inserted
      */
-    public function createTable(Request $request)
+    public function cloneImmcaseContactData(Request $request)
     {
         $vtiger = new Vtiger();
         $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("contact_no", $request->contact_no)->take(1);
@@ -115,6 +120,40 @@ class CloneDBController extends Controller
             }
         }
         return "dataCloned";
+    }
+
+    public function updateOnImmcase(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $vtiger = new Vtiger();
+            //Get contact data of this user
+            $cp_contact = Contact::where("contact_no", $request->contact_no)->firstOrFail();
+
+            $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $request->contact_no)->take(1);
+            $contact = $vtiger->search($userQuery)->result[0];
+            $obj = $vtiger->retrieve($contact->id);
+            //Then update the object:
+            $obj->result->secondaryemail =  $cp_contact->secondaryemail;
+            $obj->result->mobile =  $cp_contact->mobile;
+            $obj->result->cf_1945 =  $cp_contact->cf_1945;
+            $obj->result->cf_2254 =  $cp_contact->cf_2254;
+            $obj->result->cf_2246 =  $cp_contact->cf_2246;
+            $obj->result->cf_2252 =  $cp_contact->cf_2252;
+            $obj->result->cf_2250 =  $cp_contact->cf_2250;
+            $obj->result->cf_1780  =  $cp_contact->cf_1780 ;
+            $obj->result->user_donotcall =  $cp_contact->user_donotcall;
+            $obj->result->user_emailoptout =  $cp_contact->user_emailoptout;
+
+            $data = $vtiger->update($obj->result);
+
+            // Quotes
+            //CLItems
+            //Payments
+            return 200;
+        } catch (Exception $e) {
+            return response()->json("Error", 500);
+        }
     }
 
     /* Functions */
