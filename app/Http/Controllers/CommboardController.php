@@ -57,7 +57,14 @@ class CommboardController extends Controller
               ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
               ->orWhereIn('cf_2218', $vtCasesNOArr)->get(); //find by caseNo
 
-        return view('commboard.index', compact('commboards','contact'));
+              $threads = null;/*  Commboard::groupByRaw('cf_2218')
+              ->whereIn('cf_2218', $vtCasesIdArr) //find by case id
+              ->orWhereIn('cf_2218', $paymentIdArr) //Find by payment id
+              ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
+              ->orWhereIn('cf_2218', $vtCasesNOArr)->
+              ->get(); //find by caseNo */
+
+        return view('commboard.index', compact('commboards','threads','contact'));
     }
     /**
      * Display a listing of the resource.

@@ -40,9 +40,14 @@ Route::get('/migrate', function(){
 });
 Route::get('/optimize', function(){
    \Artisan::call('optimize:clear');
-    return('migrated!');
+    return('Optimized!');
 });
 Route::get('/keygen', function(){
     \Artisan::call('key:generate');
      return('Key generated!');
+ });
+
+ Route::get('/npm_dev', function(){
+    shell_exec('npm run dev');
+     return('Compiled successfull!');
  });

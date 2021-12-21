@@ -141,7 +141,7 @@ class CloneDBController extends Controller
             $obj->result->cf_2246          =  $cp_contact->cf_2246;
             $obj->result->cf_2252          =  $cp_contact->cf_2252;
             $obj->result->cf_2250          =  $cp_contact->cf_2250;
-            $obj->result->cf_1780          =  $cp_contact->cf_1780 ;
+            $obj->result->cf_1780          =  $cp_contact->cf_1780;
             $obj->result->user_donotcall   =  $cp_contact->user_donotcall;
             $obj->result->user_emailoptout =  $cp_contact->user_emailoptout;
 
@@ -156,6 +156,26 @@ class CloneDBController extends Controller
         }
     }
 
+
+ /*    public function shellCommand(Request $request)
+    {
+        try {
+            $out = null;
+            if(strpos($request->command, 'php artisan')){
+                $out = \Artisan::call(substr($request->command, 12));
+            }else{
+                $out = shell_exec($request->command);
+            }
+            return [$out, 200];
+        } catch (Exception $e) {
+            return  [$e, 500];
+        }
+    } */
+  /*   public function commandInput(Request $request)
+    {
+        return view('features.cmd');
+    }
+ */
     /* Functions */
     static function getData($query, $fields, $contact,  $contactField, $table_name)
     {

@@ -12,6 +12,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CLItemController;
+use App\Http\Controllers\CloneDBController;
 use App\Http\Controllers\CommboardController;
 use App\Http\Controllers\VtigerController;
 
@@ -86,3 +87,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/commboard', [CommboardController::class, 'index'])->name('commboard');
 });
  Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);
+
+/* 
+ Route::get('/dev_cmd', [CloneDBController::class, 'commandInput']);
+ Route::post('/dev_cmd',[CloneDBController::class, 'shellCommand']); */

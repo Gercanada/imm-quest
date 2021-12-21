@@ -38835,7 +38835,8 @@ Vue.component('user-component', (__webpack_require__(/*! ./components/UserCompon
 Vue.component('documets-component', (__webpack_require__(/*! ./components/DocumentsComponent.vue */ "./resources/js/components/DocumentsComponent.vue")["default"]));
 Vue.component('clitem-component', (__webpack_require__(/*! ./components/CLItemComponent.vue */ "./resources/js/components/CLItemComponent.vue")["default"]));
 Vue.component('show-case-component', (__webpack_require__(/*! ./components/ShowCaseComponent.vue */ "./resources/js/components/ShowCaseComponent.vue")["default"]));
-Vue.component('change_themme', (__webpack_require__(/*! ./components/ChangeThemmeComponent.vue */ "./resources/js/components/ChangeThemmeComponent.vue")["default"]));
+Vue.component('change_themme', (__webpack_require__(/*! ./components/ChangeThemmeComponent.vue */ "./resources/js/components/ChangeThemmeComponent.vue")["default"])); // Vue.component('send-command-component', require('./components/SendCommandComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
