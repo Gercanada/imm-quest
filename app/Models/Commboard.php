@@ -11,11 +11,16 @@ class Commboard extends Model
     protected $table = 'vt_CommBoard';
 
     protected $fillable = [
+        'id',
         'assigned_user_id',
         'name',
         'cf_2218',
         'cf_2224',
         'description',
-        'cf_2226'
+        'cf_2226',
+        'cf_2220',
+        'cf_2228',
+        'modifiedby',
+         'createdtime'
     ];
 }

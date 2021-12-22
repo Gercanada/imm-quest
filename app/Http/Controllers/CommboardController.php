@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +12,8 @@ use App\Models\Contact;
 use App\Models\Invoice;
 use App\Models\CPCase;
 use App\Models\Payment;
+
+use Faker\Factory as Faker;
 
 class CommboardController extends Controller
 {
@@ -86,13 +88,29 @@ class CommboardController extends Controller
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
             //return $contact;
             $vtiger = new Vtiger();
+
+            $faker = Faker::create();
+        //return $faker->numberBetween(0,99);
+        $newId =$faker->numberBetween(0,99).'x'.$faker->numberBetween(0,99999);
+
+            $founded =false;
+            while($founded === true){
+                $founded = Commboard::where('id',$newId)->firstOrFail();
+                $newId ="$faker->numberBetween(0,99)x$faker->numberBetween(0,99999)";
+            }
+
             $data = [
+                'id'=>$newId,
                 'assigned_user_id'=> '19x29',
                 'name'=> $request->subject,
+                'cf_2220'=>$request->threadtype,
                 'cf_2218' => $request->threadid, //threadid
                 'cf_2224' => "$contact->firstname $contact->lastname",
                 'description' => $request->comment,
-                'cf_2226'=>Carbon::today(),//timestamps
+                'cf_2226'=>Carbon::today()->format('Y-m-d'),//timestamps
+                'cf_2228'=>Carbon::now()->format('H:i:s'),//timestamps
+                'modifiedby'=>$contact->id,
+                'createdtime'=>Carbon::now()->format('Y-m-d H:i:s')
             ];
             //array_push($any, json_encode($data));
 

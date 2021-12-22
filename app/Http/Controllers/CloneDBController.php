@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use App\Models\Contact;
-
 use Exception;
 
 class CloneDBController extends Controller
@@ -41,6 +40,8 @@ class CloneDBController extends Controller
 
 
         $typeArr = [];
+        $resp = null;
+        $respArr = [];
         foreach ($types as $type) {
             if (
                 ($type === 'Documents') ||
@@ -78,10 +79,12 @@ class CloneDBController extends Controller
                     $list1 = [];
                     $list2 = [];
                     $list3 = [];
+                    $list_cnums = [];
 
                     if ($cases) {
                         foreach ($cases as $case) {
                             array_push($list1, $case->id);
+                            array_push($list_cnums, $case->ticket_no);
                         }
                     }
                     if ($type === 'Checklist') {
@@ -97,7 +100,7 @@ class CloneDBController extends Controller
                                     array_push($list2, $invoice->id);
                                 }
                                 $query = DB::table($type)->select('*')->whereIn('cf_1176', $list2); //Installment trackers of quote
-                                self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
+                                $resp = self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
                             }
                         }
                         if (count($quotes) > 0) {
@@ -106,19 +109,24 @@ class CloneDBController extends Controller
                                     array_push($list3, $quote->id);
                                 }
                                 $query = DB::table($type)->select('*')->whereIn('cf_1175', $list3); //Installment trackers of invoice
-                                self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
+                                $resp = self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
                             }
                         }
                     }
                     if ($type === 'CommBoard') {
-                        $query =  DB::table($type)->select('*')->whereIn('cf_2218', $list1);
-                        self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
+                        $query =  DB::table($type)->select('*')
+                            ->whereIn('cf_2218', $list1)
+                            ->orWhereIn('cf_2218', $list_cnums);
+                        $resp = self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
                     }
                 } else {
-                    self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
+                    $resp =  self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
                 }
             }
+
+            //dd($resp);
         }
+
         return "dataCloned";
     }
 
@@ -157,25 +165,6 @@ class CloneDBController extends Controller
     }
 
 
- /*    public function shellCommand(Request $request)
-    {
-        try {
-            $out = null;
-            if(strpos($request->command, 'php artisan')){
-                $out = \Artisan::call(substr($request->command, 12));
-            }else{
-                $out = shell_exec($request->command);
-            }
-            return [$out, 200];
-        } catch (Exception $e) {
-            return  [$e, 500];
-        }
-    } */
-  /*   public function commandInput(Request $request)
-    {
-        return view('features.cmd');
-    }
- */
     /* Functions */
     static function getData($query, $fields, $contact,  $contactField, $table_name)
     {
@@ -184,6 +173,7 @@ class CloneDBController extends Controller
         $fields = $fields;
         $fieldNames = [];
         $fieldsArr = [];
+
 
         foreach ($fields as $key => $field) {
             $fieldAtrs = [];
@@ -213,8 +203,11 @@ class CloneDBController extends Controller
     {
         DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)");
 
+        $resp = null;
+
         foreach ($tableData as $row) {
             $table = null;
+            $table_has = null;
             $username = null;
             $userPass = null;
             $firstname = null;
@@ -222,6 +215,7 @@ class CloneDBController extends Controller
             $nameFields = [];
             $dataFields = [];
             $toUpdate   = [];
+
 
             if (($tablename === 'Checklist')  || ($tablename === 'InstallmentTracker')) {
                 if ($tablename === 'Checklist') {
@@ -231,15 +225,19 @@ class CloneDBController extends Controller
                     foreach ($tableData as $row2) {
                         if ($row2->cf_1175 != '') {
                             $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
+                            $table_has =  DB::select("SELECT 'id' as table_id FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
                         }
                         if ($row2->cf_1176 != '') {
                             $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
+                            $table_has =  DB::select("SELECT 'id' as table_id FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
                         }
                     }
                 }
             } else {
                 $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE  id = '$row->id';"); //$contactField = '$contactID' AND
+                $table_has =  DB::select("SELECT 'id' as table_id FROM vt_$tablename WHERE  id = '$row->id';");
             }
+
             foreach ($row as $key => $val) {
                 if ($contactField === $key && ($val != null)) {
                     $contactID = $val;
@@ -258,13 +256,15 @@ class CloneDBController extends Controller
             }
 
             foreach ($toUpdate as $toup) {
+                $tableIdsArr = [];
                 foreach ($toup as $key => $val) {
+                    $id = null;
+                    if ($key === 'id') {
+                        $id = $val;
+                        array_push($tableIdsArr, $id);
+                    }
                     if ($table[0]->total > 0) { //If table has founded row be updated
-                        $id = null;
-                        if ($key === 'id') {
-                            $id = $val;
-                        }
-                        if (($tablename === 'Checklist') || ($tablename === 'InstallmentTracker')) { //If table hasnt contact field
+                        if (($tablename === 'Checklist') || ($tablename === 'InstallmentTracker') || ($tablename === 'CommBoard')) { //If table hasnt contact field
                             DB::update("UPDATE vt_$tablename set $key = '$val' WHERE id = '$id';");
                         } else {
                             DB::update("UPDATE vt_$tablename set $key = '$val' WHERE  $contactField = '$contactID' AND id = '$id';");
@@ -284,6 +284,7 @@ class CloneDBController extends Controller
                         if ($key === 'lastname') {
                             $last_name = $val;
                         }
+
                         if ($username !== null && $userPass !== null) {
                             User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
                                 'user_name' => $username,
@@ -296,7 +297,9 @@ class CloneDBController extends Controller
                     }
                 }
             } //end loop
+            DB::table("vt_$tablename")->whereNotIn('id', $tableIdsArr)->delete();
         }
+        //  dd($resp);
     }
 
     static function toMysqlType($value) //convert JSON data types to mysql datatypes
@@ -340,5 +343,9 @@ class CloneDBController extends Controller
                 }
             }
         }
+    }
+
+    public function testRequest(Request $request)
+    {
     }
 }
