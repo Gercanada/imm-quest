@@ -21,6 +21,11 @@ class CommboardController extends Controller
      * Show a list of comments between contact and immManager about following up on a contact.
      */
     public function index(){
+
+
+        return view('commboard.index');
+    }
+    public function getComments(){
         $user = Auth::user();
         $user_id = $user->id;
 
@@ -66,7 +71,7 @@ class CommboardController extends Controller
               ->orWhereIn('cf_2218', $vtCasesNOArr)->
               ->get(); //find by caseNo */
 
-        return view('commboard.index', compact('commboards','threads','contact'));
+              return [ $commboards, $contact, $threads  ];
     }
     /**
      * Display a listing of the resource.
@@ -82,21 +87,18 @@ class CommboardController extends Controller
             ]);
 
             $user = Auth::user();
-            $user_id = $user->id;
-            $vtiger = new Vtiger();
             //Get contact data of this user
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
-            //return $contact;
-            $vtiger = new Vtiger();
+
 
             $faker = Faker::create();
-        //return $faker->numberBetween(0,99);
-        $newId =$faker->numberBetween(0,99).'x'.$faker->numberBetween(0,99999);
+                //return $faker->numberBetween(0,99);
+            $newId =$faker->numberBetween(0,99).'x'.$faker->numberBetween(0,99999);
 
             $founded =false;
             while($founded === true){
                 $founded = Commboard::where('id',$newId)->firstOrFail();
-                $newId ="$faker->numberBetween(0,99)x$faker->numberBetween(0,99999)";
+                $newId ="_x$faker->numberBetween(0,99999)";
             }
 
             $data = [
@@ -116,7 +118,7 @@ class CommboardController extends Controller
 
             Commboard::create($data);
             //$data = $vtiger->create("CommBoard", $data);
-            return redirect('/');
+            return $data;
         } catch (\Exception $e) {
             return $e;
         }

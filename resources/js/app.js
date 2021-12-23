@@ -29,6 +29,7 @@ Vue.component('documets-component', require('./components/DocumentsComponent.vue
 Vue.component('clitem-component', require('./components/CLItemComponent.vue').default);
 Vue.component('show-case-component', require('./components/ShowCaseComponent.vue').default);
 Vue.component('change_themme', require('./components/ChangeThemmeComponent.vue').default);
+Vue.component('commboard-component', require('./components/CommboardComponent.vue').default);
 // Vue.component('send-command-component', require('./components/SendCommandComponent.vue').default);
 
 /**

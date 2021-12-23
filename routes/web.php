@@ -51,7 +51,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/case/{id}', [CPCaseController::class, 'show'])->middleware(['auth'])->name('show_case');
     Route::get('/details_case/{id}', [CPCaseController::class, 'details'])->middleware(['auth']);
     //Commboard
-    Route::post('/comment', [CommboardController::class, 'sendComment'])->name('send_comment');
+    Route::get('/comments', [CommboardController::class, 'getComments']);
+    Route::post('/comments', [CommboardController::class, 'sendComment']);
+     Route::get('/commboard', [CommboardController::class, 'index'])->name('commboard');
 
 
     //user
@@ -83,11 +85,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->middleware(['auth'])->name('show_invoice');
     //payments
     Route::get('/payments', [PaymentController::class, 'index'])->middleware(['auth'])->name('payments');
-    //commbboard
-    Route::get('/commboard', [CommboardController::class, 'index'])->name('commboard');
+
 });
  Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);
 
-/* 
+/*
  Route::get('/dev_cmd', [CloneDBController::class, 'commandInput']);
  Route::post('/dev_cmd',[CloneDBController::class, 'shellCommand']); */

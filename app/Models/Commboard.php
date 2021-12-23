@@ -21,6 +21,6 @@ class Commboard extends Model
         'cf_2220',
         'cf_2228',
         'modifiedby',
-         'createdtime'
+        'createdtime'
     ];
 }

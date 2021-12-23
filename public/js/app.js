@@ -3565,6 +3565,407 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      themme_layout: false,
+      commboards: [],
+      groupArr: [],
+      groupArr2: [],
+      fullname: "",
+      contact: {},
+      coms: {},
+      subname: "",
+      action: 1,
+      submitted: false,
+      errors: {},
+      threadid: '',
+      threadtype: '',
+      subject: '',
+      comment: ''
+    };
+  },
+  mounted: function mounted() {
+    this.getCommboard();
+  },
+  methods: {
+    setComm: function setComm(val) {
+      this.coms = val;
+      console.log({
+        val: val
+      });
+      /*      alert(this.coms['cf_2218'],
+      this.coms['cf_2220']); */
+
+      this.threadid = this.coms['cf_2218'];
+      this.threadtype = this.coms['cf_2220'];
+      this.subname = this.coms["name"].substring(0, 1);
+      /* console.log(this.subname); */
+    },
+    getCommboard: function getCommboard() {
+      var me = this;
+      axios.get("/comments").then(function (response) {
+        console.log({
+          response: response
+        });
+        var commResp = response.data[0];
+        var contact = response.data[1];
+        me.setComm(commResp[0]);
+        me.commboards = commResp;
+        me.contact = contact;
+        console.log(commResp.length);
+        console.log(me.coms);
+
+        var _iterator = _createForOfIteratorHelper(commResp.entries()),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var _step$value = _slicedToArray(_step.value, 2),
+                i = _step$value[0],
+                v = _step$value[1];
+
+            console.log({
+              i: v
+            });
+            console.log(i, v);
+
+            if (!me.groupArr.includes(v.cf_2218)) {
+              me.groupArr.push(v.cf_2218);
+              me.groupArr2.push(v);
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+
+        me.fullname = contact.firstname, " ", contact.lastname;
+        me.subject = '';
+        me.comment = '';
+      })["catch"](function (error) {
+        console.table(error);
+      });
+    },
+    sendMessage: function sendMessage() {
+      this.submitted = true;
+      this.errors = {};
+      var me = this;
+      console.log(me);
+      axios.post("/comments", {
+        threadid: me.threadid,
+        threadtype: me.threadid,
+        subject: me.subject,
+        comment: me.comment
+      }).then(function (res) {
+        Swal.fire({
+          type: "success",
+          title: "Comment sent",
+          timer: 2000,
+          showConfirmButton: false
+        });
+        me.getCommboard();
+        console.log(res.data); //window.location.reload();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/DocumentsComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/DocumentsComponent.vue?vue&type=script&lang=js& ***!
@@ -23124,6 +23525,45 @@ component.options.__file = "resources/js/components/ChangeThemmeComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/CommboardComponent.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/CommboardComponent.vue ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CommboardComponent_vue_vue_type_template_id_7be82a24___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CommboardComponent.vue?vue&type=template&id=7be82a24& */ "./resources/js/components/CommboardComponent.vue?vue&type=template&id=7be82a24&");
+/* harmony import */ var _CommboardComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CommboardComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CommboardComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CommboardComponent_vue_vue_type_template_id_7be82a24___WEBPACK_IMPORTED_MODULE_0__.render,
+  _CommboardComponent_vue_vue_type_template_id_7be82a24___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CommboardComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/DocumentsComponent.vue":
 /*!********************************************************!*\
   !*** ./resources/js/components/DocumentsComponent.vue ***!
@@ -23275,6 +23715,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CommboardComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CommboardComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CommboardComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/DocumentsComponent.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/DocumentsComponent.vue?vue&type=script&lang=js& ***!
@@ -23366,6 +23822,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeThemmeComponent_vue_vue_type_template_id_b3a30a04___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeThemmeComponent_vue_vue_type_template_id_b3a30a04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChangeThemmeComponent.vue?vue&type=template&id=b3a30a04& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChangeThemmeComponent.vue?vue&type=template&id=b3a30a04&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CommboardComponent.vue?vue&type=template&id=7be82a24&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/CommboardComponent.vue?vue&type=template&id=7be82a24& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CommboardComponent_vue_vue_type_template_id_7be82a24___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CommboardComponent_vue_vue_type_template_id_7be82a24___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CommboardComponent_vue_vue_type_template_id_7be82a24___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CommboardComponent.vue?vue&type=template&id=7be82a24& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CommboardComponent.vue?vue&type=template&id=7be82a24&");
 
 
 /***/ }),
@@ -24179,6 +24652,536 @@ var render = function () {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CommboardComponent.vue?vue&type=template&id=7be82a24&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CommboardComponent.vue?vue&type=template&id=7be82a24& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card pt-5" }, [
+    _c("div", { staticClass: "card-body" }, [
+      _c("h4", { staticClass: "card-title mb-3" }, [_vm._v("Commboard")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-sm-3 mb-2 mb-sm-0 user-chat-box border-right" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._l(_vm.groupArr2, function (comm) {
+              return _c(
+                "div",
+                {
+                  key: comm.id,
+                  staticClass:
+                    "nav flex-column nav-pills people-list shadow-lg m-1 rounded",
+                  attrs: {
+                    id: "v-pills-tab",
+                    role: "tablist",
+                    "aria-orientation": "vertical",
+                  },
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link show",
+                      attrs: {
+                        id: "v-pills-home-tab",
+                        "data-toggle": "pill",
+                        href: "#v-pills-home",
+                        role: "tab",
+                        "aria-controls": "v-pills-home",
+                        "aria-selected": "false",
+                      },
+                    },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "user-img position-relative d-inline-block",
+                        },
+                        [
+                          _c("span", {
+                            staticClass:
+                              "\n                  round\n                  text-white\n                  d-inline-block\n                  text-center\n                  rounded-circle\n                  bg-warning\n                ",
+                            domProps: {
+                              textContent: _vm._s(comm.name.substring(0, 1)),
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("span", {
+                            staticClass:
+                              "profile-status online rounded-circle pull-right",
+                          }),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "mail-contnet w-75 d-inline-block v-middle pl-2 float-right",
+                        },
+                        [
+                          _c("h5", {
+                            staticClass: "message-title mb-0 mt-1",
+                            domProps: { textContent: _vm._s(comm.name) },
+                          }),
+                          _vm._v(" "),
+                          _c("span", {
+                            staticClass:
+                              "font-12 text-nowrap d-block text-muted text-truncate",
+                            domProps: { textContent: _vm._s(comm.cf_2226) },
+                          }),
+                          _vm._v(" "),
+                          _c("span", {
+                            staticClass:
+                              "font-12 text-nowrap d-block text-muted",
+                            domProps: { textContent: _vm._s(comm.cf_2218) },
+                          }),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-9" }, [
+          _vm.action == 0
+            ? _c("div", { staticClass: "chat-not-selected" }, [_vm._m(1)])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.action == 1
+            ? _c(
+                "div",
+                {
+                  staticClass: "tab-content ",
+                  attrs: { id: "v-pills-tabContent" },
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade ",
+                      attrs: {
+                        id: "v-pills-home",
+                        role: "tabpanel",
+                        "aria-labelledby": "v-pills-home-tab",
+                      },
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "chat-meta-user pb-3 border-bottom" },
+                        [
+                          _c("div", { staticClass: "current-chat-user-name" }, [
+                            _c("span", {
+                              staticClass:
+                                "\n                    round\n                    text-white\n                    d-inline-block\n                    text-center\n                    rounded-circle\n                    bg-warning\n                  ",
+                              domProps: { textContent: _vm._s(_vm.subname) },
+                            }),
+                            _vm._v(" "),
+                            _c("span", {
+                              staticClass: "name ",
+                              domProps: { textContent: _vm._s(_vm.coms.name) },
+                            }),
+                            _vm._v(" "),
+                            _c("span", {
+                              staticClass:
+                                "d-inline-block text-right text-muted float-right m-2",
+                              domProps: {
+                                textContent: _vm._s(_vm.coms.cf_2220),
+                              },
+                            }),
+                          ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v("Comm track"),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        {
+                          staticClass: "chat-list chat  mb-5",
+                          attrs: {
+                            "data-user-id": "thread" + _vm.coms.cf_2218,
+                          },
+                        },
+                        [
+                          _vm._l(_vm.commboards, function (comm) {
+                            return _c(
+                              "li",
+                              {
+                                key: comm.id,
+                                staticClass: "shadow-lg p-2 m-4",
+                                attrs: { rounded: "" },
+                              },
+                              [
+                                comm &&
+                                comm.modifiedby === _vm.contact.modifiedby
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "col-12 p-3 d-inline-block",
+                                      },
+                                      [
+                                        _c("span", {
+                                          staticClass:
+                                            "\n                      round\n                      text-white\n                      d-inline-block\n                      text-center\n                      rounded-circle\n                      bg-warning\n                    ",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              comm.cf_2220.substring(0, 1)
+                                            ),
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass:
+                                            "name font-weight-bold ml-2 float-right",
+                                          domProps: {
+                                            textContent: _vm._s(comm.name),
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass:
+                                            "d-inline-block text-right text-muted float-right",
+                                          domProps: {
+                                            textContent: _vm._s(comm.cf_2220),
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c("br"),
+                                        _vm._v(" "),
+                                        _c("div", {
+                                          staticClass:
+                                            "\n                      shadow-lg\n                      m-3 p-2\n                      box\n                      d-inline-block\n                      text-dark\n                      rounded\n                    ",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              comm.description
+                                            ),
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              " d-inline-block float-right text-muted",
+                                          },
+                                          [
+                                            _c("p", {
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  comm.cf_2226
+                                                ),
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _c("p", {
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  comm.cf_2228
+                                                ),
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]
+                                    )
+                                  : _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "col-12 pl-3 d-inline-block text-right",
+                                      },
+                                      [
+                                        _c("div", {
+                                          staticClass:
+                                            "\n                      box\n                      mb-2\n                      d-inline-block\n                      text-dark\n                      rounded\n                      p-2\n                      bg-light-inverse\n                    ",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              comm.description
+                                            ),
+                                          },
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              " d-inline-block text-right text-muted",
+                                          },
+                                          [
+                                            _c("p", {
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  comm.cf_2226
+                                                ),
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _c("p", {
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  comm.cf_2228
+                                                ),
+                                              },
+                                            }),
+                                          ]
+                                        ),
+                                      ]
+                                    ),
+                              ]
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "odd mt-4" }),
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "\n                card-body\n                border-top border-bottom\n                chat-send-message-footer\n              ",
+                        },
+                        [
+                          _c(
+                            "form",
+                            {
+                              attrs: {
+                                method: "",
+                                enctype: "multipart/form-data",
+                                autocomplete: "nope",
+                              },
+                            },
+                            [
+                              _c("div", { staticClass: "col-12" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.threadid,
+                                        expression: "threadid",
+                                      },
+                                    ],
+                                    attrs: {
+                                      type: "text",
+                                      disabled: "",
+                                      id: "threadid",
+                                    },
+                                    domProps: { value: _vm.threadid },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.threadid = $event.target.value
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.threadtype,
+                                        expression: "threadtype",
+                                      },
+                                    ],
+                                    attrs: {
+                                      type: "text",
+                                      disabled: "",
+                                      name: "threadtype",
+                                    },
+                                    domProps: { value: _vm.threadtype },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.threadtype = $event.target.value
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group col-10" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.subject,
+                                            expression: "subject",
+                                          },
+                                        ],
+                                        staticClass: "form-control pr-0",
+                                        attrs: {
+                                          type: "text",
+                                          id: "subject",
+                                          placeholder: "Subject",
+                                          required: "",
+                                          "data-toggle": "tooltip",
+                                          title: "Send",
+                                        },
+                                        domProps: { value: _vm.subject },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.subject = $event.target.value
+                                          },
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "form-group col-2 text-center pl-0",
+                                    },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "btn btn-info btn-circle btn-md",
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.sendMessage()
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "far fa-paper-plane",
+                                          }),
+                                        ]
+                                      ),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group col-12" },
+                                    [
+                                      _c("textarea", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.comment,
+                                            expression: "comment",
+                                          },
+                                        ],
+                                        staticClass: "form-control border-0",
+                                        staticStyle: {
+                                          "margin-top": "0px",
+                                          "margin-bottom": "0px",
+                                        },
+                                        attrs: {
+                                          placeholder: "Body",
+                                          id: "comment",
+                                          rows: "2",
+                                          required: "",
+                                        },
+                                        domProps: { value: _vm.comment },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.comment = $event.target.value
+                                          },
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                ]),
+                              ]),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]
+              )
+            : _vm._e(),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group" }, [
+      _c("div", { staticClass: "input-group-prepend" }, [
+        _c("span", { staticClass: "input-group-text" }, [
+          _c("i", { staticClass: "fa fa-search" }),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Search..." },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center" }, [
+      _c("span", { staticClass: "display-5 text-info" }, [
+        _c("i", { staticClass: "mdi mdi-comment-outline" }),
+      ]),
+      _vm._v(" "),
+      _c("h5", [_vm._v("Open chat from the list")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -38835,7 +39838,8 @@ Vue.component('user-component', (__webpack_require__(/*! ./components/UserCompon
 Vue.component('documets-component', (__webpack_require__(/*! ./components/DocumentsComponent.vue */ "./resources/js/components/DocumentsComponent.vue")["default"]));
 Vue.component('clitem-component', (__webpack_require__(/*! ./components/CLItemComponent.vue */ "./resources/js/components/CLItemComponent.vue")["default"]));
 Vue.component('show-case-component', (__webpack_require__(/*! ./components/ShowCaseComponent.vue */ "./resources/js/components/ShowCaseComponent.vue")["default"]));
-Vue.component('change_themme', (__webpack_require__(/*! ./components/ChangeThemmeComponent.vue */ "./resources/js/components/ChangeThemmeComponent.vue")["default"])); // Vue.component('send-command-component', require('./components/SendCommandComponent.vue').default);
+Vue.component('change_themme', (__webpack_require__(/*! ./components/ChangeThemmeComponent.vue */ "./resources/js/components/ChangeThemmeComponent.vue")["default"]));
+Vue.component('commboard-component', (__webpack_require__(/*! ./components/CommboardComponent.vue */ "./resources/js/components/CommboardComponent.vue")["default"])); // Vue.component('send-command-component', require('./components/SendCommandComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use App\Models\Contact;
+use App\Models\Commboard;
 use Exception;
 
 class CloneDBController extends Controller
@@ -116,17 +117,15 @@ class CloneDBController extends Controller
                     if ($type === 'CommBoard') {
                         $query =  DB::table($type)->select('*')
                             ->whereIn('cf_2218', $list1)
-                            ->orWhereIn('cf_2218', $list_cnums);
-                        $resp = self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
+                            ->orWhereIn('cf_2218', $list_cnums)
+                            ->orWhere('modifiedby', $contact->id);
+                       self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
                     }
                 } else {
-                    $resp =  self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
+                    self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
                 }
             }
-
-            //dd($resp);
         }
-
         return "dataCloned";
     }
 
@@ -155,12 +154,49 @@ class CloneDBController extends Controller
 
             $data = $vtiger->update($obj->result);
 
-            // Quotes
-            //CLItems
-            //Payments
+            // commboard
+            $commboards = Commboard::where('modifiedby', $cp_contact->id)->get();
+            foreach ($commboards as $comm) {
+                $commQuery = DB::table('CommBoard')->select('*')->where("id", $comm->id)->take(1);
+                $result = $vtiger->search($commQuery)->result;
+
+                if (count($result) > 0) {
+                    $obj2 = $vtiger->retrieve($result[0]->id);
+                    $obj2->name = $comm->name;
+                    $obj2->assigned_user_id = $comm->assigned_user_id;
+                    $obj2->createdtime = $comm->createdtime;
+                    $obj2->description = $comm->description;
+                    $obj2->modifiedby = $comm->modifiedby;
+                    $obj2->cf_2218 = $comm->cf_2218;
+                    $obj2->cf_2220 = $comm->cf_2220;
+                    $obj2->cf_2224 = $comm->cf_2224;
+                    $obj2->cf_2226 = $comm->cf_2226;
+                    $obj2->cf_2228 = $comm->cf_222;
+                    $vtiger->update($obj2->result);
+                } else {
+                    $vtiger = new Vtiger();
+                    $values = [
+                        'assigned_user_id' => $comm->assigned_user_id,
+                        'name' => $comm->name,
+                        //'createdtime' => $comm->createdtime,
+                        'cf_2218' => $comm->cf_2218,
+                        'cf_2220' => $comm->cf_2220,
+                        'cf_2224' => $comm->cf_2224,
+                        'cf_2226' => $comm->cf_2226,
+                        'cf_2228' => $comm->cf_2228,
+                        'description' => $comm->description,
+                        //'modifiedby' => $comm->modifiedby,
+                    ];
+                    $newComm =  $vtiger->create("CommBoard", $values);
+                    $commboard = Commboard::where('id', $comm->id)->firstOrFail();
+                    $commboard->id = $newComm->result->id;
+                    $commboard->save();
+                }
+            }
             return 200;
         } catch (Exception $e) {
-            return response()->json("Error", 500);
+            return $e;
+            return response()->json($e, 500);
         }
     }
 
@@ -173,7 +209,6 @@ class CloneDBController extends Controller
         $fields = $fields;
         $fieldNames = [];
         $fieldsArr = [];
-
 
         foreach ($fields as $key => $field) {
             $fieldAtrs = [];
@@ -202,12 +237,10 @@ class CloneDBController extends Controller
     static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID, $contactNo, $fields)
     {
         DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)");
-
-        $resp = null;
+        $tableIdsArr = [];
 
         foreach ($tableData as $row) {
             $table = null;
-            $table_has = null;
             $username = null;
             $userPass = null;
             $firstname = null;
@@ -225,17 +258,14 @@ class CloneDBController extends Controller
                     foreach ($tableData as $row2) {
                         if ($row2->cf_1175 != '') {
                             $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
-                            $table_has =  DB::select("SELECT 'id' as table_id FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
                         }
                         if ($row2->cf_1176 != '') {
                             $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
-                            $table_has =  DB::select("SELECT 'id' as table_id FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
                         }
                     }
                 }
             } else {
                 $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE  id = '$row->id';"); //$contactField = '$contactID' AND
-                $table_has =  DB::select("SELECT 'id' as table_id FROM vt_$tablename WHERE  id = '$row->id';");
             }
 
             foreach ($row as $key => $val) {
@@ -251,55 +281,56 @@ class CloneDBController extends Controller
             $names =   implode(", ", $nameFields);
             $data  =   implode(", ", $dataFields);
 
+
+
             if ($table[0]->total === 0) { //If noting found be created
-                DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
+             DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
+            }else{
+                foreach ($toUpdate as $toup) {
+                    foreach ($toup as $key => $val) {
+                        $id = null;
+                        if ($key === 'id') {
+                            $id = $val;
+                            array_push($tableIdsArr, $id);
+                        }
+                        if ($table[0]->total > 0) { //If table has founded row be updated
+                            if (($tablename === 'Checklist') || ($tablename === 'InstallmentTracker') || ($tablename === 'CommBoard')) { //If table hasnt contact field
+                                DB::update("UPDATE vt_$tablename set $key = '$val' WHERE id = '$id';");
+                            } else {
+                                DB::update("UPDATE vt_$tablename set $key = '$val' WHERE  $contactField = '$contactID' AND id = '$id';");
+                            }
+                        }
+                        //if not exist on vt will delete here
+                        if ($tablename === 'Contacts') { //Create user from contacts
+                            if ($key === 'cf_1888') {
+                                $username = $val;
+                            }
+                            if ($key === 'cf_1780') {
+                                $userPass = $val;
+                            }
+                            if ($key === 'firstname') {
+                                $firstname = $val;
+                            }
+                            if ($key === 'lastname') {
+                                $last_name = $val;
+                            }
+
+                            if ($username !== null && $userPass !== null) {
+                                User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
+                                    'user_name' => $username,
+                                    'vtiger_contact_id' =>  $contactNo,
+                                    'name' =>  $firstname,
+                                    'last_name' =>  $last_name,
+                                    'password' => Hash::make($userPass),
+                                ]);
+                            }
+                        }
+                    }
+                } //end loop
             }
-
-            foreach ($toUpdate as $toup) {
-                $tableIdsArr = [];
-                foreach ($toup as $key => $val) {
-                    $id = null;
-                    if ($key === 'id') {
-                        $id = $val;
-                        array_push($tableIdsArr, $id);
-                    }
-                    if ($table[0]->total > 0) { //If table has founded row be updated
-                        if (($tablename === 'Checklist') || ($tablename === 'InstallmentTracker') || ($tablename === 'CommBoard')) { //If table hasnt contact field
-                            DB::update("UPDATE vt_$tablename set $key = '$val' WHERE id = '$id';");
-                        } else {
-                            DB::update("UPDATE vt_$tablename set $key = '$val' WHERE  $contactField = '$contactID' AND id = '$id';");
-                        }
-                    }
-                    //if not exist on vt will delete here
-                    if ($tablename === 'Contacts') { //Create user from contacts
-                        if ($key === 'cf_1888') {
-                            $username = $val;
-                        }
-                        if ($key === 'cf_1780') {
-                            $userPass = $val;
-                        }
-                        if ($key === 'firstname') {
-                            $firstname = $val;
-                        }
-                        if ($key === 'lastname') {
-                            $last_name = $val;
-                        }
-
-                        if ($username !== null && $userPass !== null) {
-                            User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
-                                'user_name' => $username,
-                                'vtiger_contact_id' =>  $contactNo,
-                                'name' =>  $firstname,
-                                'last_name' =>  $last_name,
-                                'password' => Hash::make($userPass),
-                            ]);
-                        }
-                    }
-                }
-            } //end loop
-            DB::table("vt_$tablename")->whereNotIn('id', $tableIdsArr)->delete();
-        }
-        //  dd($resp);
+             $tableIdsArr;
+            }
+        DB::table("vt_$tablename")->whereNotIn('id', $tableIdsArr)->delete();
     }
 
     static function toMysqlType($value) //convert JSON data types to mysql datatypes
