@@ -1,19 +1,19 @@
 <template>
-  <div class="card pt-5">
+  <div class="card pt-5 col-md-12 col-md-6 col-sm-12">
     <div class="card-body">
       <h4 class="card-title mb-3">Commboard</h4>
       <div class="row">
-        <div class="col-sm-3 mb-2 mb-sm-0 user-chat-box border-right">
+        <div class="col-sm-4 mb-2 mb-sm-0 user-chat-box border-right pt-2">
           <!-- list 1 -->
-          <div class="input-group">
+          <!-- <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fa fa-search"></i></span>
             </div>
             <input type="text" class="form-control" placeholder="Search..." />
           </div>
-
+ -->
           <div
-            class="nav flex-column nav-pills people-list shadow-lg m-1 rounded"
+            class="nav flex-column nav-pills people-list shadow-lg rounded pt-2"
             id="v-pills-tab"
             role="tablist"
             aria-orientation="vertical"
@@ -23,7 +23,7 @@
               v-for="comm in groupArr2"
               :key="comm.id"
               :id="'tab_' + coms.cf_2218 + '-tab'"
-              class="nav-link"
+              class="nav-link pt-1 pb-1 mr-0"
               data-toggle="pill"
               :href="'#tab_' + comm.cf_2218"
               role="tab"
@@ -55,7 +55,6 @@
                   w-75
                   d-inline-block
                   v-middle
-                  pl-2
                   float-right
                 "
               >
@@ -73,7 +72,7 @@
           </div>
         </div>
 
-        <div class="col-sm-9">
+        <div class="col-sm-8">
           <div class="chat-not-selected" v-if="action == 0">
             <div class="text-center">
               <span class="display-5 text-info"
@@ -91,8 +90,8 @@
               role="tabpanel"
               :aria-labelledby="'tab_' + coms.cf_2218 + '-tab'"
             >
-              <div class="chat-meta-user pb-3 border-bottom">
-                <div class="current-chat-user-name">
+              <div class="chat-meta-user border-bottom">
+                <div class="current-chat-user-name pb-3 ">
                   <span
                     class="
                       round
@@ -107,7 +106,7 @@
                   </span>
                   <span class="name" v-text="coms.name"></span>
                   <span
-                    class="d-inline-block text-right text-muted float-right m-2"
+                    class="d-inline-block text-right text-muted float-right m-2 pb-2"
                     v-text="coms.cf_2220"
                   ></span>
                 </div>
@@ -120,7 +119,7 @@
               <div  v-for="comm in commboards"
                   :key="comm.id">
                 <li
-                  class="shadow-lg p-2 m-4"
+                  class="shadow-lg pb-1 mb-2"
                   rounded
                   v-if="coms.cf_2218===comm.cf_2218 && commboards.length >0"
                 >
@@ -204,7 +203,7 @@
                   enctype="multipart/form-data"
                   autocomplete="nope"
                 >
-                  <div class="col-12">
+                  <div class="col-12 shadow-lg p-2">
                     <div class="row">
                       <input
                         v-model="threadid"
@@ -218,7 +217,7 @@
                         disabled
                         name="threadtype"
                       />
-                      <div class="form-group col-10">
+                      <div class="form-group col-10 ">
                         <input
                           v-model="subject"
                           type="text"
@@ -281,6 +280,7 @@ export default {
       threadtype: "",
       subject: "",
       comment: "",
+
     };
   },
   mounted() {

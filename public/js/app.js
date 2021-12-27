@@ -3853,7 +3853,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -24658,22 +24657,23 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card pt-5" }, [
+  return _c("div", { staticClass: "card pt-5 col-md-12 col-md-6 col-sm-12" }, [
     _c("div", { staticClass: "card-body" }, [
       _c("h4", { staticClass: "card-title mb-3" }, [_vm._v("Commboard")]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
           "div",
-          { staticClass: "col-sm-3 mb-2 mb-sm-0 user-chat-box border-right" },
+          {
+            staticClass:
+              "col-sm-4 mb-2 mb-sm-0 user-chat-box border-right pt-2",
+          },
           [
-            _vm._m(0),
-            _vm._v(" "),
             _c(
               "div",
               {
                 staticClass:
-                  "nav flex-column nav-pills people-list shadow-lg m-1 rounded",
+                  "nav flex-column nav-pills people-list shadow-lg rounded pt-2",
                 attrs: {
                   id: "v-pills-tab",
                   role: "tablist",
@@ -24685,7 +24685,7 @@ var render = function () {
                   "a",
                   {
                     key: comm.id,
-                    staticClass: "nav-link",
+                    staticClass: "nav-link pt-1 pb-1 mr-0",
                     attrs: {
                       id: "tab_" + _vm.coms.cf_2218 + "-tab",
                       "data-toggle": "pill",
@@ -24710,7 +24710,7 @@ var render = function () {
                       [
                         _c("span", {
                           staticClass:
-                            "\n                  round\n                  text-white\n                  d-inline-block\n                  text-center\n                  rounded-circle\n                  bg-warning\n                ",
+                            "\n                   round\n                   text-white\n                   d-inline-block\n                   text-center\n                   rounded-circle\n                   bg-warning\n                 ",
                           domProps: {
                             textContent: _vm._s(comm.name.substring(0, 1)),
                           },
@@ -24727,7 +24727,7 @@ var render = function () {
                       "div",
                       {
                         staticClass:
-                          "\n                mail-contnet\n                w-75\n                d-inline-block\n                v-middle\n                pl-2\n                float-right\n              ",
+                          "\n                 mail-contnet\n                 w-75\n                 d-inline-block\n                 v-middle\n                 float-right\n               ",
                       },
                       [
                         _c("h5", {
@@ -24755,9 +24755,9 @@ var render = function () {
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-9" }, [
+        _c("div", { staticClass: "col-sm-8" }, [
           _vm.action == 0
-            ? _c("div", { staticClass: "chat-not-selected" }, [_vm._m(1)])
+            ? _c("div", { staticClass: "chat-not-selected" }, [_vm._m(0)])
             : _vm._e(),
           _vm._v(" "),
           _vm.action == 1
@@ -24781,28 +24781,34 @@ var render = function () {
                     [
                       _c(
                         "div",
-                        { staticClass: "chat-meta-user pb-3 border-bottom" },
+                        { staticClass: "chat-meta-user border-bottom" },
                         [
-                          _c("div", { staticClass: "current-chat-user-name" }, [
-                            _c("span", {
-                              staticClass:
-                                "\n                    round\n                    text-white\n                    d-inline-block\n                    text-center\n                    rounded-circle\n                    bg-warning\n                  ",
-                              domProps: { textContent: _vm._s(_vm.subname) },
-                            }),
-                            _vm._v(" "),
-                            _c("span", {
-                              staticClass: "name",
-                              domProps: { textContent: _vm._s(_vm.coms.name) },
-                            }),
-                            _vm._v(" "),
-                            _c("span", {
-                              staticClass:
-                                "d-inline-block text-right text-muted float-right m-2",
-                              domProps: {
-                                textContent: _vm._s(_vm.coms.cf_2220),
-                              },
-                            }),
-                          ]),
+                          _c(
+                            "div",
+                            { staticClass: "current-chat-user-name pb-3 " },
+                            [
+                              _c("span", {
+                                staticClass:
+                                  "\n                     round\n                     text-white\n                     d-inline-block\n                     text-center\n                     rounded-circle\n                     bg-warning\n                   ",
+                                domProps: { textContent: _vm._s(_vm.subname) },
+                              }),
+                              _vm._v(" "),
+                              _c("span", {
+                                staticClass: "name",
+                                domProps: {
+                                  textContent: _vm._s(_vm.coms.name),
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("span", {
+                                staticClass:
+                                  "d-inline-block text-right text-muted float-right m-2 pb-2",
+                                domProps: {
+                                  textContent: _vm._s(_vm.coms.cf_2220),
+                                },
+                              }),
+                            ]
+                          ),
                         ]
                       ),
                       _vm._v(" "),
@@ -24825,7 +24831,7 @@ var render = function () {
                               ? _c(
                                   "li",
                                   {
-                                    staticClass: "shadow-lg p-2 m-4",
+                                    staticClass: "shadow-lg pb-1 mb-2",
                                     attrs: { rounded: "" },
                                   },
                                   [
@@ -24840,7 +24846,7 @@ var render = function () {
                                           [
                                             _c("span", {
                                               staticClass:
-                                                "\n                      round\n                      text-white\n                      d-inline-block\n                      text-center\n                      rounded-circle\n                      bg-warning\n                    ",
+                                                "\n                       round\n                       text-white\n                       d-inline-block\n                       text-center\n                       rounded-circle\n                       bg-warning\n                     ",
                                               domProps: {
                                                 textContent: _vm._s(
                                                   comm.cf_2220.substring(0, 1)
@@ -24870,7 +24876,7 @@ var render = function () {
                                             _vm._v(" "),
                                             _c("div", {
                                               staticClass:
-                                                "\n                      shadow-lg\n                      m-3\n                      p-2\n                      box\n                      d-inline-block\n                      text-dark\n                      rounded\n                    ",
+                                                "\n                       shadow-lg\n                       m-3\n                       p-2\n                       box\n                       d-inline-block\n                       text-dark\n                       rounded\n                     ",
                                               domProps: {
                                                 textContent: _vm._s(
                                                   comm.description
@@ -24913,7 +24919,7 @@ var render = function () {
                                           [
                                             _c("div", {
                                               staticClass:
-                                                "\n                      box\n                      mb-2\n                      d-inline-block\n                      text-dark\n                      rounded\n                      p-2\n                      bg-light-inverse\n                    ",
+                                                "\n                       box\n                       mb-2\n                       d-inline-block\n                       text-dark\n                       rounded\n                       p-2\n                       bg-light-inverse\n                     ",
                                               domProps: {
                                                 textContent: _vm._s(
                                                   comm.description
@@ -24959,7 +24965,7 @@ var render = function () {
                         "div",
                         {
                           staticClass:
-                            "\n                card-body\n                border-top border-bottom\n                chat-send-message-footer\n              ",
+                            "\n                 card-body\n                 border-top border-bottom\n                 chat-send-message-footer\n               ",
                         },
                         [
                           _c(
@@ -24972,159 +24978,163 @@ var render = function () {
                               },
                             },
                             [
-                              _c("div", { staticClass: "col-12" }, [
-                                _c("div", { staticClass: "row" }, [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.threadid,
-                                        expression: "threadid",
-                                      },
-                                    ],
-                                    attrs: {
-                                      type: "hidden",
-                                      disabled: "",
-                                      id: "threadid",
-                                    },
-                                    domProps: { value: _vm.threadid },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.threadid = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.threadtype,
-                                        expression: "threadtype",
-                                      },
-                                    ],
-                                    attrs: {
-                                      type: "hidden",
-                                      disabled: "",
-                                      name: "threadtype",
-                                    },
-                                    domProps: { value: _vm.threadtype },
-                                    on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.threadtype = $event.target.value
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "form-group col-10" },
-                                    [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.subject,
-                                            expression: "subject",
-                                          },
-                                        ],
-                                        staticClass: "form-control pr-0",
-                                        attrs: {
-                                          type: "text",
-                                          id: "subject",
-                                          placeholder: "Subject",
-                                          required: "",
-                                          "data-toggle": "tooltip",
-                                          title: "Send",
-                                        },
-                                        domProps: { value: _vm.subject },
-                                        on: {
-                                          input: function ($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.subject = $event.target.value
-                                          },
-                                        },
-                                      }),
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "form-group col-2 text-center pl-0",
-                                    },
-                                    [
-                                      _c(
-                                        "a",
+                              _c(
+                                "div",
+                                { staticClass: "col-12 shadow-lg p-2" },
+                                [
+                                  _c("div", { staticClass: "row" }, [
+                                    _c("input", {
+                                      directives: [
                                         {
-                                          staticClass:
-                                            "btn btn-info btn-circle btn-md",
-                                          attrs: { href: "#" },
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.threadid,
+                                          expression: "threadid",
+                                        },
+                                      ],
+                                      attrs: {
+                                        type: "hidden",
+                                        disabled: "",
+                                        id: "threadid",
+                                      },
+                                      domProps: { value: _vm.threadid },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.threadid = $event.target.value
+                                        },
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.threadtype,
+                                          expression: "threadtype",
+                                        },
+                                      ],
+                                      attrs: {
+                                        type: "hidden",
+                                        disabled: "",
+                                        name: "threadtype",
+                                      },
+                                      domProps: { value: _vm.threadtype },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.threadtype = $event.target.value
+                                        },
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group col-10 " },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.subject,
+                                              expression: "subject",
+                                            },
+                                          ],
+                                          staticClass: "form-control pr-0",
+                                          attrs: {
+                                            type: "text",
+                                            id: "subject",
+                                            placeholder: "Subject",
+                                            required: "",
+                                            "data-toggle": "tooltip",
+                                            title: "Send",
+                                          },
+                                          domProps: { value: _vm.subject },
                                           on: {
-                                            click: function ($event) {
-                                              return _vm.sendMessage()
+                                            input: function ($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.subject = $event.target.value
                                             },
                                           },
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "far fa-paper-plane",
-                                          }),
-                                        ]
-                                      ),
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "form-group col-12" },
-                                    [
-                                      _c("textarea", {
-                                        directives: [
+                                        }),
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-group col-2 text-center pl-0",
+                                      },
+                                      [
+                                        _c(
+                                          "a",
                                           {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.comment,
-                                            expression: "comment",
+                                            staticClass:
+                                              "btn btn-info btn-circle btn-md",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.sendMessage()
+                                              },
+                                            },
                                           },
-                                        ],
-                                        staticClass: "form-control border-0",
-                                        staticStyle: {
-                                          "margin-top": "0px",
-                                          "margin-bottom": "0px",
-                                        },
-                                        attrs: {
-                                          placeholder: "Body",
-                                          id: "comment",
-                                          rows: "2",
-                                          required: "",
-                                        },
-                                        domProps: { value: _vm.comment },
-                                        on: {
-                                          input: function ($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.comment = $event.target.value
+                                          [
+                                            _c("i", {
+                                              staticClass: "far fa-paper-plane",
+                                            }),
+                                          ]
+                                        ),
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "form-group col-12" },
+                                      [
+                                        _c("textarea", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.comment,
+                                              expression: "comment",
+                                            },
+                                          ],
+                                          staticClass: "form-control border-0",
+                                          staticStyle: {
+                                            "margin-top": "0px",
+                                            "margin-bottom": "0px",
                                           },
-                                        },
-                                      }),
-                                    ]
-                                  ),
-                                ]),
-                              ]),
+                                          attrs: {
+                                            placeholder: "Body",
+                                            id: "comment",
+                                            rows: "2",
+                                            required: "",
+                                          },
+                                          domProps: { value: _vm.comment },
+                                          on: {
+                                            input: function ($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.comment = $event.target.value
+                                            },
+                                          },
+                                        }),
+                                      ]
+                                    ),
+                                  ]),
+                                ]
+                              ),
                             ]
                           ),
                         ]
@@ -25140,23 +25150,6 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group" }, [
-      _c("div", { staticClass: "input-group-prepend" }, [
-        _c("span", { staticClass: "input-group-text" }, [
-          _c("i", { staticClass: "fa fa-search" }),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "Search..." },
-      }),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
