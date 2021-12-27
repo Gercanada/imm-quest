@@ -3854,7 +3854,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3866,13 +3865,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       contact: {},
       coms: {},
       subname: "",
-      action: 1,
+      action: 0,
       submitted: false,
       errors: {},
-      threadid: '',
-      threadtype: '',
-      subject: '',
-      comment: ''
+      threadid: "",
+      threadtype: "",
+      subject: "",
+      comment: ""
     };
   },
   mounted: function mounted() {
@@ -3881,30 +3880,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   methods: {
     setComm: function setComm(val) {
       this.coms = val;
-      console.log({
-        val: val
-      });
-      /*      alert(this.coms['cf_2218'],
-      this.coms['cf_2220']); */
-
-      this.threadid = this.coms['cf_2218'];
-      this.threadtype = this.coms['cf_2220'];
+      this.threadid = this.coms["cf_2218"];
+      this.threadtype = this.coms["cf_2220"];
       this.subname = this.coms["name"].substring(0, 1);
-      /* console.log(this.subname); */
+    },
+    changeAction: function changeAction() {
+      this.action = 1;
     },
     getCommboard: function getCommboard() {
       var me = this;
       axios.get("/comments").then(function (response) {
-        console.log({
-          response: response
-        });
         var commResp = response.data[0];
         var contact = response.data[1];
         me.setComm(commResp[0]);
         me.commboards = commResp;
         me.contact = contact;
-        console.log(commResp.length);
-        console.log(me.coms);
 
         var _iterator = _createForOfIteratorHelper(commResp.entries()),
             _step;
@@ -3914,11 +3904,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             var _step$value = _slicedToArray(_step.value, 2),
                 i = _step$value[0],
                 v = _step$value[1];
-
-            console.log({
-              i: v
-            });
-            console.log(i, v);
 
             if (!me.groupArr.includes(v.cf_2218)) {
               me.groupArr.push(v.cf_2218);
@@ -3932,8 +3917,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }
 
         me.fullname = contact.firstname, " ", contact.lastname;
-        me.subject = '';
-        me.comment = '';
+        me.subject = "";
+        me.comment = "";
       })["catch"](function (error) {
         console.table(error);
       });
@@ -3942,7 +3927,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.submitted = true;
       this.errors = {};
       var me = this;
-      console.log(me);
       axios.post("/comments", {
         threadid: me.threadid,
         threadtype: me.threadid,
@@ -3956,7 +3940,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           showConfirmButton: false
         });
         me.getCommboard();
-        console.log(res.data); //window.location.reload();
+        window.location.reload();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -24685,88 +24669,90 @@ var render = function () {
           [
             _vm._m(0),
             _vm._v(" "),
-            _vm._l(_vm.groupArr2, function (comm) {
-              return _c(
-                "div",
-                {
-                  key: comm.id,
-                  staticClass:
-                    "nav flex-column nav-pills people-list shadow-lg m-1 rounded",
-                  attrs: {
-                    id: "v-pills-tab",
-                    role: "tablist",
-                    "aria-orientation": "vertical",
-                  },
+            _c(
+              "div",
+              {
+                staticClass:
+                  "nav flex-column nav-pills people-list shadow-lg m-1 rounded",
+                attrs: {
+                  id: "v-pills-tab",
+                  role: "tablist",
+                  "aria-orientation": "vertical",
                 },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link show",
-                      attrs: {
-                        id: "v-pills-home-tab",
-                        "data-toggle": "pill",
-                        href: "#v-pills-home",
-                        role: "tab",
-                        "aria-controls": "v-pills-home",
-                        "aria-selected": "false",
+              },
+              _vm._l(_vm.groupArr2, function (comm) {
+                return _c(
+                  "a",
+                  {
+                    key: comm.id,
+                    staticClass: "nav-link",
+                    attrs: {
+                      id: "tab_" + _vm.coms.cf_2218 + "-tab",
+                      "data-toggle": "pill",
+                      href: "#tab_" + comm.cf_2218,
+                      role: "tab",
+                      "aria-controls": "tab_" + comm.cf_2218,
+                      "aria-selected": "false",
+                    },
+                    on: {
+                      click: function ($event) {
+                        _vm.changeAction(), _vm.setComm(comm)
                       },
                     },
-                    [
-                      _c(
-                        "span",
-                        {
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "user-img position-relative d-inline-block",
+                      },
+                      [
+                        _c("span", {
                           staticClass:
-                            "user-img position-relative d-inline-block",
-                        },
-                        [
-                          _c("span", {
-                            staticClass:
-                              "\n                  round\n                  text-white\n                  d-inline-block\n                  text-center\n                  rounded-circle\n                  bg-warning\n                ",
-                            domProps: {
-                              textContent: _vm._s(comm.name.substring(0, 1)),
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("span", {
-                            staticClass:
-                              "profile-status online rounded-circle pull-right",
-                          }),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
+                            "\n                  round\n                  text-white\n                  d-inline-block\n                  text-center\n                  rounded-circle\n                  bg-warning\n                ",
+                          domProps: {
+                            textContent: _vm._s(comm.name.substring(0, 1)),
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("span", {
                           staticClass:
-                            "mail-contnet w-75 d-inline-block v-middle pl-2 float-right",
-                        },
-                        [
-                          _c("h5", {
-                            staticClass: "message-title mb-0 mt-1",
-                            domProps: { textContent: _vm._s(comm.name) },
-                          }),
-                          _vm._v(" "),
-                          _c("span", {
-                            staticClass:
-                              "font-12 text-nowrap d-block text-muted text-truncate",
-                            domProps: { textContent: _vm._s(comm.cf_2226) },
-                          }),
-                          _vm._v(" "),
-                          _c("span", {
-                            staticClass:
-                              "font-12 text-nowrap d-block text-muted",
-                            domProps: { textContent: _vm._s(comm.cf_2218) },
-                          }),
-                        ]
-                      ),
-                    ]
-                  ),
-                ]
-              )
-            }),
-          ],
-          2
+                            "profile-status online rounded-circle pull-right",
+                        }),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "\n                mail-contnet\n                w-75\n                d-inline-block\n                v-middle\n                pl-2\n                float-right\n              ",
+                      },
+                      [
+                        _c("h5", {
+                          staticClass: "message-title mb-0 mt-1",
+                          domProps: { textContent: _vm._s(comm.name) },
+                        }),
+                        _vm._v(" "),
+                        _c("span", {
+                          staticClass:
+                            "font-12 text-nowrap d-block text-muted text-truncate",
+                          domProps: { textContent: _vm._s(comm.cf_2226) },
+                        }),
+                        _vm._v(" "),
+                        _c("span", {
+                          staticClass: "font-12 text-nowrap d-block text-muted",
+                          domProps: { textContent: _vm._s(comm.cf_2218) },
+                        }),
+                      ]
+                    ),
+                  ]
+                )
+              }),
+              0
+            ),
+          ]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "col-sm-9" }, [
@@ -24778,18 +24764,18 @@ var render = function () {
             ? _c(
                 "div",
                 {
-                  staticClass: "tab-content ",
+                  staticClass: "tab-content",
                   attrs: { id: "v-pills-tabContent" },
                 },
                 [
                   _c(
                     "div",
                     {
-                      staticClass: "tab-pane fade ",
+                      staticClass: "tab-pane fade",
                       attrs: {
-                        id: "v-pills-home",
+                        id: "tab_" + _vm.coms.cf_2218,
                         role: "tabpanel",
-                        "aria-labelledby": "v-pills-home-tab",
+                        "aria-labelledby": "tab_" + _vm.coms.cf_2218 + "-tab",
                       },
                     },
                     [
@@ -24805,7 +24791,7 @@ var render = function () {
                             }),
                             _vm._v(" "),
                             _c("span", {
-                              staticClass: "name ",
+                              staticClass: "name",
                               domProps: { textContent: _vm._s(_vm.coms.name) },
                             }),
                             _vm._v(" "),
@@ -24827,144 +24813,146 @@ var render = function () {
                       _c(
                         "ul",
                         {
-                          staticClass: "chat-list chat  mb-5",
+                          staticClass: "chat-list chat mb-5",
                           attrs: {
                             "data-user-id": "thread" + _vm.coms.cf_2218,
                           },
                         },
-                        [
-                          _vm._l(_vm.commboards, function (comm) {
-                            return _c(
-                              "li",
-                              {
-                                key: comm.id,
-                                staticClass: "shadow-lg p-2 m-4",
-                                attrs: { rounded: "" },
-                              },
-                              [
-                                comm &&
-                                comm.modifiedby === _vm.contact.modifiedby
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "col-12 p-3 d-inline-block",
-                                      },
-                                      [
-                                        _c("span", {
-                                          staticClass:
-                                            "\n                      round\n                      text-white\n                      d-inline-block\n                      text-center\n                      rounded-circle\n                      bg-warning\n                    ",
-                                          domProps: {
-                                            textContent: _vm._s(
-                                              comm.cf_2220.substring(0, 1)
-                                            ),
-                                          },
-                                        }),
-                                        _vm._v(" "),
-                                        _c("span", {
-                                          staticClass:
-                                            "name font-weight-bold ml-2 float-right",
-                                          domProps: {
-                                            textContent: _vm._s(comm.name),
-                                          },
-                                        }),
-                                        _vm._v(" "),
-                                        _c("span", {
-                                          staticClass:
-                                            "d-inline-block text-right text-muted float-right",
-                                          domProps: {
-                                            textContent: _vm._s(comm.cf_2220),
-                                          },
-                                        }),
-                                        _vm._v(" "),
-                                        _c("br"),
-                                        _vm._v(" "),
-                                        _c("div", {
-                                          staticClass:
-                                            "\n                      shadow-lg\n                      m-3 p-2\n                      box\n                      d-inline-block\n                      text-dark\n                      rounded\n                    ",
-                                          domProps: {
-                                            textContent: _vm._s(
-                                              comm.description
-                                            ),
-                                          },
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
+                        _vm._l(_vm.commboards, function (comm) {
+                          return _c("div", { key: comm.id }, [
+                            _vm.coms.cf_2218 === comm.cf_2218 &&
+                            _vm.commboards.length > 0
+                              ? _c(
+                                  "li",
+                                  {
+                                    staticClass: "shadow-lg p-2 m-4",
+                                    attrs: { rounded: "" },
+                                  },
+                                  [
+                                    comm &&
+                                    comm.modifiedby === _vm.contact.modifiedby
+                                      ? _c(
                                           "div",
                                           {
                                             staticClass:
-                                              " d-inline-block float-right text-muted",
+                                              "col-12 p-3 d-inline-block",
                                           },
                                           [
-                                            _c("p", {
+                                            _c("span", {
+                                              staticClass:
+                                                "\n                      round\n                      text-white\n                      d-inline-block\n                      text-center\n                      rounded-circle\n                      bg-warning\n                    ",
                                               domProps: {
                                                 textContent: _vm._s(
-                                                  comm.cf_2226
+                                                  comm.cf_2220.substring(0, 1)
                                                 ),
                                               },
                                             }),
                                             _vm._v(" "),
-                                            _c("p", {
+                                            _c("span", {
+                                              staticClass:
+                                                "name font-weight-bold ml-2 float-right",
                                               domProps: {
-                                                textContent: _vm._s(
-                                                  comm.cf_2228
-                                                ),
+                                                textContent: _vm._s(comm.name),
                                               },
                                             }),
-                                          ]
-                                        ),
-                                      ]
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "col-12 pl-3 d-inline-block text-right",
-                                      },
-                                      [
-                                        _c("div", {
-                                          staticClass:
-                                            "\n                      box\n                      mb-2\n                      d-inline-block\n                      text-dark\n                      rounded\n                      p-2\n                      bg-light-inverse\n                    ",
-                                          domProps: {
-                                            textContent: _vm._s(
-                                              comm.description
-                                            ),
-                                          },
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              " d-inline-block text-right text-muted",
-                                          },
-                                          [
-                                            _c("p", {
+                                            _vm._v(" "),
+                                            _c("span", {
+                                              staticClass:
+                                                "d-inline-block text-right text-muted float-right",
                                               domProps: {
                                                 textContent: _vm._s(
-                                                  comm.cf_2226
+                                                  comm.cf_2220
                                                 ),
                                               },
                                             }),
                                             _vm._v(" "),
-                                            _c("p", {
+                                            _c("br"),
+                                            _vm._v(" "),
+                                            _c("div", {
+                                              staticClass:
+                                                "\n                      shadow-lg\n                      m-3\n                      p-2\n                      box\n                      d-inline-block\n                      text-dark\n                      rounded\n                    ",
                                               domProps: {
                                                 textContent: _vm._s(
-                                                  comm.cf_2228
+                                                  comm.description
                                                 ),
                                               },
                                             }),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "d-inline-block float-right text-muted",
+                                              },
+                                              [
+                                                _c("p", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      comm.cf_2226
+                                                    ),
+                                                  },
+                                                }),
+                                                _vm._v(" "),
+                                                _c("p", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      comm.cf_2228
+                                                    ),
+                                                  },
+                                                }),
+                                              ]
+                                            ),
+                                          ]
+                                        )
+                                      : _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "col-12 pl-3 d-inline-block text-right",
+                                          },
+                                          [
+                                            _c("div", {
+                                              staticClass:
+                                                "\n                      box\n                      mb-2\n                      d-inline-block\n                      text-dark\n                      rounded\n                      p-2\n                      bg-light-inverse\n                    ",
+                                              domProps: {
+                                                textContent: _vm._s(
+                                                  comm.description
+                                                ),
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "d-inline-block text-right text-muted",
+                                              },
+                                              [
+                                                _c("p", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      comm.cf_2226
+                                                    ),
+                                                  },
+                                                }),
+                                                _vm._v(" "),
+                                                _c("p", {
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      comm.cf_2228
+                                                    ),
+                                                  },
+                                                }),
+                                              ]
+                                            ),
                                           ]
                                         ),
-                                      ]
-                                    ),
-                              ]
-                            )
-                          }),
-                          _vm._v(" "),
-                          _c("li", { staticClass: "odd mt-4" }),
-                        ],
-                        2
+                                  ]
+                                )
+                              : _vm._e(),
+                          ])
+                        }),
+                        0
                       ),
                       _vm._v(" "),
                       _c(
@@ -24996,7 +24984,7 @@ var render = function () {
                                       },
                                     ],
                                     attrs: {
-                                      type: "text",
+                                      type: "hidden",
                                       disabled: "",
                                       id: "threadid",
                                     },
@@ -25021,7 +25009,7 @@ var render = function () {
                                       },
                                     ],
                                     attrs: {
-                                      type: "text",
+                                      type: "hidden",
                                       disabled: "",
                                       name: "threadtype",
                                     },

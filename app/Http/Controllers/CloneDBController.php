@@ -18,6 +18,9 @@ class CloneDBController extends Controller
     /**
      * This function be called as webservice
      * Be created all required by a contact tables for customer portal
+     * This method copies the data of a selected contact to the portal's database.
+     *  The existing tables in immcase of which we want the contact to have read access are copied.
+     * The contact tables that exist in immcase are imported and the data that does not exist in immcase are removed from the portal
      * 1. The tables be created if not exists
      * 2. The dta be inserted
      */
@@ -129,6 +132,12 @@ class CloneDBController extends Controller
         return "dataCloned";
     }
 
+    /**
+     * This method must also be used as a webservice from immcase.
+     * It consists of importing from the customer portal database to immcase those data that the user can create and update.
+     * Among them some personal data, documents and comments (commboard)
+     *  Request contact_no
+     */
     public function updateOnImmcase(Request $request)
     {
         try {
@@ -276,6 +285,10 @@ class CloneDBController extends Controller
                     array_push($nameFields, $key);
                     array_push($dataFields, "'$val'");
                     array_push($toUpdate, [$key => $val]);
+                    if ($key === 'id') {
+                        $id = $val;
+                        array_push($tableIdsArr, $id);
+                    }
                 }
             }
             $names =   implode(", ", $nameFields);
@@ -284,14 +297,14 @@ class CloneDBController extends Controller
 
 
             if ($table[0]->total === 0) { //If noting found be created
-             DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
+             $new =  DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
+
             }else{
                 foreach ($toUpdate as $toup) {
                     foreach ($toup as $key => $val) {
                         $id = null;
                         if ($key === 'id') {
                             $id = $val;
-                            array_push($tableIdsArr, $id);
                         }
                         if ($table[0]->total > 0) { //If table has founded row be updated
                             if (($tablename === 'Checklist') || ($tablename === 'InstallmentTracker') || ($tablename === 'CommBoard')) { //If table hasnt contact field
@@ -328,7 +341,6 @@ class CloneDBController extends Controller
                     }
                 } //end loop
             }
-             $tableIdsArr;
             }
         DB::table("vt_$tablename")->whereNotIn('id', $tableIdsArr)->delete();
     }

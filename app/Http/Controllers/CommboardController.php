@@ -21,14 +21,17 @@ class CommboardController extends Controller
      * Show a list of comments between contact and immManager about following up on a contact.
      */
     public function index(){
-
-
         return view('commboard.index');
     }
+
+    /**
+     * This method returns a list of comments for the client to follow up on activities related to their paperwork process.
+     * The administrator of the process makes comments about a certain process and the client can add answers.
+     * Comments are grouped based on the thread they track
+     */
     public function getComments(){
         $user = Auth::user();
         $user_id = $user->id;
-
         $vtiger = new Vtiger();
         //Get contact data of this user
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
@@ -64,14 +67,7 @@ class CommboardController extends Controller
               ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
               ->orWhereIn('cf_2218', $vtCasesNOArr)->get(); //find by caseNo
 
-              $threads = null;/*  Commboard::groupByRaw('cf_2218')
-              ->whereIn('cf_2218', $vtCasesIdArr) //find by case id
-              ->orWhereIn('cf_2218', $paymentIdArr) //Find by payment id
-              ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
-              ->orWhereIn('cf_2218', $vtCasesNOArr)->
-              ->get(); //find by caseNo */
-
-              return [ $commboards, $contact, $threads  ];
+              return [ $commboards, $contact ];
     }
     /**
      * Display a listing of the resource.
