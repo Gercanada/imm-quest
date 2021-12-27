@@ -141,68 +141,71 @@ class CloneDBController extends Controller
     public function updateOnImmcase(Request $request)
     {
         try {
-            $user = Auth::user();
             $vtiger = new Vtiger();
             //Get contact data of this user
             $cp_contact = Contact::where("contact_no", $request->contact_no)->firstOrFail();
 
-            $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $request->contact_no)->take(1);
-            $contact = $vtiger->search($userQuery)->result[0];
-            $obj = $vtiger->retrieve($contact->id);
-            //Then update the object:
-            $obj->result->secondaryemail =  $cp_contact->secondaryemail;
-            $obj->result->mobile           =  $cp_contact->mobile;
-            $obj->result->cf_1945          =  $cp_contact->cf_1945;
-            $obj->result->cf_2254          =  $cp_contact->cf_2254;
-            $obj->result->cf_2246          =  $cp_contact->cf_2246;
-            $obj->result->cf_2252          =  $cp_contact->cf_2252;
-            $obj->result->cf_2250          =  $cp_contact->cf_2250;
-            $obj->result->cf_1780          =  $cp_contact->cf_1780;
-            $obj->result->user_donotcall   =  $cp_contact->user_donotcall;
-            $obj->result->user_emailoptout =  $cp_contact->user_emailoptout;
+            if($cp_contact){
+                $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $request->contact_no)->take(1);
+                $contact = $vtiger->search($userQuery)->result[0];
+                $obj = $vtiger->retrieve($contact->id);
+                //Then update the object:
+                $obj->result->secondaryemail =  $cp_contact->secondaryemail;
+                $obj->result->mobile           =  $cp_contact->mobile;
+                $obj->result->cf_1945          =  $cp_contact->cf_1945;
+                $obj->result->cf_2254          =  $cp_contact->cf_2254;
+                $obj->result->cf_2246          =  $cp_contact->cf_2246;
+                $obj->result->cf_2252          =  $cp_contact->cf_2252;
+                $obj->result->cf_2250          =  $cp_contact->cf_2250;
+                $obj->result->cf_1780          =  $cp_contact->cf_1780;
+                $obj->result->user_donotcall   =  $cp_contact->user_donotcall;
+                $obj->result->user_emailoptout =  $cp_contact->user_emailoptout;
 
-            $data = $vtiger->update($obj->result);
+                $data = $vtiger->update($obj->result);
 
-            // commboard
-            $commboards = Commboard::where('modifiedby', $cp_contact->id)->get();
-            foreach ($commboards as $comm) {
-                $commQuery = DB::table('CommBoard')->select('*')->where("id", $comm->id)->take(1);
-                $result = $vtiger->search($commQuery)->result;
+                // commboard
+                $commboards = Commboard::where('modifiedby', $cp_contact->id)->get();
+                foreach ($commboards as $comm) {
+                    $commQuery = DB::table('CommBoard')->select('*')->where("id", $comm->id)->take(1);
+                    $result = $vtiger->search($commQuery)->result;
 
-                if (count($result) > 0) {
-                    $obj2 = $vtiger->retrieve($result[0]->id);
-                    $obj2->name = $comm->name;
-                    $obj2->assigned_user_id = $comm->assigned_user_id;
-                    $obj2->createdtime = $comm->createdtime;
-                    $obj2->description = $comm->description;
-                    $obj2->modifiedby = $comm->modifiedby;
-                    $obj2->cf_2218 = $comm->cf_2218;
-                    $obj2->cf_2220 = $comm->cf_2220;
-                    $obj2->cf_2224 = $comm->cf_2224;
-                    $obj2->cf_2226 = $comm->cf_2226;
-                    $obj2->cf_2228 = $comm->cf_222;
-                    $vtiger->update($obj2->result);
-                } else {
-                    $vtiger = new Vtiger();
-                    $values = [
-                        'assigned_user_id' => $comm->assigned_user_id,
-                        'name' => $comm->name,
-                        //'createdtime' => $comm->createdtime,
-                        'cf_2218' => $comm->cf_2218,
-                        'cf_2220' => $comm->cf_2220,
-                        'cf_2224' => $comm->cf_2224,
-                        'cf_2226' => $comm->cf_2226,
-                        'cf_2228' => $comm->cf_2228,
-                        'description' => $comm->description,
-                        //'modifiedby' => $comm->modifiedby,
-                    ];
-                    $newComm =  $vtiger->create("CommBoard", $values);
-                    $commboard = Commboard::where('id', $comm->id)->firstOrFail();
-                    $commboard->id = $newComm->result->id;
-                    $commboard->save();
+                    if (count($result) > 0) {
+                        $obj2 = $vtiger->retrieve($result[0]->id);
+                        $obj2->name = $comm->name;
+                        $obj2->assigned_user_id = $comm->assigned_user_id;
+                        $obj2->createdtime = $comm->createdtime;
+                        $obj2->description = $comm->description;
+                        $obj2->modifiedby = $comm->modifiedby;
+                        $obj2->cf_2218 = $comm->cf_2218;
+                        $obj2->cf_2220 = $comm->cf_2220;
+                        $obj2->cf_2224 = $comm->cf_2224;
+                        $obj2->cf_2226 = $comm->cf_2226;
+                        $obj2->cf_2228 = $comm->cf_222;
+                        $vtiger->update($obj2->result);
+                    } else {
+                        $vtiger = new Vtiger();
+                        $values = [
+                            'assigned_user_id' => $comm->assigned_user_id,
+                            'name' => $comm->name,
+                            //'createdtime' => $comm->createdtime,
+                            'cf_2218' => $comm->cf_2218,
+                            'cf_2220' => $comm->cf_2220,
+                            'cf_2224' => $comm->cf_2224,
+                            'cf_2226' => $comm->cf_2226,
+                            'cf_2228' => $comm->cf_2228,
+                            'description' => $comm->description,
+                            //'modifiedby' => $comm->modifiedby,
+                        ];
+                        $newComm =  $vtiger->create("CommBoard", $values);
+                        $commboard = Commboard::where('id', $comm->id)->firstOrFail();
+                        $commboard->id = $newComm->result->id;
+                        $commboard->save();
+                    }
                 }
+                return 200;
+
             }
-            return 200;
+
         } catch (Exception $e) {
             return $e;
             return response()->json($e, 500);

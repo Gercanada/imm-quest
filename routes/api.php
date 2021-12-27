@@ -51,3 +51,4 @@ Route::get('/keygen', function(){
     shell_exec('npm run dev');
      return('Compiled successfull!');
  });
+
