@@ -25,7 +25,7 @@ class ImmCaseHeader
         $agentId = $headers['userid'][0];
         $user = null;
         //dd($agentId);
-        $userQuery = DB::table('Users')->select('id', 'is_admin', 'user_name', 'email1')->where("id", (string)$agentId)->take(1);
+        $userQuery = DB::table('Users')->select('id', 'is_admin', 'user_name', 'email1')->where("id", "19x$agentId")->take(1);
         $user1 = $vtiger->search($userQuery);
 
         if ($user1->success === true) {
