@@ -30,7 +30,7 @@ class ImmCaseHeader
 
         if ($user1->success === true) {
             if (count($user1->result) > 0) {
-                $user = $user[0];
+                $user = $user1->result[0];
             }
             if (!$user) {
                 return response()->json("User not found as IMMcase user", 403);
