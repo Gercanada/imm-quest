@@ -32,11 +32,12 @@ class ImmCaseHeader
             if (count($user1->result) > 0) {
                 $user = $user1->result[0];
             }
-            if (!$user) {
-                return response()->json("User not found as IMMcase user", 403);
-            }
-        } else {
-            return response()->json("Invalid agent id"+[$headers], 403);
+        }
+        if (!$user) {
+            return response()->json("User not found as IMMcase user", 403);
+        }
+        else {
+            return response()->json($headers);
         }
         $response = $next($request);
 
