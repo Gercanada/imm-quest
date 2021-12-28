@@ -26,18 +26,12 @@ class CloneDBController extends Controller
      */
     public function cloneImmcaseContactData(Request $request)
     {
-
-       // dd($request->headers);
-
-        return 200;
         $vtiger = new Vtiger();
         $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("contact_no", $request->contact_no)->take(1);
         $contact = $vtiger->search($userQuery)->result[0];
 
         $data = $vtiger->listTypes();
         $types = $data->result->types;
-        return $types;
-
 
         $casequery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->id);
         $cases = $vtiger->search($casequery)->result;
@@ -47,10 +41,6 @@ class CloneDBController extends Controller
         $quotequery = DB::table('Quotes')->select('*')->where('contact_id', $contact->id);
         $quotes = $vtiger->search($quotequery)->result;
 
-
-        $typeArr = [];
-        $resp = null;
-        $respArr = [];
         foreach ($types as $type) {
             if (
                 ($type === 'Documents') ||
