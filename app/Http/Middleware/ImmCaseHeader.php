@@ -36,7 +36,7 @@ class ImmCaseHeader
                 return response()->json("User not found as IMMcase user", 403);
             }
         } else {
-            return response()->json("Invalid agent id"+ $agentId, 403);
+            return response()->json("Invalid agent id"+[$headers], 403);
         }
         $response = $next($request);
 
