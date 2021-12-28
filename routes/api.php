@@ -21,6 +21,8 @@ use App\Http\Controllers\UserController;
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 }); */
+Route::post('/user_params',  [CloneDBController::class, 'cloneImmcaseContactData']);
+
 Route::middleware('imm-header')->group(function(){
     Route::post('/documents', [DocumentController::class , 'checkDocuments']);
     Route::post('/remove_document', [DocumentController::class , 'destroy']);

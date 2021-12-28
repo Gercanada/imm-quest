@@ -386,7 +386,8 @@ class CloneDBController extends Controller
         }
     }
 
-    public function testRequest(Request $request)
+    public function testws(Request $request)
     {
+        return $request;
     }
 }
