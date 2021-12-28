@@ -22,7 +22,6 @@ use App\Http\Controllers\UserController;
     return $request->user();
 }); */
 Route::post('/user_params',  [CloneDBController::class, 'cloneImmcaseContactData']);
-
 Route::middleware('imm-header')->group(function(){
     Route::post('/documents', [DocumentController::class , 'checkDocuments']);
     Route::post('/remove_document', [DocumentController::class , 'destroy']);
