@@ -34,10 +34,7 @@ class ImmCaseHeader
             }
         }
         if (!$user) {
-            return response()->json("User not found as IMMcase user", 403);
-        }
-        else {
-            return response()->json($headers);
+            return response()->json(["User not found as IMMcase user"=>$headers], 403);
         }
         $response = $next($request);
 
