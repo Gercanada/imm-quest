@@ -95,7 +95,10 @@
                                 <td>{{ $document->cf_2134 }}</td>
                                 {{-- <td>{{ $document->filelocationtype }}}</td> --}}
                                 <td>
-                                    <a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
+                                    @if ($document->filelocationtype==='E')
+                                    <a href="{{$document->filename}}" class="btn btn-outline-success btn-rounded" download>
+                                        <i class="fas fa-download"></i></a>
+                                    @endif
                                 </td>
                             </tr>
 

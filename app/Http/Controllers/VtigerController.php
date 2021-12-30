@@ -114,42 +114,40 @@ class VtigerController extends Controller
         }
     }
 
-    public function userTools()
-    {
-        $user_id = Auth::user()->id;
-        $types = VtigerType::where('user_id', $user_id)->get();
 
-        $nameTypes = [];
-        foreach ($types as $type) {
-            array_push($nameTypes, $type->name);
-        }
-        return $nameTypes;
-    }
 
     public function goType($type, $where)
     {
 
-        $user  =Auth::user();
+        $user  = Auth::user();
         $vtiger = new Vtiger();
-        $condWhere = explode(";", $where);
+
+        $data = null;
         // apply permissions
+        if ($where === 'types') {
+            $data = $vtiger->listTypes();
+            $types = $data->result->types;
+            $data = $types;
+        }
         if ($where == 'all') {
             $query = DB::table($type)->select('*');
             // $query = DB::table($type)->select('id', 'firstname', 'lastname')->where('firstname', 'John');
             $data = $vtiger->search($query);
-        } else {
-            if (count($condWhere) == 2) {
-                $query = DB::table($type)->select('*')->where($condWhere[0], $condWhere[1]);
+        }
+        if ($where === 'rel') {
+            $query = null;
+            if ($type === 'Documents') {
+                $query = DB::table($type)->select('*')->where("assigned_user_id", "19x29");
             }
-            if (count($condWhere) == 3) {
-                $query = DB::table($type)->select('*')->where($condWhere[0], $condWhere[1], $condWhere[1]);
+            if ($type === 'Quotes') {
+                $query = DB::table($type)->select('*')->where("contact_id", "12x65450")->orWhere('assigned_user_id', "19x29")->orWhere('quote_no', 'PS2150558');
             }
-
-            /*   if (count($condWhere) != 2 || count($condWhere) != 2) {
-                return "Invalid query params try 'user_id;1 or user_id;!=;1' ";
-            } */
-            $query = DB::table($type)->select('*')->where("cf_1176", "7x65598");
-            //$query = DB::table("CLItems")->select('*')->where("cf_1217", "!==","");
+            if ($type === 'Contacts') {
+                $query = DB::table($type)->select('*')->where('id', "12x65450")->orWhere("assigned_user_id", "19x29");
+            }
+            if ($type === 'DocumentFolders') {
+                $query = DB::table($type)->select('*')->where('id', "12x65450")->orWhere("assigned_user_id", "19x29");
+            }
 
             $data = $vtiger->search($query);
         }

@@ -31,7 +31,6 @@ Auth::routes();
 
 Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
     //vtiger
-    Route::get('/user/tools', [VtigerController::class, "userTools"]);
     Route::get('/vtiger/describe/types/{user_id}', [VtigerController::class, "types"]);
     Route::get('/vtiger/list/{type}/{where}', [VtigerController::class, 'goType']);
 

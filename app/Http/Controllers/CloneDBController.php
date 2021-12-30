@@ -90,10 +90,6 @@ class CloneDBController extends Controller
                             array_push($list_cnums, $case->ticket_no);
                         }
                     }
-                    /* if ($type === 'Checklist') {
-                        $query = DB::table($type)->select('*')->whereIn('cf_1199', $list1)->orWhereIn('cf_1199', $list_cnums)->orWhere($contactField, $contact->id); //is in cases id arr
-                        self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
-                    } */
 
                     if ($type === 'InstallmentTracker') {
                         if (count($invoices) > 0) {
@@ -247,10 +243,10 @@ class CloneDBController extends Controller
 
     static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID, $contactNo, $fields)
     {
-        $tableIdsArr = [];
+        $tableIdsArr = []; // Items id from immcase thath be added to CP
+        DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)"); // If table not exists be reated
 
-        DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)");
-        foreach ($tableData as $row) {
+        foreach ($tableData as $row) { //set values in table
             $table = null;
             $username = null;
             $userPass = null;
@@ -260,29 +256,21 @@ class CloneDBController extends Controller
             $dataFields = [];
             $toUpdate   = [];
 
-
-            if (($tablename === 'Checklist')  || ($tablename === 'InstallmentTracker')) {
-                if ($tablename === 'Checklist') {
-                    $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row->id';");
-                }
-                if ($tablename === 'InstallmentTracker') {
-                    foreach ($tableData as $row2) {
-                        if ($row2->cf_1175 != '') {
-                            $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
-                        }
-                        if ($row2->cf_1176 != '') {
-                            $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
-                        }
+            if ($tablename === 'InstallmentTracker') {
+                //Installment tracker can be of invoices or quotes
+                foreach ($tableData as $row2) {
+                    if ($row2->cf_1175 != '') {
+                        $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
+                    }
+                    if ($row2->cf_1176 != '') {
+                        $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
                     }
                 }
             } else {
-                $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE  id = '$row->id';"); //$contactField = '$contactID' AND
+                $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE  id = '$row->id';"); //search current table on CP
             }
 
             foreach ($row as $key => $val) {
-                if ($contactField === $key && ($val != null)) {
-                    $contactID = $val;
-                }
                 if (in_array($key, $fields)) {
                     array_push($nameFields, $key);
                     array_push($dataFields, "'$val'");
@@ -324,20 +312,16 @@ class CloneDBController extends Controller
                     }
                 }
             } else {
+                $id = null;
+                $newValues = [];
+                $newValueKeys = [];
                 foreach ($toUpdate as $toup) {
                     foreach ($toup as $key => $val) {
-                        $id = null;
+                        $newValues['*' . $key . '*'] = $val;
+                        array_push($newValueKeys, $key);
                         if ($key === 'id') { //Ger row id
                             $id = $val;
-                            if ($table[0]->total > 0) { //If table has founded row be updated
-                                if (($tablename === 'Checklist') || ($tablename === 'InstallmentTracker') || ($tablename === 'CommBoard')) { //If table hasnt contact field
-                                    DB::update("UPDATE vt_$tablename set $key = '$val' WHERE id = '$id';");
-                                } else {
-                                    DB::update("UPDATE vt_$tablename set $key = '$val' WHERE  $contactField = '$contactID' AND id = '$id';");
-                                }
-                            }
                         }
-
                         if ($tablename === 'Contacts') { //Create user from contacts
                             if ($key === 'cf_1888') {
                                 $username = $val;
@@ -359,11 +343,30 @@ class CloneDBController extends Controller
                         }
                     }
                 } //end loop
+
+                if ($table[0]->total > 0) { //If table has founded row be updated
+                    $setValues = self::jsonToSetOnMysql($newValues);
+                    DB::update("UPDATE vt_$tablename set $setValues WHERE id = '$id';");
+                }
             }
         }
         //if not exist on vt will delete here
         DB::table("vt_$tablename")->whereNotIn('id', $tableIdsArr)->delete();
     }
+
+    static function jsonToSetOnMysql($array)
+    {
+        $jsonEncoded = (json_encode($array));
+        $replace1 = str_replace('{', '', $jsonEncoded);
+        $replace2 = str_replace('}', '', $replace1);
+        $replace3 = str_replace(':', '=', $replace2);
+        $replace4 = str_replace('"*', '', $replace3);
+        $replace5 = str_replace('*"', '', $replace4);
+        $replace6 = str_replace('"', "'", $replace5);
+        $replace6 = str_replace('\\', "", $replace6);
+        return $replace6;
+    }
+
     static function newUser($username, $userPass, $firstname, $last_name, $contactNo)
     {
         $newUser = User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
