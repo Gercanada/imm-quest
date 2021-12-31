@@ -2,7 +2,6 @@
 @section('title')
     Comm board
 @endsection
-
 @section('content')
 <commboard-component></commboard-component>
 @endsection

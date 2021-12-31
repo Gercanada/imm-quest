@@ -26,105 +26,124 @@ class CloneDBController extends Controller
      */
     public function cloneImmcaseContactData(Request $request)
     {
-        $vtiger = new Vtiger();
-        $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("contact_no", $request->contact_no)->take(1);
-        $contact = $vtiger->search($userQuery)->result[0];
+        try {
+            $vtiger = new Vtiger();
+            $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("contact_no", $request->contact_no)->take(1);
+            $contact = $vtiger->search($userQuery)->result[0]; //Get contact that be cloned
+            $contactField = null;
 
-        $data = $vtiger->listTypes();
-        $types = $data->result->types;
+            $data = $vtiger->listTypes();
+            $types = $data->result->types;
 
-        $casequery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->id);
-        $cases = $vtiger->search($casequery)->result;
+            $casequery = DB::table('HelpDesk')->select('*')->where('contact_id', $contact->id);
+            $cases = $vtiger->search($casequery)->result;
 
-        $invoicequery = DB::table('Invoice')->select('*')->where('contact_id', $contact->id);
-        $invoices = $vtiger->search($invoicequery)->result;
-        $quotequery = DB::table('Quotes')->select('*')->where('contact_id', $contact->id);
-        $quotes = $vtiger->search($quotequery)->result;
+            $invoicequery = DB::table('Invoice')->select('*')->where('contact_id', $contact->id);
+            $invoices = $vtiger->search($invoicequery)->result;
+            $quotequery = DB::table('Quotes')->select('*')->where('contact_id', $contact->id);
+            $quotes = $vtiger->search($quotequery)->result;
 
-        foreach ($types as $type) {
-            if (
-                ($type === 'Documents') ||
-                ($type === 'Checklist') ||
-                ($type === 'Payments') ||
-                ($type === 'Contacts') ||
-                ($type === 'HelpDesk') ||
-                ($type === 'Invoice') ||
-                ($type === 'Quotes') ||
-                ($type === 'InstallmentTracker') ||
-                ($type === 'CommBoard') ||
-                ($type === 'CLItems')
-            ) {
-                $description = $vtiger->describe($type);   // get table description to clone (docs in this example)
-                $contactField = 'contact_id';
-
-                if ($type === 'Contacts') {
-                    $contactField = 'id';
-                }
-                if ($type === 'Documents') {
-                    $contactField = 'cf_1488';
-                }
-                if ($type === 'Payments') {
-                    $contactField = 'cf_1139';
-                }
-                if ($type === 'Checklist') {
-                    $contactField = 'cf_contacts_id';
-                }
-
-                if ($type === 'CLItems') {
-                    $contactField = 'cf_contacts_id';
-                }
-
-                if (
-                    //($type === 'Checklist') ||
+            foreach ($types as $type) {
+                if ( //Select tacles that be cloned on cp
                     ($type === 'InstallmentTracker') ||
-                    ($type === 'CommBoard')
+                    ($type === 'CommBoard') ||
+                    ($type === 'Documents') ||
+                    ($type === 'Checklist') ||
+                    ($type === 'Payments') ||
+                    ($type === 'Contacts') ||
+                    ($type === 'HelpDesk') ||
+                    ($type === 'CLItems') ||
+                    ($type === 'Invoice') ||
+                    ($type === 'Currency') ||
+                    ($type === 'Quotes') ||
+                    ($type === 'Products')
                 ) {
-                    $list1 = [];
-                    $list2 = [];
-                    $list3 = [];
-                    $list_cnums = [];
-
-                    if ($cases) {
-                        foreach ($cases as $case) {
-                            array_push($list1, $case->id);
-                            array_push($list_cnums, $case->ticket_no);
-                        }
+                    $description = $vtiger->describe($type);   // get table description to clone (docs in this example)
+                    if ($type != 'Currency' || $type != 'Products') {
+                        $contactField = 'contact_id';
                     }
 
-                    if ($type === 'InstallmentTracker') {
-                        if (count($invoices) > 0) {
-                            foreach ($invoices as $key => $val) {
-                                foreach ($invoices as $invoice) {
-                                    array_push($list2, $invoice->id);
-                                }
-                                $query = DB::table($type)->select('*')->whereIn('cf_1176', $list2); //Installment trackers of quote
-                                self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
+                    if ($type === 'Contacts') {
+                        $contactField = 'id';
+                    }
+                    if ($type === 'Documents') {
+                        $contactField = 'cf_1488';
+                    }
+                    if ($type === 'Payments') {
+                        $contactField = 'cf_1139';
+                    }
+                    if ($type === 'Checklist') {
+                        $contactField = 'cf_contacts_id';
+                    }
+
+                    if ($type === 'CLItems') {
+                        $contactField = 'cf_contacts_id';
+                    }
+                    //Get contact field in tables
+
+                    if (
+                        ($type === 'InstallmentTracker') ||
+                        ($type === 'CommBoard') ||
+                        ($type === 'Currency') ||
+                        ($type === 'Products')
+                    ) {
+                        $list1 = [];
+                        $list2 = [];
+                        $list3 = [];
+                        $list_cnums = [];
+
+                        if ($cases) {
+                            foreach ($cases as $case) {
+                                array_push($list1, $case->id);
+                                array_push($list_cnums, $case->ticket_no);
                             }
                         }
-                        if (count($quotes) > 0) {
-                            foreach ($invoices as $key => $val) {
-                                foreach ($quotes as $quote) {
-                                    array_push($list3, $quote->id);
+                        if ($type === 'Currency') {
+                            $query = DB::table($type)->select('*')->where('deleted', 0); //Installment trackers of quote
+                            self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
+                        }
+                        if ($type === 'Products') {
+                            $query = DB::table($type)->select('*'); //Installment trackers of quote
+                            self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
+                        }
+
+                        if ($type === 'InstallmentTracker') {
+                            if (count($invoices) > 0) {
+                                foreach ($invoices as $key => $val) {
+                                    foreach ($invoices as $invoice) {
+                                        array_push($list2, $invoice->id);
+                                    }
+                                    $query = DB::table($type)->select('*')->whereIn('cf_1176', $list2); //Installment trackers of quote
+                                    self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
                                 }
-                                $query = DB::table($type)->select('*')->whereIn('cf_1175', $list3); //Installment trackers of invoice
-                                self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
+                            }
+                            if (count($quotes) > 0) {
+                                foreach ($invoices as $key => $val) {
+                                    foreach ($quotes as $quote) {
+                                        array_push($list3, $quote->id);
+                                    }
+                                    $query = DB::table($type)->select('*')->whereIn('cf_1175', $list3); //Installment trackers of invoice
+                                    self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
+                                }
                             }
                         }
+                        if ($type === 'CommBoard') {
+                            $query =  DB::table($type)->select('*')
+                                ->whereIn('cf_2218', $list1)
+                                ->orWhereIn('cf_2218', $list_cnums)
+                                ->orWhere('modifiedby', $contact->id);
+                            self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
+                        }
+                    } else {
+                        $query = DB::table($type)->select('*')->where($contactField, $contact->id);
+                        self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
                     }
-                    if ($type === 'CommBoard') {
-                        $query =  DB::table($type)->select('*')
-                            ->whereIn('cf_2218', $list1)
-                            ->orWhereIn('cf_2218', $list_cnums)
-                            ->orWhere('modifiedby', $contact->id);
-                        self::getData($query, $description->result->fields, $contact, $contactField, $description->result->name);
-                    }
-                } else {
-                    $query = DB::table($type)->select('*')->where($contactField, $contact->id);
-                    self::getData($query, $description->result->fields, $contact,  $contactField, $description->result->name);
                 }
             }
+            return "dataCloned";
+        } catch (Exception $e) {
+            return response()->json($e);
         }
-        return "dataCloned";
     }
 
     /**
@@ -155,7 +174,7 @@ class CloneDBController extends Controller
                 $obj->result->user_donotcall   =  $cp_contact->user_donotcall;
                 $obj->result->user_emailoptout =  $cp_contact->user_emailoptout;
 
-                $data = $vtiger->update($obj->result);
+                $vtiger->update($obj->result);
 
                 // commboard
                 $commboards = Commboard::where('modifiedby', $cp_contact->id)->get();
@@ -209,9 +228,7 @@ class CloneDBController extends Controller
     static function getData($query, $fields, $contact,  $contactField, $table_name)
     {
         $vtiger = new Vtiger();
-        /*  if($table_name ==='Checklist'){
-            dd($vtiger->search($query));
-        } */
+
         $list = $vtiger->search($query)->result;
         $fields = $fields;
         $fieldNames = [];
@@ -317,6 +334,9 @@ class CloneDBController extends Controller
                 $newValueKeys = [];
                 foreach ($toUpdate as $toup) {
                     foreach ($toup as $key => $val) {
+
+                        $val = self::prepareStrConvertion($val);
+
                         $newValues['*' . $key . '*'] = $val;
                         array_push($newValueKeys, $key);
                         if ($key === 'id') { //Ger row id
@@ -354,12 +374,29 @@ class CloneDBController extends Controller
         DB::table("vt_$tablename")->whereNotIn('id', $tableIdsArr)->delete();
     }
 
+    static function prepareStrConvertion($val)
+    {
+        if (
+            str_contains($val, ':') ||
+            str_contains($val, '{') ||
+            str_contains($val, '}')
+        ) {
+            $val =  str_replace(':', '*~*', $val);
+            $val =  str_replace('{', '*<*', $val);
+            $val =  str_replace('}', '*>*', $val);
+        }
+        return $val;
+    }
+
     static function jsonToSetOnMysql($array)
     {
         $jsonEncoded = (json_encode($array));
         $replace1 = str_replace('{', '', $jsonEncoded);
         $replace2 = str_replace('}', '', $replace1);
         $replace3 = str_replace(':', '=', $replace2);
+        $replace3 = str_replace('*~*', ':', $replace3);
+        $replace3 = str_replace('*<*', '{', $replace3);
+        $replace3 = str_replace('*>*', '>', $replace3);
         $replace4 = str_replace('"*', '', $replace3);
         $replace5 = str_replace('*"', '', $replace4);
         $replace6 = str_replace('"', "'", $replace5);

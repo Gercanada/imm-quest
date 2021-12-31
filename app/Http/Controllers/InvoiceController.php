@@ -11,6 +11,7 @@ use App\Models\Invoice;
 use App\Models\Contact;
 use App\Models\CPCase;
 use App\Models\Payment;
+use App\Models\Currency;
 use App\Models\InstallmentTracker;
 
 class InvoiceController extends Controller
@@ -23,26 +24,39 @@ class InvoiceController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user_id = $user->id;
-
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
-        //Invoices
+
         $invoicesStatusOpen = [
-            "20 - On Track - Original Payment Plan",
-            "35 - On Track - Last Payment until Decision"
+            "On Track - Original Payment Plan",
+            "On Track - Last Payment until Decision",
+            "On Track - Final Payment",
+            "On Track - Last Payment until Decision",
+            "On track - After arrival Payment",
+            "Slow Moving"
         ];
 
         $invoicesStatusClosed = [
-            "25 - On Track - Final Payment",
-            "35 - On Track - Last Payment until Decision",
-            "70 - Closed - Paid in Full"
+            "Closed - Not Recoverable",
+            "Closed - Cancelled",
+            "Closed - Paid in Full",
+            "Late - Still Recoverable"
         ];
 
-        $open_invoices = Invoice::where('contact_id', $contact->id)   //TODO Enable this
-            ->whereIn('invoicestatus', $invoicesStatusOpen)->get();
+        $open_invoices = Invoice::where('contact_id', $contact->id)
+            //->whereIn('invoicestatus',  $invoicesStatusOpen)
+            ->Where(function ($query) use ($invoicesStatusOpen) {
+                for ($i = 0; $i < count($invoicesStatusOpen); $i++) {
+                    $query->orwhere('invoicestatus', 'like',  '%' . $invoicesStatusOpen[$i] . '%');
+                }
+            })
+            ->get();
 
-        $paid_invoices = Invoice::where('contact_id', $contact->id) //TODO Enable this
-            ->whereIn('invoicestatus', $invoicesStatusClosed)->get();
+        $paid_invoices = Invoice::where('contact_id', $contact->id)
+            ->Where(function ($query) use ($invoicesStatusClosed) {
+                for ($i = 0; $i < count($invoicesStatusClosed); $i++) {
+                    $query->orwhere('invoicestatus', 'like',  '%' . $invoicesStatusClosed[$i] . '%');
+                }
+            })->get();
 
         return view('invoices.index', compact('open_invoices', 'paid_invoices'));
     }
@@ -57,7 +71,6 @@ class InvoiceController extends Controller
     public function show(Invoice $invoice, $id)
     {
         $user = Auth::user();
-        $user_id = $user->id;
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         //Cases
         $vtCases = CPCase::where('contact_id', $contact->id)->get();
@@ -68,20 +81,19 @@ class InvoiceController extends Controller
         }
 
         //Invoices
-        $invoice = Invoice::where('id', $id)->firstOrFail();
-
+        $invoice = Invoice::where('id', $id)->with('currency')->with('product')->firstOrFail();
         // Get invoice payments
         $payments = Payment::where('cf_1141', $invoice->id)->get();
-
         $paymentIdArr = [];
         foreach ($payments as $payment) {
             array_push($paymentIdArr, $payment->id);
         }
-
+        //Get invoice documents
         $documents = DB::table('vt_Documents')->select('*')
             ->where('cf_2129', $invoice->id)
             ->orWhereIn('cf_1490', $paymentIdArr)
-            ->orWhereIn('cf_1487', $vtCasesIdArr)->get();
+            //->orWhereIn('cf_1487', $vtCasesIdArr)
+            ->get();
         //Payment plan
         $iTrackers = InstallmentTracker::where('cf_1176', $id)->get();
         return view('invoices.show', compact('invoice', 'payments', 'documents', 'iTrackers'));

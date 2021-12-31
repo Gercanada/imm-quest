@@ -64,20 +64,7 @@ class QuoteController extends Controller
     {
         $quote = Quote::where('id', $id)->firstOrFail();
         $iTrackers = InstallmentTracker::where('cf_1175', $id)->get();
-
-        $itDocuments = DB::table('vt_Documents')->select('*')->where('cf_1488', $quote->contact_id)->get();
-
-        if (
-            $quote->quotestage == "3 - Accepted"
-            || $quote->quotestage == "4 - Accepted - Converted to Invoice"
-        ) {
-            return view('quotes.details.accepted', compact('quote', 'iTrackers', 'itDocuments'));
-        } else
-            if (
-            $quote->quotestage !== "7 - Client Banned"
-            || $quote->quotestage !== "6 - Client Not Interested"
-        ) {
-            return view('quotes.details.pending', compact('quote', 'iTrackers', 'itDocuments'));
-        }
+        $itDocuments = DB::table('vt_Documents')->select('*')->where('cf_quotes_id', $quote->id)->get();
+        return view('quotes.show', compact('quote', 'iTrackers', 'itDocuments'));
     }
 }

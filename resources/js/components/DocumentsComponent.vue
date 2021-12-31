@@ -19,13 +19,13 @@
       <div class="card shadow-lg p-1">
         <div class="card-header">
           <h3 class="text-themecolor mb-0">Documents</h3>
-          <button
+         <!--  <button
             type="button"
             class="btn btn-primary fas fa-edit float-right"
             @click="openModal('documents', 'store')"
           >
             New document
-          </button>
+          </button> -->
         </div>
 
         <div class="card-body">
@@ -34,35 +34,46 @@
               <thead>
                 <tr>
                   <th scope="col">Title</th>
-                  <th scope="col">Payments</th>
-                  <th scope="col">Invoices</th>
+                  <th scope="col">Document Type</th>
                   <th scope="col">File Type</th>
                   <th scope="col">File Name</th>
                   <th scope="col">Document No</th>
+                  <th scope="col">date</th>
+                  <th scope="col">download</th>
                 </tr>
               </thead>
               <tbody>
                 <tr
-                  v-for="doument in docsArr"
-                  :key="doument.id"
-                  :value="doument.id"
+                  v-for="document in docsArr"
+                  :key="document.id"
+                  :value="document.id"
                 >
-                  <td v-text="doument.notes_title"></td>
-                  <td v-text="doument.cf_1490"></td>
-                  <td v-text="doument.cf_2129"></td>
-                  <td v-text="doument.filetype"></td>
-                  <td v-text="doument.filename"></td>
-                  <td v-text="doument.note_no"></td>
+                  <td v-text="document.notes_title"></td>
+                  <td v-text="document.cf_1491"></td>
+                  <td v-text="document.filetype"></td>
+                  <td v-text="document.filename"></td>
+                 <!--  <td v-text="document.filename"></td> -->
+                  <td v-text="document.note_no"></td>
+                  <td v-text="document.modifiedtime"></td>
+                  <td>
+                    <a
+                      :href="document.filename"
+                      class="btn btn-outline-success btn-rounded"
+                      download
+                    >
+                      <i class="fas fa-download"></i
+                    ></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <!--  <div class="row">
+           <div class="row">
             <div class="col-md-8 sm-8">
               <div style="overflow-x: auto; min-width: 80%"></div>
             </div>
-          </div> -->
+          </div>
         </div>
 
         <!-- Modal edit acount -->

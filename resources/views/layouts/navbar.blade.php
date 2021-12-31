@@ -8,16 +8,16 @@
             <!-- Logo icon -->
             <b class="logo-icon">
                 <!--You can put here icon as well  -->
-                <img src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-icon.png"
+                <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png"
                     alt="homepage" class="dark-logo" />
-
-                <img src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/logo-light-icon.png"
-                    alt="homepage" class="light-logoo" />
+                <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png"
+                    alt="homepage" class="light-logo" />
             </b>
             <!--End Logo icon -->
             <!-- Logo text -->
             <span class="logo-text">
-                <h4>CP GerCanada</h4>
+                <img src="/{{ env('ASSET_URL') }}images\immvisas_rectangle.png"
+                    alt="homepage" class="light-logoo" />
             </span>
         </a>
         <!-- Toggle which is visible on mobile only -->
@@ -58,8 +58,10 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <img src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
-                        alt="user" width="30" class="profile-pic rounded-circle" />
+                        <span class="round text-white d-inline-block text-center rounded-circle bg-success">
+                            {{ substr(Auth::user()->name, 0, 1) }}
+                            {{ substr(Auth::user()->last_name, 0, 1) }}
+                        </span>
                 </a>
                 <div class="dropdown-menu mailbox dropdown-menu-right animated bounceInDown">
                     <ul class="dropdown-user list-style-none">
@@ -70,9 +72,6 @@
                                         {{ substr(Auth::user()->name, 0, 1) }}
                                         {{ substr(Auth::user()->last_name, 0, 1) }}
                                     </span>
-                                    {{-- <img
-                                        src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
-                                        alt="user" class="rounded" width="80"> --}}
                                 </div>
                                 <div class="u-text ml-2">
                                     <h4 class="mb-0">{{ Auth::user()->name }}

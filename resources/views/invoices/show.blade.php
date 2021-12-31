@@ -4,36 +4,40 @@
 @endsection
 
 @section('content')
-
     <div class="card shadow-lg p-1">
         <div class="card-header">
             <a href="{{ route('invoices') }}" class="btn btn-outline-success btn-rounded"><i
                     class=" fas fa-arrow-circle-left"></i></a>
             <h4 class="card-title mb-3"><span class="lstick d-inline-block align-middle"></span> Invoice
-                <b>{{ $invoice->subject }}</b></h4>
+                <b>{{ $invoice->subject }}</b>
+            </h4>
         </div>
         <ul class="nav nav-tabs nav-bordered mb-3 customtab">
             <li class="nav-item">
-                <a href="#invoice-details" data-toggle="tab" aria-expanded="false" class="nav-link">
+                <a href="#invoice-details" data-toggle="tab" aria-expanded="false" class="nav-link"
+                    data-toggle="tooltip" title="Invoice details">
                     <i class="mdi mdi-file-document d-lg-none d-block mr-1"></i>
                     <span class="d-none d-lg-block">Invoice details</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#invoice-payments" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                <a href="#invoice-payments" data-toggle="tab" aria-expanded="true" class="nav-link active"
+                    data-toggle="tooltip" title="Payments">
                     <i class="mdi mdi-cash-multiple d-lg-none d-block mr-1"></i>
                     <span class="d-none d-lg-block">Payments</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#invoice-paymentplan" data-toggle="tab" aria-expanded="false" class="nav-link">
+                <a href="#invoice-paymentplan" data-toggle="tab" aria-expanded="false" class="nav-link"
+                    data-toggle="tooltip" title="Payment plan">
                     <i class="mdi mdi-square-inc-cash d-lg-none d-block mr-1"></i>
                     <span class="d-none d-lg-block">Payment plan</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#invoice-receipts" data-toggle="tab" aria-expanded="false" class="nav-link">
-                    <i class="mdimdi-receipt d-lg-none d-block mr-1"></i>
+                <a href="#invoice-receipts" data-toggle="tab" aria-expanded="false" class="nav-link"
+                    data-toggle="tooltip" title="Receipts and account statement">
+                    <i class="mdi mdi-receipt d-lg-none d-block mr-1"></i>
                     <span class="d-none d-lg-block">Receipts and account statement</span>
                 </a>
             </li>
@@ -96,11 +100,7 @@
                     </div>
                 </div>
                 </br>
-                <div class="card ">
-                    <div class="card-body">
-                        Quote product details
-                    </div>
-                </div>
+
             </div>
             <div class="tab-pane show active" id="invoice-payments">
                 <div class="table-responsive">
@@ -165,7 +165,7 @@
                                 <tr>
                                     <td>{{ $document->filetype }}</td>
                                     <td>{{ $document->filename }}</td>
-                                    <td>{{ $document->cf_2134 }}</td>
+                                    <td>{{ $document->modifiedtime }}</td>
                                     <td><a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
                                     </td>
                                 </tr>
@@ -173,6 +173,295 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card shadow-lg p-1 ">
+        <div class="card-header">
+            Quote product details
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered lineItemsTable" style="margin-top:15px">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="lineItemBlockHeader">
+                                Item Details
+                            </th>
+                            <th colspan="2" class="lineItemBlockHeader">
+                                Currency :
+                                {{ $invoice->currency->currency_name }}({{ $invoice->currency->currency_symbol }})
+                            </th>
+                            <th colspan="3" class="lineItemBlockHeader">
+                                Tax Mode : {{ $invoice->hdnTaxType }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="lineItemFieldName">
+                                <span class="redColor">*</span><strong>Item Name</strong>
+                            </td>
+
+                            <td class="lineItemFieldName">
+                                <strong>Quantity</strong>
+                            </td>
+                            <td class="lineItemFieldName">
+                                <strong>Overall Cost</strong>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <strong>Selling Price</strong>
+                            </td>
+                            <td class="lineItemFieldName">
+                                <strong class="pull-right">Total</strong>
+                            </td>
+                            <td class="lineItemFieldName">
+                                <strong class="pull-right">Margin</strong>
+                            </td>
+                            <td class="lineItemFieldName">
+                                <strong class="pull-right">Net Price</strong>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <div>
+                                    <h5>
+                                        <b class="fieldValue" target="_blank">
+                                            {{ $invoice->product->productname }}</b>
+                                    </h5>
+                                </div>
+                                <div>
+
+                                </div>
+                                <div>
+
+                                    {{ $invoice->comment }}
+                                </div>
+                            </td>
+
+                            <td>
+                                {{ $invoice->quantity }}
+                            </td>
+
+                            <td>
+                                {{ number_format($invoice->purchase_cost, 2, '.', ',') }}
+                            </td>
+
+                            <td style="white-space: nowrap;">
+                                <div>
+                                    {{ number_format($invoice->listprice, 2, '.', ',') }}
+                                </div>
+                                <div>
+                                    (-)&nbsp; <strong><a href="javascript:void(0)"
+                                            class="individualDiscount inventoryLineItemDetails" tabindex="0" role="tooltip"
+                                            id="example" data-toggle="popover" data-trigger="focus" title="" data-content=""
+                                            data-original-title="Discount">Discount</a> : </strong>
+                                </div>
+                                <div>
+                                    <strong>Total After Discount :</strong>
+                                </div>
+                            </td>
+
+                            <td>
+                                @php
+                                    if ($invoice->discount_amount === '') {
+                                        $disc = $invoice->purchase_cost - ($invoice->purchase_cost - ($invoice->purchase_cost * $invoice->discount_percent) / 100);
+                                        $result = $disc;
+                                    } else {
+                                        $result = $invoice->discount_amount;
+                                    }
+                                @endphp
+
+                                <div align="right"> {{ number_format($invoice->listprice, 2, '.', ',') }}</div>
+                                <div align="right">{{ number_format($result, 2, '.', ',') }}</div>
+                                <div align="right">{{ number_format($invoice->hdnSubTotal, 2, '.', ',') }}</div>
+                            </td>
+                            <td>
+                                <div align="right">{{ number_format($invoice->margin, 2, '.', ',') }}</div>
+                            </td>
+                            <td>
+                                <div align="right">{{ number_format($invoice->hdnSubTotal, 2, '.', ',') }}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                {{--  --}}
+                <table class="table table-bordered lineItemsTable">
+                    <tbody>
+                        <tr>
+                            <td width="83%">
+                                <div class="pull-right">
+                                    <strong>Items Total</strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    <span class="pull-right">
+                                        <strong>{{ number_format($invoice->hdnSubTotal, 2, '.', ',') }}</strong>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    (-)&nbsp;<strong><a class="inventoryLineItemDetails" href="javascript:void(0)"
+                                            id="finalDiscount" tabindex="0" role="tooltip" data-trigger="focus"
+                                            data-placement="left" data-toggle="popover" title=""
+                                            data-content="Final Discount Amount = 0.00"
+                                            data-original-title="Overall Discount">Overall Discount</a></strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    0.00
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
+                                            href="javascript:void(0)" id="example" data-trigger="focus"
+                                            data-placement="left" data-toggle="popover" title=""
+                                            data-content="Total After Discount = 2,356.00<br /><br />  Shipping &amp; Handling  = 0.00<br /><br /><h5>Charges Total = 0.00</h5>"
+                                            data-original-title="Charges">Charges</a></strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    {{ number_format($invoice->hdnS_H_Amount, 2, '.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    <strong>Pre Tax Total </strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    {{ number_format($invoice->pre_tax_total, 2, '.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
+                                            href="javascript:void(0)" id="finalTax" data-trigger="focus"
+                                            data-placement="left" title="" data-toggle="popover"
+                                            data-content="Total After Discount = 2,356.00<br /><br />GST : 	5.000% of 2,356.00 = 117.80<br />PST : 	7.000% of 2,356.00 = 164.92<br /><br />Total Tax Amount = 282.72"
+                                            data-original-title="Tax">Tax</a></strong>
+                                </div>
+                            </td>
+                            <td>
+                                @php
+                                    $ammount = $invoice->hdnSubTotal;
+                                    $tax1 = $invoice->tax1!=""?number_format($invoice->tax1):0 ;
+                                    $tax2 = $invoice->tax2!=""?number_format($invoice->tax2):0 ;
+                                    $tax3 = $invoice->tax3!=""?number_format($invoice->tax3):0 ;
+                                  //  $tax2 = number_format($invoice->tax2 ? "" : 0);
+                                  // $tax3 = number_format($invoice->tax3 ? '' : 0);
+
+                                    $res1 = $ammount - ($ammount - ($ammount * $tax1) / 100);
+                                    $res2 = $ammount - ($ammount - ($ammount * $tax2) / 100);
+                                   $res3 = $ammount - ($ammount - ($ammount * $tax3) / 100);
+                                   $totTax = $res1 + $res2 + $res3;
+                                @endphp
+                                <div align="right">
+                                    {{ number_format($totTax, 2, '.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
+                                            title="" data-trigger="focus" data-placement="left" data-toggle="popover"
+                                            href="javascript:void(0)" id="taxesOnChargesList" data-content="Charges Total = 0.00<br /><br />
+                    Total Tax Amount = 0.00" data-original-title="Taxes On Charges">
+                                            Taxes On Charges </a></strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    {{ number_format($invoice->hdnS_H_Percent, 2, '.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    (-)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
+                                            href="javascript:void(0)" id="deductedTaxesList" data-trigger="focus"
+                                            data-toggle="popover" title="" data-placement="left" data-content="Total After Discount = 2,356.00<br /><br />
+
+                    Deducted Taxes Total = 0.00" data-original-title="Deducted Taxes">
+                                            Deducted Taxes </a></strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    {{ number_format($invoice->cf_2123, 2, '.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    <strong>Adjustment</strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    {{ number_format($invoice->txtAdjustment, 2, '.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    <strong>Grand Total</strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    {{ number_format($invoice->hdnGrandTotal, 2, '.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    <strong>Received</strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    {{ number_format($invoice->received, 2, '.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="83%">
+                                <div align="right">
+                                    <strong>Balance</strong>
+                                </div>
+                            </td>
+                            <td>
+                                <div align="right">
+                                    {{ number_format($invoice->balance, 2, '.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>
