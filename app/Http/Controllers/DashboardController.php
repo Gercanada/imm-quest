@@ -43,7 +43,7 @@ class DashboardController extends Controller
         $vt_cl_items = [];
         $pending_checklists = [];
 
-        if (count($vtCasesIdArr) >= 1) {
+        if (count($vtCasesIdArr) > 0) {
             $vtChecklists = Checklist::select('*')->whereIn('cf_1199', $vtCasesIdArr)->get();
             $vt_checklists   = count($vtChecklists);
             // count clitems
@@ -64,22 +64,20 @@ class DashboardController extends Controller
                     ->orWhereIn('cf_1216', $vtCLItemIdArr)
                     ->orWhereIn('cf_1217', $vtCasesIdArr)
                     ->where('cf_1578', 'Pending')
-                    ->where('cf_1200', 'Document')->get();
+                     ->where('cf_1200', 'Document')
+                    ->get();
+                $pending_checklists = [];
 
-                $checklists = DB::table('Checklist')->select('*')
-                    ->whereIn('cf_1199', $vtCasesIdArr);
-
-                $pending_checklists = array();
-
-                $pendingArr = array();
-                if (count($vt_cl_items) >= 1) {
+                $pendingArr = [];
+                $pendingArr2 = [];
+                if (count($vt_cl_items) >0) {
                     foreach ($vt_cl_items as $item) {
-                        $itemID = $item->cf_1216;
+                        // /$itemID = $item->cf_1216;
                         array_push($pendingArr, $item->cf_1216);
+                        array_push($pendingArr2, $item->id);
                     }
-
-                    foreach ($checklists as $checklist) {
-                        if (($checklist != null) && (in_array($checklist, $pendingArr))) {
+                    foreach ($vtChecklists as $checklist) {
+                        if (($checklist != null) && (in_array($checklist->id, $pendingArr))) {
                             array_push($pending_checklists, $checklist);
                         }
                     }
@@ -103,14 +101,6 @@ class DashboardController extends Controller
             array_push($paymentIdArr, $payment->id);
             array_push($paymentNOArr, $payment->cf_1142);
         }
-
-
-        /* $vtiger = new Vtiger();
-        $commboardQuery = DB::table('CommBoard')->select('*')   //TODO Clone commboard
-            ->whereIn('cf_2218', $vtCasesIdArr) //find by case id
-            ->orWhereIn('cf_2218', $paymentIdArr) //Find by payment id
-            ///->orWhereIn('cf_2218', $paymentNOArr) //Find by payment id
-            ->orWhereIn('cf_2218', $vtCasesNOArr); //find by caseNo */
         $commboards = Commboard::WhereIn('cf_2218', $vtCasesIdArr)->get();
 
         return view('dashboard', compact(

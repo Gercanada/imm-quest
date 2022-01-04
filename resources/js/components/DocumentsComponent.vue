@@ -19,7 +19,7 @@
       <div class="card shadow-lg p-1">
         <div class="card-header">
           <h3 class="text-themecolor mb-0">Documents</h3>
-         <!--  <button
+          <!--  <button
             type="button"
             class="btn btn-primary fas fa-edit float-right"
             @click="openModal('documents', 'store')"
@@ -52,24 +52,25 @@
                   <td v-text="document.cf_1491"></td>
                   <td v-text="document.filetype"></td>
                   <td v-text="document.filename"></td>
-                 <!--  <td v-text="document.filename"></td> -->
                   <td v-text="document.note_no"></td>
                   <td v-text="document.modifiedtime"></td>
                   <td>
                     <a
-                      :href="document.filename"
+                      v-if="document.cf_2271 != ''"
+                      :href="document.cf_2271"
                       class="btn btn-outline-success btn-rounded"
+                      target="_blank"
                       download
                     >
-                      <i class="fas fa-download"></i
-                    ></a>
+                      <i class="fas fa-download"></i>
+                    </a>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-           <div class="row">
+          <div class="row">
             <div class="col-md-8 sm-8">
               <div style="overflow-x: auto; min-width: 80%"></div>
             </div>
@@ -339,34 +340,6 @@ export default {
         });
     },
 
-    /*  updateAccount() {
-      this.submitted = true;
-      this.errors = {};
-      this.valideForm();
-
-      console.log(Object.keys(this.errors));
-      if (Object.keys(this.errors).length) {
-        return;
-      }
-      let me = this;
-
-      axios
-        .post("/documents", {
-          title: this.title,
-          last_name: this.last_name,
-          description: this.description,
-          expiry_date: this.expiry_date,
-          id: this.id,
-        })
-        .then(function (response) {
-          me.closeModal();
-          me.userFiles();
-        })
-        .catch(function (error) {
-          console.table(error);
-        });
-    }, */
-
     closeModal() {
       //Cerrar modals
       this.modal = 0;
@@ -374,8 +347,6 @@ export default {
         (this.description = ""),
         (this.expiry_date = ""),
         (this.issued_date = ""),
-        //(this.active = false);
-
         (this.submitted = false);
       this.errors = {};
       this.userFiles();
@@ -409,12 +380,10 @@ export default {
     },
 
     openModal(model, action, data = []) {
-      //console.log(action);
       switch (model) {
         case "documents": {
           switch (action) {
             case "store": {
-              //  / console.log(data);
               this.modal = 1;
               this.modalTitle = "Upload documents";
 
@@ -454,26 +423,3 @@ export default {
   },
 };
 </script>
-
-<style>
-/* .modal-content {
-  width: 100% !important;
-  position: fixed !important;
-  overflow-y: visible;
-}
-.mostrar {
-  display: list-item !important;
-  opacity: 1 !important;
-  position: fixed !important;
-  background-color: #3c29297a !important;
-}
-.div-error {
-  display: flex;
-  justify-content: center;
-}
-.text-error {
-  color: red !important;
-  font-weight: bold;
-} */
-</style>
-

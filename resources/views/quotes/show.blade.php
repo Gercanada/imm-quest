@@ -151,15 +151,13 @@
                         <tbody>
                             @foreach ($itDocuments as $document)
                                 <tr>
-                                    {{-- <td>{{ $document->filetype }}</td> --}}
                                     <td>{{ $document->cf_1491 }}</td>
                                     <td>{{ $document->filename }}</td>
                                     <td>{{ $document->modifiedtime }}</td>
-                                    {{-- <td>{{ $document->filelocationtype }}}</td> --}}
                                     <td>
                                         @if ($document->cf_2271 != '')
                                             <a href="{{ $document->cf_2271 }}"
-                                                class="btn btn-outline-success btn-rounded" download>
+                                                class="btn btn-outline-success btn-rounded" target="_blank" download>
                                                 <i class="fas fa-download"></i></a>
                                         @endif
                                     </td>
@@ -225,7 +223,6 @@
                                 </td>
                             </tr>
                             <tr>
-
                                 <td>
                                     <div>
                                         <h5>
@@ -234,22 +231,17 @@
                                         </h5>
                                     </div>
                                     <div>
-
                                     </div>
                                     <div>
-
                                         {{ $quote->comment }}
                                     </div>
                                 </td>
-
                                 <td>
                                     {{ $quote->quantity }}
                                 </td>
-
                                 <td>
                                     {{ number_format($quote->purchase_cost, 2, '.', ',') }}
                                 </td>
-
                                 <td style="white-space: nowrap;">
                                     <div>
                                         {{ number_format($quote->listprice, 2, '.', ',') }}
@@ -265,7 +257,6 @@
                                         <strong>Total After Discount :</strong>
                                     </div>
                                 </td>
-
                                 <td>
                                     @php
                                         if ($quote->discount_amount === '') {
@@ -276,7 +267,6 @@
                                             $result = $quote->discount_amount != '' ? number_format($quote->discount_amount, 2, '.', ',') : 0;
                                         }
                                     @endphp
-
                                     <div align="right"> {{ number_format($quote->listprice, 2, '.', ',') }}</div>
                                     <div align="right">{{ number_format($result, 2, '.', ',') }}</div>
                                     <div align="right">{{ number_format($quote->hdnSubTotal, 2, '.', ',') }}</div>
@@ -385,7 +375,7 @@
                                         (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
                                                 title="" data-trigger="focus" data-placement="left" data-toggle="popover"
                                                 href="javascript:void(0)" id="taxesOnChargesList" data-content="Charges Total = 0.00<br /><br />
-                                Total Tax Amount = 0.00" data-original-title="Taxes On Charges">
+                                        Total Tax Amount = 0.00" data-original-title="Taxes On Charges">
                                                 Taxes On Charges </a></strong>
                                     </div>
                                 </td>
@@ -402,7 +392,7 @@
                                                 href="javascript:void(0)" id="deductedTaxesList" data-trigger="focus"
                                                 data-toggle="popover" title="" data-placement="left" data-content="Total After Discount = 2,356.00<br /><br />
 
-                                Deducted Taxes Total = 0.00" data-original-title="Deducted Taxes">
+                                        Deducted Taxes Total = 0.00" data-original-title="Deducted Taxes">
                                                 Deducted Taxes </a></strong>
                                     </div>
                                 </td>
