@@ -5,8 +5,8 @@
 @section('content')
     <!-- ============================================================== -->
     <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
-        style="background:url(/{{env('ASSET_URL')}}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/background/login-register.jpg) no-repeat center center; background-size: cover;">
-        <div class="auth-box p-4 bg-white rounded">
+        style="background:url(/{{env('ASSET_URL')}}images/iss_0893_05172_1.jpg) no-repeat center center; background-size: cover;">
+        <div class="auth-box p-4 bg-white rounded" style="opacity:85%; position:relative;">
             <div id="loginform">
                 <div class="logo">
                     <h3 class="box-title mb-3">Sign In</h3>
@@ -64,7 +64,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group text-center mt-4">
+                            <div class="form-group text-center mt-4" style="position:relative;
+                            z-index:1;">
                                 <div class="col-xs-12">
                                     <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
                                         type="submit">Log In</button>

@@ -16,8 +16,8 @@
             <!--End Logo icon -->
             <!-- Logo text -->
             <span class="logo-text">
-                <img src="/{{ env('ASSET_URL') }}images\immvisas_rectangle.png"
-                    alt="homepage" class="light-logoo" />
+                <img src="/{{ env('ASSET_URL') }}images\immvisas_1080.png"
+                    alt="homepage" class="light-logo " width="160px" />
             </span>
         </a>
         <!-- Toggle which is visible on mobile only -->
