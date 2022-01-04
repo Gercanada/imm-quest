@@ -142,7 +142,8 @@ class CloneDBController extends Controller
             }
             return "dataCloned";
         } catch (Exception $e) {
-            return response()->json($e);
+            return $e;
+            return response()->json(['error' => $e], 500);
         }
     }
 
@@ -265,6 +266,7 @@ class CloneDBController extends Controller
 
         foreach ($tableData as $row) { //set values in table
             $table = null;
+            $tableRows = null;
             $username = null;
             $userPass = null;
             $firstname = null;
@@ -272,19 +274,23 @@ class CloneDBController extends Controller
             $nameFields = [];
             $dataFields = [];
             $toUpdate   = [];
+            $beforeRows = [];
 
             if ($tablename === 'InstallmentTracker') {
                 //Installment tracker can be of invoices or quotes
                 foreach ($tableData as $row2) {
                     if ($row2->cf_1175 != '') {
                         $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
+                        $tableRows = DB::select("SELECT * FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
                     }
                     if ($row2->cf_1176 != '') {
-                        $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
+                        $table = DB::select("SELECT * FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
+                        $tableRows = DB::select("SELECT * FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
                     }
                 }
             } else {
                 $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE  id = '$row->id';"); //search current table on CP
+                $tableRows = DB::select("SELECT * FROM vt_$tablename WHERE  id = '$row->id';"); //search current table on CP
             }
 
             foreach ($row as $key => $val) {
@@ -298,10 +304,28 @@ class CloneDBController extends Controller
                     }
                 }
             }
-            $names =   implode(", ", $nameFields);
-            $data  =   implode(", ", $dataFields);
+            if (count($tableRows) > 0) {
+                foreach ($tableRows[0] as $key => $val) {
+                    array_push($beforeRows, $key);
+                }
+            }
 
-            if ($table[0]->total === 0) { //If noting found be created
+            foreach ($beforeRows as $rKey) {
+                if (!in_array($rKey, $nameFields)) {
+                    DB::statement("ALTER TABLE vt_$tablename DROP COLUMN  $rKey");
+                }
+            }
+            foreach ($nameFields as $name) {
+                if (!in_array($name, $beforeRows)) {
+                    foreach ($beforeRows as $befo) {
+                        DB::statement("ALTER TABLE vt_$tablename ADD COLUMN $name VARCHAR(155) AFTER  $befo");
+                    }
+                }
+                $names =   implode(", ", $nameFields);
+                $data  =   implode(", ", $dataFields);
+            }
+
+            if (count($table) > 0 && $table[0]->total === 0) { //If noting found be created
                 DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
                 foreach ($toUpdate as $toup) {
                     foreach ($toup as $key => $val) {
@@ -334,9 +358,7 @@ class CloneDBController extends Controller
                 $newValueKeys = [];
                 foreach ($toUpdate as $toup) {
                     foreach ($toup as $key => $val) {
-
                         $val = self::prepareStrConvertion($val);
-
                         $newValues['*' . $key . '*'] = $val;
                         array_push($newValueKeys, $key);
                         if ($key === 'id') { //Ger row id
@@ -356,6 +378,7 @@ class CloneDBController extends Controller
                                 $last_name = $val;
                             }
 
+
                             if ($username !== null && $userPass !== null) {
                                 $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
                                 array_push($tableIdsArr, $newUID);
@@ -364,7 +387,7 @@ class CloneDBController extends Controller
                     }
                 } //end loop
 
-                if ($table[0]->total > 0) { //If table has founded row be updated
+                if (count($table) > 0 && $table[0]->total > 0) { //If table has founded row be updated
                     $setValues = self::jsonToSetOnMysql($newValues);
                     DB::update("UPDATE vt_$tablename set $setValues WHERE id = '$id';");
                 }
@@ -464,5 +487,3 @@ class CloneDBController extends Controller
         return $request;
     }
 }
-
-

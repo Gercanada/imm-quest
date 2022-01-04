@@ -157,8 +157,8 @@
                                     <td>{{ $document->modifiedtime }}</td>
                                     {{-- <td>{{ $document->filelocationtype }}}</td> --}}
                                     <td>
-                                        @if ($document->filelocationtype === 'E')
-                                            <a href="{{ $document->filename }}"
+                                        @if ($document->cf_2271 != '')
+                                            <a href="{{ $document->cf_2271 }}"
                                                 class="btn btn-outline-success btn-rounded" download>
                                                 <i class="fas fa-download"></i></a>
                                         @endif
