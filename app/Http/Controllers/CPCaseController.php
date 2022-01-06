@@ -8,9 +8,6 @@ use App\Models\Checklist;
 use App\Models\CLItem;
 use App\Models\CPCase;
 use App\Models\Contact;
-use Illuminate\Http\Request;
-use JBtje\VtigerLaravel\Vtiger;
-
 class CPCaseController extends Controller
 {
     /**

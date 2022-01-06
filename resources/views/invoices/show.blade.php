@@ -203,7 +203,6 @@
                             <td class="lineItemFieldName">
                                 <span class="redColor">*</span><strong>Item Name</strong>
                             </td>
-
                             <td class="lineItemFieldName">
                                 <strong>Quantity</strong>
                             </td>
@@ -316,7 +315,7 @@
                             </td>
                             <td>
                                 <div align="right">
-                                    0.00
+                                    0.000
                                 </div>
 
                             </td>
@@ -365,9 +364,6 @@
                                     $tax1 = $invoice->tax1!=""?number_format($invoice->tax1):0 ;
                                     $tax2 = $invoice->tax2!=""?number_format($invoice->tax2):0 ;
                                     $tax3 = $invoice->tax3!=""?number_format($invoice->tax3):0 ;
-                                  //  $tax2 = number_format($invoice->tax2 ? "" : 0);
-                                  // $tax3 = number_format($invoice->tax3 ? '' : 0);
-
                                     $res1 = $ammount - ($ammount - ($ammount * $tax1) / 100);
                                     $res2 = $ammount - ($ammount - ($ammount * $tax2) / 100);
                                    $res3 = $ammount - ($ammount - ($ammount * $tax3) / 100);

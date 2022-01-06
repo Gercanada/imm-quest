@@ -4,14 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use JBtje\VtigerLaravel\Vtiger;
-use Illuminate\Http\Request;
-
 use App\Models\Invoice;
 use App\Models\Contact;
 use App\Models\CPCase;
 use App\Models\Payment;
-use App\Models\Currency;
 use App\Models\InstallmentTracker;
 
 class InvoiceController extends Controller

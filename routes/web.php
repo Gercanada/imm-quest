@@ -15,6 +15,7 @@ use App\Http\Controllers\CLItemController;
 use App\Http\Controllers\CloneDBController;
 use App\Http\Controllers\CommboardController;
 use App\Http\Controllers\VtigerController;
+use App\Http\Controllers\CustomAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ use App\Http\Controllers\VtigerController;
 */
 
 Auth::routes();
+//custom auth
 
 Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
     //vtiger

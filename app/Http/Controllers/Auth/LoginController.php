@@ -7,11 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Google\Service\Docs\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Facades\DB;
-use JBtje\VtigerLaravel\Vtiger;
-
 use Illuminate\Support\Facades\Auth;
-
 use App\Models\User;
 
 

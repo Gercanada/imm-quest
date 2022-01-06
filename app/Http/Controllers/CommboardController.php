@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use JBtje\VtigerLaravel\Vtiger;
 use App\Models\Commboard;
 use App\Models\Contact;
 use App\Models\Invoice;
@@ -31,8 +29,6 @@ class CommboardController extends Controller
      */
     public function getComments(){
         $user = Auth::user();
-        $user_id = $user->id;
-        $vtiger = new Vtiger();
         //Get contact data of this user
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
 
