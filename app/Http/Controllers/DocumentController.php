@@ -106,7 +106,7 @@ class DocumentController extends Controller
                 }
             }
             if (count($urlFiles) > 0) {
-                return response()->json([['count' => count($urlFiles)], ['files' => $urlFiles]],200);
+                return response()->json($urlFiles, 200);
             } else {
                 return;
             }
