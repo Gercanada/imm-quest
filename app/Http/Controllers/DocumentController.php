@@ -71,19 +71,19 @@ class DocumentController extends Controller
 
     public function destroy(Request $request)
     {
-        $file = substr($request->file, 1);
-        if (File::exists($file)) {
-            // Elimina imagen del servidor
-            File::delete($file);
-            $respuesta = [
-                'mensaje' => 'Imagen Eliminada',
-                'imagen' => $file
-            ];
-            return $respuesta;
-        } else {
-            return "File $file not found";
-        }
         try {
+            $file = substr($request->file, 1);
+            if (File::exists($file)) {
+                // Elimina imagen del servidor
+                File::delete($file);
+                $respuesta = [
+                    'mensaje' => 'Imagen Eliminada',
+                    'imagen' => $file
+                ];
+                return $respuesta;
+            } else {
+                return "File $file not found";
+            }
         } catch (Exception $e) {
             return response()->json([$e, 500]);
         }
