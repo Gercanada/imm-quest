@@ -32,7 +32,6 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         try {
-            $userId = 'userId';
             if ($request->file('file')) {
                 /* Multiple file upload */
                 $files = $request->file('file');
@@ -73,16 +72,14 @@ class DocumentController extends Controller
     {
         try {
             $file = substr($request->file, 1);
-
-            $exploded = explode('/',$file);
-            $spliced = array_splice($exploded,2);
-            $file = implode('/',$spliced);
-
-            if(Storage::exists($file)) {
+            $exploded = explode('/', $file);
+            $spliced = array_splice($exploded, 2);
+            $file = implode('/', $spliced);
+            if (Storage::exists($file)) {
                 Storage::delete($file);
-                return "File deleted";
-            }else{
-                return "File not found";
+                return  response()->json("File deleted");
+            } else {
+                return response()->json("File not found");
             }
         } catch (Exception $e) {
             return response()->json([$e, 500]);
@@ -106,8 +103,6 @@ class DocumentController extends Controller
             }
             if (count($urlFiles) > 0) {
                 return response()->json($urlFiles, 200);
-            } else {
-                return;
             }
         } catch (\Exception $e) {
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();

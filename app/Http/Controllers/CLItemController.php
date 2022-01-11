@@ -47,7 +47,6 @@ class CLItemController extends Controller
         try {
             $user = Auth::user();
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
-            $contact_id = $contact->id;
 
             $clitem = CLItem::where('id', $request->id)->firstOrFail();
             if ($request->file('file')) {
@@ -60,7 +59,7 @@ class CLItemController extends Controller
                 $fileList = array();
                 $contact_no = $contact->contact_no;
 
-                $destination = "documents/contact/$contact_no/clitem/$clitem->id";
+                $destination = "documents/contact/$contact_no/clitem/$clitem->clitemsno";
                 foreach ($files as $file) {
                     $filename = $file->getClientOriginalName();
                     $filename = str_replace(' ', '', $filename);
