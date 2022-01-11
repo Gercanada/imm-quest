@@ -34,7 +34,6 @@ class DocumentController extends Controller
         try {
             $userId = 'userId';
             if ($request->file('file')) {
-
                 /* Multiple file upload */
                 $files = $request->file('file');
                 if (!is_array($files)) {
@@ -60,6 +59,7 @@ class DocumentController extends Controller
                 $document->expiry_date = $request['expiry_date'];
                 $document->url_files = $fileList;
                 $document->save();
+
                 return response()->json(['message' => 'file uploaded', 'data' => $document], 200);
             } else {
                 return response()->json(['message' => 'error uploading file'], 503);
@@ -73,16 +73,16 @@ class DocumentController extends Controller
     {
         try {
             $file = substr($request->file, 1);
-            if (File::exists($file)) {
-                // Elimina imagen del servidor
-                File::delete($file);
-                $respuesta = [
-                    'mensaje' => 'Imagen Eliminada',
-                    'imagen' => $file
-                ];
-                return $respuesta;
-            } else {
-                return "File $file not found";
+
+            $exploded = explode('/',$file);
+            $spliced = array_splice($exploded,2);
+            $file = implode('/',$spliced);
+
+            if(Storage::exists($file)) {
+                Storage::delete($file);
+                return "File deleted";
+            }else{
+                return "File not found";
             }
         } catch (Exception $e) {
             return response()->json([$e, 500]);
@@ -97,7 +97,6 @@ class DocumentController extends Controller
             $directory = "/documents/contact/$user->vtiger_contact_id";
             $files = Storage::disk('public')->allFiles($directory);
             $urlFiles = [];
-
             foreach ($files as $file) {
                 if (env('APP_ENV') === 'local') {
                     array_push($urlFiles, (Storage::url($file)));
