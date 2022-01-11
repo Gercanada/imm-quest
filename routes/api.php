@@ -25,6 +25,7 @@ Route::post('/user_params',  [CloneDBController::class, 'testws']);
 
 Route::middleware('imm-header')->group(function(){
     Route::post('/documents', [DocumentController::class , 'checkDocuments']);
+    Route::post('/clitem_doc', [DocumentController::class , 'createCLItemDoc']);
     Route::post('/remove_document', [DocumentController::class , 'destroy']);
     Route::post('/getresponse', [DocumentController::class , 'getResponse']);
 

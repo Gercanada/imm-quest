@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -108,5 +109,34 @@ class DocumentController extends Controller
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->write($e);
         }
+    }
+
+    public function createCLItemDoc(Request $request)
+    {
+        $vtiger = new Vtiger();
+
+        $userQuery = DB::table('CLItems')->select('*')->where("id", $request->clitemsno)->take(1);
+        $clitem = $vtiger->search($userQuery)->result[0];
+
+        $data = [
+            "notes_title"       => $clitem->name ?? '',
+            "assigned_user_id"  => $clitem->assigned_user_id,
+            "filelocationtype"  => $request->filelocationtype,
+            "cf_1487"           => $clitem->cf_1217 ?? '',//case
+            "cf_1488"           => $clitem->cf_contacts_id ?? '',//cotact
+            "cf_clitems_id"     => $clitem->id ?? '',// id
+
+            "filename"          => $request->filename ?? '',
+            "cf_1491"           => "Contact Document"
+
+            //"notecontent" => $request->notecontent ?? '',
+            //"cf_2271" => $request->fileUrl ?? ''
+
+            //"folderid" => $request->folder ?? '',
+            //"cf_1490" => $request->payment ?? '',
+            //"cf_2129" => $request->invoice ?? '',
+            //"cf_quotes_id" => $request->quote ?? '',
+        ];
+        $data = $vtiger->create('Documents', ($data));
     }
 }
