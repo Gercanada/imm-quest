@@ -148,6 +148,6 @@ class DocumentController extends Controller
     }
 
     public function singleUrl(Request $request ){
-        return response()->json("env('APP_URL')$request->file");
+        return response()->json(env('APP_URL').$request->file);
     }
 }
