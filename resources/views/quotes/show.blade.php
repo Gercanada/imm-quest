@@ -247,10 +247,8 @@
                                         {{ number_format($quote->listprice, 2, '.', ',') }}
                                     </div>
                                     <div>
-                                        (-)&nbsp; <strong><a href="javascript:void(0)"
-                                                class="individualDiscount inventoryLineItemDetails" tabindex="0"
-                                                role="tooltip" id="example" data-toggle="popover" data-trigger="focus"
-                                                title="" data-content="" data-original-title="Discount">Discount</a> :
+                                        (-)&nbsp; <strong><a class="individualDiscount inventoryLineItemDetails"
+                                                tabindex="0" id="example">Discount</a> :
                                         </strong>
                                     </div>
                                     <div>
@@ -300,16 +298,14 @@
                             <tr>
                                 <td width="83%">
                                     <div align="right">
-                                        (-)&nbsp;<strong><a class="inventoryLineItemDetails" href="javascript:void(0)"
-                                                id="finalDiscount" tabindex="0" role="tooltip" data-trigger="focus"
-                                                data-placement="left" data-toggle="popover" title=""
-                                                data-content="Final Discount Amount = 0.00"
-                                                data-original-title="Overall Discount">Overall Discount</a></strong>
+                                        (-)&nbsp;<strong>
+                                            <a class="inventoryLineItemDetails" id="finalDiscount" tabindex="0"
+                                                role="tooltip">Overall Discount</a></strong>
                                     </div>
                                 </td>
                                 <td>
                                     <div align="right">
-                                        0.00
+                                        {{ $quote->discount_amount != '' ? number_format($quote->discount_amount, 2, '.', ',') : 0 }}
                                     </div>
 
                                 </td>
@@ -317,11 +313,8 @@
                             <tr>
                                 <td width="83%">
                                     <div align="right">
-                                        (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
-                                                href="javascript:void(0)" id="example" data-trigger="focus"
-                                                data-placement="left" data-toggle="popover" title=""
-                                                data-content="Total After Discount = 2,356.00<br /><br />  Shipping &amp; Handling  = 0.00<br /><br /><h5>Charges Total = 0.00</h5>"
-                                                data-original-title="Charges">Charges</a></strong>
+                                        (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0"
+                                                role="tooltip">Charges</a></strong>
                                     </div>
                                 </td>
                                 <td>
@@ -345,11 +338,8 @@
                             <tr>
                                 <td width="83%">
                                     <div align="right">
-                                        (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
-                                                href="javascript:void(0)" id="finalTax" data-trigger="focus"
-                                                data-placement="left" title="" data-toggle="popover"
-                                                data-content="Total After Discount = 2,356.00<br /><br />GST : 	5.000% of 2,356.00 = 117.80<br />PST : 	7.000% of 2,356.00 = 164.92<br /><br />Total Tax Amount = 282.72"
-                                                data-original-title="Tax">Tax</a></strong>
+                                        (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0"
+                                                role="tooltip">Tax</a></strong>
                                     </div>
                                 </td>
                                 <td>
@@ -372,10 +362,7 @@
                             <tr>
                                 <td width="83%">
                                     <div align="right">
-                                        (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
-                                                title="" data-trigger="focus" data-placement="left" data-toggle="popover"
-                                                href="javascript:void(0)" id="taxesOnChargesList" data-content="Charges Total = 0.00<br /><br />
-                                        Total Tax Amount = 0.00" data-original-title="Taxes On Charges">
+                                        (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0">
                                                 Taxes On Charges </a></strong>
                                     </div>
                                 </td>
@@ -388,11 +375,7 @@
                             <tr>
                                 <td width="83%">
                                     <div align="right">
-                                        (-)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
-                                                href="javascript:void(0)" id="deductedTaxesList" data-trigger="focus"
-                                                data-toggle="popover" title="" data-placement="left" data-content="Total After Discount = 2,356.00<br /><br />
-
-                                        Deducted Taxes Total = 0.00" data-original-title="Deducted Taxes">
+                                        (-)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0">
                                                 Deducted Taxes </a></strong>
                                     </div>
                                 </td>

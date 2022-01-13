@@ -482,8 +482,90 @@ class CloneDBController extends Controller
         }
     }
 
-    public function testws(Request $request)
+
+
+    public function duplicateContacts(Request $request)
     {
-        return $request;
+        $string = 'This is a string';
+$lastChar = substr($string, -1);
+return "The last char of the string is $lastChar";
+
+$contactid = '192168';
+$lst = substr($contactid, -1);
+
+if($contactid )
+
+
+        $vtiger = new Vtiger();
+        $userQuery = DB::table('Contacts')->select('*')->where('lastname', 'like', '%' . $request->lastname . '%');
+        $contacts = $vtiger->search($userQuery)->result; //Get contact that be cloned
+
+        $duplicates = [];
+        $namesArr = [];
+        $lastNamesArr = [];
+        $emailsArr = [];
+        $msg = '';
+
+        foreach ($contacts as $contact) {
+            array_push($namesArr,  $contact->firstname);
+            array_push($lastNamesArr,  $contact->lastname);
+            array_push($emailsArr,  $contact->email);
+        }
+
+       /*  sort($namesArr);
+        sort($lastNamesArr);
+        sort($emailsArr);
+
+        $arrlength = count($namesArr);
+        for ($x = 0; $x < $arrlength; $x++) {
+            echo $namesArr[$x];
+        } */
+
+
+        function showDups($array)
+        {
+            $array_temp = array();
+            foreach ($array as $val) {
+                if (!in_array($val, $array_temp)) {
+                    $array_temp[] = $val;
+                } else {
+                    return $val;
+                }
+            }
+        }
+
+        foreach ($contacts as $contact) {
+            if ($request->by_firstname === '1' && $request->by_lastname === '1'  && $request->by_email === '1') { //Firstname,  lastname, email duplicates
+                $msg = 'Duplicated firstname, lastname and email';
+                if ($contact->firstname === showDups($namesArr) && $contact->lastname === showDups($lastNamesArr)) {
+                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
+                }
+            } else
+            if ($request->by_firstname === '1' && $request->by_lastname === '1') { //Firstname and lastname duplicates
+                $msg = 'Duplicated firstname and lastname';
+                if ($contact->firstname === showDups($namesArr) && $contact->lastname === showDups($lastNamesArr)) {
+                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
+                }
+            } else
+            if ($request->by_lastname === '1') { //lastname
+                $msg = 'Duplicated lastname';
+                if ($contact->lastname === showDups($lastNamesArr)) {
+                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
+                }
+            } else
+            if ($request->by_firstname === '1') { //firstname
+                $msg = 'Duplicated  firstname ';
+                if ($contact->firstname === showDups($namesArr)) {
+                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
+                }
+            } else
+            if ($request->by_email === '1') { //email
+                $msg = 'Duplicated  email ';
+                if ($contact->email === showDups($emailsArr)) {
+                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
+                }
+            }
+        }
+        return response()->json([$msg => $duplicates]);
     }
 }

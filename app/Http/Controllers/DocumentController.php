@@ -72,7 +72,7 @@ class DocumentController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $file = substr($request->file, 1);
+           $file = substr($request->file, 1);
             $exploded = explode('/', $file);
             $spliced = array_splice($exploded, 2);
             $file = implode('/', $spliced);
@@ -113,30 +113,37 @@ class DocumentController extends Controller
 
     public function createCLItemDoc(Request $request)
     {
-        $vtiger = new Vtiger();
+        try {
+            $vtiger = new Vtiger();
 
-        $userQuery = DB::table('CLItems')->select('*')->where("id", $request->clitemsno)->take(1);
-        $clitem = $vtiger->search($userQuery)->result[0];
+            $str = "ah si"."si";
 
-        $data = [
-            "notes_title"       => $clitem->name ?? '',
-            "assigned_user_id"  => $clitem->assigned_user_id,
-            "filelocationtype"  => $request->filelocationtype,
-            "cf_1487"           => $clitem->cf_1217 ?? '',//case
-            "cf_1488"           => $clitem->cf_contacts_id ?? '',//cotact
-            "cf_clitems_id"     => $clitem->id ?? '',// id
+            $userQuery = DB::table('CLItems')->select('*')->where("id", $request->clitemsno)->take(1);
+            $clitem = $vtiger->search($userQuery)->result[0];
 
-            "filename"          => $request->filename ?? '',
-            "cf_1491"           => "Contact Document"
+            $data = [
+                "notes_title"       => $clitem->name ?? '',
+                "assigned_user_id"  => $clitem->assigned_user_id,
+                "filelocationtype"  => $request->filelocationtype,
+                "cf_1487"           => $clitem->cf_1217 ?? '', //case
+                "cf_1488"           => $clitem->cf_contacts_id ?? '', //cotact
+                "cf_clitems_id"     => $clitem->id ?? '', // id
 
-            //"notecontent" => $request->notecontent ?? '',
-            //"cf_2271" => $request->fileUrl ?? ''
+                "filename"          => $request->filename ?? '',
+                "cf_1491"           => "Contact Document"
 
-            //"folderid" => $request->folder ?? '',
-            //"cf_1490" => $request->payment ?? '',
-            //"cf_2129" => $request->invoice ?? '',
-            //"cf_quotes_id" => $request->quote ?? '',
-        ];
-        $data = $vtiger->create('Documents', ($data));
+                //"notecontent" => $request->notecontent ?? '',
+                //"cf_2271" => $request->fileUrl ?? ''
+
+                //"folderid" => $request->folder ?? '',
+                //"cf_1490" => $request->payment ?? '',
+                //"cf_2129" => $request->invoice ?? '',
+                //"cf_quotes_id" => $request->quote ?? '',
+            ];
+            $data = $vtiger->create('Documents', ($data));
+            return 200;
+        } catch (Exception $e) {
+            return response()->json($e, 500);
+        }
     }
 }

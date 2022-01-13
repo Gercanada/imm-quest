@@ -166,7 +166,12 @@
                                     <td>{{ $document->filetype }}</td>
                                     <td>{{ $document->filename }}</td>
                                     <td>{{ $document->modifiedtime }}</td>
-                                    <td><a class="btn btn-outline-success btn-rounded"><i class="fas fa-download"></i></a>
+                                    <td>
+                                        @if ($document->cf_2271 != '')
+                                            <a href="{{ $document->cf_2271 }}"
+                                                class="btn btn-outline-success btn-rounded" target="_blank" download>
+                                                <i class="fas fa-download"></i></a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -253,10 +258,9 @@
                                     {{ number_format($invoice->listprice, 2, '.', ',') }}
                                 </div>
                                 <div>
-                                    (-)&nbsp; <strong><a href="javascript:void(0)"
-                                            class="individualDiscount inventoryLineItemDetails" tabindex="0" role="tooltip"
-                                            id="example" data-toggle="popover" data-trigger="focus" title="" data-content=""
-                                            data-original-title="Discount">Discount</a> : </strong>
+                                    (-)&nbsp; <strong><a class="individualDiscount inventoryLineItemDetails"
+                                            tabindex="0">Discount</a> :
+                                    </strong>
                                 </div>
                                 <div>
                                     <strong>Total After Discount :</strong>
@@ -306,11 +310,7 @@
                         <tr>
                             <td width="83%">
                                 <div align="right">
-                                    (-)&nbsp;<strong><a class="inventoryLineItemDetails" href="javascript:void(0)"
-                                            id="finalDiscount" tabindex="0" role="tooltip" data-trigger="focus"
-                                            data-placement="left" data-toggle="popover" title=""
-                                            data-content="Final Discount Amount = 0.00"
-                                            data-original-title="Overall Discount">Overall Discount</a></strong>
+                                    (-)&nbsp;<strong><a class="inventoryLineItemDetails">Overall Discount</a></strong>
                                 </div>
                             </td>
                             <td>
@@ -323,11 +323,7 @@
                         <tr>
                             <td width="83%">
                                 <div align="right">
-                                    (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
-                                            href="javascript:void(0)" id="example" data-trigger="focus"
-                                            data-placement="left" data-toggle="popover" title=""
-                                            data-content="Total After Discount = 2,356.00<br /><br />  Shipping &amp; Handling  = 0.00<br /><br /><h5>Charges Total = 0.00</h5>"
-                                            data-original-title="Charges">Charges</a></strong>
+                                    (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0">Charges</a></strong>
                                 </div>
                             </td>
                             <td>
@@ -351,23 +347,19 @@
                         <tr>
                             <td width="83%">
                                 <div align="right">
-                                    (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
-                                            href="javascript:void(0)" id="finalTax" data-trigger="focus"
-                                            data-placement="left" title="" data-toggle="popover"
-                                            data-content="Total After Discount = 2,356.00<br /><br />GST : 	5.000% of 2,356.00 = 117.80<br />PST : 	7.000% of 2,356.00 = 164.92<br /><br />Total Tax Amount = 282.72"
-                                            data-original-title="Tax">Tax</a></strong>
+                                    (+)&nbsp;<strong><a class="inventoryLineItemDetails">Tax</a></strong>
                                 </div>
                             </td>
                             <td>
                                 @php
                                     $ammount = $invoice->hdnSubTotal;
-                                    $tax1 = $invoice->tax1!=""?number_format($invoice->tax1):0 ;
-                                    $tax2 = $invoice->tax2!=""?number_format($invoice->tax2):0 ;
-                                    $tax3 = $invoice->tax3!=""?number_format($invoice->tax3):0 ;
+                                    $tax1 = $invoice->tax1 != '' ? number_format($invoice->tax1) : 0;
+                                    $tax2 = $invoice->tax2 != '' ? number_format($invoice->tax2) : 0;
+                                    $tax3 = $invoice->tax3 != '' ? number_format($invoice->tax3) : 0;
                                     $res1 = $ammount - ($ammount - ($ammount * $tax1) / 100);
                                     $res2 = $ammount - ($ammount - ($ammount * $tax2) / 100);
-                                   $res3 = $ammount - ($ammount - ($ammount * $tax3) / 100);
-                                   $totTax = $res1 + $res2 + $res3;
+                                    $res3 = $ammount - ($ammount - ($ammount * $tax3) / 100);
+                                    $totTax = $res1 + $res2 + $res3;
                                 @endphp
                                 <div align="right">
                                     {{ number_format($totTax, 2, '.', ',') }}
@@ -377,10 +369,7 @@
                         <tr>
                             <td width="83%">
                                 <div align="right">
-                                    (+)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
-                                            title="" data-trigger="focus" data-placement="left" data-toggle="popover"
-                                            href="javascript:void(0)" id="taxesOnChargesList" data-content="Charges Total = 0.00<br /><br />
-                    Total Tax Amount = 0.00" data-original-title="Taxes On Charges">
+                                    (+)&nbsp;<strong><a class="inventoryLineItemDetails">
                                             Taxes On Charges </a></strong>
                                 </div>
                             </td>
@@ -393,11 +382,7 @@
                         <tr>
                             <td width="83%">
                                 <div align="right">
-                                    (-)&nbsp;<strong><a class="inventoryLineItemDetails" tabindex="0" role="tooltip"
-                                            href="javascript:void(0)" id="deductedTaxesList" data-trigger="focus"
-                                            data-toggle="popover" title="" data-placement="left" data-content="Total After Discount = 2,356.00<br /><br />
-
-                    Deducted Taxes Total = 0.00" data-original-title="Deducted Taxes">
+                                    (-)&nbsp;<strong><a class="inventoryLineItemDetails">
                                             Deducted Taxes </a></strong>
                                 </div>
                             </td>
