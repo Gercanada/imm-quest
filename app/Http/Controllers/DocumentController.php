@@ -30,44 +30,6 @@ class DocumentController extends Controller
         return response()->json($documents, 200);
     }
 
-    public function store(Request $request)
-    {
-        try {
-            if ($request->file('file')) {
-                /* Multiple file upload */
-                $files = $request->file('file');
-                if (!is_array($files)) {
-                    $files = [$files];
-                }
-
-                $fileList = array();
-                //loop throu the array
-                for ($i = 0; $i < count($files); $i++) {
-                    $file = $files[$i];
-                    $filename = $file->getClientOriginalName();
-                    $filename = str_replace(' ', '', $filename);
-                    $file->storeAs('documents', $filename);
-                    array_push($fileList, $filename);
-                }
-
-                //return $fileList;
-                $document = new Document;
-                $document->user_id = $request['uuid'];
-                $document->title = $request['title'];
-                $document->description = $request['description'];
-                $document->issued_date = $request['issued_date'];
-                $document->expiry_date = $request['expiry_date'];
-                $document->url_files = $fileList;
-                $document->save();
-
-                return response()->json(['message' => 'file uploaded', 'data' => $document], 200);
-            } else {
-                return response()->json(['message' => 'error uploading file'], 503);
-            }
-        } catch (\Exception $e) {
-            return  response()->json(['message' => 'error uploading file', $e], 503);
-        }
-    }
 
     public function destroy(Request $request)
     {
@@ -96,6 +58,7 @@ class DocumentController extends Controller
             $files = Storage::disk('public')->allFiles($directory);
             $urlFiles = [];
             foreach ($files as $file) {
+                //$file =  str_replace(' ', '%20', $file);
                 if (env('APP_ENV') === 'local') {
                     array_push($urlFiles, (Storage::url($file)));
                 } else {
@@ -148,6 +111,6 @@ class DocumentController extends Controller
     }
 
     public function singleUrl(Request $request ){
-        return response()->json(env('APP_URL').$request->file);
+        return response()->json($request->file);
     }
 }

@@ -47,8 +47,11 @@ class CLItemController extends Controller
         try {
             $user = Auth::user();
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
-
             $clitem = CLItem::where('id', $request->id)->firstOrFail();
+
+            $case = CPCase::where('id', $clitem->cf_1217)->firstOrFail();
+            $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
+
             if ($request->file('file')) {
                 /* Multiple file upload */
                 $files = $request->file('file');
@@ -58,8 +61,9 @@ class CLItemController extends Controller
 
                 $fileList = array();
                 $contact_no = $contact->contact_no;
+                $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
 
-                $destination = "documents/contact/$contact_no/clitem/$clitem->clitemsno";
+
                 foreach ($files as $file) {
                     $filename = $file->getClientOriginalName();
                     $filename = str_replace(' ', '', $filename);
