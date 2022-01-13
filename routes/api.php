@@ -27,6 +27,9 @@ Route::middleware('imm-header')->group(function(){
     Route::post('/documents', [DocumentController::class , 'checkDocuments']);
     Route::post('/clitem_doc', [DocumentController::class , 'createCLItemDoc']);
     Route::post('/remove_document', [DocumentController::class , 'destroy']);
+    Route::post('/single_url', [DocumentController::class , 'singleUrl']);
+
+
     Route::post('/getresponse', [DocumentController::class , 'getResponse']);
 
     Route::post('/create_user', [UserController::class, 'createUser']);
