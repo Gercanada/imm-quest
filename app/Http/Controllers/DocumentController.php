@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
-use App\Models\Document;
 use App\Models\Contact;
 use Exception;
 
@@ -31,16 +29,19 @@ class DocumentController extends Controller
     }
 
 
+    /**
+     * This method is called as web servoce to delete files from temporary storage when was uploaded to google drive.
+     */
     public function destroy(Request $request)
     {
         try {
-           $file = substr($request->file, 1);
+            $file = substr($request->file, 1);
             $exploded = explode('/', $file);
             $spliced = array_splice($exploded, 2);
             $file = implode('/', $spliced);
             if (Storage::exists($file)) {
                 Storage::delete($file);
-                return  response()->json("File deleted");
+                return  response()->json("File removed from temporary storage");
             } else {
                 return response()->json("File not found");
             }
@@ -49,12 +50,15 @@ class DocumentController extends Controller
         }
     }
 
-    ///Api methods
+    /**
+     * this method returns a list of files of a selected contact.
+     */
     public function checkDocuments(Request $request)
     {
         try {
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
-            $directory = "/documents/contact/$user->vtiger_contact_id";
+            //$directory = "/documents/contact/$user->vtiger_contact_id";
+            $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
             $files = Storage::disk('public')->allFiles($directory);
             $urlFiles = [];
             foreach ($files as $file) {
@@ -74,13 +78,13 @@ class DocumentController extends Controller
         }
     }
 
+    /**
+     * this method be called as webservice to create the document record relar=ted with the clitem and uploaded file.
+     */
     public function createCLItemDoc(Request $request)
     {
         try {
             $vtiger = new Vtiger();
-
-            $str = "ah si"."si";
-
             $userQuery = DB::table('CLItems')->select('*')->where("id", $request->clitemsno)->take(1);
             $clitem = $vtiger->search($userQuery)->result[0];
 
@@ -110,7 +114,45 @@ class DocumentController extends Controller
         }
     }
 
-    public function singleUrl(Request $request ){
+    /**
+     * This methods only returns request env['response'][$loop]. Is required because the workflow block crashes at try to upload file using env['response'][$loop]
+     */
+    public function singleUrl(Request $request)
+    {
         return response()->json($request->file);
     }
+
+    /*
+        // make directory with custom function
+          $cf_1332/$contact_no/$contact_no-cases/
+                ${
+                    $file = substr( $env["simpleurl"], 1);   $exploded = explode('/',  $file );
+                    $exploded = explode('/',  $file );
+                    $spliced = array_splice($exploded, 2);  return $spliced[5]."/01_SuppliedDocs" ;
+                }}>
+
+                ${
+                     $file = substr( $env["simpleurl"], 1);   $exploded = explode('/',  $file );
+                      $exploded = explode('/',  $file );  $spliced = array_splice($exploded, 2);
+                      return "checklists/".$spliced[7]."/clitems/". $spliced[9] ;
+            }}>
+
+                    -----------
+
+                     $cf_1332/$contact_no/$contact_no-cases/
+                ${
+                    $file = substr( $env["simpleurl"], 1);
+                    $exploded = explode('/',  $file );
+                    $spliced = array_splice($exploded, 2);
+                    $path1 =  $spliced[5]."/01_SuppliedDocs";
+                    return  str_replace(' ', '%20', $path1);
+            }}>
+                    ${
+                     $file = substr( $env["simpleurl"], 1);
+                     $exploded = explode('/',  $file );
+                      $spliced = array_splice($exploded, 2);
+                      return  str_replace(' ', '%20', "checklists/".$spliced[7]."/clitems/".$spliced[9]);
+                    }}>
+
+             */
 }
