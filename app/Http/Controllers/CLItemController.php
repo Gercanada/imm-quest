@@ -62,6 +62,7 @@ class CLItemController extends Controller
                 $fileList = array();
                 $contact_no = $contact->contact_no;
                 $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
+
                 foreach ($files as $file) {
                     $filename = $file->getClientOriginalName();
                     $filename = str_replace(' ', '', $filename);
