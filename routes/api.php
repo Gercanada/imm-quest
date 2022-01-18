@@ -39,6 +39,7 @@ Route::middleware('imm-header')->group(function(){
 
     Route::post('/remove_user', [UserController::class, 'removeUser']);
 
+    Route::post('/clear_trash', [CloneDBController::class, 'clearTrashDB']);
     Route::post('/viger/clonedb', [CloneDBController::class, 'cloneImmcaseContactData']);
     Route::post('/viger/update_contact', [CloneDBController::class, 'updateOnImmcase']);
 

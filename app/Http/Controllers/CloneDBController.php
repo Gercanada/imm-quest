@@ -140,6 +140,7 @@ class CloneDBController extends Controller
                     }
                 }
             }
+            [CloneDBController::class, 'clearTrashDB'];
             return "dataCloned";
         } catch (Exception $e) {
             return $e;
@@ -216,6 +217,7 @@ class CloneDBController extends Controller
                         $commboard->save();
                     }
                 }
+                self::clearTrashDB();
                 return 200;
             }
         } catch (Exception $e) {
@@ -249,7 +251,11 @@ class CloneDBController extends Controller
                 $field->name = str_replace('&', '', $field->name); // MySql cant write & in fieldname
             }
             if (!in_array("$field->name $fieldType $attrtoStr", $fieldsArr)) {
-                array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
+                if ($field->name === 'id') {
+                    array_push($fieldsArr, "$field->name $fieldType $attrtoStr PRIMARY KEY");
+                } else {
+                    array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
+                }
                 array_push($fieldNames, "$field->name");
             }
         }
@@ -263,7 +269,6 @@ class CloneDBController extends Controller
     {
         $tableIdsArr = []; // Items id from immcase thath be added to CP
         DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)"); // If table not exists be reated
-        //DB::table("vt_$tablename")->where($contactField, $contactID)->delete();
 
         foreach ($tableData as $row) { //set values in table
             $table = null;
@@ -305,30 +310,43 @@ class CloneDBController extends Controller
                     }
                 }
             }
+            $names =   implode(", ", $nameFields);
+            $data  =   implode(", ", $dataFields);
+
             if (count($tableRows) > 0) {
                 foreach ($tableRows[0] as $key => $val) {
                     array_push($beforeRows, $key);
                 }
             }
+
             foreach ($nameFields as $name) {
-                if (!in_array($name, $beforeRows)) {
-                    foreach ($beforeRows as $rKey) {
-                        if (!in_array($rKey, $nameFields)) {
+                foreach ($beforeRows as $rKey) {
+                    if (!in_array($rKey, $nameFields)) {
+                        $rows = DB::select("SELECT * FROM vt_$tablename LIMIT 1");
+                        $newKeyArr = [];
+                        foreach ($rows[0] as $key => $row) {
+                            array_push($newKeyArr, $key);
+                        }
+                        if (in_array($rKey, $newKeyArr)) {
                             DB::statement("ALTER TABLE vt_$tablename DROP COLUMN  $rKey");
                         }
                     }
                 }
             }
-
             foreach ($nameFields as $name) {
                 if (!in_array($name, $beforeRows)) {
                     foreach ($beforeRows as $befo) {
-                        DB::statement("ALTER TABLE vt_$tablename ADD COLUMN $name VARCHAR(155) AFTER  $befo");
+                        $rows = DB::select("SELECT * FROM vt_$tablename LIMIT 1");
+                        $newKeyArr = [];
+                        foreach ($rows[0] as $key => $row) {
+                            array_push($newKeyArr, $key);
+                        }
+                        if (!in_array($name, $newKeyArr)) {
+                            DB::statement("ALTER TABLE vt_$tablename ADD COLUMN $name VARCHAR(155) AFTER  $befo");
+                        }
                     }
                 }
             }
-            $names =   implode(", ", $nameFields);
-            $data  =   implode(", ", $dataFields);
 
             if (count($table) > 0 && $table[0]->total === 0) { //If noting found be created
                 DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
@@ -348,11 +366,13 @@ class CloneDBController extends Controller
                                 if ($key === 'lastname') {
                                     $last_name = $val;
                                 }
-                                //if ($username !== null && $userPass !== null) {
-                                $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
-                                array_push($tableIdsArr, $newUID);
-                                //}
                             }
+                        }
+                    }
+                    if ($tablename === 'Contacts') {
+                        if ($username && $userPass && $last_name && $firstname) {
+                            $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
+                            array_push($tableIdsArr, $newUID);
                         }
                     }
                 }
@@ -381,12 +401,12 @@ class CloneDBController extends Controller
                             if ($key === 'lastname') {
                                 $last_name = $val;
                             }
-
-
-                            //if ($username !== null && $userPass !== null) {
+                        }
+                    }
+                    if ($tablename === 'Contacts') {
+                        if ($username && $userPass && $last_name && $firstname) {
                             $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
                             array_push($tableIdsArr, $newUID);
-                            //}
                         }
                     }
                 } //end loop
@@ -397,8 +417,49 @@ class CloneDBController extends Controller
                 }
             }
         }
-        //if not exist on vt will delete here
-        DB::table("vt_$tablename")->where($contactField, $contactID)->whereNotIn('id', $tableIdsArr)->tosql();
+    }
+
+    public function clearTrashDB()
+    {
+        try {
+            $vtiger = new Vtiger();
+            $data = $vtiger->listTypes();
+            $types = $data->result->types;
+            $deleted = 0;
+            foreach ($types as $type) {
+                if ( //Select tacles that be cloned on cp
+                    ($type === 'InstallmentTracker') ||
+                    ($type === 'CommBoard') ||
+                    ($type === 'Documents') ||
+                    ($type === 'Checklist') ||
+                    ($type === 'Payments') ||
+                    ($type === 'Contacts') ||
+                    ($type === 'HelpDesk') ||
+                    ($type === 'CLItems') ||
+                    ($type === 'Invoice') ||
+                    ($type === 'Currency') ||
+                    ($type === 'Quotes') ||
+                    ($type === 'Products')
+                ) {
+                    $localvalues = DB::select("SELECT id FROM vt_$type");
+                    // dd($localdata);
+                    $idvalues = [];
+                    foreach ($localvalues as $loca) {
+                        array_push($idvalues, $loca->id);
+                    }
+
+                    $vt_query = DB::table($type)->select('id')->whereIn("id", $idvalues)->take(1);
+                    $result = $vtiger->search($vt_query);
+                    if ($result->success === false) {
+                        DB::table("vt_$type")->whereNotIn('id', $idvalues)->delete();
+                        $deleted = $deleted + 1;
+                    }
+                }
+            }
+            return response()->json("Success. $deleted Records deleted", 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     static function prepareStrConvertion($val)
@@ -433,13 +494,16 @@ class CloneDBController extends Controller
 
     static function newUser($username, $userPass, $firstname, $last_name, $contactNo)
     {
-        $newUser = User::firstOrCreate(['vtiger_contact_id' =>  $contactNo], [
-            'user_name' => $username,
-            'vtiger_contact_id' =>  $contactNo,
-            'name' =>  $firstname,
-            'last_name' =>  $last_name,
-            'password' => Hash::make($userPass),
-        ]);
+        $newUser = User::updateOrCreate(
+            ['vtiger_contact_id' =>  $contactNo],
+            [
+                'user_name' => $username,
+                'vtiger_contact_id' =>  $contactNo,
+                'name' =>  $firstname,
+                'last_name' =>  $last_name,
+                'password' => Hash::make($userPass),
+            ]
+        );
         return $newUser->id;
     }
 
