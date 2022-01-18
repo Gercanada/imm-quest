@@ -143,7 +143,7 @@ class CloneDBController extends Controller
             return "dataCloned";
         } catch (Exception $e) {
             return $e;
-            return response()->json(['error' => $e], 500);
+            return response()->json($e, 500);
         }
     }
 
@@ -220,7 +220,7 @@ class CloneDBController extends Controller
             }
         } catch (Exception $e) {
             return $e;
-            return response()->json($e, 500);
+            // return response()->json($e->getMessage(), 500);
         }
     }
 
@@ -263,6 +263,7 @@ class CloneDBController extends Controller
     {
         $tableIdsArr = []; // Items id from immcase thath be added to CP
         DB::unprepared("CREATE TABLE IF NOT EXISTS vt_$tablename($sqlStr)"); // If table not exists be reated
+        //DB::table("vt_$tablename")->where($contactField, $contactID)->delete();
 
         foreach ($tableData as $row) { //set values in table
             $table = null;
@@ -309,21 +310,25 @@ class CloneDBController extends Controller
                     array_push($beforeRows, $key);
                 }
             }
-
-            foreach ($beforeRows as $rKey) {
-                if (!in_array($rKey, $nameFields)) {
-                    DB::statement("ALTER TABLE vt_$tablename DROP COLUMN  $rKey");
+            foreach ($nameFields as $name) {
+                if (!in_array($name, $beforeRows)) {
+                    foreach ($beforeRows as $rKey) {
+                        if (!in_array($rKey, $nameFields)) {
+                            DB::statement("ALTER TABLE vt_$tablename DROP COLUMN  $rKey");
+                        }
+                    }
                 }
             }
+
             foreach ($nameFields as $name) {
                 if (!in_array($name, $beforeRows)) {
                     foreach ($beforeRows as $befo) {
                         DB::statement("ALTER TABLE vt_$tablename ADD COLUMN $name VARCHAR(155) AFTER  $befo");
                     }
                 }
-                $names =   implode(", ", $nameFields);
-                $data  =   implode(", ", $dataFields);
             }
+            $names =   implode(", ", $nameFields);
+            $data  =   implode(", ", $dataFields);
 
             if (count($table) > 0 && $table[0]->total === 0) { //If noting found be created
                 DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
@@ -343,11 +348,10 @@ class CloneDBController extends Controller
                                 if ($key === 'lastname') {
                                     $last_name = $val;
                                 }
-
-                                if ($username !== null && $userPass !== null) {
-                                    $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
-                                    array_push($tableIdsArr, $newUID);
-                                }
+                                //if ($username !== null && $userPass !== null) {
+                                $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
+                                array_push($tableIdsArr, $newUID);
+                                //}
                             }
                         }
                     }
@@ -379,10 +383,10 @@ class CloneDBController extends Controller
                             }
 
 
-                            if ($username !== null && $userPass !== null) {
-                                $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
-                                array_push($tableIdsArr, $newUID);
-                            }
+                            //if ($username !== null && $userPass !== null) {
+                            $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
+                            array_push($tableIdsArr, $newUID);
+                            //}
                         }
                     }
                 } //end loop
@@ -394,7 +398,7 @@ class CloneDBController extends Controller
             }
         }
         //if not exist on vt will delete here
-        DB::table("vt_$tablename")->whereNotIn('id', $tableIdsArr)->delete();
+        DB::table("vt_$tablename")->where($contactField, $contactID)->whereNotIn('id', $tableIdsArr)->tosql();
     }
 
     static function prepareStrConvertion($val)
@@ -487,16 +491,16 @@ class CloneDBController extends Controller
     public function duplicateContacts(Request $request)
     {
         $string = 'This is a string';
-$lastChar = substr($string, -1);
-return "The last char of the string is $lastChar";
+        $lastChar = substr($string, -1);
+        return "The last char of the string is $lastChar";
 
-$contactid = '192168';
-$lst = substr($contactid, -1);
+        $contactid = '192168';
+        $lst = substr($contactid, -1);
 
-if($contactid )
+        if ($contactid)
 
 
-        $vtiger = new Vtiger();
+            $vtiger = new Vtiger();
         $userQuery = DB::table('Contacts')->select('*')->where('lastname', 'like', '%' . $request->lastname . '%');
         $contacts = $vtiger->search($userQuery)->result; //Get contact that be cloned
 
@@ -512,7 +516,7 @@ if($contactid )
             array_push($emailsArr,  $contact->email);
         }
 
-       /*  sort($namesArr);
+        /*  sort($namesArr);
         sort($lastNamesArr);
         sort($emailsArr);
 
