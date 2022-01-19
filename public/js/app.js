@@ -3256,6 +3256,69 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var urlParams = window.location.pathname.split("/");
@@ -3297,7 +3360,8 @@ var urlParams = window.location.pathname.split("/");
       submitted: false,
       errors: {},
       sendSuccess: false,
-      loading: false
+      loading: false,
+      file: ""
     };
   },
   components: {
@@ -3419,6 +3483,39 @@ var urlParams = window.location.pathname.split("/");
 
       return sendMessage;
     }(),
+    sendToImmcase: function sendToImmcase(file, clitemsno) {
+      var _this = this;
+
+      var me = this;
+      this.loading = true;
+      axios.post("/cl-item/send_file", {
+        clitemsno: clitemsno,
+        file: file
+      }).then(function (response) {
+        console.log(response); //me.clitem = response.data[0];
+        //console.log(me.clitem);
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this.loading = false;
+      });
+    },
+    deleteFile: function deleteFile(file) {
+      var _this2 = this;
+
+      var me = this;
+      this.loading = true;
+      axios.post("/cl-item/dropfile", {
+        file: file
+      }).then(function (response) {
+        console.log(response); //me.clitem = response.data[0];
+        //console.log(me.clitem);
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this2.loading = false;
+      });
+    },
     removedfile: function removedfile(file, respuesta) {
       var params = {
         imagen: file.nombreServidor,
@@ -3430,7 +3527,7 @@ var urlParams = window.location.pathname.split("/");
       });
     },
     userFiles: function userFiles() {
-      var _this = this;
+      var _this3 = this;
 
       var me = this;
       this.loading = true;
@@ -3439,11 +3536,11 @@ var urlParams = window.location.pathname.split("/");
       }).then(function (response) {
         me.clitem = response.data[0];
         me.caseObj = response.data[1];
-        me.checklistObj = response.data[2];
+        me.checklistObj = response.data[2]; //console.log(me.clitem);
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this.loading = false;
+        return _this3.loading = false;
       });
     },
     closeModal: function closeModal() {
@@ -23880,45 +23977,12 @@ var render = function () {
                             ]),
                             _vm._v(" "),
                             _c("tr", [
-                              _c("td", [_vm._v("Subcategory")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.caseObj.cf_890),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
                               _c("td", [_vm._v("Status")]),
                               _vm._v(" "),
                               _c("td", {
                                 staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.caseObj.ticketstatus),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("No of Applicantions")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.caseObj.cf_888),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Government App No")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.caseObj.cf_884),
                                 },
                               }),
                             ]),
@@ -23963,7 +24027,13 @@ var render = function () {
                         ]
                       ),
                     ]),
-                    _vm._v(" "),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card shadow-lg p-1" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "card-row" }, [
                     _c("div", { staticClass: "col border py-2" }, [
                       _c("h4", [_vm._v("Checklist")]),
                       _vm._v(" "),
@@ -24078,7 +24148,13 @@ var render = function () {
                         ]
                       ),
                     ]),
-                    _vm._v(" "),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card shadow-lg p-1" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "card-row" }, [
                     _c("div", { staticClass: "col border py-2" }, [
                       _c("h2", [_vm._v("CL Item info")]),
                       _vm._v(" "),
@@ -24145,74 +24221,6 @@ var render = function () {
                             ]),
                             _vm._v(" "),
                             _c("tr", [
-                              _c("td", [_vm._v("Required To")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.cf_1202),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Required by")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.cf_1204),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Help Link")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.cf_1212),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Message to Client")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.cf_1898),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Upload file")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.clitem.cf_acf_ulf_1778
-                                  ),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Uploaded date")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.modifiedtime),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
                               _c("td", [_vm._v("Original File Name")]),
                               _vm._v(" "),
                               _c("td", {
@@ -24222,6 +24230,30 @@ var render = function () {
                                 },
                               }),
                             ]),
+                            _vm._v(" "),
+                            _vm.clitem.files.files.length > 0
+                              ? _c(
+                                  "tr",
+                                  [
+                                    _c("td", [_vm._v("Current file to send")]),
+                                    _vm._v(" "),
+                                    _vm._l(
+                                      _vm.clitem.files["files"],
+                                      function (file) {
+                                        return _c("td", {
+                                          key: file,
+                                          staticClass:
+                                            "text-end font-weight-medium",
+                                          domProps: {
+                                            textContent: _vm._s(file),
+                                          },
+                                        })
+                                      }
+                                    ),
+                                  ],
+                                  2
+                                )
+                              : _vm._e(),
                             _vm._v(" "),
                             _c("tr"),
                           ]),
@@ -24240,28 +24272,99 @@ var render = function () {
                     ? _c("div", { staticClass: "card shadow-lg p-1" }, [
                         _vm._m(1),
                       ])
-                    : _vm.clitem.cf_1578 === "Pending"
-                    ? _c("div", [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-primary btn-lg fas fa-edit float-right",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function ($event) {
-                                return _vm.openModal(
-                                  "documents",
-                                  "store",
-                                  _vm.clitem.id
-                                )
-                              },
-                            },
-                          },
-                          [_vm._v("\n              New document\n            ")]
-                        ),
-                      ])
                     : _vm._e(),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row float-right" }, [
+                    _c("div", { staticClass: "col" }, [
+                      _vm.clitem.cf_1578 === "Pending" &&
+                      _vm.clitem.files["files"].length === 0
+                        ? _c("div", { staticClass: "btn-list" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-primary btn-lg fas fa-edit",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.openModal(
+                                      "documents",
+                                      "store",
+                                      _vm.clitem.id
+                                    )
+                                  },
+                                },
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  New document\n                "
+                                ),
+                              ]
+                            ),
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.clitem.cf_1578 === "Replacement Needed" ||
+                      _vm.clitem.files["files"].length > 0
+                        ? _c(
+                            "div",
+                            { staticClass: "btn-list" },
+                            _vm._l(_vm.clitem.files["files"], function (file) {
+                              return _c(
+                                "div",
+                                {
+                                  key: file,
+                                  staticClass: "text-end font-weight-medium",
+                                },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-success btn-lg fas fa-paper-plane",
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.sendToImmcase(
+                                            file,
+                                            _vm.clitem.clitemsno
+                                          )
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                    Send document\n                  "
+                                      ),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-lg fas fa-trash-alt",
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.deleteFile(file)
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                    Remove document\n                  "
+                                      ),
+                                    ]
+                                  ),
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        : _vm._e(),
+                    ]),
+                  ]),
                 ]),
               ]),
             ]),

@@ -46,6 +46,7 @@ class DocumentController extends Controller
                 return response()->json("File not found");
             }
         } catch (Exception $e) {
+            return $e->getMessage();
             return response()->json([$e, 500]);
         }
     }

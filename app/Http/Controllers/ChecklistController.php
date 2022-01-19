@@ -59,7 +59,8 @@ class ChecklistController extends Controller
     {
         $check_list = Checklist::where('id', $id)->firstOrFail();
         $clitems = CLItem::where('cf_1216', $id)->get();
-        $files = [];
+
+
 
         foreach ($clitems as $item) {
             $case =  CPCase::where('id', $item->cf_1217)->firstOrFail();
@@ -68,11 +69,13 @@ class ChecklistController extends Controller
             //return $item->cf_contacts_id;//$contact;
             $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
             $dirFiles = Storage::disk('public')->allFiles($directory);
-            foreach ($dirFiles as $file ){
-                array_push($files,[$item->clitemsno=> $file]);
+            $files = [];
+            foreach ($dirFiles as $file) {
+                array_push($files,$file);
             }
+            $item->files=['key'=>$item->clitemsno,'files'=>$files];
         }
-        return $files;
+        /* return $clitems; */
         return view(
             'checklists.show',
             compact(

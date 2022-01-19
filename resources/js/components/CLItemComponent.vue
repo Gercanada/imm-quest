@@ -10,16 +10,16 @@
   </div>
 
   <div v-else>
-      <div class="card shadow-lg p-1">
-           <div class="card-header">
-            <a
-              :href="'/checklist/' + clitem.cf_1216"
-              class="btn btn-outline-success btn-rounded"
-              ><i class="fas fa-arrow-circle-left"></i></a
-            >
-            <h2 class="card-title">CL Item <b v-text="clitem.name"></b></h2>
-          </div>
+    <div class="card shadow-lg p-1">
+      <div class="card-header">
+        <a
+          :href="'/checklist/' + clitem.cf_1216"
+          class="btn btn-outline-success btn-rounded"
+          ><i class="fas fa-arrow-circle-left"></i
+        ></a>
+        <h2 class="card-title">CL Item <b v-text="clitem.name"></b></h2>
       </div>
+    </div>
 
     <div class="row">
       <div class="col-md-12">
@@ -51,13 +51,13 @@
                         v-text="caseObj.ticketcategories"
                       ></td>
                     </tr>
-                    <tr>
+                    <!--  <tr>
                       <td>Subcategory</td>
                       <td
                         class="text-end font-weight-medium"
                         v-text="caseObj.cf_890"
                       ></td>
-                    </tr>
+                    </tr> -->
                     <tr>
                       <td>Status</td>
                       <td
@@ -65,7 +65,7 @@
                         v-text="caseObj.ticketstatus"
                       ></td>
                     </tr>
-                    <tr>
+                    <!--  <tr>
                       <td>No of Applicantions</td>
                       <td
                         class="text-end font-weight-medium"
@@ -78,7 +78,7 @@
                         class="text-end font-weight-medium"
                         v-text="caseObj.cf_884"
                       ></td>
-                    </tr>
+                    </tr> -->
                     <tr>
                       <td>Open Date</td>
                       <td
@@ -106,6 +106,12 @@
                   </tbody>
                 </table>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="card shadow-lg p-1">
+          <div class="card-body">
+            <div class="card-row">
               <div class="col border py-2">
                 <h4>Checklist</h4>
                 <table class="table v-middle fs-3 mb-0 mt-4">
@@ -177,6 +183,12 @@
                   </tbody>
                 </table>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="card shadow-lg p-1">
+          <div class="card-body">
+            <div class="card-row">
               <div class="col border py-2">
                 <h2>CL Item info</h2>
 
@@ -217,7 +229,7 @@
                         v-text="clitem.cf_1578"
                       ></td>
                     </tr>
-                    <tr>
+                    <!--   <tr>
                       <td>Required To</td>
                       <td
                         class="text-end font-weight-medium"
@@ -247,8 +259,9 @@
                       ></td>
                     </tr>
 
-                    <tr>
-                      <!-- Editables on CP -->
+                         -->
+                    <!--  <tr>
+                      <!- - Editables on CP - ->
                       <td>Upload file</td>
                       <td
                         class="text-end font-weight-medium"
@@ -256,20 +269,29 @@
                       ></td>
                     </tr>
                     <tr>
-                      <!-- Editables on CP -->
+                      <!-  Editables on CP - ->
                       <td>Uploaded date</td>
                       <td
                         class="text-end font-weight-medium"
                         v-text="clitem.modifiedtime"
                       ></td>
-                      <!-- Modified date -->
-                    </tr>
+                      <!- - Modified date ->
+                    </tr> -->
                     <tr>
                       <!-- Editables on CP -->
                       <td>Original File Name</td>
                       <td
                         class="text-end font-weight-medium"
                         v-text="clitem.cf_1970"
+                      ></td>
+                    </tr>
+                    <tr v-if="clitem.files.files.length > 0">
+                      <td>Current file to send</td>
+                      <td
+                        v-for="file in clitem.files['files']"
+                        :key="file"
+                        class="text-end font-weight-medium"
+                        v-text="file"
                       ></td>
                     </tr>
                     <tr></tr>
@@ -285,6 +307,7 @@
 
           <!-- </template> -->
         </div>
+        <!-- TODO check statues ofclitem -->
         <div class="card shadow-lg p-1">
           <div class="card-body">
             <div class="card shadow-lg p-1" v-if="clitem.cf_1200 == 'IMM Form'">
@@ -310,14 +333,54 @@
                 </div>
               </div>
             </div>
-            <div v-else-if="clitem.cf_1578 === 'Pending'">
-              <button
-                type="button"
-                class="btn btn-primary btn-lg fas fa-edit float-right"
-                @click="openModal('documents', 'store', clitem.id)"
-              >
-                New document
-              </button>
+            <!-- <h1 v-text="clitem"></h1> -->
+            <div class="row float-right">
+              <div class="col">
+                <div
+                  class="btn-list"
+                  v-if="
+                    clitem.cf_1578 === 'Pending' &&
+                    clitem.files['files'].length === 0
+                  "
+                >
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-lg fas fa-edit"
+                    @click="openModal('documents', 'store', clitem.id)"
+                  >
+                    New document
+                  </button>
+                </div>
+
+                <div
+                  class="btn-list"
+                  v-if="
+                    clitem.cf_1578 === 'Replacement Needed' ||
+                    clitem.files['files'].length > 0
+                  "
+                >
+                  <div
+                    v-for="file in clitem.files['files']"
+                    :key="file"
+                    class="text-end font-weight-medium"
+                  >
+                    <button
+                      type="button"
+                      class="btn btn-success btn-lg fas fa-paper-plane"
+                      @click="sendToImmcase(file, clitem.clitemsno)"
+                    >
+                      Send document
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-lg fas fa-trash-alt"
+                      @click="deleteFile(file)"
+                    >
+                      Remove document
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -453,6 +516,7 @@ export default {
       sendSuccess: false,
 
       loading: false,
+      file: "",
     };
   },
   components: {
@@ -520,6 +584,38 @@ export default {
       formData.append("id", this.id);
     },
 
+    sendToImmcase(file, clitemsno) {
+      let me = this;
+      this.loading = true;
+      axios
+        .post("/cl-item/send_file", { clitemsno: clitemsno,file: file })
+        .then(function (response) {
+          console.log(response);
+          //me.clitem = response.data[0];
+          //console.log(me.clitem);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .finally(() => (this.loading = false));
+    },
+
+    deleteFile(file) {
+      let me = this;
+      this.loading = true;
+      axios
+        .post("/cl-item/dropfile", { file: file })
+        .then(function (response) {
+           console.log(response);
+          //me.clitem = response.data[0];
+          //console.log(me.clitem);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .finally(() => (this.loading = false));
+    },
+
     removedfile: function (file, respuesta) {
       const params = {
         imagen: file.nombreServidor,
@@ -541,6 +637,7 @@ export default {
           me.clitem = response.data[0];
           me.caseObj = response.data[1];
           me.checklistObj = response.data[2];
+          //console.log(me.clitem);
         })
         .catch(function (error) {
           console.log(error);

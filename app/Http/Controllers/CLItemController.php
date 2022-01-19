@@ -10,6 +10,10 @@ use App\Models\Checklist;
 use App\Models\CLItem;
 use App\Models\CPCase;
 use App\Models\Contact;
+use JBtje\VtigerLaravel\Vtiger;
+use Illuminate\Support\Facades\DB;
+use Exception;
+
 
 class CLItemController extends Controller
 {
@@ -25,9 +29,22 @@ class CLItemController extends Controller
         $case =  CPCase::where('id', $item->cf_1217)->firstOrFail();
         $checklist =  Checklist::where('id', $item->cf_1216)->firstOrFail();
 
-        $directory = "/documents/contact/$item->cf_contacts_id/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
-        $file = Storage::disk('public')->allFiles($directory);
-        return [$item, $case, $checklist, $file];
+        /* $directory = "/documents/contact/$item->cf_contacts_id/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
+        $file = Storage::disk('public')->allFiles($directory); */
+
+        $case =  CPCase::where('id', $item->cf_1217)->firstOrFail();
+        $checklist =  Checklist::where('id', $item->cf_1216)->firstOrFail();
+        $contact = Contact::where('id', $item->cf_contacts_id)->firstOrFail();
+
+        $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
+        $dirFiles = Storage::disk('public')->allFiles($directory);
+        $files = [];
+        foreach ($dirFiles as $file) {
+            array_push($files, $file);
+        }
+        $item->files = ['key' => $item->clitemsno, 'files' => $files];
+        /*  return $item; */
+        return [$item, $case, $checklist/* , $file */];
     }
 
     /**
@@ -75,7 +92,7 @@ class CLItemController extends Controller
                     $fileUrl = "$destination/$filename";
                     array_push($fileList, $fileUrl);
                 }
-               /*  $clitem->status= 'pending';
+                /*  $clitem->status= 'pending';
                 $clitem->save(); */
 
                 return response()->json(["List" => $fileList, 200]);
@@ -85,8 +102,55 @@ class CLItemController extends Controller
         }
     }
 
-    public function updateCLItemFromImmcase(Request $request){
+    public function sendDocumentToImmcase(Request $request)
+    {
+        try {
+            $vtiger = new Vtiger();
+            $ex = explode('/', $request->file);
+            /*
+            $lastEl = array_pop((array_slice($ex, -1)));
+            return $lastEl;
+            */
+            $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
+            $clitem = $vtiger->search($clitemQuery)->result[0];
+            $obj = $vtiger->retrieve($clitem->id);
+            $obj->result->cf_1970 = end($ex);
+            $vtiger->update($obj->result);
+            return response()->json("Success", 200);
 
+        } catch (Exception $e) {
+            return response()->json($e);
+        }
+    }
+    public function deleteDocument(Request $request)
+    {
+        try {
+            $file = $request->file;
+
+            if (env('APP_ENV') === 'local') {
+                $urlFile = "public/$file";
+            } else {
+                $urlFile = env('APP_URL') . Storage::url("app/public/$file"); // in prod
+            }
+
+            //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
+
+            if (Storage::exists($urlFile)) {
+                Storage::delete($urlFile);
+                return  response()->json("File removed from temporary storage");
+            } else {
+                return response()->json("File not found");
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+            return response()->json([$e, 500]);
+        }
+
+        return $request;
+    }
+
+    public function updateCLItemFromImmcase(Request $request)
+    {
     }
 
     public function downloadFile($contact)

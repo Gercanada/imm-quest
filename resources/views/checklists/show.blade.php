@@ -31,41 +31,39 @@
                     </thead>
                     <tbody>
                         @foreach ($clitems as $clitem)
-
+                            {{--  --}}
                             @if ($clitem->cf_1578 === 'Pending')
                                 <tr>
                                     <td>{{ $clitem->name }}</td>
                                     <td>{{ $clitem->cf_1202 }}</td>
                                     <td>
-
-                                        @if (count($files) > 0 && in_array("$clitem->clitemsno-$clitem->cf_1200", $files))
-                                            @foreach ($files as $file)
-                                                @php
-                                                    $exploded = explode('/', $file);
-                                                @endphp
-                                            @endif
-                                        @endforeach
-
-                                        @if (in_array("$clitem->clitemsno-$clitem->cf_1200", $exploded))
-                                            <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
-                                                data-toggle="tooltip" title="Delete file to upload new"
-                                                class="btn btn-outline-danger btn-rounded"> <i
-                                                    class="fas fa-trash"></i></a>
-                                            <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
-                                                data-toggle="tooltip" title="Send file to manager"
-                                                class="btn btn-outline-success btn-rounded"> <i
-                                                    class="fas fa-plane"></i></a>
+                                        @if (count($clitem->files['files']) > 0 && $clitem->files['key'] === $clitem->clitemsno)
+                                            @foreach ($clitem->files['files'] as $file)
+                                                {{ $file }}
+                                                <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
+                                                    data-toggle="tooltip" title="Delete file to upload new"
+                                                    class="btn btn-outline-danger btn-rounded"> <i
+                                                        class="fas fa-trash"></i></a>
+                                                <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
+                                                    data-toggle="tooltip" title="Send file to manager"
+                                                    class="btn btn-outline-success btn-rounded"> <i
+                                                        class="fas fa-plane"></i></a>
+                                            @endforeach
                                         @else
                                             <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
                                                 data-toggle="tooltip" title="Upload file"
                                                 class="btn btn-outline-success btn-rounded"> <i
                                                     class="fas fa-upload"></i></a>
                                         @endif
+
                                     </td>
                                     <td>{{ $clitem->cf_1578 }}</td>
                                     <td>{{ $clitem->cf_1212 }}</td>
                                 </tr>
                             @endif
+                            @php
+                                unset($clitem->files);
+                            @endphp
                         @endforeach
                     </tbody>
                 </table>
