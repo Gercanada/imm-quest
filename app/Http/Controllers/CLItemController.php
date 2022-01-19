@@ -114,10 +114,9 @@ class CLItemController extends Controller
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem = $vtiger->search($clitemQuery)->result[0];
             $obj = $vtiger->retrieve($clitem->id);
-            $obj->result->cf_1970 = end($ex);
+            $obj->result->cf_acf_rtf_1208 = end($ex);
             $vtiger->update($obj->result);
             return response()->json("Success", 200);
-
         } catch (Exception $e) {
             return response()->json($e);
         }

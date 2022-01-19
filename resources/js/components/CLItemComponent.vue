@@ -588,7 +588,7 @@ export default {
       let me = this;
       this.loading = true;
       axios
-        .post("/cl-item/send_file", { clitemsno: clitemsno,file: file })
+        .post("/cl-item/send_file", { clitemsno: clitemsno, file: file })
         .then(function (response) {
           console.log(response);
           //me.clitem = response.data[0];
@@ -606,7 +606,7 @@ export default {
       axios
         .post("/cl-item/dropfile", { file: file })
         .then(function (response) {
-           console.log(response);
+          console.log(response);
           //me.clitem = response.data[0];
           //console.log(me.clitem);
         })
