@@ -140,7 +140,7 @@ class CloneDBController extends Controller
                     }
                 }
             }
-            [CloneDBController::class, 'clearTrashDB'];
+            //[CloneDBController::class, 'clearTrashDB'];
             return "dataCloned";
         } catch (Exception $e) {
             return $e;
@@ -442,7 +442,6 @@ class CloneDBController extends Controller
                     ($type === 'Products')
                 ) {
                     $localvalues = DB::select("SELECT id FROM vt_$type");
-                    // dd($localdata);
                     $idvalues = [];
                     foreach ($localvalues as $loca) {
                         array_push($idvalues, $loca->id);

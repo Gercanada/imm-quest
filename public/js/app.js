@@ -3268,7 +3268,7 @@ var urlParams = window.location.pathname.split("/");
         thumbnailWidth: 150,
         maxFilesize: 5,
         parallelUploads: 3,
-        maxFiles: 3,
+        maxFiles: 1,
         uploadMultiple: true,
         autoProcessQueue: false,
         acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg,.pdf,.doc,.docx",

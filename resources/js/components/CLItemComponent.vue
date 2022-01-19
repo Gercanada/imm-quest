@@ -417,7 +417,7 @@ export default {
         thumbnailWidth: 150,
         maxFilesize: 5,
         parallelUploads: 3,
-        maxFiles: 3,
+        maxFiles: 1,
         uploadMultiple: true,
         autoProcessQueue: false,
 

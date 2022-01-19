@@ -24,7 +24,10 @@ class CLItemController extends Controller
         $item = CLItem::where('id', $request->id)->firstOrFail();
         $case =  CPCase::where('id', $item->cf_1217)->firstOrFail();
         $checklist =  Checklist::where('id', $item->cf_1216)->firstOrFail();
-        return [$item, $case, $checklist];
+
+        $directory = "/documents/contact/$item->cf_contacts_id/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
+        $file = Storage::disk('public')->allFiles($directory);
+        return [$item, $case, $checklist, $file];
     }
 
     /**
@@ -72,11 +75,18 @@ class CLItemController extends Controller
                     $fileUrl = "$destination/$filename";
                     array_push($fileList, $fileUrl);
                 }
+               /*  $clitem->status= 'pending';
+                $clitem->save(); */
+
                 return response()->json(["List" => $fileList, 200]);
             }
         } catch (\Exception $e) {
             return  response()->json(['message' => $e], 503);
         }
+    }
+
+    public function updateCLItemFromImmcase(Request $request){
+
     }
 
     public function downloadFile($contact)

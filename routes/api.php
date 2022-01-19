@@ -25,7 +25,6 @@ use App\Http\Controllers\UserController;
 }); */
 Route::post('/user_params',  [CloneDBController::class, 'testws']);
 
-
 Route::middleware('imm-header')->group(function(){
     Route::post('/documents', [DocumentController::class , 'checkDocuments']);
     Route::post('/clitem_doc', [DocumentController::class , 'createCLItemDoc']);
@@ -44,7 +43,6 @@ Route::middleware('imm-header')->group(function(){
     Route::post('/viger/update_contact', [CloneDBController::class, 'updateOnImmcase']);
 
     Route::post('/viger/find_duplicates', [CloneDBController::class, 'duplicateContacts']);
-
 
     Route::get('/migrate', function(){
        \Artisan::call('migrate:fresh');
