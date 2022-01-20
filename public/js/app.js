@@ -24238,7 +24238,7 @@ var render = function () {
                                     _c("td", [_vm._v("Current file to send")]),
                                     _vm._v(" "),
                                     _vm._l(
-                                      _vm.clitem.files["files"],
+                                      _vm.clitem.files.files,
                                       function (file) {
                                         return _c("td", {
                                           key: file,
@@ -24277,7 +24277,7 @@ var render = function () {
                   _c("div", { staticClass: "row float-right" }, [
                     _c("div", { staticClass: "col" }, [
                       _vm.clitem.cf_1578 === "Pending" &&
-                      _vm.clitem.files["files"].length === 0
+                      _vm.clitem.files.files.length === 0
                         ? _c("div", { staticClass: "btn-list" }, [
                             _c(
                               "button",
@@ -24305,11 +24305,11 @@ var render = function () {
                         : _vm._e(),
                       _vm._v(" "),
                       _vm.clitem.cf_1578 === "Replacement Needed" ||
-                      _vm.clitem.files["files"].length > 0
+                      _vm.clitem.files.files.length > 0
                         ? _c(
                             "div",
                             { staticClass: "btn-list" },
-                            _vm._l(_vm.clitem.files["files"], function (file) {
+                            _vm._l(_vm.clitem.files.files, function (file) {
                               return _c(
                                 "div",
                                 {

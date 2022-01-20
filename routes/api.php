@@ -6,6 +6,7 @@ use App\Http\Controllers\CloneDBController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CLItemController;
 
 //use Illuminate\Http\Request;
 
@@ -32,6 +33,9 @@ Route::middleware('imm-header')->group(function(){
     Route::post('/single_url', [DocumentController::class , 'singleUrl']);
 
 
+    Route::post('/cl-item/send_file', [CLItemController::class, 'sendDocumentToImmcase']);//Only catch errs
+
+
     Route::post('/getresponse', [DocumentController::class , 'getResponse']);
 
     Route::post('/create_user', [UserController::class, 'createUser']);
@@ -39,6 +43,8 @@ Route::middleware('imm-header')->group(function(){
     Route::post('/remove_user', [UserController::class, 'removeUser']);
 
     Route::post('/clear_trash', [CloneDBController::class, 'clearTrashDB']);
+    Route::post('/test_code', [CloneDBController::class, 'testCodeFrag']);
+
     Route::post('/viger/clonedb', [CloneDBController::class, 'cloneImmcaseContactData']);
     Route::post('/viger/update_contact', [CloneDBController::class, 'updateOnImmcase']);
 

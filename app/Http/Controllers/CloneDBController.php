@@ -635,4 +635,15 @@ class CloneDBController extends Controller
         }
         return response()->json([$msg => $duplicates]);
     }
+    public function testCodeFrag()
+    {
+        $url = 'https://immvisas.com/storage/app/public/documents/contact/2156722/cases/A2145420-Work%20Permit/checklists/CL2141417-/clitems/CLI4002016-Document/saturn.pg';
+        $array = get_headers($url);
+        $string = $array[0];
+        if (strpos($string, "200")) {
+            return 'url exists';
+        } else {
+            return 'url does not exist';
+        }
+    }
 }

@@ -288,7 +288,7 @@
                     <tr v-if="clitem.files.files.length > 0">
                       <td>Current file to send</td>
                       <td
-                        v-for="file in clitem.files['files']"
+                        v-for="file in clitem.files.files"
                         :key="file"
                         class="text-end font-weight-medium"
                         v-text="file"
@@ -340,7 +340,7 @@
                   class="btn-list"
                   v-if="
                     clitem.cf_1578 === 'Pending' &&
-                    clitem.files['files'].length === 0
+                    clitem.files.files.length === 0
                   "
                 >
                   <button
@@ -356,11 +356,11 @@
                   class="btn-list"
                   v-if="
                     clitem.cf_1578 === 'Replacement Needed' ||
-                    clitem.files['files'].length > 0
+                    clitem.files.files.length > 0
                   "
                 >
                   <div
-                    v-for="file in clitem.files['files']"
+                    v-for="file in clitem.files.files"
                     :key="file"
                     class="text-end font-weight-medium"
                   >

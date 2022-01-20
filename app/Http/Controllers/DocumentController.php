@@ -124,13 +124,7 @@ class DocumentController extends Controller
     public function singleUrl(Request $request)
     {
         $ex = explode('/', $request->file);
-        return end($ex);
-        /*   ${
-            $fileis = explode('/',$env["simpleurl"]);
-            return end($fileis);
-        }}>
- */
-        return response()->json($request->file);
+        return response()->json(env('APP_URL').$request->file);
     }
 
     /*
