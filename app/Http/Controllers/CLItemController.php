@@ -118,7 +118,8 @@ class CLItemController extends Controller
             }
             if ($clitem) {
                 $obj = $vtiger->retrieve($clitem->id);
-                $obj->result->cf_acf_rtf_1208 = "Go to hell";
+                $obj->result->cf_1970 = end($ex);
+                $obj->result->cf_acf_rtf_1208 = "Desde cp";
                 $vtiger->update($obj->result);
                 return response()->json("Success", 200);
             }
