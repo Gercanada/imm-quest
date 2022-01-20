@@ -76,7 +76,8 @@ class DocumentController extends Controller
             if (count($urlFiles) > 0) {
                 return response()->json($urlFiles, 200);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            return response()->json($e, 500);
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $out->write($e);
         }
@@ -124,7 +125,7 @@ class DocumentController extends Controller
     public function singleUrl(Request $request)
     {
         $ex = explode('/', $request->file);
-        $url =str_replace(' ', '%20', env('APP_URL').$request->file);
+        $url = str_replace(' ', '%20', env('APP_URL') . $request->file);
         return response()->json($url);
     }
 
