@@ -73,9 +73,9 @@ class DocumentController extends Controller
                     array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
                 }
             }
-            if (count($urlFiles) > 0) {
-                return response()->json($urlFiles, 200);
-            }
+            return response()->json($urlFiles, 200);
+           /*  if (count($urlFiles) > 0) {
+            } */
         } catch (Exception $e) {
             return response()->json($e, 500);
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
