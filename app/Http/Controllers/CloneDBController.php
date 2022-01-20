@@ -637,15 +637,56 @@ class CloneDBController extends Controller
     }
     public function testCodeFrag()
     {
-        $url = 'https://immvisas.com//storage/app/public/documents/contact/2156722/cases/A2145420-Work Permit/checklists/CL2141417-/clitems/CLI4002016-Document/saturn.png';
+        $url = 'https://immvisas.com//storage/app/public/documents/contact/2156722/cases/A2145420-Work%20Permit/checklists/CL2141417-/clitems/CLI4002016-Document/saturn.png';
+        $output = "no";
 
-        $url =str_replace(' ', '%20', $url);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_HEADER => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_NOBODY => true
+        ));
+
+        $header = explode("\n", curl_exec($curl));
+        curl_close($curl);
+       return $header;
+       /* Get url headers */
+
+        if (strpos($header[0], "200") !== false) {
+            $output =  "yes";
+        }
+
+        return response()->json($header);
+
+        /*  */
+
+        //$url =str_replace(' ', '%20', $url);
         $array = get_headers($url);
         $string = $array[0];
         if (strpos($string, "200")) {
-            return 'url exists';
-        } else {
-            return 'url does not exist';
+            $output =  "yes";
         }
+        return $output;
+
+
+        /*   aha  ${ */
+        /*   $url = $env["simpleurl"];
+        $output = "no";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_HEADER => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_NOBODY => true
+        ));
+        $header = explode("\n", curl_exec($curl));
+        curl_close($curl);
+        return ($header);
+        if (strpos($header[0], "200") !== false) {
+            $output =  "yes";
+        }
+        return $output; */
+        /*  }}>  */
     }
 }

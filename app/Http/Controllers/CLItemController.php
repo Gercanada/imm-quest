@@ -113,17 +113,17 @@ class CLItemController extends Controller
             */
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem = $vtiger->search($clitemQuery);
-            if(count($clitem->result)>0){
-                $clitem = $clitem = $vtiger->search($clitemQuery) ->result[0];
+            if (count($clitem->result) > 0) {
+                $clitem = $clitem = $vtiger->search($clitemQuery)->result[0];
             }
-            if($clitem){
+            if ($clitem) {
                 $obj = $vtiger->retrieve($clitem->id);
-                $obj->result->cf_acf_rtf_1208 = end($ex);
+                $obj->result->cf_acf_rtf_1208 = "Try to get file from cp";
                 $vtiger->update($obj->result);
                 return response()->json("Success", 200);
             }
         } catch (Exception $e) {
-            return response()->json($e,500);
+            return response()->json($e, 500);
         }
     }
     public function deleteDocument(Request $request)
@@ -136,7 +136,6 @@ class CLItemController extends Controller
             } else {
                 $urlFile = env('APP_URL') . Storage::url("app/public/$file"); // in prod
             }
-
             //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
 
             if (Storage::exists($urlFile)) {
