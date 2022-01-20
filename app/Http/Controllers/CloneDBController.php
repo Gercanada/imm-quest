@@ -637,7 +637,9 @@ class CloneDBController extends Controller
     }
     public function testCodeFrag()
     {
-        $url = 'https://immvisas.com/storage/app/public/documents/contact/2156722/cases/A2145420-Work%20Permit/checklists/CL2141417-/clitems/CLI4002016-Document/saturn.pg';
+        $url = 'https://immvisas.com//storage/app/public/documents/contact/2156722/cases/A2145420-Work Permit/checklists/CL2141417-/clitems/CLI4002016-Document/saturn.png';
+
+        $url =str_replace(' ', '%20', $url);
         $array = get_headers($url);
         $string = $array[0];
         if (strpos($string, "200")) {
