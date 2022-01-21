@@ -27,12 +27,12 @@ class CLItemController extends Controller
     {
         $item = CLItem::where('id', $request->id)->firstOrFail();
         $case =  CPCase::where('id', $item->cf_1217)->firstOrFail();
-        $checklist =  Checklist::where('id', $item->cf_1216)->firstOrFail();
+
 
         /* $directory = "/documents/contact/$item->cf_contacts_id/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
         $file = Storage::disk('public')->allFiles($directory); */
 
-        $case =  CPCase::where('id', $item->cf_1217)->firstOrFail();
+
         $checklist =  Checklist::where('id', $item->cf_1216)->firstOrFail();
         $contact = Contact::where('id', $item->cf_contacts_id)->firstOrFail();
 
@@ -111,14 +111,21 @@ class CLItemController extends Controller
             $lastEl = array_pop((array_slice($ex, -1)));
             return $lastEl;
             */
-            $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
+            $clitemQuery = DB::table('Contacts')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem = $vtiger->search($clitemQuery);
             if (count($clitem->result) > 0) {
                 $clitem = $clitem = $vtiger->search($clitemQuery)->result[0];
             }
             if ($clitem) {
+                //get contact
+                $contactQuery =DB::table('CLItems')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
+                $contact = $clitem = $vtiger->search($contactQuery)->result[0];
+                $caseQuery = DB::table('HelpDesk')->select('*')->where("id", $clitem->cf_1217)->take(1);
+                $case = $clitem = $vtiger->search($caseQuery)->result[0];
+
                 $obj = $vtiger->retrieve($clitem->id);
                 $obj->result->cf_1970 = end($ex);
+                $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                 $obj->result->cf_acf_rtf_1208 = "Desde cp";
                 $vtiger->update($obj->result);
                 return response()->json("Success", 200);
