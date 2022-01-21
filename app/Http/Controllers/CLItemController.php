@@ -44,7 +44,7 @@ class CLItemController extends Controller
         }
         $item->files = ['key' => $item->clitemsno, 'files' => $files];
         /*  return $item; */
-        return [$item, $case, $checklist/* , $file */];
+        return [$item, $case, $checklist];
     }
 
     /**
@@ -148,7 +148,7 @@ class CLItemController extends Controller
                 Storage::delete($urlFile);
                 return  response()->json("File removed from temporary storage");
             } else {
-                return response()->json("File not found");
+                return response()->json("File not found at ".$urlFile);
             }
         } catch (Exception $e) {
             return $e->getMessage();
@@ -168,12 +168,8 @@ class CLItemController extends Controller
             $description = $vtiger->describe('CLItems');
             $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("id", $clitem->cf_contacts_id)->take(1);
             $contact = $vtiger->search($userQuery)->result[0]; //Get contact that be cloned
-
             $contactField = 'cf_contacts_id';
-
-
             $task->getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
-
             return response()->json(['Success', $clitem], 200);
         } catch (Exception $e) {
             return response()->json("error", 500);

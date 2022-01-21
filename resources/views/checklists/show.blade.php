@@ -31,13 +31,16 @@
                     </thead>
                     <tbody>
                         @foreach ($clitems as $clitem)
-                            {{--  --}}
                             @if ($clitem->cf_1578 === 'Pending')
                                 <tr>
                                     <td>{{ $clitem->name }}</td>
                                     <td>{{ $clitem->cf_1202 }}</td>
                                     <td>
-                                        @if (count($clitem->files['files']) > 0 && $clitem->files['key'] === $clitem->clitemsno)
+                                        <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
+                                            data-toggle="tooltip" title="Send file to manager"
+                                            class="btn btn-outline-success btn-rounded"> <i
+                                                class="fas fa-eye"></i></a>
+                                       {{--  @if (count($clitem->files['files']) > 0 && $clitem->files['key'] === $clitem->clitemsno)
                                             @foreach ($clitem->files['files'] as $file)
                                                 {{ $file }}
                                                 <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
@@ -54,7 +57,7 @@
                                                 data-toggle="tooltip" title="Upload file"
                                                 class="btn btn-outline-success btn-rounded"> <i
                                                     class="fas fa-upload"></i></a>
-                                        @endif
+                                        @endif --}}
 
                                     </td>
                                     <td>{{ $clitem->cf_1578 }}</td>
@@ -97,7 +100,8 @@
                     </tbody>
                 </table>
             </div>
-            <h3 class="card-title"><i class="mr-1 font-18 mdi mdi-numeric-2-box-multiple-outline"></i>Submited items
+            <h3 class="card-title">
+                <i class="mr-1 font-18 mdi mdi-numeric-3-box-multiple-outline"></i>Submited items
             </h3>
             <div class="table-responsive">
                 <table class="table">
@@ -109,9 +113,8 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         @foreach ($clitems as $clitem)
-                            @if ($clitem->cf_1578 === ('Received' || 'Accepted'))
+                            @if ($clitem->cf_1578 === 'Received' || $clitem->cf_1578 === 'Accepted')
                                 <tr>
                                     <td>{{ $clitem->name }}</td>
                                     <td>{{ $clitem->cf_1578 }}</td>

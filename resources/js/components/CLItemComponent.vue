@@ -580,6 +580,7 @@ export default {
           console.table(error);
         });
     },
+
     sendMessage: async function (files, xhr, formData) {
       formData.append("id", this.id);
     },
@@ -591,8 +592,13 @@ export default {
         .post("/cl-item/send_file", { clitemsno: clitemsno, file: file })
         .then(function (response) {
           console.log(response);
-          //me.clitem = response.data[0];
-          //console.log(me.clitem);
+          Swal.fire({
+            type: "success",
+            title: "Document sent",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+          window.location.reload();
         })
         .catch(function (error) {
           console.table(error);
@@ -607,8 +613,13 @@ export default {
         .post("/cl-item/dropfile", { file: file })
         .then(function (response) {
           console.log(response);
-          //me.clitem = response.data[0];
-          //console.log(me.clitem);
+           Swal.fire({
+            type: "success",
+            title: "Document deleted",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+          window.location.reload();
         })
         .catch(function (error) {
           console.log(error);
@@ -637,7 +648,6 @@ export default {
           me.clitem = response.data[0];
           me.caseObj = response.data[1];
           me.checklistObj = response.data[2];
-          //console.log(me.clitem);
         })
         .catch(function (error) {
           console.log(error);
@@ -652,8 +662,6 @@ export default {
       this.expiry_date = "";
       this.issued_date = "";
       this.dropzone = null;
-      //(this.active = false);
-
       this.submitted = false;
       this.errors = {};
       this.userFiles();

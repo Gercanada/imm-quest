@@ -3492,8 +3492,14 @@ var urlParams = window.location.pathname.split("/");
         clitemsno: clitemsno,
         file: file
       }).then(function (response) {
-        console.log(response); //me.clitem = response.data[0];
-        //console.log(me.clitem);
+        console.log(response);
+        Swal.fire({
+          type: "success",
+          title: "Document sent",
+          timer: 2000,
+          showConfirmButton: false
+        });
+        window.location.reload();
       })["catch"](function (error) {
         console.table(error);
       })["finally"](function () {
@@ -3508,8 +3514,14 @@ var urlParams = window.location.pathname.split("/");
       axios.post("/cl-item/dropfile", {
         file: file
       }).then(function (response) {
-        console.log(response); //me.clitem = response.data[0];
-        //console.log(me.clitem);
+        console.log(response);
+        Swal.fire({
+          type: "success",
+          title: "Document deleted",
+          timer: 2000,
+          showConfirmButton: false
+        });
+        window.location.reload();
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
@@ -3536,7 +3548,7 @@ var urlParams = window.location.pathname.split("/");
       }).then(function (response) {
         me.clitem = response.data[0];
         me.caseObj = response.data[1];
-        me.checklistObj = response.data[2]; //console.log(me.clitem);
+        me.checklistObj = response.data[2];
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
@@ -3550,8 +3562,7 @@ var urlParams = window.location.pathname.split("/");
       this.description = "";
       this.expiry_date = "";
       this.issued_date = "";
-      this.dropzone = null; //(this.active = false);
-
+      this.dropzone = null;
       this.submitted = false;
       this.errors = {};
       this.userFiles();
