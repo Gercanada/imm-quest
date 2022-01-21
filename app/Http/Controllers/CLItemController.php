@@ -121,7 +121,7 @@ class CLItemController extends Controller
                 //get contact
                 $contactQuery = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
                 $contact = $vtiger->search($contactQuery)->result[0];
-                $caseQuery = DB::table('HelpDesk')->select('*')->where("contact_id",  $contact->id)->take(1);
+                $caseQuery = DB::table('HelpDesk')->select('*')->where("id",  $clitem->cf_1217)->take(1);
                 $case = $vtiger->search($caseQuery)->result[0];
                 $obj = $vtiger->retrieve($clitem->id);
                 $obj->result->cf_1970 = end($ex);
