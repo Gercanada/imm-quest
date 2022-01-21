@@ -10,6 +10,7 @@ use App\Models\Checklist;
 use App\Models\CLItem;
 use App\Models\CPCase;
 use App\Models\Contact;
+use App\Http\Controllers\CloneDBController;
 use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -166,7 +167,7 @@ class CLItemController extends Controller
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem =  $vtiger->search($clitemQuery)->result[0];
             $description = $vtiger->describe('CLItems');
-            $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("id", $clitem->cf_contacts_id)->take(1);
+            $userQuery = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
             $contact = $vtiger->search($userQuery)->result[0]; //Get contact that be cloned
             $contactField = 'cf_contacts_id';
             $task->getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
