@@ -119,17 +119,16 @@ class CLItemController extends Controller
             }
             if ($clitem) {
                 //get contact
-                $contactQuery =DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
-                $contact = $clitem = $vtiger->search($contactQuery)->result[0];
+                $contactQuery = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
+                $contact = $vtiger->search($contactQuery)->result[0];
                 $caseQuery = DB::table('HelpDesk')->select('*')->where("contact_id",  $contact->id)->take(1);
-                $case = $clitem = $vtiger->search($caseQuery)->result[0];
-
+                $case = $vtiger->search($caseQuery)->result[0];
                 $obj = $vtiger->retrieve($clitem->id);
                 $obj->result->cf_1970 = end($ex);
-                $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs/volarehere"; //GD Link
-                $obj->result->cf_acf_rtf_1208 = "Desde cpp";
+                $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
+                $obj->result->cf_acf_rtf_1208 = "From cpp";
                 $vtiger->update($obj->result);
-                return response()->json("Success", 200);
+                return response()->json(["Success", $obj], 200);
             }
         } catch (Exception $e) {
             return response()->json($e, 500);

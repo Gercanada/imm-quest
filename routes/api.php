@@ -26,11 +26,12 @@ use App\Http\Controllers\CLItemController;
 }); */
 Route::post('/user_params',  [CloneDBController::class, 'testws']);
 
+Route::post('/documents', [DocumentController::class , 'checkDocuments']);
+Route::post('/remove_document', [DocumentController::class , 'destroy']);
+Route::post('/single_url', [DocumentController::class , 'singleUrl']);
+
 Route::middleware('imm-header')->group(function(){
-    Route::post('/documents', [DocumentController::class , 'checkDocuments']);
     Route::post('/clitem_doc', [DocumentController::class , 'createCLItemDoc']);
-    Route::post('/remove_document', [DocumentController::class , 'destroy']);
-    Route::post('/single_url', [DocumentController::class , 'singleUrl']);
 
 
     Route::post('/cl-item/send_file', [CLItemController::class, 'sendDocumentToImmcase']);//Only catch errs

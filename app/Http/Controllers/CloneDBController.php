@@ -688,13 +688,13 @@ class CloneDBController extends Controller
         }
         return $output; */
         /*  }}>  */
-
+/*
        Contact:  ${return $cf_contacts_id->Contacts->contact_no }}>
 
       Checklist:   ${ return $cf_1216->Checklist->checklistno."-".$cf_1216->Checklist->cf_1706; }}>
 
       CLItem : $clitemsno-$cf_1200
 
-      Case  ${ return $cf_1217->HelpDesk->ticket_no."-".$cf_1217->HelpDesk->ticketcategories ; }}>
+      Case  ${ return $cf_1217->HelpDesk->ticket_no."-".$cf_1217->HelpDesk->ticketcategories ; }}> */
     }
 }
