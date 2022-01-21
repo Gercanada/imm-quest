@@ -335,7 +335,6 @@
             </div>
             <!-- <h1 v-text="clitem"></h1> -->
             <div class="row float-right">
-              <h1 v-text="clitem.files.files.length"></h1>
               <div class="col">
                 <div
                   class="btn-list"

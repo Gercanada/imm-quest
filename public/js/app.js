@@ -3321,7 +3321,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 var urlParams = window.location.pathname.split("/");
@@ -24289,12 +24288,6 @@ var render = function () {
                     : _vm._e(),
                   _vm._v(" "),
                   _c("div", { staticClass: "row float-right" }, [
-                    _c("h1", {
-                      domProps: {
-                        textContent: _vm._s(_vm.clitem.files.files.length),
-                      },
-                    }),
-                    _vm._v(" "),
                     _c("div", { staticClass: "col" }, [
                       (_vm.clitem.cf_1578 === "Pending" ||
                         _vm.clitem.cf_1578 === "Replacement Needed") &&
