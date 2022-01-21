@@ -3495,7 +3495,7 @@ var urlParams = window.location.pathname.split("/");
         console.log(response); //me.clitem = response.data[0];
         //console.log(me.clitem);
       })["catch"](function (error) {
-        console.log(error);
+        console.table(error);
       })["finally"](function () {
         return _this.loading = false;
       });

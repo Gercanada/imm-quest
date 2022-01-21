@@ -105,28 +105,29 @@ class CLItemController extends Controller
     public function sendDocumentToImmcase(Request $request)
     {
         try {
+
             $vtiger = new Vtiger();
             $ex = explode('/', $request->file);
             /*
             $lastEl = array_pop((array_slice($ex, -1)));
             return $lastEl;
             */
-            $clitemQuery = DB::table('Contacts')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
+            $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem = $vtiger->search($clitemQuery);
             if (count($clitem->result) > 0) {
                 $clitem = $clitem = $vtiger->search($clitemQuery)->result[0];
             }
             if ($clitem) {
                 //get contact
-                $contactQuery =DB::table('CLItems')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
+                $contactQuery =DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
                 $contact = $clitem = $vtiger->search($contactQuery)->result[0];
-                $caseQuery = DB::table('HelpDesk')->select('*')->where("id", $clitem->cf_1217)->take(1);
+                $caseQuery = DB::table('HelpDesk')->select('*')->where("contact_id",  $contact->id)->take(1);
                 $case = $clitem = $vtiger->search($caseQuery)->result[0];
 
                 $obj = $vtiger->retrieve($clitem->id);
                 $obj->result->cf_1970 = end($ex);
-                $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
-                $obj->result->cf_acf_rtf_1208 = "Desde cp";
+                $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs/volarehere"; //GD Link
+                $obj->result->cf_acf_rtf_1208 = "Desde cpp";
                 $vtiger->update($obj->result);
                 return response()->json("Success", 200);
             }

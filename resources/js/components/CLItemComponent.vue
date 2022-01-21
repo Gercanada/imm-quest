@@ -595,7 +595,7 @@ export default {
           //console.log(me.clitem);
         })
         .catch(function (error) {
-          console.log(error);
+          console.table(error);
         })
         .finally(() => (this.loading = false));
     },
