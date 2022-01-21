@@ -115,7 +115,7 @@ class CLItemController extends Controller
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem = $vtiger->search($clitemQuery);
             if (count($clitem->result) > 0) {
-                $clitem = $clitem = $vtiger->search($clitemQuery)->result[0];
+                $clitem =  $vtiger->search($clitemQuery)->result[0];
             }
             if ($clitem) {
                 //get contact
@@ -138,14 +138,12 @@ class CLItemController extends Controller
     {
         try {
             $file = $request->file;
-
             if (env('APP_ENV') === 'local') {
                 $urlFile = "public/$file";
             } else {
                 $urlFile = env('APP_URL') . Storage::url("app/public/$file"); // in prod
             }
             //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
-
             if (Storage::exists($urlFile)) {
                 Storage::delete($urlFile);
                 return  response()->json("File removed from temporary storage");
@@ -162,6 +160,24 @@ class CLItemController extends Controller
 
     public function updateCLItemFromImmcase(Request $request)
     {
+        try {
+            $task = new CloneDBController;
+            $vtiger = new Vtiger();
+            $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
+            $clitem =  $vtiger->search($clitemQuery)->result[0];
+            $description = $vtiger->describe('CLItems');
+            $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("id", $clitem->cf_contacts_id)->take(1);
+            $contact = $vtiger->search($userQuery)->result[0]; //Get contact that be cloned
+
+            $contactField = 'cf_contacts_id';
+
+
+            $task->getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
+
+            return response()->json(['Success', $clitem], 200);
+        } catch (Exception $e) {
+            return response()->json("error", 500);
+        }
     }
 
     public function downloadFile($contact)

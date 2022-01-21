@@ -30,6 +30,8 @@ Route::post('/documents', [DocumentController::class , 'checkDocuments']);
 Route::post('/remove_document', [DocumentController::class , 'destroy']);
 Route::post('/single_url', [DocumentController::class , 'singleUrl']);
 
+Route::post('/update_clitem', [CLItemController::class , 'updateCLItemFromImmcase']);
+
 Route::middleware('imm-header')->group(function(){
     Route::post('/clitem_doc', [DocumentController::class , 'createCLItemDoc']);
 
