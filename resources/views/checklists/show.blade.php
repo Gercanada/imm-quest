@@ -31,7 +31,7 @@
                     </thead>
                     <tbody>
                         @foreach ($clitems as $clitem)
-                            @if ($clitem->cf_1578 === 'Pending')
+                            @if ($clitem->cf_1578 === 'Pending' || $clitem->cf_1578 === 'Replacement Needed')
                                 <tr>
                                     <td>{{ $clitem->name }}</td>
                                     <td>{{ $clitem->cf_1202 }}</td>

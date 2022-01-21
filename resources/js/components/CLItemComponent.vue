@@ -335,12 +335,14 @@
             </div>
             <!-- <h1 v-text="clitem"></h1> -->
             <div class="row float-right">
+              <h1 v-text="clitem.files.files.length"></h1>
               <div class="col">
                 <div
                   class="btn-list"
                   v-if="
-                    clitem.cf_1578 === 'Pending' &&
-                    clitem.files.files.length === 0
+                    (clitem.cf_1578 === 'Pending' ||
+                      clitem.cf_1578 === 'Replacement Needed') &&
+                    clitem.files.files.length <= 0
                   "
                 >
                   <button
@@ -355,7 +357,8 @@
                 <div
                   class="btn-list"
                   v-if="
-                    clitem.cf_1578 === 'Replacement Needed' ||
+                    (clitem.cf_1578 === 'Pending' ||
+                      clitem.cf_1578 === 'Replacement Needed') &&
                     clitem.files.files.length > 0
                   "
                 >
@@ -613,7 +616,7 @@ export default {
         .post("/cl-item/dropfile", { file: file })
         .then(function (response) {
           console.log(response);
-           Swal.fire({
+          Swal.fire({
             type: "success",
             title: "Document deleted",
             timer: 2000,
