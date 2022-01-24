@@ -159,23 +159,7 @@ class CLItemController extends Controller
         return $request;
     }
 
-    public function updateCLItemFromImmcase(Request $request)
-    {
-        try {
-            $task = new CloneDBController;
-            $vtiger = new Vtiger();
-            $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
-            $clitem =  $vtiger->search($clitemQuery)->result[0];
-            $description = $vtiger->describe('CLItems');
-            $userQuery = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
-            $contact = $vtiger->search($userQuery)->result[0]; //Get contact that be cloned
-            $contactField = 'cf_contacts_id';
-            $task->getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
-            return response()->json(['Success', $clitem], 200);
-        } catch (Exception $e) {
-            return response()->json("error", 500);
-        }
-    }
+
 
     public function downloadFile($contact)
     {
