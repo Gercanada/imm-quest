@@ -469,10 +469,10 @@ class CloneDBController extends Controller
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem =  $vtiger->search($clitemQuery)->result[0];
             $description = $vtiger->describe('CLItems');
-             $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
-             $contactField = "cf_contacts_id";
-              self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
-             return response()->json(['Success', $clitem->id], 200);
+            $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
+            $contactField = "cf_contacts_id";
+            self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
+            return response()->json(['Success', $clitem->id], 200);
             //return response()->json($vtiger->retrieve( '44x65460') , 200);
         } catch (Exception $e) {
             return response()->json("error", 500);
@@ -670,8 +670,8 @@ class CloneDBController extends Controller
 
         $header = explode("\n", curl_exec($curl));
         curl_close($curl);
-       return $header;
-       /* Get url headers */
+        return $header;
+        /* Get url headers */
 
         if (strpos($header[0], "200") !== false) {
             $output =  "yes";
@@ -708,7 +708,7 @@ class CloneDBController extends Controller
         }
         return $output; */
         /*  }}>  */
-/*
+        /*
        Contact:  ${return $cf_contacts_id->Contacts->contact_no }}>
 
       Checklist:   ${ return $cf_1216->Checklist->checklistno."-".$cf_1216->Checklist->cf_1706; }}>
