@@ -28,23 +28,21 @@ class CLItemController extends Controller
     {
         $item = CLItem::where('id', $request->id)->firstOrFail();
         $case =  CPCase::where('id', $item->cf_1217)->firstOrFail();
-
-
         /* $directory = "/documents/contact/$item->cf_contacts_id/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
         $file = Storage::disk('public')->allFiles($directory); */
-
-
         $checklist =  Checklist::where('id', $item->cf_1216)->firstOrFail();
         $contact = Contact::where('id', $item->cf_contacts_id)->firstOrFail();
 
         $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
         $dirFiles = Storage::disk('public')->allFiles($directory);
         $files = [];
+        $itemfiles = [];
         foreach ($dirFiles as $file) {
             array_push($files, $file);
         }
-        $item->files = ['key' => $item->clitemsno, 'files' => $files];
-        /*  return $item; */
+
+            $itemfiles = ['key' => $item->clitemsno, 'files' => $files];
+        $item->files = $itemfiles;
         return [$item, $case, $checklist];
     }
 
@@ -147,9 +145,9 @@ class CLItemController extends Controller
             //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
             if (Storage::exists($urlFile)) {
                 Storage::delete($urlFile);
-                return  response()->json("File removed from temporary storage");
+                return  response()->json("File removed from temporary storage" , 200);
             } else {
-                return response()->json("File not found at ".$urlFile);
+                return response()->json("File not found at " . $urlFile , 403);
             }
         } catch (Exception $e) {
             return $e->getMessage();

@@ -3319,8 +3319,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 var urlParams = window.location.pathname.split("/");
@@ -3363,7 +3361,8 @@ var urlParams = window.location.pathname.split("/");
       errors: {},
       sendSuccess: false,
       loading: false,
-      file: ""
+      file: "",
+      clFiles: []
     };
   },
   components: {
@@ -3500,8 +3499,9 @@ var urlParams = window.location.pathname.split("/");
           title: "Document sent",
           timer: 2000,
           showConfirmButton: false
-        });
-        window.location.reload();
+        }); //window.location.reload();
+
+        me.userFiles();
       })["catch"](function (error) {
         console.table(error);
       })["finally"](function () {
@@ -3523,7 +3523,7 @@ var urlParams = window.location.pathname.split("/");
           timer: 2000,
           showConfirmButton: false
         });
-        window.location.reload();
+        me.userFiles(); //window.location.reload();
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
@@ -3546,11 +3546,17 @@ var urlParams = window.location.pathname.split("/");
       var me = this;
       this.loading = true;
       axios.post("/cl-item", {
-        id: me.id
+        id: urlParams[4]
       }).then(function (response) {
+        console.log(response);
         me.clitem = response.data[0];
         me.caseObj = response.data[1];
         me.checklistObj = response.data[2];
+        console.log(me.clitem);
+
+        if ("files" in me.clitem.files) {
+          me.clFiles = me.clitem.files.files;
+        }
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
@@ -24244,25 +24250,20 @@ var render = function () {
                               }),
                             ]),
                             _vm._v(" "),
-                            _vm.clitem.files.files.length > 0
+                            _vm.clFiles.length > 0
                               ? _c(
                                   "tr",
                                   [
                                     _c("td", [_vm._v("Current file to send")]),
                                     _vm._v(" "),
-                                    _vm._l(
-                                      _vm.clitem.files.files,
-                                      function (file) {
-                                        return _c("td", {
-                                          key: file,
-                                          staticClass:
-                                            "text-end font-weight-medium",
-                                          domProps: {
-                                            textContent: _vm._s(file),
-                                          },
-                                        })
-                                      }
-                                    ),
+                                    _vm._l(_vm.clFiles, function (file) {
+                                      return _c("td", {
+                                        key: file,
+                                        staticClass:
+                                          "text-end font-weight-medium",
+                                        domProps: { textContent: _vm._s(file) },
+                                      })
+                                    }),
                                   ],
                                   2
                                 )
@@ -24291,7 +24292,7 @@ var render = function () {
                     _c("div", { staticClass: "col" }, [
                       (_vm.clitem.cf_1578 === "Pending" ||
                         _vm.clitem.cf_1578 === "Replacement Needed") &&
-                      _vm.clitem.files.files.length <= 0
+                      _vm.clFiles == 0
                         ? _c("div", { staticClass: "btn-list" }, [
                             _c(
                               "button",
@@ -24318,66 +24319,69 @@ var render = function () {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      (_vm.clitem.cf_1578 === "Pending" ||
-                        _vm.clitem.cf_1578 === "Replacement Needed") &&
-                      _vm.clitem.files.files.length > 0
-                        ? _c(
+                      _c(
+                        "div",
+                        { staticClass: "btn-list" },
+                        _vm._l(_vm.clFiles, function (file) {
+                          return _c(
                             "div",
-                            { staticClass: "btn-list" },
-                            _vm._l(_vm.clitem.files.files, function (file) {
-                              return _c(
-                                "div",
+                            {
+                              key: file,
+                              staticClass: "text-end font-weight-medium",
+                              attrs: {
+                                "v-if":
+                                  (_vm.clitem.cf_1578 === "Pending" ||
+                                    _vm.clitem.cf_1578 ===
+                                      "Replacement Needed") &&
+                                  _vm.clFiles.length > 0,
+                              },
+                            },
+                            [
+                              _c(
+                                "button",
                                 {
-                                  key: file,
-                                  staticClass: "text-end font-weight-medium",
+                                  staticClass:
+                                    "btn btn-success btn-lg fas fa-paper-plane",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.sendToImmcase(
+                                        file,
+                                        _vm.clitem.clitemsno
+                                      )
+                                    },
+                                  },
                                 },
                                 [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-success btn-lg fas fa-paper-plane",
-                                      attrs: { type: "button" },
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.sendToImmcase(
-                                            file,
-                                            _vm.clitem.clitemsno
-                                          )
-                                        },
-                                      },
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                    Send document\n                  "
-                                      ),
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-danger btn-lg fas fa-trash-alt",
-                                      attrs: { type: "button" },
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.deleteFile(file)
-                                        },
-                                      },
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                    Remove document\n                  "
-                                      ),
-                                    ]
+                                  _vm._v(
+                                    "\n                    Send document\n                  "
                                   ),
                                 ]
-                              )
-                            }),
-                            0
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-danger btn-lg fas fa-trash-alt",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.deleteFile(file)
+                                    },
+                                  },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    Remove document\n                  "
+                                  ),
+                                ]
+                              ),
+                            ]
                           )
-                        : _vm._e(),
+                        }),
+                        0
+                      ),
                     ]),
                   ]),
                 ]),

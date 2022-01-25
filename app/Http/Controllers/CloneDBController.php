@@ -567,8 +567,6 @@ class CloneDBController extends Controller
         }
     }
 
-
-
     public function duplicateContacts(Request $request)
     {
         $string = 'This is a string';
@@ -653,7 +651,6 @@ class CloneDBController extends Controller
         }
         return response()->json([$msg => $duplicates]);
     }
-
 
     public function testCodeFrag()
     {

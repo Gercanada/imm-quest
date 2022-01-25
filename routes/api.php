@@ -61,6 +61,14 @@ Route::middleware('imm-header')->group(function(){
        \Artisan::call('optimize:clear');
         return('Optimized!');
     });
+    Route::get('/clear', function(){
+       \Artisan::call('cache:clear');
+        return('Cleared!');
+    });
+    Route::get('/cache', function(){
+       \Artisan::call('config:cache');
+        return('Cleared cache! ');
+    });
     Route::get('/keygen', function(){
         \Artisan::call('key:generate');
          return('Key generated!');

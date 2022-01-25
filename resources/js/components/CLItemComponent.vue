@@ -285,10 +285,10 @@
                         v-text="clitem.cf_1970"
                       ></td>
                     </tr>
-                    <tr v-if="clitem.files.files.length > 0">
+                    <tr v-if="clFiles.length > 0">
                       <td>Current file to send</td>
                       <td
-                        v-for="file in clitem.files.files"
+                        v-for="file in clFiles"
                         :key="file"
                         class="text-end font-weight-medium"
                         v-text="file"
@@ -341,7 +341,7 @@
                   v-if="
                     (clitem.cf_1578 === 'Pending' ||
                       clitem.cf_1578 === 'Replacement Needed') &&
-                    clitem.files.files.length <= 0
+                    clFiles == 0
                   "
                 >
                   <button
@@ -353,16 +353,14 @@
                   </button>
                 </div>
 
-                <div
-                  class="btn-list"
-                  v-if="
-                    (clitem.cf_1578 === 'Pending' ||
-                      clitem.cf_1578 === 'Replacement Needed') &&
-                    clitem.files.files.length > 0
-                  "
-                >
+                <div class="btn-list">
                   <div
-                    v-for="file in clitem.files.files"
+                    :v-if="
+                      (clitem.cf_1578 === 'Pending' ||
+                        clitem.cf_1578 === 'Replacement Needed') &&
+                      clFiles.length > 0
+                    "
+                    v-for="file in clFiles"
                     :key="file"
                     class="text-end font-weight-medium"
                   >
@@ -519,6 +517,7 @@ export default {
 
       loading: false,
       file: "",
+      clFiles: [],
     };
   },
   components: {
@@ -600,7 +599,8 @@ export default {
             timer: 2000,
             showConfirmButton: false,
           });
-          window.location.reload();
+          //window.location.reload();
+          me.userFiles();
         })
         .catch(function (error) {
           console.table(error);
@@ -621,7 +621,8 @@ export default {
             timer: 2000,
             showConfirmButton: false,
           });
-          window.location.reload();
+          me.userFiles();
+          //window.location.reload();
         })
         .catch(function (error) {
           console.log(error);
@@ -645,11 +646,16 @@ export default {
       let me = this;
       this.loading = true;
       axios
-        .post("/cl-item", { id: me.id })
+        .post("/cl-item", { id: urlParams[4] })
         .then(function (response) {
+          console.log(response);
           me.clitem = response.data[0];
           me.caseObj = response.data[1];
           me.checklistObj = response.data[2];
+          console.log(me.clitem);
+          if ("files" in me.clitem.files) {
+            me.clFiles = me.clitem.files.files;
+          }
         })
         .catch(function (error) {
           console.log(error);
