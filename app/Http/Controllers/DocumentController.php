@@ -49,7 +49,7 @@ class DocumentController extends Controller
                 return response()->json("File not found");
             }
 
-            $eachSplit = $spliced;
+      /*       $eachSplit = $spliced;
             array_shift($eachSplit); //Docs path
             array_pop($spliced); //Docs path
             $path =  implode('/', $spliced);
@@ -77,8 +77,8 @@ class DocumentController extends Controller
                     }
                     //return Storage::disk('public')->allFiles($newPath);
                 }
-            }
-            return $testResp;
+            } */
+            //return $testResp;
         } catch (Exception $e) {
             return $e->getMessage();
             return response()->json([$e, 500]);

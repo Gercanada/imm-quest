@@ -67,7 +67,6 @@ class CLItemController extends Controller
             $user = Auth::user();
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
             $clitem = CLItem::where('id', $request->id)->firstOrFail();
-
             $case = CPCase::where('id', $clitem->cf_1217)->firstOrFail();
             $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
 
@@ -77,7 +76,6 @@ class CLItemController extends Controller
                 if (!is_array($files)) {
                     $files = [$files];
                 }
-
                 $fileList = array();
                 $contact_no = $contact->contact_no;
                 $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
@@ -91,9 +89,6 @@ class CLItemController extends Controller
                     $fileUrl = "$destination/$filename";
                     array_push($fileList, $fileUrl);
                 }
-                /*  $clitem->status= 'pending';
-                $clitem->save(); */
-
                 return response()->json(["List" => $fileList, 200]);
             }
         } catch (\Exception $e) {
@@ -128,10 +123,9 @@ class CLItemController extends Controller
                 $obj->result->cf_acf_rtf_1208 = "Document uploaded from customers portal";
                 $vtiger->update($obj->result);
 
-                if ($obj->result->cf_1578 === "Received") {
-                    $task = new CloneDBController;
-                    $task->updateCLItemFromImmcase($request);
-                }
+                $task = new CloneDBController;
+                $task->updateCLItemFromImmcase($request);
+
                 return response()->json(["Success", $obj], 200);
             }
         } catch (Exception $e) {
@@ -148,7 +142,7 @@ class CLItemController extends Controller
                 $urlFile = env('APP_URL') . Storage::url("app/public/$file"); // in prod
             } */
             //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
-           /*  $explodedUrl = explode(',', $urlFile);
+            /*  $explodedUrl = explode(',', $urlFile);
             return $explodedUrl; */
 
 
