@@ -55,7 +55,7 @@ class DocumentController extends Controller
             $path =  implode('/', $spliced);
             $testResp = [];
 
-            //$files = Storage::disk('public')->allFiles("/documents/contact/$contact");
+            $files = Storage::disk('public')->allFiles("/documents/contact/$contact");
 
             return $files;
 

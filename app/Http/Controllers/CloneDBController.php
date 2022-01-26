@@ -518,7 +518,6 @@ class CloneDBController extends Controller
 
     static function newUser($username, $userPass, $firstname, $last_name, $contactNo)
     {
-        dd("be created");
         $newUser = User::updateOrCreate(
             ['vtiger_contact_id' =>  $contactNo],
             [
