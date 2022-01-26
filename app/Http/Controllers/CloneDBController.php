@@ -231,38 +231,41 @@ class CloneDBController extends Controller
     static function getData($query, $fields, $contact,  $contactField, $table_name)
     {
         $vtiger = new Vtiger();
-
-        $list = $vtiger->search($query)->result;
-        $fields = $fields;
-        $fieldNames = [];
-        $fieldsArr = [];
-
-        foreach ($fields as $key => $field) {
-            $fieldAtrs = [];
-            foreach ($field as $key2 => $val) {
-                if (($key2 === 'name') || ($key2 === 'type') || ($key2 === 'label')) {
-                } else {
-                    array_push($fieldAtrs, self::toMysqlAtr([$key2 => $val])); // Function to convert field attributes
+        $getted = $vtiger->search($query);
+        if (array_key_exists("result", $getted)) {
+            $list = $vtiger->search($query)->result;
+            $fields = $fields;
+            $fieldNames = [];
+            $fieldsArr = [];
+            foreach ($fields as $key => $field) {
+                $fieldAtrs = [];
+                foreach ($field as $key2 => $val) {
+                    if (($key2 === 'name') || ($key2 === 'type') || ($key2 === 'label')) {
+                    } else {
+                        array_push($fieldAtrs, self::toMysqlAtr([$key2 => $val])); // Function to convert field attributes
+                    }
+                }
+                $attrtoStr = implode(" ", $fieldAtrs);
+                $fieldType = self::toMysqlType($field->type->name); //Function to convert datatypes
+                if (str_contains($field->name, '&')) {
+                    $field->name = str_replace('&', '', $field->name); // MySql cant write & in fieldname
+                }
+                if (!in_array("$field->name $fieldType $attrtoStr", $fieldsArr)) {
+                    if ($field->name === 'id') {
+                        array_push($fieldsArr, "$field->name $fieldType $attrtoStr PRIMARY KEY");
+                    } else {
+                        array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
+                    }
+                    array_push($fieldNames, "$field->name");
                 }
             }
-            $attrtoStr = implode(" ", $fieldAtrs);
-            $fieldType = self::toMysqlType($field->type->name); //Function to convert datatypes
-            if (str_contains($field->name, '&')) {
-                $field->name = str_replace('&', '', $field->name); // MySql cant write & in fieldname
-            }
-            if (!in_array("$field->name $fieldType $attrtoStr", $fieldsArr)) {
-                if ($field->name === 'id') {
-                    array_push($fieldsArr, "$field->name $fieldType $attrtoStr PRIMARY KEY");
-                } else {
-                    array_push($fieldsArr, "$field->name $fieldType $attrtoStr");
-                }
-                array_push($fieldNames, "$field->name");
-            }
-        }
-        $fieldsArrtoSqlStr = implode(", ", $fieldsArr); //Convert fields to mysql string
+            $fieldsArrtoSqlStr = implode(", ", $fieldsArr); //Convert fields to mysql string
 
-        $fieldsArrtoSqlStr = "$fieldsArrtoSqlStr, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP";
-        self::jsonToMysqlTable($table_name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id, $contact->contact_no, $fieldNames);
+            $fieldsArrtoSqlStr = "$fieldsArrtoSqlStr, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP";
+            self::jsonToMysqlTable($table_name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id, $contact->contact_no, $fieldNames);
+        }/*  else {
+            dd($table_name);
+        } */
     }
 
     static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID, $contactNo, $fields)
@@ -287,18 +290,20 @@ class CloneDBController extends Controller
                 foreach ($tableData as $row2) {
                     if ($row2->cf_1175 != '') {
                         $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
-                        $tableRows = DB::select("SELECT * FROM vt_$tablename WHERE id = '$row2->id' AND cf_1175  =  '$row2->cf_1175';");
+                        $tableRows = DB::select("SELECT * FROM vt_$tablename LIMIT 1;");
                     }
                     if ($row2->cf_1176 != '') {
                         $table = DB::select("SELECT * FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
-                        $tableRows = DB::select("SELECT * FROM vt_$tablename WHERE id = '$row2->id' AND cf_1176 = '$row2->cf_1176';");
+                        $tableRows = DB::select("SELECT * FROM vt_$tablename LIMIT 1;");
                     }
                 }
             } else {
                 $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE  id = '$row->id';"); //search current table on CP
-                $tableRows = DB::select("SELECT * FROM vt_$tablename WHERE  id = '$row->id';"); //search current table on CP
+                $tableRows = DB::select("SELECT * FROM vt_$tablename LIMIT 1;"); //search current table on CP
             }
-
+            /*  if ($tablename === "Contacts") {
+                dd ($tableRows);
+            } */
             foreach ($row as $key => $val) {
                 if (in_array($key, $fields)) {
                     array_push($nameFields, $key);
@@ -347,6 +352,9 @@ class CloneDBController extends Controller
                     }
                 }
             }
+            /* if ($tablename === 'Contacts') {
+                dd ([$nameFields, $tableRows]);
+            } */
 
             if (count($table) > 0 && $table[0]->total === 0) { //If noting found be created
                 DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
@@ -510,6 +518,7 @@ class CloneDBController extends Controller
 
     static function newUser($username, $userPass, $firstname, $last_name, $contactNo)
     {
+        dd("be created");
         $newUser = User::updateOrCreate(
             ['vtiger_contact_id' =>  $contactNo],
             [
@@ -594,16 +603,6 @@ class CloneDBController extends Controller
             array_push($emailsArr,  $contact->email);
         }
 
-        /*  sort($namesArr);
-        sort($lastNamesArr);
-        sort($emailsArr);
-
-        $arrlength = count($namesArr);
-        for ($x = 0; $x < $arrlength; $x++) {
-            echo $namesArr[$x];
-        } */
-
-
         function showDups($array)
         {
             $array_temp = array();
@@ -674,9 +673,6 @@ class CloneDBController extends Controller
         }
 
         return response()->json($header);
-
-        /*  */
-
         //$url =str_replace(' ', '%20', $url);
         $array = get_headers($url);
         $string = $array[0];
@@ -684,33 +680,5 @@ class CloneDBController extends Controller
             $output =  "yes";
         }
         return $output;
-
-
-        /*   aha  ${ */
-        /*   $url = $env["simpleurl"];
-        $output = "no";
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $url,
-            CURLOPT_HEADER => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_NOBODY => true
-        ));
-        $header = explode("\n", curl_exec($curl));
-        curl_close($curl);
-        return ($header);
-        if (strpos($header[0], "200") !== false) {
-            $output =  "yes";
-        }
-        return $output; */
-        /*  }}>  */
-        /*
-       Contact:  ${return $cf_contacts_id->Contacts->contact_no }}>
-
-      Checklist:   ${ return $cf_1216->Checklist->checklistno."-".$cf_1216->Checklist->cf_1706; }}>
-
-      CLItem : $clitemsno-$cf_1200
-
-      Case  ${ return $cf_1217->HelpDesk->ticket_no."-".$cf_1217->HelpDesk->ticketcategories ; }}> */
     }
 }

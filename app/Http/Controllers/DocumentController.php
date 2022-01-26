@@ -7,6 +7,7 @@ use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Filesystem\Filesystem;
 use App\Models\User;
 use App\Models\Contact;
 use Exception;
@@ -39,12 +40,45 @@ class DocumentController extends Controller
             $exploded = explode('/', $file);
             $spliced = array_splice($exploded, 2);
             $file = implode('/', $spliced);
+            /*  $filepath = */
+            //array_pop($spliced);
             if (Storage::exists($file)) {
                 Storage::delete($file);
                 return  response()->json("File removed from temporary storage");
             } else {
                 return response()->json("File not found");
             }
+
+            $eachSplit = $spliced;
+            array_shift($eachSplit); //Docs path
+            array_pop($spliced); //Docs path
+            $path =  implode('/', $spliced);
+            $testResp = [];
+
+            //$files = Storage::disk('public')->allFiles("/documents/contact/$contact");
+
+            return $files;
+
+            foreach ($spliced as $spl) {
+                array_pop($eachSplit);
+                array_pop($spliced);
+                $ecahStPath = implode('/', $spliced); //storage path
+                $eachNewPathArr = $eachSplit;
+                $eachNewPath = implode('/', $eachNewPathArr);
+
+                if (Storage::exists($path)) {
+                    array_push($testResp, [$eachNewPath,  $ecahStPath]);
+                    $files = Storage::disk('public')->allFiles($eachNewPath);
+                    if (count($files) === 0) {
+                        Storage::deleteDirectory($ecahStPath);
+                        array_push($testResp, "A file was dropped");
+                    } else {
+                        array_push($testResp, "i NOT has a file");
+                    }
+                    //return Storage::disk('public')->allFiles($newPath);
+                }
+            }
+            return $testResp;
         } catch (Exception $e) {
             return $e->getMessage();
             return response()->json([$e, 500]);
@@ -74,7 +108,7 @@ class DocumentController extends Controller
                 }
             }
             return response()->json($urlFiles, 200);
-           /*  if (count($urlFiles) > 0) {
+            /*  if (count($urlFiles) > 0) {
             } */
         } catch (Exception $e) {
             return response()->json($e, 500);

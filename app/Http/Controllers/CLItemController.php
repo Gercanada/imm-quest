@@ -125,11 +125,13 @@ class CLItemController extends Controller
                 $obj = $vtiger->retrieve($clitem->id);
                 $obj->result->cf_1970 = end($ex);
                 $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
-                $obj->result->cf_acf_rtf_1208 = "From cpp";
+                $obj->result->cf_acf_rtf_1208 = "Document uploaded from customers portal";
                 $vtiger->update($obj->result);
 
-                $task = new CloneDBController;
-                $task->updateCLItemFromImmcase($request);
+                if ($obj->result->cf_1578 === "Received") {
+                    $task = new CloneDBController;
+                    $task->updateCLItemFromImmcase($request);
+                }
                 return response()->json(["Success", $obj], 200);
             }
         } catch (Exception $e) {
@@ -146,6 +148,10 @@ class CLItemController extends Controller
                 $urlFile = env('APP_URL') . Storage::url("app/public/$file"); // in prod
             } */
             //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
+           /*  $explodedUrl = explode(',', $urlFile);
+            return $explodedUrl; */
+
+
             if (Storage::exists($urlFile)) {
                 Storage::delete($urlFile);
                 return  response()->json("File removed from temporary storage", 200);

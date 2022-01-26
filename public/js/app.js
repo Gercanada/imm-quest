@@ -3319,6 +3319,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var urlParams = window.location.pathname.split("/");
@@ -3492,7 +3515,6 @@ var urlParams = window.location.pathname.split("/");
         clitemsno: clitemsno,
         file: file
       }).then(function (response) {
-        console.log(response);
         Swal.fire({
           type: "success",
           title: "Document sent",
@@ -3501,7 +3523,13 @@ var urlParams = window.location.pathname.split("/");
         });
         me.userFiles();
       })["catch"](function (error) {
-        console.table(error);
+        Swal.fire({
+          type: "error",
+          title: "Document not sent",
+          timer: 2000,
+          showConfirmButton: false
+        });
+        console.log(error);
       })["finally"](function () {
         return _this.loading = false;
       });
@@ -23922,19 +23950,23 @@ var render = function () {
     ? _c("div", { staticStyle: { heigth: "100%" } }, [_vm._m(0)])
     : _c("div", [
         _c("div", { staticClass: "card shadow-lg p-1" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-outline-success btn-rounded",
-                attrs: { href: "/checklist/" + _vm.clitem.cf_1216 },
-              },
-              [_c("i", { staticClass: "fas fa-arrow-circle-left" })]
-            ),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-3 col-sm-12" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-outline-success btn-rounded",
+                  attrs: { href: "/checklist/" + _vm.clitem.cf_1216 },
+                },
+                [_c("i", { staticClass: "fas fa-arrow-circle-left" })]
+              ),
+            ]),
             _vm._v(" "),
-            _c("h2", { staticClass: "card-title" }, [
-              _vm._v("CL Item "),
-              _c("b", { domProps: { textContent: _vm._s(_vm.clitem.name) } }),
+            _c("div", { staticClass: "col-md-9 col-sm-12" }, [
+              _c("h2", { staticClass: "card-title" }, [
+                _vm._v("CL Item "),
+                _c("b", { domProps: { textContent: _vm._s(_vm.clitem.name) } }),
+              ]),
             ]),
           ]),
         ]),
@@ -23947,49 +23979,28 @@ var render = function () {
               _c("div", { staticClass: "card shadow-lg p-1" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "card-row" }, [
-                    _c("div", { staticClass: "col border py-2" }, [
-                      _c("h4", [_vm._v("Case")]),
+                    _c("div", { staticClass: "col py-2" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col shadow-lg pt-1" }, [
+                          _c("h4", { staticClass: "card-title" }, [
+                            _c("span", {
+                              staticClass: "lstick d-inline-block align-middle",
+                            }),
+                            _vm._v("\n                    Case "),
+                            _c("b", {
+                              domProps: {
+                                textContent: _vm._s(_vm.caseObj.ticket_title),
+                              },
+                            }),
+                          ]),
+                        ]),
+                      ]),
                       _vm._v(" "),
                       _c(
                         "table",
                         { staticClass: "table v-middle fs-3 mb-0 mt-4" },
                         [
                           _c("tbody", [
-                            _c("tr", [
-                              _c("td", [_vm._v("Case No")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.caseObj.ticket_no),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Case title")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.caseObj.ticket_title),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Category")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.caseObj.ticketcategories
-                                  ),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
                             _c("tr", [
                               _c("td", [_vm._v("Status")]),
                               _vm._v(" "),
@@ -24048,8 +24059,22 @@ var render = function () {
               _c("div", { staticClass: "card shadow-lg p-1" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "card-row" }, [
-                    _c("div", { staticClass: "col border py-2" }, [
-                      _c("h4", [_vm._v("Checklist")]),
+                    _c("div", { staticClass: "col py-2" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col shadow-lg pt-1" }, [
+                          _c("h4", { staticClass: "card-title" }, [
+                            _c("span", {
+                              staticClass: "lstick d-inline-block align-middle",
+                            }),
+                            _vm._v("\n                    Checklist "),
+                            _c("b", {
+                              domProps: {
+                                textContent: _vm._s(_vm.checklistObj.name),
+                              },
+                            }),
+                          ]),
+                        ]),
+                      ]),
                       _vm._v(" "),
                       _c(
                         "table",
@@ -24065,17 +24090,6 @@ var render = function () {
                                   textContent: _vm._s(
                                     _vm.checklistObj.checklistno
                                   ),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Subject")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.checklistObj.name),
                                 },
                               }),
                             ]),
@@ -24146,17 +24160,6 @@ var render = function () {
                               }),
                             ]),
                             _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Related to")]),
-                              _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.checklistObj.cf_1183),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
                             _c("tr"),
                           ]),
                         ]
@@ -24169,8 +24172,8 @@ var render = function () {
               _c("div", { staticClass: "card shadow-lg p-1" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "card-row" }, [
-                    _c("div", { staticClass: "col border py-2" }, [
-                      _c("h2", [_vm._v("CL Item info")]),
+                    _c("div", { staticClass: "col py-2" }, [
+                      _vm._m(1),
                       _vm._v(" "),
                       _c(
                         "table",
@@ -24271,15 +24274,13 @@ var render = function () {
                     ]),
                   ]),
                 ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-footer" }),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card shadow-lg p-1" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _vm.clitem.cf_1200 == "IMM Form"
                     ? _c("div", { staticClass: "card shadow-lg p-1" }, [
-                        _vm._m(1),
+                        _vm._m(2),
                       ])
                     : _vm._e(),
                   _vm._v(" "),
@@ -24551,6 +24552,19 @@ var staticRenderFns = [
           },
           [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
         ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col col shadow-lg pt-1" }, [
+        _c("h4", { staticClass: "card-title" }, [
+          _c("span", { staticClass: "lstick d-inline-block align-middle" }),
+          _vm._v("\n                    CLItem\n                  "),
+        ]),
       ]),
     ])
   },

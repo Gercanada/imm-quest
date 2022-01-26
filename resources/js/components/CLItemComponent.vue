@@ -3,7 +3,7 @@
     <div class="card shadow-lg p-1">
       <div class="card-body d-flex justify-content-around">
         <div class="spinner-grow text-success center" role="status">
-          <span class="sr-only">Loading...</span>
+          <span class="sr-only" style="">Loading...</span>
         </div>
       </div>
     </div>
@@ -11,13 +11,17 @@
 
   <div v-else>
     <div class="card shadow-lg p-1">
-      <div class="card-header">
-        <a
-          :href="'/checklist/' + clitem.cf_1216"
-          class="btn btn-outline-success btn-rounded"
-          ><i class="fas fa-arrow-circle-left"></i
-        ></a>
-        <h2 class="card-title">CL Item <b v-text="clitem.name"></b></h2>
+      <div class="row">
+        <div class="col-md-3 col-sm-12">
+          <a
+            :href="'/checklist/' + clitem.cf_1216"
+            class="btn btn-outline-success btn-rounded"
+            ><i class="fas fa-arrow-circle-left"></i
+          ></a>
+        </div>
+        <div class="col-md-9 col-sm-12">
+          <h2 class="card-title">CL Item <b v-text="clitem.name"></b></h2>
+        </div>
       </div>
     </div>
 
@@ -26,11 +30,18 @@
         <div class="card shadow-lg p-1">
           <div class="card-body">
             <div class="card-row">
-              <div class="col border py-2">
-                <h4>Case</h4>
+              <div class="col py-2">
+                <div class="row">
+                  <div class="col shadow-lg pt-1">
+                    <h4 class="card-title">
+                      <span class="lstick d-inline-block align-middle"></span>
+                      Case <b v-text="caseObj.ticket_title"></b>
+                    </h4>
+                  </div>
+                </div>
                 <table class="table v-middle fs-3 mb-0 mt-4">
                   <tbody>
-                    <tr>
+                    <!--   <tr>
                       <td>Case No</td>
                       <td
                         class="text-end font-weight-medium"
@@ -50,7 +61,7 @@
                         class="text-end font-weight-medium"
                         v-text="caseObj.ticketcategories"
                       ></td>
-                    </tr>
+                    </tr> -->
                     <!--  <tr>
                       <td>Subcategory</td>
                       <td
@@ -112,8 +123,15 @@
         <div class="card shadow-lg p-1">
           <div class="card-body">
             <div class="card-row">
-              <div class="col border py-2">
-                <h4>Checklist</h4>
+              <div class="col py-2">
+                <div class="row">
+                  <div class="col shadow-lg pt-1">
+                    <h4 class="card-title">
+                      <span class="lstick d-inline-block align-middle"></span>
+                      Checklist <b v-text="checklistObj.name"></b>
+                    </h4>
+                  </div>
+                </div>
                 <table class="table v-middle fs-3 mb-0 mt-4">
                   <tbody>
                     <tr>
@@ -123,13 +141,13 @@
                         v-text="checklistObj.checklistno"
                       ></td>
                     </tr>
-                    <tr>
+                    <!--  <tr>
                       <td>Subject</td>
                       <td
                         class="text-end font-weight-medium"
                         v-text="checklistObj.name"
                       ></td>
-                    </tr>
+                    </tr> -->
                     <tr>
                       <td>% Completed</td>
                       <td
@@ -172,13 +190,13 @@
                         v-text="checklistObj.cf_1179"
                       ></td>
                     </tr>
-                    <tr>
+                    <!--  <tr>
                       <td>Related to</td>
                       <td
                         class="text-end font-weight-medium"
                         v-text="checklistObj.cf_1183"
                       ></td>
-                    </tr>
+                    </tr> -->
                     <tr></tr>
                   </tbody>
                 </table>
@@ -189,8 +207,15 @@
         <div class="card shadow-lg p-1">
           <div class="card-body">
             <div class="card-row">
-              <div class="col border py-2">
-                <h2>CL Item info</h2>
+              <div class="col py-2">
+                <div class="row">
+                  <div class="col col shadow-lg pt-1">
+                    <h4 class="card-title">
+                      <span class="lstick d-inline-block align-middle"></span>
+                      CLItem
+                    </h4>
+                  </div>
+                </div>
 
                 <table class="table v-middle fs-3 mb-0 mt-4">
                   <tbody>
@@ -300,8 +325,6 @@
               </div>
             </div>
           </div>
-          <div class="card-footer"></div>
-
           <!-- Modal edit acount -->
           <!--   <template v-if="actionType == 1"> -->
 
@@ -590,7 +613,6 @@ export default {
       axios
         .post("/cl-item/send_file", { clitemsno: clitemsno, file: file })
         .then(function (response) {
-          console.log(response);
           Swal.fire({
             type: "success",
             title: "Document sent",
@@ -600,7 +622,13 @@ export default {
           me.userFiles();
         })
         .catch(function (error) {
-          console.table(error);
+          Swal.fire({
+            type: "error",
+            title: "Document not sent",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+          console.log(error);
         })
         .finally(() => (this.loading = false));
     },
