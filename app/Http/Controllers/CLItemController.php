@@ -10,9 +10,9 @@ use App\Models\Checklist;
 use App\Models\CLItem;
 use App\Models\CPCase;
 use App\Models\Contact;
-use App\Http\Controllers\CloneDBController;
 use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\CloneDBController;
 use Exception;
 
 
@@ -41,7 +41,7 @@ class CLItemController extends Controller
             array_push($files, $file);
         }
 
-            $itemfiles = ['key' => $item->clitemsno, 'files' => $files];
+        $itemfiles = ['key' => $item->clitemsno, 'files' => $files];
         $item->files = $itemfiles;
         return [$item, $case, $checklist];
     }
@@ -127,6 +127,9 @@ class CLItemController extends Controller
                 $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                 $obj->result->cf_acf_rtf_1208 = "From cpp";
                 $vtiger->update($obj->result);
+
+                $task = new CloneDBController;
+                $task->updateCLItemFromImmcase($request);
                 return response()->json(["Success", $obj], 200);
             }
         } catch (Exception $e) {
@@ -137,17 +140,17 @@ class CLItemController extends Controller
     {
         try {
             $file = $request->file;
-            if (env('APP_ENV') === 'local') {
-                $urlFile = "public/$file";
+            $urlFile = "public/$file";
+            /* if (env('APP_ENV') === 'local') {
             } else {
                 $urlFile = env('APP_URL') . Storage::url("app/public/$file"); // in prod
-            }
+            } */
             //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
             if (Storage::exists($urlFile)) {
                 Storage::delete($urlFile);
-                return  response()->json("File removed from temporary storage" , 200);
+                return  response()->json("File removed from temporary storage", 200);
             } else {
-                return response()->json("File not found at " . $urlFile , 403);
+                return response()->json("File not found at " . $urlFile, 403);
             }
         } catch (Exception $e) {
             return $e->getMessage();

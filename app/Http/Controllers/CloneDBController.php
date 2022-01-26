@@ -473,7 +473,6 @@ class CloneDBController extends Controller
             $contactField = "cf_contacts_id";
             self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
             return response()->json(['Success', $clitem->id], 200);
-            //return response()->json($vtiger->retrieve( '44x65460') , 200);
         } catch (Exception $e) {
             return response()->json("error", 500);
         }

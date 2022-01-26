@@ -556,8 +556,6 @@ export default {
     shootMessage: async function () {
       this.submitted = true;
       this.errors = {};
-      // this.valideForm();
-
       console.log(Object.keys(this.errors));
       if (Object.keys(this.errors).length) {
         console.log(this.errors);
@@ -578,7 +576,7 @@ export default {
           /* me.closeModal(); */
         })
         .catch(function (error) {
-          console.table(error);
+          console.log(error);
         });
     },
 
@@ -599,7 +597,6 @@ export default {
             timer: 2000,
             showConfirmButton: false,
           });
-          //window.location.reload();
           me.userFiles();
         })
         .catch(function (error) {
@@ -614,7 +611,6 @@ export default {
       axios
         .post("/cl-item/dropfile", { file: file })
         .then(function (response) {
-          console.log(response);
           Swal.fire({
             type: "success",
             title: "Document deleted",
@@ -622,7 +618,6 @@ export default {
             showConfirmButton: false,
           });
           me.userFiles();
-          //window.location.reload();
         })
         .catch(function (error) {
           console.log(error);
@@ -648,11 +643,9 @@ export default {
       axios
         .post("/cl-item", { id: urlParams[4] })
         .then(function (response) {
-          console.log(response);
           me.clitem = response.data[0];
           me.caseObj = response.data[1];
           me.checklistObj = response.data[2];
-          console.log(me.clitem);
           if ("files" in me.clitem.files) {
             me.clFiles = me.clitem.files.files;
           }

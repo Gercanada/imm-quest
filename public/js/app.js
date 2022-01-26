@@ -3421,8 +3421,7 @@ var urlParams = window.location.pathname.split("/");
             switch (_context2.prev = _context2.next) {
               case 0:
                 this.submitted = true;
-                this.errors = {}; // this.valideForm();
-
+                this.errors = {};
                 console.log(Object.keys(this.errors));
 
                 if (!Object.keys(this.errors).length) {
@@ -3445,7 +3444,7 @@ var urlParams = window.location.pathname.split("/");
                 }).then(function (response) {
                   /* me.closeModal(); */
                 })["catch"](function (error) {
-                  console.table(error);
+                  console.log(error);
                 });
 
               case 9:
@@ -3499,8 +3498,7 @@ var urlParams = window.location.pathname.split("/");
           title: "Document sent",
           timer: 2000,
           showConfirmButton: false
-        }); //window.location.reload();
-
+        });
         me.userFiles();
       })["catch"](function (error) {
         console.table(error);
@@ -3516,14 +3514,13 @@ var urlParams = window.location.pathname.split("/");
       axios.post("/cl-item/dropfile", {
         file: file
       }).then(function (response) {
-        console.log(response);
         Swal.fire({
           type: "success",
           title: "Document deleted",
           timer: 2000,
           showConfirmButton: false
         });
-        me.userFiles(); //window.location.reload();
+        me.userFiles();
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
@@ -3548,11 +3545,9 @@ var urlParams = window.location.pathname.split("/");
       axios.post("/cl-item", {
         id: urlParams[4]
       }).then(function (response) {
-        console.log(response);
         me.clitem = response.data[0];
         me.caseObj = response.data[1];
         me.checklistObj = response.data[2];
-        console.log(me.clitem);
 
         if ("files" in me.clitem.files) {
           me.clFiles = me.clitem.files.files;
