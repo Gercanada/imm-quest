@@ -20,7 +20,6 @@ class ChecklistController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user_id = $user->id;
         $contact  = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
 
         //Cases
@@ -57,25 +56,35 @@ class ChecklistController extends Controller
      */
     public function show(Checklist $checklist, $id)
     {
-        $check_list = Checklist::where('id', $id)->firstOrFail();
-        $clitems = CLItem::where('cf_1216', $id)->get();
 
+        $user = Auth::user();
 
+        $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+
+        $check_list = Checklist::where('id', $id)
+            ->where('cf_contacts_id', $contact->id)
+            ->firstOrFail();
+        $clitems = CLItem::where('cf_1216', $id)
+            ->where('cf_contacts_id', $contact->id)
+            ->get();
 
         foreach ($clitems as $item) {
-            $case =  CPCase::where('id', $item->cf_1217)->firstOrFail();
-            $checklist =  Checklist::where('id', $item->cf_1216)->firstOrFail();
-            $contact = Contact::where('id', $item->cf_contacts_id)->firstOrFail();
-            //return $item->cf_contacts_id;//$contact;
+            $case =  CPCase::where('id', $item->cf_1217)
+                ->where('contact_id', $contact->id)
+                ->firstOrFail();
+            $checklist =  Checklist::where('id', $item->cf_1216)
+                ->where('cf_contacts_id', $contact->id)
+                ->firstOrFail();
+
             $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
             $dirFiles = Storage::disk('public')->allFiles($directory);
             $files = [];
             foreach ($dirFiles as $file) {
-                array_push($files,$file);
+                array_push($files, $file);
             }
-            $item->files=['key'=>$item->clitemsno,'files'=>$files];
+            $item->files = ['key' => $item->clitemsno, 'files' => $files];
         }
-        /* return $clitems; */
+
         return view(
             'checklists.show',
             compact(

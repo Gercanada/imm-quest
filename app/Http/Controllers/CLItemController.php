@@ -26,12 +26,20 @@ class CLItemController extends Controller
      */
     public function show(Request $request)
     {
-        $item = CLItem::where('id', $request->id)->firstOrFail();
-        $case =  CPCase::where('id', $item->cf_1217)->firstOrFail();
+        $user = Auth::user();
+        $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+
+        $item = CLItem::where('id', $request->id)
+            ->where('cf_contacts_id', $contact->id)
+            ->firstOrFail();
+        $case =  CPCase::where('id', $item->cf_1217)
+            ->where('contact_id', $contact->id)
+            ->firstOrFail();
         /* $directory = "/documents/contact/$item->cf_contacts_id/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
-        $file = Storage::disk('public')->allFiles($directory); */
-        $checklist =  Checklist::where('id', $item->cf_1216)->firstOrFail();
-        $contact = Contact::where('id', $item->cf_contacts_id)->firstOrFail();
+         */
+        $checklist =  Checklist::where('id', $item->cf_1216)
+            ->where('cf_contacts_id', $contact->id)
+            ->firstOrFail();
 
         $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
         $dirFiles = Storage::disk('public')->allFiles($directory);
@@ -54,7 +62,9 @@ class CLItemController extends Controller
      */
     public function dvupload($check_list, $id)
     {
-        $cl_item =   CLItem::where('id', $id)->get();
+        $user = Auth::user();
+        $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+        $cl_item =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
         return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
 
@@ -66,9 +76,14 @@ class CLItemController extends Controller
         try {
             $user = Auth::user();
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
-            $clitem = CLItem::where('id', $request->id)->firstOrFail();
-            $case = CPCase::where('id', $clitem->cf_1217)->firstOrFail();
-            $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
+            $clitem = CLItem::where('id', $request->id)
+                ->where('cf_contacts_id', $contact->id)->firstOrFail();
+            $case = CPCase::where('id', $clitem->cf_1217)
+                ->where('contact_id', $contact->id)
+                ->firstOrFail();
+            $checklist = Checklist::where('id', $clitem->cf_1216)
+                ->where('cf_contacts_id', $contact->id)
+                ->firstOrFail();
 
             if ($request->file('file')) {
                 /* Multiple file upload */
@@ -137,10 +152,6 @@ class CLItemController extends Controller
         try {
             $file = $request->file;
             $urlFile = "public/$file";
-            /* if (env('APP_ENV') === 'local') {
-            } else {
-                $urlFile = env('APP_URL') . Storage::url("app/public/$file"); // in prod
-            } */
             //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
             /*  $explodedUrl = explode(',', $urlFile);
             return $explodedUrl; */
@@ -157,7 +168,6 @@ class CLItemController extends Controller
 
         return $request;
     }
-
 
 
     public function downloadFile($contact)

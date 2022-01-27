@@ -46,13 +46,24 @@
             <div class="lds-pos"></div>
         </div>
     </div>
+
     <div id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
+        {{-- @if (Route::currentRouteName() == 'login')
+            //do something
+        @else
+            //do something else
+        @endif --}}
+       {{--  <h1>
+            {{ Auth::user() }}
+
+        </h1> --}}
         @if (!Auth::user())
             @yield('content'){{-- login view --}}
         @else
+
             @if (Auth::user())
                 <header class="topbar">
                     @include('layouts.navbar')
@@ -97,7 +108,7 @@
 
         <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.darks5.js">
         </script>
-    @elseif ( Auth::user() &&  Auth::user()->themme_layout === 1)
+    @elseif (Auth::user() && Auth::user()->themme_layout === 1)
         <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.ligth.js">
         </script>
     @else

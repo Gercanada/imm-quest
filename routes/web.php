@@ -29,6 +29,7 @@ use App\Http\Controllers\VtigerController;
 
 Auth::routes();
 
+
 Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
     //vtiger
     Route::get('/vtiger/describe/types/{user_id}', [VtigerController::class, "types"]);
@@ -86,8 +87,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/invoices/{id}', [InvoiceController::class, 'show'])/* ->middleware(['auth']) */->name('show_invoice');
     //payments
     Route::get('/payments', [PaymentController::class, 'index'])/* ->middleware(['auth']) */->name('payments');
+
+    Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);
+
+    Route::any('{any}', function () {
+        abort(404);
+    })->where('any', '.*');
 });
-Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);
+
 
 /*
  Route::get('/dev_cmd', [CloneDBController::class, 'commandInput']);

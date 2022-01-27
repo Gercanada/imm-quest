@@ -77,9 +77,12 @@ class InvoiceController extends Controller
         }
 
         //Invoices
-        $invoice = Invoice::where('id', $id)->with('currency')->with('product')->firstOrFail();
+        $invoice = Invoice::where('id', $id)
+            ->where('contact_id', $contact->id)
+            ->with('currency')->with('product')->firstOrFail();
         // Get invoice payments
-        $payments = Payment::where('cf_1141', $invoice->id)->get();
+        $payments = Payment::where('cf_1141', $invoice->id)
+            ->where('cf_1139', $contact->id)->get();
         $paymentIdArr = [];
         foreach ($payments as $payment) {
             array_push($paymentIdArr, $payment->id);

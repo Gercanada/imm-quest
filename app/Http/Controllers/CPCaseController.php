@@ -18,7 +18,6 @@ class CPCaseController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user_id = $user->id;
         //Get contact data of this user
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         //Cases
@@ -39,7 +38,11 @@ class CPCaseController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        $case =  CPcase::select('*')->where('id', $id)->firstOrFail();
+        $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+
+        $case =  CPcase::select('*')->where('id', $id)
+        ->where('contact_id', $contact->id)
+        ->firstOrFail();
 
         $checklists  = Checklist::where('cf_1199', $case->id) // case_id
             ->get();

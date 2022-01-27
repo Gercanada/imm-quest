@@ -19,7 +19,6 @@ class QuoteController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user_id = $user->id;
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         $vtquotes = Quote::select('*')->where('contact_id', $contact->id)->get();
 
@@ -62,7 +61,13 @@ class QuoteController extends Controller
      */
     public function show($id)
     {
-        $quote = Quote::where('id', $id)->firstOrFail();
+        $user = Auth::user();
+        $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
+
+        $quote = Quote::where('id', $id)
+            ->where('contact_id', $contact->id)
+            ->firstOrFail();
+
         $iTrackers = InstallmentTracker::where('cf_1175', $id)->get();
         $itDocuments = DB::table('vt_Documents')->select('*')->where('cf_quotes_id', $quote->id)->get();
         return view('quotes.show', compact('quote', 'iTrackers', 'itDocuments'));
