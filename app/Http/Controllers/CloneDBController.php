@@ -143,7 +143,7 @@ class CloneDBController extends Controller
             //[CloneDBController::class, 'clearTrashDB'];
             return "dataCloned";
         } catch (Exception $e) {
-            return $e;
+            // /return $e;
             return response()->json($e, 500);
         }
     }
@@ -263,9 +263,7 @@ class CloneDBController extends Controller
 
             $fieldsArrtoSqlStr = "$fieldsArrtoSqlStr, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP";
             self::jsonToMysqlTable($table_name, $fieldsArrtoSqlStr, $list, $contactField, $contact->id, $contact->contact_no, $fieldNames);
-        }/*  else {
-            dd($table_name);
-        } */
+        }
     }
 
     static function jsonToMysqlTable($tablename, $sqlStr, $tableData, $contactField, $contactID, $contactNo, $fields)

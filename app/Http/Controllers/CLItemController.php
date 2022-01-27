@@ -144,8 +144,6 @@ class CLItemController extends Controller
             //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
             /*  $explodedUrl = explode(',', $urlFile);
             return $explodedUrl; */
-
-
             if (Storage::exists($urlFile)) {
                 Storage::delete($urlFile);
                 return  response()->json("File removed from temporary storage", 200);

@@ -36,49 +36,36 @@ class DocumentController extends Controller
     public function destroy(Request $request)
     {
         try {
+            $return = '';
             $file = substr($request->file, 1);
             $exploded = explode('/', $file);
             $spliced = array_splice($exploded, 2);
             $file = implode('/', $spliced);
-            /*  $filepath = */
-            //array_pop($spliced);
             if (Storage::exists($file)) {
                 Storage::delete($file);
-                return  response()->json("File removed from temporary storage");
+                $return = response()->json("File removed from temporary storage");
             } else {
-                return response()->json("File not found");
+                $return = response()->json("File not found");
             }
 
-      /*       $eachSplit = $spliced;
-            array_shift($eachSplit); //Docs path
-            array_pop($spliced); //Docs path
-            $path =  implode('/', $spliced);
-            $testResp = [];
+            //Empty folders be deleted
+            $mainDir = Storage::allDirectories("/public/documents/contact/");
+            $dirs = [];
 
-            $files = Storage::disk('public')->allFiles("/documents/contact/$contact");
+            foreach ($mainDir as $dir) {
+                $expDir = explode('/', $dir);
+                $dirPath = array_shift($expDir);
+                $newDir = implode('/', $expDir);
 
-            return $files;
+                array_push($dirs, $dir);
 
-            foreach ($spliced as $spl) {
-                array_pop($eachSplit);
-                array_pop($spliced);
-                $ecahStPath = implode('/', $spliced); //storage path
-                $eachNewPathArr = $eachSplit;
-                $eachNewPath = implode('/', $eachNewPathArr);
+                $files = Storage::disk('public')->allFiles($newDir);
 
-                if (Storage::exists($path)) {
-                    array_push($testResp, [$eachNewPath,  $ecahStPath]);
-                    $files = Storage::disk('public')->allFiles($eachNewPath);
-                    if (count($files) === 0) {
-                        Storage::deleteDirectory($ecahStPath);
-                        array_push($testResp, "A file was dropped");
-                    } else {
-                        array_push($testResp, "i NOT has a file");
-                    }
-                    //return Storage::disk('public')->allFiles($newPath);
+                if (count($files) === 0) {
+                    Storage::deleteDirectory($dir);
                 }
-            } */
-            //return $testResp;
+            }
+            return $return;
         } catch (Exception $e) {
             return $e->getMessage();
             return response()->json([$e, 500]);
