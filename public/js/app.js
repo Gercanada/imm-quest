@@ -23949,7 +23949,7 @@ var render = function () {
   return _vm.loading
     ? _c("div", { staticStyle: { heigth: "100%" } }, [_vm._m(0)])
     : _c("div", [
-        _c("div", { staticClass: "card shadow-lg p-1" }, [
+        _c("div", { staticClass: "card shadow  p-1 rounded" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-3 col-sm-12" }, [
               _c(
@@ -23976,24 +23976,29 @@ var render = function () {
           { staticClass: "row" },
           [
             _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card shadow-lg p-1" }, [
+              _c("div", { staticClass: "card shadow  p-1 rounded" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "card-row" }, [
                     _c("div", { staticClass: "col py-2" }, [
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col shadow-lg pt-1" }, [
-                          _c("h4", { staticClass: "card-title" }, [
-                            _c("span", {
-                              staticClass: "lstick d-inline-block align-middle",
-                            }),
-                            _vm._v("\n                    Case "),
-                            _c("b", {
-                              domProps: {
-                                textContent: _vm._s(_vm.caseObj.ticket_title),
-                              },
-                            }),
-                          ]),
-                        ]),
+                        _c(
+                          "div",
+                          { staticClass: "col shadow  p-1 rounded pt-1" },
+                          [
+                            _c("h4", { staticClass: "card-title" }, [
+                              _c("span", {
+                                staticClass:
+                                  "lstick d-inline-block align-middle",
+                              }),
+                              _vm._v("\n                    Case "),
+                              _c("b", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.caseObj.ticket_title),
+                                },
+                              }),
+                            ]),
+                          ]
+                        ),
                       ]),
                       _vm._v(" "),
                       _c(
@@ -24056,24 +24061,29 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card shadow-lg p-1" }, [
+              _c("div", { staticClass: "card shadow  p-1 rounded" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "card-row" }, [
                     _c("div", { staticClass: "col py-2" }, [
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col shadow-lg pt-1" }, [
-                          _c("h4", { staticClass: "card-title" }, [
-                            _c("span", {
-                              staticClass: "lstick d-inline-block align-middle",
-                            }),
-                            _vm._v("\n                    Checklist "),
-                            _c("b", {
-                              domProps: {
-                                textContent: _vm._s(_vm.checklistObj.name),
-                              },
-                            }),
-                          ]),
-                        ]),
+                        _c(
+                          "div",
+                          { staticClass: "col shadow  p-1 rounded pt-1" },
+                          [
+                            _c("h4", { staticClass: "card-title" }, [
+                              _c("span", {
+                                staticClass:
+                                  "lstick d-inline-block align-middle",
+                              }),
+                              _vm._v("\n                    Checklist "),
+                              _c("b", {
+                                domProps: {
+                                  textContent: _vm._s(_vm.checklistObj.name),
+                                },
+                              }),
+                            ]),
+                          ]
+                        ),
                       ]),
                       _vm._v(" "),
                       _c(
@@ -24169,7 +24179,7 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card shadow-lg p-1" }, [
+              _c("div", { staticClass: "card shadow  p-1 rounded" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "card-row" }, [
                     _c("div", { staticClass: "col py-2" }, [
@@ -24276,10 +24286,10 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card shadow-lg p-1" }, [
+              _c("div", { staticClass: "card shadow  p-1 rounded" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _vm.clitem.cf_1200 == "IMM Form"
-                    ? _c("div", { staticClass: "card shadow-lg p-1" }, [
+                    ? _c("div", { staticClass: "card shadow  p-1 rounded" }, [
                         _vm._m(2),
                       ])
                     : _vm._e(),
@@ -24542,7 +24552,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card shadow-lg p-1" }, [
+    return _c("div", { staticClass: "card shadow  p-1 rounded" }, [
       _c("div", { staticClass: "card-body d-flex justify-content-around" }, [
         _c(
           "div",
@@ -24560,7 +24570,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col col shadow-lg pt-1" }, [
+      _c("div", { staticClass: "col col shadow  p-1 rounded pt-1" }, [
         _c("h4", { staticClass: "card-title" }, [
           _c("span", { staticClass: "lstick d-inline-block align-middle" }),
           _vm._v("\n                    CLItem\n                  "),
@@ -24718,7 +24728,7 @@ var render = function () {
               "div",
               {
                 staticClass:
-                  "nav flex-column nav-pills people-list shadow-lg rounded pt-2",
+                  "nav flex-column nav-pills people-list shadow  p-1 rounded rounded pt-2",
                 attrs: {
                   id: "v-pills-tab",
                   role: "tablist",
@@ -24876,7 +24886,8 @@ var render = function () {
                               ? _c(
                                   "li",
                                   {
-                                    staticClass: "shadow-lg pb-1 mb-2",
+                                    staticClass:
+                                      "shadow  p-1 rounded pb-1 mb-2",
                                     attrs: { rounded: "" },
                                   },
                                   [
@@ -24921,7 +24932,7 @@ var render = function () {
                                             _vm._v(" "),
                                             _c("div", {
                                               staticClass:
-                                                "\n                       shadow-lg\n                       m-3\n                       p-2\n                       box\n                       d-inline-block\n                       text-dark\n                       rounded\n                     ",
+                                                "\n                       shadow  p-1 rounded\n                       m-3\n                       p-2\n                       box\n                       d-inline-block\n                       text-dark\n                       rounded\n                     ",
                                               domProps: {
                                                 textContent: _vm._s(
                                                   comm.description
@@ -25025,7 +25036,9 @@ var render = function () {
                             [
                               _c(
                                 "div",
-                                { staticClass: "col-12 shadow-lg p-2" },
+                                {
+                                  staticClass: "col-12 shadow  p-1 rounded p-2",
+                                },
                                 [
                                   _c("div", { staticClass: "row" }, [
                                     _c("input", {
@@ -25240,7 +25253,7 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "card shadow-lg p-1" },
+            { staticClass: "card shadow  p-1 rounded" },
             [
               _vm._m(1),
               _vm._v(" "),
@@ -25740,7 +25753,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card shadow-lg p-1" }, [
+    return _c("div", { staticClass: "card shadow  p-1 rounded" }, [
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "card-body d-flex justify-content-around" }, [
           _c(
@@ -25829,7 +25842,7 @@ var render = function () {
     : _c("div", [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
-            _c("div", { staticClass: "card shadow-lg p-1" }, [
+            _c("div", { staticClass: "card shadow  p-1 rounded" }, [
               _c("div", { staticClass: "card-header" }, [
                 _vm._m(1),
                 _vm._v(" "),
@@ -25908,7 +25921,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12" }, [
-            _c("div", { staticClass: "card shadow-lg p-1" }, [
+            _c("div", { staticClass: "card shadow  p-1 rounded" }, [
               _c(
                 "div",
                 { staticClass: "card-body" },
@@ -26370,7 +26383,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-12" }, [
-            _c("div", { staticClass: "card shadow-lg p-1" }, [
+            _c("div", { staticClass: "card shadow  p-1 rounded" }, [
               _vm._m(2),
               _vm._v(" "),
               _c(
@@ -27487,7 +27500,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card shadow-lg p-1" }, [
+    return _c("div", { staticClass: "card shadow  p-1 rounded" }, [
       _c("div", { staticClass: "card-body d-flex justify-content-around" }, [
         _c(
           "div",

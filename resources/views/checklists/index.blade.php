@@ -12,7 +12,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="card shadow-lg p-1">
+            <div class="card shadow  p-1 rounded">
                 <div class="card-body">
                     <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span> My active checklist
                     </h4>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="col-md-12">
-            <div class="card shadow-lg p-1">
+            <div class="card shadow  p-1 rounded">
                 <div class="card-body">
                     <h4 class="card-title"> <span class="lstick d-inline-block align-middle"></span> My completed
                         checklist</h4>

@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="card shadow-lg p-1">
+    <div class="card shadow  p-1 rounded">
         <div class="card-header">
             <a href="{{ route('invoices') }}" class="btn btn-outline-success btn-rounded"><i
                     class=" fas fa-arrow-circle-left"></i></a>
@@ -182,7 +182,7 @@
         </div>
 
     </div>
-    <div class="card shadow-lg p-1 ">
+    <div class="card shadow  p-1 rounded ">
         <div class="card-header">
             Quote product details
         </div>

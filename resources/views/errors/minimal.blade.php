@@ -532,7 +532,7 @@
 
             .relative .mx-auto {
                 bottom: 0;
-                background: rgb(0, 0, 0);
+                background: rgba(0, 0, 0, 0.348);
                 /* Fallback color */
                 background: rgba(0, 0, 0, 0.5);
                 /* Black background with 0.5 opacity */
@@ -561,20 +561,13 @@
 @endsection
 
 <title>@yield('title')</title>
-{{-- <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head> --}}
 
 @section('content')
     <div class="container-fluid ">
         <div class="row">
             <div class="col antialiased">
-                {{-- <body class="antialiased"> --}}
-                {{-- <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0 "> --}}
                 <div class="relative flex items-top justify-center min-h-screen  sm:items-center sm:pt-0  ">
-                  {{--   <div class="max-w-xl mx-auto sm:px-6 lg:px-8 "> --}}
-                    <div class="mx-auto sm:px-6 lg:px-8  rounded shadow-lg p-1 ">
+                    <div class="mx-auto sm:px-6 lg:px-8  rounded shadow  p-1 rounded ">
                         <div class="flex items-center pt-8 sm:justify-start sm:pt-0">
                             <div class="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
                                 @yield('code')
@@ -588,14 +581,7 @@
                         </div>
                     </div>
                 </div>
-
-
-                {{-- </body> --}}
             </div>
-
         </div>
-
     </div>
 @endsection
-
-{{-- </html> --}}

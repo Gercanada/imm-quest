@@ -63,13 +63,13 @@ class DashboardController extends Controller
                     ->orWhereIn('cf_1216', $vtCLItemIdArr)
                     ->orWhereIn('cf_1217', $vtCasesIdArr)
                     ->where('cf_1578', 'Pending')
-                     ->where('cf_1200', 'Document')
+                    ->where('cf_1200', 'Document')
                     ->get();
                 $pending_checklists = [];
 
                 $pendingArr = [];
                 $pendingArr2 = [];
-                if (count($vt_cl_items) >0) {
+                if (count($vt_cl_items) > 0) {
                     foreach ($vt_cl_items as $item) {
                         // /$itemID = $item->cf_1216;
                         array_push($pendingArr, $item->cf_1216);

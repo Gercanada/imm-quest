@@ -2,7 +2,7 @@
 <template>
   <div v-if="loading">
     <div v-if="loading" style="heigth: 100%">
-      <div class="card shadow-lg p-1">
+      <div class="card shadow  p-1 rounded">
         <div class="card-body">
           <div class="card-body d-flex justify-content-around">
             <div class="spinner-grow text-success center" role="status">
@@ -16,7 +16,7 @@
 
   <div v-else>
     <div class="row">
-      <div class="card shadow-lg p-1">
+      <div class="card shadow  p-1 rounded">
         <div class="card-header">
           <h3 class="text-themecolor mb-0">Documents</h3>
           <!--  <button

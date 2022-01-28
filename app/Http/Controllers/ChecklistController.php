@@ -89,8 +89,7 @@ class ChecklistController extends Controller
             'checklists.show',
             compact(
                 'check_list',
-                'clitems',
-                'files'
+                'clitems'
             )
         );
     }

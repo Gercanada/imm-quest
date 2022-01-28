@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" style="heigth: 100%">
-    <div class="card shadow-lg p-1">
+    <div class="card shadow  p-1 rounded">
       <div class="card-body d-flex justify-content-around">
         <div class="spinner-grow text-success center" role="status">
           <span class="sr-only">Loading...</span>
@@ -18,7 +18,7 @@
     <!-- Row -->
     <div class="row">
       <div class="col-md-12">
-        <div class="card shadow-lg p-1">
+        <div class="card shadow  p-1 rounded">
           <!-- Tabs -->
           <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
             <li class="nav-item">

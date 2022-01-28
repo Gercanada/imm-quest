@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow-lg p-1">
+            <div class="card shadow  p-1 rounded">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">

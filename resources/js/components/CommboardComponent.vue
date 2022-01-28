@@ -13,7 +13,7 @@
           </div>
  -->
           <div
-            class="nav flex-column nav-pills people-list shadow-lg rounded pt-2"
+            class="nav flex-column nav-pills people-list shadow  p-1 rounded rounded pt-2"
             id="v-pills-tab"
             role="tablist"
             aria-orientation="vertical"
@@ -119,7 +119,7 @@
               <div  v-for="comm in commboards"
                   :key="comm.id">
                 <li
-                  class="shadow-lg pb-1 mb-2"
+                  class="shadow  p-1 rounded pb-1 mb-2"
                   rounded
                   v-if="coms.cf_2218===comm.cf_2218 && commboards.length >0"
                 >
@@ -151,7 +151,7 @@
                     <br />
                     <div
                       class="
-                        shadow-lg
+                        shadow  p-1 rounded
                         m-3
                         p-2
                         box
@@ -203,7 +203,7 @@
                   enctype="multipart/form-data"
                   autocomplete="nope"
                 >
-                  <div class="col-12 shadow-lg p-2">
+                  <div class="col-12 shadow  p-1 rounded p-2">
                     <div class="row">
                       <input
                         v-model="threadid"

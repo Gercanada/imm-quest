@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" style="heigth: 100%">
-    <div class="card shadow-lg p-1">
+    <div class="card shadow  p-1 rounded">
       <div class="card-body d-flex justify-content-around">
         <div class="spinner-grow text-success center" role="status">
           <span class="sr-only" style="">Loading...</span>
@@ -10,7 +10,7 @@
   </div>
 
   <div v-else>
-    <div class="card shadow-lg p-1">
+    <div class="card shadow  p-1 rounded">
       <div class="row">
         <div class="col-md-3 col-sm-12">
           <a
@@ -27,12 +27,12 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div class="card shadow-lg p-1">
+        <div class="card shadow  p-1 rounded">
           <div class="card-body">
             <div class="card-row">
               <div class="col py-2">
                 <div class="row">
-                  <div class="col shadow-lg pt-1">
+                  <div class="col shadow  p-1 rounded pt-1">
                     <h4 class="card-title">
                       <span class="lstick d-inline-block align-middle"></span>
                       Case <b v-text="caseObj.ticket_title"></b>
@@ -120,12 +120,12 @@
             </div>
           </div>
         </div>
-        <div class="card shadow-lg p-1">
+        <div class="card shadow  p-1 rounded">
           <div class="card-body">
             <div class="card-row">
               <div class="col py-2">
                 <div class="row">
-                  <div class="col shadow-lg pt-1">
+                  <div class="col shadow  p-1 rounded pt-1">
                     <h4 class="card-title">
                       <span class="lstick d-inline-block align-middle"></span>
                       Checklist <b v-text="checklistObj.name"></b>
@@ -204,12 +204,12 @@
             </div>
           </div>
         </div>
-        <div class="card shadow-lg p-1">
+        <div class="card shadow  p-1 rounded">
           <div class="card-body">
             <div class="card-row">
               <div class="col py-2">
                 <div class="row">
-                  <div class="col col shadow-lg pt-1">
+                  <div class="col col shadow  p-1 rounded pt-1">
                     <h4 class="card-title">
                       <span class="lstick d-inline-block align-middle"></span>
                       CLItem
@@ -331,9 +331,9 @@
           <!-- </template> -->
         </div>
         <!-- TODO check statues ofclitem -->
-        <div class="card shadow-lg p-1">
+        <div class="card shadow  p-1 rounded">
           <div class="card-body">
-            <div class="card shadow-lg p-1" v-if="clitem.cf_1200 == 'IMM Form'">
+            <div class="card shadow  p-1 rounded" v-if="clitem.cf_1200 == 'IMM Form'">
               <div class="col border py-2">
                 <div class="row">
                   <div class="col-md-6">

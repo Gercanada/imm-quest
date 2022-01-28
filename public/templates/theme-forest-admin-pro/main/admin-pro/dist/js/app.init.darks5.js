@@ -1,4 +1,4 @@
-$(function() {
+ $(function() {
     "use strict";
     $("#main-wrapper").AdminSettings({
         Theme: true, // this can be true or false ( true means dark and false means light ),

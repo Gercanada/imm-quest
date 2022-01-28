@@ -3,7 +3,92 @@
     Dashboard
 @endsection
 
+@section('styles')
+    <style>
+        .popover {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+            border-radius: 0.25rem !important;
+        }
+
+        .popover a {
+            border-bottom: 1px;
+        }
+
+        .popover .popover-header {
+            border-bottom: none
+        }
+
+        .left .arrow::after {
+            right: 0px;
+            border-left-color: transparent;
+        }
+
+        /*   .popover .left>.arrow::after {
+                right: 1px;
+                border-width: 0.5rem 0 0.5rem 0.5rem;
+                border-left-color: transparent;
+            } */
+
+    </style>
+    @if (Auth::user() && Auth::user()->themme_layout === 0)
+        {{-- dark --}}
+        <style>
+            .bs-popover-auto[x-placement^=left]>.arrow::after,
+            .bs-popover-left>.arrow::after {
+                right: 1px;
+                border-width: 0.5rem 0 0.5rem 0.5rem;
+                border-left-color: #0a0a0a;
+            }
+
+            .popover {
+                background-color: black;
+            }
+
+            .popover .popover-header {
+                background-color: black;
+            }
+
+            .popover .popover-body {
+                background-color: rgb(41, 41, 41);
+            }
+
+        </style>
+    @elseif (Auth::user() && Auth::user()->themme_layout === 1)
+        {{-- ligth --}}
+        <style>
+            .bs-popover-auto[x-placement^=left]>.arrow::after,
+            .bs-popover-left>.arrow::after {
+                right: 1px;
+                border-width: 0.5rem 0 0.5rem 0.5rem;
+                border-left-color: rgb(236, 236, 236);
+                ;
+            }
+
+            .popover {
+                background-color: white;
+            }
+
+            .popover .popover-header {
+                background-color: rgb(236, 236, 236);
+                border-bottom: none
+            }
+
+            .popover .popover-body {
+                background-color: white;
+                border-top: none
+            }
+
+        </style>
+    @else
+        {{-- dark --}}
+    @endif
+
+@endsection
+
+
 @section('content')
+
     <div class="container-fluid">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
@@ -16,10 +101,13 @@
         </div>
         <!-- ============================================================== -->
         <!-- Start Row -->
-        <div class="row">
-            <div class="col-lg-4 col-md-6  ">
+        {{-- <div class="myDIV">Hover over me.</div>
+        <div class="hide">I am shown when someone hovers over the div above.</div> --}}
+
+        <div class="row ">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('checklists') }}">
-                    <div class="card shadow-lg p-1">
+                    <div class="card shadow  p-1 rounded">
                         <div class="card-body">
                             <div class="d-flex no-block">
                                 <div class="mr-3 align-self-center"><span class="lstick d-inline-block align-middle"></span>
@@ -34,9 +122,19 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4 col-md-6 ">
-                <a href="{{ route('checklists') }}">
-                    <div class="card shadow-lg p-1">
+
+            <div class="col-lg-4 col-md-6">
+
+                {{-- @if (Auth::user() && Auth::user()->themme_layout === 0)
+                @elseif (Auth::user() && Auth::user()->themme_layout === 1)
+                 @else
+                  @endif --}}
+                <a href="#" data-placement="right" data-toggle="popover" title="Go to clitem"
+                    data-content="
+                    <a href='' title='test add link'>link 1 </a> </br> 
+                    <a href=''  title='test add link'>link 2 </a>"
+                    class="bg-info">
+                    <div class="card shadow  p-1 rounded">
                         <div class="card-body">
                             <div class="d-flex no-block">
                                 <div class="mr-3 align-self-center"><span class="lstick d-inline-block align-middle">
@@ -52,9 +150,27 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4 col-md-6 ">
+            {{-- <div class="col-lg-4 col-md-6 clitemDIV ">
+                <a href="{{ route('checklists') }}">
+                    <div class="card shadow  p-1 rounded">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <div class="mr-3 align-self-center"><span class="lstick d-inline-block align-middle">
+                                    </span>
+                                    <i style="font-size: 36px; rotate(180deg);" class="mdi mdi-timer-sand "></i>
+                                </div>
+                                <div class="align-self-center">
+                                    <h6 class="text-muted mt-2 mb-0">Pending items</h6>
+                                    <h2 class="text-center">{{ count($vt_cl_items) }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div> --}}
+            <div class="col-lg-4 col-md-6  ">
                 <a href="{{ route('cases') }}">
-                    <div class="card shadow-lg p-1">
+                    <div class="card shadow  p-1 rounded">
                         <div class="card-body">
                             <div class="d-flex no-block">
                                 <div class="mr-3 align-self-center"><span
@@ -69,12 +185,15 @@
                     </div>
                 </a>
             </div>
+
         </div>
+        {{-- <div class="hide">I am shown when someone hovers over the div another.</div> --}}
+
         <!-- End Row -->
         <!-- Start row -->
         <div class="row pt-3">
             <div class="col-lg-8">
-                <div class="card shadow-lg">
+                <div class="card shadow  p-1 rounded">
                     <div class="card-header">
                         <h2 class="card-title"><span class="lstick d-inline-block align-middle"></span>My cases</h2>
                     </div>
@@ -112,7 +231,7 @@
                     </div>
 
                 </div>
-                <div class="card shadow-lg">
+                <div class="card shadow  p-1 rounded">
                     <div class="card-header">
                         <h2 class="card-title">
                             <span class="lstick d-inline-block align-middle"></span>Submit pending documents
@@ -154,14 +273,26 @@
                 </div>
             </div>
             <!-- ============================================================== -->
-            <div class="col-lg-4 shadow-lg">
+            <div class="col-lg-4 shadow  p-1 rounded">
                 <div class="row">
-                        <commboard-component></commboard-component>
+                    <commboard-component></commboard-component>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <script type="text/javaScript">
+        $("[data-toggle=popover]")
+                                                                                                                                    .popover({
+                                                                                                                                        html: true
+                                                                                                                                    });
+
+
+                                                                                                                                $(document).ready(function() {
+                                                                                                                                    $('[data-toggle="popover"]').popover();
+                                                                                                                                });
+                                                                                                                            
+            </script>
 
 @endsection
