@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CLItemController;
+use App\Http\Controllers\LSurveyController;
 
 //use Illuminate\Http\Request;
 
@@ -32,6 +33,8 @@ Route::post('/single_url', [DocumentController::class , 'singleUrl']);
 
 Route::post('/update_clitem', [CloneDBController::class , 'updateCLItemFromImmcase']);
 
+Route::post('/questionaries/guest', [LSurveyController::class, 'guestToSurvey']);//tri not middleware
+
 Route::middleware('imm-header')->group(function(){
     Route::post('/clitem_doc', [DocumentController::class , 'createCLItemDoc']);
 
@@ -52,6 +55,9 @@ Route::middleware('imm-header')->group(function(){
     Route::post('/viger/update_contact', [CloneDBController::class, 'updateOnImmcase']);
 
     Route::post('/viger/find_duplicates', [CloneDBController::class, 'duplicateContacts']);
+
+    //limesurvey
+    //Route::post('/questionaries/guest', [LSurveyController::class, 'guestToSurvey']);
 
     Route::get('/migrate', function(){
        \Artisan::call('migrate:fresh');

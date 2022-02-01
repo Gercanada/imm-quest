@@ -140,7 +140,6 @@ class CLItemController extends Controller
 
                 $task = new CloneDBController;
                 $task->updateCLItemFromImmcase($request);
-
                 return response()->json(["Success", $obj], 200);
             }
         } catch (Exception $e) {

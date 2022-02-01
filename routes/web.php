@@ -15,6 +15,7 @@ use App\Http\Controllers\CLItemController;
 use App\Http\Controllers\CloneDBController;
 use App\Http\Controllers\CommboardController;
 use App\Http\Controllers\VtigerController;
+use App\Http\Controllers\LSurveyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */func
     //Route::post('/imm/contacts', [UserController::class, 'importVTUsers']);
 
     Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes'); // Config access for users ((not required now))
-    Route::get('/user_types_access', [VtigerController::class, 'index']);
+    Route::get('/user_types_access', [VtigerController::class, 'show']);
     Route::get('/vtiger/describe/{type}', [VtigerController::class, 'getType']);
 });
 
@@ -89,6 +90,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/payments', [PaymentController::class, 'index'])/* ->middleware(['auth']) */->name('payments');
 
     Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);
+
+
+    Route::get('/questionaries', [LSurveyController::class, 'index']);
+    //Route::get('/questionaries/{id}', [LSurveyController::class, 'showSurvey']);
+
+    //Route::post('/questionaries/{id}', [LSurveyController::class, 'showSurvey']);
 
     Route::any('{any}', function () {
         abort(404);

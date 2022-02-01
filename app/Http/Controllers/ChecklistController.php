@@ -84,7 +84,6 @@ class ChecklistController extends Controller
             }
             $item->files = ['key' => $item->clitemsno, 'files' => $files];
         }
-
         return view(
             'checklists.show',
             compact(

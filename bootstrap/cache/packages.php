@@ -1,11 +1,4 @@
 <?php return array (
-  'andyabih/json-to-laravel-migrations' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Andyabih\\JsonToLaravelMigrations\\JsonToLaravelMigrationsServiceProvider',
-    ),
-  ),
   'facade/ignition' => 
   array (
     'providers' => 

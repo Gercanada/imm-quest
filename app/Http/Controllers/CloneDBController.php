@@ -278,6 +278,7 @@ class CloneDBController extends Controller
             $userPass = null;
             $firstname = null;
             $last_name = null;
+            $email = null;
             $nameFields = [];
             $dataFields = [];
             $toUpdate   = [];
@@ -372,12 +373,15 @@ class CloneDBController extends Controller
                                 if ($key === 'lastname') {
                                     $last_name = $val;
                                 }
+                                if ($key === 'email') {
+                                    $email = $val;
+                                }
                             }
                         }
                     }
                     if ($tablename === 'Contacts') {
                         if ($username && $userPass && $last_name && $firstname) {
-                            $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
+                            $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo, $email);
                             array_push($tableIdsArr, $newUID);
                         }
                     }
@@ -407,11 +411,14 @@ class CloneDBController extends Controller
                             if ($key === 'lastname') {
                                 $last_name = $val;
                             }
+                            if ($key === 'email') {
+                                $email = $val;
+                            }
                         }
                     }
                     if ($tablename === 'Contacts') {
                         if ($username && $userPass && $last_name && $firstname) {
-                            $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo);
+                            $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo, $email);
                             array_push($tableIdsArr, $newUID);
                         }
                     }
@@ -514,7 +521,7 @@ class CloneDBController extends Controller
         return $replace6;
     }
 
-    static function newUser($username, $userPass, $firstname, $last_name, $contactNo)
+    static function newUser($username, $userPass, $firstname, $last_name, $contactNo, $email)
     {
         $newUser = User::updateOrCreate(
             ['vtiger_contact_id' =>  $contactNo],
@@ -523,6 +530,7 @@ class CloneDBController extends Controller
                 'vtiger_contact_id' =>  $contactNo,
                 'name' =>  $firstname,
                 'last_name' =>  $last_name,
+                'email' =>  $email,
                 'password' => Hash::make($userPass),
             ]
         );

@@ -115,19 +115,19 @@
                                 {{-- <th scope="col">Required by</th> --}}
                                 <th scope="col">Help link</th>
                                 <th scope="col">Status</th>
-                                <th></th>
+                               {{--  <th></th> --}}
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($clitems as $clitem)
-                                @if ($clitem->cf_1200 === 'IMM Form')
+                                @if ($clitem->cf_1200 === 'Questionnaire')
                                     <tr>
                                         {{-- <td>{{ $clitem->name }}</td> --}}
                                         <td>{{ $clitem->cf_1202 }}</td>
                                         {{-- <td>{{ $clitem->cf_1212 }}</td> --}}
                                         <td>{{ $clitem->cf_1578 }}</td>
-                                        <td><a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}">{{ $clitem->name }}
-                                            </a></td>
+                                       {{--  <td><a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}">{{ $clitem->name }}
+                                            </a></td> --}}
                                     </tr>
                                 @endif
                             @endforeach
