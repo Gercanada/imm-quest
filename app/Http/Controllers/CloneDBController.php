@@ -492,21 +492,23 @@ class CloneDBController extends Controller
             return response()->json("error", 500);
         }
     }
+
     public function updateChecklistFromImmcase(Request $request)
     {
         try {
+            $out    = new \Symfony\Component\Console\Output\ConsoleOutput();
             if ($request->checklist_id) {
                 $vtiger = new Vtiger();
                 $clitemQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
                 $clitem =  $vtiger->search($clitemQuery)->result[0];
                 $description = $vtiger->describe('Checklist');
-
                 $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
                 $contactField = "cf_contacts_id";
                 self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
                 return response()->json(['Success', $clitem->id], 200);
             }
         } catch (Exception $e) {
+            $out->writeln($e);
             return response()->json("error", 500);
         }
     }

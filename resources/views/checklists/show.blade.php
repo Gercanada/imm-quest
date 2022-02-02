@@ -162,7 +162,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">CL Item Name</th>
-                                <th scope="col">File name</th>
+                                <th scope="col">File Name</th>
+                                <th scope="col">Category</th>
                                 <th scope="col">Status</th>
                                 <th>View</th>
                             </tr>
@@ -173,9 +174,8 @@
                                     <tr>
                                         <td>{{ $clitem->name }}</td>
                                         <td>{{ $clitem->cf_1970 }}</td>
+                                        <td>{{ $clitem->cf_1200 }}</td>
                                         <td>{{ $clitem->cf_1578 }}
-
-
                                         </td>
                                         <td>
                                             <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
