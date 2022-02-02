@@ -24,12 +24,6 @@
             border-left-color: transparent;
         }
 
-        /*   .popover .left>.arrow::after {
-                    right: 1px;
-                    border-width: 0.5rem 0 0.5rem 0.5rem;
-                    border-left-color: transparent;
-                } */
-
     </style>
     @if (Auth::user() && Auth::user()->themme_layout === 0)
         {{-- dark --}}
@@ -83,12 +77,17 @@
     @else
         {{-- dark --}}
     @endif
-
 @endsection
 
+@section('scripts')
+    <script type="text/javaScript"> $("[data-toggle=popover]").popover({ html: true });
+                                                                            $(document).ready(
+                                                                            function() { $('[data-toggle="popover"]').popover();
+                                                                            });
+                                                                    </script>
+@endsection
 
 @section('content')
-
     <div class="container-fluid">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
@@ -102,7 +101,7 @@
         <!-- ============================================================== -->
         <!-- Start Row -->
         {{-- <div class="myDIV">Hover over me.</div>
-        <div class="hide">I am shown when someone hovers over the div above.</div> --}}
+    <div class="hide">I am shown when someone hovers over the div above.</div> --}}
 
         <div class="row ">
             <div class="col-lg-4 col-md-6">
@@ -124,14 +123,9 @@
             </div>
 
             <div class="col-lg-4 col-md-6">
-
-                {{-- @if (Auth::user() && Auth::user()->themme_layout === 0)
-                @elseif (Auth::user() && Auth::user()->themme_layout === 1)
-                 @else
-                  @endif --}}
-                <a href="#" data-placement="right" data-toggle="popover" title="Go to clitem" data-content="
-                        <a href='' title='test add link'>link 1 </a> </br>
-                        <a href=''  title='test add link'>link 2 </a>" class="bg-info">
+                <a href="#" data-placement="right" data-toggle="popover" title="Go to clitem"
+                    data-content="<a href='' title='test add link'>link 1 </a> </br> <a href=''  title='test add link'>link 2 </a>"
+                    class="bg-info">
                     <div class="card shadow  p-1 rounded">
                         <div class="card-body">
                             <div class="d-flex no-block">
@@ -148,24 +142,6 @@
                     </div>
                 </a>
             </div>
-            {{-- <div class="col-lg-4 col-md-6 clitemDIV ">
-                <a href="{{ route('checklists') }}">
-                    <div class="card shadow  p-1 rounded">
-                        <div class="card-body">
-                            <div class="d-flex no-block">
-                                <div class="mr-3 align-self-center"><span class="lstick d-inline-block align-middle">
-                                    </span>
-                                    <i style="font-size: 36px; rotate(180deg);" class="mdi mdi-timer-sand "></i>
-                                </div>
-                                <div class="align-self-center">
-                                    <h6 class="text-muted mt-2 mb-0">Pending items</h6>
-                                    <h2 class="text-center">{{ count($vt_cl_items) }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div> --}}
             <div class="col-lg-4 col-md-6  ">
                 <a href="{{ route('cases') }}">
                     <div class="card shadow  p-1 rounded">
@@ -193,7 +169,8 @@
             <div class="col-lg-8">
                 <div class="card shadow  p-1 rounded">
                     <div class="card-header">
-                        <h2 class="card-title"><span class="lstick d-inline-block align-middle"></span>My cases</h2>
+                        <h2 class="card-title"><span class="lstick d-inline-block align-middle"></span>My cases
+                        </h2>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -276,26 +253,9 @@
                 </div>
             </div>
             <!-- ============================================================== -->
-            <div class="col-lg-4 shadow  p-1 rounded">
-                <div class="row">
+            <div class="col-lg-4">
                     <commboard-component></commboard-component>
-                </div>
             </div>
         </div>
-
     </div>
-
-    <script type="text/javaScript">
-        $("[data-toggle=popover]")
-                                                                                                                                        .popover({
-                                                                                                                                            html: true
-                                                                                                                                        });
-
-
-                                                                                                                                    $(document).ready(function() {
-                                                                                                                                        $('[data-toggle="popover"]').popover();
-                                                                                                                                    });
-
-                </script>
-
 @endsection

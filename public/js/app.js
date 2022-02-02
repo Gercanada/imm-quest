@@ -3992,6 +3992,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -24712,9 +24720,9 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card pt-5 col-md-12 col-md-6 col-sm-12" }, [
+  return _c("div", { staticClass: "card shadow p-1 rounded" }, [
     _c("div", { staticClass: "card-body" }, [
-      _c("h4", { staticClass: "card-title mb-3" }, [_vm._v("Commboard")]),
+      _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -24728,7 +24736,7 @@ var render = function () {
               "div",
               {
                 staticClass:
-                  "nav flex-column nav-pills people-list shadow  p-1 rounded rounded pt-2",
+                  "\n            nav\n            flex-column\n            nav-pills\n            people-list\n            shadow\n            p-1\n            rounded rounded\n            pt-2\n          ",
                 attrs: {
                   id: "v-pills-tab",
                   role: "tablist",
@@ -24765,7 +24773,7 @@ var render = function () {
                       [
                         _c("span", {
                           staticClass:
-                            "\n                   round\n                   text-white\n                   d-inline-block\n                   text-center\n                   rounded-circle\n                   bg-warning\n                 ",
+                            "\n                  round\n                  text-white\n                  d-inline-block\n                  text-center\n                  rounded-circle\n                  bg-warning\n                ",
                           domProps: {
                             textContent: _vm._s(comm.name.substring(0, 1)),
                           },
@@ -24782,7 +24790,7 @@ var render = function () {
                       "div",
                       {
                         staticClass:
-                          "\n                 mail-contnet\n                 w-75\n                 d-inline-block\n                 v-middle\n                 float-right\n               ",
+                          "mail-contnet w-75 d-inline-block v-middle float-right",
                       },
                       [
                         _c("h5", {
@@ -24812,7 +24820,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "col-sm-8" }, [
           _vm.action == 0
-            ? _c("div", { staticClass: "chat-not-selected" }, [_vm._m(0)])
+            ? _c("div", { staticClass: "chat-not-selected" }, [_vm._m(1)])
             : _vm._e(),
           _vm._v(" "),
           _vm.action == 1
@@ -24840,11 +24848,11 @@ var render = function () {
                         [
                           _c(
                             "div",
-                            { staticClass: "current-chat-user-name pb-3 " },
+                            { staticClass: "current-chat-user-name pb-3" },
                             [
                               _c("span", {
                                 staticClass:
-                                  "\n                     round\n                     text-white\n                     d-inline-block\n                     text-center\n                     rounded-circle\n                     bg-warning\n                   ",
+                                  "\n                    round\n                    text-white\n                    d-inline-block\n                    text-center\n                    rounded-circle\n                    bg-warning\n                  ",
                                 domProps: { textContent: _vm._s(_vm.subname) },
                               }),
                               _vm._v(" "),
@@ -24857,7 +24865,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("span", {
                                 staticClass:
-                                  "d-inline-block text-right text-muted float-right m-2 pb-2",
+                                  "\n                    d-inline-block\n                    text-right text-muted\n                    float-right\n                    m-2\n                    pb-2\n                  ",
                                 domProps: {
                                   textContent: _vm._s(_vm.coms.cf_2220),
                                 },
@@ -24886,8 +24894,7 @@ var render = function () {
                               ? _c(
                                   "li",
                                   {
-                                    staticClass:
-                                      "shadow  p-1 rounded pb-1 mb-2",
+                                    staticClass: "shadow p-1 rounded pb-1 mb-2",
                                     attrs: { rounded: "" },
                                   },
                                   [
@@ -24902,7 +24909,7 @@ var render = function () {
                                           [
                                             _c("span", {
                                               staticClass:
-                                                "\n                       round\n                       text-white\n                       d-inline-block\n                       text-center\n                       rounded-circle\n                       bg-warning\n                     ",
+                                                "\n                        round\n                        text-white\n                        d-inline-block\n                        text-center\n                        rounded-circle\n                        bg-warning\n                      ",
                                               domProps: {
                                                 textContent: _vm._s(
                                                   comm.cf_2220.substring(0, 1)
@@ -24932,7 +24939,7 @@ var render = function () {
                                             _vm._v(" "),
                                             _c("div", {
                                               staticClass:
-                                                "\n                       shadow  p-1 rounded\n                       m-3\n                       p-2\n                       box\n                       d-inline-block\n                       text-dark\n                       rounded\n                     ",
+                                                "\n                        shadow\n                        p-1\n                        rounded\n                        m-3\n                        p-2\n                        box\n                        d-inline-block\n                        text-dark\n                        rounded\n                      ",
                                               domProps: {
                                                 textContent: _vm._s(
                                                   comm.description
@@ -24975,7 +24982,7 @@ var render = function () {
                                           [
                                             _c("div", {
                                               staticClass:
-                                                "\n                       box\n                       mb-2\n                       d-inline-block\n                       text-dark\n                       rounded\n                       p-2\n                       bg-light-inverse\n                     ",
+                                                "\n                        box\n                        mb-2\n                        d-inline-block\n                        text-dark\n                        rounded\n                        p-2\n                        bg-light-inverse\n                      ",
                                               domProps: {
                                                 textContent: _vm._s(
                                                   comm.description
@@ -25021,7 +25028,7 @@ var render = function () {
                         "div",
                         {
                           staticClass:
-                            "\n                 card-body\n                 border-top border-bottom\n                 chat-send-message-footer\n               ",
+                            "\n                card-body\n                border-top border-bottom\n                chat-send-message-footer\n              ",
                         },
                         [
                           _c(
@@ -25037,7 +25044,7 @@ var render = function () {
                               _c(
                                 "div",
                                 {
-                                  staticClass: "col-12 shadow  p-1 rounded p-2",
+                                  staticClass: "col-12 shadow p-1 rounded p-2",
                                 },
                                 [
                                   _c("div", { staticClass: "row" }, [
@@ -25093,7 +25100,7 @@ var render = function () {
                                     _vm._v(" "),
                                     _c(
                                       "div",
-                                      { staticClass: "form-group col-10 " },
+                                      { staticClass: "form-group col-10" },
                                       [
                                         _c("input", {
                                           directives: [
@@ -25208,6 +25215,15 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", { staticClass: "card-title" }, [
+      _c("span", { staticClass: "lstick d-inline-block align-middle" }),
+      _vm._v("Commboard\n    "),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

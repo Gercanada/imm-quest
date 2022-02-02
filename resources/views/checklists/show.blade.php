@@ -110,18 +110,9 @@
                                 @if (($clitem->cf_1578 === 'Pending' || $clitem->cf_1578 === 'Replacement Needed' || $clitem->cf_1578 === '') && $clitem->cf_1200 === 'Questionnaire')
                                     <tr>
                                         <td>{{ $clitem->name }}</td>
-                                        <td> <a href="{{ $clitem->cf_1212 }}">{{ $clitem->cf_1212 }}</a></td>
+                                        <td> <a href="{{ $clitem->cf_1212 }}"
+                                                target="_blank">{{ $clitem->cf_1212 }}</a></td>
                                         <td>{{ $clitem->cf_1578 }}
-                                            {{-- @if (session('status') === 'success')
-                                                <div class="alert alert-success text-info">
-                                                    This survey has been answered
-                                                </div>
-                                            @elseif (session('status') === 'error')
-                                                <div class="alert alert-danger text-warning">
-                                                    This survey has NOT answered. Please open the link and answer the
-                                                    survey.
-                                                </div>
-                                            @endif --}}
                                         </td>
                                         <td>
                                             <form action="{{ route('export_response') }}" method="post">
@@ -147,8 +138,7 @@
                         </div>
                     @elseif (session('status') === 'error')
                         <div class="alert alert-danger text-warning text-center font-weight-bold" id="surveyAlert">
-                            ❌ This survey has NOT answered. Please open the link and answer the
-                            survey. ❌
+                            ❌ This survey has NOT answered. Please open the link and answer the survey. ❌
                         </div>
                     @endif
                 </div>

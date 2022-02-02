@@ -94,16 +94,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/questionaries', [LSurveyController::class, 'index']);
     Route::post('/questionaries/export_response', [LSurveyController::class, 'exportResponse'])->name('export_response');
-    //Route::get('/questionaries/{id}', [LSurveyController::class, 'showSurvey']);
-
-    //Route::post('/questionaries/{id}', [LSurveyController::class, 'showSurvey']);
 
     Route::any('{any}', function () {
         abort(404);
     })->where('any', '.*');
 });
-
-
-/*
- Route::get('/dev_cmd', [CloneDBController::class, 'commandInput']);
- Route::post('/dev_cmd',[CloneDBController::class, 'shellCommand']); */

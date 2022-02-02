@@ -1,19 +1,24 @@
 <template>
-  <div class="card pt-5 col-md-12 col-md-6 col-sm-12">
+  <div class="card shadow p-1 rounded">
     <div class="card-body">
-      <h4 class="card-title mb-3">Commboard</h4>
+      <h2 class="card-title">
+        <span class="lstick d-inline-block align-middle"></span>Commboard
+      </h2>
+      <!--  <h4 class="card-title mb-3">Commboard</h4> -->
       <div class="row">
         <div class="col-sm-4 mb-2 mb-sm-0 user-chat-box border-right pt-2">
           <!-- list 1 -->
-          <!-- <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-search"></i></span>
-            </div>
-            <input type="text" class="form-control" placeholder="Search..." />
-          </div>
- -->
           <div
-            class="nav flex-column nav-pills people-list shadow  p-1 rounded rounded pt-2"
+            class="
+              nav
+              flex-column
+              nav-pills
+              people-list
+              shadow
+              p-1
+              rounded rounded
+              pt-2
+            "
             id="v-pills-tab"
             role="tablist"
             aria-orientation="vertical"
@@ -50,13 +55,7 @@
                 ></span>
               </span>
               <div
-                class="
-                  mail-contnet
-                  w-75
-                  d-inline-block
-                  v-middle
-                  float-right
-                "
+                class="mail-contnet w-75 d-inline-block v-middle float-right"
               >
                 <h5 class="message-title mb-0 mt-1" v-text="comm.name"></h5>
                 <span
@@ -91,7 +90,7 @@
               :aria-labelledby="'tab_' + coms.cf_2218 + '-tab'"
             >
               <div class="chat-meta-user border-bottom">
-                <div class="current-chat-user-name pb-3 ">
+                <div class="current-chat-user-name pb-3">
                   <span
                     class="
                       round
@@ -106,7 +105,13 @@
                   </span>
                   <span class="name" v-text="coms.name"></span>
                   <span
-                    class="d-inline-block text-right text-muted float-right m-2 pb-2"
+                    class="
+                      d-inline-block
+                      text-right text-muted
+                      float-right
+                      m-2
+                      pb-2
+                    "
                     v-text="coms.cf_2220"
                   ></span>
                 </div>
@@ -116,78 +121,81 @@
                 class="chat-list chat mb-5"
                 :data-user-id="'thread' + coms.cf_2218"
               >
-              <div  v-for="comm in commboards"
-                  :key="comm.id">
-                <li
-                  class="shadow  p-1 rounded pb-1 mb-2"
-                  rounded
-                  v-if="coms.cf_2218===comm.cf_2218 && commboards.length >0"
-                >
-                  <div
-                    class="col-12 p-3 d-inline-block"
-                    v-if="comm && comm.modifiedby === contact.modifiedby"
+                <div v-for="comm in commboards" :key="comm.id">
+                  <li
+                    class="shadow p-1 rounded pb-1 mb-2"
+                    rounded
+                    v-if="
+                      coms.cf_2218 === comm.cf_2218 && commboards.length > 0
+                    "
                   >
-                    <span
-                      class="
-                        round
-                        text-white
-                        d-inline-block
-                        text-center
-                        rounded-circle
-                        bg-warning
-                      "
-                      v-text="comm.cf_2220.substring(0, 1)"
-                    >
-                    </span>
-                    <span
-                      class="name font-weight-bold ml-2 float-right"
-                      v-text="comm.name"
-                    ></span>
-                    <span
-                      class="d-inline-block text-right text-muted float-right"
-                      v-text="comm.cf_2220"
-                    >
-                    </span>
-                    <br />
                     <div
-                      class="
-                        shadow  p-1 rounded
-                        m-3
-                        p-2
-                        box
-                        d-inline-block
-                        text-dark
-                        rounded
-                      "
-                      v-text="comm.description"
-                    ></div>
+                      class="col-12 p-3 d-inline-block"
+                      v-if="comm && comm.modifiedby === contact.modifiedby"
+                    >
+                      <span
+                        class="
+                          round
+                          text-white
+                          d-inline-block
+                          text-center
+                          rounded-circle
+                          bg-warning
+                        "
+                        v-text="comm.cf_2220.substring(0, 1)"
+                      >
+                      </span>
+                      <span
+                        class="name font-weight-bold ml-2 float-right"
+                        v-text="comm.name"
+                      ></span>
+                      <span
+                        class="d-inline-block text-right text-muted float-right"
+                        v-text="comm.cf_2220"
+                      >
+                      </span>
+                      <br />
+                      <div
+                        class="
+                          shadow
+                          p-1
+                          rounded
+                          m-3
+                          p-2
+                          box
+                          d-inline-block
+                          text-dark
+                          rounded
+                        "
+                        v-text="comm.description"
+                      ></div>
 
-                    <div class="d-inline-block float-right text-muted">
-                      <p v-text="comm.cf_2226"></p>
-                      <p v-text="comm.cf_2228"></p>
+                      <div class="d-inline-block float-right text-muted">
+                        <p v-text="comm.cf_2226"></p>
+                        <p v-text="comm.cf_2228"></p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="col-12 pl-3 d-inline-block text-right" v-else>
-                    <div
-                      class="
-                        box
-                        mb-2
-                        d-inline-block
-                        text-dark
-                        rounded
-                        p-2
-                        bg-light-inverse
-                      "
-                      v-text="comm.description"
-                    ></div>
-                    <div class="d-inline-block text-right text-muted">
-                      <p v-text="comm.cf_2226"></p>
-                      <p v-text="comm.cf_2228"></p>
+                    <div class="col-12 pl-3 d-inline-block text-right" v-else>
+                      <div
+                        class="
+                          box
+                          mb-2
+                          d-inline-block
+                          text-dark
+                          rounded
+                          p-2
+                          bg-light-inverse
+                        "
+                        v-text="comm.description"
+                      ></div>
+                      <div class="d-inline-block text-right text-muted">
+                        <p v-text="comm.cf_2226"></p>
+                        <p v-text="comm.cf_2228"></p>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              </div>
+                  </li>
+                </div>
                 <!--chat Row -->
               </ul>
               <!--  -->
@@ -203,7 +211,7 @@
                   enctype="multipart/form-data"
                   autocomplete="nope"
                 >
-                  <div class="col-12 shadow  p-1 rounded p-2">
+                  <div class="col-12 shadow p-1 rounded p-2">
                     <div class="row">
                       <input
                         v-model="threadid"
@@ -217,7 +225,7 @@
                         disabled
                         name="threadtype"
                       />
-                      <div class="form-group col-10 ">
+                      <div class="form-group col-10">
                         <input
                           v-model="subject"
                           type="text"
@@ -280,7 +288,6 @@ export default {
       threadtype: "",
       subject: "",
       comment: "",
-
     };
   },
   mounted() {
@@ -293,9 +300,9 @@ export default {
       this.threadtype = this.coms["cf_2220"];
       this.subname = this.coms["name"].substring(0, 1);
     },
-changeAction(){
-this.action=1;
-},
+    changeAction() {
+      this.action = 1;
+    },
     getCommboard() {
       let me = this;
       axios
