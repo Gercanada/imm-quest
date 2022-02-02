@@ -40,6 +40,7 @@ Route::middleware('imm-header')->group(function(){
 
 
     Route::post('/cl-item/send_file', [CLItemController::class, 'sendDocumentToImmcase']);//Only catch errs
+    Route::post('/questionaries/export_response', [LSurveyController::class, 'exportResponse']);//Test as service
 
 
     Route::post('/getresponse', [DocumentController::class , 'getResponse']);

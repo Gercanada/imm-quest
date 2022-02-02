@@ -25,10 +25,10 @@
         }
 
         /*   .popover .left>.arrow::after {
-                right: 1px;
-                border-width: 0.5rem 0 0.5rem 0.5rem;
-                border-left-color: transparent;
-            } */
+                    right: 1px;
+                    border-width: 0.5rem 0 0.5rem 0.5rem;
+                    border-left-color: transparent;
+                } */
 
     </style>
     @if (Auth::user() && Auth::user()->themme_layout === 0)
@@ -129,11 +129,9 @@
                 @elseif (Auth::user() && Auth::user()->themme_layout === 1)
                  @else
                   @endif --}}
-                <a href="#" data-placement="right" data-toggle="popover" title="Go to clitem"
-                    data-content="
-                    <a href='' title='test add link'>link 1 </a> </br> 
-                    <a href=''  title='test add link'>link 2 </a>"
-                    class="bg-info">
+                <a href="#" data-placement="right" data-toggle="popover" title="Go to clitem" data-content="
+                        <a href='' title='test add link'>link 1 </a> </br>
+                        <a href=''  title='test add link'>link 2 </a>" class="bg-info">
                     <div class="card shadow  p-1 rounded">
                         <div class="card-body">
                             <div class="d-flex no-block">
@@ -245,16 +243,20 @@
                                         <th>Checklist name</th>
                                         <th>Pending items</th>
                                         <th>Completed items</th>
+                                        <th>Active items</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     @foreach ($pending_checklists as $checklist)
                                         <tr id="1" class="gradeX">
-                                            <td> <a href="{{ route('show_checklist', [$checklist->id]) }}">
-                                                    {{ $checklist->name }}</a></td>
+                                            <td>
+                                                <a href="{{ route('show_checklist', [$checklist->id]) }}">
+                                                    {{ $checklist->name }}</a>
+                                            </td>
                                             <td>{{ $checklist->cf_1187 }} </td>
                                             <td>{{ $checklist->cf_1189 }} </td>
+                                            <td>{{ $checklist->cf_1185 }} </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -262,8 +264,9 @@
                                 <tfoot>
                                     <tr>
                                         <th>Checklist name</th>
-                                        <th>Case type</th>
-                                        <th>Status</th>
+                                        <th>Pending items</th>
+                                        <th>Completed items</th>
+                                        <th>Active items</th>
                                     </tr>
                                 </tfoot>
 
@@ -284,15 +287,15 @@
 
     <script type="text/javaScript">
         $("[data-toggle=popover]")
-                                                                                                                                    .popover({
-                                                                                                                                        html: true
+                                                                                                                                        .popover({
+                                                                                                                                            html: true
+                                                                                                                                        });
+
+
+                                                                                                                                    $(document).ready(function() {
+                                                                                                                                        $('[data-toggle="popover"]').popover();
                                                                                                                                     });
 
-
-                                                                                                                                $(document).ready(function() {
-                                                                                                                                    $('[data-toggle="popover"]').popover();
-                                                                                                                                });
-                                                                                                                            
-            </script>
+                </script>
 
 @endsection
