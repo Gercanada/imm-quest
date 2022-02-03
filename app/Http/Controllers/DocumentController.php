@@ -78,10 +78,7 @@ class DocumentController extends Controller
     public function checkDocuments(Request $request)
     {
         try {
-            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-            $out->writeln("++++++++++++++++++++++++++++++++++++++++++++++++");
-            $out->writeln($request);
-
+           /*  $out = new \Symfony\Component\Console\Output\ConsoleOutput();*/
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
 
@@ -90,7 +87,6 @@ class DocumentController extends Controller
             for ($i = 0; $i < 3; $i++) {
                 while (count($urlFiles) === 0) {
                     foreach ($files as $file) {
-                        $out->writeln($file);
                         //$file =  str_replace(' ', '%20', $file);
                         if (env('APP_ENV') === 'local') {
                             array_push($urlFiles, (Storage::url($file)));
@@ -101,11 +97,9 @@ class DocumentController extends Controller
                 }
             }
             return response()->json($urlFiles, 200);
-            /*  if (count($urlFiles) > 0) {
-            } */
         } catch (Exception $e) {
             return response()->json($e, 500);
-            $out->write($e);
+           // $out->write($e);
         }
     }
 

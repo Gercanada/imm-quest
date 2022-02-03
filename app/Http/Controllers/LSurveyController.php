@@ -36,8 +36,6 @@ class LSurveyController extends Controller
     {
         try {
             $vtiger       = new Vtiger();
-            $out          = new \Symfony\Component\Console\Output\ConsoleOutput();
-
             $contact      = Contact::where('contact_no', $request->contact_no)->firstOrFail();
             $iSurveyID    = $request->survey_id;
             $token        = 'ABCDE';
@@ -105,7 +103,6 @@ class LSurveyController extends Controller
                 return response()->json(["success" => $surveyValues]);
             }
         } catch (Exception $e) {
-            $out->writeln($e);
             return response()->json("Server error", 500);
         }
     }
@@ -120,8 +117,6 @@ class LSurveyController extends Controller
         try {
             $vtiger = new Vtiger();
             $task   = new CloneDBController;
-            //$docTask   = new DocumentController;
-            $out    = new \Symfony\Component\Console\Output\ConsoleOutput();
             $now    = Carbon::now()->format('H:i:s');
 
             $urlObj = parse_url($request->surveyurl);
@@ -193,18 +188,20 @@ class LSurveyController extends Controller
                 $file = $obj->result->name  . '.pdf';
                 if ($surveyResponses[0]->submitdate != null) {
                     while (!Storage::exists($directory . '/' . $file)) {
-                        self::download('', '../storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
+                        if (env('APP_ENV') === 'local') {
+                            self::download('', '../storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
+                            array_push($urlFiles, (Storage::url($file)));
+                        } else {
+                            self::download('', './storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
+                        }
                     }
 
                     if (Storage::exists($directory . '/' . $file)) {
-                        $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire was answered full. Try to update at ".$now;
+                        $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire was answered full. Try to update at " . $now;
                         $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
                         //sleep(20);
                         $task->updateCLItemFromImmcase($request);
-                        $out->writeln("FILE created");
-                    } else {
-                        $out->writeln("No file");
                     }
                     //}
                     /*  foreach ($surveyResponses as $result) { //Check each related response if was submitted sometime (only be one)
@@ -227,7 +224,6 @@ class LSurveyController extends Controller
             $myJSONRPCClient->release_session_key($sSessionKey);
             return $return;
         } catch (Exception $e) {
-            $out->writeln($e);
             return response()->json("Server error", 500);
         }
     }
