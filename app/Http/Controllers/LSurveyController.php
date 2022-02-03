@@ -20,8 +20,6 @@ class LSurveyController extends Controller
         /* List surveys thath user has access */
         $limeConnection = self::connectLime();
         // return $limeConnection['groups'];
-
-
         $sSessionKey = $limeConnection['sessionKey'];
         $iSurveyID = '1000';
 
@@ -221,13 +219,12 @@ class LSurveyController extends Controller
                             //clitem with this token be updated
                         }
                     } */
-                   // $return =  back()->with(['status' => 'success']);
+                    $return =  back()->with(['status' => 'success']);
                 }
             }
             $task->updateChecklistFromImmcase($request);
             // Release the session key
             $myJSONRPCClient->release_session_key($sSessionKey);
-
             return $return;
         } catch (Exception $e) {
             $out->writeln($e);
