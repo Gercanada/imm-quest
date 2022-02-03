@@ -107,7 +107,10 @@
                         </thead>
                         <tbody>
                             @foreach ($clitems as $clitem)
-                                @if (($clitem->cf_1578 === 'Pending' || $clitem->cf_1578 === 'Replacement Needed' || $clitem->cf_1578 === '') && $clitem->cf_1200 === 'Questionnaire')
+                                @if (
+                               /*  ($clitem->cf_1578 === 'Pending' || $clitem->cf_1578 === 'Replacement Needed' || $clitem->cf_1578 === '')   && */ //temp disabled
+
+                                 $clitem->cf_1200 === 'Questionnaire')
                                     <tr>
                                         <td>{{ $clitem->name }}</td>
                                         <td> <a href="{{ $clitem->cf_1212 }}"

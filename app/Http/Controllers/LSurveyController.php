@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\CPCase;
+use App\Models\Checklist;
 use Illuminate\Http\Request;
 use  \org\jsonrpcphp\JsonRPCClient as JsonRPCClient;
 use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 use Exception;
 
 class LSurveyController extends Controller
@@ -119,7 +122,9 @@ class LSurveyController extends Controller
         try {
             $vtiger = new Vtiger();
             $task   = new CloneDBController;
+            //$docTask   = new DocumentController;
             $out    = new \Symfony\Component\Console\Output\ConsoleOutput();
+            $now    = Carbon::now()->format('H:i:s');
 
             $urlObj = parse_url($request->surveyurl);
             $iSurveyID = str_replace('/', '', $urlObj['path']);
@@ -139,6 +144,17 @@ class LSurveyController extends Controller
             $exportSurvey = $myJSONRPCClient->export_responses_by_token(
                 $sSessionKey,
                 $iSurveyID,
+                $sDocumentType = 'json',
+                $sToken,
+                $sLanguageCode = null,
+                $sCompletionStatus = 'complete',
+                $sHeadingType = null,
+                $sResponseType = 'short',
+                $aFields = null
+            );
+            $exportSurveyAsPDF = $myJSONRPCClient->export_responses_by_token(
+                $sSessionKey,
+                $iSurveyID,
                 $sDocumentType = 'pdf',
                 $sToken,
                 $sLanguageCode = null,
@@ -147,13 +163,6 @@ class LSurveyController extends Controller
                 $sResponseType = 'long',
                 $aFields = null
             );
-
-           // return base64_decode($exportSurvey);
-            //download('new-name.pdf', '/public/temporary/file/file.pdf',$exportSurvey);
-            self::download('new-name.pdf', 'example.pdf', $exportSurvey);
-            /* El pdf ha de ser subido a drive etc ... */
-            return $exportSurvey;
-            /* Download base64encoded responses as file */
 
             /* Find clitem of current survey */
             $clitemQuery = DB::table('CLItems')->select('*')
@@ -168,12 +177,39 @@ class LSurveyController extends Controller
             $clitem =  $clitem->result[0];
             $obj = $vtiger->retrieve($clitem->id);
             $request->request->add(['checklist_id' => $obj->result->cf_1216]);
+            /*  return
+            $obj; */
 
+            $contact = Contact::where('id', $obj->result->cf_contacts_id)->firstOrFail();
+            $case =  CPCase::where('id', $obj->result->cf_1217)->firstOrFail();
+            $checklist =  Checklist::where('id', $obj->result->cf_1216)->firstOrFail();
+
+            $directory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $obj->result->clitemsno . '-' . $obj->result->cf_1200;
+            if (!Storage::exists($directory)) {
+                Storage::makeDirectory($directory); //creates directory if not exists
+            }
+            /* Download base64encoded responses as file */
             if (is_string($exportSurvey)) {
                 $surveyResults = json_decode(base64_decode($exportSurvey));
                 $surveyResponses =  $surveyResults->responses;
+                $file = $obj->result->name  . '.pdf';
                 if ($surveyResponses[0]->submitdate != null) {
-                    foreach ($surveyResponses as $result) { //Check each related response if was submitted sometime (only be one)
+                    while (!Storage::exists($directory . '/' . $file)) {
+                        self::download('', '../storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
+                    }
+
+                    if (Storage::exists($directory . '/' . $file)) {
+                        $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire was answered full. Try to update at ".$now;
+                        $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
+                        $vtiger->update($obj->result);
+                        //sleep(20);
+                        $task->updateCLItemFromImmcase($request);
+                        $out->writeln("FILE created");
+                    } else {
+                        $out->writeln("No file");
+                    }
+                    //}
+                    /*  foreach ($surveyResponses as $result) { //Check each related response if was submitted sometime (only be one)
                         if ($result->submitdate != null) {
                             //Update clitem is survey was answered
                             if ($obj->result->cf_1578 != "Received") {
@@ -184,18 +220,24 @@ class LSurveyController extends Controller
                             }
                             //clitem with this token be updated
                         }
-                    }
-                    $return =  back()->with(['status' => 'success']);
+                    } */
+                   // $return =  back()->with(['status' => 'success']);
                 }
             }
             $task->updateChecklistFromImmcase($request);
             // Release the session key
             $myJSONRPCClient->release_session_key($sSessionKey);
+
             return $return;
         } catch (Exception $e) {
             $out->writeln($e);
             return response()->json("Server error", 500);
         }
+    }
+
+
+    public function uploadSurveyToDrive(Request $request)
+    {
     }
 
     /**
@@ -255,12 +297,11 @@ class LSurveyController extends Controller
         header('Cache-Control: must-revalidate');
         header('Content-Length: ' . filesize($filepath));
         header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        readfile($filepath);
-
+        //header('Content-Disposition: attachment; filename="' . $filename . '"');
+        //readfile($filepath);
         // Deletes the temp file
-        if (file_exists($filepath)) {
+        /*  if (file_exists($filepath)) {
             unlink($filepath);
-        }
+        } */
     }
 }

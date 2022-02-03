@@ -35,8 +35,6 @@ class CLItemController extends Controller
         $case =  CPCase::where('id', $item->cf_1217)
             ->where('contact_id', $contact->id)
             ->firstOrFail();
-        /* $directory = "/documents/contact/$item->cf_contacts_id/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
-         */
         $checklist =  Checklist::where('id', $item->cf_1216)
             ->where('cf_contacts_id', $contact->id)
             ->firstOrFail();
@@ -94,6 +92,9 @@ class CLItemController extends Controller
                 $fileList = array();
                 $contact_no = $contact->contact_no;
                 $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
+                if ($request->category === 'eform') {
+                    $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/eforms/$clitem->clitemsno-$clitem->cf_1200";
+                }
 
                 foreach ($files as $file) {
                     $filename = $file->getClientOriginalName();
