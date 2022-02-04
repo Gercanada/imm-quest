@@ -89,8 +89,9 @@ class LSurveyController extends Controller
                     $clitem =  $vtiger->search($clitemQuery)->result[0];
                     //get contact
                     $obj = $vtiger->retrieve($clitem->id);
-                    $obj->result->cf_1212 = $limeConnection['lime_connection']['LS_BASEURL'] . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en"; //help link
+                    $obj->result->cf_1212 = $limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en"; //help link
                     $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire";
+                    //$obj->result->cf_1578 = "Pending";
                     $vtiger->update($obj->result);
                     $task = new CloneDBController;
 
@@ -145,6 +146,7 @@ class LSurveyController extends Controller
                 $sResponseType = 'short',
                 $aFields = null
             );
+
             $exportSurveyAsPDF = $myJSONRPCClient->export_responses_by_token(
                 $sSessionKey,
                 $iSurveyID,
@@ -200,22 +202,8 @@ class LSurveyController extends Controller
                         $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire was answered full. Try to update at " . $now;
                         $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
-                        //sleep(20);
                         $task->updateCLItemFromImmcase($request);
                     }
-                    //}
-                    /*  foreach ($surveyResponses as $result) { //Check each related response if was submitted sometime (only be one)
-                        if ($result->submitdate != null) {
-                            //Update clitem is survey was answered
-                            if ($obj->result->cf_1578 != "Received") {
-                                $obj->result->cf_1578 = "Received"; //help link
-                                $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire was answered full";
-                                $vtiger->update($obj->result);
-                                $task->updateCLItemFromImmcase($request);
-                            }
-                            //clitem with this token be updated
-                        }
-                    } */
                     $return =  back()->with(['status' => 'success']);
                 }
             }
