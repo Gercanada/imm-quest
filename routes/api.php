@@ -25,9 +25,13 @@ use App\Http\Controllers\LSurveyController;
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 }); */
-Route::get('/env/{var}', function($var){
-    return env($var);
+/* Route::get('/env/{var}', function($var){
+    return response()->json([$var=>env($var)]);
   });
+ */
+
+Route::get('/users', [UserController::class, 'users']);
+
 
 Route::post('/user_params',  [CloneDBController::class, 'testws']);
 

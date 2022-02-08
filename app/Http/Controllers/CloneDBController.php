@@ -7,14 +7,20 @@ use Illuminate\Support\Facades\DB;
 use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use \stdClass;
 
 use App\Models\User;
 use App\Models\Contact;
 use App\Models\Commboard;
 use Exception;
 
+
+
+
 class CloneDBController extends Controller
 {
+
+
     /**
      * This function be called as webservice
      * Be created all required by a contact tables for customer portal
@@ -27,10 +33,13 @@ class CloneDBController extends Controller
     public function cloneImmcaseContactData(Request $request)
     {
         try {
+            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+
             $vtiger = new Vtiger();
             $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("contact_no", $request->contact_no)->take(1);
             $contact = $vtiger->search($userQuery)->result[0]; //Get contact that be cloned
             $contactField = null;
+
 
             $data = $vtiger->listTypes();
             $types = $data->result->types;
@@ -143,6 +152,7 @@ class CloneDBController extends Controller
             //[CloneDBController::class, 'clearTrashDB'];
             return "dataCloned";
         } catch (Exception $e) {
+            $out->writeln($e);
             // /return $e;
             return response()->json($e, 500);
         }
@@ -177,7 +187,6 @@ class CloneDBController extends Controller
                 $obj->result->user_emailoptout =  $cp_contact->user_emailoptout;
 
                 $vtiger->update($obj->result);
-
                 // commboard
                 $commboards = Commboard::where('modifiedby', $cp_contact->id)->get();
                 foreach ($commboards as $comm) {
@@ -217,7 +226,7 @@ class CloneDBController extends Controller
                         $commboard->save();
                     }
                 }
-                self::clearTrashDB();
+                ///self::clearTrashDB();
                 return 200;
             }
         } catch (Exception $e) {
@@ -554,6 +563,11 @@ class CloneDBController extends Controller
                 'password' => Hash::make($userPass),
             ]
         );
+
+        /* $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+
+        $out->writeln("AT CLONE");
+        $out->writeln($newUser); */
         return $newUser->id;
     }
 

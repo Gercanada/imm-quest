@@ -18,6 +18,13 @@ class UserController extends Controller
         return view('users.index');
     }
 
+    public function users(){
+        return response()->json(User::all());
+      }
+
+
+
+
     public function account()
     {
         $user = Auth::user();
@@ -57,12 +64,18 @@ class UserController extends Controller
     public function createUser(Request $request) //Create user by ws from vt
     {
         try {
-            User::create([
-                'user_name' => $request->user,
-                'vtiger_contact_id' =>  $request->cid,
-                'password' => Hash::make($request->pass),
-            ]);
-            return response()->json('exitoso', 200);
+           $user =  User::updateOrCreate(
+                ['vtiger_contact_id' =>  $request->cid],
+                [
+                    'user_name' => $request->user,
+                    'name' =>  $request->first_name,
+                    'last_name' =>  $request->last_name,
+                    'email' =>  $request->email,
+                    'password' => Hash::make($request->pass),
+                ]
+            );
+            return $user;
+            //return response()->json('exitoso', 200);
         } catch (\Exception $e) {
             return $e;
         }
@@ -70,6 +83,14 @@ class UserController extends Controller
 
     public function newPassword(Request $request)
     {
+
+
+        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+
+        $out->writeln("AT userController");
+        $out->writeln($request);
+
+
         $user = User::where('id', Auth::user()->id)->firstOrFail();
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         if (!$contact) return 404;

@@ -30,20 +30,16 @@ use App\Http\Controllers\LSurveyController;
 
 Auth::routes();
 
-
 Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
     //vtiger
     Route::get('/vtiger/describe/types/{user_id}', [VtigerController::class, "types"]);
     Route::get('/vtiger/list/{type}/{where}', [VtigerController::class, 'goType']);
-
     //Route::get('/imm/contacts', [UserController::class, 'listVTUsers']);
     //Route::post('/imm/contacts', [UserController::class, 'importVTUsers']);
-
     Route::post('/vtiger_config', [VtigerController::class, 'configTypes'])->name('configTypes'); // Config access for users ((not required now))
     Route::get('/user_types_access', [VtigerController::class, 'show']);
     Route::get('/vtiger/describe/{type}', [VtigerController::class, 'getType']);
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])/* ->middleware(['auth']) */->name('dashboard');
