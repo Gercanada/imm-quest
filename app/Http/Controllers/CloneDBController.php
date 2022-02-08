@@ -19,8 +19,6 @@ use Exception;
 
 class CloneDBController extends Controller
 {
-
-
     /**
      * This function be called as webservice
      * Be created all required by a contact tables for customer portal
@@ -34,12 +32,10 @@ class CloneDBController extends Controller
     {
         try {
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-
             $vtiger = new Vtiger();
             $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("contact_no", $request->contact_no)->take(1);
             $contact = $vtiger->search($userQuery)->result[0]; //Get contact that be cloned
             $contactField = null;
-
 
             $data = $vtiger->listTypes();
             $types = $data->result->types;
@@ -355,7 +351,7 @@ class CloneDBController extends Controller
                             array_push($newKeyArr, $key);
                         }
                         if (!in_array($name, $newKeyArr)) {
-                            DB::statement("ALTER TABLE vt_$tablename ADD COLUMN $name VARCHAR(155) AFTER  $befo");
+                            DB::statement("ALTER TABLE vt_$tablename ADD COLUMN $name VARCHAR(255) AFTER  $befo");
                         }
                     }
                 }
@@ -363,9 +359,27 @@ class CloneDBController extends Controller
             /* if ($tablename === 'Contacts') {
                 dd ([$nameFields, $tableRows]);
             } */
-
+            //$e = new Exception;
             if (count($table) > 0 && $table[0]->total === 0) { //If noting found be created
-                DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
+
+                $retry = true;
+                while ($retry) {
+                    try {
+                        DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
+                        $retry = false;
+                    } catch (Exception $e) {
+                        if ($e) {
+                            $res = json_decode(json_encode($e));
+                            $errAsArr = $res->errorInfo;
+                            if (str_contains($errAsArr[2], "Data too long for column")) {
+                                $exploded = (explode(' ', $errAsArr[2]));
+                                $field = trim($exploded[5], "'");
+                                DB::statement("ALTER TABLE vt_$tablename CHANGE $field  $field LONGTEXT");
+                            }
+                        }
+                    }
+                }
+
                 foreach ($toUpdate as $toup) {
                     foreach ($toup as $key => $val) {
                         if ($tablename === 'Contacts') {
@@ -435,11 +449,28 @@ class CloneDBController extends Controller
 
                 if (count($table) > 0 && $table[0]->total > 0) { //If table has founded row be updated
                     $setValues = self::jsonToSetOnMysql($newValues);
-                    DB::update("UPDATE vt_$tablename set $setValues WHERE id = '$id';");
+                    $retry = true;
+                    while ($retry) {
+                        try {
+                            DB::update("UPDATE vt_$tablename set $setValues WHERE id = '$id';");
+                            $retry = false;
+                        } catch (Exception $e) {
+                            if ($e) {
+                                $res = json_decode(json_encode($e));
+                                $errAsArr = $res->errorInfo;
+                                if (str_contains($errAsArr[2], "Data too long for column")) {
+                                    $exploded = (explode(' ', $errAsArr[2]));
+                                    $field = trim($exploded[5], "'");
+                                    DB::statement("ALTER TABLE vt_$tablename CHANGE $field  $field LONGTEXT");
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+
 
     public function clearTrashDB()
     {
@@ -553,7 +584,6 @@ class CloneDBController extends Controller
     static function newUser($username, $userPass, $firstname, $last_name, $contactNo, $email)
     {
         $newValues = [];
-
         if ($username) {
             $newValues['user_name'] = $username;
         }
