@@ -68,8 +68,8 @@ class UserController extends Controller
                 ['vtiger_contact_id' =>  $request->cid],
                 [
                     'user_name' => $request->user,
-                    'name' =>  $request->first_name,
-                    'last_name' =>  $request->last_name,
+                    'name' =>  $request->firstname,
+                    'last_name' =>  $request->lastname,
                     'email' =>  $request->email,
                     'password' => Hash::make($request->pass),
                 ]

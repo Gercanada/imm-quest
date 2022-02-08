@@ -552,22 +552,28 @@ class CloneDBController extends Controller
 
     static function newUser($username, $userPass, $firstname, $last_name, $contactNo, $email)
     {
+        $newValues = [];
+
+        if ($username) {
+            $newValues['user_name'] = $username;
+        }
+        if ($firstname) {
+            $newValues['name'] = $firstname;
+        }
+        if ($last_name) {
+            $newValues['last_name'] = $last_name;
+        }
+        if ($email) {
+            $newValues['email'] = $email;
+        }
+        if ($userPass) {
+            $newValues['password'] = Hash::make($userPass);
+        }
+
         $newUser = User::updateOrCreate(
             ['vtiger_contact_id' =>  $contactNo],
-            [
-                'user_name' => $username,
-                'vtiger_contact_id' =>  $contactNo,
-                'name' =>  $firstname,
-                'last_name' =>  $last_name,
-                'email' =>  $email,
-                'password' => Hash::make($userPass),
-            ]
+            $newValues
         );
-
-        /* $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-
-        $out->writeln("AT CLONE");
-        $out->writeln($newUser); */
         return $newUser->id;
     }
 
