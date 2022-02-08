@@ -227,8 +227,8 @@ class CloneDBController extends Controller
                     }
                 }
                 ///self::clearTrashDB();
-                return 200;
             }
+            return 200;
         } catch (Exception $e) {
             return $e;
             // return response()->json($e->getMessage(), 500);
