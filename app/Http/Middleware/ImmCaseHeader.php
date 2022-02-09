@@ -19,21 +19,17 @@ class ImmCaseHeader
      */
     public function handle(Request $request, Closure $next)
     {
-        $vtiger = new Vtiger();
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-
+        //$vtiger = new Vtiger();
         $headers = \Request::header();
         $agentId = $headers['userid'][0];
         $immcase_pass = $headers['immcasepass'][0];
-        $out->writeln($immcase_pass);
 
         if (password_verify('GER_immcase22', $immcase_pass)) {
             $response = $next($request);
-            $out->writeln('Immcase auth well');
         } else {
             $response = response()->json("Invalid immcase authorization");
-            $out->writeln('Invalid immcase authorization');
         }
+        return $response;
 
         /* $user = null;
 
@@ -49,7 +45,6 @@ class ImmCaseHeader
             return response()->json(["User not found as IMMcase user"=>$headers], 403);
         }
         $response = $next($request); */
-        return $response;
     }
 }
 
