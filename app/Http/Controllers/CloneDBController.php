@@ -33,7 +33,7 @@ class CloneDBController extends Controller
         try {
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $vtiger = new Vtiger();
-            $userQuery = DB::table('Contacts')->select('id', 'firstname', 'lastname', 'contact_no')->where("contact_no", $request->contact_no)->take(1);
+            $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $request->contact_no)->take(1);
             $contact = $vtiger->search($userQuery)->result[0]; //Get contact that be cloned
             $contactField = null;
 
@@ -149,7 +149,6 @@ class CloneDBController extends Controller
             return "dataCloned";
         } catch (Exception $e) {
             $out->writeln($e);
-            // /return $e;
             return response()->json($e, 500);
         }
     }
@@ -305,14 +304,13 @@ class CloneDBController extends Controller
                 $table = DB::select("SELECT COUNT('id') as total FROM vt_$tablename WHERE  id = '$row->id';"); //search current table on CP
                 $tableRows = DB::select("SELECT * FROM vt_$tablename LIMIT 1;"); //search current table on CP
             }
-            /*  if ($tablename === "Contacts") {
-                dd ($tableRows);
-            } */
+
             foreach ($row as $key => $val) {
                 if (in_array($key, $fields)) {
                     array_push($nameFields, $key);
                     array_push($dataFields, "'$val'");
-                    array_push($toUpdate, [$key => $val]);
+                    //array_push($toUpdate, [$key => $val]);
+                    $toUpdate[$key] = $val;
                     if ($key === 'id') {
                         $id = $val;
                         array_push($tableIdsArr, $id);
@@ -356,18 +354,14 @@ class CloneDBController extends Controller
                     }
                 }
             }
-            /* if ($tablename === 'Contacts') {
-                dd ([$nameFields, $tableRows]);
-            } */
-            //$e = new Exception;
-            if (count($table) > 0 && $table[0]->total === 0) { //If noting found be created
-
+            if (count($table) > 0 &&  property_exists($table[0], 'total') &&  $table[0]->total === 0) { //If noting found be created
                 $retry = true;
-                while ($retry) {
+                 if ($retry === true) {
                     try {
                         DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
                         $retry = false;
                     } catch (Exception $e) {
+                        $retry = true;
                         if ($e) {
                             $res = json_decode(json_encode($e));
                             $errAsArr = $res->errorInfo;
@@ -380,47 +374,8 @@ class CloneDBController extends Controller
                     }
                 }
 
-                foreach ($toUpdate as $toup) {
-                    foreach ($toup as $key => $val) {
-                        if ($tablename === 'Contacts') {
-                            if ($tablename === 'Contacts') { //Create user from contacts
-                                if ($key === 'cf_1888') {
-                                    $username = $val;
-                                }
-                                if ($key === 'cf_1780') {
-                                    $userPass = $val;
-                                }
-                                if ($key === 'firstname') {
-                                    $firstname = $val;
-                                }
-                                if ($key === 'lastname') {
-                                    $last_name = $val;
-                                }
-                                if ($key === 'email') {
-                                    $email = $val;
-                                }
-                            }
-                        }
-                    }
+                foreach ($toUpdate as $key => $val) {
                     if ($tablename === 'Contacts') {
-                        if ($username && $userPass && $last_name && $firstname) {
-                            $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo, $email);
-                            array_push($tableIdsArr, $newUID);
-                        }
-                    }
-                }
-            } else {
-                $id = null;
-                $newValues = [];
-                $newValueKeys = [];
-                foreach ($toUpdate as $toup) {
-                    foreach ($toup as $key => $val) {
-                        $val = self::prepareStrConvertion($val);
-                        $newValues['*' . $key . '*'] = $val;
-                        array_push($newValueKeys, $key);
-                        if ($key === 'id') { //Ger row id
-                            $id = $val;
-                        }
                         if ($tablename === 'Contacts') { //Create user from contacts
                             if ($key === 'cf_1888') {
                                 $username = $val;
@@ -439,22 +394,60 @@ class CloneDBController extends Controller
                             }
                         }
                     }
-                    if ($tablename === 'Contacts') {
-                        if ($username && $userPass && $last_name && $firstname) {
-                            $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo, $email);
-                            array_push($tableIdsArr, $newUID);
+                }
+                if ($tablename === 'Contacts') {
+                    if ($username && $userPass) {
+                        $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo, $email);
+                        array_push($tableIdsArr, $newUID);
+                    }
+                }
+            } else {
+                $id = null;
+                $newValues = [];
+                $newValueKeys = [];
+
+                foreach ($toUpdate as $key => $val) {
+                    $val = self::prepareStrConvertion($val);
+                    $newValues['*' . $key . '*'] = $val;
+                    array_push($newValueKeys, $key);
+                    if ($key === 'id') { //Ger row id
+                        $id = $val;
+                    }
+                    if ($tablename === 'Contacts') { //Create user from contacts
+
+                        if ($key === 'firstname') {
+                            $firstname = $val;
+                        }
+                        if ($key === 'cf_1888') {
+                            $username = $val;
+                        }
+                        if ($key === 'cf_1780') {
+                            $userPass = $val;
+                        }
+                        if ($key === 'lastname') {
+                            $last_name = $val;
+                        }
+                        if ($key === 'email') {
+                            $email = $val;
                         }
                     }
                 } //end loop
+                if ($tablename === 'Contacts') {
+                    if ($username && $userPass) {
+                        $newUID = self::newUser($username, $userPass, $firstname, $last_name, $contactNo, $email);
+                        array_push($tableIdsArr, $newUID);
+                    }
+                }
 
-                if (count($table) > 0 && $table[0]->total > 0) { //If table has founded row be updated
+                if (count($table) > 0 &&  property_exists($table[0], 'total') && $table[0]->total > 0) { //If table has founded row be updated
                     $setValues = self::jsonToSetOnMysql($newValues);
                     $retry = true;
-                    while ($retry) {
+                     if ($retry === true) {
                         try {
                             DB::update("UPDATE vt_$tablename set $setValues WHERE id = '$id';");
                             $retry = false;
                         } catch (Exception $e) {
+                            $retry = true;
                             if ($e) {
                                 $res = json_decode(json_encode($e));
                                 $errAsArr = $res->errorInfo;
