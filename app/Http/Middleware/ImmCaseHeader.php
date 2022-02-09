@@ -20,12 +20,24 @@ class ImmCaseHeader
     public function handle(Request $request, Closure $next)
     {
         $vtiger = new Vtiger();
+        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
 
         $headers = \Request::header();
         $agentId = $headers['userid'][0];
-        $user = null;
-        //dd($agentId);
-        $userQuery = DB::table('Users')->select('id', 'is_admin', 'user_name', 'email1')->where("id", "19x$agentId")->take(1);
+        $immcase_pass = $headers['immcasepass'][0];
+        $out->writeln($immcase_pass);
+
+        if (password_verify('GER_immcase22', $immcase_pass)) {
+            $response = $next($request);
+            $out->writeln('Immcase auth well');
+        } else {
+            $response = response()->json("Invalid immcase authorization");
+            $out->writeln('Invalid immcase authorization');
+        }
+
+        /* $user = null;
+
+        $userQuery = DB::table('Users')->select('*')->where("id", "19x$agentId")->take(1);
         $user1 = $vtiger->search($userQuery);
 
         if ($user1->success === true) {
@@ -36,8 +48,15 @@ class ImmCaseHeader
         if (!$user) {
             return response()->json(["User not found as IMMcase user"=>$headers], 403);
         }
-        $response = $next($request);
-
+        $response = $next($request); */
         return $response;
     }
 }
+
+/*
+    vtiger middleware
+    Asegurar que el header venga de immcase
+    -> Puede ser llamada por un usuario (iniciarmanualmente, etc ...)
+    ->como webservice ()
+
+*/

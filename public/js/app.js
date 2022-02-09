@@ -3237,111 +3237,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 var urlParams = window.location.pathname.split("/");
@@ -3349,7 +3244,6 @@ var urlParams = window.location.pathname.split("/");
   data: function data() {
     return {
       dropzoneOptions: {
-        // url: "/drive/upload",
         url: "/cl-item/upload/file",
         thumbnailWidth: 150,
         maxFilesize: 5,
@@ -3465,7 +3359,7 @@ var urlParams = window.location.pathname.split("/");
                   expiry_date: me.expiry_date,
                   id: me.id
                 }).then(function (response) {
-                  /* me.closeModal(); */
+                  me.closeModal();
                 })["catch"](function (error) {
                   console.log(error);
                 });
@@ -24333,69 +24227,62 @@ var render = function () {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "btn-list" },
-                        _vm._l(_vm.clFiles, function (file) {
-                          return _c(
-                            "div",
-                            {
-                              key: file,
-                              staticClass: "text-end font-weight-medium",
-                              attrs: {
-                                "v-if":
-                                  (_vm.clitem.cf_1578 === "Pending" ||
-                                    _vm.clitem.cf_1578 ===
-                                      "Replacement Needed") &&
-                                  _vm.clFiles.length > 0,
+                      _c("div", { staticClass: "btn-list" }, [
+                        (_vm.clitem.cf_1578 === "Pending" ||
+                          _vm.clitem.cf_1578 === "Replacement Needed") &&
+                        _vm.clFiles.length > 0
+                          ? _c(
+                              "div",
+                              {
+                                key: _vm.file,
+                                staticClass: "text-end font-weight-medium",
+                                attrs: { "v-for": _vm.file in _vm.clFiles },
                               },
-                            },
-                            [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-success btn-lg fas fa-paper-plane",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.sendToImmcase(
-                                        file,
-                                        _vm.clitem.clitemsno
-                                      )
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-success btn-lg fas fa-paper-plane",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.sendToImmcase(
+                                          _vm.file,
+                                          _vm.clitem.clitemsno
+                                        )
+                                      },
                                     },
                                   },
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                    Send document\n                  "
-                                  ),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-danger btn-lg fas fa-trash-alt",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.deleteFile(file)
+                                  [
+                                    _vm._v(
+                                      "\n                    Send document\n                  "
+                                    ),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-danger btn-lg fas fa-trash-alt",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.deleteFile(_vm.file)
+                                      },
                                     },
                                   },
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                    Remove document\n                  "
-                                  ),
-                                ]
-                              ),
-                            ]
-                          )
-                        }),
-                        0
-                      ),
+                                  [
+                                    _vm._v(
+                                      "\n                    Remove document\n                  "
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            )
+                          : _vm._e(),
+                      ]),
                     ]),
                   ]),
                 ]),

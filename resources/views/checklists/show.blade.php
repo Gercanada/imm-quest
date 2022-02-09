@@ -29,7 +29,6 @@
                         <thead>
                             <tr>
                                 <th scope="col">CL Item Name</th>
-                                {{-- <th scope="col">Required by</th> --}}
                                 <th scope="col">Status</th>
                                 <th scope="col">Help link</th>
                                 <th scope="col"></th>
@@ -41,7 +40,6 @@
                                 @if (($clitem->cf_1578 === 'Pending' || $clitem->cf_1578 === 'Replacement Needed') && $clitem->cf_1200 === 'Document')
                                     <tr>
                                         <td>{{ $clitem->name }}</td>
-                                        {{-- <td>{{ $clitem->cf_1202 }}</td> --}}
                                         <td>{{ $clitem->cf_1578 }}</td>
                                         <td> <a href="{{ $clitem->cf_1212 }}">{{ $clitem->cf_1212 }}</a></td>
                                         <td>
@@ -69,7 +67,6 @@
                         <thead>
                             <tr>
                                 <th scope="col">CL Item Name</th>
-                                {{-- <th scope="col">Required by</th> --}}
                                 <th scope="col">Help link</th>
                                 <th scope="col">Status</th>
                                 <th>View</th>
@@ -79,9 +76,7 @@
                             @foreach ($clitems as $clitem)
                                 @if ($clitem->cf_1200 === 'IMM Form')
                                     <tr>
-                                        {{-- <td>{{ $clitem->name }}</td> --}}
                                         <td>{{ $clitem->cf_1202 }}</td>
-                                        {{-- <td>{{ $clitem->cf_1212 }}</td> --}}
                                         <td>{{ $clitem->cf_1578 }}</td>
                                         <td><a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}">{{ $clitem->name }}
                                             </a></td>
@@ -99,7 +94,6 @@
                         <thead>
                             <tr>
                                 <th scope="col">CL Item Name</th>
-                                {{-- <th scope="col">Required by</th> --}}
                                 <th scope="col">Help link</th>
                                 <th scope="col">Status</th>
                                 <th>Refresh status</th>

@@ -78,7 +78,7 @@ class DocumentController extends Controller
     public function checkDocuments(Request $request)
     {
         try {
-           /*  $out = new \Symfony\Component\Console\Output\ConsoleOutput();*/
+            /*  $out = new \Symfony\Component\Console\Output\ConsoleOutput();*/
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
 
@@ -99,12 +99,12 @@ class DocumentController extends Controller
             return response()->json($urlFiles, 200);
         } catch (Exception $e) {
             return response()->json($e, 500);
-           // $out->write($e);
+            // $out->write($e);
         }
     }
 
     /**
-     * this method be called as webservice to create the document record relar=ted with the clitem and uploaded file.
+     * this method be called as webservice to create the document record related with the clitem and uploaded file.
      */
     public function createCLItemDoc(Request $request)
     {
@@ -140,7 +140,8 @@ class DocumentController extends Controller
     }
 
     /**
-     * This methods only returns request env['response'][$loop]. Is required because the workflow block crashes at try to upload file using env['response'][$loop]
+     * This methods only returns request env['response'][$loop].
+     * Is required because the workflow block crashes at try to upload file using env['response'][$loop]
      */
     public function singleUrl(Request $request)
     {
@@ -148,38 +149,4 @@ class DocumentController extends Controller
         $url = str_replace(' ', '%20', env('APP_URL') . $request->file);
         return response()->json($url);
     }
-
-    /*
-        // make directory with custom function
-          $cf_1332/$contact_no/$contact_no-cases/
-                ${
-                    $file = substr( $env["simpleurl"], 1);   $exploded = explode('/',  $file );
-                    $exploded = explode('/',  $file );
-                    $spliced = array_splice($exploded, 2);  return $spliced[5]."/01_SuppliedDocs" ;
-                }}>
-
-                ${
-                     $file = substr( $env["simpleurl"], 1);   $exploded = explode('/',  $file );
-                      $exploded = explode('/',  $file );  $spliced = array_splice($exploded, 2);
-                      return "checklists/".$spliced[7]."/clitems/". $spliced[9] ;
-            }}>
-
-                    -----------
-
-                     $cf_1332/$contact_no/$contact_no-cases/
-                ${
-                    $file = substr( $env["simpleurl"], 1);
-                    $exploded = explode('/',  $file );
-                    $spliced = array_splice($exploded, 2);
-                    $path1 =  $spliced[5]."/01_SuppliedDocs";
-                    return  str_replace(' ', '%20', $path1);
-            }}>
-                    ${
-                     $file = substr( $env["simpleurl"], 1);
-                     $exploded = explode('/',  $file );
-                      $spliced = array_splice($exploded, 2);
-                      return  str_replace(' ', '%20', "checklists/".$spliced[7]."/clitems/".$spliced[9]);
-                    }}>
-
-             */
 }

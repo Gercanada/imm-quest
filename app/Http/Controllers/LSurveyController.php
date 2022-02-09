@@ -81,10 +81,6 @@ class LSurveyController extends Controller
                 $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
                 $clitem = $vtiger->search($clitemQuery);
 
-                while (count($clitem->result) <= 0) {  // TODO Delete while
-                    $clitem = $vtiger->search($clitemQuery);
-                }
-
                 if (count($clitem->result) > 0) {
                     $clitem =  $vtiger->search($clitemQuery)->result[0];
                     //get contact
@@ -101,7 +97,8 @@ class LSurveyController extends Controller
                 }
                 // Release the session key
                 $myJSONRPCClient->release_session_key($sSessionKey);
-                return response()->json(["success" => $surveyValues]);
+                return response()->json(["success" => "Gest sent !"]);
+                //return response()->json(["success" => $surveyValues]);
             }
         } catch (Exception $e) {
             return response()->json("Server error", 500);
@@ -212,7 +209,7 @@ class LSurveyController extends Controller
             $myJSONRPCClient->release_session_key($sSessionKey);
             return $return;
         } catch (Exception $e) {
-            return response()->json("Server error", 500);
+            return response()->json($e, 500);
         }
     }
 

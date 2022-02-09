@@ -32,68 +32,62 @@ use App\Http\Controllers\LSurveyController;
 
 //Route::get('/users', [UserController::class, 'users']);
 
-
-Route::post('/user_params',  [CloneDBController::class, 'testws']);
-
-Route::post('/documents', [DocumentController::class , 'checkDocuments']);
-Route::post('/remove_document', [DocumentController::class , 'destroy']);
-Route::post('/single_url', [DocumentController::class , 'singleUrl']);
-
-Route::post('/update_clitem', [CloneDBController::class , 'updateCLItemFromImmcase']);
-
-Route::post('/questionaries/guest', [LSurveyController::class, 'guestToSurvey']);//tri not middleware
-
-Route::middleware('imm-header')->group(function(){
-    Route::post('/clitem_doc', [DocumentController::class , 'createCLItemDoc']);
-
-
-    Route::post('/cl-item/send_file', [CLItemController::class, 'sendDocumentToImmcase']);//Only catch errs
-    Route::post('/questionaries/export_response', [LSurveyController::class, 'exportResponse']);//Test as service
-
-
-    Route::post('/getresponse', [DocumentController::class , 'getResponse']);
-
-    Route::post('/create_user', [UserController::class, 'createUser']);
-
-    Route::post('/remove_user', [UserController::class, 'removeUser']);
-
-    Route::post('/clear_trash', [CloneDBController::class, 'clearTrashDB']);
-    Route::post('/test_code', [CloneDBController::class, 'testCodeFrag']);
-
-    Route::post('/viger/clonedb', [CloneDBController::class, 'cloneImmcaseContactData']);
-    Route::post('/viger/update_contact', [CloneDBController::class, 'updateOnImmcase']);
-
-    Route::post('/viger/find_duplicates', [CloneDBController::class, 'duplicateContacts']);
-
-    //limesurvey
-    //Route::post('/questionaries/guest', [LSurveyController::class, 'guestToSurvey']);
-
-    Route::get('/migrate', function(){
-       \Artisan::call('migrate:fresh');
-        return('migrated!');
-    });
-    Route::get('/optimize', function(){
-       \Artisan::call('optimize:clear');
-        return('Optimized!');
-    });
-    Route::get('/clear', function(){
-       \Artisan::call('cache:clear');
-        return('Cleared!');
-    });
-    Route::get('/cache', function(){
-       \Artisan::call('config:cache');
-        return('Cleared cache! ');
-    });
-    Route::get('/keygen', function(){
-        \Artisan::call('key:generate');
-         return('Key generated!');
-     });
-
-     Route::get('/npm_dev', function(){
-        shell_exec('npm run dev');
-         return('Compiled successfull!');
-     });
-
+Route::get('/hash_pass/{pass}', function ($pass) {
+    return password_hash($pass, PASSWORD_DEFAULT);
 });
 
 
+Route::middleware('imm-header')->group(function () {
+
+    Route::post('/documents',                      [DocumentController::class, 'checkDocuments']);
+    Route::post('/remove_document',                [DocumentController::class, 'destroy']);
+    Route::post('/single_url',                     [DocumentController::class, 'singleUrl']);
+
+    Route::post('/update_clitem',                  [CloneDBController::class, 'updateCLItemFromImmcase']);
+
+    Route::post('/questionaries/guest',            [LSurveyController::class, 'guestToSurvey']); //tri not middleware
+
+
+    Route::post('/clitem_doc',                     [DocumentController::class, 'createCLItemDoc']);
+
+    Route::post('/cl-item/send_file',              [CLItemController::class, 'sendDocumentToImmcase']); //Only catch errs
+    Route::post('/questionaries/export_response',  [LSurveyController::class, 'exportResponse']); //Test as service
+
+    Route::post('/create_user',                    [UserController::class, 'createUser']);
+
+    Route::post('/clear_trash',                    [CloneDBController::class, 'clearTrashDB']);
+
+    Route::post('/viger/clonedb',                  [CloneDBController::class, 'cloneImmcaseContactData']);
+    Route::post('/viger/update_contact',           [CloneDBController::class, 'updateOnImmcase']);
+
+    //Route::post('/remove_user',                    [UserController::class, 'removeUser']);
+    //Route::post('/viger/find_duplicates', [CloneDBController::class, 'duplicateContacts']);
+    //limesurvey
+    //Route::post('/questionaries/guest', [LSurveyController::class, 'guestToSurvey']);
+
+    Route::get('/migrate', function () {
+        \Artisan::call('migrate:fresh');
+        return ('migrated!');
+    });
+    Route::get('/optimize', function () {
+        \Artisan::call('optimize:clear');
+        return ('Optimized!');
+    });
+    Route::get('/clear', function () {
+        \Artisan::call('cache:clear');
+        return ('Cleared!');
+    });
+    Route::get('/cache', function () {
+        \Artisan::call('config:cache');
+        return ('Cleared cache! ');
+    });
+    Route::get('/keygen', function () {
+        \Artisan::call('key:generate');
+        return ('Key generated!');
+    });
+
+    Route::get('/npm_dev', function () {
+        shell_exec('npm run dev');
+        return ('Compiled successfull!');
+    });
+});

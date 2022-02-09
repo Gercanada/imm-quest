@@ -41,34 +41,7 @@
                 </div>
                 <table class="table v-middle fs-3 mb-0 mt-4">
                   <tbody>
-                    <!--   <tr>
-                      <td>Case No</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="caseObj.ticket_no"
-                      ></td>
-                    </tr>
-                    <tr>
-                      <td>Case title</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="caseObj.ticket_title"
-                      ></td>
-                    </tr>
-                    <tr>
-                      <td>Category</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="caseObj.ticketcategories"
-                      ></td>
-                    </tr> -->
-                    <!--  <tr>
-                      <td>Subcategory</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="caseObj.cf_890"
-                      ></td>
-                    </tr> -->
+
                     <tr>
                       <td>Status</td>
                       <td
@@ -76,20 +49,6 @@
                         v-text="caseObj.ticketstatus"
                       ></td>
                     </tr>
-                    <!--  <tr>
-                      <td>No of Applicantions</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="caseObj.cf_888"
-                      ></td>
-                    </tr>
-                    <tr>
-                      <td>Government App No</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="caseObj.cf_884"
-                      ></td>
-                    </tr> -->
                     <tr>
                       <td>Open Date</td>
                       <td
@@ -141,13 +100,6 @@
                         v-text="checklistObj.checklistno"
                       ></td>
                     </tr>
-                    <!--  <tr>
-                      <td>Subject</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="checklistObj.name"
-                      ></td>
-                    </tr> -->
                     <tr>
                       <td>% Completed</td>
                       <td
@@ -190,13 +142,6 @@
                         v-text="checklistObj.cf_1179"
                       ></td>
                     </tr>
-                    <!--  <tr>
-                      <td>Related to</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="checklistObj.cf_1183"
-                      ></td>
-                    </tr> -->
                     <tr></tr>
                   </tbody>
                 </table>
@@ -254,54 +199,7 @@
                         v-text="clitem.cf_1578"
                       ></td>
                     </tr>
-                    <!--   <tr>
-                      <td>Required To</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="clitem.cf_1202"
-                      ></td>
-                    </tr>
 
-                    <tr>
-                      <td>Required by</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="clitem.cf_1204"
-                      ></td>
-                    </tr>
-                    <tr>
-                      <td>Help Link</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="clitem.cf_1212"
-                      ></td>
-                    </tr>
-                    <tr>
-                      <td>Message to Client</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="clitem.cf_1898"
-                      ></td>
-                    </tr>
-
-                         -->
-                    <!--  <tr>
-                      <!- - Editables on CP - ->
-                      <td>Upload file</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="clitem.cf_acf_ulf_1778"
-                      ></td>
-                    </tr>
-                    <tr>
-                      <!-  Editables on CP - ->
-                      <td>Uploaded date</td>
-                      <td
-                        class="text-end font-weight-medium"
-                        v-text="clitem.modifiedtime"
-                      ></td>
-                      <!- - Modified date ->
-                    </tr> -->
                     <tr>
                       <!-- Editables on CP -->
                       <td>Original File Name</td>
@@ -326,9 +224,6 @@
             </div>
           </div>
           <!-- Modal edit acount -->
-          <!--   <template v-if="actionType == 1"> -->
-
-          <!-- </template> -->
         </div>
         <!-- TODO check statues ofclitem -->
         <div class="card shadow  p-1 rounded">
@@ -378,12 +273,12 @@
 
                 <div class="btn-list">
                   <div
-                    :v-if="
-                      (clitem.cf_1578 === 'Pending' ||
+                    v-if="
+                      (clitem.cf_1578 === 'Pending'||
                         clitem.cf_1578 === 'Replacement Needed') &&
                       clFiles.length > 0
                     "
-                    v-for="file in clFiles"
+                    :v-for="file in clFiles"
                     :key="file"
                     class="text-end font-weight-medium"
                   >
@@ -498,7 +393,6 @@ export default {
   data() {
     return {
       dropzoneOptions: {
-        // url: "/drive/upload",
         url: "/cl-item/upload/file",
         thumbnailWidth: 150,
         maxFilesize: 5,
@@ -506,7 +400,6 @@ export default {
         maxFiles: 1,
         uploadMultiple: true,
         autoProcessQueue: false,
-
         acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg,.pdf,.doc,.docx",
         addRemoveLinks: true,
         dictRemoveFile: "Remove file",
@@ -596,7 +489,7 @@ export default {
           id: me.id,
         })
         .then(function (response) {
-          /* me.closeModal(); */
+          me.closeModal();
         })
         .catch(function (error) {
           console.log(error);
