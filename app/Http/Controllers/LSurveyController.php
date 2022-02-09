@@ -159,19 +159,18 @@ class LSurveyController extends Controller
             /* Find clitem of current survey */
             $clitemQuery = DB::table('CLItems')->select('*')
                 ->where("clitemsno", $request->clitemsno)
-                ->where("cf_1212", $request->surveyurl)
+                //->where("cf_1212", $request->surveyurl)
                 ->take(1);
 
             $clitem = $vtiger->search($clitemQuery);
-            while (count($clitem->result) <= 0) {  // TODO Delete while
-                $clitem = $vtiger->search($clitemQuery);
+
+            if (count($clitem->result) <= 0) {
+                return response()->json("Item not found", 404);
             }
+
             $clitem =  $clitem->result[0];
             $obj = $vtiger->retrieve($clitem->id);
             $request->request->add(['checklist_id' => $obj->result->cf_1216]);
-            /*  return
-            $obj; */
-
             $contact = Contact::where('id', $obj->result->cf_contacts_id)->firstOrFail();
             $case =  CPCase::where('id', $obj->result->cf_1217)->firstOrFail();
             $checklist =  Checklist::where('id', $obj->result->cf_1216)->firstOrFail();

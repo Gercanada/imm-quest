@@ -111,7 +111,7 @@
                                         <td>
                                             <form action="{{ route('export_response') }}" method="post">
                                                 @csrf
-                                                <input type="hidden" name="surveyurl" id="surveyUrl"
+                                                <input type="hidden" name="surveyurl" id="surveyurl"
                                                     value="{{ $clitem->cf_1212 }}">
                                                 <input type="hidden" name="clitemsno" id="clitemsno"
                                                     value="{{ $clitem->clitemsno }}">
