@@ -30,7 +30,7 @@ use App\Http\Controllers\LSurveyController;
   });
  */
 
-Route::get('/users', [UserController::class, 'users']);
+//Route::get('/users', [UserController::class, 'users']);
 
 
 Route::post('/user_params',  [CloneDBController::class, 'testws']);
