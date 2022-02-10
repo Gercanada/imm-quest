@@ -34,8 +34,6 @@ export default {
         .get("/user_themme")
         .then(function (response) {
           me.themme_layout = response.data;
-          // console.log(response.data);
-
           if (response.data === 1) {
             me.themme_layout = 1;
           } else {

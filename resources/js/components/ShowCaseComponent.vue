@@ -16,7 +16,7 @@
   <div v-else>
     <div class="row">
       <div class="col-md-12">
-        <div class="card shadow  p-1 rounded">
+        <div class="card shadow p-1 rounded">
           <div class="card-header">
             <a href="/cases" class="btn btn-outline-success btn-rounded"
               ><i class="fas fa-arrow-circle-left"></i
@@ -79,7 +79,7 @@
         </div>
       </div>
       <div class="col-md-12">
-        <div class="card shadow  p-1 rounded">
+        <div class="card shadow p-1 rounded">
           <div class="card-body">
             <ul class="nav nav-tabs nav-bordered mb-3 customtab">
               <li
@@ -117,70 +117,67 @@
                 :class="{ 'show active': isActive(checklist.name) }"
                 :id="'tab_' + checklist.id"
               >
-                <h6 class="card-title mt-5">
-                  <i
-                    class="mr-1 font-18 mdi mdi-numeric-1-box-multiple-outline"
-                  ></i>
-                  Pending items
-                </h6>
+                <div class="shadow p-1 mt-4 rounded">
+                  <h3 class="card-title">
+                    <i class="mr-1 font-18 mdi mdi-timelapse"></i> Pending items
+                  </h3>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">CL Item name</th>
+                          <th scope="col">Required by</th>
+                          <th scope="col">Upload</th>
+                          <th scope="col">Help link</th>
+                        </tr>
+                      </thead>
+                      <tbody>
 
-                <div class="card">
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">CL Item name</th>
-                            <th scope="col">Required by</th>
-                            <th scope="col">Upload</th>
-                            <th scope="col">Help link</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            v-for="clitem in CLItemsArray"
-                            :key="clitem.id"
-                            :value="clitem.id"
+                        <tr :v-if="CLItemsArray.length == 0">
+                          <div class="text-center" width="100%">
+                             No avalible data
+                          </div>
+                        </tr>
+
+                        <tr
+                          v-for="clitem in CLItemsArray"
+                          :key="clitem.id"
+                          :value="clitem.id"
+                        >
+                          <template
+                            v-if="
+                              clitem.cf_1216 === checklist.id &&
+                              clitem.cf_1578 === 'Pending'
+                            "
                           >
-                            <template
-                              v-if="
-                                clitem.cf_1216 === checklist.id &&
-                                clitem.cf_1578 === 'Pending'
-                              "
-                            >
-                              <td v-text="clitem.name"></td>
-                              <td v-text="clitem.cf_1202"></td>
-                              <td>
-                                <a
-                                  :href="
-                                    '/checklist/' +
-                                    checklist.id +
-                                    '/item/' +
-                                    clitem.id
-                                  "
-                                  class="btn btn-outline-success btn-rounded"
-                                >
-                                  <i class="fas fa-upload"></i
-                                ></a>
-                              </td>
-                              <td v-text="clitem.cf_1212"></td>
-                            </template>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <h6 class="card-title">
-                      <i
-                        class="
-                          mr-1
-                          font-18
-                          mdi mdi-numeric-2-box-multiple-outline
-                        "
-                      ></i>
-                      Electronic forms
-                    </h6>
+                            <td v-text="clitem.name"></td>
+                            <td v-text="clitem.cf_1202"></td>
+                            <td>
+                              <a
+                                :href="
+                                  '/checklist/' +
+                                  checklist.id +
+                                  '/item/' +
+                                  clitem.id
+                                "
+                                class="btn btn-outline-success btn-rounded"
+                              >
+                                <i class="fas fa-upload"></i
+                              ></a>
+                            </td>
+                            <td v-text="clitem.cf_1212"></td>
+                          </template>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
+                </div>
+
+                <div class="shadow p-1 mt-4 rounded">
+                  <h3 class="card-title">
+                    <i class="mr-1 font-18 mdi mdi-textbox"></i> Electronic
+                    forms
+                  </h3>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
@@ -224,16 +221,13 @@
                       </tbody>
                     </table>
                   </div>
-                  <h6 class="card-title">
-                    <i
-                      class="
-                        mr-1
-                        font-18
-                        mdi mdi-numeric-2-box-multiple-outline
-                      "
-                    ></i
-                    >Submited items
-                  </h6>
+                </div>
+
+                <div class="shadow p-1 mt-4 rounded">
+                  <!-- </div> -->
+                  <h3 class="card-title">
+                    <i class="mr-1 font-18 mdi mdi-telegram"></i>Submited items
+                  </h3>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>

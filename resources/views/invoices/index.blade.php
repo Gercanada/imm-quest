@@ -7,7 +7,7 @@
 @section('content')
     <div class="row page-titles">
         <div class="col-md-5 col-12 align-self-center">
-            <h3 class="text-themecolor mb-0"><span class="lstick d-inline-block align-middle"></span>My Invoices</h3>
+            <h3 class="text-themecolor mb-0">My Invoices</h3>
         </div>
     </div>
     <div class="row">
@@ -52,9 +52,10 @@
         <div class="col-md-12">
             <div class="card shadow  p-1 rounded">
                 <div class="card-body">
-                    <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span>Invoices Paid in Full</h4>
+                    <h4 class="card-title"><span class="lstick d-inline-block align-middle"></span>Invoices Paid in Full
+                    </h4>
                     <div class="table-responsive">
-                        <table  class="table dt_alt_pagination table-striped table-bordered display">
+                        <table class="table dt_alt_pagination table-striped table-bordered display">
                             <thead>
                                 <tr>
                                     <th scope="col">Invoice Title</th>

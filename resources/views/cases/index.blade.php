@@ -6,13 +6,12 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-md-5 col-12 align-self-center">
-                <h3 class="card-title text-themecolor mb-0"><span class="lstick d-inline-block align-middle"></span>My cases
+                <h3 class="card-title text-themecolor mb-0">My cases
                 </h3>
             </div>
         </div>
@@ -105,5 +104,4 @@
 
             </div>
         </div>
-    </div>
 @endsection

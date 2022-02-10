@@ -15,18 +15,24 @@
   </div>
 
   <div v-else>
+       <div class="row page-titles">
+            <div class="col-md-5 col-12 align-self-center">
+                <h3 class="text-themecolor mb-0">Documents</h3>
+            </div>
+        </div>
+
     <div class="row">
       <div class="card shadow  p-1 rounded">
-        <div class="card-header">
-          <h3 class="text-themecolor mb-0">Documents</h3>
+      <!--   <div class="card-header">
+         <! --  <h3 class="text-themecolor mb-0">Documents</h3> -->
           <!--  <button
             type="button"
             class="btn btn-primary fas fa-edit float-right"
             @click="openModal('documents', 'store')"
           >
             New document
-          </button> -->
-        </div>
+          </button> - ->
+        </div> -->
 
         <div class="card-body">
           <div class="table-responsive">

@@ -32,7 +32,6 @@
         href="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
 
     @yield('styles')
-
 </head>
 
 <body>
@@ -56,7 +55,7 @@
         @else
             //do something else
         @endif --}}
-       {{--  <h1>
+        {{-- <h1>
             {{ Auth::user() }}
 
         </h1> --}}
@@ -95,6 +94,9 @@
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jquery/dist/jquery.min.js">
     </script>
+    <script
+        src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js">
+    </script>
 
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/popper.js/dist/umd/popper.min.js">
@@ -117,31 +119,29 @@
     @endif
     <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/app-style-switcher.js">
     </script>
-    <script
-        src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js">
-    </script>
+
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/extra-libs/sparkline/sparkline.js">
     </script>
     <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/waves.js"></script>
     <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/sidebarmenu.js"></script>
     <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/feather.min.js"></script>
-    <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/custom.js"></script>
-    <script
+    <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/custom.min.js"></script>
+    {{-- <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist/dist/chartist.min.js">
-    </script>
-    <script
+    </script> --}}
+ {{--    <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js">
-    </script>
+    </script> --}}
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/d3/dist/d3.min.js">
     </script>
     <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/c3/c3.min.js">
     </script>
 
-    <script
+    {{-- <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/dashboards/dashboard2.js">
-    </script>
+    </script> --}}
 
     <!-- All scripts -->
 
@@ -168,6 +168,7 @@
 
 
     <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
+  {{--   <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script> --}}
 
     @yield('scripts')
 </body>

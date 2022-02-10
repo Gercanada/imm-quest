@@ -80,21 +80,24 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javaScript"> $("[data-toggle=popover]").popover({ html: true });
-                                                                            $(document).ready(
-                                                                            function() { $('[data-toggle="popover"]').popover();
-                                                                            });
-                                                                    </script>
+    <script>
+        $("[data-toggle=popover]").popover({
+            html: true
+        });
+
+        function() {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 @endsection
 
 @section('content')
-    <div class="container-fluid">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-md-5 col-12 align-self-center">
-                <h3 class="card-title text-themecolor mb-0"><span class="lstick d-inline-block align-middle"></span>Dashboard
+                <h3 class="card-title text-themecolor mb-0">Dashboard
                 </h3>
             </div>
         </div>
@@ -254,8 +257,7 @@
             </div>
             <!-- ============================================================== -->
             <div class="col-lg-4">
-                    <commboard-component></commboard-component>
+                <commboard-component></commboard-component>
             </div>
         </div>
-    </div>
 @endsection
