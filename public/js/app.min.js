@@ -1771,7 +1771,7 @@ module.exports = function transformData(data, headers, fns) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
+/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 
 
 var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
@@ -3237,6 +3237,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 var urlParams = window.location.pathname.split("/");
@@ -3436,6 +3438,7 @@ var urlParams = window.location.pathname.split("/");
       axios.post("/cl-item/dropfile", {
         file: file
       }).then(function (response) {
+        console.log(response);
         Swal.fire({
           type: "success",
           title: "Document deleted",
@@ -3473,6 +3476,7 @@ var urlParams = window.location.pathname.split("/");
 
         if ("files" in me.clitem.files) {
           me.clFiles = me.clitem.files.files;
+          console.log(me.clFiles);
         }
       })["catch"](function (error) {
         console.log(error);
@@ -23997,7 +24001,7 @@ var render = function () {
   return _vm.loading
     ? _c("div", { staticStyle: { heigth: "100%" } }, [_vm._m(0)])
     : _c("div", [
-        _c("div", { staticClass: "card shadow  p-1 rounded" }, [
+        _c("div", { staticClass: "card shadow p-1 rounded" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-3 col-sm-12" }, [
               _c(
@@ -24024,14 +24028,14 @@ var render = function () {
           { staticClass: "row" },
           [
             _c("div", { staticClass: "col-md-12" }, [
-              _c("div", { staticClass: "card shadow  p-1 rounded" }, [
+              _c("div", { staticClass: "card shadow p-1 rounded" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "card-row" }, [
                     _c("div", { staticClass: "col py-2" }, [
                       _c("div", { staticClass: "row" }, [
                         _c(
                           "div",
-                          { staticClass: "col shadow  p-1 rounded pt-1" },
+                          { staticClass: "col shadow p-1 rounded pt-1" },
                           [
                             _c("h4", { staticClass: "card-title" }, [
                               _c("span", {
@@ -24109,14 +24113,14 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card shadow  p-1 rounded" }, [
+              _c("div", { staticClass: "card shadow p-1 rounded" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "card-row" }, [
                     _c("div", { staticClass: "col py-2" }, [
                       _c("div", { staticClass: "row" }, [
                         _c(
                           "div",
-                          { staticClass: "col shadow  p-1 rounded pt-1" },
+                          { staticClass: "col shadow p-1 rounded pt-1" },
                           [
                             _c("h4", { staticClass: "card-title" }, [
                               _c("span", {
@@ -24227,7 +24231,7 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card shadow  p-1 rounded" }, [
+              _c("div", { staticClass: "card shadow p-1 rounded" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "card-row" }, [
                     _c("div", { staticClass: "col py-2" }, [
@@ -24334,10 +24338,10 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card shadow  p-1 rounded" }, [
+              _c("div", { staticClass: "card shadow p-1 rounded" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _vm.clitem.cf_1200 == "IMM Form"
-                    ? _c("div", { staticClass: "card shadow  p-1 rounded" }, [
+                    ? _c("div", { staticClass: "card shadow p-1 rounded" }, [
                         _vm._m(2),
                       ])
                     : _vm._e(),
@@ -24346,7 +24350,7 @@ var render = function () {
                     _c("div", { staticClass: "col" }, [
                       (_vm.clitem.cf_1578 === "Pending" ||
                         _vm.clitem.cf_1578 === "Replacement Needed") &&
-                      _vm.clFiles == 0
+                      _vm.clFiles.length == 0
                         ? _c("div", { staticClass: "btn-list" }, [
                             _c(
                               "button",
@@ -24373,62 +24377,69 @@ var render = function () {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      _c("div", { staticClass: "btn-list" }, [
-                        (_vm.clitem.cf_1578 === "Pending" ||
-                          _vm.clitem.cf_1578 === "Replacement Needed") &&
-                        _vm.clFiles.length > 0
-                          ? _c(
-                              "div",
-                              {
-                                key: _vm.file,
-                                staticClass: "text-end font-weight-medium",
-                                attrs: { "v-for": _vm.file in _vm.clFiles },
+                      _c(
+                        "div",
+                        { staticClass: "btn-list" },
+                        _vm._l(_vm.clFiles, function (file) {
+                          return _c(
+                            "div",
+                            {
+                              key: file,
+                              staticClass: "text-end font-weight-medium",
+                              attrs: {
+                                "v-if":
+                                  (_vm.clitem.cf_1578 === "Pending" ||
+                                    _vm.clitem.cf_1578 ===
+                                      "Replacement Needed") &&
+                                  _vm.clFiles.length > 0,
                               },
-                              [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-success btn-lg fas fa-paper-plane",
-                                    attrs: { type: "button" },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.sendToImmcase(
-                                          _vm.file,
-                                          _vm.clitem.clitemsno
-                                        )
-                                      },
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-success btn-lg fas fa-paper-plane",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.sendToImmcase(
+                                        file,
+                                        _vm.clitem.clitemsno
+                                      )
                                     },
                                   },
-                                  [
-                                    _vm._v(
-                                      "\n                    Send document\n                  "
-                                    ),
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-danger btn-lg fas fa-trash-alt",
-                                    attrs: { type: "button" },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.deleteFile(_vm.file)
-                                      },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    Send document\n                  "
+                                  ),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-danger btn-lg fas fa-trash-alt",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.deleteFile(file)
                                     },
                                   },
-                                  [
-                                    _vm._v(
-                                      "\n                    Remove document\n                  "
-                                    ),
-                                  ]
-                                ),
-                              ]
-                            )
-                          : _vm._e(),
-                      ]),
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    Remove document\n                  "
+                                  ),
+                                ]
+                              ),
+                            ]
+                          )
+                        }),
+                        0
+                      ),
                     ]),
                   ]),
                 ]),
@@ -24593,7 +24604,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card shadow  p-1 rounded" }, [
+    return _c("div", { staticClass: "card shadow p-1 rounded" }, [
       _c("div", { staticClass: "card-body d-flex justify-content-around" }, [
         _c(
           "div",
@@ -24611,7 +24622,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col col shadow  p-1 rounded pt-1" }, [
+      _c("div", { staticClass: "col col shadow p-1 rounded pt-1" }, [
         _c("h4", { staticClass: "card-title" }, [
           _c("span", { staticClass: "lstick d-inline-block align-middle" }),
           _vm._v("\n                    CLItem\n                  "),

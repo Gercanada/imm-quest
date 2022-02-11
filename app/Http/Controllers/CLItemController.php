@@ -64,23 +64,22 @@ class CLItemController extends Controller
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
         $cl_item =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
 
-        if($cl_item->cf_1200 === "Questionnaire"){
+        if ($cl_item->cf_1200 === "Questionnaire") {
             return view('checklists.items.questionnaire', compact('cl_item'));
         }
         return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
 
 
-    public function survey( $id)
+    public function survey($id)
     {
         $user = Auth::user();
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
         $cl_item =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
 
         return $cl_item;
-        if($cl_item->cf_1200 === "Questionnaire"){
+        if ($cl_item->cf_1200 === "Questionnaire") {
             return view('checklists.items.questionnaire', compact('cl_item'));
-
         }
         return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
@@ -172,6 +171,7 @@ class CLItemController extends Controller
         try {
             $file = $request->file;
             $urlFile = "public/$file";
+            //$urlFile = $file;
             //it works /public/documents/contact/2156722/cases/A2145419-Work Permit/checklists/CL2141417-/clitems/CLI4002097-Document/simpsons.png
             /*  $explodedUrl = explode(',', $urlFile);
             return $explodedUrl; */

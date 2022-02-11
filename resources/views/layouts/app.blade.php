@@ -142,9 +142,7 @@
     {{-- <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/dashboards/dashboard2.js">
     </script> --}}
-
     <!-- All scripts -->
-
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/select2/dist/js/select2.full.min.js">
     </script>
@@ -165,8 +163,6 @@
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
     </script>
-
-
     <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
   {{--   <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script> --}}
 

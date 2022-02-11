@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" style="heigth: 100%">
-    <div class="card shadow  p-1 rounded">
+    <div class="card shadow p-1 rounded">
       <div class="card-body d-flex justify-content-around">
         <div class="spinner-grow text-success center" role="status">
           <span class="sr-only" style="">Loading...</span>
@@ -10,7 +10,7 @@
   </div>
 
   <div v-else>
-    <div class="card shadow  p-1 rounded">
+    <div class="card shadow p-1 rounded">
       <div class="row">
         <div class="col-md-3 col-sm-12">
           <a
@@ -27,12 +27,12 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div class="card shadow  p-1 rounded">
+        <div class="card shadow p-1 rounded">
           <div class="card-body">
             <div class="card-row">
               <div class="col py-2">
                 <div class="row">
-                  <div class="col shadow  p-1 rounded pt-1">
+                  <div class="col shadow p-1 rounded pt-1">
                     <h4 class="card-title">
                       <span class="lstick d-inline-block align-middle"></span>
                       Case <b v-text="caseObj.ticket_title"></b>
@@ -41,7 +41,6 @@
                 </div>
                 <table class="table v-middle fs-3 mb-0 mt-4">
                   <tbody>
-
                     <tr>
                       <td>Status</td>
                       <td
@@ -79,12 +78,12 @@
             </div>
           </div>
         </div>
-        <div class="card shadow  p-1 rounded">
+        <div class="card shadow p-1 rounded">
           <div class="card-body">
             <div class="card-row">
               <div class="col py-2">
                 <div class="row">
-                  <div class="col shadow  p-1 rounded pt-1">
+                  <div class="col shadow p-1 rounded pt-1">
                     <h4 class="card-title">
                       <span class="lstick d-inline-block align-middle"></span>
                       Checklist <b v-text="checklistObj.name"></b>
@@ -149,12 +148,12 @@
             </div>
           </div>
         </div>
-        <div class="card shadow  p-1 rounded">
+        <div class="card shadow p-1 rounded">
           <div class="card-body">
             <div class="card-row">
               <div class="col py-2">
                 <div class="row">
-                  <div class="col col shadow  p-1 rounded pt-1">
+                  <div class="col col shadow p-1 rounded pt-1">
                     <h4 class="card-title">
                       <span class="lstick d-inline-block align-middle"></span>
                       CLItem
@@ -226,9 +225,12 @@
           <!-- Modal edit acount -->
         </div>
         <!-- TODO check statues ofclitem -->
-        <div class="card shadow  p-1 rounded">
+        <div class="card shadow p-1 rounded">
           <div class="card-body">
-            <div class="card shadow  p-1 rounded" v-if="clitem.cf_1200 == 'IMM Form'">
+            <div
+              class="card shadow p-1 rounded"
+              v-if="clitem.cf_1200 == 'IMM Form'"
+            >
               <div class="col border py-2">
                 <div class="row">
                   <div class="col-md-6">
@@ -259,7 +261,7 @@
                   v-if="
                     (clitem.cf_1578 === 'Pending' ||
                       clitem.cf_1578 === 'Replacement Needed') &&
-                    clFiles == 0
+                    clFiles.length == 0
                   "
                 >
                   <button
@@ -273,12 +275,12 @@
 
                 <div class="btn-list">
                   <div
-                    v-if="
-                      (clitem.cf_1578 === 'Pending'||
+                    :v-if="
+                      (clitem.cf_1578 === 'Pending' ||
                         clitem.cf_1578 === 'Replacement Needed') &&
                       clFiles.length > 0
                     "
-                    :v-for="file in clFiles"
+                    v-for="file in clFiles"
                     :key="file"
                     class="text-end font-weight-medium"
                   >
@@ -532,6 +534,7 @@ export default {
       axios
         .post("/cl-item/dropfile", { file: file })
         .then(function (response) {
+          console.log(response);
           Swal.fire({
             type: "success",
             title: "Document deleted",
@@ -569,6 +572,7 @@ export default {
           me.checklistObj = response.data[2];
           if ("files" in me.clitem.files) {
             me.clFiles = me.clitem.files.files;
+            console.log(me.clFiles);
           }
         })
         .catch(function (error) {

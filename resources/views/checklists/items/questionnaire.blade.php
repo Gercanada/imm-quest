@@ -18,9 +18,11 @@
                 opacity: 50%;
                 background-color: blue;
                 color: red;
+                padding: 20px 0 0 2px;
+                margin: 2px 0 0 2px;
             }
 
-            .new-frame .navbar-default {
+            #myIframe body .new-frame .navbar-collapse {
                 opacity: 100%;
                 background-color: green;
                 color: red;
@@ -47,7 +49,8 @@
 
 @section('content')
     <div class="row">
-        <iframe src="{{ $cl_item->cf_1212 }}" id="myIframe" width="100% " onload="myFunction()">
+        <iframe src="{{ $cl_item->cf_1212 }}" id="myIframe" width="100% " onload="myFunction()"
+            style=".navbar-collapse { opacity: 100%; background-color: green; color: red;}">
         </iframe>
     </div>
 @endsection
@@ -59,22 +62,17 @@
                 console.log("1 Segundo esperado")
                 document.getElementById('myIframe').className = 'new-frame';
                 var myframe = document.getElementById("myIframe");
-                var item2 = document.getElementById("beginScripts");
-                //var item3 = document.getElementById("row");
-                var item4 = document.getElementsByClassName("container-fluid");
 
-                console.log(myframe.classList);
-                console.log(item2.classList);
-                /*   console.log(item2.classList);
-                  console.log(item3.classList); */
-                // /myframe.classList.remove(" navbar navbar-default navbar-fixed-top");
-                /*  myframe.classList.remove("navbar-default");
-                 myframe.classList.remove("navbar-fixed-top");
-                 myframe.classList.remove("navbar");
-                 myframe.classList.remove("script-container");
-                 myframe.classList.remove("brand-logo"); */
-                //document.getElementById('beginScripts').className = 'new-frame';
-                //alert("Page is loaded");
+                var article = document.getElementsByTagName('article')
+                //var navbar = document.getElementById("navbar");
+                var iframeDocument = myframe.contentDocument ? myframe.contentDocument : myframe.contentWindow;
+
+                var x = document.getElementsByTagName("iframe")[0].contentWindow;
+
+                console.log(x.window.document);
+                $('#myIframe').contents().find('html').html();
+
+
             }, 2000);
 
         }

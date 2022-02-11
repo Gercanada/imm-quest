@@ -84,16 +84,12 @@ class DocumentController extends Controller
 
             $files = Storage::disk('public')->allFiles($directory);
             $urlFiles = [];
-            for ($i = 0; $i < 3; $i++) {
-                while (count($urlFiles) === 0) {
-                    foreach ($files as $file) {
-                        //$file =  str_replace(' ', '%20', $file);
-                        if (env('APP_ENV') === 'local') {
-                            array_push($urlFiles, (Storage::url($file)));
-                        } else {
-                            array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
-                        }
-                    }
+            foreach ($files as $file) {
+                //$file =  str_replace(' ', '%20', $file);
+                if (env('APP_ENV') === 'local') {
+                    array_push($urlFiles, (Storage::url($file)));
+                } else {
+                    array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
                 }
             }
             return response()->json($urlFiles, 200);

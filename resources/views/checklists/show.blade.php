@@ -115,14 +115,13 @@
                                                     value="{{ $clitem->cf_1212 }}">
                                                 <input type="hidden" name="clitemsno" id="clitemsno"
                                                     value="{{ $clitem->clitemsno }}">
-                                                {{-- <button type="submit" class="btn btn-outline-success btn-rounded">
-                                                    <i class="icon-refresh"></i></button> --}}
+                                                <button type="submit" class="btn btn-outline-success btn-rounded">
+                                                    <i class="icon-refresh"></i></button>
 
-
-                                                        <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
+                                                {{-- <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
                                                             data-toggle="tooltip" title="View details"
                                                             class="btn btn-outline-success btn-rounded"> <i
-                                                                class="fas fa-eye"></i></a>
+                                                                class="fas fa-eye"></i></a> --}}
                                             </form>
                                         </td>
                                     </tr>
