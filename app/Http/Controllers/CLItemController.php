@@ -63,8 +63,28 @@ class CLItemController extends Controller
         $user = Auth::user();
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
         $cl_item =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
+
+        if($cl_item->cf_1200 === "Questionnaire"){
+            return view('checklists.items.questionnaire', compact('cl_item'));
+        }
         return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
+
+
+    public function survey( $id)
+    {
+        $user = Auth::user();
+        $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+        $cl_item =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
+
+        return $cl_item;
+        if($cl_item->cf_1200 === "Questionnaire"){
+            return view('checklists.items.questionnaire', compact('cl_item'));
+
+        }
+        return view('checklists.items.item-dv-upload', compact('cl_item'));
+    }
+
 
     /**
      * This method allows upload files related with clitem

@@ -113,9 +113,15 @@ class LSurveyController extends Controller
     public function exportResponse(Request $request)
     {
         try {
+            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $vtiger = new Vtiger();
             $task   = new CloneDBController;
             $now    = Carbon::now()->format('H:i:s');
+            // $out->writeln($request);
+
+            if ($request->form != 'vue') {
+                $request->form = '';
+            }
 
             $urlObj = parse_url($request->surveyurl);
             $iSurveyID = str_replace('/', '', $urlObj['path']);
@@ -201,13 +207,23 @@ class LSurveyController extends Controller
                         $task->updateCLItemFromImmcase($request);
                     }
                     $return =  back()->with(['status' => 'success']);
+
+                    if ($request->form === "vue") {
+                        return "success";
+                    }
                 }
             }
             $task->updateChecklistFromImmcase($request);
             // Release the session key
             $myJSONRPCClient->release_session_key($sSessionKey);
+
+            if ($request->form === "vue") {
+                return "error";
+            }
             return $return;
         } catch (Exception $e) {
+            $out->writeln("Error !");
+            $out->writeln($e);
             return response()->json($e, 500);
         }
     }

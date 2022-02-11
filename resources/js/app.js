@@ -45,4 +45,3 @@ const app = new Vue({
         menu: 0
     },
 });
-

@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/checklists', [ChecklistController::class, 'index'])/* ->middleware(['auth']) */->name('checklists');
     Route::get('/checklist/{id}', [ChecklistController::class, 'show'])/* ->middleware(['auth']) */->name('show_checklist');
     Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupload'])/* ->middleware(['auth']) */->name('checklist_item');
+    Route::post('/survey/cl_item/{id}', [CLItemController::class, 'survey'])/* ->middleware(['auth']) */;
     //cl items
     Route::post('/cl-item', [CLItemController::class, 'show'])/* ->middleware(['auth']) */;
     Route::post('/cl-item/upload/file', [CLItemController::class, 'uploadFile'])/* ->middleware(['auth']) */;

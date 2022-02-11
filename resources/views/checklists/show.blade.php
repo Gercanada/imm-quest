@@ -31,7 +31,7 @@
                                 <th scope="col">CL Item Name</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Help link</th>
-                                <th scope="col"></th>
+                                <th scope="col">View</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -115,10 +115,14 @@
                                                     value="{{ $clitem->cf_1212 }}">
                                                 <input type="hidden" name="clitemsno" id="clitemsno"
                                                     value="{{ $clitem->clitemsno }}">
-                                                <button type="submit" class="btn btn-outline-success btn-rounded"
-                                                    {{-- data-toggle="tooltip"
-                                                    title="click to update the item after answering the survey" --}}>
-                                                    <i class="icon-refresh"></i></button>
+                                                {{-- <button type="submit" class="btn btn-outline-success btn-rounded">
+                                                    <i class="icon-refresh"></i></button> --}}
+
+
+                                                        <a href="{{ route('checklist_item', [$check_list->id, $clitem->id]) }}"
+                                                            data-toggle="tooltip" title="View details"
+                                                            class="btn btn-outline-success btn-rounded"> <i
+                                                                class="fas fa-eye"></i></a>
                                             </form>
                                         </td>
                                     </tr>

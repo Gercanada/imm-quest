@@ -126,19 +126,16 @@
                       <thead>
                         <tr>
                           <th scope="col">CL Item name</th>
-                          <th scope="col">Required by</th>
-                          <th scope="col">Upload</th>
+                          <th scope="col">Status</th>
                           <th scope="col">Help link</th>
+                          <th scope="col">View</th>
                         </tr>
                       </thead>
+                      <!--  <div :v-if="CLItemsArray.length == 0">
+
+                      </div> -->
+
                       <tbody>
-
-                        <tr :v-if="CLItemsArray.length == 0">
-                          <div class="text-center" width="100%">
-                             No avalible data
-                          </div>
-                        </tr>
-
                         <tr
                           v-for="clitem in CLItemsArray"
                           :key="clitem.id"
@@ -147,11 +144,19 @@
                           <template
                             v-if="
                               clitem.cf_1216 === checklist.id &&
-                              clitem.cf_1578 === 'Pending'
+                              clitem.cf_1200 === 'Document' &&
+                              (clitem.cf_1578 === 'Pending' ||
+                                clitem.cf_1578 === 'Replacement Needed')
                             "
                           >
                             <td v-text="clitem.name"></td>
-                            <td v-text="clitem.cf_1202"></td>
+                            <td v-text="clitem.cf_1578"></td>
+                            <td>
+                              <a
+                                :href="clitem.cf_1212"
+                                v-text="clitem.cf_1212"
+                              ></a>
+                            </td>
                             <td>
                               <a
                                 :href="
@@ -162,7 +167,7 @@
                                 "
                                 class="btn btn-outline-success btn-rounded"
                               >
-                                <i class="fas fa-upload"></i
+                                <i class="fas fa-eye"></i
                               ></a>
                             </td>
                             <td v-text="clitem.cf_1212"></td>
@@ -183,9 +188,9 @@
                       <thead>
                         <tr>
                           <th scope="col">CL Item name</th>
-                          <th scope="col">Required by</th>
                           <th scope="col">Help link</th>
                           <th scope="col">Status</th>
+                          <th scope="col">View</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -214,12 +219,116 @@
                               </a>
                             </td>
                             <td v-text="clitem.cf_1202"></td>
-                            <td v-text="clitem.cf_1212"></td>
                             <td v-text="clitem.cf_1578"></td>
+
+                            <td>
+                              <a
+                                :href="
+                                  '/checklist/' +
+                                  checklist.id +
+                                  '/item/' +
+                                  clitem.id
+                                "
+                                class="btn btn-outline-success btn-rounded"
+                              >
+                                <i class="fas fa-eye"></i
+                              ></a>
+                            </td>
                           </template>
                         </tr>
                       </tbody>
                     </table>
+                  </div>
+                </div>
+
+                <div class="shadow p-1 mt-4 rounded">
+                  <h3 class="card-title">
+                    <i class="mr-1 font-18 mdi mdi-textbox"></i> Questionnaire
+                  </h3>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">CL Item Name</th>
+                          <th scope="col">Help link</th>
+                          <th scope="col">Status</th>
+                          <th>Refresh status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          v-for="clitem in CLItemsArray"
+                          :key="clitem.id"
+                          :value="clitem.id"
+                        >
+                          <template
+                            v-if="
+                              clitem &&
+                              clitem.cf_1216 == checklist.id &&
+                              clitem.cf_1200 === 'Questionnaire' &&
+                              (clitem.cf_1578 === 'Pending' ||
+                                clitem.cf_1578 === 'Replacement Needed')
+                            "
+                          >
+                            <td v-text="clitem.name"></td>
+                            <td>
+                              <a
+                                :href="clitem.cf_1212"
+                                target="_blank"
+                                v-text="clitem.cf_1212"
+                              ></a>
+                            </td>
+                            <td v-text="clitem.cf_1578"></td>
+
+                            <td>
+                              <form @submit.prevent>
+                                <input
+                                  type="hidden"
+                                  name="surveyurl"
+                                  id="surveyurl"
+                                  :value="clitem.cf_1212"
+                                />
+                                <input
+                                  type="hidden"
+                                  name="clitemsno"
+                                  id="clitemsno"
+                                  :value="clitem.clitemsno"
+                                />
+                                <button
+                                  @click="refreshStatus()"
+                                  class="btn btn-outline-success btn-rounded"
+                                >
+                                  <i class="icon-refresh"></i>
+                                </button>
+                              </form>
+                            </td>
+                          </template>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div
+                      v-if="session_status === 'success'"
+                      class="
+                        alert alert-success
+                        text-info text-center
+                        font-weight-bold
+                      "
+                      id="surveyAlert"
+                    >
+                      ✔ This survey has been answered ✔
+                    </div>
+                    <div
+                      v-else-if="session_status === 'error'"
+                      class="
+                        alert alert-danger
+                        text-warning text-center
+                        font-weight-bold
+                      "
+                      id="surveyAlert"
+                    >
+                      ❌ This survey has NOT answered. Please open the link and
+                      answer the survey. ❌
+                    </div>
                   </div>
                 </div>
 
@@ -232,9 +341,11 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th scope="col">CL Item name</th>
+                          <th scope="col">CL Item Name</th>
+                          <th scope="col">File Name</th>
+                          <th scope="col">Category</th>
                           <th scope="col">Status</th>
-                          <th scope="col">File name</th>
+                          <th>View</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -256,8 +367,24 @@
                             "
                           >
                             <td v-text="clitem.name"></td>
-                            <td v-text="clitem.cf_1578"></td>
                             <td v-text="clitem.cf_1970"></td>
+
+                            <td v-text="clitem.cf_1200"></td>
+                            <td v-text="clitem.cf_1578"></td>
+
+                            <td>
+                              <a
+                                :href="
+                                  '/checklist/' +
+                                  checklist.id +
+                                  '/item/' +
+                                  clitem.id
+                                "
+                                class="btn btn-outline-success btn-rounded"
+                              >
+                                <i class="fas fa-eye"></i
+                              ></a>
+                            </td>
                           </template>
                         </tr>
                       </tbody>
@@ -287,6 +414,10 @@ export default {
       id: urlParams[2],
       activeItem: "",
       loading: false,
+
+      surveyurl: "",
+      clitemsno: "",
+      session_status: "",
     };
   },
 
@@ -300,7 +431,7 @@ export default {
       axios
         .get("/details_case/" + me.id)
         .then(function (response) {
-          console.log({ response });
+          console.log(response);
           me.tkcase = response.data[0];
           me.ArrayChecklist = response.data[1];
           me.CLItemsArray = response.data[2];
@@ -317,6 +448,25 @@ export default {
     },
     setActive(menuItem) {
       this.activeItem = menuItem;
+    },
+
+    refreshStatus() {
+      let me = this;
+      axios
+        .post("/questionaries/export_response", {
+          surveyurl: surveyurl.value,
+          clitemsno: clitemsno.value,
+          form: "vue",
+        })
+        .then(function (response) {
+          console.log(response);
+          me.session_status = response.data;
+          $("#surveyAlert").delay(10000).hide(0);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .finally(() => (this.loading = false));
     },
   },
 };
