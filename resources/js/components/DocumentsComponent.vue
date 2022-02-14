@@ -2,7 +2,7 @@
 <template>
   <div v-if="loading">
     <div v-if="loading" style="heigth: 100%">
-      <div class="card shadow  p-1 rounded">
+      <div class="card shadow p-1 rounded">
         <div class="card-body">
           <div class="card-body d-flex justify-content-around">
             <div class="spinner-grow text-success center" role="status">
@@ -15,17 +15,17 @@
   </div>
 
   <div v-else>
-       <div class="row page-titles">
-            <div class="col-md-5 col-12 align-self-center">
-                <h3 class="text-themecolor mb-0">Documents</h3>
-            </div>
-        </div>
+    <div class="row page-titles">
+      <div class="col-md-5 col-12 align-self-center">
+        <h3 class="text-themecolor mb-0">Documents</h3>
+      </div>
+    </div>
 
     <div class="row">
-      <div class="card shadow  p-1 rounded">
-      <!--   <div class="card-header">
+      <div class="card shadow p-1 rounded">
+        <!--   <div class="card-header">
          <! --  <h3 class="text-themecolor mb-0">Documents</h3> -->
-          <!--  <button
+        <!--  <button
             type="button"
             class="btn btn-primary fas fa-edit float-right"
             @click="openModal('documents', 'store')"
@@ -317,13 +317,16 @@ export default {
           id: this.id,
         })
         .then(function (response) {
+          console.log(response);
           me.closeModal();
           me.userFiles();
         })
         .catch(function (error) {
+            conole.log({"here": error});
           console.table(error);
         });
     },
+
     sendMessage: async function (files, xhr, formData) {
       formData.append("email", this.email);
       formData.append("message", this.message);

@@ -445,32 +445,8 @@ export default {
     this.userFiles();
   },
   methods: {
-    afterUploadComplete: async function (response) {
-      if (
-        response.status == 200 ||
-        response.status == "success" ||
-        response.status == "200"
-      ) {
-        Swal.fire({
-          type: "success",
-          title: "Upload successfull!",
-          timer: 2000,
-          showConfirmButton: false,
-        });
-        console.log("upload successful");
-        this.sendSuccess = true;
-        this.closeModal();
-      } else {
-        Swal.fire({
-          type: "error",
-          title: "Upload failed !",
-          timer: 2000,
-          showConfirmButton: false,
-        });
-        console.log("upload failed");
-        this.closeModal();
-      }
-    },
+    afterUploadComplete: async function () {},
+
     shootMessage: async function () {
       this.submitted = true;
       this.errors = {};
@@ -484,17 +460,26 @@ export default {
       let me = this;
       axios
         .post("/cl-item/upload/file", {
-          title: me.title,
-          last_name: me.last_name,
-          description: me.description,
-          expiry_date: me.expiry_date,
           id: me.id,
         })
         .then(function (response) {
+          console.log(response);
+          Swal.fire({
+            type: "success",
+            title: "Upload successfull!",
+            timer: 2000,
+            showConfirmButton: false,
+          });
           me.closeModal();
         })
         .catch(function (error) {
-          console.log(error);
+          console.log("error");
+          Swal.fire({
+            type: "error",
+            title: "Upload failed !",
+            timer: 2000,
+            showConfirmButton: false,
+          });
         });
     },
 
@@ -508,6 +493,7 @@ export default {
       axios
         .post("/cl-item/send_file", { clitemsno: clitemsno, file: file })
         .then(function (response) {
+          console.log(response);
           Swal.fire({
             type: "success",
             title: "Document sent",

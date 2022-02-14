@@ -91,6 +91,9 @@ class CLItemController extends Controller
     public function uploadFile(Request $request)
     {
         try {
+
+            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            /*  $out->writeln($request); */
             $user = Auth::user();
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
             $clitem = CLItem::where('id', $request->id)
@@ -101,40 +104,56 @@ class CLItemController extends Controller
             $checklist = Checklist::where('id', $clitem->cf_1216)
                 ->where('cf_contacts_id', $contact->id)
                 ->firstOrFail();
-
-            if ($request->file('file')) {
-                /* Multiple file upload */
-                $files = $request->file('file');
-                if (!is_array($files)) {
-                    $files = [$files];
-                }
-                $fileList = array();
-                $contact_no = $contact->contact_no;
-                $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
-                if ($request->category === 'eform') {
-                    $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/eforms/$clitem->clitemsno-$clitem->cf_1200";
-                }
-
-                foreach ($files as $file) {
-                    $filename = $file->getClientOriginalName();
-                    $filename = str_replace(' ', '', $filename);
-                    $filename = str_replace('-', '_', $filename);
-
-                    $file->storeAs("/public/$destination", $filename);
-                    $fileUrl = "$destination/$filename";
-                    array_push($fileList, $fileUrl);
-                }
-                return response()->json(["List" => $fileList, 200]);
+            /* Multiple file upload */
+            if (!$request->file('file')) {
+                $out->writeln("Fail here");
+                return  404;
             }
-        } catch (\Exception $e) {
-            return  response()->json(['message' => $e], 503);
+            $out->writeln($request);
+            $out->writeln("************");
+            $files = $request->file('file');
+            if (!is_array($files)) {
+                $files = [$files];
+            }
+            /*  if (count($files) <= 0) {
+                return response()->json("No file to upload", 409);
+            } */
+            /*  return response()->json("success", 200); */
+            $fileList = array();
+            $contact_no = $contact->contact_no;
+            $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
+            if ($request->category === 'eform') {
+                $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/eforms/$clitem->clitemsno-$clitem->cf_1200";
+            }
+            $out->writeln($files);
+
+            // return 200;
+            foreach ($files as $file) {
+                $out->writeln($file);
+                $filename = $file->getClientOriginalName();
+                $out->writeln($filename);
+                $filename = str_replace(' ', '', $filename);
+                $filename = str_replace('-', '_', $filename);
+                $file->storeAs("/public/$destination", $filename);
+                $fileUrl = "$destination/$filename";
+                array_push($fileList, $fileUrl);
+            }
+            $out->writeln(count($fileList));
+
+           // return 200;
+            // return response()->json("success", 200);
+
+            return response()->json($fileList, 200);
+        } catch (Exception $e) {
+            $out->writeln(500);
+            return response()->json($e, 500);
         }
     }
 
     public function sendDocumentToImmcase(Request $request)
     {
         try {
-
+            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $vtiger = new Vtiger();
             $ex = explode('/', $request->file);
             /*
@@ -143,26 +162,28 @@ class CLItemController extends Controller
             */
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem = $vtiger->search($clitemQuery);
-            if (count($clitem->result) > 0) {
-                $clitem =  $vtiger->search($clitemQuery)->result[0];
-            }
-            if ($clitem) {
-                //get contact
-                $contactQuery = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
-                $contact = $vtiger->search($contactQuery)->result[0];
-                $caseQuery = DB::table('HelpDesk')->select('*')->where("id",  $clitem->cf_1217)->take(1);
-                $case = $vtiger->search($caseQuery)->result[0];
-                $obj = $vtiger->retrieve($clitem->id);
-                $obj->result->cf_1970 = end($ex);
-                $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
-                $obj->result->cf_acf_rtf_1208 = "Document uploaded from customers portal";
-                $vtiger->update($obj->result);
 
-                $task = new CloneDBController;
-                $task->updateCLItemFromImmcase($request);
-                return response()->json(["Success", $obj], 200);
+
+            if (!$clitem->success === true) {
+                return response()->json("Clitem not fount", 404);
             }
+            $clitem =  $vtiger->search($clitemQuery)->result[0];
+            //get contact
+            $contactQuery = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
+            $contact = $vtiger->search($contactQuery)->result[0];
+            $caseQuery = DB::table('HelpDesk')->select('*')->where("id",  $clitem->cf_1217)->take(1);
+            $case = $vtiger->search($caseQuery)->result[0];
+            $obj = $vtiger->retrieve($clitem->id);
+            $obj->result->cf_1970 = end($ex);
+            $obj->result->cf_1214 = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
+            $obj->result->cf_acf_rtf_1208 = "Document uploaded from customers portal";
+            $vtiger->update($obj->result);
+            $task = new CloneDBController;
+            $task->updateCLItemFromImmcase($request);
+
+            return response()->json("Success", 200);
         } catch (Exception $e) {
+            $out->writeln(500);
             return response()->json($e, 500);
         }
     }
@@ -185,8 +206,7 @@ class CLItemController extends Controller
             return $e->getMessage();
             return response()->json([$e, 500]);
         }
-
-        return $request;
+        /*  return $request; */
     }
 
 

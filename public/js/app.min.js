@@ -3292,41 +3292,19 @@ var urlParams = window.location.pathname.split("/");
   },
   methods: {
     afterUploadComplete: function () {
-      var _afterUploadComplete = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
+      var _afterUploadComplete = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (response.status == 200 || response.status == "success" || response.status == "200") {
-                  Swal.fire({
-                    type: "success",
-                    title: "Upload successfull!",
-                    timer: 2000,
-                    showConfirmButton: false
-                  });
-                  console.log("upload successful");
-                  this.sendSuccess = true;
-                  this.closeModal();
-                } else {
-                  Swal.fire({
-                    type: "error",
-                    title: "Upload failed !",
-                    timer: 2000,
-                    showConfirmButton: false
-                  });
-                  console.log("upload failed");
-                  this.closeModal();
-                }
-
-              case 1:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee);
       }));
 
-      function afterUploadComplete(_x) {
+      function afterUploadComplete() {
         return _afterUploadComplete.apply(this, arguments);
       }
 
@@ -3355,15 +3333,24 @@ var urlParams = window.location.pathname.split("/");
                 this.$refs.myVueDropzone.processQueue();
                 me = this;
                 axios.post("/cl-item/upload/file", {
-                  title: me.title,
-                  last_name: me.last_name,
-                  description: me.description,
-                  expiry_date: me.expiry_date,
                   id: me.id
                 }).then(function (response) {
+                  console.log(response);
+                  Swal.fire({
+                    type: "success",
+                    title: "Upload successfull!",
+                    timer: 2000,
+                    showConfirmButton: false
+                  });
                   me.closeModal();
                 })["catch"](function (error) {
-                  console.log(error);
+                  console.log("error");
+                  Swal.fire({
+                    type: "error",
+                    title: "Upload failed !",
+                    timer: 2000,
+                    showConfirmButton: false
+                  });
                 });
 
               case 9:
@@ -3396,7 +3383,7 @@ var urlParams = window.location.pathname.split("/");
         }, _callee3, this);
       }));
 
-      function sendMessage(_x2, _x3, _x4) {
+      function sendMessage(_x, _x2, _x3) {
         return _sendMessage.apply(this, arguments);
       }
 
@@ -3411,6 +3398,7 @@ var urlParams = window.location.pathname.split("/");
         clitemsno: clitemsno,
         file: file
       }).then(function (response) {
+        console.log(response);
         Swal.fire({
           type: "success",
           title: "Document sent",
@@ -4352,9 +4340,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   expiry_date: this.expiry_date,
                   id: this.id
                 }).then(function (response) {
+                  console.log(response);
                   me.closeModal();
                   me.userFiles();
                 })["catch"](function (error) {
+                  conole.log({
+                    "here": error
+                  });
                   console.table(error);
                 });
 
@@ -25315,7 +25307,7 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "card shadow  p-1 rounded" },
+            { staticClass: "card shadow p-1 rounded" },
             [
               _c("div", { staticClass: "card-body" }, [
                 _c("div", { staticClass: "table-responsive" }, [
@@ -25813,7 +25805,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card shadow  p-1 rounded" }, [
+    return _c("div", { staticClass: "card shadow p-1 rounded" }, [
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "card-body d-flex justify-content-around" }, [
           _c(

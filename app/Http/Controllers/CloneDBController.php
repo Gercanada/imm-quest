@@ -536,7 +536,6 @@ class CloneDBController extends Controller
             $vtiger = new Vtiger();
             $checklistQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
             $checklist =  $vtiger->search($checklistQuery);
-
             if (!$checklist->success === true) {
                 return response()->json("Checklist not fount", 404);
             }
