@@ -130,7 +130,7 @@ class VtigerController extends Controller
             $data = $types;
         }
         if ($where == 'all') {
-            $query = DB::table($type)->select('*')->where('clitemsno','CLI4002016');
+            $query = DB::table($type)->select('*')->where('clitemsno','CLI4002052');
             // $query = DB::table($type)->select('id', 'firstname', 'lastname')->where('firstname', 'John');
             $data = $vtiger->search($query);
         }

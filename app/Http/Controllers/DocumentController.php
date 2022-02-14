@@ -67,6 +67,7 @@ class DocumentController extends Controller
             }
             return $return;
         } catch (Exception $e) {
+            return response()->json(["error" => $e], 500);
             return $e->getMessage();
             return response()->json([$e, 500]);
         }
@@ -94,7 +95,7 @@ class DocumentController extends Controller
             }
             return response()->json($urlFiles, 200);
         } catch (Exception $e) {
-            return response()->json($e, 500);
+            return response()->json(["error" => $e], 500);
             // $out->write($e);
         }
     }
@@ -141,8 +142,12 @@ class DocumentController extends Controller
      */
     public function singleUrl(Request $request)
     {
-        $ex = explode('/', $request->file);
-        $url = str_replace(' ', '%20', env('APP_URL') . $request->file);
-        return response()->json($url);
+        try {
+            $ex = explode('/', $request->file);
+            $url = str_replace(' ', '%20', env('APP_URL') . $request->file);
+            return response()->json($url);
+        } catch (Exception $e) {
+            return response()->json(["error" => $e], 500);
+        }
     }
 }

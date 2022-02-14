@@ -523,7 +523,7 @@ class CloneDBController extends Controller
                 return response()->json(['Success', $clitem->id], 200);
             }
         } catch (Exception $e) {
-            return response()->json("error", 500);
+            return response()->json(["error" => $e], 500);
         }
     }
 
@@ -541,7 +541,7 @@ class CloneDBController extends Controller
                 return response()->json(['Success', $clitem->id], 200);
             }
         } catch (Exception $e) {
-            return response()->json("error", 500);
+            return response()->json(["error" => $e], 500);
         }
     }
 
