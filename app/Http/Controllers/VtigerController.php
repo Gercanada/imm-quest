@@ -130,7 +130,7 @@ class VtigerController extends Controller
             $data = $types;
         }
         if ($where == 'all') {
-            $query = DB::table($type)->select('*')->where('clitemsno','CLI4002052');
+            $query = DB::table($type)->select('*')/* ->where('clitemsno','CLI4002052') */;
             // $query = DB::table($type)->select('id', 'firstname', 'lastname')->where('firstname', 'John');
             $data = $vtiger->search($query);
         }
@@ -138,6 +138,9 @@ class VtigerController extends Controller
             $query = null;
             if ($type === 'Documents') {
                 $query = DB::table($type)->select('*')->where("assigned_user_id", "19x29");
+            }
+            if ($type === 'Checklist') {
+                $query = DB::table($type)->select('*')->where("id", "43x71108");
             }
             if ($type === 'Invoice') {
                 $query = DB::table($type)->select('*')->where("assigned_user_id", "19x29");

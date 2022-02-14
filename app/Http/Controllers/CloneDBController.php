@@ -511,32 +511,38 @@ class CloneDBController extends Controller
     public function updateCLItemFromImmcase(Request $request)
     {
         try {
-            if ($request->clitemsno) {
-                $vtiger = new Vtiger();
-                $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
-                $clitem =  $vtiger->search($clitemQuery);
-                if (!$clitem->success === true) {
-                    return response()->json("Item not fount", 404);
-                }
-                $clitem = $clitem->result[0];
-                $description = $vtiger->describe('CLItems');
-                $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
-                $contactField = "cf_contacts_id";
-                self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
-                return response()->json(['Success', $clitem->id], 200);
+            if (!$request->clitemsno) {
+                return 404;
             }
+            $vtiger = new Vtiger();
+            $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
+            $clitem =  $vtiger->search($clitemQuery);
+            if (!$clitem->success === true) {
+                return response()->json("Item not fount", 404);
+            }
+            $clitem = $clitem->result[0];
+            $description = $vtiger->describe('CLItems');
+            $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
+            $contactField = "cf_contacts_id";
+            self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
+            return response()->json(['Success', $clitem->id], 200);
         } catch (Exception $e) {
-            return response()->json(["error" => $e], 500);
+            return response()->json("error", 500);
         }
     }
 
     public function updateChecklistFromImmcase(Request $request)
     {
         try {
+            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            $out->writeln($request);
+            $out->writeln($request->checklist_id);
+            $out->writeln($request['checklist_id']);
+
             $vtiger = new Vtiger();
             $checklistQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
             $checklist =  $vtiger->search($checklistQuery);
-            if (!$checklist->success === true) {
+            if ($checklist->success != true) {
                 return response()->json("Checklist not fount", 404);
             }
             $checklist = $checklist->result[0];
@@ -546,6 +552,7 @@ class CloneDBController extends Controller
             self::getData($checklistQuery, $description->result->fields, $contact, $contactField, $description->result->name);
             return response()->json(['Success', $checklist->id], 200);
         } catch (Exception $e) {
+            $out->writeln($e);
             return response()->json(["error" => $e->getMessage()], 500);
         }
     }
