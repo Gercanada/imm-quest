@@ -44,6 +44,7 @@ Route::middleware('imm-header')->group(function () {
     Route::post('/single_url',                     [DocumentController::class, 'singleUrl']);
 
     Route::post('/update_clitem',                  [CloneDBController::class, 'updateCLItemFromImmcase']);
+    Route::post('/update_checklist',                  [CloneDBController::class, 'updateChecklistFromImmcase']);
 
     Route::post('/questionaries/guest',            [LSurveyController::class, 'guestToSurvey']); //tri not middleware
 

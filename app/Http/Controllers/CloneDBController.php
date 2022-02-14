@@ -356,7 +356,7 @@ class CloneDBController extends Controller
             }
             if (count($table) > 0 &&  property_exists($table[0], 'total') &&  $table[0]->total === 0) { //If noting found be created
                 $retry = true;
-                 if ($retry === true) {
+                if ($retry === true) {
                     try {
                         DB::insert("INSERT INTO vt_$tablename($names) VALUES($data);");
                         $retry = false;
@@ -442,7 +442,7 @@ class CloneDBController extends Controller
                 if (count($table) > 0 &&  property_exists($table[0], 'total') && $table[0]->total > 0) { //If table has founded row be updated
                     $setValues = self::jsonToSetOnMysql($newValues);
                     $retry = true;
-                     if ($retry === true) {
+                    if ($retry === true) {
                         try {
                             DB::update("UPDATE vt_$tablename set $setValues WHERE id = '$id';");
                             $retry = false;
@@ -519,6 +519,7 @@ class CloneDBController extends Controller
                 $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
                 $contactField = "cf_contacts_id";
                 self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
+
                 return response()->json(['Success', $clitem->id], 200);
             }
         } catch (Exception $e) {
