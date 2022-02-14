@@ -514,12 +514,15 @@ class CloneDBController extends Controller
             if ($request->clitemsno) {
                 $vtiger = new Vtiger();
                 $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
-                $clitem =  $vtiger->search($clitemQuery)->result[0];
+                $clitem =  $vtiger->search($clitemQuery);
+                if (!$clitem->success === true) {
+                    return response()->json("Item not fount", 404);
+                }
+                $clitem = $clitem->result[0];
                 $description = $vtiger->describe('CLItems');
                 $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
                 $contactField = "cf_contacts_id";
                 self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
-
                 return response()->json(['Success', $clitem->id], 200);
             }
         } catch (Exception $e) {
@@ -530,18 +533,21 @@ class CloneDBController extends Controller
     public function updateChecklistFromImmcase(Request $request)
     {
         try {
-            if ($request->checklist_id) {
-                $vtiger = new Vtiger();
-                $clitemQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
-                $clitem =  $vtiger->search($clitemQuery)->result[0];
-                $description = $vtiger->describe('Checklist');
-                $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
-                $contactField = "cf_contacts_id";
-                self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
-                return response()->json(['Success', $clitem->id], 200);
+            $vtiger = new Vtiger();
+            $checklistQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
+            $checklist =  $vtiger->search($checklistQuery);
+
+            if (!$checklist->success === true) {
+                return response()->json("Checklist not fount", 404);
             }
+            $checklist = $checklist->result[0];
+            $description = $vtiger->describe('Checklist');
+            $contact = Contact::where("id", $checklist->cf_contacts_id)->firstOrFail();
+            $contactField = "cf_contacts_id";
+            self::getData($checklistQuery, $description->result->fields, $contact, $contactField, $description->result->name);
+            return response()->json(['Success', $checklist->id], 200);
         } catch (Exception $e) {
-            return response()->json(["error" => $e], 500);
+            return response()->json(["error" => $e->getMessage()], 500);
         }
     }
 
