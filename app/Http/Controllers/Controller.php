@@ -17,4 +17,14 @@ class Controller extends BaseController
         $out = new \Symfony\Component\Console\Output\ConsoleOutput();
         return $out;
     }
+
+    public function returnJsonError($e, $onMethod)
+    {
+        if (env('APP_ENV') === 'local') {
+            $this->consoleWrite()->writeln($e);
+            return response()->json(['error' => $e], 500);
+        } else {
+            return response()->json(['error' => $onMethod]);
+        }
+    }
 }

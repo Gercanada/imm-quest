@@ -43,23 +43,24 @@ Route::middleware('imm-header')->group(function () {
     Route::post('/remove_document',                [DocumentController::class, 'destroy']);
     Route::post('/single_url',                     [DocumentController::class, 'singleUrl']);
 
-    Route::post('/update_clitem',                  [CloneDBController::class, 'updateCLItemFromImmcase']);
-    Route::post('/update_checklist',                  [CloneDBController::class, 'updateChecklistFromImmcase']);
-
-    Route::post('/questionaries/guest',            [LSurveyController::class, 'guestToSurvey']); //tri not middleware
-
-
     Route::post('/clitem_doc',                     [DocumentController::class, 'createCLItemDoc']);
 
-    Route::post('/cl-item/send_file',              [CLItemController::class, 'sendDocumentToImmcase']); //Only catch errs
-    Route::post('/questionaries/export_response',  [LSurveyController::class, 'exportResponse']); //Test as service
-
-    Route::post('/create_user',                    [UserController::class, 'createUser']);
-
+    Route::post('/update_clitem',                  [CloneDBController::class, 'updateCLItemFromImmcase']);
+    Route::post('/update_checklist',                  [CloneDBController::class, 'updateChecklistFromImmcase']);
     Route::post('/clear_trash',                    [CloneDBController::class, 'clearTrashDB']);
 
     Route::post('/viger/clonedb',                  [CloneDBController::class, 'cloneImmcaseContactData']);
     Route::post('/viger/update_contact',           [CloneDBController::class, 'updateOnImmcase']);
+
+    Route::post('/questionaries/guest',            [LSurveyController::class, 'guestToSurvey']); //tri not middleware
+    Route::post('/questionaries/export_response',  [LSurveyController::class, 'exportResponse']); //Test as service
+
+
+
+    Route::post('/cl-item/send_file',              [CLItemController::class, 'sendDocumentToImmcase']); //Only catch errs
+
+    Route::post('/create_user',                    [UserController::class, 'createUser']);
+
 
     //Route::post('/remove_user',                    [UserController::class, 'removeUser']);
     //Route::post('/viger/find_duplicates', [CloneDBController::class, 'duplicateContacts']);

@@ -21,12 +21,16 @@ class DocumentController extends Controller
 
     public function getDocuments()
     {
-        $user = Auth::user();
-        //Get contact data of this user
-        $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
-        //Documents
-        $documents = DB::table('vt_Documents')->where('cf_1488', $contact->id)->get();
-        return response()->json($documents, 200);
+        try {
+            $user = Auth::user();
+            //Get contact data of this user
+            $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
+            //Documents
+            $documents = DB::table('vt_Documents')->where('cf_1488', $contact->id)->get();
+            return response()->json($documents, 200);
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['DocumentController' => 'getDocuments']);
+        }
     }
 
 
@@ -67,9 +71,7 @@ class DocumentController extends Controller
             }
             return $return;
         } catch (Exception $e) {
-            return response()->json(["error" => $e], 500);
-            return $e->getMessage();
-            return response()->json([$e, 500]);
+            return $this->returnJsonError($e, ['DocumentController' => 'destroy']);
         }
     }
 
@@ -79,7 +81,6 @@ class DocumentController extends Controller
     public function checkDocuments(Request $request)
     {
         try {
-            /*  $out = new \Symfony\Component\Console\Output\ConsoleOutput();*/
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
 
@@ -95,8 +96,7 @@ class DocumentController extends Controller
             }
             return response()->json($urlFiles, 200);
         } catch (Exception $e) {
-            return response()->json(["error" => $e], 500);
-            // $out->write($e);
+            return $this->returnJsonError($e, ['DocumentController' => 'checkDocuments']);
         }
     }
 
@@ -132,7 +132,7 @@ class DocumentController extends Controller
             $data = $vtiger->create('Documents', ($data));
             return 200;
         } catch (Exception $e) {
-            return response()->json($e, 500);
+            return $this->returnJsonError($e, ['DocumentController' => 'createCLItemDoc']);
         }
     }
 
@@ -147,7 +147,7 @@ class DocumentController extends Controller
             $url = str_replace(' ', '%20', env('APP_URL') . $request->file);
             return response()->json($url);
         } catch (Exception $e) {
-            return response()->json(["error" => $e], 500);
+            return $this->returnJsonError($e, ['DocumentController' => 'singleUrl']);
         }
     }
 }

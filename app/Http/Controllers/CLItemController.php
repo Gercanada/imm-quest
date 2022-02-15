@@ -93,7 +93,6 @@ class CLItemController extends Controller
     public function uploadFile(Request $request)
     {
         try {
-
             $user = Auth::user();
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
             $clitem = CLItem::where('id', $request->id)
@@ -128,7 +127,7 @@ class CLItemController extends Controller
             }
             return response()->json($fileList, 200);
         } catch (Exception $e) {
-            return response()->json(['error' => $e], 500);
+            return $this->returnJsonError($e, ['CLItemController' => 'uploadFile']);
         }
     }
 
@@ -160,7 +159,7 @@ class CLItemController extends Controller
 
             return response()->json("Success", 200);
         } catch (Exception $e) {
-            return response()->json($e, 500);
+            return $this->returnJsonError($e, ['CLItemController' => 'sendDocumentToImmcase']);
         }
     }
     public function deleteDocument(Request $request)
@@ -175,24 +174,28 @@ class CLItemController extends Controller
                 return response()->json("File not found at " . $urlFile, 403);
             }
         } catch (Exception $e) {
-            return response()->json(['error' => $e], 500);
+            return $this->returnJsonError($e, ['CLItemController' => 'deleteDocument']);
         }
     }
 
 
     public function downloadFile($contact)
     {
-        $directory = "/documents/contact/$contact";
-        $files = Storage::disk('public')->allFiles($directory);
-        $urlFiles = [];
+        try {
+            $directory = "/documents/contact/$contact";
+            $files = Storage::disk('public')->allFiles($directory);
+            $urlFiles = [];
 
-        foreach ($files as $file) {
-            if (env('APP_ENV') === 'local') {
-                array_push($urlFiles, (Storage::url($file)));
-            } else {
-                array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+            foreach ($files as $file) {
+                if (env('APP_ENV') === 'local') {
+                    array_push($urlFiles, (Storage::url($file)));
+                } else {
+                    array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+                }
             }
+            return $urlFiles;
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['CLItemController' => 'downloadFile']);
         }
-        return $urlFiles;
     }
 }

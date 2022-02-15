@@ -101,7 +101,7 @@ class LSurveyController extends Controller
                 //return response()->json(["success" => $surveyValues]);
             }
         } catch (Exception $e) {
-            return response()->json("Server error", 500);
+            return $this->returnJsonError($e, ['LSurveyController' => 'guestToSurvey']);
         }
     }
 
@@ -222,9 +222,7 @@ class LSurveyController extends Controller
             }
             return $return;
         } catch (Exception $e) {
-            $out->writeln("Error !");
-            $out->writeln($e);
-            return response()->json($e, 500);
+            return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }
     }
 

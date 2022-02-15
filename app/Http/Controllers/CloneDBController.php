@@ -147,8 +147,7 @@ class CloneDBController extends Controller
             //[CloneDBController::class, 'clearTrashDB'];
             return "dataCloned";
         } catch (Exception $e) {
-            /* $console->writeln($e); */
-            return response()->json($e, 500);
+            return $this->returnJsonError($e, ['CloneDBController' => 'cloneImmcaseContactData']);
         }
     }
 
@@ -224,8 +223,7 @@ class CloneDBController extends Controller
             }
             return 200;
         } catch (Exception $e) {
-            return $e;
-            // return response()->json($e->getMessage(), 500);
+            return $this->returnJsonError($e, ['CloneDBController' => 'updateOnImmcase']);
         }
     }
 
@@ -502,7 +500,7 @@ class CloneDBController extends Controller
             }
             return response()->json("Success. $deleted Records deleted", 200);
         } catch (Exception $e) {
-            return response()->json($e->getMessage(), 500);
+            return $this->returnJsonError($e, ['CloneDBController' => 'clearTrashDB']);
         }
     }
 
@@ -526,7 +524,7 @@ class CloneDBController extends Controller
             self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
             return response()->json(['Success', $clitem->id], 200);
         } catch (Exception $e) {
-            return response()->json("error", 500);
+            return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);
         }
     }
 
@@ -547,7 +545,7 @@ class CloneDBController extends Controller
             self::getData($checklistQuery, $description->result->fields, $contact, $contactField, $description->result->name);
             return response()->json(['Success', $checklist->id], 200);
         } catch (Exception $e) {
-            return response()->json(["error" => $e->getMessage()], 500);
+            return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);
         }
     }
 
