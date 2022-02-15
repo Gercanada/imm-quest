@@ -24,7 +24,7 @@ class Controller extends BaseController
             $this->consoleWrite()->writeln($e);
             return response()->json(['error' => $e], 500);
         } else {
-            return response()->json(['error' => $onMethod]);
+            return response()->json(['error' => $onMethod], 500);
         }
     }
 }
