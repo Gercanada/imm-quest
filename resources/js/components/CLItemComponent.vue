@@ -472,14 +472,14 @@ export default {
           me.closeModal();
         })
         .catch(function (error) {
-          console.log(error);
-          console.log("error");
-          /*  Swal.fire({
+          /* console.log(error);
+          console.log("error"); */
+           Swal.fire({
             type: "error",
             title: "Upload failed !",
             timer: 2000,
             showConfirmButton: false,
-          }); */
+          });
         });
     },
 

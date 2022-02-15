@@ -533,7 +533,7 @@ class CloneDBController extends Controller
     public function updateChecklistFromImmcase(Request $request)
     {
         try {
-            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            //$out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $vtiger = new Vtiger();
             $checklistQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
             $checklist =  $vtiger->search($checklistQuery);
@@ -547,7 +547,6 @@ class CloneDBController extends Controller
             self::getData($checklistQuery, $description->result->fields, $contact, $contactField, $description->result->name);
             return response()->json(['Success', $checklist->id], 200);
         } catch (Exception $e) {
-            $out->writeln($e);
             return response()->json(["error" => $e->getMessage()], 500);
         }
     }

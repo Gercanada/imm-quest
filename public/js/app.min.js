@@ -3343,14 +3343,14 @@ var urlParams = window.location.pathname.split("/");
                   });
                   me.closeModal();
                 })["catch"](function (error) {
-                  console.log(error);
-                  console.log("error");
-                  /*  Swal.fire({
+                  /* console.log(error);
+                  console.log("error"); */
+                  Swal.fire({
                     type: "error",
                     title: "Upload failed !",
                     timer: 2000,
-                    showConfirmButton: false,
-                  }); */
+                    showConfirmButton: false
+                  });
                 });
 
               case 9:
