@@ -143,9 +143,7 @@ class CLItemController extends Controller
             if (!$clitem->success === true) {
                 return response()->json("Clitem not fount", 404);
             }
-
             $clitem =  $vtiger->search($clitemQuery)->result[0];
-
             $contactQuery                 = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
             $contact                      = $vtiger->search($contactQuery)->result[0];
             $caseQuery                    = DB::table('HelpDesk')->select('*')->where("id",  $clitem->cf_1217)->take(1);
