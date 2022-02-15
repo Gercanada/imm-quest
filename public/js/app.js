@@ -3293,15 +3293,26 @@ var urlParams = window.location.pathname.split("/");
   methods: {
     afterUploadComplete: function () {
       var _afterUploadComplete = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var me;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                me = this;
+                Swal.fire({
+                  type: "success",
+                  title: "Upload successfull!",
+                  timer: 2000,
+                  showConfirmButton: false
+                });
+                me.closeModal();
+
+              case 3:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, this);
       }));
 
       function afterUploadComplete() {
@@ -3335,23 +3346,26 @@ var urlParams = window.location.pathname.split("/");
                 axios.post("/cl-item/upload/file", {
                   id: me.id
                 }).then(function (response) {
-                  Swal.fire({
+                  console.log(response);
+                  /* Swal.fire({
                     type: "success",
                     title: "Upload successfull!",
                     timer: 2000,
-                    showConfirmButton: false
+                    showConfirmButton: false,
                   });
-                  me.closeModal();
-                })["catch"](function (error) {
-                  /* console.log(error);
-                  console.log("error"); */
-                  Swal.fire({
-                    type: "error",
-                    title: "Upload failed !",
-                    timer: 2000,
-                    showConfirmButton: false
-                  });
+                  me.closeModal(); */
+                })
+                /*
+                .catch(function (error) {
+                console.table(error);
+                Swal.fire({
+                 type: "error",
+                 title: "Upload failed !",
+                 timer: 2000,
+                 showConfirmButton: false,
                 });
+                }) */
+                ;
 
               case 9:
               case "end":

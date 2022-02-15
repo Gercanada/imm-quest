@@ -11,4 +11,10 @@ use Illuminate\Support\Facades\View;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function consoleWrite()
+    {
+        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        return $out;
+    }
 }

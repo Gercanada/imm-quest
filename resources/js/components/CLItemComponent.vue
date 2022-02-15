@@ -445,7 +445,16 @@ export default {
     this.userFiles();
   },
   methods: {
-    afterUploadComplete: async function () {},
+    afterUploadComplete: async function () {
+      let me = this;
+      Swal.fire({
+        type: "success",
+        title: "Upload successfull!",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      me.closeModal();
+    },
 
     shootMessage: async function () {
       this.submitted = true;
@@ -463,24 +472,24 @@ export default {
           id: me.id,
         })
         .then(function (response) {
-          Swal.fire({
+          console.log(response);
+          /* Swal.fire({
             type: "success",
             title: "Upload successfull!",
             timer: 2000,
             showConfirmButton: false,
           });
-          me.closeModal();
-        })
+          me.closeModal(); */
+        }) /*
         .catch(function (error) {
-          /* console.log(error);
-          console.log("error"); */
-           Swal.fire({
+          console.table(error);
+          Swal.fire({
             type: "error",
             title: "Upload failed !",
             timer: 2000,
             showConfirmButton: false,
           });
-        });
+        }) */;
     },
 
     sendMessage: async function (files, xhr, formData) {
