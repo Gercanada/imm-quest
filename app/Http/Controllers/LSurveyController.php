@@ -35,6 +35,8 @@ class LSurveyController extends Controller
     public function guestToSurvey(Request $request)
     {
         try {
+
+
             $vtiger       = new Vtiger();
             $contact      = Contact::where('contact_no', $request->contact_no)->firstOrFail();
             $iSurveyID    = $request->survey_id;
@@ -83,8 +85,9 @@ class LSurveyController extends Controller
 
                 if (count($clitem->result) > 0) {
                     $clitem =  $vtiger->search($clitemQuery)->result[0];
-                    //get contact
+
                     $obj = $vtiger->retrieve($clitem->id);
+
                     $obj->result->cf_1212 = $limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en"; //help link
                     $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire";
                     //$obj->result->cf_1578 = "Pending";
