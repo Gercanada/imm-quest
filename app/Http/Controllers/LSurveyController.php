@@ -113,7 +113,6 @@ class LSurveyController extends Controller
     public function exportResponse(Request $request)
     {
         try {
-            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $vtiger = new Vtiger();
             $task   = new CloneDBController;
             $now    = Carbon::now()->format('H:i:s');
@@ -122,6 +121,8 @@ class LSurveyController extends Controller
             if ($request->form != 'vue') {
                 $request->form = '';
             }
+
+            /* return $request; */
 
             $urlObj = parse_url($request->surveyurl);
             $iSurveyID = str_replace('/', '', $urlObj['path']);
