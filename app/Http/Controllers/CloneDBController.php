@@ -31,7 +31,6 @@ class CloneDBController extends Controller
     public function cloneImmcaseContactData(Request $request)
     {
         try {
-            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
             $vtiger = new Vtiger();
             $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $request->contact_no)->take(1);
             $contact = $vtiger->search($userQuery)->result[0]; //Get contact that be cloned
@@ -148,7 +147,7 @@ class CloneDBController extends Controller
             //[CloneDBController::class, 'clearTrashDB'];
             return "dataCloned";
         } catch (Exception $e) {
-            $out->writeln($e);
+            /* $console->writeln($e); */
             return response()->json($e, 500);
         }
     }
@@ -535,10 +534,6 @@ class CloneDBController extends Controller
     {
         try {
             $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-            $out->writeln($request);
-            $out->writeln($request->checklist_id);
-            $out->writeln($request['checklist_id']);
-
             $vtiger = new Vtiger();
             $checklistQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
             $checklist =  $vtiger->search($checklistQuery);

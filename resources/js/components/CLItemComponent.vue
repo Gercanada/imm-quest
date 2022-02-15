@@ -463,7 +463,6 @@ export default {
           id: me.id,
         })
         .then(function (response) {
-          console.log(response);
           Swal.fire({
             type: "success",
             title: "Upload successfull!",
@@ -473,13 +472,14 @@ export default {
           me.closeModal();
         })
         .catch(function (error) {
+          console.log(error);
           console.log("error");
-          Swal.fire({
+          /*  Swal.fire({
             type: "error",
             title: "Upload failed !",
             timer: 2000,
             showConfirmButton: false,
-          });
+          }); */
         });
     },
 
