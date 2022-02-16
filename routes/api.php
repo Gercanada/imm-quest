@@ -9,6 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CLItemController;
 use App\Http\Controllers\LSurveyController;
 
+use Illuminate\Http\Request;
+
 //use Illuminate\Http\Request;
 
 /*
@@ -36,29 +38,29 @@ Route::get('/hash_pass/{pass}', function ($pass) {
     return password_hash($pass, PASSWORD_DEFAULT);
 });
 
+Route::post('/return_route', function (Request $request) {
+    return response()->json(['url' => $request->url]);
+
+});
 
 Route::middleware('imm-header')->group(function () {
 
     Route::post('/documents',                      [DocumentController::class, 'checkDocuments']);
     Route::post('/remove_document',                [DocumentController::class, 'destroy']);
+    Route::post('/clitem_doc',                     [DocumentController::class, 'createCLItemDoc']);
     Route::post('/single_url',                     [DocumentController::class, 'singleUrl']);
 
-    Route::post('/clitem_doc',                     [DocumentController::class, 'createCLItemDoc']);
-
-    Route::post('/update_clitem',                  [CloneDBController::class, 'updateCLItemFromImmcase']);
-    Route::post('/update_checklist',                  [CloneDBController::class, 'updateChecklistFromImmcase']);
-    Route::post('/clear_trash',                    [CloneDBController::class, 'clearTrashDB']);
 
     Route::post('/viger/clonedb',                  [CloneDBController::class, 'cloneImmcaseContactData']);
     Route::post('/viger/update_contact',           [CloneDBController::class, 'updateOnImmcase']);
+    Route::post('/clear_trash',                    [CloneDBController::class, 'clearTrashDB']);
+    Route::post('/update_checklist',               [CloneDBController::class, 'updateChecklistFromImmcase']);
+    Route::post('/update_clitem',                  [CloneDBController::class, 'updateCLItemFromImmcase']);
 
     Route::post('/questionaries/guest',            [LSurveyController::class, 'guestToSurvey']); //tri not middleware
     Route::post('/questionaries/export_response',  [LSurveyController::class, 'exportResponse']); //Test as service
 
-
-
     Route::post('/cl-item/send_file',              [CLItemController::class, 'sendDocumentToImmcase']); //Only catch errs
-
     Route::post('/create_user',                    [UserController::class, 'createUser']);
 
 

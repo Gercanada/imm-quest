@@ -65,7 +65,6 @@ class CLItemController extends Controller
         $user = Auth::user();
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
         $cl_item =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
-
         if ($cl_item->cf_1200 === "Questionnaire") {
             return view('checklists.items.questionnaire', compact('cl_item'));
         }
@@ -160,6 +159,7 @@ class CLItemController extends Controller
             return $this->returnJsonError($e, ['CLItemController' => 'sendDocumentToImmcase']);
         }
     }
+
     public function deleteDocument(Request $request)
     {
         try {

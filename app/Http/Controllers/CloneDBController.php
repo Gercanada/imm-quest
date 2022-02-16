@@ -508,6 +508,7 @@ class CloneDBController extends Controller
     public function updateCLItemFromImmcase(Request $request)
     {
         try {
+            set_time_limit(10);
             if (!$request->clitemsno) {
                 return 404;
             }
@@ -531,7 +532,7 @@ class CloneDBController extends Controller
     public function updateChecklistFromImmcase(Request $request)
     {
         try {
-            //$out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            set_time_limit(10);
             $vtiger = new Vtiger();
             $checklistQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
             $checklist =  $vtiger->search($checklistQuery);
