@@ -151,9 +151,8 @@ class CLItemController extends Controller
             $obj->result->cf_1970         = end($ex);
             $obj->result->cf_1214         = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
             $obj->result->cf_acf_rtf_1208 = "Document uploaded from customers portal";
-            $vtiger->update($obj->result);
-            $task->updateCLItemFromImmcase($request);
-
+           /*  $vtiger->update($obj->result);
+            $task->updateCLItemFromImmcase($request); */
             return response()->json("Success", 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CLItemController' => 'sendDocumentToImmcase']);

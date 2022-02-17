@@ -51,9 +51,12 @@ class DocumentController extends Controller
             if (Storage::exists($file)) {
                 Storage::delete($file);
                 $return = response()->json("File removed from temporary storage");
+                $this->consoleWrite()->writeln("A file be deleted");
             } else {
+                $this->consoleWrite()->writeln("File not found");
                 $return = response()->json("File not found");
             }
+
             //Empty folders be deleted
             $mainDir = Storage::allDirectories("/public/documents/contact/");
             $dirs = [];
@@ -71,6 +74,7 @@ class DocumentController extends Controller
                     Storage::deleteDirectory($dir);
                 }
             }
+            $this->consoleWrite()->writeln("A file was deleted");
             return $return;
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['DocumentController' => 'destroy']);
@@ -87,8 +91,8 @@ class DocumentController extends Controller
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
 
-            $this->consoleWrite()->write('request');
-            $this->consoleWrite()->write($request);
+            /* $this->consoleWrite()->writeln('request');
+            $this->consoleWrite()->writeln($request); */
             $files = Storage::disk('public')->allFiles($directory);
 
 
@@ -105,8 +109,6 @@ class DocumentController extends Controller
             $this->consoleWrite()->writeln($urlFiles);
             return response()->json($urlFiles, 200);
         } catch (Exception $e) {
-            $this->consoleWrite()->writeln("error");
-            $this->consoleWrite()->writeln($e);
             return $this->returnJsonError($e, ['DocumentController' => 'checkDocuments']);
         }
     }
@@ -156,8 +158,9 @@ class DocumentController extends Controller
         try {
             set_time_limit(1);
             $preUrl =  env('APP_URL') . $request->file;
+            $preUrl =  $request->server_name . $request->file;
             $url = str_replace(" ", "%20", $preUrl);
-            return response()->json(['url'=>$url]);
+            return response()->json(['url' => $url]);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['DocumentController' => 'singleUrl']);
         }
