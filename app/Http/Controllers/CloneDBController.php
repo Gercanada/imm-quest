@@ -179,7 +179,7 @@ class CloneDBController extends Controller
                 $obj->result->user_donotcall   =  $cp_contact->user_donotcall;
                 $obj->result->user_emailoptout =  $cp_contact->user_emailoptout;
 
-                $vtiger->update($obj->result);
+                $vtiger->update($obj);
                 // commboard
                 $commboards = Commboard::where('modifiedby', $cp_contact->id)->get();
                 foreach ($commboards as $comm) {
@@ -233,6 +233,7 @@ class CloneDBController extends Controller
     {
         $vtiger = new Vtiger();
         $getted = $vtiger->search($query);
+
         if (array_key_exists("result", $getted)) {
             $list = $vtiger->search($query)->result;
             $fields = $fields;
@@ -508,17 +509,21 @@ class CloneDBController extends Controller
     public function updateCLItemFromImmcase(Request $request)
     {
         try {
-            set_time_limit(10);
             if (!$request->clitemsno) {
                 return 404;
             }
+            set_time_limit(60);
+
             $vtiger = new Vtiger();
+
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem =  $vtiger->search($clitemQuery);
+
             if (!$clitem->success === true) {
                 return response()->json("Item not fount", 404);
             }
             $clitem = $clitem->result[0];
+
             $description = $vtiger->describe('CLItems');
             $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
             $contactField = "cf_contacts_id";
@@ -532,7 +537,7 @@ class CloneDBController extends Controller
     public function updateChecklistFromImmcase(Request $request)
     {
         try {
-            set_time_limit(10);
+            set_time_limit(60);
             $vtiger = new Vtiger();
             $checklistQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
             $checklist =  $vtiger->search($checklistQuery);
@@ -726,7 +731,7 @@ class CloneDBController extends Controller
 
     public function testCodeFrag()
     {
-        $url = 'https://immvisas.com//storage/app/public/documents/contact/2156722/cases/A2145420-Work%20Permit/checklists/CL2141417-/clitems/CLI4002016-Document/saturn.png';
+        $url = 'https://immvisas.com/storage/app/public/documents/contact/2156722/cases/A2145420-Work%20Permit/checklists/CL2141417-/clitems/CLI4002016-Document/saturn.png';
         $output = "no";
 
         $curl = curl_init();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\CPCase;
 use App\Models\Checklist;
+use App\Models\CLItem;
 use Illuminate\Http\Request;
 use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\DB;
@@ -35,8 +36,6 @@ class LSurveyController extends Controller
     public function guestToSurvey(Request $request)
     {
         try {
-            set_time_limit(15);
-            //return $exess;
             $vtiger       = new Vtiger();
             $task         = new CloneDBController;
             $contact      = Contact::where('contact_no', $request->contact_no)->firstOrFail();
@@ -86,14 +85,14 @@ class LSurveyController extends Controller
 
                 if (count($clitem->result) > 0) {
                     $clitem =  $vtiger->search($clitemQuery)->result[0];
-
                     $obj = $vtiger->retrieve($clitem->id);
+                    //$this->consoleWrite()->writeln($limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en");
 
                     $obj->result->cf_1212 = $limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en"; //help link
                     $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire";
-                    //$obj->result->cf_1578 = "Pending";
-                    $vtiger->update($obj->result);
 
+                    $data = $vtiger->update($obj->result);
+                    //return [$clitem, $obj];
                     $task->updateCLItemFromImmcase($request);
                     $request->request->add(['checklist_id' => $obj->result->cf_1216]);  // Add value to request
                     $task->updateChecklistFromImmcase($request); //checklist of clitem be updated
@@ -104,6 +103,7 @@ class LSurveyController extends Controller
                 //return response()->json(["success" => $surveyValues]);
             }
         } catch (Exception $e) {
+            return $e;
             return $this->returnJsonError($e, ['LSurveyController' => 'guestToSurvey']);
         }
     }
@@ -119,18 +119,36 @@ class LSurveyController extends Controller
             $vtiger = new Vtiger();
             $task   = new CloneDBController;
             $now    = Carbon::now()->format('H:i:s');
-            set_time_limit(20);
-            // $out->writeln($request);
+
             if ($request->form != 'vue') {
                 $request->form = '';
             }
 
-            $urlObj = parse_url($request->surveyurl);
+            $oncpItem = CLItem::where("clitemsno", $request->clitemsno)->firstOrFail();
+            /* Find clitem of current survey */
+            $clitemQuery = DB::table('CLItems')->select('*')
+                ->where("clitemsno", $request->clitemsno)->take(1);
+
+            $clitem = $vtiger->search($clitemQuery);
+
+            if ($clitem->success === false) {
+                return response()->json("Item not found", 404);
+            } else {
+                $clitem =  $clitem->result[0];
+            }
+            if ($clitem->cf_1212 != $oncpItem->cf_1212) {
+                $task->updateCLItemFromImmcase($request);
+                $clitem = $vtiger->search($clitemQuery);
+            }
+            /*  */
+
+            $urlObj = parse_url($clitem->cf_1212);
             $iSurveyID = str_replace('/', '', $urlObj['path']);
 
             $urlQuery = $urlObj['query'];
 
             $urlQueryAsArr = [];
+
             $return = back()->with(['status' => 'error']);
 
             parse_str($urlQuery,  $urlQueryAsArr);
@@ -163,18 +181,7 @@ class LSurveyController extends Controller
                 $sResponseType = 'long',
                 $aFields = null
             );
-            /* Find clitem of current survey */
-            $clitemQuery = DB::table('CLItems')->select('*')
-                ->where("clitemsno", $request->clitemsno)
-                //->where("cf_1212", $request->surveyurl)
-                ->take(1);
-
-            $clitem = $vtiger->search($clitemQuery);
-            if ($clitem->success === false) {
-                return response()->json("Item not found", 404);
-            } else {
-                $clitem =  $clitem->result[0];
-            }
+            /*  */
 
             $contact   = Contact::where('id', $clitem->cf_contacts_id)->firstOrFail();
             $case      = CPCase::where('id', $clitem->cf_1217)->firstOrFail();
@@ -186,16 +193,15 @@ class LSurveyController extends Controller
                 Storage::makeDirectory($directory); //creates directory if not exists
             }
             /* Download base64encoded responses as file */
-            $this->consoleWrite()->writeln("===========exportSurvey============");
+            //$this->consoleWrite()->writeln("===========exportSurvey============");
 
             if (is_string($exportSurvey)) {
-                $this->consoleWrite()->writeln("yes");
                 $surveyResults = json_decode(base64_decode($exportSurvey));
                 $surveyResponses =  $surveyResults->responses;
-                $file = $clitem->name  . '.pdf';
+                $file = str_replace(' ', '_', $clitem->name);
+                $file = $file . '.pdf';
 
                 if ($surveyResponses[0]->submitdate != null) {
-                    $this->consoleWrite()->writeln("here");
                     if (!Storage::exists($directory . '/' . $file)) {
                         if (env('APP_ENV') === 'local') {
                             self::download('', '../storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
@@ -203,43 +209,30 @@ class LSurveyController extends Controller
                             self::download('', './storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
                         }
                     }
+
                     if (Storage::exists($directory . '/' . $file)) {
                         $obj = $vtiger->retrieve($clitem->id);
-                        $obj->result->description = "This clitem is a questionaire was answered full. Try to update at " . $now;
+                        $obj->result->description = "File uploaded at: " . $now;
                         $vtiger->update($obj->result);
-                        /*  $vtiger->update($obj->result->description);
-                        $vtiger->update($obj->result->cf_1214); */
-                        //return [$clitem, $obj];
-                        //return;
-                        $this->consoleWrite()->writeln("updated");
-                        //$task->updateCLItemFromImmcase($request);
+
+                        $task->updateCLItemFromImmcase($request);
+                        $task->updateChecklistFromImmcase($request);
+                        $return =  back()->with(['status' => 'success']);
                     }
-                    $return =  back()->with(['status' => 'success']);
-                    /*
-                        if ($request->form === "vue") {
-                            return "success";
-                        } */
                 }
             }
-
-            //$task->updateChecklistFromImmcase($request);
             // Release the session key
             $myJSONRPCClient->release_session_key($sSessionKey);
 
+            return $return;
             /* if ($request->form === "vue") {
                 return "error";
             } */
-            return $return;
         } catch (Exception $e) {
-            return $e;
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }
     }
 
-
-    public function uploadSurveyToDrive(Request $request)
-    {
-    }
 
     /**
      * This function is callen when requires starts a limesurvey remotecontrol session

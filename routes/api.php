@@ -40,14 +40,12 @@ Route::get('/hash_pass/{pass}', function ($pass) {
 
 Route::post('/return_route', function (Request $request) {
     return response()->json(['url' => $request->url]);
-
 });
 
 Route::middleware('imm-header')->group(function () {
 
     Route::post('/documents',                      [DocumentController::class, 'checkDocuments']);
     Route::post('/remove_document',                [DocumentController::class, 'destroy']);
-    Route::post('/clitem_doc',                     [DocumentController::class, 'createCLItemDoc']);
     Route::post('/single_url',                     [DocumentController::class, 'singleUrl']);
 
 
@@ -64,6 +62,7 @@ Route::middleware('imm-header')->group(function () {
     Route::post('/create_user',                    [UserController::class, 'createUser']);
 
 
+    //Route::post('/clitem_doc',                     [DocumentController::class, 'createCLItemDoc']);
     //Route::post('/remove_user',                    [UserController::class, 'removeUser']);
     //Route::post('/viger/find_duplicates', [CloneDBController::class, 'duplicateContacts']);
     //limesurvey

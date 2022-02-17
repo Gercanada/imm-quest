@@ -13,6 +13,7 @@ use App\Models\Contact;
 use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CloneDBController;
+use Illuminate\Support\Carbon;
 use Exception;
 
 
@@ -135,7 +136,8 @@ class CLItemController extends Controller
         try {
             $vtiger      = new Vtiger();
             $task        = new CloneDBController;
-            $ex          = explode('/', $request->file);
+            $now         = Carbon::now()->format('H:i:s');
+            //$ex          = explode('/', $request->file);
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem      = $vtiger->search($clitemQuery);
 
@@ -143,16 +145,11 @@ class CLItemController extends Controller
                 return response()->json("Clitem not fount", 404);
             }
             $clitem =  $vtiger->search($clitemQuery)->result[0];
-            $contactQuery                 = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
-            $contact                      = $vtiger->search($contactQuery)->result[0];
-            $caseQuery                    = DB::table('HelpDesk')->select('*')->where("id",  $clitem->cf_1217)->take(1);
-            $case                         = $vtiger->search($caseQuery)->result[0];
-            $obj                          = $vtiger->retrieve($clitem->id);
-            $obj->result->cf_1970         = end($ex);
-            $obj->result->cf_1214         = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
-            $obj->result->cf_acf_rtf_1208 = "Document uploaded from customers portal";
-           /*  $vtiger->update($obj->result);
-            $task->updateCLItemFromImmcase($request); */
+
+            $obj  = $vtiger->retrieve($clitem->id);
+            $obj->result->description = "File uploaded at: " . $now;
+            $vtiger->update($obj);
+            $task->updateCLItemFromImmcase($request);
             return response()->json("Success", 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CLItemController' => 'sendDocumentToImmcase']);

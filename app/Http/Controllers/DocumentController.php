@@ -22,13 +22,10 @@ class DocumentController extends Controller
     public function getDocuments()
     {
         try {
-            $user = Auth::user();
             //Get contact data of this user
+            $user = Auth::user();
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
-            //Documents
             $documents = DB::table('vt_Documents')->where('cf_1488', $contact->id)->get();
-
-            $this->consoleWrite()->writeln($documents);
             return response()->json($documents, 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['DocumentController' => 'getDocuments']);
@@ -42,18 +39,20 @@ class DocumentController extends Controller
     public function destroy(Request $request)
     {
         try {
-            set_time_limit(18);
             $return = '';
             $file = substr($request->file, 1);
+
             $exploded = explode('/', $file);
-            $spliced = array_splice($exploded, 2);
+            $spliced = array_splice($exploded, 4);
+
             $file = implode('/', $spliced);
+            $file = 'public/' . $file;
+            $file =  str_replace('%20', ' ', $file);
+
             if (Storage::exists($file)) {
                 Storage::delete($file);
                 $return = response()->json("File removed from temporary storage");
-                $this->consoleWrite()->writeln("A file be deleted");
             } else {
-                $this->consoleWrite()->writeln("File not found");
                 $return = response()->json("File not found");
             }
 
@@ -67,14 +66,12 @@ class DocumentController extends Controller
                 $newDir = implode('/', $expDir);
 
                 array_push($dirs, $dir);
-
                 $files = Storage::disk('public')->allFiles($newDir);
 
                 if (count($files) === 0) {
                     Storage::deleteDirectory($dir);
                 }
             }
-            $this->consoleWrite()->writeln("A file was deleted");
             return $return;
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['DocumentController' => 'destroy']);
@@ -87,15 +84,9 @@ class DocumentController extends Controller
     public function checkDocuments(Request $request)
     {
         try {
-            set_time_limit(20);
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
-
-            /* $this->consoleWrite()->writeln('request');
-            $this->consoleWrite()->writeln($request); */
             $files = Storage::disk('public')->allFiles($directory);
-
-
             $urlFiles = [];
             foreach ($files as $file) {
                 // /$file =  str_replace(' ', '%20', $file);
@@ -105,8 +96,6 @@ class DocumentController extends Controller
                     array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
                 }
             }
-            $this->consoleWrite()->writeln('URL FILES');
-            $this->consoleWrite()->writeln($urlFiles);
             return response()->json($urlFiles, 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['DocumentController' => 'checkDocuments']);
