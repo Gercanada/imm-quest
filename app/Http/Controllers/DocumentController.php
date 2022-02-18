@@ -87,6 +87,7 @@ class DocumentController extends Controller
      */
     public function checkDocuments(Request $request)
     {
+        return 200;
         try {
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
@@ -160,4 +161,3 @@ class DocumentController extends Controller
         }
     }
 }
-
