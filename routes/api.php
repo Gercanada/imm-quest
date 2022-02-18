@@ -35,6 +35,7 @@ use Illuminate\Http\Request;
 //Route::get('/users', [UserController::class, 'users']);
 
 Route::get('/hash_pass/{pass}', function ($pass) {
+    set_time_limit(10);
     return password_hash($pass, PASSWORD_DEFAULT);
 });
 

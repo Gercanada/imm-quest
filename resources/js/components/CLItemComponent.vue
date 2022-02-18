@@ -501,6 +501,7 @@ export default {
       this.loading = true;
       axios
         .post("/cl-item/send_file", { clitemsno: clitemsno, file: file })
+
         .then(function (response) {
           console.log(response);
           Swal.fire({
@@ -509,7 +510,7 @@ export default {
             timer: 2000,
             showConfirmButton: false,
           });
-          me.userFiles();
+          //me.userFiles();
         })
         .catch(function (error) {
           Swal.fire({

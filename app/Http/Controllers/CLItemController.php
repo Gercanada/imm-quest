@@ -134,6 +134,8 @@ class CLItemController extends Controller
     public function sendDocumentToImmcase(Request $request)
     {
         try {
+            //set_time_limit(10);
+            //$this->consoleWrite()->writeln("sending document");
             $vtiger      = new Vtiger();
             $task        = new CloneDBController;
             $now         = Carbon::now()->format('H:i:s');
@@ -146,14 +148,65 @@ class CLItemController extends Controller
             }
             $clitem =  $vtiger->search($clitemQuery)->result[0];
 
+            //$this->consoleWrite()->writeln($clitem->clitemsno);
+
+            $contactQuery                 = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
+            $contact                      = $vtiger->search($contactQuery)->result[0];
+            $caseQuery                    = DB::table('HelpDesk')->select('*')->where("id",  $clitem->cf_1217)->take(1);
+            $case                         = $vtiger->search($caseQuery)->result[0];
+
+            $checklistQuery                    = DB::table('Checklist')->select('*')->where("id",  $clitem->cf_1216)->take(1);
+            $checklist                         = $vtiger->search($checklistQuery)->result[0];
+
+            //try to send documents direct from here
+            //$gdyear =  $contact->cf_1332;
+            $rContactId = $contact->contact_no;
+            $rCase = "$case->ticket_no-$case->ticketcategories";
+            $rChecklist = "$checklist->checklistno-$checklist->cf_1706";
+            $rItem = "$clitem->clitemsno-$clitem->cf_1200";
+            $files = self::checkItemFile($rContactId, $rCase, $rChecklist, $rItem);
+
+            //$this->consoleWrite()->writeln('files');
+            //$this->consoleWrite()->writeln($files);
+
             $obj  = $vtiger->retrieve($clitem->id);
             $obj->result->description = "File uploaded at: " . $now;
-            $vtiger->update($obj);
+            //$this->consoleWrite()->writeln($files[0]);
+
+            //return $files;
+            $obj->result->cf_1898 = $files;
+            $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
+            $vtiger->update($obj->result);
+            //sleep(3000);
+            //$this->consoleWrite()->writeln($obj->result->description);
+            //$this->consoleWrite()->writeln($obj->result->cf_1898);
             $task->updateCLItemFromImmcase($request);
             return response()->json("Success", 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CLItemController' => 'sendDocumentToImmcase']);
         }
+    }
+
+    static function checkItemFile($contact, $case, $checklist, $clitem)
+    {
+        //$user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
+
+        $directory = "/documents/contact/$contact/cases/$case/checklists/$checklist/clitems/$clitem";
+        $files = Storage::disk('public')->allFiles($directory);
+        $urlFiles = [];
+        foreach ($files as $file) {
+            if (env('APP_ENV') === 'local') {
+                array_push($urlFiles, (Storage::url($file)));
+            } else {
+                array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+            }
+        }
+        return $urlFiles;
+        // /return response()->json($urlFiles, 200);
+    }
+
+    public function sendDocumentToImmcaseAsPostRequest(Request $request)
+    {
     }
 
     public function deleteDocument(Request $request)

@@ -3418,8 +3418,7 @@ var urlParams = window.location.pathname.split("/");
           title: "Document sent",
           timer: 2000,
           showConfirmButton: false
-        });
-        me.userFiles();
+        }); //me.userFiles();
       })["catch"](function (error) {
         Swal.fire({
           type: "error",
