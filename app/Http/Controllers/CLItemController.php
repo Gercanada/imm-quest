@@ -177,7 +177,7 @@ class CLItemController extends Controller
             $obj->result->cf_1898 = $files;
             $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
             $vtiger->update($obj->result);
-            //sleep(3000);
+            sleep(10);
             //$this->consoleWrite()->writeln($obj->result->description);
             //$this->consoleWrite()->writeln($obj->result->cf_1898);
             $task->updateCLItemFromImmcase($request);
