@@ -509,12 +509,10 @@ class CloneDBController extends Controller
     public function updateCLItemFromImmcase(Request $request)
     {
         try {
+            $vtiger = new Vtiger();
             if (!$request->clitemsno) {
                 return 404;
             }
-            set_time_limit(60);
-
-            $vtiger = new Vtiger();
 
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem =  $vtiger->search($clitemQuery);
@@ -523,8 +521,8 @@ class CloneDBController extends Controller
                 return response()->json("Item not fount", 404);
             }
             $clitem = $clitem->result[0];
-
             $description = $vtiger->describe('CLItems');
+
             $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
             $contactField = "cf_contacts_id";
             self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);

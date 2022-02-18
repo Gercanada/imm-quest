@@ -83,15 +83,14 @@ class LSurveyController extends Controller
                 $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
                 $clitem = $vtiger->search($clitemQuery);
 
-                if (count($clitem->result) > 0) {
+                if ($clitem->success) {
                     $clitem =  $vtiger->search($clitemQuery)->result[0];
                     $obj = $vtiger->retrieve($clitem->id);
                     //$this->consoleWrite()->writeln($limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en");
 
                     $obj->result->cf_1212 = $limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en"; //help link
                     $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire";
-
-                    $data = $vtiger->update($obj->result);
+                    $vtiger->update($obj->result);
                     //return [$clitem, $obj];
                     $task->updateCLItemFromImmcase($request);
                     $request->request->add(['checklist_id' => $obj->result->cf_1216]);  // Add value to request
