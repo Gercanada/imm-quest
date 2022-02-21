@@ -192,7 +192,7 @@ class LSurveyController extends Controller
                 Storage::makeDirectory($directory); //creates directory if not exists
             }
             /* Download base64encoded responses as file */
-            $this->consoleWrite()->writeln("===========exportSurvey============");
+            //$this->consoleWrite()->writeln("===========exportSurvey============");
 
             if (is_string($exportSurvey)) {
                 $surveyResults = json_decode(base64_decode($exportSurvey));
@@ -209,10 +209,11 @@ class LSurveyController extends Controller
                         }
                     }
                     if (Storage::exists($directory . '/' . $file)) {
-                        $this->consoleWrite()->writeln("Here go");
+                        //$this->consoleWrite()->writeln("Here go");
+
                         $obj = $vtiger->retrieve($clitem->id);
                         $obj->result->description = "File uploaded at: " . $now;
-                        //$obj->result->cf_1898 = "go";
+                        $obj->result->cf_1898   = 'from_cp';
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
 
@@ -230,6 +231,7 @@ class LSurveyController extends Controller
                 return "error";
             } */
         } catch (Exception $e) {
+            // return response()->json($e->getMessage());
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }
     }

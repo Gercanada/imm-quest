@@ -39,7 +39,7 @@ class DocumentController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $this->consoleWrite()->writeln("Be deleted");
+            //$this->consoleWrite()->writeln("Be deleted");
             set_time_limit(10);
             $return = '';
             $file = substr($request->file, 1);
@@ -52,11 +52,11 @@ class DocumentController extends Controller
             $file =  str_replace('%20', ' ', $file);
 
             if (Storage::exists($file)) {
-                $this->consoleWrite()->writeln("Be deleted" . $file);
+                //$this->consoleWrite()->writeln("Be deleted" . $file);
                 Storage::delete($file);
                 $return = response()->json("File removed from temporary storage");
             } else {
-                $this->consoleWrite()->writeln("Not found \n" . $file);
+                //$this->consoleWrite()->writeln("Not found \n" . $file);
                 $return = response()->json("File not found");
             }
 
@@ -87,11 +87,11 @@ class DocumentController extends Controller
      */
     public function checkDocuments(Request $request)
     {
-        return 200;
         try {
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
-            $this->consoleWrite()->writeln($directory);
+            /* $this->consoleWrite()->writeln("==================Checking files==================");
+            $this->consoleWrite()->writeln($directory); */
             $files = Storage::disk('public')->allFiles($directory);
             $urlFiles = [];
             foreach ($files as $file) {
@@ -151,8 +151,6 @@ class DocumentController extends Controller
     public function singleUrl(Request $request)
     {
         try {
-            set_time_limit(10);
-            //$preUrl =  env('APP_URL') . $request->file;
             $preUrl =  $request->server_name . $request->file;
             $url = str_replace(" ", "%20", $preUrl);
             return response()->json(['url' => $url]);

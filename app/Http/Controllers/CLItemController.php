@@ -135,7 +135,7 @@ class CLItemController extends Controller
     {
         try {
             //set_time_limit(10);
-            $this->consoleWrite()->writeln("sending document");
+            // $this->consoleWrite()->writeln("sending document");
             $vtiger      = new Vtiger();
             $task        = new CloneDBController;
             $now         = Carbon::now()->format('H:i:s');
@@ -148,7 +148,7 @@ class CLItemController extends Controller
             }
             $clitem =  $vtiger->search($clitemQuery)->result[0];
 
-            $this->consoleWrite()->writeln($clitem->clitemsno);
+            // $this->consoleWrite()->writeln($clitem->clitemsno);
 
             $contactQuery                 = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
             $contact                      = $vtiger->search($contactQuery)->result[0];
@@ -159,10 +159,10 @@ class CLItemController extends Controller
             $checklist                         = $vtiger->search($checklistQuery)->result[0];
 
             //try to send documents direct from here
-            $rContactId = $contact->contact_no;
+           /*  $rContactId = $contact->contact_no;
             $rCase = "$case->ticket_no-$case->ticketcategories";
             $rChecklist = "$checklist->checklistno-$checklist->cf_1706";
-            $rItem = "$clitem->clitemsno-$clitem->cf_1200";
+            $rItem = "$clitem->clitemsno-$clitem->cf_1200"; */
             //$files = self::checkItemFile($rContactId, $rCase, $rChecklist, $rItem);
 
             //$this->consoleWrite()->writeln('files');
@@ -170,32 +170,14 @@ class CLItemController extends Controller
 
             $obj  = $vtiger->retrieve($clitem->id);
             $obj->result->description = "File uploaded at: " . $now;
-            //$this->consoleWrite()->writeln($files[0]);
-
-            //return $files;
-            //$obj->result->cf_1898 = $files;
-            $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
-
-
-            $starttime = time();
+            $obj->result->cf_1898   = 'from_cp';
+            $obj->result->cf_1214   = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
             $vtiger->update($obj->result);
 
-
-          /*   if ((time() - $starttime) < 5) {
-            }
-            return;
-
-            do {
-                $this->consoleWrite()->writeln($starttime);
-
-                //make something
-                break;
-            } while ((time() - $starttime) < 5); //stop with 5 seconds */
-            /* $task->updateCLItemFromImmcase($request);
-                return response()->json("Success", 200); */
-
-
-            $this->consoleWrite()->writeln($obj->result->description);
+            /*
+            ${  date_default_timezone_set("America/Vancouver");   return date('Y-m-d H:i:s', time() - 20 ); }}>    Between   ${ date_default_timezone_set("America/Vancouver");  return date('Y-m-d H:i:s', time() + 20 ); }}>
+             */
+            // $this->consoleWrite()->writeln($obj->result->description);
             //$this->consoleWrite()->writeln($obj->result->cf_1898);
             $task->updateCLItemFromImmcase($request);
             return response()->json("Success", 200);
