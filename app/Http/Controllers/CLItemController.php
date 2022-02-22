@@ -192,6 +192,8 @@ class CLItemController extends Controller
         try {
             $file = $request->file;
             $urlFile = "public/$file";
+
+
             if (Storage::exists($urlFile)) {
                 Storage::delete($urlFile);
                 return  response()->json("File removed from temporary storage", 200);

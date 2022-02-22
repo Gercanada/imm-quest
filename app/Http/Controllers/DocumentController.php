@@ -39,11 +39,20 @@ class DocumentController extends Controller
     public function destroy(Request $request)
     {
         try {
+            /* if (Storage::exists("public/documents/contact/2156722/cases/A2145432-Study Permit/checklists/CL2241446-Study Permit/clitems/CLI4002169-Questionnaire/Study_permit_survey.pdf"))
+             {return "exists at try 2 ";}
+                return Storage::allFiles();
+            */
+
             $return = '';
             $file = substr($request->file, 1);
 
             $exploded = explode('/', $file);
-            $spliced = array_splice($exploded, 4);
+            if (env('APP_ENV') === 'local') {
+                $spliced = array_splice($exploded, 4);
+            } else {
+                $spliced = array_splice($exploded, 5);
+            }
 
             $file = implode('/', $spliced);
             $file = 'public/' . $file;
