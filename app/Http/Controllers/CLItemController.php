@@ -139,6 +139,7 @@ class CLItemController extends Controller
             $vtiger      = new Vtiger();
             $now         = Carbon::now()->format('H:i:s');
             //$ex          = explode('/', $request->file);
+            $oncpItem = CLItem::where("clitemsno", $request->clitemsno)->firstOrFail();
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             $clitem      = $vtiger->search($clitemQuery);
 
@@ -154,7 +155,7 @@ class CLItemController extends Controller
             $case            = $vtiger->search($caseQuery)->result[0];
 
             $obj  = $vtiger->retrieve($clitem->id);
-            if ($obj->result->cf_1898 === 'from_cp' || ($obj->result->cf_1578 != $clitem->cf_1578)) {
+            if ($obj->result->cf_1898 === 'from_cp' || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
                 return response()->json("waiting");
             }
 

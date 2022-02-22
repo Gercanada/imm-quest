@@ -141,6 +141,18 @@ class LSurveyController extends Controller
             }
             /*  */
 
+            $contact   = Contact::where('id', $clitem->cf_contacts_id)->firstOrFail();
+            $case      = CPCase::where('id', $clitem->cf_1217)->firstOrFail();
+            $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
+            $request->request->add(['checklist_id' => $clitem->cf_1216]);
+
+            $obj = $vtiger->retrieve($clitem->id);
+
+            if (($obj->result->cf_1898 === 'from_cp') || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
+                return  back()->with(['status' => 'waiting']);
+            }
+
+
             $urlObj = parse_url($clitem->cf_1212);
             $iSurveyID = str_replace('/', '', $urlObj['path']);
 
@@ -182,16 +194,6 @@ class LSurveyController extends Controller
             );
             /*  */
 
-            $contact   = Contact::where('id', $clitem->cf_contacts_id)->firstOrFail();
-            $case      = CPCase::where('id', $clitem->cf_1217)->firstOrFail();
-            $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
-            $request->request->add(['checklist_id' => $clitem->cf_1216]);
-
-            $obj = $vtiger->retrieve($clitem->id);
-
-            if (($obj->result->cf_1898 === 'from_cp') || ($obj->result->cf_1578 != $clitem->cf_1578)) {
-                return  back()->with(['status' => 'waiting']);
-            }
 
 
             $directory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
