@@ -508,16 +508,15 @@ export default {
             Swal.fire({
               type: "warning",
               title:
-                "Document sent. Please await for manager response without sent again request almost few minutes.",
+                "Document sent. Please await for manager response without sent again request almost few minutes. If problem persists contactyour manager.",
               timer: 3000,
               showConfirmButton: false,
             });
           }
           if (response.data === "success") {
-              Swal.fire({
+            Swal.fire({
               type: "success",
-              title:
-                "Document sent. ",
+              title: "Document sent. ",
               timer: 3000,
               showConfirmButton: false,
             });

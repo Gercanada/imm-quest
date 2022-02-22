@@ -3417,7 +3417,7 @@ var urlParams = window.location.pathname.split("/");
         if (response.data === "waiting") {
           Swal.fire({
             type: "warning",
-            title: "Document sent. Please await for manager response without sent again request almost few minutes.",
+            title: "Document sent. Please await for manager response without sent again request almost few minutes. If problem persists contactyour manager.",
             timer: 3000,
             showConfirmButton: false
           });
