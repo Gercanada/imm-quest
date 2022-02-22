@@ -50,13 +50,13 @@ class DocumentController extends Controller
             $exploded = explode('/', $file);
             if (env('APP_ENV') === 'local') {
                 $spliced = array_splice($exploded, 4);
+                $file = implode('/', $spliced);
+                $file = 'public/' . $file;
             } else {
                 $spliced = array_splice($exploded, 5);
+                $file =  str_replace('%20', ' ', $file);
             }
 
-            $file = implode('/', $spliced);
-            $file = 'public/' . $file;
-            $file =  str_replace('%20', ' ', $file);
 
             if (Storage::exists($file)) {
                 // $this->consoleWrite()->writeln("Be deleted " . $file);
