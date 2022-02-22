@@ -211,7 +211,7 @@ class LSurveyController extends Controller
                     $obj = $vtiger->retrieve($clitem->id);
 
                     if (($obj->result->cf_1898 === 'from_cp') || ($obj->result->cf_1578 != $clitem->cf_1578)) {
-                        $return =  back()->with(['status' => 'waiting']);
+                        return  back()->with(['status' => 'waiting']);
                     }
 
 
