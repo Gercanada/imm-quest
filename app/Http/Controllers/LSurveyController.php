@@ -208,10 +208,16 @@ class LSurveyController extends Controller
                             self::download('', './storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
                         }
                     }
+                    $obj = $vtiger->retrieve($clitem->id);
+
+                    if (($obj->result->cf_1898 === 'from_cp') || ($obj->result->cf_1578 != $clitem->cf_1578)) {
+                        $return =  back()->with(['status' => 'waiting']);
+                    }
+
+
                     if (Storage::exists($directory . '/' . $file)) {
                         //$this->consoleWrite()->writeln("Here go");
 
-                        $obj = $vtiger->retrieve($clitem->id);
                         $obj->result->description = "File uploaded at: " . $now;
                         $obj->result->cf_1898   = 'from_cp';
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link

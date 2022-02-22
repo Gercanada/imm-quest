@@ -3345,8 +3345,8 @@ var urlParams = window.location.pathname.split("/");
                 me = this;
                 axios.post("/cl-item/upload/file", {
                   id: me.id
-                }).then(function (response) {
-                  console.log(response);
+                }).then(function (response) {//console.log(response);
+
                   /* Swal.fire({
                     type: "success",
                     title: "Upload successfull!",
@@ -3413,20 +3413,32 @@ var urlParams = window.location.pathname.split("/");
         file: file
       }).then(function (response) {
         console.log(response);
-        Swal.fire({
-          type: "success",
-          title: "Document sent",
-          timer: 2000,
-          showConfirmButton: false
-        }); //me.userFiles();
+
+        if (response.data === "waiting") {
+          Swal.fire({
+            type: "warning",
+            title: "Document sent. Please await for manager response without sent again request almost few minutes.",
+            timer: 3000,
+            showConfirmButton: false
+          });
+        }
+
+        if (response.data === "success") {
+          Swal.fire({
+            type: "success",
+            title: "Document sent. ",
+            timer: 3000,
+            showConfirmButton: false
+          });
+        } //me.userFiles();
+
       })["catch"](function (error) {
         Swal.fire({
           type: "error",
           title: "Document not sent",
           timer: 2000,
           showConfirmButton: false
-        });
-        console.log(error);
+        }); //console.log(error);
       })["finally"](function () {
         return _this.loading = false;
       });
@@ -3439,7 +3451,7 @@ var urlParams = window.location.pathname.split("/");
       axios.post("/cl-item/dropfile", {
         file: file
       }).then(function (response) {
-        console.log(response);
+        //console.log(response);
         Swal.fire({
           type: "success",
           title: "Document deleted",
@@ -3476,8 +3488,7 @@ var urlParams = window.location.pathname.split("/");
         me.checklistObj = response.data[2];
 
         if ("files" in me.clitem.files) {
-          me.clFiles = me.clitem.files.files;
-          console.log(me.clFiles);
+          me.clFiles = me.clitem.files.files; //console.log(me.clFiles);
         }
       })["catch"](function (error) {
         console.log(error);

@@ -131,11 +131,16 @@
                     </table>
                     @if (session('status') === 'success')
                         <div class="alert alert-success text-info text-center font-weight-bold " id="surveyAlert">
-                            ✔ This survey has been answered ✔
+                            ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record
+                            updated
                         </div>
                     @elseif (session('status') === 'error')
                         <div class="alert alert-danger text-warning text-center font-weight-bold" id="surveyAlert">
                             ❌ This survey has NOT answered. Please open the link and answer the survey. ❌
+                        </div>
+                    @elseif (session('status') === 'waiting')
+                        <div class="alert alert-danger text-warning text-center font-weight-bold" id="surveyAlert">
+                            This file was sent. Please await for the manager updates the record .
                         </div>
                     @endif
                 </div>

@@ -154,6 +154,9 @@ class CLItemController extends Controller
             $case            = $vtiger->search($caseQuery)->result[0];
 
             $obj  = $vtiger->retrieve($clitem->id);
+            if ($obj->result->cf_1898 === 'from_cp' || ($obj->result->cf_1578 != $clitem->cf_1578)) {
+                return response()->json("waiting");
+            }
 
             $obj->result->description = "File uploaded at: " . $now;
             $obj->result->cf_1898     = 'from_cp';
