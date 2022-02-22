@@ -43,31 +43,25 @@ Route::post('/return_route', function (Request $request) {
 });
 
 Route::middleware('imm-header')->group(function () {
-
+    //Files
     Route::post('/documents',                      [DocumentController::class, 'checkDocuments']);
     Route::post('/remove_document',                [DocumentController::class, 'destroy']);
     Route::post('/single_url',                     [DocumentController::class, 'singleUrl']);
-
-
+    //DB copy
     Route::post('/viger/clonedb',                  [CloneDBController::class, 'cloneImmcaseContactData']);
     Route::post('/viger/update_contact',           [CloneDBController::class, 'updateOnImmcase']);
     Route::post('/clear_trash',                    [CloneDBController::class, 'clearTrashDB']);
     Route::post('/update_checklist',               [CloneDBController::class, 'updateChecklistFromImmcase']);
     Route::post('/update_clitem',                  [CloneDBController::class, 'updateCLItemFromImmcase']);
-
+    //Lime survey
     Route::post('/questionaries/guest',            [LSurveyController::class, 'guestToSurvey']); //tri not middleware
     Route::post('/questionaries/export_response',  [LSurveyController::class, 'exportResponse']); //Test as service
-
+    //CLItem
     Route::post('/cl-item/send_file',              [CLItemController::class, 'sendDocumentToImmcase']); //Only catch errs
+
     Route::post('/create_user',                    [UserController::class, 'createUser']);
 
-
-    //Route::post('/clitem_doc',                     [DocumentController::class, 'createCLItemDoc']);
-    //Route::post('/remove_user',                    [UserController::class, 'removeUser']);
-    //Route::post('/viger/find_duplicates', [CloneDBController::class, 'duplicateContacts']);
-    //limesurvey
-    //Route::post('/questionaries/guest', [LSurveyController::class, 'guestToSurvey']);
-
+    //call dev commands
     Route::get('/migrate', function () {
         \Artisan::call('migrate:fresh');
         return ('migrated!');

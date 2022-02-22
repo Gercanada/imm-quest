@@ -7,14 +7,13 @@ use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Filesystem\Filesystem;
 use App\Models\User;
 use App\Models\Contact;
 use Exception;
 
 class DocumentController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         return view('users.documents');
     }
@@ -39,11 +38,6 @@ class DocumentController extends Controller
     public function destroy(Request $request)
     {
         try {
-            /* if (Storage::exists("public/documents/contact/2156722/cases/A2145432-Study Permit/checklists/CL2241446-Study Permit/clitems/CLI4002169-Questionnaire/Study_permit_survey.pdf"))
-             {return "exists at try 2 ";}
-                return Storage::allFiles();
-            */
-
             $return = '';
             $file = substr($request->file, 1);
 
@@ -53,19 +47,18 @@ class DocumentController extends Controller
             } else {
                 $spliced = array_splice($exploded, 5);
             }
-
             $file = implode('/', $spliced);
+
             if (env('APP_ENV') === 'local') {
                 $file = 'public/' . $file;
             }
+
             $file =  str_replace('%20', ' ', $file);
 
             if (Storage::exists($file)) {
-                // $this->consoleWrite()->writeln("Be deleted " . $file);
                 Storage::delete($file);
                 $return = response()->json("File removed from temporary storage");
             } else {
-                // $this->consoleWrite()->writeln("Not found \n" . $file);
                 $return = response()->json("File not found");
             }
 
@@ -75,7 +68,7 @@ class DocumentController extends Controller
 
             foreach ($mainDir as $dir) {
                 $expDir = explode('/', $dir);
-                $dirPath = array_shift($expDir);
+                //$dirPath = array_shift($expDir);
                 $newDir = implode('/', $expDir);
 
                 array_push($dirs, $dir);
@@ -99,8 +92,6 @@ class DocumentController extends Controller
         try {
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
-            /* $this->consoleWrite()->writeln("==================Checking files==================");
-            $this->consoleWrite()->writeln($directory); */
             $files = Storage::disk('public')->allFiles($directory);
             $urlFiles = [];
             foreach ($files as $file) {
@@ -137,14 +128,6 @@ class DocumentController extends Controller
 
                 "filename"          => $request->filename ?? '',
                 "cf_1491"           => "Contact Document"
-
-                //"notecontent" => $request->notecontent ?? '',
-                //"cf_2271" => $request->fileUrl ?? ''
-
-                //"folderid" => $request->folder ?? '',
-                //"cf_1490" => $request->payment ?? '',
-                //"cf_2129" => $request->invoice ?? '',
-                //"cf_quotes_id" => $request->quote ?? '',
             ];
             $data = $vtiger->create('Documents', ($data));
             return 200;
@@ -162,10 +145,7 @@ class DocumentController extends Controller
         try {
             $preUrl =  $request->server_name . $request->file;
             $url = str_replace(" ", "%20", $preUrl);
-
             return $url;
-
-            return response()->json(['url' => $url]);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['DocumentController' => 'singleUrl']);
         }
