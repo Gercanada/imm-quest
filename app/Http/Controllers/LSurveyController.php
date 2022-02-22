@@ -187,6 +187,13 @@ class LSurveyController extends Controller
             $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
             $request->request->add(['checklist_id' => $clitem->cf_1216]);
 
+            $obj = $vtiger->retrieve($clitem->id);
+
+            if (($obj->result->cf_1898 === 'from_cp') || ($obj->result->cf_1578 != $clitem->cf_1578)) {
+                return  back()->with(['status' => 'waiting']);
+            }
+
+
             $directory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
             if (!Storage::exists($directory)) {
                 Storage::makeDirectory($directory); //creates directory if not exists
@@ -207,11 +214,6 @@ class LSurveyController extends Controller
                         } else {
                             self::download('', './storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
                         }
-                    }
-                    $obj = $vtiger->retrieve($clitem->id);
-
-                    if (($obj->result->cf_1898 === 'from_cp') || ($obj->result->cf_1578 != $clitem->cf_1578)) {
-                        return  back()->with(['status' => 'waiting']);
                     }
 
 
