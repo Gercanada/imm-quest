@@ -5,11 +5,11 @@
 @section('content')
     <!-- ============================================================== -->
     <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
-        style="background:url(/{{env('ASSET_URL')}}images/iss_0893_05172_1.jpg) no-repeat center center; background-size: cover;">
+        style="background:url(/{{ env('ASSET_URL') }}images/iss_0893_05172_1.jpg) no-repeat center center; background-size: cover;">
         <div class="auth-box p-4 bg-white rounded" style="opacity:85%; position:relative;">
             <div id="loginform">
-                <div class="logo">
-                    <h3 class="box-title mb-3">Sign In</h3>
+                <div class="logo text-center">
+                    <h3 class="box-title mb-3 right"><i class="fas fa-key"></i> Sign In</h3>
                 </div>
                 <!-- Form -->
                 <div class="row">
@@ -19,11 +19,11 @@
                             @csrf
                             <div class="form-group mb-3">
                                 <div class="">
-                                    <input id="user_name" type="text" placeholder="Username"
-                                        class="form-control
-                                @error('user_name') is-invalid
-                                @enderror"
-                                        name="user_name" value="{{ old('user_name') }}" required autocomplete="text" autofocus>
+                                    <input id="user_name" type="text" placeholder="Username" style="opacity:75%;"
+                                        class="form-control rounded
+                                @error('user_name') is-invalid @enderror"
+                                        name="user_name" value="{{ old('user_name') }}" required autocomplete="text"
+                                        autofocus>
 
                                     @error('user_name')
                                         <span class="invalid-feedback" role="alert">
@@ -34,10 +34,9 @@
                             </div>
                             <div class="form-group mb-4">
                                 <div class="">
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid
-                                @enderror"
-                                        name="password" required autocomplete="current-password">
+                                    <input id="password" type="password" style="opacity:75%;"
+                                        class="form-control rounded @error('password') is-invalid @enderror" name="password"
+                                        required autocomplete="current-password">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -65,7 +64,7 @@
                                 </div>
                             </div>
                             <div class="form-group text-center mt-4" style="position:relative;
-                            z-index:1;">
+                                    z-index:1;">
                                 <div class="col-xs-12">
                                     <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
                                         type="submit">Log In</button>
