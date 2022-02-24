@@ -136,6 +136,9 @@ class VtigerController extends Controller
         }
         if ($where === 'rel') {
             $query = null;
+            if ($type === 'HelpDesk') {
+                $query = DB::table($type)->select('*')->where("ticket_no", "A2245485");
+            }
             if ($type === 'Documents') {
                 $query = DB::table($type)->select('*')->where("assigned_user_id", "19x29");
             }
@@ -160,3 +163,11 @@ class VtigerController extends Controller
         return  $data;
     }
 }
+/*
+$today = date("Y-m-d H:i:s");
+if($createdtime === $modifiedtime){
+    return "Case created at ".$today;
+}else{
+    return "Case updated at ".$today;
+}
+ */

@@ -165,7 +165,7 @@ class CLItemController extends Controller
 
             $vtiger->update($obj->result);
             //$task->updateCLItemFromImmcase($request);
-            return response()->json("Success", 200);
+            return response()->json("success", 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CLItemController' => 'sendDocumentToImmcase']);
         }

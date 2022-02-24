@@ -162,8 +162,9 @@ class CloneDBController extends Controller
         try {
             $vtiger = new Vtiger();
             //Get contact data of this user
-            $cp_contact = Contact::where("contact_no", $request->contact_no)->firstOrFail();
-            if ($cp_contact) {
+            $cp_contact = Contact::where("contact_no", $request->contact_no)->first();
+
+            if ($cp_contact != null) {
                 $userQuery = DB::table('Contacts')->select('*')->where("contact_no", $request->contact_no)->take(1);
                 $contact = $vtiger->search($userQuery)->result[0];
                 $obj = $vtiger->retrieve($contact->id);
