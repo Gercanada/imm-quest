@@ -653,6 +653,27 @@ class CloneDBController extends Controller
         }
     }
 
+
+    /**
+     * It function be called by cp user as web route. It be update on cp db all data of current user as exists on immcase
+     */
+    public function syncData(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $task = new CloneDBController();
+            if (!$user) return 404;
+
+            $request->request->add(['contact_no' => $user->vtiger_contact_id]);
+            $task->cloneImmcaseContactData($request);
+            $task->updateOnImmcase($request);
+            $task->clearTrashDB();
+            return response()->json('success',200);
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['CloneDBController' => 'syncData']);
+        }
+    }
+
     public function duplicateContacts(Request $request)
     {
         $string = 'This is a string';

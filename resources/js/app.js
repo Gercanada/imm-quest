@@ -30,6 +30,7 @@ Vue.component('clitem-component', require('./components/CLItemComponent.vue').de
 Vue.component('show-case-component', require('./components/ShowCaseComponent.vue').default);
 Vue.component('change_themme', require('./components/ChangeThemmeComponent.vue').default);
 Vue.component('commboard-component', require('./components/CommboardComponent.vue').default);
+Vue.component('sync-cp-component', require('./components/SyncCPImmcase.vue').default);
 // Vue.component('send-command-component', require('./components/SendCommandComponent.vue').default);
 
 /**

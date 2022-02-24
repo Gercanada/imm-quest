@@ -15,6 +15,7 @@ use App\Http\Controllers\CLItemController;
 use App\Http\Controllers\CommboardController;
 use App\Http\Controllers\VtigerController;
 use App\Http\Controllers\LSurveyController;
+use App\Http\Controllers\CloneDBController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */func
 });
 
 Route::middleware('auth')->group(function () {
+    Route::post('/viger/sync_data', [CloneDBController::class, 'syncData']);
     //dashboard
     Route::get('/',                  [DashboardController::class, 'index'])->name('dashboard');
     //case

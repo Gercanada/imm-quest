@@ -118,7 +118,6 @@ class VtigerController extends Controller
 
     public function goType($type, $where)
     {
-
         $user  = Auth::user();
         $vtiger = new Vtiger();
 

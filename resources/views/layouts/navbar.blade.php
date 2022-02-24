@@ -8,18 +8,16 @@
             <!-- Logo icon -->
             <b class="logo-icon">
                 <!--You can put here icon as well  -->
-                <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png"
-                    alt="homepage" class="dark-logo" />
-                <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png"
-                    alt="homepage" class="light-logo" />
+                <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png" alt="homepage" class="dark-logo" />
+                <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png" alt="homepage" class="light-logo" />
             </b>
             <!--End Logo icon -->
             <!-- Logo text -->
             <span class="logo-text">
-                <img src="/{{ env('ASSET_URL') }}images\immvisas_1080.png"
-                    alt="homepage" class="light-logo " width="160px" />
-                <img src="/{{ env('ASSET_URL') }}images\immvisas_1080.png"
-                    alt="homepage" class="dark-logo " width="160px" />
+                <img src="/{{ env('ASSET_URL') }}images\immvisas_1080.png" alt="homepage" class="light-logo "
+                    width="160px" />
+                <img src="/{{ env('ASSET_URL') }}images\immvisas_1080.png" alt="homepage" class="dark-logo "
+                    width="160px" />
             </span>
         </a>
         <!-- Toggle which is visible on mobile only -->
@@ -60,12 +58,12 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                        <span class="round text-white d-inline-block text-center rounded-circle bg-success">
-                            {{ substr(Auth::user()->name, 0, 1) }}
-                            {{ substr(Auth::user()->last_name, 0, 1) }}
-                        </span>
+                    <span class="round text-white d-inline-block text-center rounded-circle bg-success">
+                        {{ substr(Auth::user()->name, 0, 1) }}
+                        {{ substr(Auth::user()->last_name, 0, 1) }}
+                    </span>
                 </a>
-                <div class="dropdown-menu mailbox dropdown-menu-right animated bounceInDown">
+                <div class="dropdown-menu mailbox dropdown-menu-right animated bounceInDown shadow p-1 rounded ">
                     <ul class="dropdown-user list-style-none">
                         <li>
                             <div class="dw-user-box p-3 d-flex">
@@ -94,11 +92,16 @@
 
                         <li role="separator" class="dropdown-divider"></li>
                         <li class="user-list">
+                            <sync-cp-component></sync-cp-component>
+                        </li>
+
+                        <li role="separator" class="dropdown-divider"></li>
+                        <li class="user-list float-right">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a class="px-3 py-20" href="route('logout')" onclick="event.preventDefault();
                                 this.closest('form').submit();" aria-expanded="false">
-                                    <i class="fa fa-power-off"></i>
+                                    <i class="fa fa-power-off  text-danger"></i>
                                     <span class="hide-menu"> Logout </span>
                                 </a>
                             </form>
