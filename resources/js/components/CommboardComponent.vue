@@ -25,6 +25,7 @@
           >
             <!-- id="v-pills-home-tab" -->
             <a
+              :v-if="groupArr2.lenght > 0"
               v-for="comm in groupArr2"
               :key="comm.id"
               :id="'tab_' + coms.cf_2218 + '-tab'"
@@ -295,10 +296,14 @@ export default {
   },
   methods: {
     setComm(val) {
-      this.coms = val;
-      this.threadid = this.coms["cf_2218"];
-      this.threadtype = this.coms["cf_2220"];
-      this.subname = this.coms["name"].substring(0, 1);
+      if (val != undefined) {
+        this.coms = val;
+        console.log("this.coms");
+        console.log(val);
+        this.threadid = this.coms["cf_2218"];
+        this.threadtype = this.coms["cf_2220"];
+        this.subname = this.coms["name"].substring(0, 1);
+      }
     },
     changeAction() {
       this.action = 1;
@@ -312,19 +317,20 @@ export default {
           let contact = response.data[1];
           me.setComm(commResp[0]);
 
-          me.commboards = commResp;
-          me.contact = contact;
-
-          for (const [i, v] of commResp.entries()) {
-            if (!me.groupArr.includes(v.cf_2218)) {
-              me.groupArr.push(v.cf_2218);
-              me.groupArr2.push(v);
+          if (commResp != null) {
+            me.commboards = commResp;
+            me.contact = contact;
+            for (const [i, v] of commResp.entries()) {
+              if (!me.groupArr.includes(v.cf_2218)) {
+                me.groupArr.push(v.cf_2218);
+                me.groupArr2.push(v);
+              }
             }
-          }
-          (me.fullname = contact.firstname), " ", contact.lastname;
+            (me.fullname = contact.firstname), " ", contact.lastname;
 
-          me.subject = "";
-          me.comment = "";
+            me.subject = "";
+            me.comment = "";
+          }
         })
         .catch(function (error) {
           console.table(error);

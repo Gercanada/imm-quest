@@ -41,6 +41,7 @@ export default {
             timer: 2000,
             showConfirmButton: false,
           });
+          window.location.reload();
         })
         .catch(function (error) {
           console.log(error);

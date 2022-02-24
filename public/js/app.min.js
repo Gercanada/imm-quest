@@ -3910,6 +3910,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3935,10 +3936,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   methods: {
     setComm: function setComm(val) {
-      this.coms = val;
-      this.threadid = this.coms["cf_2218"];
-      this.threadtype = this.coms["cf_2220"];
-      this.subname = this.coms["name"].substring(0, 1);
+      if (val != undefined) {
+        this.coms = val;
+        console.log("this.coms");
+        console.log(val);
+        this.threadid = this.coms["cf_2218"];
+        this.threadtype = this.coms["cf_2220"];
+        this.subname = this.coms["name"].substring(0, 1);
+      }
     },
     changeAction: function changeAction() {
       this.action = 1;
@@ -3949,32 +3954,35 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         var commResp = response.data[0];
         var contact = response.data[1];
         me.setComm(commResp[0]);
-        me.commboards = commResp;
-        me.contact = contact;
 
-        var _iterator = _createForOfIteratorHelper(commResp.entries()),
-            _step;
+        if (commResp != null) {
+          me.commboards = commResp;
+          me.contact = contact;
 
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var _step$value = _slicedToArray(_step.value, 2),
-                i = _step$value[0],
-                v = _step$value[1];
+          var _iterator = _createForOfIteratorHelper(commResp.entries()),
+              _step;
 
-            if (!me.groupArr.includes(v.cf_2218)) {
-              me.groupArr.push(v.cf_2218);
-              me.groupArr2.push(v);
+          try {
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var _step$value = _slicedToArray(_step.value, 2),
+                  i = _step$value[0],
+                  v = _step$value[1];
+
+              if (!me.groupArr.includes(v.cf_2218)) {
+                me.groupArr.push(v.cf_2218);
+                me.groupArr2.push(v);
+              }
             }
+          } catch (err) {
+            _iterator.e(err);
+          } finally {
+            _iterator.f();
           }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
 
-        me.fullname = contact.firstname, " ", contact.lastname;
-        me.subject = "";
-        me.comment = "";
+          me.fullname = contact.firstname, " ", contact.lastname;
+          me.subject = "";
+          me.comment = "";
+        }
       })["catch"](function (error) {
         console.table(error);
       });
@@ -4934,6 +4942,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -4961,11 +4971,18 @@ var urlParams = window.location.pathname.split("/");
       this.loading = true; //the loading begin
 
       axios.get("/details_case/" + me.id).then(function (response) {
-        console.log(response);
+        //console.log(response);
         me.tkcase = response.data[0];
-        me.ArrayChecklist = response.data[1];
-        me.CLItemsArray = response.data[2];
-        me.activeItem = me.ArrayChecklist[0].name;
+
+        if (response.data[1].length > 0) {
+          console.log(response.data[1]);
+          me.ArrayChecklist = response.data[1];
+          me.activeItem = me.ArrayChecklist[0].name;
+        }
+
+        if (response.data[2]) {
+          me.CLItemsArray = response.data[2];
+        }
       })["finally"](function () {
         return _this.loading = false;
       })["catch"](function (error) {
@@ -5054,6 +5071,7 @@ __webpack_require__.r(__webpack_exports__);
           timer: 2000,
           showConfirmButton: false
         });
+        window.location.reload();
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
@@ -24946,6 +24964,7 @@ var render = function () {
                     key: comm.id,
                     staticClass: "nav-link pt-1 pb-1 mr-0",
                     attrs: {
+                      "v-if": _vm.groupArr2.lenght > 0,
                       id: "tab_" + _vm.coms.cf_2218 + "-tab",
                       "data-toggle": "pill",
                       href: "#tab_" + comm.cf_2218,
@@ -26151,7 +26170,10 @@ var render = function () {
                         {
                           key: checklist.name,
                           staticClass: "nav-item",
-                          attrs: { value: checklist.name },
+                          attrs: {
+                            "v-if": _vm.ArrayChecklist > 0,
+                            value: checklist.name,
+                          },
                         },
                         [
                           checklist
@@ -26201,7 +26223,10 @@ var render = function () {
                       {
                         key: checklist.id,
                         staticClass: "tab-content",
-                        attrs: { value: checklist.id },
+                        attrs: {
+                          "v-if": _vm.ArrayChecklist > 0,
+                          value: checklist.id,
+                        },
                       },
                       [
                         _c(

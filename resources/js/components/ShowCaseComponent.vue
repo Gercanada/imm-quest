@@ -84,6 +84,7 @@
             <ul class="nav nav-tabs nav-bordered mb-3 customtab">
               <li
                 class="nav-item"
+                :v-if="ArrayChecklist > 0"
                 v-for="checklist in ArrayChecklist"
                 :key="checklist.name"
                 :value="checklist.name"
@@ -108,6 +109,7 @@
 
             <div
               class="tab-content"
+              :v-if="ArrayChecklist > 0"
               v-for="checklist in ArrayChecklist"
               :key="checklist.id"
               :value="checklist.id"
@@ -431,11 +433,16 @@ export default {
       axios
         .get("/details_case/" + me.id)
         .then(function (response) {
-          console.log(response);
+          //console.log(response);
           me.tkcase = response.data[0];
-          me.ArrayChecklist = response.data[1];
-          me.CLItemsArray = response.data[2];
-          me.activeItem = me.ArrayChecklist[0].name;
+          if (response.data[1].length > 0) {
+            console.log(response.data[1]);
+            me.ArrayChecklist = response.data[1];
+            me.activeItem = me.ArrayChecklist[0].name;
+          }
+          if (response.data[2]) {
+            me.CLItemsArray = response.data[2];
+          }
         })
         .finally(() => (this.loading = false))
         .catch(function (error) {
