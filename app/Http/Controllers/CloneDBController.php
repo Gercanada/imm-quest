@@ -473,6 +473,48 @@ class CloneDBController extends Controller
             $deleted = 0;
 
             foreach ($types as $type) {
+
+                //get contact field on table
+                if ($type != 'Currency' || $type != 'Products') {
+                    $contactField = 'contact_id';
+                }
+
+                if ($type === 'Contacts') {
+                    $contactField = 'id';
+                }
+                if ($type === 'Documents') {
+                    $contactField = 'cf_1488';
+                }
+                if ($type === 'Payments') {
+                    $contactField = 'cf_1139';
+                }
+                if ($type === 'Checklist') {
+                    $contactField = 'cf_contacts_id';
+                }
+
+                if ($type === 'CLItems') {
+                    $contactField = 'cf_contacts_id';
+                }
+                if ($type != 'Currency' || $type != 'Products') {
+                    $contactField = 'contact_id';
+                }
+
+                if ($type === 'Contacts') {
+                    $contactField = 'id';
+                }
+                if ($type === 'Documents') {
+                    $contactField = 'cf_1488';
+                }
+                if ($type === 'Payments') {
+                    $contactField = 'cf_1139';
+                }
+                if ($type === 'Checklist') {
+                    $contactField = 'cf_contacts_id';
+                }
+
+                if ($type === 'CLItems') {
+                    $contactField = 'cf_contacts_id';
+                }
                 if ( //Select tacles that be cloned on cp
                     ($type === 'InstallmentTracker') ||
                     ($type === 'CommBoard') ||
@@ -500,9 +542,9 @@ class CloneDBController extends Controller
                         $vt_query = DB::table($type)->select('id')->where("id", $id)->take(1);
                         $vt_obj = $vtiger->search($vt_query);
 
-                        if (count($vt_obj->result) == 0) {
+                        if ($vt_obj->success === false) {
                             //If id from cp exists on vtiger be pushed in
-                            array_push($vt_ids, $vt_obj->result[0]->id);
+                            array_push($vt_ids, $id);
                         }
                     }
 
@@ -515,6 +557,110 @@ class CloneDBController extends Controller
             }
 
             //return $nfrecords;
+            return response()->json("Success. $deleted Records deleted", 200);
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['CloneDBController' => 'clearTrashDB']);
+        }
+    }
+
+    /**
+     * It method be called as route by authenticathed uset for clear of customesr portal all data related of this user thath not exists on immcase
+     */
+    public function clearTrashByAuth()
+    { //TODO check this cleaner and do thath works by auth user
+        try {
+            $vtiger = new Vtiger();
+
+            $user = Auth::user();
+
+            $data = $vtiger->listTypes();
+            $types = $data->result->types;
+            $deleted = 0;
+
+            foreach ($types as $type) {
+
+                //get contact field on table
+                if ($type != 'Currency' || $type != 'Products') {
+                    $contactField = 'contact_id';
+                }
+                if ($type === 'Contacts') {
+                    $contactField = 'id';
+                }
+                if ($type === 'Documents') {
+                    $contactField = 'cf_1488';
+                }
+                if ($type === 'Payments') {
+                    $contactField = 'cf_1139';
+                }
+                if ($type === 'Checklist') {
+                    $contactField = 'cf_contacts_id';
+                }
+
+                if ($type === 'CLItems') {
+                    $contactField = 'cf_contacts_id';
+                }
+                if ($type != 'Currency' || $type != 'Products') {
+                    $contactField = 'contact_id';
+                }
+
+                if ($type === 'Contacts') {
+                    $contactField = 'id';
+                }
+                if ($type === 'Documents') {
+                    $contactField = 'cf_1488';
+                }
+                if ($type === 'Payments') {
+                    $contactField = 'cf_1139';
+                }
+                if ($type === 'Checklist') {
+                    $contactField = 'cf_contacts_id';
+                }
+
+                if ($type === 'CLItems') {
+                    $contactField = 'cf_contacts_id';
+                }
+                if ( //Select tacles that be cloned on cp
+                    ($type === 'InstallmentTracker') ||
+                    ($type === 'CommBoard') ||
+                    ($type === 'Documents') ||
+                    ($type === 'Checklist') ||
+                    ($type === 'Payments') ||
+                    ($type === 'Contacts') ||
+                    ($type === 'HelpDesk') ||
+                    ($type === 'CLItems') ||
+                    ($type === 'Invoice') ||
+                    ($type === 'Currency') ||
+                    ($type === 'Quotes') ||
+                    ($type === 'Products')
+                ) {
+                    $localvalues = DB::select("SELECT id FROM vt_$type");
+                    $idvalues = [];
+                    foreach ($localvalues as $loca) {
+                        //Push in array ids of types on cp
+                        array_push($idvalues, $loca->id);
+                    }
+
+                    $vt_ids = []; //for del
+                    foreach ($idvalues as $id) {
+                        //Find on vtiger each id to get if exist
+                        $vt_query = DB::table($type)->select('id')->where("id", $id)
+                            ->where($contactField, $user->vtiger_contact_id)->take(1);
+                        // $vt_query = DB::table($type)->select('id')->where("id", $id)->take(1);
+                        $vt_obj = $vtiger->search($vt_query);
+
+                        if ($vt_obj->success === false) {
+                            //If id from cp not exists on vtiger be pushed in array of ids for delete
+                            array_push($vt_ids, $id);
+                        }
+                    }
+
+                    if (count($vt_ids) > 0) {
+                        DB::table("vt_$type")->whereNotIn('id', $vt_ids)->delete();
+                        //return $to_del;
+                        $deleted = $deleted + 1;
+                    }
+                }
+            }
             return response()->json("Success. $deleted Records deleted", 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'clearTrashDB']);
@@ -677,11 +823,13 @@ class CloneDBController extends Controller
         try {
             $user = Auth::user();
             $task = new CloneDBController();
-            if (!$user) return 404;
+            if (!$user) {
+                return 404;
+            }
             $request->request->add(['contact_no' => $user->vtiger_contact_id]);
             $task->cloneImmcaseContactData($request);
             $task->updateOnImmcase($request);
-            $task->clearTrashDB();
+            $task->clearTrashByAuth();
             return response()->json('success', 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'syncData']);
