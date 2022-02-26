@@ -90,6 +90,7 @@ class DocumentController extends Controller
     public function checkDocuments(Request $request)
     {
         try {
+            //$this->consoleWrite()->writeln($request);
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
             $files = Storage::disk('public')->allFiles($directory);
@@ -102,8 +103,11 @@ class DocumentController extends Controller
                     array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
                 }
             }
-            return response()->json($urlFiles, 200);
+            return $urlFiles;
+            //return response()->json($urlFiles, 200);
         } catch (Exception $e) {
+            $this->consoleWrite()->writeln($e);
+            return $e;
             return $this->returnJsonError($e, ['DocumentController' => 'checkDocuments']);
         }
     }

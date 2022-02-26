@@ -1,24 +1,30 @@
 <template>
-  <div class="row">
-    <div v-if="loading" class="col">
-      <button
-        disabled
-        type="button"
-        class="btn btn-outline-warning btn-rounded col-md-12"
-      >
-        <i class="fa fa-spin fas fa-sync-alt text-success"></i> Syncing ...
-      </button>
-    </div>
-    <div v-else class="col">
-      <button
-        type="button"
-        class="btn btn-outline-warning btn-rounded col-md-12"
-        @click="sync()"
-      >
-        <i class="fas fa-sync-alt text-success"></i> Sync
-      </button>
-    </div>
-  </div>
+  <li
+    class="nav-item py-3 px-4"
+    data-toggle="tooltip"
+    data-placement="left"
+    title="Fetch data from source"
+  >
+    <button
+      v-if="loading"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      title="Sync in progress..."
+      disabled
+      type="button"
+      class="btn btn-outline-warning btn-rounded col-md-12"
+    >
+      <i class="fa fa-spin fas fa-sync-alt text-success"></i> Syncing ...
+    </button>
+    <button
+      v-else
+      type="button"
+      class="btn btn-outline-warning btn-rounded col-md-12"
+      @click="sync()"
+    >
+      <i class="fas fa-sync-alt text-success"></i> Sync
+    </button>
+  </li>
 </template>
 <script>
 export default {

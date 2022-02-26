@@ -136,7 +136,7 @@ class VtigerController extends Controller
         if ($where === 'rel') {
             $query = null;
             if ($type === 'CLItems') {
-                $query = DB::table($type)->select('*')->where("clitemsno", "CLI4002174");
+                $query = DB::table($type)->select('*')->where("clitemsno", "CLI4002176");
             }
             if ($type === 'HelpDesk') {
                 $query = DB::table($type)->select('*')->where("ticket_no", "A2245485");

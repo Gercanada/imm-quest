@@ -55,6 +55,9 @@
             </li> --}}
             <!-- Profile -->
             <!-- ============================================================== -->
+            <sync-cp-component></sync-cp-component>
+            <li class="nav-item d-md-block waves-effect waves-dark">
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -90,13 +93,13 @@
                                 My Account Setting</a>
                         </li>
 
-                        <li role="separator" class="dropdown-divider"></li>
-                        <li class="user-list">
+                        {{-- <li role="separator" class="dropdown-divider"></li> --}}
+                        {{-- <li class="user-list">
                             <sync-cp-component></sync-cp-component>
-                        </li>
+                        </li> --}}
 
                         <li role="separator" class="dropdown-divider"></li>
-                        <li class="user-list float-right">
+                        <li class="user-list">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a class="px-3 py-20" href="route('logout')" onclick="event.preventDefault();

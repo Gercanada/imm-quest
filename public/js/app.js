@@ -5051,6 +5051,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -26886,11 +26892,38 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _vm.loading
-      ? _c("div", { staticClass: "col" }, [_vm._m(0)])
-      : _c("div", { staticClass: "col" }, [
-          _c(
+  return _c(
+    "li",
+    {
+      staticClass: "nav-item py-3 px-4",
+      attrs: {
+        "data-toggle": "tooltip",
+        "data-placement": "left",
+        title: "Fetch data from source",
+      },
+    },
+    [
+      _vm.loading
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-warning btn-rounded col-md-12",
+              attrs: {
+                "data-toggle": "tooltip",
+                "data-placement": "bottom",
+                title: "Sync in progress...",
+                disabled: "",
+                type: "button",
+              },
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-spin fas fa-sync-alt text-success",
+              }),
+              _vm._v(" Syncing ...\n  "),
+            ]
+          )
+        : _c(
             "button",
             {
               staticClass: "btn btn-outline-warning btn-rounded col-md-12",
@@ -26903,30 +26936,13 @@ var render = function () {
             },
             [
               _c("i", { staticClass: "fas fa-sync-alt text-success" }),
-              _vm._v(" Sync\n    "),
+              _vm._v(" Sync\n  "),
             ]
           ),
-        ]),
-  ])
+    ]
+  )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-warning btn-rounded col-md-12",
-        attrs: { disabled: "", type: "button" },
-      },
-      [
-        _c("i", { staticClass: "fa fa-spin fas fa-sync-alt text-success" }),
-        _vm._v(" Syncing ...\n    "),
-      ]
-    )
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

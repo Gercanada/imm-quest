@@ -148,7 +148,14 @@ class LSurveyController extends Controller
 
             $obj = $vtiger->retrieve($clitem->id);
 
-            if (($obj->result->cf_1898 === 'from_cp') || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
+            /* $metadata = json_encode(
+                [
+                    'received' => 'from_cp',
+                ]
+            ); */
+            $itemMetadata = json_decode($obj->result->cf_2370);
+            //if (($obj->result->cf_2370 === 'from_cp') || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
+            if (($itemMetadata->received === 'from_cp') || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
                 return  back()->with(['status' => 'waiting']);
             }
 
@@ -169,7 +176,7 @@ class LSurveyController extends Controller
             $myJSONRPCClient = $limeConnection['myJSONRPCClient'];
             $sSessionKey = $limeConnection['sessionKey'];
 
-            $exportSurvey = $myJSONRPCClient->export_responses_by_token(
+            $exportSurvey = $myJSONRPCClient->export_responses_by_token( //as json
                 $sSessionKey,
                 $iSurveyID,
                 $sDocumentType = 'json',
@@ -181,7 +188,7 @@ class LSurveyController extends Controller
                 $aFields = null
             );
 
-            $exportSurveyAsPDF = $myJSONRPCClient->export_responses_by_token(
+            $exportSurveyAsPDF = $myJSONRPCClient->export_responses_by_token( //as pdf
                 $sSessionKey,
                 $iSurveyID,
                 $sDocumentType = 'pdf',
@@ -221,11 +228,19 @@ class LSurveyController extends Controller
 
                     if (Storage::exists($directory . '/' . $file)) {
                         //$this->consoleWrite()->writeln("Here go");
+                        $metadata = json_encode(
+                            [
+                                'received' => 'from_cp',
+                            ]
+                        );
 
                         $obj->result->description = "File uploaded at: " . $now;
-                        $obj->result->cf_1898   = 'from_cp';
+                        $obj->result->cf_2370   = $metadata; //set on metadata field
+                        // $obj->result->cf_2370   = 'from_cp'; //set on metadata field
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
+
+                        //vamo a ver
 
                         $task->updateCLItemFromImmcase($request);
                         $task->updateChecklistFromImmcase($request);
