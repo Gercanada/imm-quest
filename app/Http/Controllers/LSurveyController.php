@@ -153,11 +153,11 @@ class LSurveyController extends Controller
                     'received' => 'from_cp',
                 ]
             ); */
-            $itemMetadata = json_decode($obj->result->cf_2370);
+            //$itemMetadata = json_decode($obj->result->cf_2370);
             //if (($obj->result->cf_2370 === 'from_cp') || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
-            if (($itemMetadata->received === 'from_cp') || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
+            /* if (($itemMetadata->received === 'from_cp') || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
                 return  back()->with(['status' => 'waiting']);
-            }
+            } */
 
 
             $urlObj = parse_url($clitem->cf_1212);
@@ -228,14 +228,15 @@ class LSurveyController extends Controller
 
                     if (Storage::exists($directory . '/' . $file)) {
                         //$this->consoleWrite()->writeln("Here go");
-                        $metadata = json_encode(
+                       /*  $metadata = json_encode(
                             [
                                 'received' => 'from_cp',
                             ]
-                        );
+                        ); */
+                        //$arrAsStr = implode(', ', $file);
 
                         $obj->result->description = "File uploaded at: " . $now;
-                        $obj->result->cf_2370   = $metadata; //set on metadata field
+                        $obj->result->cf_2370   = $directory . '/' . $file; //set on metadata field
                         // $obj->result->cf_2370   = 'from_cp'; //set on metadata field
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
