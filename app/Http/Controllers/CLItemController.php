@@ -52,6 +52,8 @@ class CLItemController extends Controller
         $itemfiles = ['key' => $item->clitemsno, 'files' => $files];
         $item->files = $itemfiles;
         return [$item, $case, $checklist];
+
+
     }
 
     /**
@@ -181,6 +183,8 @@ class CLItemController extends Controller
 
             $itemMetadata =  $obj->result->cf_2370 != '' ? json_decode($obj->result->cf_2370) : [];
 
+
+
             //return [$obj, $obj->result->cf_2370,  $itemMetadata];
 
             //return $itemMetadata;
@@ -193,7 +197,7 @@ class CLItemController extends Controller
 
                 return 'i has';
             } */
-           /*  if (isset($itemMetadata->received) || isset($itemMetadata['received'])) {
+            /*  if (isset($itemMetadata->received) || isset($itemMetadata['received'])) {
 
                 return 'i has 2';
             }
@@ -206,7 +210,7 @@ class CLItemController extends Controller
 
             return "hee"; */
             //if ($obj->result->cf_1898 === 'from_cp' || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
-           /*  if (array_key_exists('received', $itemMetadata) && $itemMetadata->received === 'from_cp' || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
+            /*  if (array_key_exists('received', $itemMetadata) && $itemMetadata->received === 'from_cp' || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
                 return response()->json("waiting");
             } */
             //call checkDocuments method and add required request values
@@ -218,18 +222,19 @@ class CLItemController extends Controller
 
             $files =  $docsTask->checkDocuments($request);
 
-            $metaArr =  [
+           /*  $metaArr =  [
                 'received' => 'from_cp',
                 'path_files' => [
                     $files
                 ]
             ];
             $metadata = json_encode($metaArr);
-
+ */
             // /return $metadata;
+            $arrAsStr = implode(', ',$files);
 
             $obj->result->description = "File uploaded at: " . $now;
-            $obj->result->cf_2370     =$metadata; //set on metadata field
+            $obj->result->cf_2370     = $arrAsStr; //set on metadata field
             // $obj->result->cf_2370     = 'from_cp';//set on metadata field
             $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
 
@@ -363,3 +368,17 @@ if(array_key_exists('received', $cf_2370)){
     return "key exstis :) ";
 } */
 
+// ${ return if(is_array( json_decode(json_encode($cf_2370))))? "true" : "false" ; }}>  ||    ${ return is_object( json_decode(json_encode($cf_2370))) ? "true" : "false" ; }}>
+/*
+https://75ce-187-212-180-149.ngrok.io
+
+
+${  return "https://75ce-187-212-180-149.ngrok.io"; }}>
+${  return 'https://75ce-187-212-180-149.ngrok.io'; }}>
+${  return `https://75ce-187-212-180-149.ngrok.io`; }}>
+*/
+/* ${ $exp = explode(`", "`, $cf_2370); return `"https://75ce-187-212-180-149.ngrok.io"`.$exp[$loop]; }}>
+${ $exp = explode(", ", $cf_2370); return "https://75ce-187-212-180-149.ngrok.io".$exp[$loop]; }}> */
+// https://75ce-187-212-180-149.ngrok.io ${ $exp = explode(", ", $cf_2370); return $exp[$loop] }>
+
+https://75ce-187-212-180-149.ngrok.io/storage/documents/contact/2156722/cases/A2145432-Study%20Permit/checklists/CL2241446-Study%20Permit/clitems/CLI4002176-Document/DSC_0927%20copy.jpg
