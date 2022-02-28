@@ -11,6 +11,7 @@ use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use  \org\jsonrpcphp\JsonRPCClient as JsonRPCClient;
 use Exception;
 
@@ -115,8 +116,10 @@ class LSurveyController extends Controller
     public function exportResponse(Request $request)
     {
         try {
+            $user   = Auth::user();
             $vtiger = new Vtiger();
             $task   = new CloneDBController;
+            $docsTask    = new DocumentController();
             $now    = Carbon::now()->format('H:i:s');
 
             if ($request->form != 'vue') {
@@ -145,20 +148,6 @@ class LSurveyController extends Controller
             $case      = CPCase::where('id', $clitem->cf_1217)->firstOrFail();
             $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
             $request->request->add(['checklist_id' => $clitem->cf_1216]);
-
-            $obj = $vtiger->retrieve($clitem->id);
-
-            /* $metadata = json_encode(
-                [
-                    'received' => 'from_cp',
-                ]
-            ); */
-            //$itemMetadata = json_decode($obj->result->cf_2370);
-            //if (($obj->result->cf_2370 === 'from_cp') || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
-            /* if (($itemMetadata->received === 'from_cp') || ($obj->result->cf_1578 != $oncpItem->cf_1578)) {
-                return  back()->with(['status' => 'waiting']);
-            } */
-
 
             $urlObj = parse_url($clitem->cf_1212);
             $iSurveyID = str_replace('/', '', $urlObj['path']);
@@ -224,19 +213,19 @@ class LSurveyController extends Controller
                             self::download('', './storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
                         }
                     }
-
-
                     if (Storage::exists($directory . '/' . $file)) {
-                        //$this->consoleWrite()->writeln("Here go");
-                       /*  $metadata = json_encode(
-                            [
-                                'received' => 'from_cp',
-                            ]
-                        ); */
-                        //$arrAsStr = implode(', ', $file);
+                        $obj = $vtiger->retrieve($clitem->id);
+                        $request->request->add(['cid'       => $user->vtiger_contact_id]);
+                        $request->request->add(['case'      => $case->ticket_no . '-' . $case->ticketcategories]);
+                        $request->request->add(['checklist' => $checklist->checklistno . '-' . $checklist->cf_1706]);
+                        $request->request->add(['clitem'    => $clitem->clitemsno . '-' . $clitem->cf_1200]);
+
+                        $files =  $docsTask->checkDocuments($request);
+
+                        $arrAsStr = implode(', ', $files);
 
                         $obj->result->description = "File uploaded at: " . $now;
-                        $obj->result->cf_2370   = $directory . '/' . $file; //set on metadata field
+                        $obj->result->cf_2370   = $arrAsStr; //set on metadata field
                         // $obj->result->cf_2370   = 'from_cp'; //set on metadata field
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
