@@ -503,16 +503,6 @@ export default {
         .post("/cl-item/send_file", { clitemsno: clitemsno, file: file })
         .then(function (response) {
           console.log(response);
-
-          if (response.data === "waiting") {
-            Swal.fire({
-              type: "warning",
-              title:
-                "Document sent. Please await for manager response without sent again request almost few minutes. If problem persists contactyour manager.",
-              timer: 3000,
-              showConfirmButton: false,
-            });
-          }
           if (response.data === "success") {
             Swal.fire({
               type: "success",
@@ -521,8 +511,7 @@ export default {
               showConfirmButton: false,
             });
           }
-
-          //me.userFiles();
+          me.userFiles();
         })
         .catch(function (error) {
           Swal.fire({

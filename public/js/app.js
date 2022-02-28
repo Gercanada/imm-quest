@@ -3414,15 +3414,6 @@ var urlParams = window.location.pathname.split("/");
       }).then(function (response) {
         console.log(response);
 
-        if (response.data === "waiting") {
-          Swal.fire({
-            type: "warning",
-            title: "Document sent. Please await for manager response without sent again request almost few minutes. If problem persists contactyour manager.",
-            timer: 3000,
-            showConfirmButton: false
-          });
-        }
-
         if (response.data === "success") {
           Swal.fire({
             type: "success",
@@ -3430,8 +3421,9 @@ var urlParams = window.location.pathname.split("/");
             timer: 3000,
             showConfirmButton: false
           });
-        } //me.userFiles();
+        }
 
+        me.userFiles();
       })["catch"](function (error) {
         Swal.fire({
           type: "error",
@@ -5070,7 +5062,6 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       me.loading = true;
       axios.post("/viger/sync_data").then(function (response) {
-        //    console.log(response);
         Swal.fire({
           type: "success",
           title: "Updated fom source.",

@@ -40,7 +40,6 @@ export default {
       axios
         .post("/viger/sync_data")
         .then(function (response) {
-          //    console.log(response);
           Swal.fire({
             type: "success",
             title: "Updated fom source.",
