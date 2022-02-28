@@ -697,7 +697,6 @@ class CloneDBController extends Controller
     public function updateChecklistFromImmcase(Request $request)
     {
         try {
-            set_time_limit(60);
             $vtiger = new Vtiger();
             $checklistQuery = DB::table('Checklist')->select('*')->where("id", $request->checklist_id)->take(1);
             $checklist =  $vtiger->search($checklistQuery);
