@@ -19,9 +19,10 @@
                         <tr
                             v-for="clitem_a in clitems"
                             v-if="
-                                clitem_a.cf_1578 === 'Pending' ||
-                                (clitem_a.cf_1578 === 'Replacement Needed' &&
-                                    clitem_a.cf_1200 === 'Document')
+                                (clitem_a.cf_1578 === 'Pending' ||
+                                    clitem_a.cf_1578 ===
+                                        'Replacement Needed') &&
+                                clitem_a.cf_1200 === 'Document'
                             "
                         >
                             <td>{{ clitem_a.name }}</td>
