@@ -145,7 +145,7 @@ class VtigerController extends Controller
                 $query = DB::table($type)->select('*')->where("assigned_user_id", "19x29");
             }
             if ($type === 'Checklist') {
-                $query = DB::table($type)->select('*')->where("id", "43x71108");
+                $query = DB::table($type)->select('*')->where("checklistno", "CL2141422");
             }
             if ($type === 'Invoice') {
                 $query = DB::table($type)->select('*')->where("assigned_user_id", "19x29");

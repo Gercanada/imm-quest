@@ -608,9 +608,8 @@ class CloneDBController extends Controller
 
                         $vt_obj = $vtiger->search($vt_query);
 
-                        if ($vt_obj->success === false || count($vt_obj->result[0]) < 1) {
+                        if ($vt_obj->success === false || count($vt_obj->result) <= 0) {
                             //If id from cp not exists on vtiger be pushed in array of ids for delete
-                            return 203;
                             array_push($vt_ids, $id);
                         }
                     }
