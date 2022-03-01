@@ -155,7 +155,7 @@ class LSurveyController extends Controller
             $urlQuery = $urlObj['query'];
             $urlQueryAsArr = [];
 
-            $return = response()->json('error', 200);;
+            $return = response()->json('error', 200);
             // $return = back()->with(['status' => 'error']);
 
             parse_str($urlQuery,  $urlQueryAsArr);
