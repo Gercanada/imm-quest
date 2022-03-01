@@ -175,7 +175,6 @@ export default {
         .then(function (response) {
           me.tkcase = response.data[0];
           if (response.data[1].length > 0) {
-            console.log(response.data[1]);
             me.ArrayChecklist = response.data[1];
             me.activeItem = me.ArrayChecklist[0].name;
             if (me.ArrayChecklist.length > 0) {
