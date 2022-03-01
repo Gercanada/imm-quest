@@ -92,7 +92,6 @@ export default {
       axios.post("/dev_cmd", {
         command: me.command,
       }).then(function (response) {
-          console.log(response.data);
           me.command_track = response;
           Swal.fire({
             type: "success",

@@ -3606,6 +3606,297 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChecklistComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChecklistComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var urlParams = window.location.pathname.split("/");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "checklistComponent",
+  props: {
+    name: String,
+    f_checklist_id: String
+  },
+  data: function data() {
+    return {
+      clitems: [],
+      checklist: "",
+      loading: false,
+      checklist_id: urlParams[2],
+      session: "",
+      headers: {
+        "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]").content
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.show();
+  },
+  methods: {
+    show: function show() {
+      var _this = this;
+
+      var me = this;
+      this.loading = true;
+      var checklistID = 0;
+
+      if (me.f_checklist_id === undefined) {
+        checklistID = me.checklist_id;
+      } else {
+        checklistID = me.f_checklist_id;
+      }
+
+      axios.get("/checklist/" + checklistID + "/items").then(function (response) {
+        me.checklist = response.data[0];
+        me.clitems = response.data[1];
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this.loading = false;
+      });
+    },
+    exportResponse: function exportResponse(survey_url, clitems_no) {
+      var _this2 = this;
+
+      this.loading = true;
+      axios.post("/questionaries/export_response", {
+        clitemsno: clitems_no
+      }).then(function (response) {
+        if (response.data.status === "success") {
+          Swal.fire({
+            type: "success",
+            title: " ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record updated",
+            timer: 2000,
+            showConfirmButton: false
+          });
+        } else {
+          Swal.fire({
+            type: "error",
+            title: "❌ This survey has NOT answered. Please open the link and answer the survey. ❌",
+            timer: 2000,
+            showConfirmButton: false
+          });
+        }
+
+        this.show();
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this2.loading = false;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js& ***!
@@ -4531,6 +4822,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _ChecklistComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChecklistComponent */ "./resources/js/components/ChecklistComponent.vue");
 //
 //
 //
@@ -4670,276 +4962,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "showCase",
+  components: {
+    checklistComponent: _ChecklistComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
+      name: "Bruce",
       tkcase: "",
       clitem: "",
       ArrayChecklist: [],
@@ -4949,7 +4981,8 @@ var urlParams = window.location.pathname.split("/");
       loading: false,
       surveyurl: "",
       clitemsno: "",
-      session_status: ""
+      session_status: "",
+      f_checklist_id: 0
     };
   },
   mounted: function mounted() {
@@ -4963,13 +4996,16 @@ var urlParams = window.location.pathname.split("/");
       this.loading = true; //the loading begin
 
       axios.get("/details_case/" + me.id).then(function (response) {
-        //console.log(response);
         me.tkcase = response.data[0];
 
         if (response.data[1].length > 0) {
           console.log(response.data[1]);
           me.ArrayChecklist = response.data[1];
           me.activeItem = me.ArrayChecklist[0].name;
+
+          if (me.ArrayChecklist.length > 0) {
+            me.f_checklist_id = me.ArrayChecklist[0].id;
+          }
         }
 
         if (response.data[2]) {
@@ -4981,29 +5017,14 @@ var urlParams = window.location.pathname.split("/");
         console.table(error);
       });
     },
+    changeTab: function changeTab(checklist) {
+      this.f_checklist_id = checklist;
+    },
     isActive: function isActive(menuItem) {
       return this.activeItem === menuItem;
     },
     setActive: function setActive(menuItem) {
       this.activeItem = menuItem;
-    },
-    refreshStatus: function refreshStatus() {
-      var _this2 = this;
-
-      var me = this;
-      axios.post("/questionaries/export_response", {
-        surveyurl: surveyurl.value,
-        clitemsno: clitemsno.value,
-        form: "vue"
-      }).then(function (response) {
-        console.log(response);
-        me.session_status = response.data;
-        $("#surveyAlert").delay(10000).hide(0);
-      })["catch"](function (error) {
-        console.log(error);
-      })["finally"](function () {
-        return _this2.loading = false;
-      });
     }
   }
 });
@@ -23723,6 +23744,45 @@ component.options.__file = "resources/js/components/ChangeThemmeComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/ChecklistComponent.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/ChecklistComponent.vue ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ChecklistComponent_vue_vue_type_template_id_c0de07bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChecklistComponent.vue?vue&type=template&id=c0de07bc& */ "./resources/js/components/ChecklistComponent.vue?vue&type=template&id=c0de07bc&");
+/* harmony import */ var _ChecklistComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChecklistComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ChecklistComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ChecklistComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ChecklistComponent_vue_vue_type_template_id_c0de07bc___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ChecklistComponent_vue_vue_type_template_id_c0de07bc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ChecklistComponent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/CommboardComponent.vue":
 /*!********************************************************!*\
   !*** ./resources/js/components/CommboardComponent.vue ***!
@@ -23950,6 +24010,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ChecklistComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/ChecklistComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChecklistComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChecklistComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChecklistComponent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChecklistComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/CommboardComponent.vue?vue&type=script&lang=js& ***!
@@ -24060,6 +24136,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeThemmeComponent_vue_vue_type_template_id_b3a30a04___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChangeThemmeComponent_vue_vue_type_template_id_b3a30a04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChangeThemmeComponent.vue?vue&type=template&id=b3a30a04& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChangeThemmeComponent.vue?vue&type=template&id=b3a30a04&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ChecklistComponent.vue?vue&type=template&id=c0de07bc&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/ChecklistComponent.vue?vue&type=template&id=c0de07bc& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChecklistComponent_vue_vue_type_template_id_c0de07bc___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChecklistComponent_vue_vue_type_template_id_c0de07bc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChecklistComponent_vue_vue_type_template_id_c0de07bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChecklistComponent.vue?vue&type=template&id=c0de07bc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChecklistComponent.vue?vue&type=template&id=c0de07bc&");
 
 
 /***/ }),
@@ -24909,6 +25002,355 @@ var render = function () {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChecklistComponent.vue?vue&type=template&id=c0de07bc&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ChecklistComponent.vue?vue&type=template&id=c0de07bc& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card-body" }, [
+    _c("div", { staticClass: "shadow p-1 mt-4 rounded" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive mt-4" }, [
+        _c("table", { staticClass: "table" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.clitems, function (clitem_a) {
+              return clitem_a.cf_1578 === "Pending" ||
+                (clitem_a.cf_1578 === "Replacement Needed" &&
+                  clitem_a.cf_1200 === "Document")
+                ? _c("tr", [
+                    _c("td", [_vm._v(_vm._s(clitem_a.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(clitem_a.cf_1578))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("a", { attrs: { href: clitem_a.cf_1212 } }, [
+                        _vm._v(_vm._s(clitem_a.cf_1212)),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-outline-success btn-rounded",
+                          attrs: {
+                            href:
+                              "/checklist/" +
+                              _vm.checklist.id +
+                              "/item/" +
+                              clitem_a.id,
+                            "data-toggle": "tooltip",
+                            title: "View details",
+                          },
+                        },
+                        [_c("i", { staticClass: "fas fa-eye" })]
+                      ),
+                    ]),
+                  ])
+                : _vm._e()
+            }),
+            0
+          ),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "shadow p-1 mt-4 rounded" }, [
+      _vm._m(2),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive mt-4" }, [
+        _c("table", { staticClass: "table" }, [
+          _vm._m(3),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.clitems, function (clitem_b) {
+              return clitem_b.cf_1200 === "IMM Form"
+                ? _c("tr", [
+                    _c("td", [_vm._v(_vm._s(clitem_b.cf_1202))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(clitem_b.cf_1578))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "/checklist/" +
+                              _vm.checklist.id +
+                              "/item/" +
+                              clitem_b.id,
+                          },
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(clitem_b.name) +
+                              "\n                            "
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ])
+                : _vm._e()
+            }),
+            0
+          ),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "shadow p-1 mt-4 rounded" }, [
+      _vm._m(4),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive mt-4" }, [
+        _c("table", { staticClass: "table" }, [
+          _vm._m(5),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.clitems, function (clitem_c) {
+              return (clitem_c.cf_1578 === "Pending" ||
+                clitem_c.cf_1578 === "Replacement Needed" ||
+                clitem_c.cf_1578 === "") &&
+                clitem_c.cf_1200 === "Questionnaire"
+                ? _c("tr", [
+                    _c("td", [_vm._v(_vm._s(clitem_c.name))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        { attrs: { href: clitem_c.cf_1212, target: "_blank" } },
+                        [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(clitem_c.cf_1212)
+                          ),
+                        ]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(clitem_c.cf_1578))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm.loading == false
+                        ? _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-outline-success btn-rounded",
+                              attrs: { type: "submit" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.exportResponse(
+                                    clitem_c.cf_1212,
+                                    clitem_c.clitemsno
+                                  )
+                                },
+                              },
+                            },
+                            [_c("i", { staticClass: "icon-refresh" })]
+                          )
+                        : _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-outline-success btn-rounded",
+                              attrs: { type: "submit", disabled: "" },
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "icon-refresh fas fa-spin",
+                              }),
+                            ]
+                          ),
+                    ]),
+                  ])
+                : _vm._e()
+            }),
+            0
+          ),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "shadow p-1 mt-4 rounded" }, [
+      _vm._m(6),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive mt-4" }, [
+        _c("table", { staticClass: "table" }, [
+          _vm._m(7),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.clitems, function (clitem_e) {
+              return clitem_e.cf_1578 === "Received" ||
+                clitem_e.cf_1578 === "Accepted" ||
+                clitem_e.cf_1578 === "Not Required Anymore"
+                ? _c("tr", [
+                    _c("td", [_vm._v(_vm._s(clitem_e.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(clitem_e.cf_1970))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(clitem_e.cf_1200))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(clitem_e.cf_1578))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-outline-success btn-rounded",
+                          attrs: {
+                            href:
+                              "/checklist/" +
+                              _vm.checklist.id +
+                              "/item/" +
+                              clitem_e.id,
+                            "data-toggle": "tooltip",
+                            title: "View details",
+                          },
+                        },
+                        [_c("i", { staticClass: "fas fa-eye" })]
+                      ),
+                    ]),
+                  ])
+                : _vm._e()
+            }),
+            0
+          ),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "card-title" }, [
+      _c("i", { staticClass: "mr-1 font-18 mdi mdi-timelapse" }),
+      _vm._v(" Pending items\n        "),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("CL Item Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Help link")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("View")]),
+        _vm._v(" "),
+        _c("th"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "card-title" }, [
+      _c("i", { staticClass: "mr-1 font-18 mdi mdi-textbox" }),
+      _vm._v(" Electronic forms\n        "),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("CL Item Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Help link")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("View")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "card-title" }, [
+      _c("i", { staticClass: "mr-1 font-18 mdi mdi-help-circle-outline" }),
+      _vm._v("Questionnaire\n        "),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("CL Item Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Help link")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Refresh status")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "card-title" }, [
+      _c("i", { staticClass: "mr-1 font-18 mdi mdi-telegram" }),
+      _vm._v("Submited items\n        "),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("CL Item Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("File Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Category")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("View")]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -26187,10 +26629,15 @@ var render = function () {
                                     "aria-expanded": true,
                                   },
                                   on: {
-                                    click: function ($event) {
-                                      $event.preventDefault()
-                                      return _vm.setActive(checklist.name)
-                                    },
+                                    click: [
+                                      function ($event) {
+                                        $event.preventDefault()
+                                        return _vm.setActive(checklist.name)
+                                      },
+                                      function ($event) {
+                                        return _vm.changeTab(checklist.id)
+                                      },
+                                    ],
                                   },
                                 },
                                 [
@@ -26236,470 +26683,16 @@ var render = function () {
                             attrs: { id: "tab_" + checklist.id },
                           },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "shadow p-1 mt-4 rounded" },
-                              [
-                                _vm._m(3, true),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "table-responsive" }, [
-                                  _c("table", { staticClass: "table" }, [
-                                    _vm._m(4, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "tbody",
-                                      _vm._l(
-                                        _vm.CLItemsArray,
-                                        function (clitem) {
-                                          return _c(
-                                            "tr",
-                                            {
-                                              key: clitem.id,
-                                              attrs: { value: clitem.id },
-                                            },
-                                            [
-                                              clitem.cf_1216 === checklist.id &&
-                                              clitem.cf_1200 === "Document" &&
-                                              (clitem.cf_1578 === "Pending" ||
-                                                clitem.cf_1578 ===
-                                                  "Replacement Needed")
-                                                ? [
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.name
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1578
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", [
-                                                      _c("a", {
-                                                        attrs: {
-                                                          href: clitem.cf_1212,
-                                                        },
-                                                        domProps: {
-                                                          textContent: _vm._s(
-                                                            clitem.cf_1212
-                                                          ),
-                                                        },
-                                                      }),
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("td", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          staticClass:
-                                                            "btn btn-outline-success btn-rounded",
-                                                          attrs: {
-                                                            href:
-                                                              "/checklist/" +
-                                                              checklist.id +
-                                                              "/item/" +
-                                                              clitem.id,
-                                                          },
-                                                        },
-                                                        [
-                                                          _c("i", {
-                                                            staticClass:
-                                                              "fas fa-eye",
-                                                          }),
-                                                        ]
-                                                      ),
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1212
-                                                        ),
-                                                      },
-                                                    }),
-                                                  ]
-                                                : _vm._e(),
-                                            ],
-                                            2
-                                          )
-                                        }
-                                      ),
-                                      0
-                                    ),
-                                  ]),
-                                ]),
-                              ]
-                            ),
+                            _c("input", {
+                              attrs: { type: "hidden", name: "checklist_id" },
+                              domProps: { value: checklist.id },
+                            }),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "shadow p-1 mt-4 rounded" },
-                              [
-                                _vm._m(5, true),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "table-responsive" }, [
-                                  _c("table", { staticClass: "table" }, [
-                                    _vm._m(6, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "tbody",
-                                      _vm._l(
-                                        _vm.CLItemsArray,
-                                        function (clitem) {
-                                          return _c(
-                                            "tr",
-                                            {
-                                              key: clitem.id,
-                                              attrs: { value: clitem.id },
-                                            },
-                                            [
-                                              clitem &&
-                                              clitem.cf_1216 == checklist.id &&
-                                              clitem.cf_1200 === "IMM Form"
-                                                ? [
-                                                    _c("td", [
-                                                      _c("a", {
-                                                        attrs: {
-                                                          href:
-                                                            "/checklist/" +
-                                                            clitem.cf_1216 +
-                                                            "/item/" +
-                                                            clitem.id,
-                                                        },
-                                                        domProps: {
-                                                          textContent: _vm._s(
-                                                            clitem.name
-                                                          ),
-                                                        },
-                                                      }),
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1202
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1578
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          staticClass:
-                                                            "btn btn-outline-success btn-rounded",
-                                                          attrs: {
-                                                            href:
-                                                              "/checklist/" +
-                                                              checklist.id +
-                                                              "/item/" +
-                                                              clitem.id,
-                                                          },
-                                                        },
-                                                        [
-                                                          _c("i", {
-                                                            staticClass:
-                                                              "fas fa-eye",
-                                                          }),
-                                                        ]
-                                                      ),
-                                                    ]),
-                                                  ]
-                                                : _vm._e(),
-                                            ],
-                                            2
-                                          )
-                                        }
-                                      ),
-                                      0
-                                    ),
-                                  ]),
-                                ]),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "shadow p-1 mt-4 rounded" },
-                              [
-                                _vm._m(7, true),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "table-responsive" }, [
-                                  _c("table", { staticClass: "table" }, [
-                                    _vm._m(8, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "tbody",
-                                      _vm._l(
-                                        _vm.CLItemsArray,
-                                        function (clitem) {
-                                          return _c(
-                                            "tr",
-                                            {
-                                              key: clitem.id,
-                                              attrs: { value: clitem.id },
-                                            },
-                                            [
-                                              clitem &&
-                                              clitem.cf_1216 == checklist.id &&
-                                              clitem.cf_1200 ===
-                                                "Questionnaire" &&
-                                              (clitem.cf_1578 === "Pending" ||
-                                                clitem.cf_1578 ===
-                                                  "Replacement Needed")
-                                                ? [
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.name
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", [
-                                                      _c("a", {
-                                                        attrs: {
-                                                          href: clitem.cf_1212,
-                                                          target: "_blank",
-                                                        },
-                                                        domProps: {
-                                                          textContent: _vm._s(
-                                                            clitem.cf_1212
-                                                          ),
-                                                        },
-                                                      }),
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1578
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", [
-                                                      _c(
-                                                        "form",
-                                                        {
-                                                          on: {
-                                                            submit: function (
-                                                              $event
-                                                            ) {
-                                                              $event.preventDefault()
-                                                            },
-                                                          },
-                                                        },
-                                                        [
-                                                          _c("input", {
-                                                            attrs: {
-                                                              type: "hidden",
-                                                              name: "surveyurl",
-                                                              id: "surveyurl",
-                                                            },
-                                                            domProps: {
-                                                              value:
-                                                                clitem.cf_1212,
-                                                            },
-                                                          }),
-                                                          _vm._v(" "),
-                                                          _c("input", {
-                                                            attrs: {
-                                                              type: "hidden",
-                                                              name: "clitemsno",
-                                                              id: "clitemsno",
-                                                            },
-                                                            domProps: {
-                                                              value:
-                                                                clitem.clitemsno,
-                                                            },
-                                                          }),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "button",
-                                                            {
-                                                              staticClass:
-                                                                "btn btn-outline-success btn-rounded",
-                                                              on: {
-                                                                click:
-                                                                  function (
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.refreshStatus()
-                                                                  },
-                                                              },
-                                                            },
-                                                            [
-                                                              _c("i", {
-                                                                staticClass:
-                                                                  "icon-refresh",
-                                                              }),
-                                                            ]
-                                                          ),
-                                                        ]
-                                                      ),
-                                                    ]),
-                                                  ]
-                                                : _vm._e(),
-                                            ],
-                                            2
-                                          )
-                                        }
-                                      ),
-                                      0
-                                    ),
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm.session_status === "success"
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "\n                      alert alert-success\n                      text-info text-center\n                      font-weight-bold\n                    ",
-                                          attrs: { id: "surveyAlert" },
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                    ✔ This survey has been answered ✔\n                  "
-                                          ),
-                                        ]
-                                      )
-                                    : _vm.session_status === "error"
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "\n                      alert alert-danger\n                      text-warning text-center\n                      font-weight-bold\n                    ",
-                                          attrs: { id: "surveyAlert" },
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                    ❌ This survey has NOT answered. Please open the link and\n                    answer the survey. ❌\n                  "
-                                          ),
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                ]),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "shadow p-1 mt-4 rounded" },
-                              [
-                                _vm._m(9, true),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "table-responsive" }, [
-                                  _c("table", { staticClass: "table" }, [
-                                    _vm._m(10, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "tbody",
-                                      _vm._l(
-                                        _vm.CLItemsArray,
-                                        function (clitem) {
-                                          return _c(
-                                            "tr",
-                                            {
-                                              key: clitem.id,
-                                              attrs: {
-                                                value: clitem.id,
-                                                "v-if":
-                                                  clitem &&
-                                                  clitem.cf_1216 ==
-                                                    checklist.id &&
-                                                  clitem.cf_1578 ===
-                                                    ("Received" || 0),
-                                              },
-                                            },
-                                            [
-                                              clitem &&
-                                              clitem.cf_1216 == checklist.id &&
-                                              clitem.cf_1578 ===
-                                                ("Received" || 0)
-                                                ? [
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.name
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1970
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1200
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", {
-                                                      domProps: {
-                                                        textContent: _vm._s(
-                                                          clitem.cf_1578
-                                                        ),
-                                                      },
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("td", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          staticClass:
-                                                            "btn btn-outline-success btn-rounded",
-                                                          attrs: {
-                                                            href:
-                                                              "/checklist/" +
-                                                              checklist.id +
-                                                              "/item/" +
-                                                              clitem.id,
-                                                          },
-                                                        },
-                                                        [
-                                                          _c("i", {
-                                                            staticClass:
-                                                              "fas fa-eye",
-                                                          }),
-                                                        ]
-                                                      ),
-                                                    ]),
-                                                  ]
-                                                : _vm._e(),
-                                            ],
-                                            2
-                                          )
-                                        }
-                                      ),
-                                      0
-                                    ),
-                                  ]),
-                                ]),
-                              ]
-                            ),
-                          ]
+                            _c("checklistComponent", {
+                              attrs: { f_checklist_id: checklist.id },
+                            }),
+                          ],
+                          1
                         ),
                       ]
                     )
@@ -26756,108 +26749,6 @@ var staticRenderFns = [
         staticClass: "text-end font-weight-medium",
         attrs: { "tkcase.ticket_title": "" },
       }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "card-title" }, [
-      _c("i", { staticClass: "mr-1 font-18 mdi mdi-timelapse" }),
-      _vm._v(" Pending items\n                "),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("CL Item name")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Help link")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("View")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "card-title" }, [
-      _c("i", { staticClass: "mr-1 font-18 mdi mdi-textbox" }),
-      _vm._v(" Electronic\n                  forms\n                "),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("CL Item name")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Help link")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("View")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "card-title" }, [
-      _c("i", { staticClass: "mr-1 font-18 mdi mdi-textbox" }),
-      _vm._v(" Questionnaire\n                "),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("CL Item Name")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Help link")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Refresh status")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "card-title" }, [
-      _c("i", { staticClass: "mr-1 font-18 mdi mdi-telegram" }),
-      _vm._v("Submited items\n                "),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("CL Item Name")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("File Name")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Category")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("View")]),
-      ]),
     ])
   },
 ]
@@ -40487,7 +40378,8 @@ Vue.component('clitem-component', (__webpack_require__(/*! ./components/CLItemCo
 Vue.component('show-case-component', (__webpack_require__(/*! ./components/ShowCaseComponent.vue */ "./resources/js/components/ShowCaseComponent.vue")["default"]));
 Vue.component('change_themme', (__webpack_require__(/*! ./components/ChangeThemmeComponent.vue */ "./resources/js/components/ChangeThemmeComponent.vue")["default"]));
 Vue.component('commboard-component', (__webpack_require__(/*! ./components/CommboardComponent.vue */ "./resources/js/components/CommboardComponent.vue")["default"]));
-Vue.component('sync-cp-component', (__webpack_require__(/*! ./components/SyncCPImmcase.vue */ "./resources/js/components/SyncCPImmcase.vue")["default"])); // Vue.component('send-command-component', require('./components/SendCommandComponent.vue').default);
+Vue.component('sync-cp-component', (__webpack_require__(/*! ./components/SyncCPImmcase.vue */ "./resources/js/components/SyncCPImmcase.vue")["default"]));
+Vue.component('checklist-component', (__webpack_require__(/*! ./components/ChecklistComponent.vue */ "./resources/js/components/ChecklistComponent.vue")["default"])); // Vue.component('send-command-component', require('./components/SendCommandComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

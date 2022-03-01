@@ -19,11 +19,10 @@ class DocumentController extends Controller
     }
 
     public function getDocuments()
-    {
+    {//Get contact data of this user
         try {
-            //Get contact data of this user
-            $user = Auth::user();
-            $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
+            $user      = Auth::user();
+            $contact   = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
             $documents = DB::table('vt_Documents')->where('cf_1488', $contact->id)->get();
             return response()->json($documents, 200);
         } catch (Exception $e) {
@@ -70,7 +69,6 @@ class DocumentController extends Controller
                 $expDir = explode('/', $dir);
                 //$dirPath = array_shift($expDir);
                 $newDir = implode('/', $expDir);
-
                 array_push($dirs, $dir);
                 $files = Storage::disk('public')->allFiles($newDir);
 
@@ -90,7 +88,6 @@ class DocumentController extends Controller
     public function checkDocuments(Request $request)
     {
         try {
-            //$this->consoleWrite()->writeln($request);
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
             $files = Storage::disk('public')->allFiles($directory);
@@ -104,41 +101,11 @@ class DocumentController extends Controller
                 }
             }
             return $urlFiles;
-            //return response()->json($urlFiles, 200);
         } catch (Exception $e) {
-            $this->consoleWrite()->writeln($e);
-            return $e;
             return $this->returnJsonError($e, ['DocumentController' => 'checkDocuments']);
         }
     }
 
-    /**
-     * this method be called as webservice to create the document record related with the clitem and uploaded file.
-     */
-    public function createCLItemDoc(Request $request)
-    {
-        try {
-            $vtiger = new Vtiger();
-            $userQuery = DB::table('CLItems')->select('*')->where("id", $request->clitemsno)->take(1);
-            $clitem = $vtiger->search($userQuery)->result[0];
-
-            $data = [
-                "notes_title"       => $clitem->name ?? '',
-                "assigned_user_id"  => $clitem->assigned_user_id,
-                "filelocationtype"  => $request->filelocationtype,
-                "cf_1487"           => $clitem->cf_1217 ?? '', //case
-                "cf_1488"           => $clitem->cf_contacts_id ?? '', //cotact
-                "cf_clitems_id"     => $clitem->id ?? '', // id
-
-                "filename"          => $request->filename ?? '',
-                "cf_1491"           => "Contact Document"
-            ];
-            $data = $vtiger->create('Documents', ($data));
-            return 200;
-        } catch (Exception $e) {
-            return $this->returnJsonError($e, ['DocumentController' => 'createCLItemDoc']);
-        }
-    }
 
     /**
      * This methods only returns request env['response'][$loop].

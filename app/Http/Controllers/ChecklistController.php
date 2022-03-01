@@ -9,6 +9,7 @@ use App\Models\CPCase;
 use App\Models\Contact;
 use App\Models\CLItem;
 use App\Models\User;
+use Exception;
 
 class ChecklistController extends Controller
 {
@@ -56,40 +57,48 @@ class ChecklistController extends Controller
      */
     public function show(Checklist $checklist, $id)
     {
-
         $user = Auth::user();
-
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
-
         $check_list = Checklist::where('id', $id)
             ->where('cf_contacts_id', $contact->id)
             ->firstOrFail();
-        $clitems = CLItem::where('cf_1216', $id)
-            ->where('cf_contacts_id', $contact->id)
-            ->get();
-
-        foreach ($clitems as $item) {
-            $case =  CPCase::where('id', $item->cf_1217)
-                ->where('contact_id', $contact->id)
-                ->firstOrFail();
-            $checklist =  Checklist::where('id', $item->cf_1216)
-                ->where('cf_contacts_id', $contact->id)
-                ->firstOrFail();
-
-            $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
-            $dirFiles = Storage::disk('public')->allFiles($directory);
-            $files = [];
-            foreach ($dirFiles as $file) {
-                array_push($files, $file);
-            }
-            $item->files = ['key' => $item->clitemsno, 'files' => $files];
-        }
         return view(
             'checklists.show',
-            compact(
-                'check_list',
-                'clitems'
-            )
+            compact('check_list')
         );
+    }
+    public function checklistItems(Checklist $checklist, $id)
+    {
+        try {
+            $user = Auth::user();
+            $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+            $check_list = Checklist::where('id', $id)
+                ->where('cf_contacts_id', $contact->id)
+                ->firstOrFail();
+            $clitems = CLItem::where('cf_1216', $id)
+                ->where('cf_contacts_id', $contact->id)
+                ->get();
+
+            foreach ($clitems as $item) {
+                $case =  CPCase::where('id', $item->cf_1217)
+                    ->where('contact_id', $contact->id)
+                    ->firstOrFail();
+                $checklist =  Checklist::where('id', $item->cf_1216)
+                    ->where('cf_contacts_id', $contact->id)
+                    ->firstOrFail();
+
+                $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
+                $dirFiles = Storage::disk('public')->allFiles($directory);
+                $files = [];
+                foreach ($dirFiles as $file) {
+                    array_push($files, $file);
+                }
+                $item->files = ['key' => $item->clitemsno, 'files' => $files];
+            }
+
+            return response()->json([$check_list, $clitems]);
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['ChecklistController' => 'ChecklistItems']);
+        }
     }
 }

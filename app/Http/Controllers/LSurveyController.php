@@ -116,11 +116,11 @@ class LSurveyController extends Controller
     public function exportResponse(Request $request)
     {
         try {
-            $user   = Auth::user();
-            $vtiger = new Vtiger();
-            $task   = new CloneDBController;
-            $docsTask    = new DocumentController();
-            $now    = Carbon::now()->format('H:i:s');
+            $user      = Auth::user();
+            $vtiger    = new Vtiger();
+            $task      = new CloneDBController;
+            $docsTask  = new DocumentController();
+            $now       = Carbon::now()->format('H:i:s');
 
             if ($request->form != 'vue') {
                 $request->form = '';
@@ -142,21 +142,21 @@ class LSurveyController extends Controller
                 $task->updateCLItemFromImmcase($request);
                 $clitem = $vtiger->search($clitemQuery);
             }
-            /*  */
 
             $contact   = Contact::where('id', $clitem->cf_contacts_id)->firstOrFail();
             $case      = CPCase::where('id', $clitem->cf_1217)->firstOrFail();
             $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
+
             $request->request->add(['checklist_id' => $clitem->cf_1216]);
 
             $urlObj = parse_url($clitem->cf_1212);
             $iSurveyID = str_replace('/', '', $urlObj['path']);
 
             $urlQuery = $urlObj['query'];
-
             $urlQueryAsArr = [];
 
-            $return = back()->with(['status' => 'error']);
+            $return = (['status' => 'error']);
+            // $return = back()->with(['status' => 'error']);
 
             parse_str($urlQuery,  $urlQueryAsArr);
             $sToken = $urlQueryAsArr['token'];
@@ -189,8 +189,6 @@ class LSurveyController extends Controller
                 $aFields = null
             );
             /*  */
-
-
 
             $directory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
             if (!Storage::exists($directory)) {
@@ -226,7 +224,6 @@ class LSurveyController extends Controller
 
                         $obj->result->description = "File uploaded at: " . $now;
                         $obj->result->cf_2370   = $arrAsStr; //set on metadata field
-                        // $obj->result->cf_2370   = 'from_cp'; //set on metadata field
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
 
@@ -234,19 +231,17 @@ class LSurveyController extends Controller
 
                         $task->updateCLItemFromImmcase($request);
                         $task->updateChecklistFromImmcase($request);
-                        $return =  back()->with(['status' => 'success']);
+                        //$return =  back()->with(['status' => 'success']);
+                        $return =  (['status' => 'success']);
                     }
                 }
             }
             // Release the session key
             $myJSONRPCClient->release_session_key($sSessionKey);
-
             return $return;
-            /* if ($request->form === "vue") {
-                return "error";
-            } */
         } catch (Exception $e) {
-            // return response()->json($e->getMessage());
+            // return response()->json($e->getMess
+            return $e;
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }
     }

@@ -144,7 +144,6 @@ class CloneDBController extends Controller
                     }
                 }
             }
-            //[CloneDBController::class, 'clearTrashDB'];
             return "dataCloned";
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'cloneImmcaseContactData']);
@@ -308,7 +307,6 @@ class CloneDBController extends Controller
                 if (in_array($key, $fields)) {
                     array_push($nameFields, $key);
                     array_push($dataFields, "'$val'");
-                    //array_push($toUpdate, [$key => $val]);
                     $toUpdate[$key] = $val;
                     if ($key === 'id') {
                         $id = $val;
@@ -820,6 +818,7 @@ class CloneDBController extends Controller
     public function syncData(Request $request)
     {
         try {
+            set_time_limit(120);
             $user = Auth::user();
             $task = new CloneDBController();
             if (!$user) {
