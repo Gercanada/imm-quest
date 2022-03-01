@@ -156,7 +156,6 @@ class LSurveyController extends Controller
             $urlQueryAsArr = [];
 
             $return = response()->json('error', 200);
-            // $return = back()->with(['status' => 'error']);
 
             parse_str($urlQuery,  $urlQueryAsArr);
             $sToken = $urlQueryAsArr['token'];
@@ -227,11 +226,9 @@ class LSurveyController extends Controller
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
 
-                        //vamo a ver
-
                         $task->updateCLItemFromImmcase($request);
                         $task->updateChecklistFromImmcase($request);
-                        //$return =  back()->with(['status' => 'success']);
+
                         $return =  response()->json('success', 200);
                     }
                 }
@@ -240,8 +237,6 @@ class LSurveyController extends Controller
             $myJSONRPCClient->release_session_key($sSessionKey);
             return $return;
         } catch (Exception $e) {
-            // return response()->json($e->getMess
-            return $e;
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }
     }

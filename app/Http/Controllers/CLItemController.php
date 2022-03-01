@@ -113,22 +113,29 @@ class CLItemController extends Controller
             }
             $fileList = [];
             $contact_no = $contact->contact_no;
+
             $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
 
             if ($request->category === 'eform') {
                 $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/eforms/$clitem->clitemsno-$clitem->cf_1200";
             }
 
+            $this->consoleWrite()->writeln($files);
+
             foreach ($files as $file) {
-                $filename = $file->getClientOriginalName();
+                $filename = $file ? $file->getClientOriginalName() :  $clitem->name;
                 $filename = str_replace(' ', '', $filename);
                 $filename = str_replace('-', '_', $filename);
-                $file->storeAs("/public/$destination", $filename);
-                $fileUrl = "$destination/$filename";
-                array_push($fileList, $fileUrl);
+                if ($file) {
+                    $file->storeAs("/public/$destination", $filename);
+                    $fileUrl = "$destination/$filename";
+                    array_push($fileList, $fileUrl);
+                }
             }
             return response()->json($fileList, 200);
         } catch (Exception $e) {
+            $this->consoleWrite()->writeln($e->getMessage());
+            $this->consoleWrite()->writeln($e);
             return $this->returnJsonError($e, ['CLItemController' => 'uploadFile']);
         }
     }

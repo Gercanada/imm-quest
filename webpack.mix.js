@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('dotenv').config();
 
 /*
  |--------------------------------------------------------------------------
@@ -13,11 +14,9 @@ const mix = require('laravel-mix');
 
 
 
-
-mix.js(['resources/js/app.js',
-
-    ], 'public/js/')
+mix.js(['resources/js/app.js', ], 'public/js/')
     .vue()
-    //.sass('resources/sass/app.scss', 'public/css')
+    .minify('public/js/app.js');
+/*  .combine([
 
-.minify('public/js/app.js');
+ ], 'public/css/main.css') */

@@ -12,9 +12,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     @if (env('APP_ENV') === 'local')
-    <link rel="icon" type="image/png" sizes="16x16"href="/{{ env('ASSET_URL') }}images/immvisassquarelight.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('ASSET_URL') }}images/immvisassquarelight.png">
     @else
-    <link rel="icon" type="image/png" sizes="16x16"href="/{{ env('ASSET_URL') }}images/immvisassquare.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('ASSET_URL') }}images/immvisassquare.png">
     @endif
     <title>GetCanada CP | @yield('title') </title>
     <link rel="canonical" href="https://www.wrappixel.com/{{ env('ASSET_URL') }}templates/adminpro/" />
@@ -53,19 +53,9 @@
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        {{-- @if (Route::currentRouteName() == 'login')
-            //do something
-        @else
-            //do something else
-        @endif --}}
-        {{-- <h1>
-            {{ Auth::user() }}
-
-        </h1> --}}
         @if (!Auth::user())
             @yield('content'){{-- login view --}}
         @else
-
             @if (Auth::user())
                 <header class="topbar">
                     @include('layouts.navbar')
@@ -110,7 +100,6 @@
     <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.min.js"></script>
 
     @if (Auth::user() && Auth::user()->themme_layout === 0)
-
         <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.darks5.js">
         </script>
     @elseif (Auth::user() && Auth::user()->themme_layout === 1)
@@ -133,7 +122,7 @@
     {{-- <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist/dist/chartist.min.js">
     </script> --}}
- {{--    <script
+    {{-- <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js">
     </script> --}}
     <script
@@ -166,9 +155,12 @@
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
     </script>
-    <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
-  {{--   <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script> --}}
 
+    @if (env('APP_ENV') === 'local')
+        <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
+    @else
+        <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script>
+    @endif
     @yield('scripts')
 </body>
 
