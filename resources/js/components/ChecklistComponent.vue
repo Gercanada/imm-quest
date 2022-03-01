@@ -247,13 +247,16 @@ export default {
                 .finally(() => (this.loading = false));
         },
         exportResponse(survey_url, clitems_no) {
-            this.loading = true;
+            let me = this;
+            me.loading = true;
             axios
                 .post("/questionaries/export_response", {
                     clitemsno: clitems_no,
                 })
                 .then(function (response) {
-                    if (response.data.status === "success") {
+                    console.log(response);
+                    console.log(response.data);
+                    if (response.data === "success") {
                         Swal.fire({
                             type: "success",
                             title: " ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record updated",
@@ -268,10 +271,10 @@ export default {
                             showConfirmButton: false,
                         });
                     }
-                    this.show();
+                    me.show();
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.table(error);
                 })
                 .finally(() => (this.loading = false));
         },

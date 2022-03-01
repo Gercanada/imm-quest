@@ -3865,11 +3865,15 @@ var urlParams = window.location.pathname.split("/");
     exportResponse: function exportResponse(survey_url, clitems_no) {
       var _this2 = this;
 
-      this.loading = true;
+      var me = this;
+      me.loading = true;
       axios.post("/questionaries/export_response", {
         clitemsno: clitems_no
       }).then(function (response) {
-        if (response.data.status === "success") {
+        console.log(response);
+        console.log(response.data);
+
+        if (response.data === "success") {
           Swal.fire({
             type: "success",
             title: " ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record updated",
@@ -3885,9 +3889,9 @@ var urlParams = window.location.pathname.split("/");
           });
         }
 
-        this.show();
+        me.show();
       })["catch"](function (error) {
-        console.log(error);
+        console.table(error);
       })["finally"](function () {
         return _this2.loading = false;
       });

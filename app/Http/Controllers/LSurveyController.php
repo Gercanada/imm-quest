@@ -155,7 +155,7 @@ class LSurveyController extends Controller
             $urlQuery = $urlObj['query'];
             $urlQueryAsArr = [];
 
-            $return = (['status' => 'error']);
+            $return = response()->json('error', 200);;
             // $return = back()->with(['status' => 'error']);
 
             parse_str($urlQuery,  $urlQueryAsArr);
@@ -232,7 +232,7 @@ class LSurveyController extends Controller
                         $task->updateCLItemFromImmcase($request);
                         $task->updateChecklistFromImmcase($request);
                         //$return =  back()->with(['status' => 'success']);
-                        $return =  (['status' => 'success']);
+                        $return =  response()->json('success', 200);
                     }
                 }
             }
