@@ -605,11 +605,12 @@ class CloneDBController extends Controller
                             ->where($contactField, $user->vtiger_contact_id)
                             ->orWhere($contactField, $contactId)
                             ->take(1);
-                        // $vt_query = DB::table($type)->select('id')->where("id", $id)->take(1);
+
                         $vt_obj = $vtiger->search($vt_query);
 
-                        if ($vt_obj->success === false) {
+                        if ($vt_obj->success === false || count($vt_obj->result[0]) < 1) {
                             //If id from cp not exists on vtiger be pushed in array of ids for delete
+                            return 203;
                             array_push($vt_ids, $id);
                         }
                     }
