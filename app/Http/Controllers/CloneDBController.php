@@ -471,48 +471,7 @@ class CloneDBController extends Controller
             $deleted = 0;
 
             foreach ($types as $type) {
-
                 //get contact field on table
-                if ($type != 'Currency' || $type != 'Products') {
-                    $contactField = 'contact_id';
-                }
-
-                if ($type === 'Contacts') {
-                    $contactField = 'id';
-                }
-                if ($type === 'Documents') {
-                    $contactField = 'cf_1488';
-                }
-                if ($type === 'Payments') {
-                    $contactField = 'cf_1139';
-                }
-                if ($type === 'Checklist') {
-                    $contactField = 'cf_contacts_id';
-                }
-
-                if ($type === 'CLItems') {
-                    $contactField = 'cf_contacts_id';
-                }
-                if ($type != 'Currency' || $type != 'Products') {
-                    $contactField = 'contact_id';
-                }
-
-                if ($type === 'Contacts') {
-                    $contactField = 'id';
-                }
-                if ($type === 'Documents') {
-                    $contactField = 'cf_1488';
-                }
-                if ($type === 'Payments') {
-                    $contactField = 'cf_1139';
-                }
-                if ($type === 'Checklist') {
-                    $contactField = 'cf_contacts_id';
-                }
-
-                if ($type === 'CLItems') {
-                    $contactField = 'cf_contacts_id';
-                }
                 if ( //Select tacles that be cloned on cp
                     ($type === 'InstallmentTracker') ||
                     ($type === 'CommBoard') ||
@@ -641,8 +600,11 @@ class CloneDBController extends Controller
                     $vt_ids = []; //for del
                     foreach ($idvalues as $id) {
                         //Find on vtiger each id to get if exist
+                        $contactId = str_replace('12x', '', $user->vtiger_contact_id);
                         $vt_query = DB::table($type)->select('id')->where("id", $id)
-                            ->where($contactField, $user->vtiger_contact_id)->take(1);
+                            ->where($contactField, $user->vtiger_contact_id)
+                            ->orWhere($contactField, $contactId)
+                            ->take(1);
                         // $vt_query = DB::table($type)->select('id')->where("id", $id)->take(1);
                         $vt_obj = $vtiger->search($vt_query);
 
