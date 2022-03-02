@@ -233,13 +233,13 @@ class LSurveyController extends Controller
                         $myJSONRPCClient->release_session_key($sSessionKey);
                         return response()->json('success', 200);
                     } else {
-                        return 400;
+                        return response()->json(400);
                     }
                 } else {
-                    return 400;
+                    return response()->json(400);
                 }
             } else {
-                return 404;
+                return response()->json(400);
             }
             // Release the session key
         } catch (Exception $e) {
