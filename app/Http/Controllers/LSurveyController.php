@@ -235,7 +235,7 @@ class LSurveyController extends Controller
             }
             // Release the session key
             $myJSONRPCClient->release_session_key($sSessionKey);
-            return $return;
+            return response()->json('success', 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }

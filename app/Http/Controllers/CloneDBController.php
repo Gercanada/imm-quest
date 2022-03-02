@@ -527,9 +527,7 @@ class CloneDBController extends Controller
     { //TODO check this cleaner and do thath works by auth user
         try {
             $vtiger = new Vtiger();
-
             $user = Auth::user();
-
             $data = $vtiger->listTypes();
             $types = $data->result->types;
             $deleted = 0;
@@ -608,7 +606,8 @@ class CloneDBController extends Controller
 
                         $vt_obj = $vtiger->search($vt_query);
 
-                        if ($vt_obj->success === false || count($vt_obj->result) <= 0) {
+                        if ($vt_obj->success === false || count($vt_obj->result) == 0) {
+                            $this->consoleWrite()->writeln('here');
                             //If id from cp not exists on vtiger be pushed in array of ids for delete
                             array_push($vt_ids, $id);
                         }
@@ -616,12 +615,12 @@ class CloneDBController extends Controller
 
                     if (count($vt_ids) > 0) {
                         DB::table("vt_$type")->whereNotIn('id', $vt_ids)->delete();
-                        //return $to_del;
-                        $deleted = $deleted + 1;
+                        //$deleted = $deleted + 1;
                     }
                 }
             }
-            return response()->json("Success. $deleted Records deleted", 200);
+            return 200;
+            //return response()->json("Success. $deleted Records deleted", 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'clearTrashDB']);
         }
@@ -789,8 +788,8 @@ class CloneDBController extends Controller
             $request->request->add(['contact_no' => $user->vtiger_contact_id]);
             $task->cloneImmcaseContactData($request);
             $task->updateOnImmcase($request);
-            $task->clearTrashByAuth();
-            return response()->json('success', 200);
+            $trash = $task->clearTrashByAuth();
+            return response()->json(['success', "deleted $trash rows"], 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'syncData']);
         }

@@ -255,7 +255,7 @@ export default {
                     clitemsno: clitems_no,
                 })
                 .then(function (response) {
-                    // console.log(response.data);
+                     console.log(response.data);
                     if (response.data === "success") {
                         Swal.fire({
                             type: "success",
