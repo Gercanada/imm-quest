@@ -230,12 +230,13 @@ class LSurveyController extends Controller
                         $task->updateChecklistFromImmcase($request);
 
                         $return =  response()->json('success', 200);
+                        $myJSONRPCClient->release_session_key($sSessionKey);
+                        return response()->json('success', 200);
                     }
                 }
             }
+            return 404;
             // Release the session key
-            $myJSONRPCClient->release_session_key($sSessionKey);
-            return response()->json('success', 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }
