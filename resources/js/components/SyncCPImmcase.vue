@@ -40,14 +40,14 @@ export default {
             axios
                 .post("/viger/sync_data")
                 .then(function (response) {
-                    console.log(response.data[1]);
+                    console.log(response);
                     Swal.fire({
                         type: "success",
                         title: "Updated from source ",
                         timer: 4000,
                         showConfirmButton: false,
                     });
-                    window.location.reload();
+                     window.location.reload();
                 })
                 .catch(function (error) {
                     console.log(error);

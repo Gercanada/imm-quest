@@ -1,5 +1,32 @@
 <template>
     <div class="card-body">
+        <div class="table-responsive mt-0">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Checklist No</th>
+                        <td>{{ checklist.checklistno }}</td>
+                    </tr>
+                    <tr>
+                        <th>Active Items</th>
+                        <td>{{ checklist.cf_1185 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Completed Items</th>
+                        <td>{{ checklist.cf_1189 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ checklist.cf_1179 }}</td>
+                    </tr>
+                    <tr>
+                        <th>Checklist Type</th>
+                        <td>{{ checklist.cf_1706 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--  -->
         <div class="shadow p-1 mt-4 rounded">
             <h3 class="card-title">
                 <i class="mr-1 font-18 mdi mdi-timelapse"></i> Pending items
@@ -255,7 +282,7 @@ export default {
                     clitemsno: clitems_no,
                 })
                 .then(function (response) {
-                     console.log(response.data);
+                    console.log(response.data);
                     if (response.data === "success") {
                         Swal.fire({
                             type: "success",

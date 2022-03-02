@@ -528,12 +528,14 @@ class CloneDBController extends Controller
         try {
             $vtiger = new Vtiger();
             $user = Auth::user();
+            $contactQuery = DB::table('Contacts')->select("id")->where("contact_no", $user->vtiger_contact_id)->take(1);
+            $contact = $vtiger->search($contactQuery)->result[0];
+
             $data = $vtiger->listTypes();
             $types = $data->result->types;
-            $deleted = 0;
+            $deleted = [];
 
             foreach ($types as $type) {
-
                 //get contact field on table
                 if ($type != 'Currency' || $type != 'Products') {
                     $contactField = 'contact_id';
@@ -588,38 +590,41 @@ class CloneDBController extends Controller
                     ($type === 'Quotes') ||
                     ($type === 'Products')
                 ) {
-                    $localvalues = DB::select("SELECT id FROM vt_$type");
+                    // $this->consoleWrite()->writeln("$type -> $contactField -> $contact->id");
+                    $tType = "vt_$type";
+                    //  $localvalues = DB::select("SELECT id FROM  $tType WHERE '".$contactField."'  = '".$contact->id."' ;");
+                    $localvalues = DB::select("SELECT id FROM  $tType ;");
+
+                    //return $localvalues;
                     $idvalues = [];
                     foreach ($localvalues as $loca) {
                         //Push in array ids of types on cp
-                        array_push($idvalues, $loca->id);
+                        array_push($idvalues, "$loca->id");
                     }
 
                     $vt_ids = []; //for del
                     foreach ($idvalues as $id) {
                         //Find on vtiger each id to get if exist
-                        $contactId = str_replace('12x', '', $user->vtiger_contact_id);
-                        $vt_query = DB::table($type)->select('id')->where("id", $id)
-                            ->where($contactField, $user->vtiger_contact_id)
-                            ->orWhere($contactField, $contactId)
-                            ->take(1);
+                        $vt_query = DB::table($type)->select("id")->where("id", $id);
 
                         $vt_obj = $vtiger->search($vt_query);
 
-                        if ($vt_obj->success === false || count($vt_obj->result) == 0) {
-                            $this->consoleWrite()->writeln('here');
+                        if ($vt_obj->success === false || empty($vt_obj->result)) {
                             //If id from cp not exists on vtiger be pushed in array of ids for delete
-                            array_push($vt_ids, $id);
+                            array_push($vt_ids,  $id);
                         }
                     }
 
                     if (count($vt_ids) > 0) {
-                        DB::table("vt_$type")->whereNotIn('id', $vt_ids)->delete();
-                        //$deleted = $deleted + 1;
+                        foreach ($vt_ids as $vtId) {
+                            DB::table("vt_$type")->where('id', $vtId)->delete();
+                        }
                     }
+                    array_push($deleted, [['Original values', $idvalues], [$type, $vt_ids]]);
                 }
             }
             return 200;
+            // return $deleted;
             //return response()->json("Success. $deleted Records deleted", 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'clearTrashDB']);
@@ -788,8 +793,8 @@ class CloneDBController extends Controller
             $request->request->add(['contact_no' => $user->vtiger_contact_id]);
             $task->cloneImmcaseContactData($request);
             $task->updateOnImmcase($request);
-            $trash = $task->clearTrashByAuth();
-            return response()->json(['success', "deleted $trash rows"], 200);
+            $task->clearTrashByAuth();
+            return response()->json('success', 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'syncData']);
         }
