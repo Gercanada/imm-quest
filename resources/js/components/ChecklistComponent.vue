@@ -307,7 +307,7 @@ export default {
                         timer: 2000,
                         showConfirmButton: false,
                     });
-                    console.log(error);
+                    console.table(error);
                 })
                 .finally(() => (this.loading = false));
         },
