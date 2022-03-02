@@ -158,7 +158,6 @@
 
     @if (env('APP_ENV') === 'local')
         <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
-        {{-- <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script> --}}
     @else
         <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script>
     @endif

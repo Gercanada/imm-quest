@@ -282,7 +282,7 @@ export default {
                     clitemsno: clitems_no,
                 })
                 .then(function (response) {
-                    //console.log(response.data);
+                    console.table(response);
                     Swal.fire({
                         type: "success",
                         title: " ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record updated",
@@ -298,7 +298,7 @@ export default {
                             showConfirmButton: false,
                         });
                     } */
-                    me.show();
+                    // me.show();
                 })
                 .catch(function (error) {
                     Swal.fire({
