@@ -282,14 +282,14 @@ export default {
                     clitemsno: clitems_no,
                 })
                 .then(function (response) {
-                    console.log(response.data);
-                    if (response.data === "success") {
-                        Swal.fire({
-                            type: "success",
-                            title: " ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record updated",
-                            timer: 2000,
-                            showConfirmButton: false,
-                        });
+                    //console.log(response.data);
+                    Swal.fire({
+                        type: "success",
+                        title: " ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record updated",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                    /*  if (response.data === "success") {
                     } else {
                         Swal.fire({
                             type: "error",
@@ -297,11 +297,17 @@ export default {
                             timer: 2000,
                             showConfirmButton: false,
                         });
-                    }
+                    } */
                     me.show();
                 })
                 .catch(function (error) {
-                    console.table(error);
+                    Swal.fire({
+                        type: "error",
+                        title: "❌ This survey has NOT answered. Please open the link and answer the survey. ❌",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                    console.log(error);
                 })
                 .finally(() => (this.loading = false));
         },
