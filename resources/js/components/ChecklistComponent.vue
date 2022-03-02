@@ -242,10 +242,10 @@ export default {
 
             checklist_id: urlParams[2],
             session: "",
-            headers: {
+            /*   headers: {
                 "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]")
                     .content,
-            },
+            }, */
         };
     },
     mounted() {
