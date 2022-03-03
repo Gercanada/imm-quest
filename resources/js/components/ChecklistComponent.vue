@@ -282,14 +282,15 @@ export default {
                     clitemsno: clitems_no,
                 })
                 .then(function (response) {
-                    console.table(response);
-                    Swal.fire({
-                        type: "success",
-                        title: " ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record updated",
-                        timer: 2000,
-                        showConfirmButton: false,
-                    });
-                    /*  if (response.data === "success") {
+                    if (response.data === "success") {
+                        Swal.fire({
+                            type: "success",
+                            title: " ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record updated",
+                            timer: 2000,
+                            showConfirmButton: false,
+                        });
+
+                        me.show();
                     } else {
                         Swal.fire({
                             type: "error",
@@ -297,8 +298,7 @@ export default {
                             timer: 2000,
                             showConfirmButton: false,
                         });
-                    } */
-                    // me.show();
+                    }
                 })
                 .catch(function (error) {
                     Swal.fire({
