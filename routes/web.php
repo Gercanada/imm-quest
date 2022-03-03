@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-    Route::get('/questionaries', [LSurveyController::class, 'index']);
+    //Route::get('/questionaries', [LSurveyController::class, 'index']);
     Route::post('/questionaries/export_response', [LSurveyController::class, 'exportResponse'])->name('export_response');
 
     Route::any('{any}', function () {

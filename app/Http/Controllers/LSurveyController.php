@@ -20,11 +20,10 @@ class LSurveyController extends Controller
     public function index()
     {
         /* List surveys thath user has access */
-        $limeConnection = self::connectLime();
         // return $limeConnection['groups'];
+        $limeConnection = self::connectLime();
         $sSessionKey = $limeConnection['sessionKey'];
         $iSurveyID = '1000';
-
         return base64_decode($limeConnection['myJSONRPCClient']->export_responses_by_token($sSessionKey, $iSurveyID));
     }
 
@@ -194,8 +193,6 @@ class LSurveyController extends Controller
                 Storage::makeDirectory($directory); //creates directory if not exists
             }
             /* Download base64encoded responses as file */
-            //$this->consoleWrite()->writeln("===========exportSurvey============");
-
             if (is_string($exportSurvey)) {
                 $surveyResults = json_decode(base64_decode($exportSurvey));
                 $surveyResponses =  $surveyResults->responses;
@@ -228,20 +225,14 @@ class LSurveyController extends Controller
 
                         $task->updateCLItemFromImmcase($request);
                         $task->updateChecklistFromImmcase($request);
-
-                        // $return =  response()->json('success', 200);
+                        // Release the session key
                         $myJSONRPCClient->release_session_key($sSessionKey);
                         return response()->json('success', 200);
-                    } else {
-                        return response()->json(400);
                     }
-                } else {
-                    return response()->json(400);
                 }
-            } else {
-                return response()->json(400);
             }
-            // Release the session key
+            $myJSONRPCClient->release_session_key($sSessionKey);
+            return response()->json(400);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }
@@ -255,10 +246,10 @@ class LSurveyController extends Controller
     {
         //TODO Check if release sesion key causes an error
         $limeConnection = [
-            'LS_RPCURL' => env('LS_RPCURL'),
-            'LS_BASEURL' => env('LS_BASEURL'),
-            'LS_USER' => env('LS_USER'),
-            'LS_PASSWORD' => ('LS_PASSWORD')
+            'LS_RPCURL'   => env('LS_RPCURL'),
+            'LS_BASEURL'  => env('LS_BASEURL'),
+            'LS_USER'     => env('LS_USER'),
+            'LS_PASSWORD' => env('LS_PASSWORD') //TODO check issues
         ];
         $myJSONRPCClient = new JsonRPCClient(env('LS_RPCURL'));
         $sessionKey = $myJSONRPCClient->get_session_key(env('LS_USER'), env('LS_PASSWORD'));
@@ -266,12 +257,11 @@ class LSurveyController extends Controller
         $groups = $myJSONRPCClient->list_surveys($sessionKey);
         // release the session key
         //$myJSONRPCClient->release_session_key($sessionKey);
-
         return [
             'myJSONRPCClient' => $myJSONRPCClient,
-            'sessionKey' => $sessionKey,
+            'sessionKey'      => $sessionKey,
             'lime_connection' => $limeConnection,
-            'groups' => $groups,
+            'groups'          => $groups,
         ];
     }
 
@@ -297,7 +287,6 @@ class LSurveyController extends Controller
         $decoded_file_data = base64_decode($base64_encoded_file_data);
         // Writes data to the specified file
         file_put_contents($filepath, $decoded_file_data);
-
         header('Expires: 0');
         header('Pragma: public');
         header('Cache-Control: must-revalidate');

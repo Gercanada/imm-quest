@@ -285,8 +285,8 @@ export default {
                     if (response.data === "success") {
                         Swal.fire({
                             type: "success",
-                            title: " ✔ This survey has been answered and sent to manager. ✔ Await a few minutes to get this record updated",
-                            timer: 2000,
+                            title: " ✔ This survey has been answered and sent to manager. ✔",
+                            timer: 5000,
                             showConfirmButton: false,
                         });
 
