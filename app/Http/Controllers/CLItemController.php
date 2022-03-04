@@ -242,13 +242,9 @@ class CLItemController extends Controller
 
             foreach ($files as $file) {
                 if (env('APP_ENV') === 'local') {
-                    if (Storage::exists($file)) {
-                        array_push($urlFiles, (Storage::url($file)));
-                    }
+                    array_push($urlFiles, (Storage::url($file)));
                 } else {
-                    if (Storage::exists("app/public/$file")) {
-                        array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
-                    }
+                    array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
                 }
             }
             return $urlFiles;
@@ -290,3 +286,18 @@ ${ $ex  = explode(', ', $cf_2370);
      {     return 'yes';
 
      }}}> */
+
+/* 
+$env["server_url"] = "https://4ee2-187-212-180-149.ngrok.io";
+if ($cf_2370 != null) {
+    $eachFile = explode(', ', $cf_2370);
+
+    $fileUrl =  $env["server_url"] . $eachFile[$loop];
+    $headers = get_headers($fileUrl);
+    if ($headers && strpos($headers[0], '200')) {
+        $env["simpleurl"] = $fileUrl;
+    }else{
+        $env["simpleurl"] = $headers;
+    }
+}
+return 'yes'; */

@@ -19,7 +19,7 @@ class DocumentController extends Controller
     }
 
     public function getDocuments()
-    {//Get contact data of this user
+    { //Get contact data of this user
         try {
             $user      = Auth::user();
             $contact   = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
@@ -115,8 +115,13 @@ class DocumentController extends Controller
     {
         try {
             $preUrl =  $request->server_name . $request->file;
+
             $url = str_replace(" ", "%20", $preUrl);
-            return $url;
+
+            $headers = get_headers($url);
+            if ($headers && strpos($headers[0], '200')) {
+                return $url;
+            }
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['DocumentController' => 'singleUrl']);
         }
