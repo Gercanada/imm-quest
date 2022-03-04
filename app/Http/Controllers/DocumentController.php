@@ -116,8 +116,15 @@ class DocumentController extends Controller
         try {
             $preUrl =  $request->server_name . $request->file;
 
-            $url = str_replace(" ", "%20", $preUrl);
-
+            $ex = explode('/', $preUrl);
+            $arr=[];
+            //return $ex;
+            foreach ($ex as $word) {
+                $newword = str_replace(" ", "%20", $word);                
+                array_push($arr, $newword);
+            }
+            $url = implode("/", $arr);
+            //return $url;
             $headers = get_headers($url);
             if ($headers && strpos($headers[0], '200')) {
                 return $url;
