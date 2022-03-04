@@ -86,17 +86,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="clitem_b in clitems"
-              v-if="clitem_b.cf_1200 === 'IMM Form'"
-            >
+            <tr v-for="clitem_b in clitems" v-if="clitem_b.cf_1200 === 'IMM Form'">
               <td>{{ clitem_b.cf_1202 }}</td>
               <td>{{ clitem_b.cf_1578 }}</td>
               <td>
-                <a
-                  :href="'/checklist/' + checklist.id + '/item/' + clitem_b.id"
-                  >{{ clitem_b.name }}</a
-                >
+                <a :href="'/checklist/' + checklist.id + '/item/' + clitem_b.id">{{
+                  clitem_b.name
+                }}</a>
               </td>
             </tr>
           </tbody>
@@ -129,9 +125,7 @@
             >
               <td>{{ clitem_c.name }}</td>
               <td>
-                <a :href="clitem_c.cf_1212" target="_blank">{{
-                  clitem_c.cf_1212
-                }}</a>
+                <a :href="clitem_c.cf_1212" target="_blank">{{ clitem_c.cf_1212 }}</a>
               </td>
               <td>{{ clitem_c.cf_1578 }}</td>
               <td>
@@ -273,8 +267,6 @@ export default {
               timer: 5000,
               showConfirmButton: false,
             });
-
-            me.show();
           } else {
             Swal.fire({
               type: "error",
@@ -284,6 +276,7 @@ export default {
               showConfirmButton: false,
             });
           }
+          me.show();
         })
         .catch(function (error) {
           Swal.fire({

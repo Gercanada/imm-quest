@@ -103,7 +103,7 @@ class CLItemController extends Controller
             $contact_no = $contact->contact_no;
 
             $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
-
+            $destination = str_replace(' ', '', $destination);
             if ($request->category === 'eform') {
                 $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/eforms/$clitem->clitemsno-$clitem->cf_1200";
             }

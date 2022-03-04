@@ -3796,12 +3796,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "checklistComponent",
@@ -3863,7 +3857,6 @@ var urlParams = window.location.pathname.split("/");
             timer: 5000,
             showConfirmButton: false
           });
-          me.show();
         } else {
           Swal.fire({
             type: "error",
@@ -3872,6 +3865,8 @@ var urlParams = window.location.pathname.split("/");
             showConfirmButton: false
           });
         }
+
+        me.show();
       })["catch"](function (error) {
         Swal.fire({
           type: "error",
