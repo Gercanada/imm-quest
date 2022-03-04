@@ -189,7 +189,9 @@ class LSurveyController extends Controller
                 $aFields = null
             );
 
-            $directory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
+            $natdirectory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
+            $directory = str_replace(" ", "_", $natdirectory);
+
             if (!Storage::exists($directory)) {
                 Storage::makeDirectory($directory); //creates directory if not exists
             }
@@ -221,10 +223,9 @@ class LSurveyController extends Controller
                         $obj->result->description = "File uploaded at: " . $now;
                         $obj->result->cf_2370   = $arrAsStr; //set on metadata field
                         //here
-                        // $newFilePath =  str_replace(" ", "_", "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs");
-                        $newFilePath =  str_replace(" ", "_", "ah si? ven aqui");
-                        $obj->result->cf_1214     = $newFilePath; //GD Link
-                        // $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
+                        //$newFilePath =  str_replace(" ", "_", "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs");
+                        //$obj->result->cf_1214     = $newFilePath; //GD Link
+                        $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
 
                         $task->updateCLItemFromImmcase($request);

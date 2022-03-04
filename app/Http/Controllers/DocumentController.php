@@ -89,15 +89,19 @@ class DocumentController extends Controller
     {
         try {
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
-            $directory = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
+            // $natdirectory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
+
+
+            $natDir = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
+            $directory = str_replace(" ", "_", $natDir);
             $files = Storage::disk('public')->allFiles($directory);
             $urlFiles = [];
             foreach ($files as $file) {
-                // /$file =  str_replace(' ', '%20', $file);
+                $newval = str_replace(' ', '_', $file);
                 if (env('APP_ENV') === 'local') {
-                    array_push($urlFiles, (Storage::url($file)));
+                    array_push($urlFiles, (Storage::url($newval)));
                 } else {
-                    array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+                    array_push($urlFiles, (Storage::url("app/public/$newval"))); // in prod
                 }
             }
             return $urlFiles;
@@ -117,10 +121,10 @@ class DocumentController extends Controller
             $preUrl =  $request->server_name . $request->file;
 
             $ex = explode('/', $preUrl);
-            $arr=[];
+            $arr = [];
             //return $ex;
             foreach ($ex as $word) {
-                $newword = str_replace(" ", "%20", $word);                
+                $newword = str_replace(" ", "%20", $word);
                 array_push($arr, $newword);
             }
             $url = implode("/", $arr);
