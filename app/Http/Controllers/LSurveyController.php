@@ -27,6 +27,8 @@ class LSurveyController extends Controller
         return base64_decode($limeConnection['myJSONRPCClient']->export_responses_by_token($sSessionKey, $iSurveyID));
     }
 
+
+
     /**
      * it function be called from immcase as webservice
      * it be create access key for contact and send guest email.
@@ -186,7 +188,6 @@ class LSurveyController extends Controller
                 $sResponseType = 'long',
                 $aFields = null
             );
-            /*  */
 
             $directory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
             if (!Storage::exists($directory)) {
@@ -215,7 +216,6 @@ class LSurveyController extends Controller
                         $request->request->add(['clitem'    => $clitem->clitemsno . '-' . $clitem->cf_1200]);
 
                         $files =  $docsTask->checkDocuments($request);
-
                         $arrAsStr = implode(', ', $files);
 
                         $obj->result->description = "File uploaded at: " . $now;
@@ -231,13 +231,77 @@ class LSurveyController extends Controller
                     }
                 }
             }
-            $myJSONRPCClient->release_session_key($sSessionKey);
             return response()->json(400);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }
     }
 
+
+    public function survey(Request $request, $id)
+    {
+        header("Access-Control-Allow-Origin: *");
+        $user      = Auth::user();
+        $vtiger    = new Vtiger();
+        $task      = new CloneDBController;
+        $contact   = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+        $oncpItem  =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
+
+
+
+        //$oncpItem = CLItem::where("clitemsno", $request->clitemsno)->firstOrFail();
+        /* Find clitem of current survey */
+        $clitemQuery = DB::table('CLItems')->select('*')
+            ->where("clitemsno", $oncpItem->clitemsno)->take(1);
+
+        $clitem = $vtiger->search($clitemQuery);
+
+        if ($clitem->success === false) {
+            return response()->json("Item not found", 404);
+        }
+        $clitem =  $clitem->result[0];
+
+        if ($clitem->cf_1212 != $oncpItem->cf_1212) {
+            $request->request->add(['clitemsno' => $clitem->clitemsno]);
+            $task->updateCLItemFromImmcase($request);
+            $clitem = $vtiger->search($clitemQuery);
+        }
+
+        //limesurvey connection 
+        $urlObj = parse_url($clitem->cf_1212);
+        $iSurveyID = str_replace('/', '', $urlObj['path']);
+
+        $urlQuery = $urlObj['query'];
+        $urlQueryAsArr = [];
+
+        $return = response()->json('error', 200);
+
+        parse_str($urlQuery,  $urlQueryAsArr);
+        $sToken = $urlQueryAsArr['token'];
+
+        $limeConnection = self::connectLime(); //Start limesurvey session
+        $myJSONRPCClient = $limeConnection['myJSONRPCClient'];
+        $sSessionKey = $limeConnection['sessionKey'];
+
+        $exportSurvey = $myJSONRPCClient->export_responses_by_token( //as json
+            $sSessionKey,
+            $iSurveyID,
+            $sDocumentType = 'json',
+            $sToken,
+            $sLanguageCode = null,
+            $sCompletionStatus = 'complete',
+            $sHeadingType = null,
+            $sResponseType = 'short',
+            $aFields = null
+        );
+
+        if (is_string($exportSurvey)) {
+            $surveyResults = json_decode(base64_decode($exportSurvey));
+            $surveyResponses =  $surveyResults->responses;
+        }
+
+        return [$clitem, $surveyResponses];
+    }
 
     /**
      * This function is callen when requires starts a limesurvey remotecontrol session

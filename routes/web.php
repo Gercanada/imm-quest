@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/checklist/{id}/items',                   [ChecklistController::class, 'checklistItems']);
 
     Route::get('/checklist/{check_list}/item/{id}', [CLItemController::class, 'dvupload'])->name('checklist_item');
-    Route::post('/survey/cl_item/{id}',             [CLItemController::class, 'survey']);
+    Route::get('/survey/cl_item/{id}',             [LSurveyController::class, 'survey']);
     //cl items
     Route::get('/documents/{contact}/', [CLItemController::class, 'downloadFile']);
     Route::post('/cl-item',             [CLItemController::class, 'show']);

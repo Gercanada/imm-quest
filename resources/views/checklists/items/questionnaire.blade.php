@@ -48,14 +48,15 @@
 
 
 @section('content')
-    <div class="row">
+<iframesurvey-component></iframesurvey-component>
+   {{--  <div class="row">
         <iframe src="{{ $cl_item->cf_1212 }}" id="myIframe" width="100% " onload="myFunction()"
             style=".navbar-collapse { opacity: 100%; background-color: green; color: red;}">
         </iframe>
-    </div>
+    </div> --}}
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
     <script>
         function myFunction() {
             setTimeout(() => {
@@ -77,4 +78,4 @@
 
         }
     </script>
-@endsection
+@endsection --}}
