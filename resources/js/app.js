@@ -31,7 +31,7 @@ Vue.component('change_themme', require('./components/ChangeThemmeComponent.vue')
 Vue.component('commboard-component', require('./components/CommboardComponent.vue').default);
 Vue.component('sync-cp-component', require('./components/SyncCPImmcase.vue').default);
 Vue.component('checklist-component', require('./components/ChecklistComponent.vue').default);
-Vue.component('iframesurvey-component', require('./components/IframeSurveyComponent.vue').default);
+// Vue.component('iframesurvey-component', require('./components/IframeSurveyComponent.vue').default);
 // Vue.component('send-command-component',   require('./components/SendCommandComponent.vue').default);
 
 /**
