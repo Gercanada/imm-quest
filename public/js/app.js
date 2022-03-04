@@ -3230,134 +3230,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 var urlParams = window.location.pathname.split("/");
@@ -3930,10 +3802,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "checklistComponent",
@@ -3946,8 +3814,7 @@ var urlParams = window.location.pathname.split("/");
       clitems: [],
       checklist: "",
       loading: false,
-      checklist_id: urlParams[2],
-      session: ""
+      checklist_id: urlParams[2]
       /*   headers: {
                 "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]")
                     .content,
@@ -24586,7 +24453,7 @@ var render = function () {
             _vm._v(" "),
             _c("div", { staticClass: "col-md-9 col-sm-12" }, [
               _c("h2", { staticClass: "card-title" }, [
-                _vm._v("\n                    CL Item "),
+                _vm._v("CL Item "),
                 _c("b", { domProps: { textContent: _vm._s(_vm.clitem.name) } }),
               ]),
             ]),
@@ -24610,10 +24477,10 @@ var render = function () {
                             _c("h4", { staticClass: "card-title" }, [
                               _c("span", {
                                 staticClass:
-                                  "\n                                                lstick\n                                                d-inline-block\n                                                align-middle\n                                            ",
+                                  "lstick d-inline-block align-middle",
                               }),
                               _vm._v(
-                                "\n                                        Case\n                                        "
+                                "\n                    Case\n                    "
                               ),
                               _c("b", {
                                 domProps: {
@@ -24634,8 +24501,7 @@ var render = function () {
                               _c("td", [_vm._v("Status")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.caseObj.ticketstatus),
                                 },
@@ -24646,8 +24512,7 @@ var render = function () {
                               _c("td", [_vm._v("Open Date")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.caseObj.cf_866),
                                 },
@@ -24658,8 +24523,7 @@ var render = function () {
                               _c("td", [_vm._v("Case type")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(
                                     _vm.caseObj.ticketcategories
@@ -24672,8 +24536,7 @@ var render = function () {
                               _c("td", [_vm._v("Description")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.caseObj.description),
                                 },
@@ -24701,10 +24564,10 @@ var render = function () {
                             _c("h4", { staticClass: "card-title" }, [
                               _c("span", {
                                 staticClass:
-                                  "\n                                                lstick\n                                                d-inline-block\n                                                align-middle\n                                            ",
+                                  "lstick d-inline-block align-middle",
                               }),
                               _vm._v(
-                                "\n                                        Checklist\n                                        "
+                                "\n                    Checklist\n                    "
                               ),
                               _c("b", {
                                 domProps: {
@@ -24725,8 +24588,7 @@ var render = function () {
                               _c("td", [_vm._v("Checklist No")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(
                                     _vm.checklistObj.checklistno
@@ -24739,8 +24601,7 @@ var render = function () {
                               _c("td", [_vm._v("% Completed")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_2079),
                                 },
@@ -24751,8 +24612,7 @@ var render = function () {
                               _c("td", [_vm._v("Checklist Type")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1706),
                                 },
@@ -24763,8 +24623,7 @@ var render = function () {
                               _c("td", [_vm._v("Applicant Full Name")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1181),
                                 },
@@ -24775,8 +24634,7 @@ var render = function () {
                               _c("td", [_vm._v("Completed Items")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1189),
                                 },
@@ -24787,8 +24645,7 @@ var render = function () {
                               _c("td", [_vm._v("Pending Items")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1187),
                                 },
@@ -24799,8 +24656,7 @@ var render = function () {
                               _c("td", [_vm._v("Status")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1179),
                                 },
@@ -24831,8 +24687,7 @@ var render = function () {
                               _c("td", [_vm._v("CLItems No")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.clitem.clitemsno),
                                 },
@@ -24843,8 +24698,7 @@ var render = function () {
                               _c("td", [_vm._v("Subject")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.clitem.name),
                                 },
@@ -24855,8 +24709,7 @@ var render = function () {
                               _c("td", [_vm._v("Description")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(
                                     _vm.clitem.cf_acf_rtf_1208
@@ -24869,8 +24722,7 @@ var render = function () {
                               _c("td", [_vm._v("Category")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.clitem.cf_1200),
                                 },
@@ -24881,8 +24733,7 @@ var render = function () {
                               _c("td", [_vm._v("Item Status")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.clitem.cf_1578),
                                 },
@@ -24893,8 +24744,7 @@ var render = function () {
                               _c("td", [_vm._v("Original File Name")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass:
-                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                staticClass: "text-end font-weight-medium",
                                 domProps: {
                                   textContent: _vm._s(_vm.clitem.cf_1970),
                                 },
@@ -24911,7 +24761,7 @@ var render = function () {
                                       return _c("td", {
                                         key: file,
                                         staticClass:
-                                          "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                          "text-end font-weight-medium",
                                         domProps: { textContent: _vm._s(file) },
                                       })
                                     }),
@@ -24947,7 +24797,7 @@ var render = function () {
                               "button",
                               {
                                 staticClass:
-                                  "\n                                        btn btn-primary btn-lg\n                                        fas\n                                        fa-edit\n                                    ",
+                                  "btn btn-primary btn-lg fas fa-edit",
                                 attrs: { type: "button" },
                                 on: {
                                   click: function ($event) {
@@ -24961,7 +24811,7 @@ var render = function () {
                               },
                               [
                                 _vm._v(
-                                  "\n                                    New document\n                                "
+                                  "\n                  New document\n                "
                                 ),
                               ]
                             ),
@@ -24990,7 +24840,7 @@ var render = function () {
                                 "button",
                                 {
                                   staticClass:
-                                    "\n                                            btn btn-success btn-lg\n                                            fas\n                                            fa-paper-plane\n                                        ",
+                                    "btn btn-success btn-lg fas fa-paper-plane",
                                   attrs: { type: "button" },
                                   on: {
                                     click: function ($event) {
@@ -25003,7 +24853,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                        Send document\n                                    "
+                                    "\n                    Send document\n                  "
                                   ),
                                 ]
                               ),
@@ -25012,7 +24862,7 @@ var render = function () {
                                 "button",
                                 {
                                   staticClass:
-                                    "\n                                            btn btn-danger btn-lg\n                                            fas\n                                            fa-trash-alt\n                                        ",
+                                    "btn btn-danger btn-lg fas fa-trash-alt",
                                   attrs: { type: "button" },
                                   on: {
                                     click: function ($event) {
@@ -25022,7 +24872,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                        Remove document\n                                    "
+                                    "\n                    Remove document\n                  "
                                   ),
                                 ]
                               ),
@@ -25114,7 +24964,7 @@ var render = function () {
                                           "label",
                                           {
                                             staticClass:
-                                              "\n                                                leading-7\n                                                text-sm text-gray-600\n                                            ",
+                                              "leading-7 text-sm text-gray-600",
                                             attrs: { for: "attachment" },
                                           },
                                           [_vm._v("Attachments")]
@@ -25152,7 +25002,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                Save\n                            "
+                                    "\n                Save\n              "
                                   ),
                                 ]
                               ),
@@ -25173,7 +25023,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                Close\n                            "
+                                    "\n                Close\n              "
                                   ),
                                 ]
                               ),
@@ -25215,13 +25065,8 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col col shadow p-1 rounded pt-1" }, [
         _c("h4", { staticClass: "card-title" }, [
-          _c("span", {
-            staticClass:
-              "\n                                                lstick\n                                                d-inline-block\n                                                align-middle\n                                            ",
-          }),
-          _vm._v(
-            "\n                                        CLItem\n                                    "
-          ),
+          _c("span", { staticClass: "lstick d-inline-block align-middle" }),
+          _vm._v("\n                    CLItem\n                  "),
         ]),
       ]),
     ])
@@ -25235,9 +25080,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "row" }, [
             _c("p", [_vm._v("Helplink")]),
-            _vm._v(
-              "\n                                        b\n                                    "
-            ),
+            _vm._v("\n                    b\n                  "),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [_c("p", [_vm._v("Status")])]),
@@ -25478,7 +25321,7 @@ var render = function () {
                               clitem_b.id,
                           },
                         },
-                        [_vm._v(_vm._s(clitem_b.name) + "\n              ")]
+                        [_vm._v(_vm._s(clitem_b.name))]
                       ),
                     ]),
                   ])
@@ -25511,11 +25354,7 @@ var render = function () {
                       _c(
                         "a",
                         { attrs: { href: clitem_c.cf_1212, target: "_blank" } },
-                        [
-                          _vm._v(
-                            "\n                " + _vm._s(clitem_c.cf_1212)
-                          ),
-                        ]
+                        [_vm._v(_vm._s(clitem_c.cf_1212))]
                       ),
                     ]),
                     _vm._v(" "),
