@@ -39,8 +39,8 @@ class DocumentController extends Controller
         try {
             $return = '';
             $file = substr($request->file, 1);
-
             $exploded = explode('/', $file);
+
             if (env('APP_ENV') === 'local') {
                 $spliced = array_splice($exploded, 4);
             } else {
@@ -52,13 +52,14 @@ class DocumentController extends Controller
                 $file = 'public/' . $file;
             }
 
-            $file =  str_replace('%20', ' ', $file);
+            $file =  str_replace('_', ' ', $file);
 
             if (Storage::exists($file)) {
+                //return $file;
                 Storage::delete($file);
-                $return = response()->json("File removed from temporary storage");
+                $return = response()->json("File removed from temporary storage", 200);
             } else {
-                $return = response()->json("File not found");
+                $return = response()->json("File not found", 404);
             }
 
             //Empty folders be deleted
@@ -124,7 +125,7 @@ class DocumentController extends Controller
             $arr = [];
             //return $ex;
             foreach ($ex as $word) {
-                $newword = str_replace(" ", "%20", $word);
+                $newword = str_replace(" ", "_", $word);
                 array_push($arr, $newword);
             }
             $url = implode("/", $arr);

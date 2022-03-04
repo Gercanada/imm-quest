@@ -227,7 +227,7 @@ class LSurveyController extends Controller
                         //$obj->result->cf_1214     = $newFilePath; //GD Link
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
-
+                        sleep(12);
                         $task->updateCLItemFromImmcase($request);
                         $task->updateChecklistFromImmcase($request);
                         // Release the session key
