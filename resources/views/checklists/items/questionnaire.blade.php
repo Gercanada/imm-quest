@@ -44,38 +44,6 @@
     @else
     @endif
 @endsection
-
-
-
 @section('content')
-<iframesurvey-component></iframesurvey-component>
-   {{--  <div class="row">
-        <iframe src="{{ $cl_item->cf_1212 }}" id="myIframe" width="100% " onload="myFunction()"
-            style=".navbar-collapse { opacity: 100%; background-color: green; color: red;}">
-        </iframe>
-    </div> --}}
+    <iframesurvey-component></iframesurvey-component>
 @endsection
-
-{{-- @section('scripts')
-    <script>
-        function myFunction() {
-            setTimeout(() => {
-                console.log("1 Segundo esperado")
-                document.getElementById('myIframe').className = 'new-frame';
-                var myframe = document.getElementById("myIframe");
-
-                var article = document.getElementsByTagName('article')
-                //var navbar = document.getElementById("navbar");
-                var iframeDocument = myframe.contentDocument ? myframe.contentDocument : myframe.contentWindow;
-
-                var x = document.getElementsByTagName("iframe")[0].contentWindow;
-
-                console.log(x.window.document);
-                $('#myIframe').contents().find('html').html();
-
-
-            }, 2000);
-
-        }
-    </script>
-@endsection --}}

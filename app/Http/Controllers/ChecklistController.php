@@ -67,6 +67,10 @@ class ChecklistController extends Controller
             compact('check_list')
         );
     }
+
+    /**
+     * returns clitems of chechlist on vueview for checklist
+     */
     public function checklistItems(Checklist $checklist, $id)
     {
         try {
@@ -75,6 +79,7 @@ class ChecklistController extends Controller
             $check_list = Checklist::where('id', $id)
                 ->where('cf_contacts_id', $contact->id)
                 ->firstOrFail();
+
             $clitems = CLItem::where('cf_1216', $id)
                 ->where('cf_contacts_id', $contact->id)
                 ->get();

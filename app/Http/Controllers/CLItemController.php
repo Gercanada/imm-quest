@@ -65,14 +65,14 @@ class CLItemController extends Controller
         $user = Auth::user();
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
         $cl_item =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
-       /*  if ($cl_item->cf_1200 === "Questionnaire") {
+        /*  if ($cl_item->cf_1200 === "Questionnaire") {
             return view('checklists.items.questionnaire', compact('cl_item'));
         } */
         return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
 
 
-    
+
 
 
     /**
@@ -242,9 +242,13 @@ class CLItemController extends Controller
 
             foreach ($files as $file) {
                 if (env('APP_ENV') === 'local') {
-                    array_push($urlFiles, (Storage::url($file)));
+                    if (Storage::exists($file)) {
+                        array_push($urlFiles, (Storage::url($file)));
+                    }
                 } else {
-                    array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+                    if (Storage::exists("app/public/$file")) {
+                        array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
+                    }
                 }
             }
             return $urlFiles;

@@ -63,8 +63,8 @@
                   title="View details"
                   class="btn btn-outline-success btn-rounded"
                 >
-                  <i class="fas fa-eye"></i
-                ></a>
+                  <i class="fas fa-eye"></i>
+                </a>
               </td>
             </tr>
           </tbody>
@@ -93,9 +93,10 @@
               <td>{{ clitem_b.cf_1202 }}</td>
               <td>{{ clitem_b.cf_1578 }}</td>
               <td>
-                <a :href="'/checklist/' + checklist.id + '/item/' + clitem_b.id"
-                  >{{ clitem_b.name }}
-                </a>
+                <a
+                  :href="'/checklist/' + checklist.id + '/item/' + clitem_b.id"
+                  >{{ clitem_b.name }}</a
+                >
               </td>
             </tr>
           </tbody>
@@ -128,35 +129,30 @@
             >
               <td>{{ clitem_c.name }}</td>
               <td>
-                <a :href="clitem_c.cf_1212" target="_blank">
-                  {{ clitem_c.cf_1212 }}</a
-                >
+                <a :href="clitem_c.cf_1212" target="_blank">{{
+                  clitem_c.cf_1212
+                }}</a>
               </td>
               <td>{{ clitem_c.cf_1578 }}</td>
               <td>
-                                <button
-                                    v-if="loading == false"
-                                    type="submit"
-                                    class="btn btn-outline-success btn-rounded"
-                                    @click="
-                                        exportResponse(
-                                            clitem_c.cf_1212,
-                                            clitem_c.clitemsno
-                                        )
-                                    "
-                                >
-                                    <i class="icon-refresh"></i>
-                                </button>
-                                <button
-                                    v-else
-                                    type="submit"
-                                    disabled
-                                    class="btn btn-outline-success btn-rounded"
-                                >
-                                    <i class="icon-refresh fas fa-spin"></i>
-                                </button>
-                            </td>
-            <!--   <td>
+                <button
+                  v-if="loading == false"
+                  type="submit"
+                  class="btn btn-outline-success btn-rounded"
+                  @click="exportResponse(clitem_c.cf_1212, clitem_c.clitemsno)"
+                >
+                  <i class="icon-refresh"></i>
+                </button>
+                <button
+                  v-else
+                  type="submit"
+                  disabled
+                  class="btn btn-outline-success btn-rounded"
+                >
+                  <i class="icon-refresh fas fa-spin"></i>
+                </button>
+              </td>
+              <!--   <td>
                 <a
                   :href="'/checklist/' + checklist.id + '/item/' + clitem_c.id"
                   data-toggle="tooltip"
@@ -165,7 +161,7 @@
                 >
                   <i class="fas fa-eye"></i
                 ></a>
-              </td> -->
+              </td>-->
             </tr>
           </tbody>
         </table>
@@ -206,8 +202,8 @@
                   title="View details"
                   class="btn btn-outline-success btn-rounded"
                 >
-                  <i class="fas fa-eye"></i
-                ></a>
+                  <i class="fas fa-eye"></i>
+                </a>
               </td>
             </tr>
           </tbody>
@@ -229,9 +225,7 @@ export default {
       clitems: [],
       checklist: "",
       loading: false,
-
       checklist_id: urlParams[2],
-      session: "",
       /*   headers: {
                 "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]")
                     .content,

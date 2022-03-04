@@ -52,7 +52,7 @@
                                             name="remember" {{ old('remember') ? 'checked' : '' }}>
                                         <label for="checkbox-signup"> Remember me </label>
                                     </div>
-                                    <div class="ml-auto">
+                                    {{-- <div class="ml-auto">
                                         @if (Route::has('password.request'))
                                             <a id="to-recover" class="text-muted float-right"
                                                 href="{{ route('password.request') }}">
@@ -60,7 +60,7 @@
                                                 {{ __('Forgot Your Password?') }}
                                             </a>
                                         @endif
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="form-group text-center mt-4" style="position:relative;
