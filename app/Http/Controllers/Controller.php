@@ -27,7 +27,7 @@ class Controller extends BaseController
             return response()->json($e, 500);
             return response()->json(['error' => $e], 500);
         } else {
-            return response()->json(['error' => $onMethod], 500);
+            return response()->json(['error' => [$onMethod => $e->getMessage()]], 500);
         }
     }
 
@@ -49,4 +49,3 @@ class Controller extends BaseController
         return Storage::put('json_logs.json', $errors);
     }
 }
-

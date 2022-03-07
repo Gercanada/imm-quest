@@ -156,7 +156,6 @@ class LSurveyController extends Controller
             $urlQuery = $urlObj['query'];
             $urlQueryAsArr = [];
 
-            $return = response()->json('error', 200);
 
             parse_str($urlQuery,  $urlQueryAsArr);
             $sToken = $urlQueryAsArr['token'];
@@ -278,8 +277,6 @@ class LSurveyController extends Controller
 
         $urlQuery = $urlObj['query'];
         $urlQueryAsArr = [];
-
-        $return = response()->json('error', 200);
 
         parse_str($urlQuery,  $urlQueryAsArr);
         $sToken = $urlQueryAsArr['token'];
