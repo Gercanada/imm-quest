@@ -127,8 +127,6 @@ class LSurveyController extends Controller
             if ($request->form != 'vue') {
                 $request->form = '';
             }
-
-            $this->consoleWrite()->writeln($request->clitemsno);
             $oncpItem = CLItem::where("clitemsno", $request->clitemsno)->firstOrFail();
 
             if (!$oncpItem) {
@@ -250,7 +248,8 @@ class LSurveyController extends Controller
                             $urls = explode(', ', $updatedItem->cf_2370);
                             foreach ($urls as  $url) {
                                 $request->request->add(['file' => $url]);
-                                $docsTask->destroy($request);
+
+                                //$docsTask->destroy($request);
                             }
                         }
                         $received = true;

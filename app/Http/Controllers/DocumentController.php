@@ -101,10 +101,8 @@ class DocumentController extends Controller
             foreach ($files as $file) {
                 $eachFile = str_replace(' ', '_', $file);
                 $fullurl = '';
-                $this->consoleWrite()->writeln('get header');
                 if (env('APP_ENV') === 'local') {
                     $fullurl = env('APP_URL') . Storage::url($eachFile);
-                    /* $headers = get_headers($fullurl); */
                     if (env('APP_ENV') === 'local') {
                         $this->consoleWrite()->writeln($fullurl);
                     }

@@ -590,7 +590,6 @@ class CloneDBController extends Controller
                     ($type === 'Quotes') ||
                     ($type === 'Products')
                 ) {
-                    // $this->consoleWrite()->writeln("$type -> $contactField -> $contact->id");
                     $tType = "vt_$type";
                     //  $localvalues = DB::select("SELECT id FROM  $tType WHERE '".$contactField."'  = '".$contact->id."' ;");
                     $localvalues = DB::select("SELECT id FROM  $tType ;");
