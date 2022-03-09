@@ -37,7 +37,7 @@ class DocumentController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $return = '';
+            $return = response()->json(200);
             $file = substr($request->file, 1);
             $exploded = explode('/', $file);
 
@@ -99,11 +99,26 @@ class DocumentController extends Controller
             $files = Storage::disk('public')->allFiles($directory);
             $urlFiles = [];
             foreach ($files as $file) {
-                $newval = str_replace(' ', '_', $file);
+                $eachFile = str_replace(' ', '_', $file);
+                $fullurl = '';
+                $this->consoleWrite()->writeln('get header');
                 if (env('APP_ENV') === 'local') {
-                    array_push($urlFiles, (Storage::url($newval)));
+                    $fullurl = env('APP_URL') . Storage::url($eachFile);
+                    /* $headers = get_headers($fullurl); */
+                    if (env('APP_ENV') === 'local') {
+                        $this->consoleWrite()->writeln($fullurl);
+                    }
+                    array_push($urlFiles, ($fullurl));
                 } else {
-                    array_push($urlFiles, (Storage::url("app/public/$newval"))); // in prod
+                    $fullurl = env('APP_URL') . Storage::url("app/public/$eachFile");
+                    /* $headers = get_headers($fullurl); 
+                    if ($headers && strpos($headers[0], '200')) {
+                    }*/
+                    array_push($urlFiles, ($fullurl)); // in prod
+                }
+                if (env('APP_ENV') === 'local') {
+                    $this->consoleWrite()->writeln('Simple url getted');
+                    $this->consoleWrite()->writeln($fullurl);
                 }
             }
             return $urlFiles;
@@ -142,12 +157,4 @@ class DocumentController extends Controller
             return $this->returnJsonError($e, ['DocumentController' => 'singleUrl']);
         }
     }
-}
-
-
-if($env["simpleurl"] != null || $env["simpleurl"] != ''){
-    return 'yes';
-}
-else{
-    return 'no';
 }
