@@ -459,6 +459,8 @@ export default {
       let me = this;
       axios.post("/cl-item/upload/file", {
         id: me.id,
+      }).then(function(response){
+        console.log(response);
       });
     },
 

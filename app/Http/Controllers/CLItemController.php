@@ -42,6 +42,7 @@ class CLItemController extends Controller
             ->firstOrFail();
 
         $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
+        $directory = str_replace(' ', '_', $directory);
         $dirFiles = Storage::disk('public')->allFiles($directory);
         $files = [];
         $itemfiles = [];
@@ -81,9 +82,9 @@ class CLItemController extends Controller
     public function uploadFile(Request $request)
     {
         try {
-            $user = Auth::user();
+            $user    = Auth::user();
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
-            $clitem = CLItem::where('id', $request->id)
+            $clitem  = CLItem::where('id', $request->id)
                 ->where('cf_contacts_id', $contact->id)->firstOrFail();
 
             $case = CPCase::where('id', $clitem->cf_1217)
@@ -101,29 +102,23 @@ class CLItemController extends Controller
             }
             $fileList = [];
             $contact_no = $contact->contact_no;
-
             $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
-            $destination = str_replace(' ', '', $destination);
+
             if ($request->category === 'eform') {
                 $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/eforms/$clitem->clitemsno-$clitem->cf_1200";
             }
-
-            $this->consoleWrite()->writeln($files);
+            $destination = str_replace(' ', '_', $destination);
 
             foreach ($files as $file) {
-                $filename = $file ? $file->getClientOriginalName() :  $clitem->name;
+                $filename = $file->getClientOriginalName();
                 $filename = str_replace(' ', '', $filename);
                 $filename = str_replace('-', '_', $filename);
-                if ($file) {
-                    $file->storeAs("/public/$destination", $filename);
-                    $fileUrl = "$destination/$filename";
-                    array_push($fileList, $fileUrl);
-                }
+                $file->storeAs("/public/$destination", $filename);
+                $fileUrl = "$destination/$filename";
+                array_push($fileList, $fileUrl);
             }
             return response()->json($fileList, 200);
         } catch (Exception $e) {
-            $this->consoleWrite()->writeln($e->getMessage());
-            $this->consoleWrite()->writeln($e);
             return $this->returnJsonError($e, ['CLItemController' => 'uploadFile']);
         }
     }
@@ -131,6 +126,7 @@ class CLItemController extends Controller
     public function sendDocumentToImmcase(Request $request)
     {
         try {
+
             $user        = Auth::user();
             $vtiger      = new Vtiger();
             $docsTask    = new DocumentController();
@@ -180,8 +176,11 @@ class CLItemController extends Controller
             $request->request->add(['clitem'    => $clitem->clitemsno . '-' . $clitem->cf_1200]);
 
             $files =  $docsTask->checkDocuments($request);
-
             $arrAsStr = implode(', ', $files);
+
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln($arrAsStr);
+            }
 
             $obj->result->description = "File uploaded at: " . $now;
             $obj->result->cf_2370     = $arrAsStr; //set on metadata field
@@ -191,6 +190,7 @@ class CLItemController extends Controller
             $vtiger->update($obj->result);
             sleep(12);
             $updatedItem = $task->updateCLItemFromImmcase($request);
+
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln('item updated');
             }

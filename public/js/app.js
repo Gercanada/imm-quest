@@ -3336,6 +3336,8 @@ var urlParams = window.location.pathname.split("/");
                 me = this;
                 axios.post("/cl-item/upload/file", {
                   id: me.id
+                }).then(function (response) {
+                  console.log(response);
                 });
 
               case 9:

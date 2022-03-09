@@ -156,3 +156,7 @@ class DocumentController extends Controller
         }
     }
 }
+
+
+
+// ${$ex = explode(", ", $cf_2370);       return explode(", ", $cf_2370)[$loop]; }}>
