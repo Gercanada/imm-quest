@@ -3796,6 +3796,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "checklistComponent",
@@ -3808,12 +3838,10 @@ var urlParams = window.location.pathname.split("/");
       clitems: [],
       checklist: "",
       loading: false,
-      checklist_id: urlParams[2]
-      /*   headers: {
-                "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]")
-                    .content,
-            }, */
-
+      checklist_id: urlParams[2],
+      headers: {
+        "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]").content
+      }
     };
   },
   mounted: function mounted() {
@@ -25269,7 +25297,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h3", { staticClass: "card-title" }, [
       _c("i", { staticClass: "mr-1 font-18 mdi mdi-timelapse" }),
-      _vm._v(" Pending items\n    "),
+      _vm._v(" Pending items\n        "),
     ])
   },
   function () {
@@ -25296,7 +25324,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h3", { staticClass: "card-title" }, [
       _c("i", { staticClass: "mr-1 font-18 mdi mdi-textbox" }),
-      _vm._v(" Electronic forms\n    "),
+      _vm._v(" Electronic forms\n        "),
     ])
   },
   function () {
@@ -25321,7 +25349,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h3", { staticClass: "card-title" }, [
       _c("i", { staticClass: "mr-1 font-18 mdi mdi-help-circle-outline" }),
-      _vm._v("Questionnaire\n    "),
+      _vm._v("Questionnaire\n        "),
     ])
   },
   function () {
@@ -25346,7 +25374,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h3", { staticClass: "card-title" }, [
       _c("i", { staticClass: "mr-1 font-18 mdi mdi-telegram" }),
-      _vm._v("Submited items\n    "),
+      _vm._v("Submited items\n        "),
     ])
   },
   function () {

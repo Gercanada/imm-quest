@@ -77,6 +77,9 @@ class DocumentController extends Controller
                     Storage::deleteDirectory($dir);
                 }
             }
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln('A file was deleted');
+            }
             return $return;
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['DocumentController' => 'destroy']);
@@ -91,8 +94,6 @@ class DocumentController extends Controller
         try {
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             // $natdirectory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
-
-
             $natDir = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";
             $directory = str_replace(" ", "_", $natDir);
             $files = Storage::disk('public')->allFiles($directory);
@@ -131,6 +132,9 @@ class DocumentController extends Controller
             $url = implode("/", $arr);
             //return $url;
             $headers = get_headers($url);
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln('Simple url getting');
+            }
             if ($headers && strpos($headers[0], '200')) {
                 return $url;
             }
@@ -138,4 +142,12 @@ class DocumentController extends Controller
             return $this->returnJsonError($e, ['DocumentController' => 'singleUrl']);
         }
     }
+}
+
+
+if($env["simpleurl"] != null || $env["simpleurl"] != ''){
+    return 'yes';
+}
+else{
+    return 'no';
 }

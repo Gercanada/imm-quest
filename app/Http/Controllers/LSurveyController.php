@@ -161,6 +161,7 @@ class LSurveyController extends Controller
             $sToken = $urlQueryAsArr['token'];
 
             $limeConnection = self::connectLime(); //Start limesurvey session
+
             $myJSONRPCClient = $limeConnection['myJSONRPCClient'];
             $sSessionKey = $limeConnection['sessionKey'];
 

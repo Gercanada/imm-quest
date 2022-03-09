@@ -652,6 +652,9 @@ class CloneDBController extends Controller
             $contact = Contact::where("id", $clitem->cf_contacts_id)->firstOrFail();
             $contactField = "cf_contacts_id";
             self::getData($clitemQuery, $description->result->fields, $contact, $contactField, $description->result->name);
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln('CLITEM updated ');
+            }
             return response()->json(['Success', $clitem->id], 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);
@@ -672,6 +675,9 @@ class CloneDBController extends Controller
             $contact = Contact::where("id", $checklist->cf_contacts_id)->firstOrFail();
             $contactField = "cf_contacts_id";
             self::getData($checklistQuery, $description->result->fields, $contact, $contactField, $description->result->name);
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln('checklist updated ');
+            }
             return response()->json(['Success', $checklist->id], 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);
