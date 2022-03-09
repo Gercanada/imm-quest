@@ -153,12 +153,7 @@
                                     v-if="loading == false"
                                     type="submit"
                                     class="btn btn-outline-success btn-rounded"
-                                    @click="
-                                        exportResponse(
-                                            clitem_c.cf_1212,
-                                            clitem_c.clitemsno
-                                        )
-                                    "
+                                    @click="exportResponse(clitem_c.clitemsno)"
                                 >
                                     <i class="icon-refresh"></i>
                                 </button>
@@ -250,10 +245,10 @@ export default {
             checklist: "",
             loading: false,
             checklist_id: urlParams[2],
-            headers: {
+            /*  headers: {
                 "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]")
                     .content,
-            },
+            }, */
         };
     },
     mounted() {
@@ -282,7 +277,7 @@ export default {
                 })
                 .finally(() => (this.loading = false));
         },
-        exportResponse(survey_url, clitems_no) {
+        exportResponse(clitems_no) {
             let me = this;
             me.loading = true;
             axios
@@ -305,6 +300,7 @@ export default {
                             showConfirmButton: false,
                         });
                     }
+
                     me.show();
                 })
                 .catch(function (error) {
@@ -314,7 +310,8 @@ export default {
                         timer: 2000,
                         showConfirmButton: false,
                     });
-                    console.table(error);
+                    console.log(error);
+                    // console.log( error);
                 })
                 .finally(() => (this.loading = false));
         },

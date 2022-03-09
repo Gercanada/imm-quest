@@ -122,23 +122,32 @@ class LSurveyController extends Controller
             $task      = new CloneDBController;
             $docsTask  = new DocumentController();
             $now       = Carbon::now()->format('H:i:s');
+            $received  = false;
 
             if ($request->form != 'vue') {
                 $request->form = '';
             }
 
+            $this->consoleWrite()->writeln($request->clitemsno);
             $oncpItem = CLItem::where("clitemsno", $request->clitemsno)->firstOrFail();
+
+            if (!$oncpItem) {
+                return 404;
+            }
             /* Find clitem of current survey */
             $clitemQuery = DB::table('CLItems')->select('*')
                 ->where("clitemsno", $request->clitemsno)->take(1);
 
             $clitem = $vtiger->search($clitemQuery);
 
-            if ($clitem->success === false) {
+            // return  empty($clitem->result) ? 'true' : 'false';
+
+            if ($clitem->success === false || empty($clitem->result)) {
                 return response()->json("Item not found", 404);
             } else {
                 $clitem =  $clitem->result[0];
             }
+
             if ($clitem->cf_1212 != $oncpItem->cf_1212) {
                 $task->updateCLItemFromImmcase($request);
                 $clitem = $vtiger->search($clitemQuery);
@@ -155,7 +164,6 @@ class LSurveyController extends Controller
 
             $urlQuery = $urlObj['query'];
             $urlQueryAsArr = [];
-
 
             parse_str($urlQuery,  $urlQueryAsArr);
             $sToken = $urlQueryAsArr['token'];
@@ -227,16 +235,34 @@ class LSurveyController extends Controller
                         //$obj->result->cf_1214     = $newFilePath; //GD Link
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
-                        sleep(12);
-                        $task->updateCLItemFromImmcase($request);
+                        /* return response()->json('success', 200); */
+
+                        sleep(12); // wait 12 seconds
+
+                        $updatedItem = $task->updateCLItemFromImmcase($request);
                         $task->updateChecklistFromImmcase($request);
-                        // Release the session key
-                        $myJSONRPCClient->release_session_key($sSessionKey);
-                        return response()->json('success', 200);
+                        if (env('APP_ENV') === 'local') {
+                            $this->consoleWrite()->writeln('item updated');
+                            $this->consoleWrite()->writeln($updatedItem->cf_1578);
+                        }
+                        if ($updatedItem->cf_1578 === "Received") {
+                            //call destroller
+                            $urls = explode(', ', $updatedItem->cf_2370);
+                            foreach ($urls as  $url) {
+                                $request->request->add(['file' => $url]);
+                                $docsTask->destroy($request);
+                            }
+                        }
+                        $received = true;
                     }
                 }
             }
-            return response()->json(400);
+            // Release the session key
+            $myJSONRPCClient->release_session_key($sSessionKey);
+            if (!$received) {
+                return 'failed';
+            }
+            return 'success';
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
         }

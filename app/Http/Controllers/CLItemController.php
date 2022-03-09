@@ -190,9 +190,12 @@ class CLItemController extends Controller
             $obj->result->cf_1214     = $newFilePath; //GD Link
             $vtiger->update($obj->result);
             sleep(12);
-            $task->updateCLItemFromImmcase($request);
+            $updatedItem = $task->updateCLItemFromImmcase($request);
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln('item updated');
+            }
+            return $updatedItem;
             $task->updateChecklistFromImmcase($request);
-
             return response()->json("success", 200);
         } catch (Exception $e) {
             return $e;

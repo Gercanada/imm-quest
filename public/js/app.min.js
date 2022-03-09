@@ -3821,11 +3821,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "checklistComponent",
@@ -3838,10 +3833,12 @@ var urlParams = window.location.pathname.split("/");
       clitems: [],
       checklist: "",
       loading: false,
-      checklist_id: urlParams[2],
-      headers: {
-        "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]").content
-      }
+      checklist_id: urlParams[2]
+      /*  headers: {
+          "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]")
+              .content,
+      }, */
+
     };
   },
   mounted: function mounted() {
@@ -3870,7 +3867,7 @@ var urlParams = window.location.pathname.split("/");
         return _this.loading = false;
       });
     },
-    exportResponse: function exportResponse(survey_url, clitems_no) {
+    exportResponse: function exportResponse(clitems_no) {
       var _this2 = this;
 
       var me = this;
@@ -3902,7 +3899,7 @@ var urlParams = window.location.pathname.split("/");
           timer: 2000,
           showConfirmButton: false
         });
-        console.table(error);
+        console.log(error); // console.log( error);
       })["finally"](function () {
         return _this2.loading = false;
       });
@@ -25208,10 +25205,7 @@ var render = function () {
                               attrs: { type: "submit" },
                               on: {
                                 click: function ($event) {
-                                  return _vm.exportResponse(
-                                    clitem_c.cf_1212,
-                                    clitem_c.clitemsno
-                                  )
+                                  return _vm.exportResponse(clitem_c.clitemsno)
                                 },
                               },
                             },

@@ -655,7 +655,9 @@ class CloneDBController extends Controller
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln('CLITEM updated ');
             }
-            return response()->json(['Success', $clitem->id], 200);
+            return $clitem;
+            return response()->json($clitem);
+            //return response()->json(['Success', $clitem->id], 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);
         }
