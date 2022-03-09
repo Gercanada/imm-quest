@@ -228,30 +228,33 @@ class LSurveyController extends Controller
 
                         $obj->result->description = "File uploaded at: " . $now;
                         $obj->result->cf_2370   = $arrAsStr; //set on metadata field
-                        //here
-                        //$newFilePath =  str_replace(" ", "_", "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs");
-                        //$obj->result->cf_1214     = $newFilePath; //GD Link
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $vtiger->update($obj->result);
-                        /* return response()->json('success', 200); */
 
-                        sleep(12); // wait 12 seconds
+                        sleep(8); // wait 12 seconds
 
-                        $updatedItem = $task->updateCLItemFromImmcase($request);
-                        $task->updateChecklistFromImmcase($request);
-                        if (env('APP_ENV') === 'local') {
+                        $obj2  = $vtiger->retrieve($clitem->id);
+                        /*   if (env('APP_ENV') === 'local') {
                             $this->consoleWrite()->writeln('item updated');
                             $this->consoleWrite()->writeln($updatedItem->cf_1578);
-                        }
-                        if ($updatedItem->cf_1578 === "Received") {
-                            //call destroller
-                            $urls = explode(', ', $updatedItem->cf_2370);
-                            foreach ($urls as  $url) {
-                                $request->request->add(['file' => $url]);
+                        } */
 
-                                //$docsTask->destroy($request);
+                        //call destroller
+                        do {
+                            if ($obj2->result->cf_1578 === "Received") {
+                                $updatedItem = $task->updateCLItemFromImmcase($request);
+                                $task->updateChecklistFromImmcase($request);
+
+                                $urls = explode(', ', $updatedItem->cf_2370);
+                                foreach ($urls as  $url) {
+                                    $request->request->add(['file' => $url]);
+                                    $docsTask->destroy($request);
+                                }
+                            } else {
+                                sleep(3);
+                                $obj2  = $vtiger->retrieve($clitem->id);
                             }
-                        }
+                        } while ($obj2->result->cf_1578 != "Received");
                         $received = true;
                     }
                 }
