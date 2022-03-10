@@ -339,8 +339,8 @@
                                                     ></label>
                                                 </div>
                                                 <div
-                                                    class="flex-container"
                                                     v-else
+                                                    class="flex-container"
                                                 >
                                                     <div id="imgsrc">
                                                         <img
