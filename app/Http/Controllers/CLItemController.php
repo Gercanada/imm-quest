@@ -117,6 +117,7 @@ class CLItemController extends Controller
                 $fileUrl = "$destination/$filename";
                 array_push($fileList, $fileUrl);
             }
+            return response()->json(200);
             return response()->json($fileList, 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CLItemController' => 'uploadFile']);

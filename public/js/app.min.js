@@ -3230,12 +3230,244 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      appEnv: "local",
       dropzoneOptions: {
         url: "/cl-item/upload/file",
         thumbnailWidth: 150,
@@ -3260,7 +3492,6 @@ var urlParams = window.location.pathname.split("/");
       url_files: "",
       expiry_date: "",
       issued_date: "",
-      //
       clitem: {},
       caseObj: {},
       checklistObj: {},
@@ -3314,7 +3545,6 @@ var urlParams = window.location.pathname.split("/");
     }(),
     shootMessage: function () {
       var _shootMessage = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var me;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -3333,14 +3563,19 @@ var urlParams = window.location.pathname.split("/");
 
               case 6:
                 this.$refs.myVueDropzone.processQueue();
-                me = this;
-                axios.post("/cl-item/upload/file", {
-                  id: me.id
-                }).then(function (response) {
-                  console.log(response);
-                });
+                /*  let me = this;
+                axios
+                    .post("/cl-item/upload/file", {
+                        id: me.id,
+                    })
+                    .then(function (response) {
+                        console.table(response);
+                    })
+                    .catch(function (error) {
+                        console.table(error);
+                    }); */
 
-              case 9:
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -5806,6 +6041,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, ".modal-content {\n    width: 100% !important;\n    position: fixed !important;\n    overflow-y: visible;\n  }\n  .mostrar {\n    display: list-item !important;\n    opacity: 1 !important;\n    background-color: #3c29297a !important;\n  }\n  .div-error {\n    display: flex;\n    justify-content: center;\n  }\n  .text-error {\n    color: red !important;\n    font-weight: bold;\n  }\n\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.flex-container[data-v-02f5c574] {\n    display: flex;\n    align-items: center;\n    flex-wrap: wrap;\n}\n.flex-container > div[data-v-02f5c574] {\n    margin: 10px;\n    text-align: center;\n    line-height: 75px;\n    font-size: 30px;\n}\n#imgsrc[data-v-02f5c574] {\n    border: solid 2px gray;\n    width: 100%;\n    height: auto;\n    max-height: 400px;\n    position: relative;\n    align-items: center;\n    flex-grow: 8;\n}\n.labelforimg[data-v-02f5c574] {\n    text-align: center;\n    flex-grow: 1;\n}\nimg[data-v-02f5c574] {\n    width: auto;\n    height: auto;\n    max-width: 400px;\n    max-height: 400px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23354,6 +23613,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_style_index_0_id_02f5c574_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_style_index_0_id_02f5c574_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_style_index_0_id_02f5c574_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -23690,23 +23979,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _CLItemComponent_vue_vue_type_template_id_02f5c574___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CLItemComponent.vue?vue&type=template&id=02f5c574& */ "./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&");
+/* harmony import */ var _CLItemComponent_vue_vue_type_template_id_02f5c574_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CLItemComponent.vue?vue&type=template&id=02f5c574&scoped=true& */ "./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&scoped=true&");
 /* harmony import */ var _CLItemComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CLItemComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CLItemComponent.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _CLItemComponent_vue_vue_type_style_index_0_id_02f5c574_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css& */ "./resources/js/components/CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _CLItemComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CLItemComponent_vue_vue_type_template_id_02f5c574___WEBPACK_IMPORTED_MODULE_0__.render,
-  _CLItemComponent_vue_vue_type_template_id_02f5c574___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _CLItemComponent_vue_vue_type_template_id_02f5c574_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _CLItemComponent_vue_vue_type_template_id_02f5c574_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "02f5c574",
   null
   
 )
@@ -24119,19 +24410,32 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574& ***!
-  \************************************************************************************/
+/***/ "./resources/js/components/CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css& ***!
+  \**************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_style_index_0_id_02f5c574_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=style&index=0&id=02f5c574&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&scoped=true&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&scoped=true& ***!
+  \************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_template_id_02f5c574___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_template_id_02f5c574___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_template_id_02f5c574_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_template_id_02f5c574_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_template_id_02f5c574___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CLItemComponent.vue?vue&type=template&id=02f5c574& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CLItemComponent_vue_vue_type_template_id_02f5c574_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CLItemComponent.vue?vue&type=template&id=02f5c574&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&scoped=true&");
 
 
 /***/ }),
@@ -24255,10 +24559,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/CLItemComponent.vue?vue&type=template&id=02f5c574&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -24289,7 +24593,7 @@ var render = function () {
             _vm._v(" "),
             _c("div", { staticClass: "col-md-9 col-sm-12" }, [
               _c("h2", { staticClass: "card-title" }, [
-                _vm._v("CL Item "),
+                _vm._v("\n                    CL Item "),
                 _c("b", { domProps: { textContent: _vm._s(_vm.clitem.name) } }),
               ]),
             ]),
@@ -24313,10 +24617,10 @@ var render = function () {
                             _c("h4", { staticClass: "card-title" }, [
                               _c("span", {
                                 staticClass:
-                                  "lstick d-inline-block align-middle",
+                                  "\n                                                lstick\n                                                d-inline-block\n                                                align-middle\n                                            ",
                               }),
                               _vm._v(
-                                "\n                    Case\n                    "
+                                "\n                                        Case\n                                        "
                               ),
                               _c("b", {
                                 domProps: {
@@ -24337,7 +24641,8 @@ var render = function () {
                               _c("td", [_vm._v("Status")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(_vm.caseObj.ticketstatus),
                                 },
@@ -24348,7 +24653,8 @@ var render = function () {
                               _c("td", [_vm._v("Open Date")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(_vm.caseObj.cf_866),
                                 },
@@ -24359,7 +24665,8 @@ var render = function () {
                               _c("td", [_vm._v("Case type")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(
                                     _vm.caseObj.ticketcategories
@@ -24372,7 +24679,8 @@ var render = function () {
                               _c("td", [_vm._v("Description")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(_vm.caseObj.description),
                                 },
@@ -24400,10 +24708,10 @@ var render = function () {
                             _c("h4", { staticClass: "card-title" }, [
                               _c("span", {
                                 staticClass:
-                                  "lstick d-inline-block align-middle",
+                                  "\n                                                lstick\n                                                d-inline-block\n                                                align-middle\n                                            ",
                               }),
                               _vm._v(
-                                "\n                    Checklist\n                    "
+                                "\n                                        Checklist\n                                        "
                               ),
                               _c("b", {
                                 domProps: {
@@ -24424,7 +24732,8 @@ var render = function () {
                               _c("td", [_vm._v("Checklist No")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(
                                     _vm.checklistObj.checklistno
@@ -24437,7 +24746,8 @@ var render = function () {
                               _c("td", [_vm._v("% Completed")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_2079),
                                 },
@@ -24448,7 +24758,8 @@ var render = function () {
                               _c("td", [_vm._v("Checklist Type")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1706),
                                 },
@@ -24459,7 +24770,8 @@ var render = function () {
                               _c("td", [_vm._v("Applicant Full Name")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1181),
                                 },
@@ -24470,7 +24782,8 @@ var render = function () {
                               _c("td", [_vm._v("Completed Items")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1189),
                                 },
@@ -24481,7 +24794,8 @@ var render = function () {
                               _c("td", [_vm._v("Pending Items")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1187),
                                 },
@@ -24492,7 +24806,8 @@ var render = function () {
                               _c("td", [_vm._v("Status")]),
                               _vm._v(" "),
                               _c("td", {
-                                staticClass: "text-end font-weight-medium",
+                                staticClass:
+                                  "\n                                                text-end\n                                                font-weight-medium\n                                            ",
                                 domProps: {
                                   textContent: _vm._s(_vm.checklistObj.cf_1179),
                                 },
@@ -24518,96 +24833,177 @@ var render = function () {
                         "table",
                         { staticClass: "table v-middle fs-3 mb-0 mt-4" },
                         [
-                          _c("tbody", [
-                            _c("tr", [
-                              _c("td", [_vm._v("CLItems No")]),
+                          _c(
+                            "tbody",
+                            [
+                              _c("tr", [
+                                _c("td", [_vm._v("CLItems No")]),
+                                _vm._v(" "),
+                                _c("td", {
+                                  staticClass:
+                                    "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                  domProps: {
+                                    textContent: _vm._s(_vm.clitem.clitemsno),
+                                  },
+                                }),
+                              ]),
                               _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.clitemsno),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Subject")]),
+                              _c("tr", [
+                                _c("td", [_vm._v("Subject")]),
+                                _vm._v(" "),
+                                _c("td", {
+                                  staticClass:
+                                    "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                  domProps: {
+                                    textContent: _vm._s(_vm.clitem.name),
+                                  },
+                                }),
+                              ]),
                               _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.name),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Description")]),
+                              _c("tr", [
+                                _c("td", [_vm._v("Description")]),
+                                _vm._v(" "),
+                                _c("td", {
+                                  staticClass:
+                                    "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                  domProps: {
+                                    textContent: _vm._s(
+                                      _vm.clitem.cf_acf_rtf_1208
+                                    ),
+                                  },
+                                }),
+                              ]),
                               _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm.clitem.cf_acf_rtf_1208
-                                  ),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Category")]),
+                              _c("tr", [
+                                _c("td", [_vm._v("Category")]),
+                                _vm._v(" "),
+                                _c("td", {
+                                  staticClass:
+                                    "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                  domProps: {
+                                    textContent: _vm._s(_vm.clitem.cf_1200),
+                                  },
+                                }),
+                              ]),
                               _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.cf_1200),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Item Status")]),
+                              _c("tr", [
+                                _c("td", [_vm._v("Item Status")]),
+                                _vm._v(" "),
+                                _c("td", {
+                                  staticClass:
+                                    "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                  domProps: {
+                                    textContent: _vm._s(_vm.clitem.cf_1578),
+                                  },
+                                }),
+                              ]),
                               _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.cf_1578),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("tr", [
-                              _c("td", [_vm._v("Original File Name")]),
+                              _c("tr", [
+                                _c("td", [_vm._v("Original File Name")]),
+                                _vm._v(" "),
+                                _c("td", {
+                                  staticClass:
+                                    "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                  domProps: {
+                                    textContent: _vm._s(_vm.clitem.cf_1970),
+                                  },
+                                }),
+                              ]),
                               _vm._v(" "),
-                              _c("td", {
-                                staticClass: "text-end font-weight-medium",
-                                domProps: {
-                                  textContent: _vm._s(_vm.clitem.cf_1970),
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _vm.clFiles.length > 0
-                              ? _c(
+                              _vm._l(_vm.clFiles, function (file) {
+                                return _c(
                                   "tr",
+                                  {
+                                    key: file,
+                                    attrs: { "v-if": _vm.clFiles.length > 0 },
+                                  },
                                   [
                                     _c("td", [_vm._v("Current file to send")]),
                                     _vm._v(" "),
-                                    _vm._l(_vm.clFiles, function (file) {
-                                      return _c("td", {
-                                        key: file,
+                                    _c(
+                                      "td",
+                                      {
                                         staticClass:
-                                          "text-end font-weight-medium",
-                                        domProps: { textContent: _vm._s(file) },
-                                      })
-                                    }),
-                                  ],
-                                  2
+                                          "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                      },
+                                      [
+                                        _vm.appEnv === "local"
+                                          ? _c(
+                                              "div",
+                                              { staticClass: "flex-container" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { attrs: { id: "imgsrc" } },
+                                                  [
+                                                    _c("img", {
+                                                      attrs: {
+                                                        src: "/storage/" + file,
+                                                        alt: file
+                                                          ? file.split("/")[9]
+                                                          : "current-file",
+                                                      },
+                                                    }),
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("label", {
+                                                  staticClass: "labelforimg",
+                                                  attrs: { for: "imgsrc" },
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      file
+                                                        ? file.split("/")[9]
+                                                        : ""
+                                                    ),
+                                                  },
+                                                }),
+                                              ]
+                                            )
+                                          : _c(
+                                              "div",
+                                              { staticClass: "flex-container" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { attrs: { id: "imgsrc" } },
+                                                  [
+                                                    _c("img", {
+                                                      attrs: {
+                                                        src:
+                                                          "/storage/app/public/" +
+                                                          file,
+                                                        alt: file
+                                                          ? file.split("/")[9]
+                                                          : "current-file",
+                                                      },
+                                                    }),
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("label", {
+                                                  staticClass: "labelforimg",
+                                                  attrs: { for: "imgsrc" },
+                                                  domProps: {
+                                                    textContent: _vm._s(
+                                                      file
+                                                        ? file.split("/")[9]
+                                                        : ""
+                                                    ),
+                                                  },
+                                                }),
+                                              ]
+                                            ),
+                                      ]
+                                    ),
+                                  ]
                                 )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c("tr"),
-                          ]),
+                              }),
+                              _vm._v(" "),
+                              _c("tr"),
+                            ],
+                            2
+                          ),
                         ]
                       ),
                     ]),
@@ -24633,7 +25029,7 @@ var render = function () {
                               "button",
                               {
                                 staticClass:
-                                  "btn btn-primary btn-lg fas fa-edit",
+                                  "\n                                        btn btn-primary btn-lg\n                                        fas\n                                        fa-edit\n                                    ",
                                 attrs: { type: "button" },
                                 on: {
                                   click: function ($event) {
@@ -24647,7 +25043,7 @@ var render = function () {
                               },
                               [
                                 _vm._v(
-                                  "\n                  New document\n                "
+                                  "\n                                    New document\n                                "
                                 ),
                               ]
                             ),
@@ -24676,7 +25072,7 @@ var render = function () {
                                 "button",
                                 {
                                   staticClass:
-                                    "btn btn-success btn-lg fas fa-paper-plane",
+                                    "\n                                            btn btn-success btn-lg\n                                            fas\n                                            fa-paper-plane\n                                        ",
                                   attrs: { type: "button" },
                                   on: {
                                     click: function ($event) {
@@ -24689,7 +25085,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                    Send document\n                  "
+                                    "\n                                        Send document\n                                    "
                                   ),
                                 ]
                               ),
@@ -24698,7 +25094,7 @@ var render = function () {
                                 "button",
                                 {
                                   staticClass:
-                                    "btn btn-danger btn-lg fas fa-trash-alt",
+                                    "\n                                            btn btn-danger btn-lg\n                                            fas\n                                            fa-trash-alt\n                                        ",
                                   attrs: { type: "button" },
                                   on: {
                                     click: function ($event) {
@@ -24708,7 +25104,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                    Remove document\n                  "
+                                    "\n                                        Remove document\n                                    "
                                   ),
                                 ]
                               ),
@@ -24782,11 +25178,6 @@ var render = function () {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "modal-body" }, [
-                              _c("form", {
-                                staticClass: "form-horizontal",
-                                attrs: { enctype: "multipart/form-data" },
-                              }),
-                              _vm._v(" "),
                               _c(
                                 "div",
                                 { staticClass: "flex flex-wrap -m-2" },
@@ -24800,7 +25191,7 @@ var render = function () {
                                           "label",
                                           {
                                             staticClass:
-                                              "leading-7 text-sm text-gray-600",
+                                              "\n                                                leading-7\n                                                text-sm text-gray-600\n                                            ",
                                             attrs: { for: "attachment" },
                                           },
                                           [_vm._v("Attachments")]
@@ -24838,7 +25229,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                Save\n              "
+                                    "\n                                Save\n                            "
                                   ),
                                 ]
                               ),
@@ -24859,7 +25250,7 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                Close\n              "
+                                    "\n                                Close\n                            "
                                   ),
                                 ]
                               ),
@@ -24901,8 +25292,13 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col col shadow p-1 rounded pt-1" }, [
         _c("h4", { staticClass: "card-title" }, [
-          _c("span", { staticClass: "lstick d-inline-block align-middle" }),
-          _vm._v("\n                    CLItem\n                  "),
+          _c("span", {
+            staticClass:
+              "\n                                                lstick\n                                                d-inline-block\n                                                align-middle\n                                            ",
+          }),
+          _vm._v(
+            "\n                                        CLItem\n                                    "
+          ),
         ]),
       ]),
     ])
@@ -24916,7 +25312,9 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "row" }, [
             _c("p", [_vm._v("Helplink")]),
-            _vm._v("\n                    b\n                  "),
+            _vm._v(
+              "\n                                        b\n                                    "
+            ),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [_c("p", [_vm._v("Status")])]),
