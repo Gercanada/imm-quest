@@ -188,7 +188,6 @@ class CLItemController extends Controller
             $newFilePath =  str_replace(" ", "_", "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs");
             $obj->result->cf_1214     = $newFilePath; //GD Link
             $vtiger->update($obj->result);
-            // return $updated;
             sleep(8);
 
             $obj2  = $vtiger->retrieve($clitem->id);
