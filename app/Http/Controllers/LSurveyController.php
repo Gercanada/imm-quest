@@ -57,7 +57,7 @@ class LSurveyController extends Controller
                 "lastname" => $LastNameAPI,
                 "firstname" => $FirstNameAPI,
                 "token" => $token,
-                "language" => 'en',
+                // "language" => 'en',
                 "emailstatus" => "OK"
             );
 
@@ -65,6 +65,8 @@ class LSurveyController extends Controller
             $bCreateToken = true;
             // Create the tokens
             $newToken = $myJSONRPCClient->add_participants($sSessionKey, $iSurveyID, $aParticipantData, $bCreateToken);
+
+            // return $newToken[0]['token'];
             if (array_key_exists("status", $newToken)) { // If catched survey error starus
                 return response()->json(["error" => [$newToken, $sSessionKey]]);
             } else {
@@ -72,6 +74,7 @@ class LSurveyController extends Controller
                 $newMail = $myJSONRPCClient->invite_participants($sSessionKey, $iSurveyID, $tokenIDs, true);
                 // Print returned results
                 $surveyValues = [];
+
 
                 if ($newMail[$newToken[0]['tid']]['status'] == 'OK') {
                     array_push(
@@ -89,7 +92,6 @@ class LSurveyController extends Controller
                     $clitem =  $vtiger->search($clitemQuery)->result[0];
                     $obj = $vtiger->retrieve($clitem->id);
                     //$this->consoleWrite()->writeln($limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en");
-
                     $obj->result->cf_1212 = $limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en"; //help link
                     $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire";
                     $vtiger->update($obj->result);
@@ -273,7 +275,8 @@ class LSurveyController extends Controller
 
     public function survey(Request $request, $id)
     {
-        header("Access-Control-Allow-Origin: *");
+        // header("Access-Control-Allow-Origin: *");
+
         $user      = Auth::user();
         $vtiger    = new Vtiger();
         $task      = new CloneDBController;
@@ -326,12 +329,14 @@ class LSurveyController extends Controller
             $aFields = null
         );
 
+        $surveyResponses =[];
         if (is_string($exportSurvey)) {
             $surveyResults = json_decode(base64_decode($exportSurvey));
             $surveyResponses =  $surveyResults->responses;
         }
 
-        return [$clitem, $surveyResponses];
+        return  $surveyResponses;
+        // return [$clitem, $surveyResponses];
     }
 
     /**

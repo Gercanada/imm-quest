@@ -266,16 +266,6 @@
                                                 v-text="clitem.cf_1200"
                                             ></td>
                                         </tr>
-                                        <tr>
-                                            <td>Item Status</td>
-                                            <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
-                                                v-text="clitem.cf_1578"
-                                            ></td>
-                                        </tr>
 
                                         <tr>
                                             <!-- Editables on CP -->
@@ -288,6 +278,62 @@
                                                 v-text="clitem.cf_1970"
                                             ></td>
                                         </tr>
+                                        <tr>
+                                            <td>Item Status</td>
+                                            <td
+                                                class="
+                                                    text-end
+                                                    font-weight-medium
+                                                "
+                                                v-text="clitem.cf_1578"
+                                            ></td>
+                                        </tr>
+
+                                        <tr
+                                            v-if="
+                                                clitem.cf_1200 ===
+                                                'Questionnaire'
+                                            "
+                                        >
+                                            <!-- Editables on CP -->
+                                            <td>Help link</td>
+                                            <td
+                                                class="
+                                                    text-end
+                                                    font-weight-medium
+                                                "
+                                            >
+                                                <a :href="clitem.cf_1212">{{
+                                                    clitem.cf_1212
+                                                }}</a>
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            v-if="
+                                                clitem.cf_1200 ===
+                                                'Questionnaire'
+                                            "
+                                        >
+                                            <!-- Editables on CP -->
+                                            <td>Completed survey</td>
+                                            <td
+                                                class="
+                                                    text-end
+                                                    font-weight-medium
+                                                "
+                                            >
+                                                <p
+                                                    v-if="
+                                                        survey.length > 0 &&
+                                                        survey.submitdate != ''
+                                                    "
+                                                >
+                                                    Yes
+                                                </p>
+                                                <p v-else>No</p>
+                                            </td>
+                                        </tr>
+
                                         <tr
                                             v-for="file in clFiles"
                                             :v-if="clFiles.length > 0"
@@ -416,6 +462,7 @@
                                 <div
                                     class="btn-list"
                                     v-if="
+                                        clitem.cf_1200 != 'Questionnaire' &&
                                         (clitem.cf_1578 === 'Pending' ||
                                             clitem.cf_1578 ===
                                                 'Replacement Needed') &&
@@ -442,8 +489,91 @@
                                 </div>
 
                                 <div class="btn-list">
+                                    <!-- survey -->
+                                    <!-- $item->cf_1200 === "Questionnaire" -->
+                                    <div
+                                        v-if="
+                                            clitem.cf_1200 ===
+                                                'Questionnaire' &&
+                                            survey.length > 0 &&
+                                            survey.submitdate != '' &&
+                                            (clitem.cf_1578 === 'Pending' ||
+                                                clitem.cf_1578 ===
+                                                    'Replacement Needed')
+                                        "
+                                        class="text-end font-weight-medium"
+                                    >
+                                        <!-- btn here -->
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="
+                                                    btn btn-success btn-lg
+                                                    fas
+                                                    fa-paper-plane
+                                                "
+                                                @click="
+                                                    exportResponse(
+                                                        clitem_c.clitemsno
+                                                    )
+                                                "
+                                            >
+                                                Send survey document
+                                            </button>
+                                            <!--   <button
+                                                v-else
+                                                type="button"
+                                                disabled
+                                                class="
+                                                    btn
+                                                    btn-outline-success
+                                                    btn-rounded
+                                                "
+                                            >
+                                                <i
+                                                    class="
+                                                        fas
+                                                        fa-plane
+                                                        fas
+                                                        fa-spin
+                                                    "
+                                                ></i>
+                                            </button> -->
+                                            <!--  <button
+                                            type="button"
+                                            class="
+                                                btn btn-success btn-lg
+                                                fas
+                                                fa-paper-plane
+                                            "
+                                            @click="
+                                                sendToImmcase(
+                                                    file,
+                                                    clitem.clitemsno
+                                                )
+                                            "
+                                        >
+                                            Send document
+                                        </button> -->
+                                            <!--  <button
+                                                type="button"
+                                                class="
+                                                    btn btn-danger btn-lg
+                                                    fas
+                                                    fa-trash-alt
+                                                "
+                                                @click="deleteFile(file)"
+                                            >
+                                                Remove document
+                                            </button> -->
+                                        </td>
+                                    </div>
+
+                                    <!--  -->
+
                                     <div
                                         :v-if="
+                                            clitem.cf_1200 != 'Questionnaire' &&
                                             (clitem.cf_1578 === 'Pending' ||
                                                 clitem.cf_1578 ===
                                                     'Replacement Needed') &&
@@ -655,6 +785,7 @@ export default {
             loading: false,
             file: "",
             clFiles: [],
+            survey: {},
         };
     },
     components: {
@@ -771,9 +902,13 @@ export default {
             axios
                 .post("/cl-item", { id: urlParams[4] })
                 .then(function (response) {
+                    // console.table(response);
+
                     me.clitem = response.data[0];
                     me.caseObj = response.data[1];
                     me.checklistObj = response.data[2];
+                    me.survey = response.data[3];
+                    console.log(me.survey);
                     if ("files" in me.clitem.files) {
                         me.clFiles = me.clitem.files.files;
                         //console.log(me.clFiles);

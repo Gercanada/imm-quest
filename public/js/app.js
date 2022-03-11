@@ -3461,6 +3461,136 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var urlParams = window.location.pathname.split("/");
@@ -3503,7 +3633,8 @@ var urlParams = window.location.pathname.split("/");
       sendSuccess: false,
       loading: false,
       file: "",
-      clFiles: []
+      clFiles: [],
+      survey: {}
     };
   },
   components: {
@@ -3682,9 +3813,12 @@ var urlParams = window.location.pathname.split("/");
       axios.post("/cl-item", {
         id: urlParams[4]
       }).then(function (response) {
+        // console.table(response);
         me.clitem = response.data[0];
         me.caseObj = response.data[1];
         me.checklistObj = response.data[2];
+        me.survey = response.data[3];
+        console.log(me.survey);
 
         if ("files" in me.clitem.files) {
           me.clFiles = me.clitem.files.files; //console.log(me.clFiles);
@@ -5146,8 +5280,8 @@ var urlParams = window.location.pathname.split("/"); //console.log(urlParams);
     },
     getFrame: function getFrame() {
       alert("method called");
-      var frame = document.getElementById("surveyframe");
-      frame.contentWindow.postMessage(this.clitem.cf_1212, "*");
+      var frame = document.getElementById("surveyframe"); // frame.contentWindow.postMessage(this.clitem.cf_1212, "*");
+
       /*   function getMeta(url, callback) {
       var img = document.getElementsByTagName(body);
       img.src = url;
@@ -5159,7 +5293,7 @@ var urlParams = window.location.pathname.split("/"); //console.log(urlParams);
       alert(width + "px " + height + "px");
       }); */
 
-      console.log(frame.contentWindow.document.body.scrollHeight + "px"); //setTimeout(() => {
+      console.log(frame.contentWindow.t + "px"); //setTimeout(() => {
       // const myFrame = document.getElementById("surveyframe");
       //alert(the_height.contentWindow.document.body.scrollHeight + "px");
 
@@ -25076,6 +25210,18 @@ var render = function () {
                               ]),
                               _vm._v(" "),
                               _c("tr", [
+                                _c("td", [_vm._v("Original File Name")]),
+                                _vm._v(" "),
+                                _c("td", {
+                                  staticClass:
+                                    "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                  domProps: {
+                                    textContent: _vm._s(_vm.clitem.cf_1970),
+                                  },
+                                }),
+                              ]),
+                              _vm._v(" "),
+                              _c("tr", [
                                 _c("td", [_vm._v("Item Status")]),
                                 _vm._v(" "),
                                 _c("td", {
@@ -25087,17 +25233,52 @@ var render = function () {
                                 }),
                               ]),
                               _vm._v(" "),
-                              _c("tr", [
-                                _c("td", [_vm._v("Original File Name")]),
-                                _vm._v(" "),
-                                _c("td", {
-                                  staticClass:
-                                    "\n                                                text-end\n                                                font-weight-medium\n                                            ",
-                                  domProps: {
-                                    textContent: _vm._s(_vm.clitem.cf_1970),
-                                  },
-                                }),
-                              ]),
+                              _vm.clitem.cf_1200 === "Questionnaire"
+                                ? _c("tr", [
+                                    _c("td", [_vm._v("Help link")]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass:
+                                          "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                      },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
+                                            attrs: { href: _vm.clitem.cf_1212 },
+                                          },
+                                          [_vm._v(_vm._s(_vm.clitem.cf_1212))]
+                                        ),
+                                      ]
+                                    ),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.clitem.cf_1200 === "Questionnaire"
+                                ? _c("tr", [
+                                    _c("td", [_vm._v("Completed survey")]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass:
+                                          "\n                                                text-end\n                                                font-weight-medium\n                                            ",
+                                      },
+                                      [
+                                        _vm.survey.length > 0 &&
+                                        _vm.survey.submitdate != ""
+                                          ? _c("p", [
+                                              _vm._v(
+                                                "\n                                                Yes\n                                            "
+                                              ),
+                                            ])
+                                          : _c("p", [_vm._v("No")]),
+                                      ]
+                                    ),
+                                  ])
+                                : _vm._e(),
                               _vm._v(" "),
                               _vm._l(_vm.clFiles, function (file) {
                                 return _c(
@@ -25210,6 +25391,7 @@ var render = function () {
                   _vm._v(" "),
                   _c("div", { staticClass: "row float-right" }, [
                     _c("div", { staticClass: "col" }, [
+                      _vm.clitem.cf_1200 != "Questionnaire" &&
                       (_vm.clitem.cf_1578 === "Pending" ||
                         _vm.clitem.cf_1578 === "Replacement Needed") &&
                       _vm.clFiles.length == 0
@@ -25242,65 +25424,103 @@ var render = function () {
                       _c(
                         "div",
                         { staticClass: "btn-list" },
-                        _vm._l(_vm.clFiles, function (file) {
-                          return _c(
-                            "div",
-                            {
-                              key: file,
-                              staticClass: "text-end font-weight-medium",
-                              attrs: {
-                                "v-if":
-                                  (_vm.clitem.cf_1578 === "Pending" ||
-                                    _vm.clitem.cf_1578 ===
-                                      "Replacement Needed") &&
-                                  _vm.clFiles.length > 0,
+                        [
+                          _vm.clitem.cf_1200 === "Questionnaire" &&
+                          _vm.survey.length > 0 &&
+                          _vm.survey.submitdate != "" &&
+                          (_vm.clitem.cf_1578 === "Pending" ||
+                            _vm.clitem.cf_1578 === "Replacement Needed")
+                            ? _c(
+                                "div",
+                                { staticClass: "text-end font-weight-medium" },
+                                [
+                                  _c("td", [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "\n                                                btn btn-success btn-lg\n                                                fas\n                                                fa-paper-plane\n                                            ",
+                                        attrs: { type: "button" },
+                                        on: {
+                                          click: function ($event) {
+                                            return _vm.exportResponse(
+                                              _vm.clitem_c.clitemsno
+                                            )
+                                          },
+                                        },
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                            Send survey document\n                                        "
+                                        ),
+                                      ]
+                                    ),
+                                  ]),
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm._l(_vm.clFiles, function (file) {
+                            return _c(
+                              "div",
+                              {
+                                key: file,
+                                staticClass: "text-end font-weight-medium",
+                                attrs: {
+                                  "v-if":
+                                    _vm.clitem.cf_1200 != "Questionnaire" &&
+                                    (_vm.clitem.cf_1578 === "Pending" ||
+                                      _vm.clitem.cf_1578 ===
+                                        "Replacement Needed") &&
+                                    _vm.clFiles.length > 0,
+                                },
                               },
-                            },
-                            [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "\n                                            btn btn-success btn-lg\n                                            fas\n                                            fa-paper-plane\n                                        ",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.sendToImmcase(
-                                        file,
-                                        _vm.clitem.clitemsno
-                                      )
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "\n                                            btn btn-success btn-lg\n                                            fas\n                                            fa-paper-plane\n                                        ",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.sendToImmcase(
+                                          file,
+                                          _vm.clitem.clitemsno
+                                        )
+                                      },
                                     },
                                   },
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        Send document\n                                    "
-                                  ),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "\n                                            btn btn-danger btn-lg\n                                            fas\n                                            fa-trash-alt\n                                        ",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.deleteFile(file)
+                                  [
+                                    _vm._v(
+                                      "\n                                        Send document\n                                    "
+                                    ),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "\n                                            btn btn-danger btn-lg\n                                            fas\n                                            fa-trash-alt\n                                        ",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.deleteFile(file)
+                                      },
                                     },
                                   },
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        Remove document\n                                    "
-                                  ),
-                                ]
-                              ),
-                            ]
-                          )
-                        }),
-                        0
+                                  [
+                                    _vm._v(
+                                      "\n                                        Remove document\n                                    "
+                                    ),
+                                  ]
+                                ),
+                              ]
+                            )
+                          }),
+                        ],
+                        2
                       ),
                     ]),
                   ]),
@@ -25784,34 +26004,22 @@ var render = function () {
                     _c("td", [_vm._v(_vm._s(clitem_c.cf_1578))]),
                     _vm._v(" "),
                     _c("td", [
-                      _vm.loading == false
-                        ? _c(
-                            "button",
-                            {
-                              staticClass:
-                                "btn btn-outline-success btn-rounded",
-                              attrs: { type: "submit" },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.exportResponse(clitem_c.clitemsno)
-                                },
-                              },
-                            },
-                            [_c("i", { staticClass: "icon-refresh" })]
-                          )
-                        : _c(
-                            "button",
-                            {
-                              staticClass:
-                                "btn btn-outline-success btn-rounded",
-                              attrs: { type: "submit", disabled: "" },
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "icon-refresh fas fa-spin",
-                              }),
-                            ]
-                          ),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-outline-success btn-rounded",
+                          attrs: {
+                            href:
+                              "/checklist/" +
+                              _vm.checklist.id +
+                              "/item/" +
+                              clitem_c.id,
+                            "data-toggle": "tooltip",
+                            title: "View details",
+                          },
+                        },
+                        [_c("i", { staticClass: "fas fa-eye" })]
+                      ),
                     ]),
                   ])
                 : _vm._e()

@@ -82,7 +82,7 @@ export default {
         getFrame() {
             alert("method called");
             const frame = document.getElementById("surveyframe");
-            frame.contentWindow.postMessage(this.clitem.cf_1212, "*");
+            // frame.contentWindow.postMessage(this.clitem.cf_1212, "*");
 
             /*   function getMeta(url, callback) {
         var img = document.getElementsByTagName(body);
@@ -96,7 +96,7 @@ export default {
         alert(width + "px " + height + "px");
       }); */
 
-            console.log(frame.contentWindow.document.body.scrollHeight + "px");
+            console.log(frame.contentWindow.t + "px");
 
             //setTimeout(() => {
             // const myFrame = document.getElementById("surveyframe");

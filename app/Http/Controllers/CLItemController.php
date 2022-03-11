@@ -28,6 +28,7 @@ class CLItemController extends Controller
      */
     public function show(Request $request)
     {
+
         $user = Auth::user();
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
 
@@ -41,6 +42,13 @@ class CLItemController extends Controller
             ->where('cf_contacts_id', $contact->id)
             ->firstOrFail();
 
+        $survey = [];
+        if ($item->cf_1200 === "Questionnaire" && $item->cf_1212 != '') {
+            $lime = new LSurveyController();
+            $id = $item->id;
+            $survey = $lime->survey($request, $id); //Start limesurvey session
+        }
+
         $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
         $directory = str_replace(' ', '_', $directory);
         $dirFiles = Storage::disk('public')->allFiles($directory);
@@ -52,7 +60,7 @@ class CLItemController extends Controller
 
         $itemfiles = ['key' => $item->clitemsno, 'files' => $files];
         $item->files = $itemfiles;
-        return [$item, $case, $checklist];
+        return [$item, $case, $checklist, $survey];
     }
 
     /**
@@ -66,9 +74,9 @@ class CLItemController extends Controller
         $user = Auth::user();
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
         $cl_item =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
-         if ($cl_item->cf_1200 === "Questionnaire") {
+        /*  if ($cl_item->cf_1200 === "Questionnaire") {
             return view('checklists.items.questionnaire', compact('cl_item'));
-        }
+        } */
         return view('checklists.items.item-dv-upload', compact('cl_item'));
     }
 

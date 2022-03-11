@@ -148,7 +148,7 @@
                                 }}</a>
                             </td>
                             <td>{{ clitem_c.cf_1578 }}</td>
-                            <td>
+                           <!--  <td>
                                 <button
                                     v-if="loading == false"
                                     type="submit"
@@ -165,8 +165,8 @@
                                 >
                                     <i class="icon-refresh fas fa-spin"></i>
                                 </button>
-                            </td>
-                            <!--   <td>
+                            </td> -->
+                              <td>
                 <a
                   :href="'/checklist/' + checklist.id + '/item/' + clitem_c.id"
                   data-toggle="tooltip"
@@ -175,7 +175,7 @@
                 >
                   <i class="fas fa-eye"></i
                 ></a>
-              </td>-->
+              </td>
                         </tr>
                     </tbody>
                 </table>
