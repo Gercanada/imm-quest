@@ -37,6 +37,10 @@ class DocumentController extends Controller
     public function destroy(Request $request)
     {
         try {
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln('A file be deleted');
+            }
+
             $return = response()->json(200);
             $file = substr($request->file, 1);
             $exploded = explode('/', $file);
@@ -77,9 +81,7 @@ class DocumentController extends Controller
                     Storage::deleteDirectory($dir);
                 }
             }
-            if (env('APP_ENV') === 'local') {
-                $this->consoleWrite()->writeln('A file was deleted');
-            }
+
             return $return;
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['DocumentController' => 'destroy']);
@@ -92,6 +94,9 @@ class DocumentController extends Controller
     public function checkDocuments(Request $request)
     {
         try {
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("CHecking files");
+            }
             $user = User::where('vtiger_contact_id', $request->cid)->firstOrFail();
             // $natdirectory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
             $natDir = "/documents/contact/$user->vtiger_contact_id/cases/$request->case/checklists/$request->checklist/clitems/$request->clitem";

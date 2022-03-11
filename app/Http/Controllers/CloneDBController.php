@@ -636,7 +636,7 @@ class CloneDBController extends Controller
         try {
             $vtiger = new Vtiger();
             if (!$request->clitemsno) {
-                return 404;
+                return response()->json(404);
             }
 
             $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
@@ -655,7 +655,7 @@ class CloneDBController extends Controller
                 $this->consoleWrite()->writeln('CLITEM updated ');
             }
             return $clitem;
-            return response()->json($clitem);
+            // return response()->json($clitem);
             //return response()->json(['Success', $clitem->id], 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);

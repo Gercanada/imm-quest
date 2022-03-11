@@ -908,7 +908,7 @@ export default {
                     me.caseObj = response.data[1];
                     me.checklistObj = response.data[2];
                     me.survey = response.data[3];
-                    console.log(me.survey);
+                    // console.log(me.survey);
                     if ("files" in me.clitem.files) {
                         me.clFiles = me.clitem.files.files;
                         //console.log(me.clFiles);

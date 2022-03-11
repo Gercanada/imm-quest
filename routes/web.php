@@ -28,6 +28,8 @@ use App\Http\Controllers\CloneDBController;
 |
 */
 
+Route::get('/submitsurvey/id/{id}/tkn/{tkn}/lan/{ln}', [LSurveyController::class, 'onSubmit']);
+
 Auth::routes();
 
 Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
@@ -40,6 +42,8 @@ Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */func
     Route::get('/user_types_access',               [VtigerController::class, 'show']);
     Route::get('/vtiger/describe/{type}',          [VtigerController::class, 'getType']);
 });
+
+
 
 Route::middleware('auth')->group(function () {
     Route::post('/viger/sync_data', [CloneDBController::class, 'syncData']);
@@ -89,6 +93,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->name('show_invoice');
     //payments
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments');
+
+
 
 
 
