@@ -128,8 +128,8 @@ class LSurveyController extends Controller
                 $request->form = '';
             }
             if ($request->survey_url) {
-                $oncpItem = CLItem::where("cf_1212", "like", "$request->survey_url" . "%")->firstOrFail();
-                $clitemQuery = DB::table('CLItems')->select('*')->where("cf_1212", "like", "$request->survey_url" . "%")->take(1);
+                $oncpItem = CLItem::where("cf_1212", "like", $request->survey_url . "%")->firstOrFail();
+                $clitemQuery = DB::table('CLItems')->select('*')->where("cf_1212", "like", $request->survey_url . "%")->take(1);
             } else {
                 $oncpItem = CLItem::where("clitemsno", $request->clitemsno)->firstOrFail();
                 $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
@@ -244,18 +244,17 @@ class LSurveyController extends Controller
                         $obj->result->cf_2370   = $arrAsStr; //set on metadata field
                         $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
                         $this->consoleWrite()->writeln("try to update");
-
                         $vtiger->update($obj->result);
-                        
                         $this->consoleWrite()->writeln("setted");
-                        return "any";
                         sleep(8); // wait 12 seconds
-
+                        
                         $obj2  = $vtiger->retrieve($clitem->id);
+                        return 200;
                         //call destroller
                         do {
                             if ($obj2->result->cf_1578 === "Received") {
                                 $request->request->add(['checklist_id' => $checklist->checklistno]);
+                                $request->request->add(['clitemsno' => $clitem->clitemsno]);
 
                                 $updatedItem = $task->updateCLItemFromImmcase($request);
                                 $task->updateChecklistFromImmcase($request);
@@ -294,21 +293,14 @@ class LSurveyController extends Controller
 
     public function survey(Request $request, $id)
     {
-        // header("Access-Control-Allow-Origin: *");
-
         $user      = Auth::user();
         $vtiger    = new Vtiger();
         $task      = new CloneDBController;
         $contact   = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
         $oncpItem  =   CLItem::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
-
-
-
         //$oncpItem = CLItem::where("clitemsno", $request->clitemsno)->firstOrFail();
         /* Find clitem of current survey */
-        $clitemQuery = DB::table('CLItems')->select('*')
-            ->where("clitemsno", $oncpItem->clitemsno)->take(1);
-
+        $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $oncpItem->clitemsno)->take(1);
         $clitem = $vtiger->search($clitemQuery);
 
         if ($clitem->success === false) {
@@ -317,6 +309,7 @@ class LSurveyController extends Controller
             }
             return response()->json("Item not found", 404);
         }
+
         $clitem =  $clitem->result[0];
 
         if ($clitem->cf_1212 != $oncpItem->cf_1212) {
@@ -432,7 +425,9 @@ class LSurveyController extends Controller
         try {
             $request->request->add(['survey_url' => $link]);
             $task = new LSurveyController();
-            $exported = $task->exportResponse($request);
+            return $task->exportResponse($request);
+
+            return 200;
 
             return view('checklists.items.survey.done');
             // return $exported;
