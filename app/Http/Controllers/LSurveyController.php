@@ -103,7 +103,7 @@ class LSurveyController extends Controller
                 //return response()->json(["success" => $surveyValues]);
             }
         } catch (Exception $e) {
-            return $e;
+            // return $e;
             return $this->returnJsonError($e, ['LSurveyController' => 'guestToSurvey']);
         }
     }
@@ -247,7 +247,7 @@ class LSurveyController extends Controller
                         $vtiger->update($obj->result);
                         $this->consoleWrite()->writeln("setted");
                         sleep(8); // wait 12 seconds
-                        
+
                         $obj2  = $vtiger->retrieve($clitem->id);
                         return 200;
                         //call destroller

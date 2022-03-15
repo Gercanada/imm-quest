@@ -39,7 +39,8 @@
     35 => 'App\\Providers\\AuthServiceProvider',
     36 => 'App\\Providers\\EventServiceProvider',
     37 => 'App\\Providers\\RouteServiceProvider',
-    38 => 'Spatie\\Permission\\PermissionServiceProvider',
+    38 => 'App\\Providers\\GoogleDriveServiceProvider',
+    39 => 'Spatie\\Permission\\PermissionServiceProvider',
   ),
   'eager' => 
   array (
@@ -65,7 +66,8 @@
     19 => 'App\\Providers\\AuthServiceProvider',
     20 => 'App\\Providers\\EventServiceProvider',
     21 => 'App\\Providers\\RouteServiceProvider',
-    22 => 'Spatie\\Permission\\PermissionServiceProvider',
+    22 => 'App\\Providers\\GoogleDriveServiceProvider',
+    23 => 'Spatie\\Permission\\PermissionServiceProvider',
   ),
   'deferred' => 
   array (

@@ -514,7 +514,7 @@
                                                 "
                                                 @click="
                                                     exportResponse(
-                                                        clitem_c.clitemsno
+                                                        clitem.clitemsno
                                                     )
                                                 "
                                             >
@@ -949,6 +949,45 @@ export default {
                     }
                 }
             }
+        },
+
+        exportResponse(clitems_no) {
+            let me = this;
+            me.loading = true;
+            axios
+                .post("/questionaries/export_response", {
+                    clitemsno: clitems_no,
+                })
+                .then(function (response) {
+                    if (response.data === "success") {
+                        Swal.fire({
+                            type: "success",
+                            title: " ✔ This survey has been answered and sent to manager. ✔",
+                            timer: 5000,
+                            showConfirmButton: false,
+                        });
+                    } else {
+                        Swal.fire({
+                            type: "error",
+                            title: "❌ This survey has NOT answered. Please open the link and answer the survey. ❌",
+                            timer: 2000,
+                            showConfirmButton: false,
+                        });
+                    }
+
+                    me.userFiles();
+                })
+                .catch(function (error) {
+                    Swal.fire({
+                        type: "error",
+                        title: "❌ This survey has NOT answered. Please open the link and answer the survey. ❌",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                    console.log(error);
+                    // console.log( error);
+                })
+                .finally(() => (this.loading = false));
         },
     },
 };

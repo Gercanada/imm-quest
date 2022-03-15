@@ -90,6 +90,10 @@ class CLItemController extends Controller
     public function uploadFile(Request $request)
     {
         try {
+            $this->consoleWrite()->writeln("HERE");
+            Storage::disk('google')->put('test.txt', 'Hello World');
+            return "Done";
+
             $user    = Auth::user();
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
             $clitem  = CLItem::where('id', $request->id)
@@ -108,6 +112,19 @@ class CLItemController extends Controller
             if (!is_array($files)) {
                 $files = [$files];
             }
+
+            foreach ($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $filename = str_replace(' ', '', $filename);
+                $filename = str_replace('-', '_', $filename);
+                $file->store('any', 'google');
+                /*  $fileUrl = "path/$filename";
+                array_push($fileList, $fileUrl); */
+            }
+
+            // Storage::disk('google')->allFiles();
+            return "Stored";
+            //vamo a ver 
             $fileList = [];
             $contact_no = $contact->contact_no;
             $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
