@@ -58,6 +58,7 @@ Route::middleware('imm-header')->group(function () {
     Route::post('/questionaries/export_response',  [LSurveyController::class, 'exportResponse']); //Test as service
     //CLItem
     Route::post('/cl-item/send_file',              [CLItemController::class, 'sendDocumentToImmcase']); //Only catch errs
+    Route::post('/cl-item/upload',              [CLItemController::class, 'uploadFile']); //Only catch errs
 
     Route::post('/create_user',                    [UserController::class, 'createUser']);
 

@@ -30,6 +30,8 @@ use App\Http\Controllers\CloneDBController;
 
 Route::get('/submitsurvey/id/{id}/tkn/{tkn}/lan/{ln}', [LSurveyController::class, 'onSubmit']);
 
+// Route::get('/store', [LSurveyController::class, 'test']);
+
 Auth::routes();
 
 Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin

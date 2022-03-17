@@ -13,6 +13,7 @@ use App\Models\Contact;
 use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use App\Providers\GoogleDriveServiceProvider;
 use Exception;
 
 
@@ -91,7 +92,36 @@ class CLItemController extends Controller
     {
         try {
             $this->consoleWrite()->writeln("HERE");
-            Storage::disk('google')->put('test.txt', 'Hello World');
+            $files = $request->file('file');
+            if (!is_array($files)) {
+                $files = [$files];
+            }
+            $task = new CLItemController();
+            return $task->upToGoogleDrive($files, 'ah/si/ven/aqui');
+
+            /*  foreach ($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $filename = str_replace(' ', '', $filename);
+                $filename = str_replace('-', '_', $filename);
+                // $file->store('any', 'google');
+                $this->consoleWrite()->writeln($filename);
+                // Storage::disk('google')->put($file);
+
+
+                $this->consoleWrite()->writeln(Storage::disk('google')->exists(env('GOOGLE_DRIVE_FOLDER_ID')) ? "YES" : "no");
+
+                $file->storeAs(
+                    env('GOOGLE_DRIVE_FOLDER_ID'),
+                    'any/' . $filename,
+                    'google',
+                );
+
+                /*  $fileUrl = "path/$filename";
+                array_push($fileList, $fileUrl); * /
+            }
+            */
+
+
             return "Done";
 
             $user    = Auth::user();
@@ -124,7 +154,7 @@ class CLItemController extends Controller
 
             // Storage::disk('google')->allFiles();
             return "Stored";
-            //vamo a ver 
+            //vamo a ver
             $fileList = [];
             $contact_no = $contact->contact_no;
             $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
@@ -294,7 +324,145 @@ class CLItemController extends Controller
             return $this->returnJsonError($e, ['CLItemController' => 'downloadFile']);
         }
     }
+
+
+    public function upToGoogleDrive($files, $directory)
+    {
+        try {
+             $directory = "si/pues/ven/aqui";
+            //    $directory = "no/tu/ven/aqui";
+            // $directory = "ah/si/ven/aqui";
+
+            if (!is_array($files)) {
+                $files = [$files];
+            }
+            $explodedDir = explode('/', $directory);
+
+            $directoryArr = [];
+            $newPath = '/';
+            $driveDirectories = [];
+            $nextDirName = [];
+            $nextDirPath = [];
+            $newDirName = '';
+            foreach ($explodedDir as $dir) {
+                array_push($directoryArr,  $dir);  //to create newq dir
+            }
+            // return $directoryArr[0];
+
+            //$rootContents = collect(Storage::disk('google')->listContents('/', 0))->where('type', 'dir')->whereIn('name', $directoryArr[0])->first(); //get all(recursive on true) root contents (of assigned folder)
+            //    return $rootContents;
+            $nextPath = '/';
+            $nextNamePath = '/';
+            $nextPathArr = [];
+            $nextNameArr = [];
+            foreach ($directoryArr as $key => $dir) {
+                $this->consoleWrite()->writeln($dir . ' '. $nextPath);
+
+                $contents = collect(Storage::disk('google')->listContents($nextPath, 0))->where('type', 'dir')->whereIn('name', $dir)->first(); //get all(recursive on true) root contents (of assigned folder)   
+                if ($contents) {
+                    array_push($nextPathArr, $contents['basename']);
+                    array_push($nextNameArr, $contents['name']);
+                    $nextPath =  implode('/', $nextPathArr);
+                }else{
+                    Storage::disk('google')->makeDirectory($nextPath . '/' . $dir);
+                    $contents2 = collect(Storage::disk('google')->listContents($nextPath, 0))->where('type', 'dir')->whereIn('name', $dir)->first(); 
+                    array_push($nextPathArr, $contents2['basename']);
+                    array_push($nextNameArr, $contents2['name']);
+                    $nextPath =  implode('/', $nextPathArr);
+
+                }
+            }
+            return $nextPathArr;
+return "here";
+            foreach ($rootContents as $item) {
+                if ($new =  $item['name']) {
+                    array_push($driveDirectories, ['name' => $item['name'], 'type' => $item['type'], 'path' => $item['path'], 'basename' => $item['basename']]);
+                }
+            }
+
+            foreach ($directoryArr as $key => $new) {
+                if (isset($new, $driveDirectories)) {
+                    $existing = true;
+
+                    // $this->consoleWrite()->writeln($key. '=='.  $driveDirectories[$key]['name']);
+                    // if (isset($new, $driveDirectories) && isset($driveDirectories[$key]) && $new === $driveDirectories[$key]['name'] && $existing) { //in drive exists folder named as .. 
+                    if (isset($new, $driveDirectories) && isset($driveDirectories[$key]) && $new === $driveDirectories[$key]['name'] && $existing) { //in drive exists folder named as .. 
+                        $this->consoleWrite()->writeln("Try on iff");
+                        $parentPath = $driveDirectories[$key]['path'];
+                        $newPath =  $parentPath;
+
+                        if (isset($driveDirectories[$key])) {
+                            // $this->consoleWrite()->writeln("Next Folder exists " . $driveDirectories[$key]['name']);
+                            $newPathArr = explode('/', $driveDirectories[$key]['path']);
+                            if (count($newPathArr) >= 1) {
+                                array_pop($newPathArr);
+                                $parentPath = implode('/', ($newPathArr));
+                            }
+                        }
+                        $contents1 = collect(Storage::disk('google')->listContents($parentPath, 0))->where('type', 'dir');
+                        $this->consoleWrite()->writeln($new . '==' .  $contents1[$key]['name']);
+
+                        $existing =  (isset($new, $contents1)) ? 0 : 1;
+                        $this->consoleWrite()->writeln($existing);
+
+
+                        foreach ($contents1 as $item) {
+                            array_push($driveDirectories, ['name' => $item['name'], 'type' => $item['type'], 'path' => $item['path'], 'basename' => $item['basename']]);
+                            array_push($nextDirName, $item['name']);
+                            array_push($nextDirPath, $item['basename']);
+                        }
+                    } else {
+                        $this->consoleWrite()->writeln("Try on else");
+                        $this->consoleWrite()->writeln($new);
+
+                        if (count($nextDirPath) >= 1) {
+                            $newPath = implode('/', $nextDirPath);
+                        }
+                        $newDirName = implode('/', $nextDirName);
+                        // $this->consoleWrite()->writeln("Folder $new  be created into " . $newDirName);
+
+                        // return $newPath;
+                        //get parent folder
+                        // Storage::disk('google')->makeDirectory($newPath . '/' . $new);
+                        $firstIn = collect(Storage::disk('google')->listContents($newPath, 0))->where('type', 'dir')->first();
+                        // return $firstIn;
+                        if (!$firstIn || !$firstIn['name'] === $new) {
+                            Storage::disk('google')->makeDirectory($newPath . '/' . $new);
+                            $this->consoleWrite()->writeln("Folder $new  be created into " . $newDirName);
+                        }
+                        $contents2 = collect(Storage::disk('google')->listContents($newPath, 1))->where('type', 'dir');
+                        foreach ($contents2 as $item) {
+                            array_push($driveDirectories, ['name' => $item['name'], 'type' => $item['type'], 'path' => $item['path'], 'basename' => $item['basename']]);
+                            array_push($nextDirName, $item['name']);
+                            array_push($nextDirPath, $item['basename']);
+                        }
+                    }
+                }
+            }
+
+            $newDirName = implode('/', $nextDirName);
+            $newDirPath = implode('/', $nextDirPath);
+            return [$newDirName, $newDirPath];
+
+
+            foreach ($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $filename = str_replace(' ', '', $filename);
+                $filename = str_replace('-', '_', $filename);
+                $this->consoleWrite()->writeln($filename);
+                $file->storeAs(
+                    env('GOOGLE_DRIVE_FOLDER_ID') . $newDirPath,
+                    $filename,
+                    'google',
+                );
+            }
+            return 200;
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['CLItemController' => 'downloadFile']);
+        }
+    }
 }
+
 
 
 /*
@@ -329,7 +497,7 @@ ${ $ex  = explode(', ', $cf_2370);
 
      }}}> */
 
-/* 
+/*
 $env["server_url"] = "https://4ee2-187-212-180-149.ngrok.io";
 if ($cf_2370 != null) {
     $eachFile = explode(', ', $cf_2370);

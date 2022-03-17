@@ -841,7 +841,7 @@ export default {
                     file: file,
                 })
                 .then(function (response) {
-                    // console.log(response);
+                     console.log(response);
                     if (response.data === "success") {
                         Swal.fire({
                             type: "success",

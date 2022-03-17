@@ -27,7 +27,13 @@ class LSurveyController extends Controller
         return base64_decode($limeConnection['myJSONRPCClient']->export_responses_by_token($sSessionKey, $iSurveyID));
     }
 
-
+/*     public function test()
+    {
+        Storage::disk('google')->put('test.txt', 'Hello World');
+        // Storage::disk('google')->put('test.txt', 'Hello World');
+        return "Done";
+    }
+ */
 
     /**
      * it function be called from immcase as webservice
@@ -221,12 +227,9 @@ class LSurveyController extends Controller
                         }
                     }
                     if (Storage::exists($directory . '/' . $file)) {
-
                         if (env('APP_ENV') === 'local') {
                             $this->consoleWrite()->writeln("just here");
                         }
-
-
                         $obj = $vtiger->retrieve($clitem->id);
 
                         $this->consoleWrite()->writeln($obj->result->clitemsno);
