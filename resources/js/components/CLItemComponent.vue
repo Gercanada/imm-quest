@@ -841,6 +841,8 @@ export default {
                     file: file,
                 })
                 .then(function (response) {
+                    console.table(response);
+                    console.log(response);
                     if (response.data === "success") {
                         Swal.fire({
                             type: "success",
@@ -852,6 +854,7 @@ export default {
                     me.userFiles();
                 })
                 .catch(function (error) {
+                     console.table(error);
                     console.log(error);
                     Swal.fire({
                         type: "error",

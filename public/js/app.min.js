@@ -3751,6 +3751,9 @@ var urlParams = window.location.pathname.split("/");
         clitemsno: clitemsno,
         file: file
       }).then(function (response) {
+        console.table(response);
+        console.log(response);
+
         if (response.data === "success") {
           Swal.fire({
             type: "success",
@@ -3762,6 +3765,7 @@ var urlParams = window.location.pathname.split("/");
 
         me.userFiles();
       })["catch"](function (error) {
+        console.table(error);
         console.log(error);
         Swal.fire({
           type: "error",
