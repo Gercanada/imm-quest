@@ -635,9 +635,6 @@ class CloneDBController extends Controller
     {
         try {
             $vtiger = new Vtiger();
-            $this->consoleWrite()->writeln("Here");
-            $this->consoleWrite()->writeln($request->clitemsno);
-
             if (!$request->clitemsno) {
                 return response()->json(404);
             }

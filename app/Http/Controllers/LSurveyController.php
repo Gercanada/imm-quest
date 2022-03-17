@@ -89,7 +89,6 @@ class LSurveyController extends Controller
                 if ($clitem->success) {
                     $clitem =  $vtiger->search($clitemQuery)->result[0];
                     $obj = $vtiger->retrieve($clitem->id);
-                    //$this->consoleWrite()->writeln($limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" . "en");
                     $obj->result->cf_1212 = $limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" .  "en"; //help link
                     $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire";
                     $vtiger->update($obj->result);
@@ -165,9 +164,6 @@ class LSurveyController extends Controller
 
             $urlObj = parse_url($clitem->cf_1212);
             $iSurveyID = str_replace('/', '', $urlObj['path']);
-
-            $this->consoleWrite()->writeln($clitem->cf_1212);
-
             $urlQuery = $urlObj['query'];
             $urlQueryAsArr = [];
 
@@ -217,11 +213,7 @@ class LSurveyController extends Controller
                 $file = str_replace(' ', '_', $clitem->name);
                 $file = $file . '.pdf';
 
-                $this->consoleWrite()->writeln("Here we go 2");
-                $this->consoleWrite()->writeln($surveyResponses[0]->submitdate);
-
                 if ($surveyResponses[0]->submitdate != null) {
-                    $this->consoleWrite()->writeln("Here we go 3");
                     if (!Storage::exists($directory . '/' . $file)) {
                         if (env('APP_ENV') === 'local') {
                             self::download('', '../storage/app/' . $directory . '/' . $file, $exportSurveyAsPDF); //save survey file on storage folder
@@ -234,7 +226,6 @@ class LSurveyController extends Controller
                             $this->consoleWrite()->writeln("just here");
                         }
                         $obj = $vtiger->retrieve($clitem->id);
-                        $this->consoleWrite()->writeln($obj->result->clitemsno);
 
                         $request->request->add(['cid'       => $contact->contact_no]);
                         $request->request->add(['case'      => $case->ticket_no . '-' . $case->ticketcategories]);
@@ -411,7 +402,6 @@ class LSurveyController extends Controller
     {
         try {
             $link = "forms.gercanada.com/$id?token=$tkn";
-
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln("Called onSubmit method ");
             }
