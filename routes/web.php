@@ -28,6 +28,7 @@ use App\Http\Controllers\CloneDBController;
 |
 */
 
+Route::get('/submittedsurvey', [LSurveyController::class, 'submitted']);
 Route::get('/submitsurvey/id/{id}/tkn/{tkn}/lan/{ln}', [LSurveyController::class, 'onSubmit']);
 
 // Route::get('/store', [LSurveyController::class, 'test']);

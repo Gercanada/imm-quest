@@ -658,8 +658,6 @@ class CloneDBController extends Controller
                 $this->consoleWrite()->writeln('CLITEM updated ');
             }
             return $clitem;
-            // return response()->json($clitem);
-            //return response()->json(['Success', $clitem->id], 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);
         }
@@ -808,112 +806,5 @@ class CloneDBController extends Controller
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'syncData']);
         }
-    }
-
-    public function duplicateContacts(Request $request)
-    {
-        $string = 'This is a string';
-        $lastChar = substr($string, -1);
-        return "The last char of the string is $lastChar";
-
-        $contactid = '192168';
-        $lst = substr($contactid, -1);
-
-        if ($contactid)
-
-
-            $vtiger = new Vtiger();
-        $userQuery = DB::table('Contacts')->select('*')->where('lastname', 'like', '%' . $request->lastname . '%');
-        $contacts = $vtiger->search($userQuery)->result; //Get contact that be cloned
-
-        $duplicates = [];
-        $namesArr = [];
-        $lastNamesArr = [];
-        $emailsArr = [];
-        $msg = '';
-
-        foreach ($contacts as $contact) {
-            array_push($namesArr,  $contact->firstname);
-            array_push($lastNamesArr,  $contact->lastname);
-            array_push($emailsArr,  $contact->email);
-        }
-
-        function showDups($array)
-        {
-            $array_temp = array();
-            foreach ($array as $val) {
-                if (!in_array($val, $array_temp)) {
-                    $array_temp[] = $val;
-                } else {
-                    return $val;
-                }
-            }
-        }
-
-        foreach ($contacts as $contact) {
-            if ($request->by_firstname === '1' && $request->by_lastname === '1'  && $request->by_email === '1') { //Firstname,  lastname, email duplicates
-                $msg = 'Duplicated firstname, lastname and email';
-                if ($contact->firstname === showDups($namesArr) && $contact->lastname === showDups($lastNamesArr)) {
-                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
-                }
-            } else
-            if ($request->by_firstname === '1' && $request->by_lastname === '1') { //Firstname and lastname duplicates
-                $msg = 'Duplicated firstname and lastname';
-                if ($contact->firstname === showDups($namesArr) && $contact->lastname === showDups($lastNamesArr)) {
-                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
-                }
-            } else
-            if ($request->by_lastname === '1') { //lastname
-                $msg = 'Duplicated lastname';
-                if ($contact->lastname === showDups($lastNamesArr)) {
-                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
-                }
-            } else
-            if ($request->by_firstname === '1') { //firstname
-                $msg = 'Duplicated  firstname ';
-                if ($contact->firstname === showDups($namesArr)) {
-                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
-                }
-            } else
-            if ($request->by_email === '1') { //email
-                $msg = 'Duplicated  email ';
-                if ($contact->email === showDups($emailsArr)) {
-                    array_push($duplicates,  ['firstname' => $contact->firstname, 'lastname' => $contact->lastname, 'email' => $contact->email, 'contact_no' => $contact->contact_no]);
-                }
-            }
-        }
-        return response()->json([$msg => $duplicates]);
-    }
-
-    public function testCodeFrag()
-    {
-        $url = 'https://immvisas.com/storage/app/public/documents/contact/2156722/cases/A2145420-Work%20Permit/checklists/CL2141417-/clitems/CLI4002016-Document/saturn.png';
-        $output = "no";
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $url,
-            CURLOPT_HEADER => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_NOBODY => true
-        ));
-
-        $header = explode("\n", curl_exec($curl));
-        curl_close($curl);
-        return $header;
-        /* Get url headers */
-
-        if (strpos($header[0], "200") !== false) {
-            $output =  "yes";
-        }
-
-        return response()->json($header);
-        //$url =str_replace(' ', '%20', $url);
-        $array = get_headers($url);
-        $string = $array[0];
-        if (strpos($string, "200")) {
-            $output =  "yes";
-        }
-        return $output;
     }
 }

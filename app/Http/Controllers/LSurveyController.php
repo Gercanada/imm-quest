@@ -27,14 +27,6 @@ class LSurveyController extends Controller
         return base64_decode($limeConnection['myJSONRPCClient']->export_responses_by_token($sSessionKey, $iSurveyID));
     }
 
-/*     public function test()
-    {
-        Storage::disk('google')->put('test.txt', 'Hello World');
-        // Storage::disk('google')->put('test.txt', 'Hello World');
-        return "Done";
-    }
- */
-
     /**
      * it function be called from immcase as webservice
      * it be create access key for contact and send guest email.
@@ -77,16 +69,19 @@ class LSurveyController extends Controller
                 $tokenIDs = array($newToken[0]['tid']);
                 $newMail = $myJSONRPCClient->invite_participants($sSessionKey, $iSurveyID, $tokenIDs, true);
                 // Print returned results
+
+                //  return $newToken;
                 $surveyValues = [];
-                if ($newMail[$newToken[0]['tid']]['status'] == 'OK') {
-                    array_push(
-                        $surveyValues,
-                        $iSurveyID,
-                        $newToken[0]['token'],
-                        $newToken[0]['tid'],
-                        $newToken[0]['language']
-                    );
-                }
+                // if ($newMail[$newToken[0]['tid']]['status'] == 'OK') {
+                array_push(
+                    $surveyValues,
+                    $iSurveyID,
+                    $newToken[0]['token'],
+                    $newToken[0]['tid'],
+                    $newToken[0]['language']
+                );
+                // }
+                // return $surveyValues;
 
                 $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
                 $clitem = $vtiger->search($clitemQuery);
@@ -122,26 +117,32 @@ class LSurveyController extends Controller
     public function exportResponse(Request $request)
     {
         try {
-            $vtiger    = new Vtiger();
-            $task      = new CloneDBController;
-            $docsTask  = new DocumentController();
-            $now       = Carbon::now()->format('H:i:s');
-            $received  = false;
+            $vtiger      = new Vtiger();
+            $task        = new CloneDBController;
+            $docsTask    = new DocumentController();
+            $clitemTask  = new CLItemController();
+            $now         = Carbon::now()->format('H:i:s');
 
-            $this->consoleWrite()->writeln("Here we go 1");
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("Called exportResponse method ");
+                $this->consoleWrite()->writeln("Here we go 1");
+                $this->consoleWrite()->write($request);
+            }
 
             if ($request->form != 'vue') {
                 $request->form = '';
             }
             if ($request->survey_url) {
-                $oncpItem = CLItem::where("cf_1212", "like", $request->survey_url . "%")->firstOrFail();
-                $clitemQuery = DB::table('CLItems')->select('*')->where("cf_1212", "like", $request->survey_url . "%")->take(1);
+                $oncpItem = CLItem::where("cf_1212", "like", "%" . $request->survey_url . "%")->firstOrFail();
+                $clitemQuery = DB::table('CLItems')->select('*')->where("cf_1212", "like", "%" . $request->survey_url . "%")->take(1);
             } else {
                 $oncpItem = CLItem::where("clitemsno", $request->clitemsno)->firstOrFail();
                 $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
             }
+
             /* Find clitem of current survey */
             $clitem = $vtiger->search($clitemQuery);
+
 
             if ($clitem->success === false || empty($clitem->result)) {
                 return response()->json("Item not found", 404);
@@ -151,12 +152,14 @@ class LSurveyController extends Controller
 
             if ($clitem->cf_1212 != $oncpItem->cf_1212) {
                 $task->updateCLItemFromImmcase($request);
-                $clitem = $vtiger->search($clitemQuery);
+                $clitem = $vtiger->search($clitemQuery)->result[0];
             }
 
+            $request->request->add(['clitemsno' => $clitem->clitemsno]);
+
+            $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
             $contact   = Contact::where('id', $clitem->cf_contacts_id)->firstOrFail();
             $case      = CPCase::where('id', $clitem->cf_1217)->firstOrFail();
-            $checklist = Checklist::where('id', $clitem->cf_1216)->firstOrFail();
 
             $request->request->add(['checklist_id' => $clitem->cf_1216]);
 
@@ -231,7 +234,6 @@ class LSurveyController extends Controller
                             $this->consoleWrite()->writeln("just here");
                         }
                         $obj = $vtiger->retrieve($clitem->id);
-
                         $this->consoleWrite()->writeln($obj->result->clitemsno);
 
                         $request->request->add(['cid'       => $contact->contact_no]);
@@ -240,53 +242,35 @@ class LSurveyController extends Controller
                         $request->request->add(['clitem'    => $clitem->clitemsno . '-' . $clitem->cf_1200]);
 
                         $files =  $docsTask->checkDocuments($request);
-                        $arrAsStr =  $files ? implode(', ', $files) : '';
 
+                        $succesStatus = false;
+                        $driveFilePath = '';
+                        $filePaths = [];
+                        $newFilePath =  str_replace(" ", "_", "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs");
+                        $driveTask = new ClitemController();
+                        $toDrive = $driveTask->putInDrive($newFilePath, $files[0]);
+                        $succesStatus = $toDrive[0];
+                        $driveFilePath = $toDrive[1];
 
-                        $obj->result->description = "File uploaded at: " . $now;
-                        $obj->result->cf_2370   = $arrAsStr; //set on metadata field
-                        $obj->result->cf_1214     = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs"; //GD Link
-                        $this->consoleWrite()->writeln("try to update");
-                        $vtiger->update($obj->result);
-                        $this->consoleWrite()->writeln("setted");
-                        sleep(8); // wait 12 seconds
+                        $filesUrls = $files[1];
 
-                        $obj2  = $vtiger->retrieve($clitem->id);
-                        return 200;
-                        //call destroller
-                        do {
-                            if ($obj2->result->cf_1578 === "Received") {
-                                $request->request->add(['checklist_id' => $checklist->checklistno]);
-                                $request->request->add(['clitemsno' => $clitem->clitemsno]);
-
-                                $updatedItem = $task->updateCLItemFromImmcase($request);
-                                $task->updateChecklistFromImmcase($request);
-
-                                if ($updatedItem->cf_2370 != '') {
-                                    $urls = explode(', ', $updatedItem->cf_2370);
-                                    foreach ($urls as  $url) {
-                                        $request->request->add(['file' => $url]);
-                                        $docsTask->destroy($request);
-                                    }
-                                }
-                            } else {
-                                sleep(3);
-                                $obj2  = $vtiger->retrieve($clitem->id);
-                            }
-                        } while ($obj2->result->cf_1578 != "Received");
-                        $received = true;
+                        $updatedItem =  $clitemTask->updateUploadedItem(
+                            $clitem->id,
+                            $succesStatus,
+                            $now,
+                            $driveFilePath,
+                            $newFilePath,
+                            $task,
+                            $docsTask,
+                            $filesUrls,
+                            $request
+                        );
+                        return $updatedItem;
                     }
-                }
-            } else {
-                if (env('APP_ENV') === 'local') {
-                    $this->consoleWrite()->writeln("Cant export");
                 }
             }
             // Release the session key
             $myJSONRPCClient->release_session_key($sSessionKey);
-            if (!$received) {
-                return 'failed';
-            }
             return 'success';
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['LSurveyController' => 'exportResponse']);
@@ -383,6 +367,8 @@ class LSurveyController extends Controller
         ];
     }
 
+
+
     /***
      * Downloads base64 encoded file
      *
@@ -410,12 +396,12 @@ class LSurveyController extends Controller
         header('Cache-Control: must-revalidate');
         header('Content-Length: ' . filesize($filepath));
         header('Content-Type: application/octet-stream');
-        //header('Content-Disposition: attachment; filename="' . $filename . '"');
-        //readfile($filepath);
-        // Deletes the temp file
-        /*  if (file_exists($filepath)) {
+        /* header('Content-Disposition: attachment; filename="' . $filename . '"');
+           readfile($filepath);
+           // Deletes the temp file
+           if (file_exists($filepath)) {
             unlink($filepath);
-        } */
+          }*/
     }
 
     /**
@@ -423,24 +409,35 @@ class LSurveyController extends Controller
      */
     public function onSubmit(Request $request, $id, $tkn, $ln)
     {
-        $link = "http://forms.gercanada.com/$id?token=$tkn";
-        // $link = "https://forms.gercanada.com/$id?token=$tkn&lang=$ln";
         try {
+            $link = "forms.gercanada.com/$id?token=$tkn";
+
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("Called onSubmit method ");
+            }
+
             $request->request->add(['survey_url' => $link]);
             $task = new LSurveyController();
-            return $task->exportResponse($request);
+            $exported = $task->exportResponse($request);
 
-            return 200;
-
-            return view('checklists.items.survey.done');
-            // return $exported;
+            if ($exported === 'Success') {
+                // return view('checklists.items.survey.done');
+                return redirect('/submittedsurvey');
+            }
+            return $exported;
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['LSurveyController' => 'onSubmit']);
         }
+    }
 
-        /*   http: //forms.gercanada.com/1000?token=H1AC0X6X6eanyYy&lang=en
+    public function submitted()
+    {
+        return view('checklists.items.survey.done');
+    }
+}
+
+
+/*   http: //forms.gercanada.com/1000?token=H1AC0X6X6eanyYy&lang=en
         http: //forms.gercanada.com/{SAVEDID}?token={TOKEN}&lang={LANG}
         https: //70b6-187-212-180-149.ngrok.io/submitsurvey/helplink/http://forms.gercanada.com/{SAVEDID}?token={TOKEN}&lang={LANG}
          https: //70b6-187-212-180-149.ngrok.io/submitsurvey/id{SAVEDID}/tkn/{TOKEN}/ln/{LANG} */
-    }
-}

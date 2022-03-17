@@ -841,7 +841,6 @@ export default {
                     file: file,
                 })
                 .then(function (response) {
-                     console.log(response);
                     if (response.data === "success") {
                         Swal.fire({
                             type: "success",
@@ -853,6 +852,7 @@ export default {
                     me.userFiles();
                 })
                 .catch(function (error) {
+                    console.log(error);
                     Swal.fire({
                         type: "error",
                         title: "Document not sent",
@@ -903,7 +903,6 @@ export default {
                 .post("/cl-item", { id: urlParams[4] })
                 .then(function (response) {
                     // console.table(response);
-
                     me.clitem = response.data[0];
                     me.caseObj = response.data[1];
                     me.checklistObj = response.data[2];
