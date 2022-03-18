@@ -163,11 +163,11 @@ class CLItemController extends Controller
             //Checklist
             $checklistQuery    = DB::table('Checklist')->select('*')->where("id", $clitem->cf_1216)->take(1);
             $checklist         = $vtiger->search($checklistQuery);
+
             if (!$checklist->success) {
                 return response()->json("Checklist not fount", 404);
             }
             $checklist         = $vtiger->search($checklistQuery)->result[0];
-
 
             //Contact
             $contactQuery    = DB::table('Contacts')->select('*')->where("id", $clitem->cf_contacts_id)->take(1);
@@ -192,14 +192,13 @@ class CLItemController extends Controller
             $request->request->add(['clitem'    => $clitem->clitemsno . '-' . $clitem->cf_1200]);
 
             $files =  $docsTask->checkDocuments($request);
-
             $newFilePath =  str_replace(" ", "_", "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs");
 
-            $succesStatus = false;
+            $succesStatus  = false;
             $driveFilePath = '';
 
-            $toDrive = self::putInDrive($newFilePath, $files[0]);
-            $succesStatus = $toDrive[0];
+            $toDrive       = self::putInDrive($newFilePath, $files[0]);
+            $succesStatus  = $toDrive[0];
             $driveFilePath = $toDrive[1];
 
             $filesUrls = $files[1];
@@ -380,17 +379,31 @@ class CLItemController extends Controller
     static function putInDrive($newFilePath, $files)
     {
         try {
-            $succesStatus = false;
+            $succesStatus  = false;
             $driveFilePath = '';
-            $filePaths = [];
+            $filePaths     = [];
+
             foreach ($files as $file) {
                 $ex = explode('/', $file);
                 $fileName = end($ex);
-                array_shift($ex);
-                array_shift($ex);
-                // return $ex;
+
+                if (env('APP_ENV') === 'local') {
+                    array_shift($ex);
+                    array_shift($ex);
+                } else {
+                    array_shift($ex);
+                    array_shift($ex);
+                    array_shift($ex);
+                }
+
                 $newFile = implode('/', $ex);
-                $content = Storage::disk('public')->get($newFile);
+
+                if (env('APP_ENV') === 'local') {
+                    $content = Storage::disk('public')->get($newFile);
+                } else {
+                    $content = Storage::get($newFile);
+                }
+
                 $drivePath = self::googleDrivePath($newFilePath);
                 $drivePathIds =  $drivePath[0];
                 $drivePathName =  $drivePath[1];
@@ -399,7 +412,6 @@ class CLItemController extends Controller
                 array_push($filePaths, $drivePathName . '/' . $fileName);
             }
             $driveFilePath = implode(', ', $filePaths);
-
             return [$succesStatus, $driveFilePath];
         } catch (Exception $e) {
             $thisIs = new Controller();
