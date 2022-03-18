@@ -701,6 +701,7 @@
                 </div>
             </template>
         </div>
+        
     </div>
 </template>
 
@@ -841,8 +842,6 @@ export default {
                     file: file,
                 })
                 .then(function (response) {
-                    console.table(response);
-                    console.log(response);
                     if (response.data === "success") {
                         Swal.fire({
                             type: "success",
@@ -854,7 +853,6 @@ export default {
                     me.userFiles();
                 })
                 .catch(function (error) {
-                     console.table(error);
                     console.log(error);
                     Swal.fire({
                         type: "error",
@@ -905,15 +903,13 @@ export default {
             axios
                 .post("/cl-item", { id: urlParams[4] })
                 .then(function (response) {
-                    // console.table(response);
                     me.clitem = response.data[0];
                     me.caseObj = response.data[1];
                     me.checklistObj = response.data[2];
                     me.survey = response.data[3];
-                    // console.log(me.survey);
+
                     if ("files" in me.clitem.files) {
                         me.clFiles = me.clitem.files.files;
-                        //console.log(me.clFiles);
                     }
                 })
                 .catch(function (error) {
@@ -987,7 +983,6 @@ export default {
                         showConfirmButton: false,
                     });
                     console.log(error);
-                    // console.log( error);
                 })
                 .finally(() => (this.loading = false));
         },

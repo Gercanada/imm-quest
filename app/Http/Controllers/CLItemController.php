@@ -192,7 +192,8 @@ class CLItemController extends Controller
             $request->request->add(['clitem'    => $clitem->clitemsno . '-' . $clitem->cf_1200]);
 
             $files =  $docsTask->checkDocuments($request);
-            $newFilePath =  str_replace(" ", "_", "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs");
+            
+            $newFilePath = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs";
 
             $succesStatus  = false;
             $driveFilePath = '';
@@ -462,12 +463,12 @@ class CLItemController extends Controller
                     $obj->result->description = "File uploaded at: " . $now;
                     $obj->result->cf_1898     = $driveFilePath;
                     $obj->result->cf_1214     = $newFilePath; //GD Link
-                    $obj->result->cf_1578     = 'Received'; //GD Link
+                    $obj->result->cf_1578     = "Received"; //GD Link
+
                     $vtiger->update($obj->result);
                     return goNext($vtiger, $clitem, $task, $request,  $filesUrls,  $docsTask);
                 }
             }
-            // return $updatedItem;
         } catch (Exception $e) {
             $thisIs = new Controller();
             return $thisIs->returnJsonError($e, ['CLItemController' => 'updateUploadedItem']);

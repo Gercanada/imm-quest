@@ -3591,6 +3591,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 var urlParams = window.location.pathname.split("/");
@@ -3751,9 +3752,6 @@ var urlParams = window.location.pathname.split("/");
         clitemsno: clitemsno,
         file: file
       }).then(function (response) {
-        console.table(response);
-        console.log(response);
-
         if (response.data === "success") {
           Swal.fire({
             type: "success",
@@ -3765,7 +3763,6 @@ var urlParams = window.location.pathname.split("/");
 
         me.userFiles();
       })["catch"](function (error) {
-        console.table(error);
         console.log(error);
         Swal.fire({
           type: "error",
@@ -3817,14 +3814,13 @@ var urlParams = window.location.pathname.split("/");
       axios.post("/cl-item", {
         id: urlParams[4]
       }).then(function (response) {
-        // console.table(response);
         me.clitem = response.data[0];
         me.caseObj = response.data[1];
         me.checklistObj = response.data[2];
-        me.survey = response.data[3]; // console.log(me.survey);
+        me.survey = response.data[3];
 
         if ("files" in me.clitem.files) {
-          me.clFiles = me.clitem.files.files; //console.log(me.clFiles);
+          me.clFiles = me.clitem.files.files;
         }
       })["catch"](function (error) {
         console.log(error);
@@ -3898,7 +3894,7 @@ var urlParams = window.location.pathname.split("/");
           timer: 2000,
           showConfirmButton: false
         });
-        console.log(error); // console.log( error);
+        console.log(error);
       })["finally"](function () {
         return _this4.loading = false;
       });
