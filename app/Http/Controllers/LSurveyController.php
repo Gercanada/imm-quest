@@ -81,7 +81,6 @@ class LSurveyController extends Controller
                     $newToken[0]['language']
                 );
                 // }
-                // return $surveyValues;
 
                 $clitemQuery = DB::table('CLItems')->select('*')->where("clitemsno", $request->clitemsno)->take(1);
                 $clitem = $vtiger->search($clitemQuery);
@@ -92,7 +91,6 @@ class LSurveyController extends Controller
                     $obj->result->cf_1212 = $limeConnection['lime_connection']['LS_BASEURL'] . '/' . $surveyValues[0] . "?token=" . $surveyValues[1] . "&lang=" .  "en"; //help link
                     $obj->result->cf_acf_rtf_1208 = "This clitem is a questionaire";
                     $vtiger->update($obj->result);
-                    //return [$clitem, $obj];
                     $task->updateCLItemFromImmcase($request);
                     $request->request->add(['checklist_id' => $obj->result->cf_1216]);  // Add value to request
                     $task->updateChecklistFromImmcase($request); //checklist of clitem be updated
@@ -100,10 +98,8 @@ class LSurveyController extends Controller
                 // Release the session key
                 $myJSONRPCClient->release_session_key($sSessionKey);
                 return response()->json(["success" => "Gest sent !"]);
-                //return response()->json(["success" => $surveyValues]);
             }
         } catch (Exception $e) {
-            // return $e;
             return $this->returnJsonError($e, ['LSurveyController' => 'guestToSurvey']);
         }
     }
@@ -237,7 +233,7 @@ class LSurveyController extends Controller
                         $succesStatus = false;
                         $driveFilePath = '';
                         $filePaths = [];
-                        $newFilePath =  str_replace(" ", "_", "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs");
+                        $newFilePath =  "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs";
                         $driveTask = new ClitemController();
                         $toDrive = $driveTask->putInDrive($newFilePath, $files[0]);
                         $succesStatus = $toDrive[0];
