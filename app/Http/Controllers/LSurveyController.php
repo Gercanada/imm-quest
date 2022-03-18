@@ -246,6 +246,7 @@ class LSurveyController extends Controller
                         $filesUrls = $files[1];
 
                         $updatedItem =  $clitemTask->updateUploadedItem(
+                            $vtiger,
                             $clitem->id,
                             $succesStatus,
                             $now,

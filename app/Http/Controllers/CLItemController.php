@@ -204,6 +204,7 @@ class CLItemController extends Controller
             $filesUrls = $files[1];
 
             $updatedItem =  $clitemTask->updateUploadedItem(
+                $vtiger,
                 $clitem->id,
                 $succesStatus,
                 $now,
@@ -218,7 +219,6 @@ class CLItemController extends Controller
             return $updatedItem;
             return response()->json("success", 200);
         } catch (Exception $e) {
-            return $e;
             return $this->returnJsonError($e, ['CLItemController' => 'sendDocumentToImmcase']);
         }
     }
@@ -354,16 +354,6 @@ class CLItemController extends Controller
             }
 
             foreach ($directoryArr as $key => $dir) {
-
-                return [
-                    env('FILESYSTEM_CLOUD'),
-                    env('GOOGLE_DRIVE_CLIENT_ID'),
-                    env('GOOGLE_DRIVE_CLIENT_SECRET'),
-                    env('GOOGLE_DRIVE_REFRESH_TOKEN'),
-                    env('GOOGLE_DRIVE_FOLDER_ID')
-                ];
-
-
                 $contents = collect(Storage::disk('google')->listContents($nextPathBase, 0))->where('type', 'dir')->whereIn('name', $dir)->first(); //get all(recursive on true) root contents (of assigned folder)
                 if ($contents) {
                     array_push($nextPathArr, $contents['basename']);
@@ -432,6 +422,7 @@ class CLItemController extends Controller
     }
 
     static function updateUploadedItem(
+        $vtiger,
         $clitem,
         $succesStatus,
         $now,
@@ -443,33 +434,39 @@ class CLItemController extends Controller
         Request $request
     ) {
         try {
-            $vtiger    = new Vtiger();
             $obj = $vtiger->retrieve($clitem);
-            $updatedItem = null;
-            if ($succesStatus) {
-                $obj->result->description = "File uploaded at: " . $now;
-                $obj->result->cf_1898     = $driveFilePath;
-                $obj->result->cf_1214     = $newFilePath; //GD Link
-                $obj->result->cf_1578     = 'Received'; //GD Link
-                $vtiger->update($obj->result);
-                sleep(3);
-            }
-            $obj2  = $vtiger->retrieve($clitem);
-            do {
-                if ($obj2->result->cf_1578 === "Received") {
-                    $updatedItem = $task->updateCLItemFromImmcase($request);
-                    $task->updateChecklistFromImmcase($request);
-                    $urls =  $filesUrls;
-                    foreach ($urls as  $url) {
-                        $request->request->add(['file' => $url]);
-                        $docsTask->destroy($request);
+
+            function goNext($vtiger, $clitem, $task, $request,  $filesUrls,  $docsTask)
+            {
+                $obj2  = $vtiger->retrieve($clitem);
+                do {
+                    if ($obj2->result->cf_1578 === "Received") {
+                        $task->updateCLItemFromImmcase($request);
+                        $task->updateChecklistFromImmcase($request);
+                        $urls =  $filesUrls;
+                        foreach ($urls as  $url) {
+                            $request->request->add(['file' => $url]);
+                            $docsTask->destroy($request);
+                        }
+                    } else {
+                        sleep(3);
+                        $obj2  = $vtiger->retrieve($clitem);
                     }
-                } else {
-                    sleep(3);
-                    $obj2  = $vtiger->retrieve($clitem->id);
+                } while ($obj2->result->cf_1578 != "Received");
+                return 'Success';
+                // return "here go";
+            }
+
+            if ($succesStatus) {
+                if (set_time_limit(5)) {
+                    $obj->result->description = "File uploaded at: " . $now;
+                    $obj->result->cf_1898     = $driveFilePath;
+                    $obj->result->cf_1214     = $newFilePath; //GD Link
+                    $obj->result->cf_1578     = 'Received'; //GD Link
+                    $vtiger->update($obj->result);
+                    return goNext($vtiger, $clitem, $task, $request,  $filesUrls,  $docsTask);
                 }
-            } while ($obj2->result->cf_1578 != "Received");
-            return 'Success';
+            }
             // return $updatedItem;
         } catch (Exception $e) {
             $thisIs = new Controller();

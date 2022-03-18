@@ -645,6 +645,7 @@ class CloneDBController extends Controller
             if (!$clitem->success === true) {
                 return response()->json("Item not fount", 404);
             }
+            
             $clitem = $clitem->result[0];
             $description = $vtiger->describe('CLItems');
 
