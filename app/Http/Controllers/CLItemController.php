@@ -354,6 +354,16 @@ class CLItemController extends Controller
             }
 
             foreach ($directoryArr as $key => $dir) {
+
+                return [
+                    env('FILESYSTEM_CLOUD'),
+                    env('GOOGLE_DRIVE_CLIENT_ID'),
+                    env('GOOGLE_DRIVE_CLIENT_SECRET'),
+                    env('GOOGLE_DRIVE_REFRESH_TOKEN'),
+                    env('GOOGLE_DRIVE_FOLDER_ID')
+                ];
+
+
                 $contents = collect(Storage::disk('google')->listContents($nextPathBase, 0))->where('type', 'dir')->whereIn('name', $dir)->first(); //get all(recursive on true) root contents (of assigned folder)
                 if ($contents) {
                     array_push($nextPathArr, $contents['basename']);
@@ -409,6 +419,8 @@ class CLItemController extends Controller
                 $drivePathName =  $drivePath[1];
                 Storage::disk('google')->put($drivePathIds . '/' . $fileName, $content);
                 $succesStatus = true;
+
+
                 array_push($filePaths, $drivePathName . '/' . $fileName);
             }
             $driveFilePath = implode(', ', $filePaths);
