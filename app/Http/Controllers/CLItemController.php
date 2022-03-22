@@ -192,7 +192,7 @@ class CLItemController extends Controller
             $request->request->add(['clitem'    => $clitem->clitemsno . '-' . $clitem->cf_1200]);
 
             $files =  $docsTask->checkDocuments($request);
-            
+
             $newFilePath = "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs";
 
             $succesStatus  = false;
@@ -287,51 +287,18 @@ class CLItemController extends Controller
     public function upToGoogleDrive($files, $directory)
     {
         try {
-            $nextPathName  = '/';
-            $nextPathBase = '/';
-            $directoryArr = [];
-            $nextPathArr  = [];
-            $nextNameArr  = [];
-
-            if (!is_array($files)) {
-                $files = [$files];
-            }
-
-            $explodedDir = explode('/', $directory);
-
-            foreach ($explodedDir as $dir) {
-                array_push($directoryArr,  $dir);  //to create newq dir
-            }
-
-
-            foreach ($directoryArr as $key => $dir) {
-                $contents = collect(Storage::disk('google')->listContents($nextPathBase, 0))->where('type', 'dir')->whereIn('name', $dir)->first(); //get all(recursive on true) root contents (of assigned folder)
-                if ($contents) {
-                    array_push($nextPathArr, $contents['basename']);
-                    array_push($nextNameArr, $contents['name']);
-                    $nextPathName =  implode('/', $nextNameArr);
-                    $nextPathBase =  implode('/', $nextPathArr);
-                } else {
-                    Storage::disk('google')->makeDirectory($nextPathBase . '/' . $dir);
-                    $contents2 = collect(Storage::disk('google')->listContents($nextPathBase, 0))->where('type', 'dir')->whereIn('name', $dir)->first();
-                    array_push($nextPathArr, $contents2['basename']);
-                    array_push($nextNameArr, $contents2['name']);
-                    $nextPathName =  implode('/', $nextNameArr);
-                    $nextPathBase =  implode('/', $nextPathArr);
-                }
-            }
-            $results = [];
+            $results   = [];
+            $drivePath =  self::googleDrivePath($directory);
             foreach ($files as $file) {
                 $filename = $file->getClientOriginalName();
                 $filename = str_replace(' ', '', $filename);
                 $filename = str_replace('-', '_', $filename);
-
                 $file->storeAs(
-                    env('GOOGLE_DRIVE_FOLDER_ID') . $nextPathBase,
+                    env('GOOGLE_DRIVE_FOLDER_ID') . $drivePath[0],
                     $filename,
                     'google',
                 );
-                array_push($results, $nextPathName . '/' . $filename);
+                array_push($results, $drivePath[1] . '/' . $filename);
             }
             return "Stored in " . implode(', ', $results);
         } catch (Exception $e) {
@@ -342,7 +309,7 @@ class CLItemController extends Controller
     static function googleDrivePath($directory)
     {
         try {
-            $nextPathName  = '/';
+            $nextPathName = '/';
             $nextPathBase = '/';
             $directoryArr = [];
             $nextPathArr  = [];
@@ -410,8 +377,6 @@ class CLItemController extends Controller
                 $drivePathName =  $drivePath[1];
                 Storage::disk('google')->put($drivePathIds . '/' . $fileName, $content);
                 $succesStatus = true;
-
-
                 array_push($filePaths, $drivePathName . '/' . $fileName);
             }
             $driveFilePath = implode(', ', $filePaths);
@@ -455,7 +420,6 @@ class CLItemController extends Controller
                     }
                 } while ($obj2->result->cf_1578 != "Received");
                 return 'Success';
-                // return "here go";
             }
 
             if ($succesStatus) {

@@ -32,6 +32,7 @@ Vue.component('commboard-component', require('./components/CommboardComponent.vu
 Vue.component('sync-cp-component', require('./components/SyncCPImmcase.vue').default);
 Vue.component('checklist-component', require('./components/ChecklistComponent.vue').default);
 Vue.component('iframesurvey-component', require('./components/IframeSurveyComponent.vue').default);
+Vue.component('portal-menu', require('./components/PortalAdmin.vue').default);
 // Vue.component('send-command-component',   require('./components/SendCommandComponent.vue').default);
 
 /**

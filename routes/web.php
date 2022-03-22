@@ -16,6 +16,7 @@ use App\Http\Controllers\CommboardController;
 use App\Http\Controllers\VtigerController;
 use App\Http\Controllers\LSurveyController;
 use App\Http\Controllers\CloneDBController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,14 @@ Auth::routes();
 
 Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
     //vtiger
+    Route::get('/admin', [AdminController::class, 'index']);
+    Route::get('/admin/types', [AdminController::class, 'getTypes']);
+    Route::post('/admin/types/describe', [AdminController::class, 'describeType']);
+    Route::post('/admin/types/save', [AdminController::class, 'saveRelation']);
+
+
+
+
     Route::get('/vtiger/describe/types/{user_id}', [VtigerController::class, "types"]);
     Route::get('/vtiger/list/{type}/{where}',      [VtigerController::class, 'goType']);
     //Route::get('/imm/contacts',                  [UserController::class, 'listVTUsers']);

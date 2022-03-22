@@ -326,7 +326,6 @@ class LSurveyController extends Controller
         }
 
         return  $surveyResponses;
-        // return [$clitem, $surveyResponses];
     }
 
     /**
