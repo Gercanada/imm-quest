@@ -5472,6 +5472,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5492,52 +5493,13 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       me.loading = true;
       axios.get("/admin/types").then(function (response) {
-        console.log(response.data[1]);
-        me.current_relations = response.data[1];
-        var typesArr = [];
-        var enableds = [];
-        var vtTypes = response.data[0];
-        var current_relations = response.data[1];
-        current_relations.forEach(function (element) {
-          enableds.push({
-            type: element.type,
-            field: element.user_field
-          });
-        }); // console.log(enableds);
-
-        vtTypes.forEach(function (type) {
-          var found = enableds.find(function (post, index) {
-            if (post.type == type) {
-              return true;
-            }
-          });
-
-          if (found) {
-            /* console.log(found);
-            console.log(found.field); */
-            typesArr.push([{
-              type: type
-            }, {
-              field: found.field
-            }]);
-          } else {
-            typesArr.push([{
-              type: type
-            }, null]);
-          }
-        }); // console.log(typesArr);
-
-        typesArr.forEach(function (type) {
-          me.types.push(type); // me.types.push(type[0]["type"]);
-        });
+        console.log(response.data);
+        me.types = response.data;
       })["catch"](function (error) {
-        console.table(error); // console.log(error);
+        console.table(error);
       })["finally"](function () {
         return _this.loading = false;
       });
-    },
-    event: function event() {
-      console.log("Correctus");
     },
     updateBox: function updateBox(e) {
       var opt = e.target.value;
@@ -5577,17 +5539,6 @@ __webpack_require__.r(__webpack_exports__);
           .catch(function (error) {
               console.log(error);
           }); */
-    },
-    describeType: function describeType(type) {
-      var me = this;
-      axios.post("admin/types/describe", {
-        type: type
-      }).then(function (response) {
-        console.log(response);
-        me.fields = response.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
     }
   }
 });
@@ -27798,92 +27749,96 @@ var render = function () {
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
                 _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.types, function (type) {
-                        return _c("tr", [
-                          _c("td", [
-                            _c("div", { staticClass: "col-md-3" }, [
-                              _c("input", {
-                                staticClass:
-                                  "\n                                                    material-inputs\n                                                    filled-in\n                                                    chk-col-light-green\n                                                ",
-                                attrs: {
-                                  type: "checkbox",
-                                  id: "md_checkbox_31",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                { attrs: { for: "md_checkbox_31" } },
-                                [_vm._v(_vm._s(type[0].type))]
-                              ),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "select",
-                              {
-                                staticClass:
-                                  "\n                                                select2\n                                                form-control\n                                                custom-select\n                                            ",
-                                staticStyle: { width: "100%", height: "36px" },
-                                attrs: { id: type[0].type },
-                                domProps: { value: type[0].type },
-                                on: {
-                                  focus: function ($event) {
-                                    return _vm.describeType(type[0].type)
-                                  },
-                                  change: _vm.updateBox,
-                                },
-                              },
-                              [
-                                _c("option", [_vm._v("Select")]),
+                  _c(
+                    "table",
+                    {
+                      staticClass:
+                        "\n                                table\n                                dt_alt_pagination\n                                table-striped table-bordered\n                                display\n                            ",
+                      staticStyle: { width: "100%" },
+                    },
+                    [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.types, function (type) {
+                          return _c("tr", [
+                            _c("td", [
+                              _c("div", { staticClass: "col-md-3" }, [
+                                _c("input", {
+                                  staticClass:
+                                    "\n                                                    material-inputs\n                                                    filled-in\n                                                    chk-col-light-green\n                                                ",
+                                  attrs: { type: "checkbox", id: type },
+                                }),
                                 _vm._v(" "),
-                                _vm._l(_vm.fields, function (field) {
-                                  return _c(
-                                    "optgroup",
-                                    {
-                                      attrs: {
-                                        value: field.name,
-                                        label: field.name,
+                                _c("label", { attrs: { for: type.type } }, [
+                                  _vm._v(
+                                    "\n                                                " +
+                                      _vm._s(type.type) +
+                                      "\n                                            "
+                                  ),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "select",
+                                {
+                                  staticClass:
+                                    "\n                                                select2\n                                                form-control\n                                                custom-select\n                                            ",
+                                  staticStyle: {
+                                    width: "100%",
+                                    height: "36px",
+                                  },
+                                  attrs: { id: type[0] },
+                                  domProps: { value: type[0] },
+                                  on: { change: _vm.updateBox },
+                                },
+                                [
+                                  _c("option", [_vm._v("Select")]),
+                                  _vm._v(" "),
+                                  _vm._l(type.fields, function (field) {
+                                    return _c(
+                                      "optgroup",
+                                      {
+                                        attrs: {
+                                          value: field.label,
+                                          label: field.label,
+                                        },
                                       },
-                                    },
-                                    [
-                                      _c(
-                                        "option",
-                                        {
-                                          domProps: {
-                                            value: [type[0].type, field.label],
-                                            selected:
-                                              field.selected == true
+                                      [
+                                        _c(
+                                          "option",
+                                          {
+                                            domProps: {
+                                              value: [type.type, field.name],
+                                              selected: field.selected
                                                 ? true
                                                 : false,
+                                            },
                                           },
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(field.name) +
-                                              "\n                                                "
-                                          ),
-                                        ]
-                                      ),
-                                    ]
-                                  )
-                                }),
-                              ],
-                              2
-                            ),
-                          ]),
-                        ])
-                      }),
-                      0
-                    ),
-                  ]),
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(field.name) +
+                                                "\n                                                "
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    )
+                                  }),
+                                ],
+                                2
+                              ),
+                            ]),
+                          ])
+                        }),
+                        0
+                      ),
+                    ]
+                  ),
                 ]),
               ]),
             ]),
@@ -27932,8 +27887,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Types")]),
         _vm._v(" "),
         _c("th", [_vm._v("User relation field")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Save")]),
       ]),
     ])
   },
