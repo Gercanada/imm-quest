@@ -24,12 +24,12 @@ class Controller extends BaseController
     {
         $newArr = [];
         if (env('APP_ENV') === 'local') {
-            // $this->consoleWrite()->writeln("!! ERROR $onMethod[0] -> $onMethod[1]");
+            $this->consoleWrite()->writeln("!! ERROR $onMethod[0] -> $onMethod[1]");
             $this->consoleWrite()->writeln($e->getMessage());
             $this->consoleWrite()->writeln($e);
             array_push($newArr, $onMethod, [
                 'message' => $e->getMessage(),
-                'details'=>$e
+                'details' => $e
             ]);
             return response()->json(['error' => $newArr], 500);
         } else {

@@ -645,7 +645,7 @@ class CloneDBController extends Controller
             if (!$clitem->success === true) {
                 return response()->json("Item not fount", 404);
             }
-            
+
             $clitem = $clitem->result[0];
             $description = $vtiger->describe('CLItems');
 
@@ -683,6 +683,107 @@ class CloneDBController extends Controller
             return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);
         }
     }
+
+    /**
+     * It function be called by cp user as web route. It be update on cp db all data of current user as exists on immcase
+     */
+    public function syncData(Request $request)
+    {
+        try {
+            // echo("ok ox");
+            set_time_limit(120);
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("Starting sync");
+            }
+            $user = Auth::user();
+            $task = new CloneDBController();
+            if (!$user) {
+                return 404;
+            }
+            $request->request->add(['contact_no' => $user->vtiger_contact_id]);
+            $task->cloneImmcaseContactData($request);
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("Data cloned");
+            }
+            $task->updateOnImmcase($request);
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("Updated fom cp on vt");
+            }
+            $task->clearTrashByAuth();
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("Trash cleared");
+            }
+            return response()->json('success', 200);
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['CloneDBController' => 'syncData']);
+        }
+    }
+
+
+    /**
+     * It function be called as vt workflow when a record is deleted on vtiger. If an record is deleted on immcase be deleted from customers portal also
+     * @param (req : {type, id}) 
+     */
+    public function bedoreDeletedOnVt(Request $request)
+    {
+        try {
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("go bedoreDeletedOnVt");
+                $this->consoleWrite()->writeln($request);
+            }
+            DB::table("vt_$request->type")->where('id', $request->prefix_id . 'x' . $request->id)->delete();
+            return response()->json("$request->type with id $request->id  deleted on customers portal");
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['CloneDBController' => 'bedoreDeletedOnVt']);
+        }
+    }
+
+    public function cloneSingleType(Request $request)
+    {
+        try {
+            $vtiger = new Vtiger();
+            $type = $request->type;
+            $prefix_id = $request->prefix_id;
+            $id = $request->id;
+            $contactField = $request->contact_field;
+
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("go cloneSingleType");
+                $this->consoleWrite()->writeln($request);
+            }
+
+
+            $vtQuery  = DB::table($type)->select('*')->where("id", $prefix_id . 'x' . $id)->take(1);
+            $vtObj =  $vtiger->search($vtQuery);
+
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("Here 1");
+            }
+
+            if (!$vtObj->success === true) {
+                return response()->json("Item not fount", 404);
+            }
+
+            $vtObj = $vtObj->result[0];
+            $description = $vtiger->describe($type);
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln("Here 2 $contactField");
+                $this->consoleWrite()->writeln("Where id is " . $prefix_id . 'x' . $id);
+                $this->consoleWrite()->writeln(DB::table("vt_$type")->select($contactField)->where('id', '=', $prefix_id . 'x' . $id)->toSql());
+            }
+            $contactFieldForType = DB::table("vt_$type")->select("$contactField")->where('id',  $prefix_id . 'x' . $id)->first();
+            $contact = Contact::where("id", $contactFieldForType->$contactField)->firstOrFail();
+            self::getData($vtQuery, $description->result->fields, $contact, $contactField, $description->result->name);
+
+            if (env('APP_ENV') === 'local') {
+                $this->consoleWrite()->writeln('updated success');
+            }
+            return response()->json("$type with id $id created also on CP");
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);
+        }
+    }
+
 
     static function prepareStrConvertion($val)
     {
@@ -780,29 +881,6 @@ class CloneDBController extends Controller
                     return  $attr;
                 }
             }
-        }
-    }
-
-
-    /**
-     * It function be called by cp user as web route. It be update on cp db all data of current user as exists on immcase
-     */
-    public function syncData(Request $request)
-    {
-        try {
-            set_time_limit(120);
-            $user = Auth::user();
-            $task = new CloneDBController();
-            if (!$user) {
-                return 404;
-            }
-            $request->request->add(['contact_no' => $user->vtiger_contact_id]);
-            $task->cloneImmcaseContactData($request);
-            $task->updateOnImmcase($request);
-            $task->clearTrashByAuth();
-            return response()->json('success', 200);
-        } catch (Exception $e) {
-            return $this->returnJsonError($e, ['CloneDBController' => 'syncData']);
         }
     }
 }
