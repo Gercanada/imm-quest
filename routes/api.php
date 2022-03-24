@@ -53,7 +53,7 @@ Route::middleware('imm-header')->group(function () {
     Route::post('/clear_trash',                    [CloneDBController::class, 'clearTrashDB']);
     // Route::post('/update_checklist',               [CloneDBController::class, 'updateChecklistFromImmcase']);
     // Route::post('/update_clitem',                  [CloneDBController::class, 'updateCLItemFromImmcase']);
-    Route::post('/vtiger/before_deleted',                  [CloneDBController::class, 'bedoreDeletedOnVt']);
+    Route::post('/vtiger/before_deleted',                  [CloneDBController::class, 'beforeDeletedOnVt']);
     Route::post('/vtiger/clone_single',                  [CloneDBController::class, 'cloneSingleType']);
     //Lime survey
     Route::post('/questionaries/guest',            [LSurveyController::class, 'guestToSurvey']); //tri not middleware

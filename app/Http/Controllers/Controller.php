@@ -24,7 +24,7 @@ class Controller extends BaseController
     {
         $newArr = [];
         if (env('APP_ENV') === 'local') {
-            $this->consoleWrite()->writeln("!! ERROR $onMethod[0] -> $onMethod[1]");
+            // $this->consoleWrite()->writeln("!! ERROR implode(',', $onMethod)");
             $this->consoleWrite()->writeln($e->getMessage());
             $this->consoleWrite()->writeln($e);
             array_push($newArr, $onMethod, [

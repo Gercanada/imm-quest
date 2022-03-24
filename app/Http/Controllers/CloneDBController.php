@@ -724,17 +724,27 @@ class CloneDBController extends Controller
      * It function be called as vt workflow when a record is deleted on vtiger. If an record is deleted on immcase be deleted from customers portal also
      * @param (req : {type, id}) 
      */
-    public function bedoreDeletedOnVt(Request $request)
+    public function beforeDeletedOnVt(Request $request)
     {
         try {
             if (env('APP_ENV') === 'local') {
-                $this->consoleWrite()->writeln("go bedoreDeletedOnVt");
+                $this->consoleWrite()->writeln("go beforeDeletedOnVt");
                 $this->consoleWrite()->writeln($request);
             }
+            $message = [];
+
+            if ($request->type === 'Contacts') {
+                $contact = DB::table("vt_Contacts")->select('contact_no')->where('id', $request->prefix_id . 'x' . $request->id)->first();
+                User::where('vtiger_contact_id', $contact->contact_no)->delete();
+                array_push($message, 'User deleted');
+            }
             DB::table("vt_$request->type")->where('id', $request->prefix_id . 'x' . $request->id)->delete();
-            return response()->json("$request->type with id $request->id  deleted on customers portal");
+            array_push($message, "$request->type with id $request->id  deleted");
+            $message = implode(', ', $message);
+
+            return response()->json("$message on customers portal");
         } catch (Exception $e) {
-            return $this->returnJsonError($e, ['CloneDBController' => 'bedoreDeletedOnVt']);
+            return $this->returnJsonError($e, ['CloneDBController' => 'beforeDeletedOnVt']);
         }
     }
 
