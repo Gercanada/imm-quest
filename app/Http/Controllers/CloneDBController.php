@@ -732,7 +732,6 @@ class CloneDBController extends Controller
                 $this->consoleWrite()->writeln($request);
             }
             $message = [];
-
             if ($request->type === 'Contacts') {
                 $contact = DB::table("vt_Contacts")->select('contact_no')->where('id', $request->prefix_id . 'x' . $request->id)->first();
                 User::where('vtiger_contact_id', $contact->contact_no)->delete();
