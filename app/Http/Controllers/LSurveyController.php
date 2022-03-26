@@ -109,7 +109,7 @@ class LSurveyController extends Controller
      * it checks if a survey of clitem was answered
      * if true, the clitem be updated (inly takes submitdate for this case)
      */
-    public function exportResponse(Request $request)
+    public function exportResponse(Request $request) //when is clitem
     {
         try {
             $vtiger      = new Vtiger();
@@ -124,9 +124,43 @@ class LSurveyController extends Controller
                 $this->consoleWrite()->write($request);
             }
 
+            function exportSurvey($myJSONRPCClient, $sSessionKey, $iSurveyID, $sToken)
+            {
+                $exportSurvey = $myJSONRPCClient->export_responses_by_token( //as json
+                    $sSessionKey,
+                    $iSurveyID,
+                    $sDocumentType = 'json',
+                    $sToken,
+                    $sLanguageCode = null,
+                    $sCompletionStatus = 'complete',
+                    $sHeadingType = null,
+                    $sResponseType = 'short',
+                    $aFields = null
+                );
+
+                $exportSurveyAsPDF = $myJSONRPCClient->export_responses_by_token( //as pdf
+                    $sSessionKey,
+                    $iSurveyID,
+                    $sDocumentType = 'pdf',
+                    $sToken,
+                    $sLanguageCode = null,
+                    $sCompletionStatus = 'complete',
+                    $sHeadingType = 'full',
+                    $sResponseType = 'long',
+                    $aFields = null
+                );
+
+                return [$exportSurvey, $exportSurveyAsPDF];
+            }
+
             if ($request->form != 'vue') {
                 $request->form = '';
             }
+
+            /* if (!str_contains($request->survey_url, '573761')) { //If survey url is imm profile
+                // $exportedSurvey = exportSurvey($myJSONRPCClient, $sSessionKey, $iSurveyID, $sToken);
+            }*/
+
             if ($request->survey_url) {
                 $oncpItem = CLItem::where("cf_1212", "like", "%" . $request->survey_url . "%")->firstOrFail();
                 $clitemQuery = DB::table('CLItems')->select('*')->where("cf_1212", "like", "%" . $request->survey_url . "%")->take(1);
@@ -137,8 +171,6 @@ class LSurveyController extends Controller
 
             /* Find clitem of current survey */
             $clitem = $vtiger->search($clitemQuery);
-
-
             if ($clitem->success === false || empty($clitem->result)) {
                 return response()->json("Item not found", 404);
             } else {
@@ -168,11 +200,16 @@ class LSurveyController extends Controller
 
             $limeConnection = self::connectLime(); //Start limesurvey session
 
-
             $myJSONRPCClient = $limeConnection['myJSONRPCClient'];
             $sSessionKey = $limeConnection['sessionKey'];
 
-            $exportSurvey = $myJSONRPCClient->export_responses_by_token( //as json
+
+            $exportedSurvey = exportSurvey($myJSONRPCClient, $sSessionKey, $iSurveyID, $sToken);
+
+            $exportSurvey = $exportedSurvey[0];
+            $exportSurveyAsPDF = $exportedSurvey[0];
+
+            /*  $exportSurvey = $myJSONRPCClient->export_responses_by_token( //as json
                 $sSessionKey,
                 $iSurveyID,
                 $sDocumentType = 'json',
@@ -194,7 +231,7 @@ class LSurveyController extends Controller
                 $sHeadingType = 'full',
                 $sResponseType = 'long',
                 $aFields = null
-            );
+            ); */
 
             $natdirectory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
             $directory = str_replace(" ", "_", $natdirectory);
@@ -324,7 +361,6 @@ class LSurveyController extends Controller
             $surveyResults = json_decode(base64_decode($exportSurvey));
             $surveyResponses =  $surveyResults->responses;
         }
-
         return  $surveyResponses;
     }
 
@@ -394,13 +430,18 @@ class LSurveyController extends Controller
     /**
      * It method be automatic called at sbmit a survey by an participant
      */
-    public function onSubmit(Request $request, $id, $tkn, $ln)
+    public function onSubmit(Request $request, $id, $tkn,  $ln)
     {
         try {
+
             $link = "forms.gercanada.com/$id?token=$tkn";
+            // /submitsurvey/id/{id}/response/{SAVEDID}/lan/{ln}
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln("Called onSubmit method ");
             }
+
+            /*  if ($id === '573761') { //IMM profile survey
+            } */
 
             $request->request->add(['survey_url' => $link]);
             $task = new LSurveyController();
@@ -418,7 +459,103 @@ class LSurveyController extends Controller
 
     public function submitted()
     {
+        return redirect('https://www.gercanada.com');
         return view('checklists.items.survey.done');
+    }
+
+    //Submit without token
+
+
+    /**
+     *It be called wen survey without  token be submitted. for example imm profile.
+     */
+    public function submitByResponse(Request $request, $id, $submitted_id, $ln)
+    {
+        try {
+            // return $submitted_id;
+            $now = Carbon::now()->format('y/m/d H:i:s');
+
+            $limeConnection = self::connectLime(); //Start limesurvey session
+
+
+            $myJSONRPCClient = $limeConnection['myJSONRPCClient'];
+            $sSessionKey = $limeConnection['sessionKey'];
+            $iSurveyID = $id;
+            $iFromResponseID = $submitted_id;
+            $iToResponseID = $submitted_id;
+
+            $exportSurveyAsJson = $myJSONRPCClient->export_responses( //as Json
+                $sSessionKey,
+                $iSurveyID,
+                $sDocumentType = 'json',
+                $sLanguageCode = null,
+                $sCompletionStatus = 'all',
+                $sHeadingType = 'code',
+                $sResponseType = 'long',
+                $iFromResponseID,
+                $iToResponseID,
+                $aFields = null
+
+            );
+            $surveyJsonResults = json_decode(base64_decode($exportSurveyAsJson));
+
+
+
+            // return $docName;
+            /*  return response()->json([$surveyJsonResults, [
+                $iFromResponseID,
+                $iToResponseID
+            ]]);
+ */
+            $exportSurveyAsPDF = $myJSONRPCClient->export_responses( //as pdf
+                $sSessionKey,
+                $iSurveyID,
+                $sDocumentType = 'pdf',
+                $sLanguageCode = null,
+                $sCompletionStatus = 'all',
+                $sHeadingType = 'full',
+                $sResponseType = 'long',
+                $iFromResponseID,
+                $iToResponseID,
+                $aFields = null
+            );
+
+
+            $docName = ($surveyJsonResults->responses[0]->datestamp ?: $now)
+                . ' '
+                . ($surveyJsonResults->responses[0]->G1Q00001 ?: '')
+                . ' '
+                . ($surveyJsonResults->responses[0]->G1Q00002 ?: '');
+
+            $directory = "/immprofiles/any";
+            $file = str_replace(' ', '_', $docName);
+            $file = str_replace(':', '', $file);
+            $file = str_replace('', '', $file);
+            $file = $file . '.pdf';
+
+           /*  $clTask = new CLItemController();
+            $drivePath =  $clTask->googleDrivePath('');
+ */
+            // return $drivePath;
+            // env('GOOGLE_DRIVE_FOLDER_ID') . $drivePath[0],
+
+            if (!Storage::exists($directory)) {
+                Storage::makeDirectory($directory); //creates directory if not exists
+                //TODO Try to upload survey file direct to drive ;)
+            }
+            if (!Storage::exists($directory . '/' . $file)) {
+                // Storage::disk('google')->put($directory . '/' . $file, base64_decode($exportSurveyAsPDF));
+                Storage::put($directory . '/' . $file, base64_decode($exportSurveyAsPDF));
+                /* if (env('APP_ENV') === 'local') {
+                    // self::download('', '../storage/app/' . $directory . '/' . $docName, $exportSurveyAsPDF); //save survey file on storage folder
+                } else {
+                    self::download('', './storage/app/' . $directory . '/' . $docName, $exportSurveyAsPDF); //save survey file on storage folder
+                } */
+            }
+            return response()->json('200');
+        } catch (Exception $e) {
+            return $this->returnJsonError($e, ['LSurveyController' => 'submitByResponse']);
+        }
     }
 }
 
