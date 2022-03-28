@@ -466,6 +466,7 @@ class LSurveyController extends Controller
      */
     public function submitByResponse(Request $request, $id, $submitted_id, $ln)
     {
+        //https://immvisas.com/submitsurvey/id/{SID}/response/{SAVEDID}/lan/{LANG}
         try {
             $now   = Carbon::now();
             $nowDT = $now->format('y/m/d H:i:s');

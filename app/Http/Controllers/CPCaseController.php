@@ -8,6 +8,7 @@ use App\Models\Checklist;
 use App\Models\CLItem;
 use App\Models\CPCase;
 use App\Models\Contact;
+
 class CPCaseController extends Controller
 {
     /**
@@ -21,7 +22,6 @@ class CPCaseController extends Controller
         //Get contact data of this user
         $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
         //Cases
-
         $active_cases = CPcase::select('*')->where('contact_id', $contact->id)->where('ticketstatus', '!=', 'Completed')->get();
         $completed_cases =  CPcase::select('*')->where('contact_id', $contact->id)->where('ticketstatus', 'Completed')->get();
         return view('cases.index', compact('active_cases', 'completed_cases'));
@@ -37,12 +37,11 @@ class CPCaseController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
-
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
 
         $case =  CPcase::select('*')->where('id', $id)
-        ->where('contact_id', $contact->id)
-        ->firstOrFail();
+            ->where('contact_id', $contact->id)
+            ->firstOrFail();
 
         $checklists  = Checklist::where('cf_1199', $case->id) // case_id
             ->get();

@@ -751,6 +751,7 @@ class CloneDBController extends Controller
     {
         try {
             $vtiger = new Vtiger();
+            //
             $type = $request->type;
             $prefix_id = $request->prefix_id;
             $id = $request->id;
@@ -761,10 +762,8 @@ class CloneDBController extends Controller
                 $this->consoleWrite()->writeln($request);
             }
 
-
             $vtQuery  = DB::table($type)->select('*')->where("id", $prefix_id . 'x' . $id)->take(1);
             $vtObj =  $vtiger->search($vtQuery);
-
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln("Here 1");
             }
@@ -775,13 +774,14 @@ class CloneDBController extends Controller
 
             $vtObj = $vtObj->result[0];
             $description = $vtiger->describe($type);
+
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln("Here 2 $contactField");
                 $this->consoleWrite()->writeln("Where id is " . $prefix_id . 'x' . $id);
-                $this->consoleWrite()->writeln(DB::table("vt_$type")->select($contactField)->where('id', '=', $prefix_id . 'x' . $id)->toSql());
             }
-            $contactFieldForType = DB::table("vt_$type")->select("$contactField")->where('id',  $prefix_id . 'x' . $id)->first();
-            $contact = Contact::where("id", $contactFieldForType->$contactField)->firstOrFail();
+            $contactFieldForTypeQuery = DB::table($type)->select($contactField)->where('id',  $prefix_id . 'x' . $id)->take(1); // tring to get on local 
+            $contactFieldForType = $vtiger->search($contactFieldForTypeQuery)->result[0];
+            $contact = self::getContact($vtiger, $contactFieldForType->$contactField);
             self::getData($vtQuery, $description->result->fields, $contact, $contactField, $description->result->name);
 
             if (env('APP_ENV') === 'local') {
@@ -789,8 +789,19 @@ class CloneDBController extends Controller
             }
             return response()->json("$type with id $id created also on CP");
         } catch (Exception $e) {
-            return $this->returnJsonError($e, ['CloneDBController' => 'updateCLItemFromImmcase']);
+            return $this->returnJsonError($e, ['CloneDBController' => 'cloneSingleType']);
         }
+    }
+
+    static function getContact($vtiger, $contactField)
+    {
+        try {
+            $contact = Contact::where("id", $contactField)->firstOrFail();
+        } catch (Exception $e) {
+            $contactQuery =  DB::table('Contacts')->select('*')->where("id", $contactField)->take(1);
+            $contact =  $vtiger->search($contactQuery)->result[0];
+        }
+        return $contact ?: null;
     }
 
 
