@@ -433,22 +433,17 @@ class LSurveyController extends Controller
     public function onSubmit(Request $request, $id, $tkn,  $ln)
     {
         try {
-
             $link = "forms.gercanada.com/$id?token=$tkn";
-            // /submitsurvey/id/{id}/response/{SAVEDID}/lan/{ln}
+            //submitsurvey/id/{id}/response/{SAVEDID}/lan/{ln}
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln("Called onSubmit method ");
             }
-
-            /*  if ($id === '573761') { //IMM profile survey
-            } */
 
             $request->request->add(['survey_url' => $link]);
             $task = new LSurveyController();
             $exported = $task->exportResponse($request);
 
             if ($exported === 'Success') {
-                // return view('checklists.items.survey.done');
                 return redirect('/submittedsurvey');
             }
             return $exported;
@@ -460,7 +455,7 @@ class LSurveyController extends Controller
     public function submitted()
     {
         return redirect('https://www.gercanada.com');
-        return view('checklists.items.survey.done');
+        // return view('checklists.items.survey.done');
     }
 
     //Submit without token
@@ -472,17 +467,17 @@ class LSurveyController extends Controller
     public function submitByResponse(Request $request, $id, $submitted_id, $ln)
     {
         try {
-            // return $submitted_id;
-            $now = Carbon::now()->format('y/m/d H:i:s');
+            $now   = Carbon::now();
+            $nowDT = $now->format('y/m/d H:i:s');
+            $year  = $now->year;
+            $month = $now->format('F');
 
-            $limeConnection = self::connectLime(); //Start limesurvey session
-
-
+            $limeConnection  = self::connectLime(); //Start limesurvey session
             $myJSONRPCClient = $limeConnection['myJSONRPCClient'];
-            $sSessionKey = $limeConnection['sessionKey'];
-            $iSurveyID = $id;
+            $sSessionKey     = $limeConnection['sessionKey'];
+            $iSurveyID       = $id;
             $iFromResponseID = $submitted_id;
-            $iToResponseID = $submitted_id;
+            $iToResponseID   = $submitted_id;
 
             $exportSurveyAsJson = $myJSONRPCClient->export_responses( //as Json
                 $sSessionKey,
@@ -497,17 +492,9 @@ class LSurveyController extends Controller
                 $aFields = null
 
             );
-            $surveyJsonResults = json_decode(base64_decode($exportSurveyAsJson));
+            $surveyJsonResults  = json_decode(base64_decode($exportSurveyAsJson));
 
-
-
-            // return $docName;
-            /*  return response()->json([$surveyJsonResults, [
-                $iFromResponseID,
-                $iToResponseID
-            ]]);
- */
-            $exportSurveyAsPDF = $myJSONRPCClient->export_responses( //as pdf
+            $exportSurveyAsPDF  = $myJSONRPCClient->export_responses( //as pdf
                 $sSessionKey,
                 $iSurveyID,
                 $sDocumentType = 'pdf',
@@ -520,39 +507,24 @@ class LSurveyController extends Controller
                 $aFields = null
             );
 
-
-            $docName = ($surveyJsonResults->responses[0]->datestamp ?: $now)
+            $docName = ($surveyJsonResults->responses[0]->datestamp ?: $nowDT)
                 . ' '
                 . ($surveyJsonResults->responses[0]->G1Q00001 ?: '')
                 . ' '
                 . ($surveyJsonResults->responses[0]->G1Q00002 ?: '');
 
-            $directory = "/immprofiles/any";
+            $directory = "immprofiles/$year/$month";
             $file = str_replace(' ', '_', $docName);
             $file = str_replace(':', '', $file);
             $file = str_replace('', '', $file);
             $file = $file . '.pdf';
 
-           /*  $clTask = new CLItemController();
-            $drivePath =  $clTask->googleDrivePath('');
- */
-            // return $drivePath;
-            // env('GOOGLE_DRIVE_FOLDER_ID') . $drivePath[0],
-
-            if (!Storage::exists($directory)) {
-                Storage::makeDirectory($directory); //creates directory if not exists
-                //TODO Try to upload survey file direct to drive ;)
-            }
-            if (!Storage::exists($directory . '/' . $file)) {
-                // Storage::disk('google')->put($directory . '/' . $file, base64_decode($exportSurveyAsPDF));
-                Storage::put($directory . '/' . $file, base64_decode($exportSurveyAsPDF));
-                /* if (env('APP_ENV') === 'local') {
-                    // self::download('', '../storage/app/' . $directory . '/' . $docName, $exportSurveyAsPDF); //save survey file on storage folder
-                } else {
-                    self::download('', './storage/app/' . $directory . '/' . $docName, $exportSurveyAsPDF); //save survey file on storage folder
-                } */
-            }
-            return response()->json('200');
+            $clTask = new CLItemController();
+            $drivePath =  $clTask->googleDrivePath($directory);
+            $drivePathIds =  $drivePath[0];
+            Storage::disk('google')->put($drivePathIds . '/' . $file, base64_decode($exportSurveyAsPDF));
+            /*  http://localhost:8000/submitsurvey/id/573761/response/135/lan/es */
+            return redirect('/submittedsurvey');
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['LSurveyController' => 'submitByResponse']);
         }

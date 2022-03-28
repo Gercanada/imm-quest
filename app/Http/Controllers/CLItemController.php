@@ -13,8 +13,8 @@ use App\Models\Contact;
 use JBtje\VtigerLaravel\Vtiger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
-use App\Providers\GoogleDriveServiceProvider;
 use Exception;
+// use App\Providers\GoogleDriveServiceProvider;
 
 
 class CLItemController extends Controller
@@ -231,11 +231,9 @@ class CLItemController extends Controller
             $files      = Storage::disk('public')->allFiles($directory);
             $urlFiles   = [];
             foreach ($files as $file) {
-                if (env('APP_ENV') === 'local') {
-                    array_push($urlFiles, (Storage::url($file)));
-                } else {
-                    array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
-                }
+                env('APP_ENV') === 'local'
+                    ? array_push($urlFiles, (Storage::url($file)))
+                    : array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
             }
             return $urlFiles;
         } catch (Exception $e) {
@@ -271,11 +269,9 @@ class CLItemController extends Controller
             $urlFiles  = [];
 
             foreach ($files as $file) {
-                if (env('APP_ENV') === 'local') {
-                    array_push($urlFiles, (Storage::url($file)));
-                } else {
-                    array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
-                }
+                env('APP_ENV') === 'local'
+                    ? array_push($urlFiles, (Storage::url($file)))
+                    : array_push($urlFiles, (Storage::url("app/public/$file"))); // in prod
             }
             return $urlFiles;
         } catch (Exception $e) {
@@ -316,7 +312,6 @@ class CLItemController extends Controller
             $nextNameArr  = [];
 
             $explodedDir = explode('/', $directory);
-
             foreach ($explodedDir as $dir) {
                 array_push($directoryArr,  $dir);  //to create newq dir
             }
@@ -363,15 +358,8 @@ class CLItemController extends Controller
                     array_shift($ex);
                     array_shift($ex);
                 }
-
                 $newFile = implode('/', $ex);
-
-                if (env('APP_ENV') === 'local') {
-                    $content = Storage::disk('public')->get($newFile);
-                } else {
-                    $content = Storage::get($newFile);
-                }
-
+                $content =  env('APP_ENV') === 'local' ? Storage::disk('public')->get($newFile) : $content = Storage::get($newFile);
                 $drivePath = self::googleDrivePath($newFilePath);
                 $drivePathIds =  $drivePath[0];
                 $drivePathName =  $drivePath[1];
