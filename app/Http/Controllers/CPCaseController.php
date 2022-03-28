@@ -8,6 +8,7 @@ use App\Models\Checklist;
 use App\Models\CLItem;
 use App\Models\CPCase;
 use App\Models\Contact;
+use Exception;
 
 class CPCaseController extends Controller
 {
@@ -80,5 +81,16 @@ class CPCaseController extends Controller
         }
 
         return [$case, $checklists, $clitems];
+    }
+
+    static function getCase($vtiger, $id, $contactId)
+    {
+        try {
+            $case      =  CPCase::where('id', $id)->where('contact_id', $contactId)->firstOrFail();
+        } catch (Exception $e) {
+            $caseQuery =  DB::table('HelpDesk')->select('*')->where("id", $id)->take(1);
+            $case =  $vtiger->search($caseQuery)->result[0];
+        }
+        return $case ?: null;
     }
 }

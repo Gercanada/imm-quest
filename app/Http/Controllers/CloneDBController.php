@@ -781,7 +781,8 @@ class CloneDBController extends Controller
             }
             $contactFieldForTypeQuery = DB::table($type)->select($contactField)->where('id',  $prefix_id . 'x' . $id)->take(1); // tring to get on local 
             $contactFieldForType = $vtiger->search($contactFieldForTypeQuery)->result[0];
-            $contact = self::getContact($vtiger, $contactFieldForType->$contactField);
+            $contact = self::getTypeData($vtiger, 'id', $contactFieldForType->$contactField, 'Contact', 'one');
+            
             self::getData($vtQuery, $description->result->fields, $contact, $contactField, $description->result->name);
 
             if (env('APP_ENV') === 'local') {
@@ -793,15 +794,24 @@ class CloneDBController extends Controller
         }
     }
 
-    static function getContact($vtiger, $contactField)
+    static function getTypeData($vtiger, $field, $value, $type, $get)
     {
         try {
-            $contact = Contact::where("id", $contactField)->firstOrFail();
+            if ($get === 'all') {
+                $value = DB::table("vt_$type")->where($field, $value)->get();
+            } else {
+                $value = DB::table("vt_$type")->where($field, $value)->firstOrFail();
+            }
         } catch (Exception $e) {
-            $contactQuery =  DB::table('Contacts')->select('*')->where("id", $contactField)->take(1);
-            $contact =  $vtiger->search($contactQuery)->result[0];
+            if ($get === 'all') {
+                $vtQuery =  DB::table($type)->select('*')->where($field, $value)->get();
+                $value =  $vtiger->search($vtQuery)->result;
+            } else {
+                $vtQuery =  DB::table($type)->select('*')->where($field, $value)->take(1);
+                $value =  $vtiger->search($vtQuery)->result[0];
+            }
         }
-        return $contact ?: null;
+        return $value ?: null;
     }
 
 

@@ -3463,6 +3463,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 var urlParams = window.location.pathname.split("/");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "checklistComponent",
@@ -3501,6 +3506,7 @@ var urlParams = window.location.pathname.split("/");
       }
 
       axios.get("/checklist/" + checklistID + "/items").then(function (response) {
+        // console.log(response);
         me.checklist = response.data[0];
         me.clitems = response.data[1];
       })["catch"](function (error) {

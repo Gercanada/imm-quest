@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use JBtje\VtigerLaravel\Vtiger;
 use App\Models\Checklist;
 use App\Models\CPCase;
 use App\Models\Contact;
@@ -75,18 +76,20 @@ class ChecklistController extends Controller
     {
         try {
             $user       = Auth::user();
-            $contact    = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
-            $check_list = Checklist::where('id', $id)->where('cf_contacts_id', $contact->id)->firstOrFail();
-            $clitems    = CLItem::where('cf_1216', $id)->where('cf_contacts_id', $contact->id)->get();
+            $cloneTask  = new CloneDBController();
+            $vtiger     = new Vtiger();
+
+            $contact    = $cloneTask->getTypeData($vtiger, 'contact_no', $user->vtiger_contact_id, 'Contacts', 'one');
+            $check_list = $cloneTask->getTypeData($vtiger, 'cf_contacts_id', $contact->id, 'Checklist', 'one');
+            $clitems    = $cloneTask->getTypeData($vtiger, 'cf_contacts_id', $contact->id, 'CLItems', 'all');
 
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln("checklist $id , contact $contact->id");
             }
 
             foreach ($clitems as $item) {
-                $case      =  CPCase::where('id', $item->cf_1217)->where('contact_id', $contact->id)->firstOrFail();
-                $checklist =  Checklist::where('id', $item->cf_1216)->where('cf_contacts_id', $contact->id)->firstOrFail();
-
+                $case = $cloneTask->getTypeData($vtiger, 'id', $item->cf_1217, 'HelpDesk', 'one');
+                $checklist = $cloneTask->getTypeData($vtiger, 'id', $item->cf_1216, 'Checklist', 'one');
                 if (env('APP_ENV') === 'local') {
                     $this->consoleWrite()->writeln("case $case->id , checklist $checklist->id ");
                 }

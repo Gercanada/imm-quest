@@ -8,10 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CLItemController;
 use App\Http\Controllers\LSurveyController;
-
 use Illuminate\Http\Request;
-
-//use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------

@@ -148,7 +148,7 @@
                                 }}</a>
                             </td>
                             <td>{{ clitem_c.cf_1578 }}</td>
-                           <!--  <td>
+                            <!--  <td>
                                 <button
                                     v-if="loading == false"
                                     type="submit"
@@ -166,16 +166,21 @@
                                     <i class="icon-refresh fas fa-spin"></i>
                                 </button>
                             </td> -->
-                              <td>
-                <a
-                  :href="'/checklist/' + checklist.id + '/item/' + clitem_c.id"
-                  data-toggle="tooltip"
-                  title="View details"
-                  class="btn btn-outline-success btn-rounded"
-                >
-                  <i class="fas fa-eye"></i
-                ></a>
-              </td>
+                            <td>
+                                <a
+                                    :href="
+                                        '/checklist/' +
+                                        checklist.id +
+                                        '/item/' +
+                                        clitem_c.id
+                                    "
+                                    data-toggle="tooltip"
+                                    title="View details"
+                                    class="btn btn-outline-success btn-rounded"
+                                >
+                                    <i class="fas fa-eye"></i
+                                ></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -269,6 +274,7 @@ export default {
             axios
                 .get("/checklist/" + checklistID + "/items")
                 .then(function (response) {
+                    // console.log(response);
                     me.checklist = response.data[0];
                     me.clitems = response.data[1];
                 })
