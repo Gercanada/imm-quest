@@ -71,7 +71,7 @@ class UserController extends Controller
                     'password' => Hash::make($request->pass),
                 ]
             );
-            return $user;
+            return $user ?: null;
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['UserController' => 'createUser']);
         }
