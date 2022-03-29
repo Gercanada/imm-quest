@@ -811,7 +811,7 @@ export default {
             axios
                 .post("/cl-item", { id: urlParams[4] })
                 .then(function (response) {
-                    // console.log(response);
+                     console.log(response);
                     if ("error" in response.data) {
                         Swal.fire({
                             type: "error",

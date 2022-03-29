@@ -55,13 +55,12 @@ class CLItemController extends Controller
 
             $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
             $directory = str_replace(' ', '_', $directory);
-            $dirFiles = env("APP_ENV") === 'local' ? Storage::disk('public')->allFiles($directory) : Storage::disk('public')->allFiles('app/public/' . $directory);
+            $dirFiles = Storage::disk('public')->allFiles($directory);
             $files = [];
             $itemfiles = [];
             foreach ($dirFiles as $file) {
                 array_push($files, env("APP_ENV") === 'local' ?: 'app/public/' . $file);
             }
-
             $itemfiles = ['key' => $item->clitemsno, 'files' => $files];
             $item->files = $itemfiles;
             return [$item, $case, $checklist, $survey];
@@ -249,9 +248,13 @@ class CLItemController extends Controller
     public function deleteDocument(Request $request)
     {
         try {
-            $file = $request->file;
-            $urlFile = env('APP_ENV') ? "public/$file" : "app/public/$file";
-
+            $file = env('APP_ENV') === 'local' ? $request->file : substr($request->file, 0);
+            if (env('APP_ENV') != 'local') {
+                $exploded = explode('/', $file);
+                $spliced = array_splice($exploded, 1);
+                $file = implode('/', $spliced);
+            }
+            $urlFile =  $file;
             if (Storage::exists($urlFile)) {
                 Storage::delete($urlFile);
                 return  response()->json("File removed from temporary storage", 200);
