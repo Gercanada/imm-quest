@@ -750,11 +750,10 @@ class CloneDBController extends Controller
     public function cloneSingleType(Request $request)
     {
         try {
-            $vtiger = new Vtiger();
-            //
-            $type = $request->type;
-            $prefix_id = $request->prefix_id;
-            $id = $request->id;
+            $vtiger       = new Vtiger();
+            $type         = $request->type;
+            $prefix_id    = $request->prefix_id;
+            $id           = $request->id;
             $contactField = $request->contact_field;
 
             if (env('APP_ENV') === 'local') {
@@ -768,21 +767,21 @@ class CloneDBController extends Controller
                 $this->consoleWrite()->writeln("Here 1");
             }
 
-            if (!$vtObj->success === true) {
-                return response()->json("Item not fount", 404);
+            $vtObj =  !empty($vtObj->result) ? $vtObj->result[0] : null;
+            if (!$vtObj) {
+                return response()->json("$type not found", 404);
             }
-
-            $vtObj = $vtObj->result[0];
             $description = $vtiger->describe($type);
 
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln("Here 2 $contactField");
                 $this->consoleWrite()->writeln("Where id is " . $prefix_id . 'x' . $id);
             }
-            $contactFieldForTypeQuery = DB::table($type)->select($contactField)->where('id',  $prefix_id . 'x' . $id)->take(1); // tring to get on local 
-            $contactFieldForType = $vtiger->search($contactFieldForTypeQuery)->result[0];
-            $contact = self::getTypeData($vtiger, 'id', $contactFieldForType->$contactField, 'Contact', 'one');
-            
+
+            $contact = Contact::where("id", $vtObj->$contactField)->first()
+                ?:
+                $vtiger->search(DB::table('Contacts')->select('*')->where("id", $vtObj->$contactField)->take(1))->result;
+
             self::getData($vtQuery, $description->result->fields, $contact, $contactField, $description->result->name);
 
             if (env('APP_ENV') === 'local') {
@@ -792,26 +791,6 @@ class CloneDBController extends Controller
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CloneDBController' => 'cloneSingleType']);
         }
-    }
-
-    static function getTypeData($vtiger, $field, $value, $type, $get)
-    {
-        try {
-            if ($get === 'all') {
-                $value = DB::table("vt_$type")->where($field, $value)->get();
-            } else {
-                $value = DB::table("vt_$type")->where($field, $value)->firstOrFail();
-            }
-        } catch (Exception $e) {
-            if ($get === 'all') {
-                $vtQuery =  DB::table($type)->select('*')->where($field, $value)->get();
-                $value =  $vtiger->search($vtQuery)->result;
-            } else {
-                $vtQuery =  DB::table($type)->select('*')->where($field, $value)->take(1);
-                $value =  $vtiger->search($vtQuery)->result[0];
-            }
-        }
-        return $value ?: null;
     }
 
 

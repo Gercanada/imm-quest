@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
 use App\Models\Checklist;
 use App\Models\CLItem;
 use App\Models\CPCase;
@@ -31,17 +30,21 @@ class CLItemController extends Controller
     {
         try {
             $user = Auth::user();
-            $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+            $contact   = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+            $item      = CLItem::where('id', $request->id)->where('cf_contacts_id', $contact->id)->first();
+            $checklist = Checklist::where('id', $item->cf_1216)->where('cf_contacts_id', $contact->id)->first();
+            $case      = CPCase::where('id', $item->cf_1217)->where('contact_id', $contact->id)->first();
 
-            $item = CLItem::where('id', $request->id)
-                ->where('cf_contacts_id', $contact->id)
-                ->firstOrFail();
-            $case =  CPCase::where('id', $item->cf_1217)
-                ->where('contact_id', $contact->id)
-                ->firstOrFail();
-            $checklist =  Checklist::where('id', $item->cf_1216)
-                ->where('cf_contacts_id', $contact->id)
-                ->firstOrFail();
+            if (!$contact || !$item || !$checklist || !$case) {
+                $crashed = !$contact ? "Contact" : !$item ? "CLItem" : !$checklist ? "Checklist" : !$case ? "Case" : null;
+                return response()->json(
+                    [
+                        "error" =>
+                        "Invalid item relationship for $crashed. 
+                        Please contact the admin to report this error on try Sync again"
+                    ]
+                );
+            }
 
             $survey = [];
             if ($item->cf_1200 === "Questionnaire" && $item->cf_1212 != '') {

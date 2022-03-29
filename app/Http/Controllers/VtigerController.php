@@ -173,6 +173,31 @@ class VtigerController extends Controller
         }
         return  $data;
     }
+
+    public function infoType(Request $request, $type)
+    {
+        $vtiger = new Vtiger();
+        $data = null;
+        $query = DB::table($type)->select('*');
+        if ($vtiger->search($query)->success === false) {
+            return ["invalid type $type for query, try some of : ", $vtiger->listTypes()->result->types];
+        }
+
+        if ($request) {
+            foreach ($request->request as $key => $value) {
+                $query = $query->where($key, $value);
+            }
+        }
+        $data = $vtiger->search($query);
+        if ($data->success === false) {
+            $fields = [];
+            foreach ($vtiger->describe($type)->result->fields as $field) {
+                array_push($fields, [$field->name => "$field->label"]);
+            }
+            return ["invalid attribute for where query , For $type need to be any of :", $fields];
+        }
+        return [$query->tosql(), $data];
+    }
 }
 /*
 $today = date("Y-m-d H:i:s");

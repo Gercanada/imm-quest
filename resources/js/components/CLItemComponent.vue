@@ -37,11 +37,7 @@
                                     <div class="col shadow p-1 rounded pt-1">
                                         <h4 class="card-title">
                                             <span
-                                                class="
-                                                    lstick
-                                                    d-inline-block
-                                                    align-middle
-                                                "
+                                                class="lstick d-inline-block align-middle"
                                             ></span>
                                             Case
                                             <b
@@ -55,20 +51,14 @@
                                         <tr>
                                             <td>Status</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="caseObj.ticketstatus"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Open Date</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="caseObj.cf_866"
                                             ></td>
                                         </tr>
@@ -76,10 +66,7 @@
                                         <tr>
                                             <td>Case type</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="
                                                     caseObj.ticketcategories
                                                 "
@@ -88,10 +75,7 @@
                                         <tr>
                                             <td>Description</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="caseObj.description"
                                             ></td>
                                         </tr>
@@ -111,11 +95,7 @@
                                     <div class="col shadow p-1 rounded pt-1">
                                         <h4 class="card-title">
                                             <span
-                                                class="
-                                                    lstick
-                                                    d-inline-block
-                                                    align-middle
-                                                "
+                                                class="lstick d-inline-block align-middle"
                                             ></span>
                                             Checklist
                                             <b v-text="checklistObj.name"></b>
@@ -127,10 +107,7 @@
                                         <tr>
                                             <td>Checklist No</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="
                                                     checklistObj.checklistno
                                                 "
@@ -139,60 +116,42 @@
                                         <tr>
                                             <td>% Completed</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="checklistObj.cf_2079"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Checklist Type</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="checklistObj.cf_1706"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Applicant Full Name</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="checklistObj.cf_1181"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Completed Items</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="checklistObj.cf_1189"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Pending Items</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="checklistObj.cf_1187"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Status</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="checklistObj.cf_1179"
                                             ></td>
                                         </tr>
@@ -213,11 +172,7 @@
                                     >
                                         <h4 class="card-title">
                                             <span
-                                                class="
-                                                    lstick
-                                                    d-inline-block
-                                                    align-middle
-                                                "
+                                                class="lstick d-inline-block align-middle"
                                             ></span>
                                             CLItem
                                         </h4>
@@ -229,40 +184,28 @@
                                         <tr>
                                             <td>CLItems No</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="clitem.clitemsno"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Subject</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="clitem.name"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Description</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="clitem.cf_acf_rtf_1208"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Category</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="clitem.cf_1200"
                                             ></td>
                                         </tr>
@@ -271,20 +214,14 @@
                                             <!-- Editables on CP -->
                                             <td>Original File Name</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="clitem.cf_1970"
                                             ></td>
                                         </tr>
                                         <tr>
                                             <td>Item Status</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                                 v-text="clitem.cf_1578"
                                             ></td>
                                         </tr>
@@ -298,10 +235,7 @@
                                             <!-- Editables on CP -->
                                             <td>Help link</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                             >
                                                 <a :href="clitem.cf_1212">{{
                                                     clitem.cf_1212
@@ -317,10 +251,7 @@
                                             <!-- Editables on CP -->
                                             <td>Completed survey</td>
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                             >
                                                 <p
                                                     v-if="
@@ -348,10 +279,7 @@
                                                 v-text="file"
                                             ></td> -->
                                             <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
+                                                class="text-end font-weight-medium"
                                             >
                                                 <div
                                                     class="flex-container"
@@ -471,11 +399,7 @@
                                 >
                                     <button
                                         type="button"
-                                        class="
-                                            btn btn-primary btn-lg
-                                            fas
-                                            fa-edit
-                                        "
+                                        class="btn btn-primary btn-lg fas fa-edit"
                                         @click="
                                             openModal(
                                                 'documents',
@@ -507,11 +431,7 @@
                                         <td>
                                             <button
                                                 type="button"
-                                                class="
-                                                    btn btn-success btn-lg
-                                                    fas
-                                                    fa-paper-plane
-                                                "
+                                                class="btn btn-success btn-lg fas fa-paper-plane"
                                                 @click="
                                                     exportResponse(
                                                         clitem.clitemsno
@@ -585,11 +505,7 @@
                                     >
                                         <button
                                             type="button"
-                                            class="
-                                                btn btn-success btn-lg
-                                                fas
-                                                fa-paper-plane
-                                            "
+                                            class="btn btn-success btn-lg fas fa-paper-plane"
                                             @click="
                                                 sendToImmcase(
                                                     file,
@@ -601,11 +517,7 @@
                                         </button>
                                         <button
                                             type="button"
-                                            class="
-                                                btn btn-danger btn-lg
-                                                fas
-                                                fa-trash-alt
-                                            "
+                                            class="btn btn-danger btn-lg fas fa-trash-alt"
                                             @click="deleteFile(file)"
                                         >
                                             Remove document
@@ -655,10 +567,7 @@
                                         <div class="relative">
                                             <label
                                                 for="attachment"
-                                                class="
-                                                    leading-7
-                                                    text-sm text-gray-600
-                                                "
+                                                class="leading-7 text-sm text-gray-600"
                                                 >Attachments</label
                                             ><br />
                                             <vue-dropzone
@@ -701,7 +610,6 @@
                 </div>
             </template>
         </div>
-        
     </div>
 </template>
 
@@ -903,6 +811,14 @@ export default {
             axios
                 .post("/cl-item", { id: urlParams[4] })
                 .then(function (response) {
+                    // console.log(response);
+                    if('error' in response.data){
+                         Swal.fire({
+                            type: "error",
+                            title: response.data.error,
+                            showConfirmButton: false,
+                        });
+                    }
                     me.clitem = response.data[0];
                     me.caseObj = response.data[1];
                     me.checklistObj = response.data[2];

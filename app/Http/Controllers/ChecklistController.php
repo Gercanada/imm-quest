@@ -60,9 +60,8 @@ class ChecklistController extends Controller
     {
         $user = Auth::user();
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
-        $check_list = Checklist::where('id', $id)
-            ->where('cf_contacts_id', $contact->id)
-            ->firstOrFail();
+        $check_list = Checklist::where('id', $id)->where('cf_contacts_id', $contact->id)
+            ->first();
         return view(
             'checklists.show',
             compact('check_list')
@@ -76,30 +75,29 @@ class ChecklistController extends Controller
     {
         try {
             $user       = Auth::user();
-            $cloneTask  = new CloneDBController();
-            $vtiger     = new Vtiger();
-
-            $contact    = $cloneTask->getTypeData($vtiger, 'contact_no', $user->vtiger_contact_id, 'Contacts', 'one');
-            $check_list = $cloneTask->getTypeData($vtiger, 'cf_contacts_id', $contact->id, 'Checklist', 'one');
-            $clitems    = $cloneTask->getTypeData($vtiger, 'cf_contacts_id', $contact->id, 'CLItems', 'all');
+            $contact    = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
+            $check_list = Checklist::where('id', $id)->where('cf_contacts_id', $contact->id)->first();
+            $clitems    = CLItem::where('cf_1216', $id)->where('cf_contacts_id', $contact->id)->get();
 
             if (env('APP_ENV') === 'local') {
                 $this->consoleWrite()->writeln("checklist $id , contact $contact->id");
             }
 
             foreach ($clitems as $item) {
-                $case = $cloneTask->getTypeData($vtiger, 'id', $item->cf_1217, 'HelpDesk', 'one');
-                $checklist = $cloneTask->getTypeData($vtiger, 'id', $item->cf_1216, 'Checklist', 'one');
+                $case =  CPCase::where('id', $item->cf_1217)->where('contact_id', $contact->id)->first();
+                $checklist =  Checklist::where('id', $item->cf_1216)->where('cf_contacts_id', $contact->id)->first();
                 if (env('APP_ENV') === 'local') {
                     $this->consoleWrite()->writeln("case $case->id , checklist $checklist->id ");
                 }
-                $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
-                $dirFiles  = Storage::disk('public')->allFiles($directory);
-                $files     = [];
-                foreach ($dirFiles as $file) {
-                    array_push($files, $file);
+                if ($case && $checklist) {
+                    $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
+                    $dirFiles  = Storage::disk('public')->allFiles($directory);
+                    $files     = [];
+                    foreach ($dirFiles as $file) {
+                        array_push($files, $file);
+                    }
+                    $item->files = ['key' => $item->clitemsno, 'files' => $files];
                 }
-                $item->files = ['key' => $item->clitemsno, 'files' => $files];
             }
             return response()->json([$check_list, $clitems]);
         } catch (Exception $e) {

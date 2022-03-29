@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CLItemController;
 use App\Http\Controllers\LSurveyController;
+use App\Http\Controllers\VtigerController;
 use Illuminate\Http\Request;
 
 /*
@@ -48,10 +49,8 @@ Route::middleware('imm-header')->group(function () {
     Route::post('/viger/clonedb',                  [CloneDBController::class, 'cloneImmcaseContactData']);
     Route::post('/viger/update_contact',           [CloneDBController::class, 'updateOnImmcase']);
     Route::post('/clear_trash',                    [CloneDBController::class, 'clearTrashDB']);
-    // Route::post('/update_checklist',               [CloneDBController::class, 'updateChecklistFromImmcase']);
-    // Route::post('/update_clitem',                  [CloneDBController::class, 'updateCLItemFromImmcase']);
-    Route::post('/vtiger/before_deleted',                  [CloneDBController::class, 'beforeDeletedOnVt']);
-    Route::post('/vtiger/clone_single',                  [CloneDBController::class, 'cloneSingleType']);
+    Route::post('/vtiger/before_deleted',          [CloneDBController::class, 'beforeDeletedOnVt']);
+    Route::post('/vtiger/clone_single',            [CloneDBController::class, 'cloneSingleType']);
     //Lime survey
     Route::post('/questionaries/guest',            [LSurveyController::class, 'guestToSurvey']); //tri not middleware
     Route::post('/questionaries/export_response',  [LSurveyController::class, 'exportResponse']); //Test as service
@@ -60,6 +59,8 @@ Route::middleware('imm-header')->group(function () {
     Route::post('/cl-item/upload',                 [CLItemController::class, 'uploadFile']); //Only catch errs
 
     Route::post('/create_user',                    [UserController::class, 'createUser']);
+
+    Route::post('/vtiger/info/{type}',      [VtigerController::class, 'infoType']);
 
     //call dev commands
     Route::get('/migrate', function () {

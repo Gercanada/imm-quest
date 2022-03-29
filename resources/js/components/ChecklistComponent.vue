@@ -264,7 +264,6 @@ export default {
         show() {
             let me = this;
             this.loading = true;
-
             let checklistID = 0;
             if (me.f_checklist_id === undefined) {
                 checklistID = me.checklist_id;
@@ -274,7 +273,7 @@ export default {
             axios
                 .get("/checklist/" + checklistID + "/items")
                 .then(function (response) {
-                    // console.log(response);
+                    console.log(response);
                     me.checklist = response.data[0];
                     me.clitems = response.data[1];
                 })
@@ -306,7 +305,6 @@ export default {
                             showConfirmButton: false,
                         });
                     }
-
                     me.show();
                 })
                 .catch(function (error) {
@@ -317,7 +315,6 @@ export default {
                         showConfirmButton: false,
                     });
                     console.log(error);
-                    // console.log( error);
                 })
                 .finally(() => (this.loading = false));
         },
