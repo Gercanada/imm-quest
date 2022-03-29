@@ -55,11 +55,11 @@ class CLItemController extends Controller
 
             $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
             $directory = str_replace(' ', '_', $directory);
-            $dirFiles = Storage::disk('public')->allFiles($directory);
+            $dirFiles = env("APP_ENV") === 'local' ? Storage::disk('public')->allFiles($directory) : Storage::disk('public')->allFiles('app/public/' . $directory);
             $files = [];
             $itemfiles = [];
             foreach ($dirFiles as $file) {
-                array_push($files, $file);
+                array_push($files, env("APP_ENV") === 'local' ?: 'app/public/' . $file);
             }
 
             $itemfiles = ['key' => $item->clitemsno, 'files' => $files];
@@ -250,7 +250,7 @@ class CLItemController extends Controller
     {
         try {
             $file = $request->file;
-            $urlFile = "public/$file";
+            $urlFile = env('APP_ENV') ? "public/$file" : "app/public/$file";
 
             if (Storage::exists($urlFile)) {
                 Storage::delete($urlFile);
