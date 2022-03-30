@@ -102,5 +102,5 @@ class UserController extends Controller
         $user = User::where('id', Auth::user()->id)->firstOrFail();
         $user->themme_layout = $request->themme_layout;
         $user->save();
-    }
+    }    
 }

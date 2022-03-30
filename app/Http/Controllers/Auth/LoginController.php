@@ -26,7 +26,6 @@ class LoginController extends Controller
     |
     */
 
-    //use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
@@ -77,7 +76,6 @@ class LoginController extends Controller
             $this->hasTooManyLoginAttempts($request)
         ) {
             $this->fireLockoutEvent($request);
-
             return $this->sendLockoutResponse($request);
         }
 
@@ -85,7 +83,6 @@ class LoginController extends Controller
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
             }
-
             return $this->sendLoginResponse($request);
         }
 
@@ -290,5 +287,25 @@ class LoginController extends Controller
         }
 
         return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
+    }
+
+    protected function incrementLoginAttempts(Request $request)
+    {
+        app(RateLimiter::class)->hit(
+            $this->getInputs($request) . $request->ip()
+        );
+    }
+
+    private function getInputs(Request $request)
+    {
+        $usernames = $this->username();
+        if (!is_array($usernames)) {
+            $usernames = [$usernames];
+        }
+        $ret = '';
+        foreach ($usernames as $username)
+            $ret .= $request->input($username) . '.';
+        $ret = substr($ret, 0, -1);
+        return $ret;
     }
 }

@@ -19,7 +19,7 @@
             background-image: url('/{{ env('ASSET_URL') }}images/iss_0893_05172_1.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-size: cover;
+            background-size: auto;
         }
 
         a {
@@ -541,11 +541,17 @@
             }
 
             .inothave {
-                height: 500px;
-                background-image: url('/{{ env('ASSET_URL') }}images/dont_has-removebg-preview.png');
+                height: 400px;
+                background-image: url('/{{ env('ASSET_URL') }}images/just 404.png');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
             }
+
+        }
+
+        .vertical-centered {
+            top: auto;
+            bottom: auto;
         }
 
     </style>
@@ -563,22 +569,22 @@
 <title>@yield('title')</title>
 
 @section('content')
-    <div class="container-fluid ">
-        <div class="row">
-            <div class="col antialiased">
-                <div class="relative flex items-top justify-center min-h-screen  sm:items-center sm:pt-0  ">
-                    <div class="mx-auto sm:px-6 lg:px-8  rounded shadow  p-1 rounded ">
-                        <div class="flex items-center pt-8 sm:justify-start sm:pt-0">
-                            <div class="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
-                                @yield('code')
-                            </div>
-
-                            <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
-                                @yield('message')
-                            </div>
+    <div class="row">
+        <div class="col antialiased">
+            <div class="relative flex items-top justify-center vertical-centered  sm:items-center sm:pt-0  ">
+                <div class="mx-auto my-auto sm:px-6 lg:px-8  rounded shadow  p-1 rounded ">
+                    <div class="flex items-center pt-8 sm:justify-start sm:pt-0">
+                        <div class="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
+                            @yield('code')
                         </div>
-                        <div class="flex items-center pt-8 sm:justify-start sm:pt-0 center inothave ">
+                        <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
+                            @yield('message')
                         </div>
+                    </div>
+                    <div class="flex items-center pt-8 sm:justify-start sm:pt-0 center inothave ">
+                    </div>
+                    <div class="text-center shadow p-4 rounded">
+                        <a href="/" class="btn btn-lg btn-info" href="#" role="button">Back to dashboard</a>
                     </div>
                 </div>
             </div>
