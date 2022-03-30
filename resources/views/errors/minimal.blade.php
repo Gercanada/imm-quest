@@ -542,7 +542,7 @@
 
             .inothave {
                 height: 400px;
-                background-image: url('/{{ env('ASSET_URL') }}images/just 404.png');
+                background-image: url('/{{ env('ASSET_URL') }}images/just_404.png');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
             }
