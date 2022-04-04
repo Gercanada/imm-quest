@@ -91,12 +91,15 @@ class ChecklistController extends Controller
                 }
                 if ($case && $checklist) {
                     $directory = "/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$item->clitemsno-$item->cf_1200";
-                    $dirFiles  = Storage::disk('public')->allFiles($directory);
-                    $files     = [];
+                    $directory = str_replace(' ', '_', $directory);
+                    $dirFiles = Storage::disk('public')->allFiles($directory);
+                    $files = [];
+                    $itemfiles = [];
                     foreach ($dirFiles as $file) {
-                        array_push($files, $file);
+                        array_push($files, env("APP_ENV") === 'local' ? $file: 'app/public/' . $file);
                     }
-                    $item->files = ['key' => $item->clitemsno, 'files' => $files];
+                    $itemfiles = ['key' => $item->clitemsno, 'files' => $files];
+                    $item->files = $itemfiles;
                 }
             }
             return response()->json([$check_list, $clitems]);

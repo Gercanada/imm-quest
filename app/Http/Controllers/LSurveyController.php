@@ -124,34 +124,7 @@ class LSurveyController extends Controller
                 $this->consoleWrite()->write($request);
             }
 
-            function exportSurvey($myJSONRPCClient, $sSessionKey, $iSurveyID, $sToken)
-            {
-                $exportSurvey = $myJSONRPCClient->export_responses_by_token( //as json
-                    $sSessionKey,
-                    $iSurveyID,
-                    $sDocumentType = 'json',
-                    $sToken,
-                    $sLanguageCode = null,
-                    $sCompletionStatus = 'complete',
-                    $sHeadingType = null,
-                    $sResponseType = 'short',
-                    $aFields = null
-                );
 
-                $exportSurveyAsPDF = $myJSONRPCClient->export_responses_by_token( //as pdf
-                    $sSessionKey,
-                    $iSurveyID,
-                    $sDocumentType = 'pdf',
-                    $sToken,
-                    $sLanguageCode = null,
-                    $sCompletionStatus = 'complete',
-                    $sHeadingType = 'full',
-                    $sResponseType = 'long',
-                    $aFields = null
-                );
-
-                return [$exportSurvey, $exportSurveyAsPDF];
-            }
 
             if ($request->form != 'vue') {
                 $request->form = '';
@@ -204,34 +177,10 @@ class LSurveyController extends Controller
             $sSessionKey = $limeConnection['sessionKey'];
 
 
-            $exportedSurvey = exportSurvey($myJSONRPCClient, $sSessionKey, $iSurveyID, $sToken);
+            $exportedSurvey = self::exportSurvey($myJSONRPCClient, $sSessionKey, $iSurveyID, $sToken);
 
             $exportSurvey = $exportedSurvey[0];
-            $exportSurveyAsPDF = $exportedSurvey[0];
-
-            /*  $exportSurvey = $myJSONRPCClient->export_responses_by_token( //as json
-                $sSessionKey,
-                $iSurveyID,
-                $sDocumentType = 'json',
-                $sToken,
-                $sLanguageCode = null,
-                $sCompletionStatus = 'complete',
-                $sHeadingType = null,
-                $sResponseType = 'short',
-                $aFields = null
-            );
-
-            $exportSurveyAsPDF = $myJSONRPCClient->export_responses_by_token( //as pdf
-                $sSessionKey,
-                $iSurveyID,
-                $sDocumentType = 'pdf',
-                $sToken,
-                $sLanguageCode = null,
-                $sCompletionStatus = 'complete',
-                $sHeadingType = 'full',
-                $sResponseType = 'long',
-                $aFields = null
-            ); */
+            $exportSurveyAsPDF = $exportedSurvey[1];
 
             $natdirectory = "/public/documents/contact/$contact->contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/" . $clitem->clitemsno . '-' . $clitem->cf_1200;
             $directory = str_replace(" ", "_", $natdirectory);
@@ -425,6 +374,35 @@ class LSurveyController extends Controller
            if (file_exists($filepath)) {
             unlink($filepath);
           }*/
+    }
+
+    static  function exportSurvey($myJSONRPCClient, $sSessionKey, $iSurveyID, $sToken)
+    {
+        $exportSurvey = $myJSONRPCClient->export_responses_by_token( //as json
+            $sSessionKey,
+            $iSurveyID,
+            $sDocumentType = 'json',
+            $sToken,
+            $sLanguageCode = null,
+            $sCompletionStatus = 'complete',
+            $sHeadingType = null,
+            $sResponseType = 'short',
+            $aFields = null
+        );
+
+        $exportSurveyAsPDF = $myJSONRPCClient->export_responses_by_token( //as pdf
+            $sSessionKey,
+            $iSurveyID,
+            $sDocumentType = 'pdf',
+            $sToken,
+            $sLanguageCode = null,
+            $sCompletionStatus = 'complete',
+            $sHeadingType = 'full',
+            $sResponseType = 'long',
+            $aFields = null
+        );
+
+        return [$exportSurvey, $exportSurveyAsPDF];
     }
 
     /**

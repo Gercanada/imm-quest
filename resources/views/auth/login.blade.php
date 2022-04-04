@@ -5,7 +5,7 @@
 @section('content')
     <!-- ============================================================== -->
     <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
-        style="background:url(/{{ env('ASSET_URL') }}images/iss_0893_05172_1.jpg) no-repeat center center; background-size: cover;">
+        style="background:url(/{{ env('ASSET_URL') }}images/fondocanada.jpg) no-repeat center center; background-size: cover;">
         <div class="auth-box p-4 bg-white rounded" style="opacity:85%; position:relative;">
             <div id="loginform">
                 <div class="logo text-center">

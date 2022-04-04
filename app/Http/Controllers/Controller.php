@@ -25,8 +25,8 @@ class Controller extends BaseController
         $newArr = [];
         if (env('APP_ENV') === 'local') {
             // $this->consoleWrite()->writeln("!! ERROR implode(',', $onMethod)");
-            $this->consoleWrite()->writeln($e->getMessage());
-            $this->consoleWrite()->writeln($e);
+            $this->consoleWrite()->writeln('Error with code ' .   $e->getCode() . ' at line ' . $e->getLine() . '\n' . $e->getMessage());
+
             array_push($newArr, $onMethod, [
                 'message' => $e->getMessage(),
                 'details' => $e

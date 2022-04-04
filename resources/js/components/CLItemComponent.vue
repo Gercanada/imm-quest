@@ -248,7 +248,6 @@
                                                 'Questionnaire'
                                             "
                                         >
-                                            <!-- Editables on CP -->
                                             <td>Completed survey</td>
                                             <td
                                                 class="text-end font-weight-medium"
@@ -267,17 +266,9 @@
 
                                         <tr
                                             v-for="file in clFiles"
-                                            :v-if="clFiles.length > 0"
-                                            :key="file"
+                                            v-if="clFiles.length > 0"
                                         >
                                             <td>Current file to send</td>
-                                            <!--  <td
-                                                class="
-                                                    text-end
-                                                    font-weight-medium
-                                                "
-                                                v-text="file"
-                                            ></td> -->
                                             <td
                                                 class="text-end font-weight-medium"
                                             >
@@ -440,59 +431,11 @@
                                             >
                                                 Send survey document
                                             </button>
-                                            <!--   <button
-                                                v-else
-                                                type="button"
-                                                disabled
-                                                class="
-                                                    btn
-                                                    btn-outline-success
-                                                    btn-rounded
-                                                "
-                                            >
-                                                <i
-                                                    class="
-                                                        fas
-                                                        fa-plane
-                                                        fas
-                                                        fa-spin
-                                                    "
-                                                ></i>
-                                            </button> -->
-                                            <!--  <button
-                                            type="button"
-                                            class="
-                                                btn btn-success btn-lg
-                                                fas
-                                                fa-paper-plane
-                                            "
-                                            @click="
-                                                sendToImmcase(
-                                                    file,
-                                                    clitem.clitemsno
-                                                )
-                                            "
-                                        >
-                                            Send document
-                                        </button> -->
-                                            <!--  <button
-                                                type="button"
-                                                class="
-                                                    btn btn-danger btn-lg
-                                                    fas
-                                                    fa-trash-alt
-                                                "
-                                                @click="deleteFile(file)"
-                                            >
-                                                Remove document
-                                            </button> -->
                                         </td>
                                     </div>
 
-                                    <!--  -->
-
                                     <div
-                                        :v-if="
+                                        v-if="
                                             clitem.cf_1200 != 'Questionnaire' &&
                                             (clitem.cf_1578 === 'Pending' ||
                                                 clitem.cf_1578 ===
@@ -695,6 +638,8 @@ export default {
             file: "",
             clFiles: [],
             survey: {},
+
+            clitemID: null,
         };
     },
     components: {
@@ -778,7 +723,6 @@ export default {
             axios
                 .post("/cl-item/dropfile", { file: file })
                 .then(function (response) {
-                    console.log(response);
                     Swal.fire({
                         type: "success",
                         title: "Document deleted",
@@ -811,7 +755,6 @@ export default {
             axios
                 .post("/cl-item", { id: urlParams[4] })
                 .then(function (response) {
-                     console.log(response);
                     if ("error" in response.data) {
                         Swal.fire({
                             type: "error",
@@ -873,7 +816,7 @@ export default {
                     clitemsno: clitems_no,
                 })
                 .then(function (response) {
-                    if (response.data === "success") {
+                    if (response.status === 200) {
                         Swal.fire({
                             type: "success",
                             title: " ✔ This survey has been answered and sent to manager. ✔",

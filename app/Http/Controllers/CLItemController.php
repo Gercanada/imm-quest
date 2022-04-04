@@ -59,7 +59,7 @@ class CLItemController extends Controller
             $files = [];
             $itemfiles = [];
             foreach ($dirFiles as $file) {
-                array_push($files, env("APP_ENV") === 'local' ?: 'app/public/' . $file);
+                array_push($files, env("APP_ENV") === 'local' ? $file : 'app/public/' . $file);
             }
             $itemfiles = ['key' => $item->clitemsno, 'files' => $files];
             $item->files = $itemfiles;
@@ -116,8 +116,6 @@ class CLItemController extends Controller
             if (!is_array($files)) {
                 $files = [$files];
             }
-
-            //vamo a ver
             $fileList = [];
             $contact_no = $contact->contact_no;
             $destination = "documents/contact/$contact_no/cases/$case->ticket_no-$case->ticketcategories/checklists/$checklist->checklistno-$checklist->cf_1706/clitems/$clitem->clitemsno-$clitem->cf_1200";
@@ -127,16 +125,22 @@ class CLItemController extends Controller
             }
             $destination = str_replace(' ', '_', $destination);
 
+            $newFilePath =  "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs";
+
             foreach ($files as $file) {
                 $filename = $file->getClientOriginalName();
                 $filename = str_replace(' ', '', $filename);
                 $filename = str_replace('-', '_', $filename);
                 $file->storeAs("/public/$destination", $filename);
                 $fileUrl = "$destination/$filename";
+                self::putInDrive($newFilePath, [$file]);
+                $request->request->add(['file' => $file]);
+                $del = new CLItemController();
+                $del->deleteDocument($request);
+
                 array_push($fileList, $fileUrl);
             }
             return response()->json(200);
-            return response()->json($fileList, 200);
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CLItemController' => 'uploadFile']);
         }
@@ -255,8 +259,8 @@ class CLItemController extends Controller
                 $file = implode('/', $spliced);
             }
             $urlFile =  $file;
-            if (Storage::exists($urlFile)) {
-                Storage::delete($urlFile);
+            if (Storage::exists($urlFile) ?: Storage::disk('public')->exists($urlFile)) {
+                Storage::delete($urlFile) ?: Storage::disk('public')->delete($urlFile);
                 return  response()->json("File removed from temporary storage", 200);
             } else {
                 return response()->json("File not found at " . $urlFile, 403);
@@ -406,7 +410,7 @@ class CLItemController extends Controller
                         $urls =  $filesUrls;
                         foreach ($urls as  $url) {
                             $request->request->add(['file' => $url]);
-                            $docsTask->destroy($request);
+                            // $docsTask->destroy($request);
                         }
                     } else {
                         sleep(3);

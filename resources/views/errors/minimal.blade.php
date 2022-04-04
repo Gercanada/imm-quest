@@ -16,7 +16,7 @@
         }
 
         .container-fluid {
-            background-image: url('/{{ env('ASSET_URL') }}images/iss_0893_05172_1.jpg');
+            background-image: url('/{{ env('ASSET_URL') }}images/fondocanada.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: auto;

@@ -26,7 +26,6 @@
                 </tbody>
             </table>
         </div>
-        <!--  -->
         <div class="shadow p-1 mt-4 rounded">
             <h3 class="card-title">
                 <i class="mr-1 font-18 mdi mdi-timelapse"></i> Pending items
@@ -36,9 +35,11 @@
                     <thead>
                         <tr>
                             <th scope="col">CL Item Name</th>
+                            <td>Description</td>
                             <th scope="col">Status</th>
-                            <th scope="col">Help link</th>
-                            <th scope="col">View</th>
+                            <td>Category</td>
+                            <td>Uploaded file Name</td>
+                            <th scope="col">Upload file</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -53,26 +54,89 @@
                             "
                         >
                             <td>{{ clitem_a.name }}</td>
+                            <td>{{ clitem_a.cf_acf_rtf_1208 }}</td>
                             <td>{{ clitem_a.cf_1578 }}</td>
+                            <td>{{ clitem_a.cf_1200 }}</td>
+                            <td>{{ clitem_a.cf_1970 }}</td>
                             <td>
                                 <a :href="clitem_a.cf_1212">{{
                                     clitem_a.cf_1212
                                 }}</a>
                             </td>
                             <td>
-                                <a
-                                    :href="
-                                        '/checklist/' +
-                                        checklist.id +
-                                        '/item/' +
-                                        clitem_a.id
+                                <div
+                                    v-if="
+                                        clitem_a.cf_1578 === 'Pending' ||
+                                        clitem_a.cf_1578 ===
+                                            'Replacement Needed'
                                     "
-                                    data-toggle="tooltip"
-                                    title="View details"
-                                    class="btn btn-outline-success btn-rounded"
                                 >
-                                    <i class="fas fa-eye"></i>
-                                </a>
+                                    <div
+                                        class="btn-list"
+                                        v-if="
+                                            clitem_a.files['files'].length == 0
+                                        "
+                                    >
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-primary btn-rounded"
+                                            @click="
+                                                openModal(
+                                                    'documents',
+                                                    'store',
+                                                    clitem_a.id
+                                                )
+                                            "
+                                        >
+                                            <i class="fas fa-upload"></i>
+                                        </button>
+                                    </div>
+
+                                    <div v-else>
+                                        <div
+                                            v-for="file in clitem_a.files[
+                                                'files'
+                                            ]"
+                                        >
+                                            <label
+                                                for=""
+                                                v-text="
+                                                    file.split('/')[
+                                                        file.split('/').length -
+                                                            1
+                                                    ]
+                                                "
+                                            ></label>
+                                            <button
+                                                type="button"
+                                                class="btn btn-outline-success btn-rounded float-left"
+                                                data-toggle="tooltip"
+                                                data-placement="bottom"
+                                                title="Send document"
+                                                @click="
+                                                    sendToImmcase(
+                                                        file,
+                                                        clitem_a.clitemsno
+                                                    )
+                                                "
+                                            >
+                                                <i
+                                                    class="fas fa-paper-plane"
+                                                ></i>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                class="btn btn-outline-danger btn-rounded float-right"
+                                                @click="deleteFile(file)"
+                                                data-toggle="tooltip"
+                                                data-placement="bottom"
+                                                title="Remove document"
+                                            >
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -90,7 +154,7 @@
                             <th scope="col">CL Item Name</th>
                             <th scope="col">Help link</th>
                             <th scope="col">Status</th>
-                            <th>View</th>
+                            <th>Send</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -128,7 +192,7 @@
                             <th scope="col">CL Item Name</th>
                             <th scope="col">Help link</th>
                             <th scope="col">Status</th>
-                            <th>Refresh status</th>
+                            <th>Send before answer</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -148,7 +212,7 @@
                                 }}</a>
                             </td>
                             <td>{{ clitem_c.cf_1578 }}</td>
-                            <!--  <td>
+                            <td>
                                 <button
                                     v-if="loading == false"
                                     type="submit"
@@ -165,21 +229,6 @@
                                 >
                                     <i class="icon-refresh fas fa-spin"></i>
                                 </button>
-                            </td> -->
-                            <td>
-                                <a
-                                    :href="
-                                        '/checklist/' +
-                                        checklist.id +
-                                        '/item/' +
-                                        clitem_c.id
-                                    "
-                                    data-toggle="tooltip"
-                                    title="View details"
-                                    class="btn btn-outline-success btn-rounded"
-                                >
-                                    <i class="fas fa-eye"></i
-                                ></a>
                             </td>
                         </tr>
                     </tbody>
@@ -234,9 +283,89 @@
                 </table>
             </div>
         </div>
+        <template v-if="actionType == 1">
+            <div
+                class="modal fade"
+                tabindex="-1"
+                :class="{ mostrar: modal }"
+                role="dialog"
+                aria-labelledby="myModalLabel"
+                style="display: none; overflow-y: auto"
+                aria-hidden="true"
+            >
+                <div
+                    class="modal-dialog modal-primary modal-lg"
+                    style="padding-top: 55px"
+                    role="document"
+                >
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" v-text="modalTitle"></h4>
+
+                            <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                @click="closeModal()"
+                                aria-label="Close"
+                            >
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="flex flex-wrap -m-2">
+                                <div class="p-2 w-full">
+                                    <div class="relative">
+                                        <label
+                                            for="attachment"
+                                            class="leading-7 text-sm text-gray-600"
+                                            >Attachments</label
+                                        ><br />
+                                        <vue-dropzone
+                                            ref="myVueDropzone"
+                                            id="dropzone"
+                                            :options="dropzoneOptions"
+                                            @vdropzone-complete="
+                                                afterUploadComplete
+                                            "
+                                            @vdropzone-sending-multiple="
+                                                sendMessage
+                                            "
+                                        ></vue-dropzone>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-primary fas fa-save"
+                                @click="shootMessage"
+                            >
+                                Save
+                            </button>
+                            <button
+                                @click="closeModal()"
+                                type="button"
+                                class="btn btn-danger"
+                                data-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </template>
     </div>
 </template>
+
 <script>
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
 const urlParams = window.location.pathname.split("/");
 export default {
     name: "checklistComponent",
@@ -246,21 +375,168 @@ export default {
     },
     data() {
         return {
+            dropzoneOptions: {
+                url: "/cl-item/upload/file",
+                thumbnailWidth: 150,
+                maxFilesize: 5,
+                parallelUploads: 3,
+                maxFiles: 1,
+                uploadMultiple: true,
+                autoProcessQueue: false,
+                acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg,.pdf,.doc,.docx",
+                addRemoveLinks: true,
+                dictRemoveFile: "Remove file",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector(
+                        "meta[name=csrf-token]"
+                    ).content,
+                },
+            },
             clitems: [],
             checklist: "",
             loading: false,
             checklist_id: urlParams[2],
-            /*  headers: {
-                "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]")
-                    .content,
-            }, */
+            modal: 0,
+            modalTitle: "",
+            actionType: 0,
+            submitted: false,
+            errors: {},
+            sendSuccess: false,
+            clFiles: [],
         };
     },
     mounted() {
         this.show();
     },
+    components: {
+        vueDropzone: vue2Dropzone,
+    },
 
     methods: {
+        afterUploadComplete: async function () {
+            let me = this;
+            Swal.fire({
+                type: "success",
+                title: "Upload successfull!",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            me.closeModal();
+        },
+
+        shootMessage: async function () {
+            this.submitted = true;
+            this.errors = {};
+            console.log(Object.keys(this.errors));
+            if (Object.keys(this.errors).length) {
+                console.log(this.errors);
+                return;
+            }
+            this.$refs.myVueDropzone.processQueue();
+        },
+
+        sendMessage: async function (files, xhr, formData, id) {
+            formData.append("id", this.clitemID);
+        },
+
+        sendToImmcase(file, clitemsno) {
+            let me = this;
+            this.loading = true;
+            axios
+                .post("/cl-item/send_file", {
+                    clitemsno: clitemsno,
+                    file: file,
+                })
+                .then(function (response) {
+                    if (response.data === "success") {
+                        Swal.fire({
+                            type: "success",
+                            title: "Document sent. ",
+                            timer: 3000,
+                            showConfirmButton: false,
+                        });
+                    }
+                    me.show();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    Swal.fire({
+                        type: "error",
+                        title: "Document not sent",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                })
+                .finally(() => (this.loading = false));
+        },
+
+        deleteFile(file) {
+            let me = this;
+            this.loading = true;
+            axios
+                .post("/cl-item/dropfile", { file: file })
+                .then(function (response) {
+                    console.log(response);
+                    Swal.fire({
+                        type: "success",
+                        title: "Document deleted",
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                    me.show();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(() => (this.loading = false));
+        },
+
+        removedfile: function (file, respuesta) {
+            const params = {
+                imagen: file.nombreServidor,
+                uuid: document.querySelector("#dropzone").value,
+            };
+
+            axios.post("/drive/delete", params).then((respuesta) => {
+                // Eliminar del DOM
+                file.previewElement.parentNode.removeChild(file.previewElement);
+            });
+        },
+
+        closeModal() {
+            this.modal = 0;
+            this.title = "";
+            this.description = "";
+            this.expiry_date = "";
+            this.issued_date = "";
+            this.dropzone = null;
+            this.submitted = false;
+            this.errors = {};
+            this.show();
+        },
+
+        openModal(model, action, data = []) {
+            console.log(data);
+            switch (model) {
+                case "documents": {
+                    switch (action) {
+                        case "store": {
+                            this.modal = 1;
+                            this.modalTitle = "Upload documents";
+                            this.clitemID = data;
+                            this.title = data.title;
+                            this.description = data.description;
+                            this.expiry_date = data.expiry_date;
+                            this.issued_date = data.issued_date;
+                            this.actionType = 1;
+                            break;
+                        }
+                    }
+                }
+            }
+        },
+
+        /*  */
         show() {
             let me = this;
             this.loading = true;
@@ -273,7 +549,6 @@ export default {
             axios
                 .get("/checklist/" + checklistID + "/items")
                 .then(function (response) {
-                    console.log(response);
                     me.checklist = response.data[0];
                     me.clitems = response.data[1];
                 })
@@ -290,7 +565,10 @@ export default {
                     clitemsno: clitems_no,
                 })
                 .then(function (response) {
-                    if (response.data === "success") {
+                    if (
+                        response.data === "success" ||
+                        response.data === "Success"
+                    ) {
                         Swal.fire({
                             type: "success",
                             title: " ✔ This survey has been answered and sent to manager. ✔",
