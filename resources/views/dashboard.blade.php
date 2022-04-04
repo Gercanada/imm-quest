@@ -126,9 +126,9 @@
             </div>
 
             <div class="col-lg-4 col-md-6">
-                <a href="#" data-placement="right" data-toggle="popover" title="Go to clitem"
+                {{-- <a href="#" data-placement="right" data-toggle="popover" title="Go to clitem"
                     data-content="<a href='' title='test add link'>link 1 </a> </br> <a href=''  title='test add link'>link 2 </a>"
-                    class="bg-info">
+                    class="bg-info"> --}}
                     <div class="card shadow  p-1 rounded">
                         <div class="card-body">
                             <div class="d-flex no-block">
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                </a>
+               {{--  </a> --}}
             </div>
             <div class="col-lg-4 col-md-6  ">
                 <a href="{{ route('cases') }}">
