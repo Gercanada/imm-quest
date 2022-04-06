@@ -7,14 +7,14 @@
                         <th>Checklist No</th>
                         <td>{{ checklist.checklistno }}</td>
                     </tr>
-                    <tr>
+                    <!--   <tr>
                         <th>Active Items</th>
                         <td>{{ checklist.cf_1185 }}</td>
                     </tr>
                     <tr>
                         <th>Completed Items</th>
                         <td>{{ checklist.cf_1189 }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th>Status</th>
                         <td>{{ checklist.cf_1179 }}</td>
@@ -35,11 +35,11 @@
                     <thead>
                         <tr>
                             <th scope="col">CL Item Name</th>
-                            <td>Description</td>
+                            <!-- <td>Description</td> -->
                             <th scope="col">Status</th>
                             <td>Category</td>
-                            <td>Uploaded file Name</td>
-                            <th scope="col">Upload file</th>
+                            <!--   <td>Uploaded file Name</td>
+                            <th scope="col">Upload file</th> -->
                             <th></th>
                         </tr>
                     </thead>
@@ -54,15 +54,15 @@
                             "
                         >
                             <td>{{ clitem_a.name }}</td>
-                            <td>{{ clitem_a.cf_acf_rtf_1208 }}</td>
+                            <!-- <td>{{ clitem_a.cf_acf_rtf_1208 }}</td> -->
                             <td>{{ clitem_a.cf_1578 }}</td>
                             <td>{{ clitem_a.cf_1200 }}</td>
-                            <td>{{ clitem_a.cf_1970 }}</td>
+                            <!-- <td>{{ clitem_a.cf_1970 }}</td>
                             <td>
                                 <a :href="clitem_a.cf_1212">{{
                                     clitem_a.cf_1212
                                 }}</a>
-                            </td>
+                            </td> -->
                             <td>
                                 <div
                                     v-if="
@@ -88,7 +88,8 @@
                                                 )
                                             "
                                         >
-                                            <i class="fas fa-upload"></i>
+                                            <i class="fas fa-upload"></i>Upload
+                                            file
                                         </button>
                                     </div>
 
@@ -99,6 +100,7 @@
                                             ]"
                                         >
                                             <label
+                                                class="text-center"
                                                 for=""
                                                 v-text="
                                                     file.split('/')[
@@ -107,33 +109,39 @@
                                                     ]
                                                 "
                                             ></label>
-                                            <button
-                                                type="button"
-                                                class="btn btn-outline-success btn-rounded float-left"
-                                                data-toggle="tooltip"
-                                                data-placement="bottom"
-                                                title="Send document"
-                                                @click="
-                                                    sendToImmcase(
-                                                        file,
-                                                        clitem_a.clitemsno
-                                                    )
-                                                "
-                                            >
-                                                <i
-                                                    class="fas fa-paper-plane"
-                                                ></i>
-                                            </button>
-                                            <button
-                                                type="button"
-                                                class="btn btn-outline-danger btn-rounded float-right"
-                                                @click="deleteFile(file)"
-                                                data-toggle="tooltip"
-                                                data-placement="bottom"
-                                                title="Remove document"
-                                            >
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
+                                            <div class="btn-list">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-outline-success btn-rounded"
+                                                    data-toggle="tooltip"
+                                                    data-placement="bottom"
+                                                    title="Send document"
+                                                    @click="
+                                                        sendToImmcase(
+                                                            file,
+                                                            clitem_a.clitemsno
+                                                        )
+                                                    "
+                                                >
+                                                    <i
+                                                        class="fas fa-paper-plane"
+                                                    ></i>
+                                                    Send
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-outline-danger btn-rounded"
+                                                    @click="deleteFile(file)"
+                                                    data-toggle="tooltip"
+                                                    data-placement="bottom"
+                                                    title="Remove document"
+                                                >
+                                                    <i
+                                                        class="fas fa-trash-alt"
+                                                    ></i>
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +151,7 @@
                 </table>
             </div>
         </div>
-        <div class="shadow p-1 mt-4 rounded">
+        <!--  <div class="shadow p-1 mt-4 rounded">
             <h3 class="card-title">
                 <i class="mr-1 font-18 mdi mdi-textbox"></i> Electronic forms
             </h3>
@@ -234,7 +242,8 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> -->
+
         <div class="shadow p-1 mt-4 rounded">
             <h3 class="card-title">
                 <i class="mr-1 font-18 mdi mdi-telegram"></i>Submited items
@@ -275,7 +284,7 @@
                                     title="View details"
                                     class="btn btn-outline-success btn-rounded"
                                 >
-                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-eye"></i>Details
                                 </a>
                             </td>
                         </tr>
@@ -283,6 +292,7 @@
                 </table>
             </div>
         </div>
+
         <template v-if="actionType == 1">
             <div
                 class="modal fade"

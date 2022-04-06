@@ -22,22 +22,20 @@ class Controller extends BaseController
 
     public function returnJsonError($e, $onMethod)
     {
-        $newArr = [];
+        $errArr = [];
         if (env('APP_ENV') === 'local') {
-            // $this->consoleWrite()->writeln("!! ERROR implode(',', $onMethod)");
             $this->consoleWrite()->writeln('Error with code ' .   $e->getCode() . ' at line ' . $e->getLine() . '\n' . $e->getMessage());
-
-            array_push($newArr, $onMethod, [
+            array_push($errArr, $onMethod, [
                 'message' => $e->getMessage(),
                 'details' => $e
             ]);
-            return response()->json(['error' => $newArr], 500);
+            return response()->json(['error' => $errArr], 500);
         } else {
             //array_push($omMethod, $e->getMessage());            
-            array_push($newArr, $onMethod, [
+            array_push($errArr, $onMethod, [
                 'message' => $e->getMessage(),
             ]);
-            return response()->json(['error' => $newArr], 500);
+            return response()->json(['error' => $errArr], 500);
         }
     }
 

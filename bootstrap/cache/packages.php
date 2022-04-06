@@ -17,6 +17,13 @@
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
     ),
   ),
+  'geekshubs/rabbitmq' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Geekshubs\\RabbitMQ\\RabbitMQServiceProvider',
+    ),
+  ),
   'jbtje/vtiger-laravel' => 
   array (
     'providers' => 

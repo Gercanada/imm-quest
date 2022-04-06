@@ -36,7 +36,8 @@ class CLItemController extends Controller
             $case      = CPCase::where('id', $item->cf_1217)->where('contact_id', $contact->id)->first();
 
             if (!$contact || !$item || !$checklist || !$case) {
-                $crashed = !$contact ? "Contact" : !$item ? "CLItem" : !$checklist ? "Checklist" : !$case ? "Case" : null;
+                // $bar = ($foo == 1) ? "1" : (($foo == 2)  ? "2" : "other");
+                $crashed = (!$contact) ? "Contact" : ((!$item)  ? "CLItem" : (!$checklist ? "Checklist" : (!$case ? "Case" : null)));
                 return response()->json(
                     [
                         "error" =>

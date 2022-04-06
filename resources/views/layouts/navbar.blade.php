@@ -55,7 +55,9 @@
             </li> --}}
             <!-- Profile -->
             <!-- ============================================================== -->
-            <sync-cp-component></sync-cp-component>
+            @if (env('APP_ENV') === 'local')
+                <sync-cp-component></sync-cp-component>
+            @endif
             <li class="nav-item d-md-block waves-effect waves-dark">
             </li>
             <li class="nav-item dropdown">

@@ -17,6 +17,7 @@ use App\Http\Controllers\VtigerController;
 use App\Http\Controllers\LSurveyController;
 use App\Http\Controllers\CloneDBController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MqttController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,29 +33,33 @@ use App\Http\Controllers\AdminController;
 /**
  * Routes for survey submitted
  */
+Route::get('/mq/send', [MqttController::class, 'send']);
+
+
+
+
+
 Route::get('/submittedsurvey', [LSurveyController::class, 'submitted']);
 Route::get('/submitsurvey/id/{id}/tkn/{tkn}/lan/{ln}', [LSurveyController::class, 'onSubmit']);
-
 Route::get('/submitsurvey/id/{id}/response/{submitted_id}/lan/{ln}', [LSurveyController::class, 'submitByResponse']); //survey_id, respose_id
 
-// Route::get('/store', [LSurveyController::class, 'test']);
-
 Auth::routes();
+if (env('APP_ENV') === 'local') {
+    Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
+        //vtiger
+        Route::get('/admin', [AdminController::class, 'index']);
+        Route::get('/admin/types', [AdminController::class, 'getTypes']);
+        Route::post('/admin/types/describe', [AdminController::class, 'describeType']);
+        Route::post('/admin/types/save', [AdminController::class, 'saveRelation']);
 
-Route::middleware('auth')->group(/* ['middleware' => ['auth', 'admin']],  */function () {  // user as cp admin
-    //vtiger
-    Route::get('/admin', [AdminController::class, 'index']);
-    Route::get('/admin/types', [AdminController::class, 'getTypes']);
-    Route::post('/admin/types/describe', [AdminController::class, 'describeType']);
-    Route::post('/admin/types/save', [AdminController::class, 'saveRelation']);
+        Route::get('/vtiger/describe/types/{user_id}', [VtigerController::class, "types"]);
+        Route::get('/vtiger/list/{type}/{where}',      [VtigerController::class, 'goType']);
+        Route::post('/vtiger_config',                  [VtigerController::class, 'configTypes'])->name('configTypes'); // Config access for users ((not required now))
+        Route::get('/user_types_access',               [VtigerController::class, 'show']);
+        Route::get('/vtiger/describe/{type}',          [VtigerController::class, 'getType']);
+    });
+}
 
-
-    Route::get('/vtiger/describe/types/{user_id}', [VtigerController::class, "types"]);
-    Route::get('/vtiger/list/{type}/{where}',      [VtigerController::class, 'goType']);
-    Route::post('/vtiger_config',                  [VtigerController::class, 'configTypes'])->name('configTypes'); // Config access for users ((not required now))
-    Route::get('/user_types_access',               [VtigerController::class, 'show']);
-    Route::get('/vtiger/describe/{type}',          [VtigerController::class, 'getType']);
-});
 
 
 

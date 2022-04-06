@@ -55,7 +55,7 @@
                         href="{{ route('checklists') }}" aria-expanded="false"><i data-feather="clipboard"
                             class="feather-icon"></i><span class="hide-menu">Checklists</span></a></li>
 
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+               {{--  <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                         href="{{ route('quotes') }}" aria-expanded="false"><i data-feather="file-text"
                             class="feather-icon"></i><span class="hide-menu">Quotes</span></a></li>
 
@@ -77,7 +77,7 @@
 
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
                         aria-expanded="false"><i data-feather="credit-card" class="feather-icon"></i><span
-                            class="hide-menu">Make a payment</span></a></li>
+                            class="hide-menu">Make a payment</span></a></li> --}}
 
 
                 <li class="sidebar-item">
