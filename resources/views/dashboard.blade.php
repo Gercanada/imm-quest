@@ -169,7 +169,7 @@
         <!-- End Row -->
         <!-- Start row -->
         <div class="row pt-3">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="card shadow  p-1 rounded">
                     <div class="card-header">
                         <h2 class="card-title"><span class="lstick d-inline-block align-middle"></span>My cases
