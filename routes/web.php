@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\FactorController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuestionController;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,17 +20,22 @@ use App\Http\Controllers\QuestionController;
 /* Route::get('/', function () {
     return view('index');
 }); */
-Route::get('/', [QuestionController::class,"index"]);
+// Route::get('/', [QuestionController::class,"index"]);
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/tempdata', [HomeController::class, 'tempData']);
+
+Route::get('/factor-1/ages', [FactorController::class, 'getAges']);
+
 Route::get('/create', function () {
     return view('create');
 });
 
 Auth::routes();
 
+/*
 Route::get('/questions', [QuestionController::class, "questions"]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); */

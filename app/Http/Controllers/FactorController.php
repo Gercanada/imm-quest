@@ -3,83 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Models\Factor;
+use Exception;
 use Illuminate\Http\Request;
 
 class FactorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function getAges()
     {
-        //
+        try {
+            $alldata = $this->dataFile();
+            $tabla = $alldata['Tabla'];
+            $ages = [];
+            foreach ($tabla as $key => $item) {
+                foreach ($item as $key => $inner) {
+                    if ($key === "Sub Facto" && $inner === "Age") {
+                        array_push(
+                            $ages,
+                            [
+                                'Criterion' => $item['Criterion'],
+                                'Single' => $item['Single'],
+                                'Married' => $item['Married']
+                            ]
+                        );
+                    }
+                }
+            }
+
+            return response()->json($ages);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function dataFile()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Factor  $factor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Factor $factor)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Factor  $factor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Factor $factor)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Factor  $factor
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Factor $factor)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Factor  $factor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Factor $factor)
-    {
-        //
+        return json_decode(file_get_contents(storage_path() . "/temp-data.json"), true);
     }
 }
