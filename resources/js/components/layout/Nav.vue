@@ -19,13 +19,13 @@
                         <img
                             src="https://placekitten.com/50/50"
                             alt="homepage"
-                            class="dark-logo"
+                            class="dark-logo rounded"
                         />
                         <!-- Light Logo icon -->
                         <img
                             src="https://placekitten.com/50/50"
                             alt="homepage"
-                            class="light-logo"
+                            class="light-logo rounded-circle"
                         />
                     </b>
                     <!--End Logo icon -->
@@ -39,8 +39,8 @@
                         />
                         <!-- Light Logo text -->
                         <img
-                            src="https://placekitten.com/150/50"
-                            class="light-logo"
+                            src="https://placekitten.com/175/50"
+                            class="light-logo rounded"
                             alt="homepage"
                         />
                     </span>
@@ -314,7 +314,7 @@
                                             <span
                                                 class="user-img position-relative d-inline-block"
                                             >
-                                               <!--  <img
+                                                <!--  <img
                                                     src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
                                                     alt="user"
                                                     class="rounded-circle w-100"
@@ -791,7 +791,7 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                         >
-                           <!--  <img
+                            <!--  <img
                                 src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
                                 alt="user"
                                 width="30"
@@ -805,7 +805,7 @@
                                 <li>
                                     <div class="dw-user-box p-3 d-flex">
                                         <div class="u-img">
-                                           <!--  <img
+                                            <!--  <img
                                                 src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/1.jpg"
                                                 alt="user"
                                                 class="rounded"

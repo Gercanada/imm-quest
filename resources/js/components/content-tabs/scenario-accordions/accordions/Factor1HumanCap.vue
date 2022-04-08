@@ -326,9 +326,6 @@ export default {
             selectedSecondLanguage: "",
             secondlangs: [],
             totalScore: 0,
-
-            // scAge: 0,
-
             scoreForMarried: 0,
             scoreForSingle: 0,
         };

@@ -133,16 +133,12 @@ src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/
 <script
 src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/tables/bootstrap-table.init.js">
 </script>
-
 @if (env('APP_ENV') === 'local')
     <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
 @else
     <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script>
 @endif
-
 @yield('scripts')
-
 </body>
-
 
 </html>

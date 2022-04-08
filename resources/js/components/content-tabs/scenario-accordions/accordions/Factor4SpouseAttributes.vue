@@ -1,4 +1,4 @@
-<template lang="html">
+<template lang="html" v-if="maritialStatus === 'Married'">
     <div class="card mb-0">
         <div class="card-header" id="headingOne">
             <div class="row">
@@ -7,11 +7,12 @@
                         <a
                             class="custom-accordion-title d-block pt-2 pb-2"
                             data-toggle="collapse"
-                            href="#collapseHabilityTransfer"
+                            href="#collapseSpouseAttributes"
                             aria-expanded="true"
-                            aria-controls="collapseHabilityTransfer"
+                            aria-controls="collapseSpouseAttributes"
                         >
-                            Factor 2: Transferibilidad de actividades
+                            Factor 4: Atributos de pareja (en caso de que
+                            aplique)
                             <span class="float-right"
                                 ><i
                                     class="mdi mdi-chevron-down accordion-arrow"
@@ -35,7 +36,7 @@
             </div>
         </div>
         <div
-            id="collapseHabilityTransfer"
+            id="collapseSpouseAttributes"
             class="collapse show"
             aria-labelledby="headingOne"
             data-parent="#accordion"
@@ -45,18 +46,18 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-4">
-                            <label>Education and language</label>
+                            <label>Spouse Can W. Exp</label>
                         </div>
                         <div class="col-4">
                             <select
                                 class="form-control"
                                 id="select2-search-hide"
                                 style="width: 100%; height: 36px"
-                                @change="getSubFactor('Education and Language')"
-                                v-model="selectedEdAndLan"
+                                @change="getSubFactor('Spouse Can W. Exp')"
+                                v-model="selectedCanWExperiency"
                             >
                                 <option
-                                    v-for="item in educationandlanguages"
+                                    v-for="item in spouseCanWExperiencies"
                                     :value="item"
                                 >
                                     {{ item.Criterion }}
@@ -70,8 +71,8 @@
                                 class="form-control"
                                 :value="
                                     maritialStatus === 'Married'
-                                        ? selectedEdAndLan['Married']
-                                        : selectedEdAndLan['Single']
+                                        ? selectedCanWExperiency['Married']
+                                        : selectedCanWExperiency['Single']
                                 "
                             />
                         </div>
@@ -81,22 +82,18 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-4">
-                            <label>Education and Canadian Wok Experience</label>
+                            <label>Spouse Education</label>
                         </div>
                         <div class="col-4">
                             <select
                                 class="form-control"
                                 id="select2-search-hide"
                                 style="width: 100%; height: 36px"
-                                @change="
-                                    getSubFactor(
-                                        'Education and Canadian Wok Experience'
-                                    )
-                                "
-                                v-model="selectedWorkExperiency"
+                                @change="getSubFactor('Spouse Education')"
+                                v-model="selectedSpousedLanReading"
                             >
                                 <option
-                                    v-for="item in canadianWorkExperiencies"
+                                    v-for="item in spouseEducations"
                                     :value="item"
                                 >
                                     {{ item.Criterion }}
@@ -110,8 +107,8 @@
                                 class="form-control"
                                 :value="
                                     maritialStatus === 'Married'
-                                        ? selectedWorkExperiency['Married']
-                                        : selectedWorkExperiency['Single']
+                                        ? selectedSpousedLanReading['Married']
+                                        : selectedSpousedLanReading['Single']
                                 "
                             />
                         </div>
@@ -121,7 +118,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-4">
-                            <label>Language and Foeign Wok Experience</label>
+                            <label>Spouse language | Reading</label>
                         </div>
                         <div class="col-4">
                             <select
@@ -129,14 +126,12 @@
                                 id="select2-search-hide"
                                 style="width: 100%; height: 36px"
                                 @change="
-                                    getSubFactor(
-                                        'Language and Foeign Wok Experience'
-                                    )
+                                    getSubFactor('Spouse language | Reading')
                                 "
-                                v-model="selectedForeignLanExperiency"
+                                v-model="selectedSpousedLanWritting"
                             >
                                 <option
-                                    v-for="item in ForeignLanWorkExperiencies"
+                                    v-for="item in spouseLanguageReading"
                                     :value="item"
                                 >
                                     {{ item.Criterion }}
@@ -150,10 +145,8 @@
                                 class="form-control"
                                 :value="
                                     maritialStatus === 'Married'
-                                        ? selectedForeignLanExperiency[
-                                              'Married'
-                                          ]
-                                        : selectedForeignLanExperiency['Single']
+                                        ? selectedSpousedLanWritting['Married']
+                                        : selectedSpousedLanWritting['Single']
                                 "
                             />
                         </div>
@@ -163,10 +156,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-4">
-                            <label
-                                >Canadian Wok Experience and Foeign Wok
-                                Experience</label
-                            >
+                            <label>Spouse language | Writing</label>
                         </div>
                         <div class="col-4">
                             <select
@@ -174,14 +164,12 @@
                                 id="select2-search-hide"
                                 style="width: 100%; height: 36px"
                                 @change="
-                                    getSubFactor(
-                                        'Canadian Wok Experience and Foeign Wok Experience'
-                                    )
+                                    getSubFactor('Spouse language | Writing')
                                 "
-                                v-model="selectedForeignAndCanadian"
+                                v-model="selectedSpousedLanWritting"
                             >
                                 <option
-                                    v-for="item in ForeignAndCanadianWorkExperiencies"
+                                    v-for="item in spouseLanguageWritting"
                                     :value="item"
                                 >
                                     {{ item.Criterion }}
@@ -195,8 +183,8 @@
                                 class="form-control"
                                 :value="
                                     maritialStatus === 'Married'
-                                        ? selectedForeignAndCanadian['Married']
-                                        : selectedForeignAndCanadian['Single']
+                                        ? selectedSpousedLanWritting['Married']
+                                        : selectedSpousedLanWritting['Single']
                                 "
                             />
                         </div>
@@ -206,10 +194,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-4">
-                            <label
-                                >Certificate of Qualification and
-                                Language</label
-                            >
+                            <label>Spouse language | Listening</label>
                         </div>
                         <div class="col-4">
                             <select
@@ -217,14 +202,12 @@
                                 id="select2-search-hide"
                                 style="width: 100%; height: 36px"
                                 @change="
-                                    getSubFactor(
-                                        'Certificate of Qualification and Language'
-                                    )
+                                    getSubFactor('Spouse language | Listening')
                                 "
-                                v-model="selectedLangCertificateQualification"
+                                v-model="selectedSpousedListening"
                             >
                                 <option
-                                    v-for="item in LangCertificateQualifications"
+                                    v-for="item in spouseLanguageListening"
                                     :value="item"
                                 >
                                     {{ item.Criterion }}
@@ -238,18 +221,51 @@
                                 class="form-control"
                                 :value="
                                     maritialStatus === 'Married'
-                                        ? selectedLangCertificateQualification[
-                                              'Married'
-                                          ]
-                                        : selectedLangCertificateQualification[
-                                              'Single'
-                                          ]
+                                        ? selectedSpousedListening['Married']
+                                        : selectedSpousedListening['Single']
                                 "
                             />
                         </div>
                     </div>
                 </div>
-                <!--Canadian Wok Experience and Foeign Wok Experience factor -->
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Spouse language | Speaking</label>
+                        </div>
+                        <div class="col-4">
+                            <select
+                                class="form-control"
+                                id="select2-search-hide"
+                                style="width: 100%; height: 36px"
+                                @change="
+                                    getSubFactor('Spouse language | Speaking')
+                                "
+                                v-model="selectedSpousedSpeaking"
+                            >
+                                <option
+                                    v-for="item in spouseLanguageSpeaking"
+                                    :value="item"
+                                >
+                                    {{ item.Criterion }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-4">
+                            <input
+                                type="text"
+                                class="form-control"
+                                :value="
+                                    maritialStatus === 'Married'
+                                        ? selectedSpousedSpeaking['Married']
+                                        : selectedSpousedSpeaking['Single']
+                                "
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -262,94 +278,89 @@ export default {
             scoreForMarried: 0,
             scoreForSingle: 0,
 
-            educationandlanguages: [],
-            canadianWorkExperiencies: [],
-            ForeignLanWorkExperiencies: [],
-            ForeignAndCanadianWorkExperiencies: [],
-            LangCertificateQualifications: [],
-            selectedEdAndLan: "",
-            selectedWorkExperiency: "",
-            selectedForeignLanExperiency: "",
-            selectedForeignAndCanadian: "",
-            selectedLangCertificateQualification: "",
+            spouseCanWExperiencies: [],
+            spouseEducations: [],
+            spouseLanguageReading: [],
+            spouseLanguageWritting: [],
+            spouseLanguageListening: [],
+            spouseLanguageSpeaking: [],
+
+            selectedCanWExperiency: "",
+            selectedSpousedLanReading: "",
+            selectedSpousedLanWritting: "",
+            selectedSpousedListening: "",
+            selectedSpousedSpeaking: "",
         };
     },
     mounted() {
-        this.getSubFactor("Education and Language");
-        this.getSubFactor("Education and Canadian Wok Experience");
-        this.getSubFactor("Language and Foeign Wok Experience");
-        this.getSubFactor("Canadian Wok Experience and Foeign Wok Experience");
-        this.getSubFactor("Certificate of Qualification and Language");
+        this.getSubFactor("Spouse Can W. Exp");
+        this.getSubFactor("Spouse Education");
+        this.getSubFactor("Spouse language | Reading");
+        this.getSubFactor("Spouse language | Writing");
+        this.getSubFactor("Spouse language | Listening");
+        this.getSubFactor("Spouse language | Speaking");
     },
     methods: {
         getSubFactor(subFactor) {
             let me = this;
             axios.get("/factor-2/" + subFactor).then(function (response) {
-                if (subFactor === "Education and Language") {
-                    me.educationandlanguages = response.data;
+                if (subFactor === "Spouse Can W. Exp") {
+                    me.spouseCanWExperiencies = response.data;
                 }
-                if (subFactor === "Education and Canadian Wok Experience") {
-                    console.log(response.data);
-                    me.canadianWorkExperiencies = response.data;
+                if (subFactor === "Spouse Education") {
+                    me.spouseEducations = response.data;
                 }
-                if (subFactor === "Language and Foeign Wok Experience") {
-                    console.log(response.data);
-                    me.ForeignLanWorkExperiencies = response.data;
+                if (subFactor === "Spouse language | Reading") {
+                    me.spouseLanguageReading = response.data;
                 }
-                if (
-                    subFactor ===
-                    "Canadian Wok Experience and Foeign Wok Experience"
-                ) {
-                    console.log(response.data);
-                    me.ForeignAndCanadianWorkExperiencies = response.data;
+                if (subFactor === "Spouse language | Writing") {
+                    me.spouseLanguageWritting = response.data;
                 }
-                if (subFactor === "Certificate of Qualification and Language") {
-                    console.log(response.data);
-                    me.LangCertificateQualifications = response.data;
+                if (subFactor === "Spouse language | Listening") {
+                    me.spouseLanguageListening = response.data;
+                }
+                if (subFactor === "Spouse language | Speaking") {
+                    me.selectedSpousedSpeaking = response.data;
                 }
             });
             this.sumScore();
         },
 
         sumScore() {
-            // console.log(this.maritialStatus);
+            console.log(this.maritialStatus);
             this.scoreForMarried =
-                (this.selectedEdAndLan["Married"]
-                    ? Number(this.selectedEdAndLan["Married"])
+                (this.selectedCanWExperiency["Married"]
+                    ? Number(this.selectedCanWExperiency["Married"])
                     : 0) +
-                (this.selectedWorkExperiency["Married"]
-                    ? Number(this.selectedWorkExperiency["Married"])
+                (this.selectedSpousedLanReading["Married"]
+                    ? Number(this.selectedSpousedLanReading["Married"])
                     : 0) +
-                (this.selectedForeignLanExperiency["Married"]
-                    ? Number(this.selectedForeignLanExperiency["Married"])
+                (this.selectedSpousedLanWritting["Married"]
+                    ? Number(this.selectedSpousedLanWritting["Married"])
                     : 0) +
-                (this.selectedForeignAndCanadian["Married"]
-                    ? Number(this.selectedForeignAndCanadian["Married"])
+                (this.selectedSpousedListening["Married"]
+                    ? Number(this.selectedSpousedListening["Married"])
                     : 0) +
-                (this.selectedLangCertificateQualification["Married"]
-                    ? Number(
-                          this.selectedLangCertificateQualification["Married"]
-                      )
+                (this.selectedSpousedSpeaking["Married"]
+                    ? Number(this.selectedSpousedSpeaking["Married"])
                     : 0);
 
-            this.scoreForSingle =
-                (this.selectedEdAndLan["Single"]
-                    ? Number(this.selectedEdAndLan["Single"])
+            /*  this.scoreForSingle =
+                (this.selectedCanWExperiency["Single"]
+                    ? Number(this.selectedCanWExperiency["Single"])
                     : 0) +
-                (this.selectedWorkExperiency["Single"]
-                    ? Number(this.selectedWorkExperiency["Single"])
+                (this.selectedSpousedLanReading["Single"]
+                    ? Number(this.selectedSpousedLanReading["Single"])
                     : 0) +
-                (this.selectedForeignLanExperiency["Single"]
-                    ? Number(this.selectedForeignLanExperiency["Single"])
+                (this.selectedSpousedLanWritting["Single"]
+                    ? Number(this.selectedSpousedLanWritting["Single"])
                     : 0) +
-                (this.selectedForeignAndCanadian["Single"]
-                    ? Number(this.selectedForeignAndCanadian["Single"])
+                (this.selectedSpousedListening["Single"]
+                    ? Number(this.selectedSpousedListening["Single"])
                     : 0) +
-                (this.selectedLangCertificateQualification["Single"]
-                    ? Number(
-                          this.selectedLangCertificateQualification["Single"]
-                      )
-                    : 0);
+                (this.selectedSpousedSpeaking["Single"]
+                    ? Number(this.selectedSpousedSpeaking["Single"])
+                    : 0); */
         },
     },
 };
