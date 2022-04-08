@@ -22,20 +22,23 @@ use Illuminate\Support\Facades\Auth;
 }); */
 // Route::get('/', [QuestionController::class,"index"]);
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/tempdata', [HomeController::class, 'tempData']);
+Route::get('/tempdata', [FactorController::class, 'dataFile']);
+Route::get('/factors-table', [FactorController::class, 'factorsTable']);
 
+/* Factor 1 */
 Route::get('/factor-1/ages', [FactorController::class, 'getAges']);
+Route::get('/factor-1/work-experiency', [FactorController::class, 'getExperiency']);
+Route::get('/factor-1/education', [FactorController::class, 'getEducation']);
+Route::get('/factor-1/language-reading', [FactorController::class, 'getLangReading']);
+Route::get('/factor-1/language-listening', [FactorController::class, 'getLangListening']);
+Route::get('/factor-1/language-writting', [FactorController::class, 'getLangWritting']);
+Route::get('/factor-1/language-speaking', [FactorController::class, 'getLangSpeaking']);
+Route::get('/factor-1/second-language', [FactorController::class, 'getSecondLanguage']);
+
+/* factor 2 */
 
 Route::get('/create', function () {
     return view('create');
 });
 
 Auth::routes();
-
-/*
-Route::get('/questions', [QuestionController::class, "questions"]);
-
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); */

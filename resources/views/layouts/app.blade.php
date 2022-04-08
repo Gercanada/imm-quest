@@ -12,7 +12,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     @if (env('APP_ENV') === 'local')
-        <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('ASSET_URL') }}images/immvisassquarelight.png">
+        <link rel="icon" type="image/png" href="https://placekitten.com/70/170">
+        {{-- <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('ASSET_URL') }}images/immvisassquarelight.png"> --}}
     @else
         <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('ASSET_URL') }}images/immvisassquare.png">
     @endif

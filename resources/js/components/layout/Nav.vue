@@ -33,13 +33,13 @@
                     <span class="logo-text">
                         <!-- dark Logo text -->
                         <img
-                            src="https://placekitten.com/50/50"
+                            src="https://placekitten.com/150/50"
                             alt="homepage"
                             class="dark-logo"
                         />
                         <!-- Light Logo text -->
                         <img
-                            src="https://placekitten.com/50/50"
+                            src="https://placekitten.com/150/50"
                             class="light-logo"
                             alt="homepage"
                         />

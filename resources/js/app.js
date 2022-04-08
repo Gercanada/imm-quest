@@ -5,10 +5,11 @@
  */
 
 require('./bootstrap');
+import { createApp } from 'vue';
+import AppComponent from './components/App.vue';
+let app = createApp({});
 
-window.Vue = require('vue').default;
-Vue.component('app-component', require('./components/App.vue').default);
+app.component('app-component', AppComponent);
 
-const app = new Vue({
-    el: '#app',
-});
+
+app.mount("#app");

@@ -621,7 +621,6 @@ export default {
       axios
         .get("/questions")
         .then(function (response) {
-          console.log(response);
           const questions = response.data[0];
           const options = response.data[1];
           const factors = response.data[2];

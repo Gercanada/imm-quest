@@ -13,8 +13,9 @@
                                 type="radio"
                                 name="matrialStatus"
                                 id="isSingle"
-                                value="single"
-                                @change="changeStatus('single')"
+                                value="Single"
+                                checked
+                                @change="changeStatus('Single')"
                             />
                             <label class="form-check-label" for="isSingle"
                                 >Soltero</label
@@ -26,8 +27,8 @@
                                 type="radio"
                                 name="matrialStatus"
                                 id="isMarried"
-                                value="married"
-                                @change="changeStatus('married')"
+                                value="Married"
+                                @change="changeStatus('Married')"
                             />
                             <label class="form-check-label" for="isMarried"
                                 >Casado</label
@@ -37,19 +38,19 @@
                     <div class="col-4"></div>
                     <div class="col-4"></div>
                 </div>
-                <Factor1HumanCap :maritialStatus="this.maritialStatus" />
-                <!-- <Accordions :maritialStatus="maritialStatus" /> -->
+                <accordions :maritialStatus="maritialStatus" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Accordions from "./scenario-accordions/Accordions";
-import Factor1HumanCap from "./scenario-accordions/accordions/Factor1HumanCap.vue";
+import Accordions from "./scenario-accordions/Accordions.vue";
+// import Factor1HumanCap from "./scenario-accordions/accordions/Factor1HumanCap.vue";
+
 export default {
     components: {
-        Factor1HumanCap,
+        // Factor1HumanCap,
         Accordions,
     },
     data() {
@@ -57,9 +58,12 @@ export default {
             maritialStatus: "single",
         };
     },
+    mounted() {
+        // console.log(this.maritialStatus);
+    },
     methods: {
         changeStatus(value) {
-            console.log(value);
+            // console.log(value);
             this.maritialStatus = value;
         },
     },
