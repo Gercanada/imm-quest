@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Factor extends Model
 {
     use HasFactory;
-    protected $table ="factors";
+    protected $table = "factors";
+
+    public function subfactors()
+    {
+        return $this->hasMany(Subfactor::class);
+    }
 }

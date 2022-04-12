@@ -15,7 +15,6 @@ class FactorController extends Controller
 
     public function factorsTable($subfactor)
     {
-        // return $subfactor;
         if ($subfactor === 'all') {
             return  $this->dataFile()['Tabla'];
         } else {
@@ -44,7 +43,6 @@ class FactorController extends Controller
 
     public function getFactor($subFactor)
     {
-        //TODO Try to use seeder of data sheet
         try {
             $alldata = $this->dataFile();
             $tabla = $alldata['Tabla'];
@@ -120,5 +118,11 @@ class FactorController extends Controller
         return [$subfactors, $criteria];
         // return [$subfactors, $criteria];
         return  $criteria;
+    }
+
+    public function factors()/* get factors for  create accordions */
+    {
+        $factors = Factor::with('subfactors')->with('subfactors.criteria')->get();
+        return $factors;
     }
 }

@@ -25,5 +25,7 @@ Route::get('/factor/{subFactor}', [FactorController::class, 'getFactor']);
 
 Route::get('/subfactors', [FactorController::class, 'listSubfactors']); //List subfactors for create seeders
 
+Route::get('/factors', [FactorController::class, 'factors']);
+
 
 Auth::routes();
