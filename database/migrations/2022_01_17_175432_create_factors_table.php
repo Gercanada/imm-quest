@@ -16,7 +16,8 @@ class CreateFactorsTable extends Migration
         Schema::create('factors', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->string('sub_title')->nullable();
+            // $table->string('description')->nullable();
             $table->timestamps();
         });
     }

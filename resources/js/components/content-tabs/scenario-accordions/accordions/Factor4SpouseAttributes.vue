@@ -8,7 +8,7 @@
                             class="custom-accordion-title d-block pt-2 pb-2"
                             data-toggle="collapse"
                             href="#collapseSpouseAttributes"
-                            aria-expanded="true"
+                            aria-expanded="false"
                             aria-controls="collapseSpouseAttributes"
                         >
                             Factor 4: Atributos de pareja (en caso de que
@@ -37,7 +37,7 @@
         </div>
         <div
             id="collapseSpouseAttributes"
-            class="collapse show"
+            class="collapse"
             aria-labelledby="headingOne"
             data-parent="#accordion"
             style=""
@@ -45,7 +45,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <label>Spouse Can W. Exp</label>
                         </div>
                         <div class="col-4">
@@ -65,7 +65,7 @@
                             </select>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-2">
                             <input
                                 type="text"
                                 class="form-control"
@@ -81,7 +81,7 @@
                 <!-- education and langs factor -->
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <label>Spouse Education</label>
                         </div>
                         <div class="col-4">
@@ -90,7 +90,7 @@
                                 id="select2-search-hide"
                                 style="width: 100%; height: 36px"
                                 @change="getSubFactor('Spouse Education')"
-                                v-model="selectedSpousedLanReading"
+                                v-model="selectedSpouseEducation"
                             >
                                 <option
                                     v-for="item in spouseEducations"
@@ -100,8 +100,45 @@
                                 </option>
                             </select>
                         </div>
-
+                        <div class="col-2">
+                            <input
+                                type="text"
+                                class="form-control"
+                                :value="
+                                    maritialStatus === 'Married'
+                                        ? selectedSpouseEducation['Married']
+                                        : selectedSpouseEducation['Single']
+                                "
+                            />
+                        </div>
+                    </div>
+                </div>
+                <!-- education and canadian experiency factor -->
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Spouse language | Reading</label>
+                        </div>
                         <div class="col-4">
+                            <select
+                                class="form-control"
+                                id="select2-search-hide"
+                                style="width: 100%; height: 36px"
+                                @change="
+                                    getSubFactor('Spouse language | Reading')
+                                "
+                                v-model="selectedSpousedLanReading"
+                            >
+                                <option
+                                    v-for="item in spouseLanguageReading"
+                                    :value="item"
+                                >
+                                    {{ item.Criterion }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-2">
                             <input
                                 type="text"
                                 class="form-control"
@@ -114,48 +151,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- education and canadian experiency factor -->
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-4">
-                            <label>Spouse language | Reading</label>
-                        </div>
-                        <div class="col-4">
-                            <select
-                                class="form-control"
-                                id="select2-search-hide"
-                                style="width: 100%; height: 36px"
-                                @change="
-                                    getSubFactor('Spouse language | Reading')
-                                "
-                                v-model="selectedSpousedLanWritting"
-                            >
-                                <option
-                                    v-for="item in spouseLanguageReading"
-                                    :value="item"
-                                >
-                                    {{ item.Criterion }}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-4">
-                            <input
-                                type="text"
-                                class="form-control"
-                                :value="
-                                    maritialStatus === 'Married'
-                                        ? selectedSpousedLanWritting['Married']
-                                        : selectedSpousedLanWritting['Single']
-                                "
-                            />
-                        </div>
-                    </div>
-                </div>
                 <!-- Language and Foeign Wok Experiencey factor -->
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <label>Spouse language | Writing</label>
                         </div>
                         <div class="col-4">
@@ -177,7 +176,7 @@
                             </select>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-2">
                             <input
                                 type="text"
                                 class="form-control"
@@ -193,7 +192,7 @@
                 <!--Canadian Wok Experience and Foeign Wok Experience factor -->
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <label>Spouse language | Listening</label>
                         </div>
                         <div class="col-4">
@@ -215,7 +214,7 @@
                             </select>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-2">
                             <input
                                 type="text"
                                 class="form-control"
@@ -231,7 +230,7 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <label>Spouse language | Speaking</label>
                         </div>
                         <div class="col-4">
@@ -253,7 +252,7 @@
                             </select>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-2">
                             <input
                                 type="text"
                                 class="form-control"
@@ -286,6 +285,7 @@ export default {
             spouseLanguageSpeaking: [],
 
             selectedCanWExperiency: "",
+            selectedSpouseEducation: "",
             selectedSpousedLanReading: "",
             selectedSpousedLanWritting: "",
             selectedSpousedListening: "",
@@ -303,7 +303,7 @@ export default {
     methods: {
         getSubFactor(subFactor) {
             let me = this;
-            axios.get("/factor-2/" + subFactor).then(function (response) {
+            axios.get("/factor/" + subFactor).then(function (response) {
                 if (subFactor === "Spouse Can W. Exp") {
                     me.spouseCanWExperiencies = response.data;
                 }
@@ -320,7 +320,7 @@ export default {
                     me.spouseLanguageListening = response.data;
                 }
                 if (subFactor === "Spouse language | Speaking") {
-                    me.selectedSpousedSpeaking = response.data;
+                    me.spouseLanguageSpeaking = response.data;
                 }
             });
             this.sumScore();
@@ -331,6 +331,9 @@ export default {
             this.scoreForMarried =
                 (this.selectedCanWExperiency["Married"]
                     ? Number(this.selectedCanWExperiency["Married"])
+                    : 0) +
+                (this.selectedSpouseEducation["Married"]
+                    ? Number(this.selectedSpouseEducation["Married"])
                     : 0) +
                 (this.selectedSpousedLanReading["Married"]
                     ? Number(this.selectedSpousedLanReading["Married"])
@@ -344,23 +347,6 @@ export default {
                 (this.selectedSpousedSpeaking["Married"]
                     ? Number(this.selectedSpousedSpeaking["Married"])
                     : 0);
-
-            /*  this.scoreForSingle =
-                (this.selectedCanWExperiency["Single"]
-                    ? Number(this.selectedCanWExperiency["Single"])
-                    : 0) +
-                (this.selectedSpousedLanReading["Single"]
-                    ? Number(this.selectedSpousedLanReading["Single"])
-                    : 0) +
-                (this.selectedSpousedLanWritting["Single"]
-                    ? Number(this.selectedSpousedLanWritting["Single"])
-                    : 0) +
-                (this.selectedSpousedListening["Single"]
-                    ? Number(this.selectedSpousedListening["Single"])
-                    : 0) +
-                (this.selectedSpousedSpeaking["Single"]
-                    ? Number(this.selectedSpousedSpeaking["Single"])
-                    : 0); */
         },
     },
 };

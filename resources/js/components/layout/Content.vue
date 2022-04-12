@@ -65,7 +65,7 @@
                         >
                             <li class="nav-item">
                                 <a
-                                    href="#Sumary"
+                                    href="#Summary"
                                     data-toggle="tab"
                                     aria-expanded="false"
                                     class="nav-link active"
@@ -74,7 +74,7 @@
                                         class="mdi mdi-home-variant d-lg-none d-block mr-1"
                                     ></i>
                                     <span class="d-none d-lg-block"
-                                        >Sumary</span
+                                        >Summary</span
                                     >
                                 </a>
                             </li>
@@ -111,8 +111,8 @@
                         </ul>
 
                         <div class="tab-content" style="width: 100%">
-                            <div class="tab-pane show active" id="Sumary">
-                                <Sumary />
+                            <div class="tab-pane show active" id="Summary">
+                                <Summary />
                             </div>
                             <div class="tab-pane" id="Situation">
                                 <SituationA />
@@ -132,12 +132,12 @@
 </template>
 
 <script>
-import Sumary from "../content-tabs/Sumary.vue";
+import Summary from "../content-tabs/Summary.vue";
 import SituationA from "../content-tabs/SituationA.vue";
 import Scenario2 from "../content-tabs/Scenario2.vue";
 export default {
     components: {
-        Sumary,
+        Summary,
         SituationA,
         Scenario2,
     },
