@@ -16,12 +16,11 @@ class AddSubfactorIdToCriteriaTable extends Migration
     public function up()
     {
         Schema::table('criteria', function (Blueprint $table) {
-            /*  $subFactor  = new Subfactor();
+            $subFactor  = new Subfactor();
             $subFactor->subfactor = "default";
-            $subFactor->id = 5;
-            $subFactor->save(); */
+            $subFactor->save();
 
-            $table->unsignedBigInteger('subfactor_id')/* ->default($subFactor->id) */;
+            $table->unsignedBigInteger('subfactor_id')->default($subFactor->id);
             $table->foreign('subfactor_id')->references('id')->on('subfactors');
         });
     }

@@ -19,22 +19,22 @@ class FactorSeeder extends Seeder
 
         $data = [
             [
-                'id' => 1,
+                'id' => 2,
                 'title' => 'Factor 1 - ¿Qué se evalúa?',
                 'sub_title' => 'Factores centrales del Capital Humano',
             ],
             [
-                'id' => 2,
+                'id' => 3,
                 'title' => 'Factor 2 - ¿Qué se evalúa?',
                 'sub_title' => 'Transferibilidad de habilidades',
             ],
             [
-                'id' => 3,
+                'id' => 4,
                 'title' => 'Factor 3 - ¿Qué se evalúa?',
                 'sub_title' => 'Puntos Adicionales',
             ],
             [
-                'id' => 4,
+                'id' => 5,
                 'title' => 'Factor 4 - ¿Qué se evalúa?',
                 'sub_title' => 'Atributos de la pareja (en caso de que aplique)',
             ]

@@ -22568,9 +22568,125 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=script&lang=js ***!
   \*************************************************************************************************************************************************************************************************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\laragon\\www\\ImmQuest\\resources\\js\\components\\content-tabs\\scenario-accordions\\Accordions.vue: Unexpected token, expected \",\" (41:42)\n\n\u001b[0m \u001b[90m 39 |\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 40 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33m!\u001b[39m\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msingleValues\u001b[33m.\u001b[39mincludes(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mselectedSubfactor[subfactor]\u001b[33m.\u001b[39msubfactor_id)) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m         \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msingleValues\u001b[33m.\u001b[39mpush(\u001b[32m'subfactor'\u001b[39m\u001b[33m:\u001b[39msubfactor\u001b[33m,\u001b[39m\u001b[32m'score'\u001b[39m\u001b[33m:\u001b[39m\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mselectedSubfactor[subfactor]\u001b[33m.\u001b[39msingle)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 42 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 43 |\u001b[39m     \u001b[90m//   console.log(this.singleValues);\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 44 |\u001b[39m\u001b[0m\n    at Parser._raise (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:569:17)\n    at Parser.raiseWithData (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:562:17)\n    at Parser.raise (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:523:17)\n    at Parser.unexpected (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:3601:16)\n    at Parser.expect (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:3575:28)\n    at Parser.parseCallExpressionArguments (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:11852:14)\n    at Parser.parseCoverCallAndAsyncArrowHead (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:11775:29)\n    at Parser.parseSubscript (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:11706:19)\n    at Parser.parseSubscripts (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:11675:19)\n    at Parser.parseExprSubscripts (C:\\laragon\\www\\ImmQuest\\node_modules\\@babel\\parser\\lib\\index.js:11664:17)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["maritialStatus"],
+  selectedSubfactor: null,
+  data: function data() {
+    return {
+      data: [],
+      selectedSubfactor: {},
+      factorScoreMarried: {},
+      factorScoreSingle: {},
+      singleValues: [],
+      marriedValues: [],
+      subfactorsArr: []
+    };
+  },
+  mounted: function mounted() {
+    console.log(this.maritialStatus);
+    this.getData();
+  },
+  methods: {
+    getData: function getData() {
+      var me = this;
+      axios.get("/factors").then(function (response) {
+        // console.log(response);
+        me.data = response.data ? response.data : [];
+        console.log(me.data);
+      });
+    },
+    criteriaVal: function criteriaVal(factor, subfactor) {
+      var me = this;
+      me.subfactorsArr.sort(function (a, b) {
+        return a - b;
+      });
+      me.singleValues.sort(function (a, b) {
+        return a.subfactor - b.subfactor;
+      });
+
+      if (!me.subfactorsArr.includes(subfactor)) {
+        me.subfactorsArr.push(subfactor);
+        me.singleValues.push({
+          subfactor: subfactor,
+          value: me.selectedSubfactor[subfactor].single
+        });
+        me.marriedValues.push({
+          subfactor: subfactor,
+          value: me.selectedSubfactor[subfactor].married
+        });
+      } else {
+        var replace = function replace(arr, obj, newValue) {
+          var _newObj;
+
+          arr.splice(arr.findIndex(function (e) {
+            return e.hasOwnProperty("value") ? e.value : e === obj;
+          }), 1);
+          var obKey = Object.keys(obj);
+          var ovVal = Object.values(obj);
+          var newObj = (_newObj = {}, _defineProperty(_newObj, obKey, ovVal[0]), _defineProperty(_newObj, "value", newValue), _newObj);
+          arr.push(newObj);
+        };
+
+        replace(me.singleValues, {
+          subfactor: subfactor
+        }, me.selectedSubfactor[subfactor].single);
+        replace(me.marriedValues, {
+          subfactor: subfactor
+        }, me.selectedSubfactor[subfactor].married);
+        replace(me.subfactorsArr, {
+          subfactor: subfactor
+        }, subfactor);
+        /*
+        me.singleValues.splice(
+          me.singleValues.findIndex((e) => e.subfactor === subfactor),
+          1
+        );
+         me.subfactorsArr.splice(
+          me.subfactorsArr.findIndex((e) => e === subfactor),
+          1
+        );
+         me.subfactorsArr.push(subfactor);
+        me.singleValues.push({
+          subfactor,
+          value: me.selectedSubfactor[subfactor].single,
+        }); */
+      }
+
+      function sumArr(arr) {
+        return arr.reduce(function (previousValue, currentValue) {
+          return previousValue + currentValue.value;
+        }, 0);
+      } //   console.log({ Subfactors: me.subfactorsArr });
+
+
+      console.log({
+        ForSingleValues: me.singleValues
+      });
+      console.log({
+        forMarried: me.marriedValues
+      }); //   me.factorScoreMarried[factor] = me.selectedSubfactor[subfactor].married;
+
+      me.factorScoreSingle[factor] = sumArr(me.singleValues);
+      me.factorScoreMarried[factor] = sumArr(me.marriedValues);
+      /*  me.singleValues.reduce(
+        (previousValue, currentValue) => previousValue + currentValue.value,
+        0
+      ); */
+
+      console.log(me.factorScoreMarried[factor]);
+      console.log(me.factorScoreSingle[factor]);
+    }
+  }
+});
 
 /***/ }),
 
@@ -22874,8 +22990,8 @@ var _hoisted_21 = {
   "class": "col-2"
 };
 var _hoisted_22 = ["value"];
-function render(_ctx, _cache) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.data, function (factor) {
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.data, function (factor) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       "class": "custom-accordion-title d-block pt-2 pb-2",
       "data-toggle": "collapse",
@@ -22889,7 +23005,7 @@ function render(_ctx, _cache) {
     , _hoisted_9)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "text",
       disabled: "",
-      value: _ctx.maritialStatus === 'Married' ? _ctx.factorScoreMarried[factor.id] : _ctx.factorScoreSingle[factor.id],
+      value: $props.maritialStatus === 'Married' ? $data.factorScoreMarried[factor.id] : $data.factorScoreSingle[factor.id],
       "class": "form-control float-right"
     }, null, 8
     /* PROPS */
@@ -22909,10 +23025,10 @@ function render(_ctx, _cache) {
           "height": "36px"
         },
         "onUpdate:modelValue": function onUpdateModelValue($event) {
-          return _ctx.selectedSubfactor[subfactor.id] = $event;
+          return $data.selectedSubfactor[subfactor.id] = $event;
         },
         onChange: function onChange($event) {
-          return _ctx.criteriaVal(factor.id, subfactor.id);
+          return $options.criteriaVal(factor.id, subfactor.id);
         }
       }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(subfactor.criteria, function (criterion) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
@@ -22924,10 +23040,10 @@ function render(_ctx, _cache) {
       /* UNKEYED_FRAGMENT */
       ))], 40
       /* PROPS, HYDRATE_EVENTS */
-      , _hoisted_19), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.selectedSubfactor[subfactor.id]]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      , _hoisted_19), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.selectedSubfactor[subfactor.id]]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": "form-control",
-        value: _ctx.selectedSubfactor[subfactor.id] != undefined ? _ctx.maritialStatus === 'Married' && _ctx.selectedSubfactor[subfactor.id].hasOwnProperty('married') ? _ctx.selectedSubfactor[subfactor.id].married : _ctx.maritialStatus === 'Single' && _ctx.selectedSubfactor[subfactor.id].hasOwnProperty('single') ? _ctx.selectedSubfactor[subfactor.id].single : 0 : 0
+        value: $data.selectedSubfactor[subfactor.id] != undefined ? $props.maritialStatus === 'Married' && $data.selectedSubfactor[subfactor.id].hasOwnProperty('married') ? $data.selectedSubfactor[subfactor.id].married : $props.maritialStatus === 'Single' && $data.selectedSubfactor[subfactor.id].hasOwnProperty('single') ? $data.selectedSubfactor[subfactor.id].single : 0 : 0
       }, null, 8
       /* PROPS */
       , _hoisted_22)])]);

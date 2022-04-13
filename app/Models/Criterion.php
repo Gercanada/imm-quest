@@ -9,12 +9,12 @@ class Criterion extends Model
 {
     use HasFactory;
     protected $table = "criteria";
-    protected $fillable = [
+    /* protected $fillable = [
         'criterion',
         'single',
         'married',
         'subfactor_id'
-    ];
+    ]; */
 
     public function subfactor()
     {

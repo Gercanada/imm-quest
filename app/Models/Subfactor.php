@@ -9,6 +9,12 @@ class Subfactor extends Model
 {
     use HasFactory;
 
+    /*    protected $fillable = [
+        'id',
+        'subfactor',
+        'factor_id'
+    ]; */
+
     public function factor()
     {
         return $this->belongsTo(Factor::class);

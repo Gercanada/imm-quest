@@ -91,12 +91,6 @@
 export default {
   props: ["maritialStatus"],
   selectedSubfactor: null,
-  /*  components: {
-    Factor1HumanCap,
-    Factor2HabilityTransfer,
-    Factor3AdditionalPoints,
-    Factor4SpouseAttributes,
-  }, */
   data() {
     return {
       data: [],
@@ -104,7 +98,8 @@ export default {
       factorScoreMarried: {},
       factorScoreSingle: {},
       singleValues: [],
-      marredValues: [],
+      marriedValues: [],
+      subfactorsArr: [],
     };
   },
 
@@ -116,24 +111,96 @@ export default {
     getData() {
       let me = this;
       axios.get("/factors").then(function (response) {
-        console.log(response);
+        // console.log(response);
         me.data = response.data ? response.data : [];
         console.log(me.data);
       });
     },
     criteriaVal(factor, subfactor) {
-      console.log(factor);
-      console.log(this.selectedSubfactor);
-      console.log(this.selectedSubfactor[subfactor]);
+      let me = this;
+      me.subfactorsArr.sort(function (a, b) {
+        return a - b;
+      });
+      me.singleValues.sort(function (a, b) {
+        return a.subfactor - b.subfactor;
+      });
 
-      if (!this.singleValues.includes(this.selectedSubfactor[subfactor].subfactor_id)) {
-        this.singleValues.push('subfactor':subfactor,'score':this.selectedSubfactor[subfactor].single);
+      if (!me.subfactorsArr.includes(subfactor)) {
+        me.subfactorsArr.push(subfactor);
+
+        me.singleValues.push({
+          subfactor,
+          value: me.selectedSubfactor[subfactor].single,
+        });
+
+        me.marriedValues.push({
+          subfactor,
+          value: me.selectedSubfactor[subfactor].married,
+        });
+      } else {
+        function replace(arr, obj, newValue) {
+          arr.splice(
+            arr.findIndex((e) => (e.hasOwnProperty("value") ? e.value : e === obj)),
+            1
+          );
+          let obKey = Object.keys(obj);
+
+          let ovVal = Object.values(obj);
+          let newObj = { [obKey]: ovVal[0], value: newValue };
+          arr.push(newObj);
+        }
+
+        replace(
+          me.singleValues,
+          { subfactor: subfactor },
+          me.selectedSubfactor[subfactor].single
+        );
+
+        replace(
+          me.marriedValues,
+          { subfactor: subfactor },
+          me.selectedSubfactor[subfactor].married
+        );
+        replace(me.subfactorsArr, { subfactor: subfactor }, subfactor);
+        /*
+        me.singleValues.splice(
+          me.singleValues.findIndex((e) => e.subfactor === subfactor),
+          1
+        );
+
+        me.subfactorsArr.splice(
+          me.subfactorsArr.findIndex((e) => e === subfactor),
+          1
+        );
+
+        me.subfactorsArr.push(subfactor);
+        me.singleValues.push({
+          subfactor,
+          value: me.selectedSubfactor[subfactor].single,
+        }); */
       }
-    //   console.log(this.singleValues);
+      function sumArr(arr) {
+        return arr.reduce(
+          (previousValue, currentValue) => previousValue + currentValue.value,
+          0
+        );
+      }
 
-      this.factorScoreMarried[factor] = this.selectedSubfactor[subfactor].married;
-      this.factorScoreSingle[factor] = this.selectedSubfactor[subfactor].single;
-      //   console.log(this.factorScoreMarried[factor]);
+      //   console.log({ Subfactors: me.subfactorsArr });
+      console.log({ ForSingleValues: me.singleValues });
+      console.log({ forMarried: me.marriedValues });
+
+      //   me.factorScoreMarried[factor] = me.selectedSubfactor[subfactor].married;
+      me.factorScoreSingle[factor] = sumArr(me.singleValues);
+      me.factorScoreMarried[factor] = sumArr(me.marriedValues);
+
+      /*  me.singleValues.reduce(
+        (previousValue, currentValue) => previousValue + currentValue.value,
+        0
+      ); */
+
+      console.log(me.factorScoreMarried[factor]);
+      console.log(me.factorScoreSingle[factor]);
     },
   },
 };

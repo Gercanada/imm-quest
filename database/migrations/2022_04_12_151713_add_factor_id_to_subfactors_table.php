@@ -10,12 +10,11 @@ class AddFactorIdToSubfactorsTable extends Migration
     public function up()
     {
         Schema::table('subfactors', function (Blueprint $table) {
-            /*  $factor  = new Factor();
+            $factor  = new Factor();
             $factor->title = "default";
-            $factor->id = 0;
             $factor->save();
- */
-            $table->unsignedBigInteger('factor_id')/* ->default($factor->id) */;
+
+            $table->unsignedBigInteger('factor_id')->default($factor->id);
             $table->foreign('factor_id')->references('id')->on('factors');
         });
     }

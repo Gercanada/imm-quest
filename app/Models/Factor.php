@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Factor extends Model
 {
     use HasFactory;
-    protected $table = "factors";
+    // protected $table = "factors";
+    /*  protected $fillable = [
+        'id',
+        'title',
+        'sub_title'
+    ]; */
 
     public function subfactors()
     {

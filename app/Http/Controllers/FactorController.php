@@ -72,57 +72,72 @@ class FactorController extends Controller
         $tabla = $this->dataFile()['Tabla'];
         $subfactors = [];
         $criteria = [];
-        $SubId = 0;
-        $critId = 0;
+        $SubId = 1;
+        $critId = 1;
         $subFactId = null;
         foreach ($tabla as $item) {
-            if (isset($item['Facto'])) {
-                foreach ($item as $key => $inner) {
-                    $cols = array_column($subfactors, "subfactor");
-                    if ($key === "Sub Facto" &&  !in_array($inner, $cols)) {
-                        $SubId = $SubId + 1;
-                        $subFactId = $SubId;
+            // if (isset($item['Facto'])) {
+            foreach ($item as $key => $inner) {
+                $cols = array_column($subfactors, "subfactor");
+                if ($key === "Sub Facto" &&  !in_array($inner, $cols)) {
+                    $SubId = $SubId + 1;
+                    $subFactId = $SubId;
 
+                    /*   $factorId = isset($item['Facto']) ? ($item['Facto'] == "Facto 1 | Coe Human Capital factos"
+                        ? 1 : $item['Facto'] == "Facto 3 | Skills transferability"
+                        ? 2 : ($item['Facto'] == "Facto 4 | Additional Points" ?
+                            3 : ($item['Facto'] == "Facto 2 | Spouse Attributes" ? 4 : null))) : null; */
+                    $factorId = null;
+                    if (isset($item['Facto'])) {
                         $factorId = $item['Facto'] == "Facto 1 | Coe Human Capital factos"
-                            ? 1 : ($item['Facto'] == "Facto 3 | Skills transferability"
-                                ? 2 : ($item['Facto'] == "Facto 4 | Additional Points"
-                                    ? 3 : ($item['Facto'] == "Facto 2 | Spouse Attributes" ? 4 : null)));
-
-                        array_push(
-                            $subfactors,
-                            [
-                                "id" => $SubId,
-                                "subfactor" => $inner,
-                                // "facto" => $item['Facto'],
-                                'factor_id' =>  $factorId
-                            ]
-                        );
+                            ? 2 : ($item['Facto'] == "Facto 3 | Skills transferability"
+                                ? 3 : ($item['Facto'] == "Facto 4 | Additional Points"
+                                    ? 4 : ($item['Facto'] == "Facto 2 | Spouse Attributes" ? 5 : null)));
+                    } else {
+                        if (isset($item['Sub Facto']) && str_contains($item['Sub Facto'], 'Additional Points')) {
+                            $factorId = 4;
+                        }
                     }
+                    /*   */
 
-                    $critCols = array_column($criteria, "criterion");
-                    /* agregar el valor de una columna exista solo una vez en un array*/
-                    if ($key === "Criterion" &&  !in_array($inner, $critCols)) {
-                        $critId = $critId + 1;
-                        array_push($criteria, [
-                            "id" => $critId,
-                            'criterion' => $item['Criterion'],
-                            'single' => isset($item['Single']) ? (float)$item['Single'] : null,
-                            'married' => (float)($item['Married']),
-                            'subfactor_id' => $subFactId,
-                        ]);
-                    }
+                    array_push(
+                        $subfactors,
+                        [
+                            "id" => $SubId,
+                            "subfactor" => $inner,
+                            // // "facto" => $item['Facto'],
+                            'factor_id' =>  $factorId
+                        ]
+                    );
+                }
+
+                $critCols = array_column($criteria, "criterion");
+                /* agregar el valor de una columna exista solo una vez en un array*/
+                if ($key === "Criterion" &&  !in_array($inner, $critCols)) {
+                    $critId = $critId + 1;
+                    array_push($criteria, [
+                        "id" => $critId,
+                        'criterion' => $item['Criterion'],
+                        'single' => isset($item['Single']) ? (float)$item['Single'] : null,
+                        'married' => (float)($item['Married']),
+                        'subfactor_id' => $subFactId,
+                    ]);
                 }
             }
+            // }
         }
-        return $subfactors;
-        return [$subfactors, $criteria];
+        // return $subfactors;
+        //return [$subfactors, $criteria];
         // return [$subfactors, $criteria];
         return  $criteria;
     }
 
     public function factors()/* get factors for  create accordions */
     {
-        $factors = Factor::with('subfactors')->with('subfactors.criteria')->get();
+        $factors = Factor::where('factors.title', '!=', 'default')
+            ->with('subfactors')
+            // ->where('subfactors.subfactor', '!=', 'default')
+            ->with('subfactors.criteria')->get();
         return $factors;
     }
 }
