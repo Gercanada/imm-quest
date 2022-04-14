@@ -24,14 +24,15 @@ class Controller extends BaseController
     {
         $errArr = [];
         if (env('APP_ENV') === 'local') {
+            $this->consoleWrite()->writeln('Error getted');
             $this->consoleWrite()->writeln('Error with code ' .   $e->getCode() . ' at line ' . $e->getLine() . '\n' . $e->getMessage());
-            array_push($errArr, $onMethod, [
+            array_push($errArr, [$onMethod, [
                 'message' => $e->getMessage(),
                 'details' => $e
-            ]);
+            ]]);
             return response()->json(['error' => $errArr], 500);
         } else {
-            //array_push($omMethod, $e->getMessage());            
+            //array_push($omMethod, $e->getMessage());
             array_push($errArr, $onMethod, [
                 'message' => $e->getMessage(),
             ]);

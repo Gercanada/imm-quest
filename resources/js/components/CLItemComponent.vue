@@ -562,6 +562,7 @@ export default {
     },
 
     sendToImmcase(file, clitemsno) {
+      console.log("to hell");
       let me = this;
       this.loading = true;
       axios
@@ -570,6 +571,7 @@ export default {
           file: file,
         })
         .then(function (response) {
+          console.table(response);
           if (response.data === "success") {
             deleteFile(file);
             Swal.fire({
@@ -582,7 +584,7 @@ export default {
           me.userFiles();
         })
         .catch(function (error) {
-          console.log(error);
+          console.table(error);
           Swal.fire({
             type: "error",
             title: "Document not sent",

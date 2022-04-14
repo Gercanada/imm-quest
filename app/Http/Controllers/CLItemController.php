@@ -150,7 +150,6 @@ class CLItemController extends Controller
     public function sendDocumentToImmcase(Request $request)
     {
         try {
-
             $user        = Auth::user();
             $vtiger      = new Vtiger();
             $docsTask    = new DocumentController();
@@ -223,7 +222,6 @@ class CLItemController extends Controller
                 $filesUrls,
                 $request
             );
-
             return $updatedItem;
             return response()->json("success", 200);
         } catch (Exception $e) {
