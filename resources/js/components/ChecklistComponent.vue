@@ -318,9 +318,10 @@
               <div class="flex flex-wrap -m-2">
                 <div class="p-2 w-full">
                   <div class="relative">
-                    <label for="attachment" class="leading-7 text-sm text-gray-600"
+                    <!--  <label for="attachment" class="leading-7 text-sm text-gray-600"
                       >Attachments</label
-                    ><br />
+                    > -->
+                    <br />
                     <vue-dropzone
                       ref="myVueDropzone"
                       id="dropzone"
@@ -375,15 +376,24 @@ export default {
         url: "/cl-item/upload/file",
         thumbnailWidth: 150,
         maxFilesize: 5,
-        parallelUploads: 3,
+        parallelUploads: 1,
         maxFiles: 1,
-        uploadMultiple: true,
+        uploadMultiple: false,
         autoProcessQueue: false,
         acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg,.pdf,.doc,.docx",
         addRemoveLinks: true,
         dictRemoveFile: "Remove file",
+        // clickable: false,
         headers: {
           "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]").content,
+        },
+
+        init: function () {
+          this.on("addedfile", function (file) {
+            if (this.files.length > 1) {
+              this.removeFile(this.files[0]);
+            }
+          });
         },
       },
       clitems: [],
