@@ -37,7 +37,7 @@
               <th scope="col">CL Item Name</th>
               <!-- <td>Description</td> -->
               <th scope="col">Status</th>
-              <td>Category</td>
+              <th scope="col">Category</th>
               <!--   <td>Uploaded file Name</td>
                             <th scope="col">Upload file</th> -->
               <th></th>
@@ -148,98 +148,6 @@
         </table>
       </div>
     </div>
-    <!--  <div class="shadow p-1 mt-4 rounded">
-            <h3 class="card-title">
-                <i class="mr-1 font-18 mdi mdi-textbox"></i> Electronic forms
-            </h3>
-            <div class="table-responsive mt-4">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">CL Item Name</th>
-                            <th scope="col">Help link</th>
-                            <th scope="col">Status</th>
-                            <th>Send</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            v-for="clitem_b in clitems"
-                            v-if="clitem_b.cf_1200 === 'IMM Form'"
-                        >
-                            <td>{{ clitem_b.cf_1202 }}</td>
-                            <td>{{ clitem_b.cf_1578 }}</td>
-                            <td>
-                                <a
-                                    :href="
-                                        '/checklist/' +
-                                        checklist.id +
-                                        '/item/' +
-                                        clitem_b.id
-                                    "
-                                    >{{ clitem_b.name }}</a
-                                >
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="shadow p-1 mt-4 rounded">
-            <h3 class="card-title">
-                <i class="mr-1 font-18 mdi mdi-help-circle-outline"></i
-                >Questionnaire
-            </h3>
-            <div class="table-responsive mt-4">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">CL Item Name</th>
-                            <th scope="col">Help link</th>
-                            <th scope="col">Status</th>
-                            <th>Send before answer</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            v-for="clitem_c in clitems"
-                            v-if="
-                                (clitem_c.cf_1578 === 'Pending' ||
-                                    clitem_c.cf_1578 === 'Replacement Needed' ||
-                                    clitem_c.cf_1578 === '') &&
-                                clitem_c.cf_1200 === 'Questionnaire'
-                            "
-                        >
-                            <td>{{ clitem_c.name }}</td>
-                            <td>
-                                <a :href="clitem_c.cf_1212" target="_blank">{{
-                                    clitem_c.cf_1212
-                                }}</a>
-                            </td>
-                            <td>{{ clitem_c.cf_1578 }}</td>
-                            <td>
-                                <button
-                                    v-if="loading == false"
-                                    type="submit"
-                                    class="btn btn-outline-success btn-rounded"
-                                    @click="exportResponse(clitem_c.clitemsno)"
-                                >
-                                    <i class="icon-refresh"></i>
-                                </button>
-                                <button
-                                    v-else
-                                    type="submit"
-                                    disabled
-                                    class="btn btn-outline-success btn-rounded"
-                                >
-                                    <i class="icon-refresh fas fa-spin"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div> -->
 
     <div class="shadow p-1 mt-4 rounded">
       <h3 class="card-title">
