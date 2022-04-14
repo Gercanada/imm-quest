@@ -425,7 +425,7 @@ export default {
               timer: 3000,
               showConfirmButton: false,
             });
-            deleteFile(file);
+            me.deleteFile(file);
           }
           me.show();
         })
