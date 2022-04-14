@@ -99,6 +99,11 @@ class CLItemController extends Controller
             if (!is_array($files)) {
                 $files = [$files];
             }
+
+
+            if (env('APP_ENV') == 'local') {
+                $this->consoleWrite()->writeln("here file" . $request->id);
+            }
             /*   */
             $contact = Contact::where("contact_no", $user->vtiger_contact_id)->firstOrFail();
             $clitem  = CLItem::where('id', $request->id)
@@ -128,6 +133,9 @@ class CLItemController extends Controller
 
             $newFilePath =  "$contact->cf_1332/$contact->contact_no/$contact->contact_no-cases/$case->ticket_no-$case->ticketcategories/01_SuppliedDocs";
 
+            if (env('APP_ENV') == 'local') {
+                $this->consoleWrite()->writeln("here file");
+            }
             foreach ($files as $file) {
                 $filename = $file->getClientOriginalName();
                 $filename = str_replace(' ', '', $filename);
