@@ -4,23 +4,16 @@
 @endsection
 @section('content')
     <!-- ============================================================== -->
-    
+
     <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
         style="background:url(/{{ env('ASSET_URL') }}images/fondocanada.jpg) no-repeat center center; background-size: cover;">
         <div class="auth-box p-4 bg-white rounded">
-
-
             <div id="loginform" style="opacity:85%; position:relative;">
-                <div class="mb-4  text-center mb-4 pb-4 " >
+                <div class="mb-4  text-center mb-4 pb-4 ">
                     <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png" alt="homepage" class="dark-logo" />
                     <img src="/{{ env('ASSET_URL') }}images\immvisas_1080.png" alt="homepage" class="light-logo "
                         width="160px" />
                 </div>
-
-
-               {{--  <div class="logo text-center">
-                    <h3 class="box-title mb-3 right"><i class="fas fa-key"></i> Sign In</h3>
-                </div> --}}
                 <!-- Form -->
                 <div class="row">
                     <div class="col-12">
@@ -74,10 +67,10 @@
                                 </div>
                             </div>
                             <div class="form-group text-center mt-4" style="position:relative;
-                                                                                            z-index:1;">
+                                                                                                            z-index:1;">
                                 <div class="col-xs-12">
                                     <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
-                                        type="submit"><i class="fas  fa-key ">  </i>   Log In</button>
+                                        type="submit"><i class="fas  fa-key "> </i> Log In</button>
                                 </div>
                             </div>
                         </form>

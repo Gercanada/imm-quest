@@ -722,7 +722,7 @@ class CloneDBController extends Controller
 
     /**
      * It function be called as vt workflow when a record is deleted on vtiger. If an record is deleted on immcase be deleted from customers portal also
-     * @param (req : {type, id}) 
+     * @param (req : {type, id})
      */
     public function beforeDeletedOnVt(Request $request)
     {

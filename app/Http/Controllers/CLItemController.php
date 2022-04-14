@@ -41,7 +41,7 @@ class CLItemController extends Controller
                 return response()->json(
                     [
                         "error" =>
-                        "Invalid item relationship for $crashed. 
+                        "Invalid item relationship for $crashed.
                         Please contact the admin to report this error on try Sync again"
                     ]
                 );
@@ -264,7 +264,7 @@ class CLItemController extends Controller
                 Storage::delete($urlFile) ?: Storage::disk('public')->delete($urlFile);
                 return  response()->json("File removed from temporary storage", 200);
             } else {
-                return response()->json("File not found at " . $urlFile, 403);
+                return response()->json("File not found at " . $urlFile);
             }
         } catch (Exception $e) {
             return $this->returnJsonError($e, ['CLItemController' => 'deleteDocument']);
@@ -278,7 +278,6 @@ class CLItemController extends Controller
             $directory = "/documents/contact/$contact";
             $files     = Storage::disk('public')->allFiles($directory);
             $urlFiles  = [];
-
             foreach ($files as $file) {
                 env('APP_ENV') === 'local'
                     ? array_push($urlFiles, (Storage::url($file)))
@@ -328,7 +327,11 @@ class CLItemController extends Controller
             }
 
             foreach ($directoryArr as $key => $dir) {
-                $contents = collect(Storage::disk('google')->listContents($nextPathBase, 0))->where('type', 'dir')->whereIn('name', $dir)->first(); //get all(recursive on true) root contents (of assigned folder)
+                $contents = collect(Storage::disk('google')
+                    ->listContents($nextPathBase, 0))
+                    ->where('type', 'dir')
+                    ->whereIn('name', $dir)
+                    ->first(); //get all(recursive on true) root contents (of assigned folder)
                 if ($contents) {
                     array_push($nextPathArr, $contents['basename']);
                     array_push($nextNameArr, $contents['name']);
@@ -336,7 +339,11 @@ class CLItemController extends Controller
                     $nextPathBase =  implode('/', $nextPathArr);
                 } else {
                     Storage::disk('google')->makeDirectory($nextPathBase . '/' . $dir);
-                    $contents2 = collect(Storage::disk('google')->listContents($nextPathBase, 0))->where('type', 'dir')->whereIn('name', $dir)->first();
+                    $contents2 = collect(Storage::disk('google')
+                        ->listContents($nextPathBase, 0))
+                        ->where('type', 'dir')
+                        ->whereIn('name', $dir)
+                        ->first();
                     array_push($nextPathArr, $contents2['basename']);
                     array_push($nextNameArr, $contents2['name']);
                     $nextPathName =  implode('/', $nextNameArr);
@@ -448,7 +455,7 @@ class CLItemController extends Controller
     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
 
     try to customize workflow with less delays
-    
+
     working at 20220317
     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
 
