@@ -447,7 +447,7 @@ export default {
       axios
         .post("/cl-item/dropfile", { file: file })
         .then(function (response) {
-          console.log(response);
+          //   console.log(response);
           Swal.fire({
             type: "success",
             title: "Document deleted",
