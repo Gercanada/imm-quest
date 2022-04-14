@@ -88,6 +88,20 @@
                       ></label>
                       <div class="btn-list">
                         <button
+                          v-if="sending === true"
+                          type="button"
+                          class="btn btn-outline-success btn-rounded"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Send document"
+                          disabled
+                        >
+                          <i class="fas fa-spinner fa-spin"></i>
+                          Send
+                        </button>
+
+                        <button
+                          v-else
                           type="button"
                           class="btn btn-outline-success btn-rounded"
                           data-toggle="tooltip"
@@ -95,11 +109,25 @@
                           title="Send document"
                           @click="sendToImmcase(file, clitem_a.clitemsno)"
                         >
-                          <i class="fas fa-spinner fa-spin" v-if="sending === true"></i>
-                          <i class="fas fa-paper-plane" v-else></i>
+                          <i class="fas fa-paper-plane"></i>
                           Send
                         </button>
+
                         <button
+                          v-if="deleting === true"
+                          type="button"
+                          class="btn btn-outline-danger btn-rounded"
+                          disabled
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Remove document"
+                        >
+                          <i class="fas fa-spinner fa-spin"></i>
+                          Delete
+                        </button>
+
+                        <button
+                          v-else
                           type="button"
                           class="btn btn-outline-danger btn-rounded"
                           @click="deleteFile(file)"
@@ -107,8 +135,7 @@
                           data-placement="bottom"
                           title="Remove document"
                         >
-                          <i class="fas fa-spinner fa-spin" v-if="deleting === true"></i>
-                          <i class="fas fa-trash-alt" v-else></i>
+                          <i class="fas fa-trash-alt"></i>
                           Delete
                         </button>
                       </div>
