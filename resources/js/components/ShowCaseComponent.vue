@@ -32,17 +32,11 @@
               <tbody>
                 <tr>
                   <td>Case No</td>
-                  <td
-                    class="text-end font-weight-medium"
-                    v-text="tkcase.ticket_no"
-                  ></td>
+                  <td class="text-end font-weight-medium" v-text="tkcase.ticket_no"></td>
                 </tr>
                 <tr>
                   <td>Case title</td>
-                  <td
-                    class="text-end font-weight-medium"
-                    tkcase.ticket_title
-                  ></td>
+                  <td class="text-end font-weight-medium" tkcase.ticket_title></td>
                 </tr>
                 <tr>
                   <td>Case type</td>
@@ -67,10 +61,7 @@
                 </tr>
                 <tr>
                   <td>No of Applicants</td>
-                  <td
-                    class="text-end font-weight-medium"
-                    v-text="tkcase.cf_888"
-                  ></td>
+                  <td class="text-end font-weight-medium" v-text="tkcase.cf_888"></td>
                 </tr>
                 <tr></tr>
               </tbody>
@@ -100,10 +91,7 @@
                   @click="changeTab(checklist.id)"
                 >
                   <i class="mdi mdi-clipboard-check d-lg-none d-block mr-1"></i>
-                  <span
-                    class="d-none d-lg-block"
-                    v-text="checklist.name"
-                  ></span>
+                  <span class="d-none d-lg-block" v-text="checklist.name"></span>
                 </a>
               </li>
             </ul>
@@ -120,11 +108,7 @@
                 :class="{ 'show active': isActive(checklist.name) }"
                 :id="'tab_' + checklist.id"
               >
-                <input
-                  type="hidden"
-                  :value="checklist.id"
-                  name="checklist_id"
-                />
+                <input type="hidden" :value="checklist.id" name="checklist_id" />
                 <!-- <checklistComponent /> -->
                 <checklistComponent :f_checklist_id="checklist.id" />
               </div>
@@ -138,7 +122,7 @@
 </template>
 
 <script>
-import checklistComponent from "./ChecklistComponent";
+import checklistComponent from "./Checklist/ChecklistComponent.vue";
 const urlParams = window.location.pathname.split("/");
 
 export default {
@@ -204,4 +188,3 @@ export default {
   },
 };
 </script>
-
