@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" style="heigth: 100%">
-    <div class="card shadow  p-1 rounded">
+    <div class="card shadow p-1 rounded">
       <div class="card-body d-flex justify-content-around">
         <div class="spinner-grow text-success center" role="status">
           <span class="sr-only">Loading...</span>
@@ -18,7 +18,7 @@
     <!-- Row -->
     <div class="row">
       <div class="col-md-12">
-        <div class="card shadow  p-1 rounded">
+        <div class="card shadow p-1 rounded">
           <!-- Tabs -->
           <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
             <li class="nav-item">
@@ -60,7 +60,6 @@
           </ul>
           <!-- Tabs -->
           <div class="tab-content" id="pills-tabContent">
-
             <div
               class="tab-pane fade active show"
               id="last-month"
@@ -75,18 +74,21 @@
                       class="rounded-circle"
                       width="150"
                     /> -->
-                    <span class="rounded-circle bg-success text-center display-1 w-100 p-3 font-weight-bold" width="150"
-                    v-text="userObj.firstname.substring(0,1) + userObj.lastname.substring(0,1)">
-
-                        </span>
+                    <span
+                      class="rounded-circle bg-success text-center display-1 w-100 p-3 font-weight-bold"
+                      width="150"
+                      v-text="
+                        userObj.firstname.substring(0, 1) +
+                        userObj.lastname.substring(0, 1)
+                      "
+                    >
+                    </span>
                     <h4 class="card-title mt-2">
                       <b v-text="userObj.firstname"></b><b></b>
                       <b v-text="userObj.lastname"></b>
                     </h4>
                     <h6 class="card-subtitle" v-text="userObj.cf_1704"></h6>
-                    <div
-                      class="row text-center justify-content-md-center"
-                    ></div>
+                    <div class="row text-center justify-content-md-center"></div>
                   </center>
                 </div>
                 <div>
@@ -273,9 +275,7 @@
                     </div>
                   </div>
                   <div class="form-group" autocomplete="none">
-                    <label class="col-md-12" for="instagramLink"
-                      >Instagram
-                    </label>
+                    <label class="col-md-12" for="instagramLink">Instagram </label>
                     <div class="col-md-12">
                       <input
                         type="url"
@@ -293,9 +293,7 @@
                     </div>
                   </div>
                   <div class="form-group" autocomplete="off">
-                    <label class="col-md-12" for="gotolinkedin"
-                      >Linkedin
-                    </label>
+                    <label class="col-md-12" for="gotolinkedin">Linkedin </label>
                     <div class="col-md-12">
                       <input
                         v-model="userObj.cf_2250"
@@ -351,11 +349,7 @@
                   </div>
                   <div class="form-group">
                     <div class="col-sm-12">
-                      <a
-                        href="#"
-                        class="btn btn-success"
-                        v-on:click="updateAccount()"
-                      >
+                      <a href="#" class="btn btn-success" v-on:click="updateAccount()">
                         Update Profile
                       </a>
                     </div>
@@ -384,9 +378,7 @@
                   />
                   <section autocomplete="disabled">
                     <div class="form-group" autocomplete="nope">
-                      <label class="col-md-12" for="inputPass"
-                        >Old password</label
-                      >
+                      <label class="col-md-12" for="inputPass">Old password</label>
                       <div class="col-md-12">
                         <input
                           class="form-control form-control-line"
@@ -404,9 +396,7 @@
                       </div>
                     </div>
                     <div class="form-group" autocomplete="nope">
-                      <label class="col-md-12" for="inputPass"
-                        >New Password</label
-                      >
+                      <label class="col-md-12" for="inputPass">New Password</label>
                       <div class="col-md-12">
                         <input
                           class="form-control form-control-line"
@@ -441,11 +431,7 @@
                   </section>
                   <div class="form-group">
                     <div class="col-sm-12">
-                      <a
-                        href="#"
-                        class="btn btn-success"
-                        v-on:click="updatePassword()"
-                      >
+                      <a href="#" class="btn btn-success" v-on:click="updatePassword()">
                         Update Password
                       </a>
                     </div>
@@ -622,10 +608,14 @@ export default {
       if (field === "userObj.cf_2252") fail = this.userObj.cf_2252;
       if (field === "userObj.cf_2250") fail = this.userObj.cf_2250;
 
+      console.log(field);
+      console.log(fail);
+
       if (
         !/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/i.test(
           fail
-        )
+        ) &&
+        fail !== ""
       ) {
         this.errors[
           as
@@ -635,5 +625,3 @@ export default {
   },
 };
 </script>
-
-

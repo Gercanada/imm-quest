@@ -198,8 +198,6 @@ class CLItemController extends Controller
                 return response()->json("case not fount", 404);
             }
             $case   = $vtiger->search($caseQuery)->result[0];
-            //here ok
-
             $request->request->add(['cid'       => $user->vtiger_contact_id]);
             $request->request->add(['case'      => $case->ticket_no . '-' . $case->ticketcategories]);
             $request->request->add(['checklist' => $checklist->checklistno . '-' . $checklist->cf_1706]);

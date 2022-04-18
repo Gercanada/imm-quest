@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     public $incrementing = false;
+    public $timestamps = false;
     protected $table = 'vt_Contacts';
 }

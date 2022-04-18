@@ -40,7 +40,8 @@ class CPCaseController extends Controller
         $user_id = $user->id;
         $contact = Contact::where('contact_no',  $user->vtiger_contact_id)->firstOrFail();
 
-        $case =  CPcase::select('*')->where('id', $id)
+        $case =  CPcase::select('*')
+            ->where('id', $id)
             ->where('contact_id', $contact->id)
             ->firstOrFail();
 
