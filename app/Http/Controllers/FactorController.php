@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSituation;
 use App\Models\Factor;
+use App\Models\Scenario;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -39,8 +41,6 @@ class FactorController extends Controller
         }
     }
 
-
-
     public function getFactor($subFactor)
     {
         try {
@@ -76,17 +76,11 @@ class FactorController extends Controller
         $critId = 1;
         $subFactId = null;
         foreach ($tabla as $item) {
-            // if (isset($item['Facto'])) {
             foreach ($item as $key => $inner) {
                 $cols = array_column($subfactors, "subfactor");
                 if ($key === "Sub Facto" &&  !in_array($inner, $cols)) {
                     $SubId = $SubId + 1;
                     $subFactId = $SubId;
-
-                    /*   $factorId = isset($item['Facto']) ? ($item['Facto'] == "Facto 1 | Coe Human Capital factos"
-                        ? 1 : $item['Facto'] == "Facto 3 | Skills transferability"
-                        ? 2 : ($item['Facto'] == "Facto 4 | Additional Points" ?
-                            3 : ($item['Facto'] == "Facto 2 | Spouse Attributes" ? 4 : null))) : null; */
                     $factorId = null;
                     if (isset($item['Facto'])) {
                         $factorId = $item['Facto'] == "Facto 1 | Coe Human Capital factos"
@@ -98,14 +92,11 @@ class FactorController extends Controller
                             $factorId = 4;
                         }
                     }
-                    /*   */
-
                     array_push(
                         $subfactors,
                         [
                             "id" => $SubId,
                             "subfactor" => $inner,
-                            // // "facto" => $item['Facto'],
                             'factor_id' =>  $factorId
                         ]
                     );
@@ -124,7 +115,6 @@ class FactorController extends Controller
                     ]);
                 }
             }
-            // }
         }
         // return $subfactors;
         //return [$subfactors, $criteria];
@@ -139,5 +129,14 @@ class FactorController extends Controller
             // ->where('subfactors.subfactor', '!=', 'default')
             ->with('subfactors.criteria')->get();
         return $factors;
+    }
+
+
+    /**
+     * To save an scenario be required auth (Loogin or register redirect)
+     */
+    public function saveScenario(StoreSituation $request)
+    {
+        return 200;
     }
 }

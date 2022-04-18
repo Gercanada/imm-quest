@@ -2,7 +2,8 @@ require('./bootstrap');
 
 import { createApp } from 'vue';
 
-import AppComponent from './components/App.vue';
+// import AppComponent from './vue-src/components/App';
+import AppComponent from './vue-src/components/App';
 
 let app = createApp({});
 
