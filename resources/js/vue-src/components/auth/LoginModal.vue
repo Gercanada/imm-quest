@@ -1,7 +1,4 @@
 <template>
-  <!-- <div class="card"> -->
-  <!-- <div class="card-body"> -->
-  <!-- Signup modal content -->
   <div
     id="signup-modal"
     class="modal fade"
@@ -106,7 +103,7 @@
             </a>
           </div>
 
-          <form action="#" class="pl-3 pr-3">
+          <form class="pl-3 pr-3">
             <div class="form-group">
               <label for="emailaddress1">Email address</label>
               <input
@@ -163,82 +160,12 @@
     <!-- Full width modal -->
     <a class="nav-item nav-link" data-toggle="modal" data-target="#login-modal">
       <i class="fas fa-key"></i>
-      Log in Modal
+      Log in
     </a>
   </ul>
-  <!-- </div> -->
-  <!-- end card-body-->
-  <!-- </div> -->
-  <!-- end card-->
 </template>
-
-<script>
-export default {
-  props: {
-    title: {
-      required: true,
-      default: "Without title",
-    },
-  },
-  data() {
-    return {
-      userName: "",
-      Password: "",
-      /*   headers: {
-        "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]").content,
-        "Content-Type": "multipart/form-data",
-      }, */
-    };
-  },
-  methods: {
-    login(e) {
-      e.preventDefault();
-      if (this.password.length > 0) {
-        this.$axios.get("/sanctum/csrf-cookie").then((response) => {
-          this.$axios
-            .post("api/login", {
-              email: this.email,
-              password: this.password,
-            })
-            .then((response) => {
-              console.log(response.data);
-              if (response.data.success) {
-                this.$router.go("/dashboard");
-              } else {
-                this.error = response.data.message;
-              }
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
-        });
-      }
-    },
-
-    beforeRouteEnter(to, from, next) {
-      if (window.Laravel.isLoggedin) {
-        return next("dashboard");
-      }
-      next();
-    },
-    /* axios
-        .post("/login", { email: this.userName, password: this.Password })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(console.error()); },*/
-  },
-};
-</script>
-
+<script src="./login.js"></script>
 <style>
-/* .modal-content {
-  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
-  -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
-  -o-box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
-} */
-
 .modal-backdrop {
   z-index: 0 !important;
 }

@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Auth::routes();
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/tempdata', [FactorController::class, 'dataFile']); //returns a json response
@@ -27,7 +29,6 @@ Route::get('/subfactors', [FactorController::class, 'listSubfactors']); //List s
 
 Route::get('/factors', [FactorController::class, 'factors']);
 
-Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/is_auth', [LoginController::class, 'isAuth']);
     Route::post('/save_situation', [FactorController::class, 'saveScenario']);

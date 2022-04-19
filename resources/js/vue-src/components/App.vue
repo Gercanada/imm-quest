@@ -1,6 +1,6 @@
 <template>
   <div id="main-wrapper">
-    <NavbarHeader />
+    <NavbarHeader @authenticated="loggedIn" :isLoggedIn="isLoggedIn" />
     <Aside />
     <Content />
     <Footer />
@@ -38,20 +38,30 @@ export default {
       isLoggedIn: false,
     };
   },
-  mounted() {},
+  /* mounted() {
+    alert(this.isLoggedIn);
+  }, */
   created() {
+    alert(window.Laravel.isLoggedin);
     if (window.Laravel.isLoggedin) {
       this.isLoggedIn = true;
     }
   },
   methods: {
+    loggedIn(val) {
+      alert("logged App");
+      alert(val);
+      console.log(val);
+      this.isLoggedIn = val === true ? true : false;
+      //   this.authenticated = val;
+    },
+
     logout(e) {
       console.log("here");
       e.preventDefault();
-      this.$axios.get("/sanctum/csrf-cookie").then((response) => {
-        this.$axios
-          //   .post("/api/logout")
-          .post("/logout")
+      axios.get("/sanctum/csrf-cookie").then((response) => {
+        axios
+          .post("/api/logout")
           .then((response) => {
             if (response.data.success) {
               window.location.href = "/";

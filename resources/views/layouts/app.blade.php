@@ -48,19 +48,22 @@
 
 <body>
     @if (Auth::check())
-        <script>
-            window.Laravel = {!! json_encode([
-    'isLoggedin' => true,
-    'user' => Auth::user(),
-]) !!}
-        </script>
+        @php
+            $user_auth_data = [
+                'isLoggedin' => true,
+                'user' => Auth::user(),
+            ];
+        @endphp
     @else
-        <script>
-            window.Laravel = {!! json_encode([
-    'isLoggedin' => false,
-]) !!}
-        </script>
+        @php
+            $user_auth_data = [
+                'isLoggedin' => false,
+            ];
+        @endphp
     @endif
+    <script>
+        window.Laravel = JSON.parse(atob('{{ base64_encode(json_encode($user_auth_data)) }}'));
+    </script>
     <div id="app">
         <div class="preloader">
             <div class="lds-ripple">
@@ -68,7 +71,11 @@
                 <div class="lds-pos"></div>
             </div>
         </div>
-        <app-component></app-component>
+        @if (!Auth::user())
+            @yield('content'){{-- login view --}}
+        @else
+            <app-component></app-component>
+        @endif
     </div>
 </body>
 

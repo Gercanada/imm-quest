@@ -79,8 +79,8 @@
         <!-- ============================================================== -->
         <!-- Right side toggle and nav items -->
         <!-- ============================================================== -->
-        HERE
-        <ul class="navbar-nav float-right">
+        HERE <label for="" v-text="isLoggedIn"></label>
+        <ul class="navbar-nav float-right" v-if="isLoggedIn === true">
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
@@ -167,15 +167,19 @@
             </div>
           </li>
         </ul>
+        <ul class="navbar-nav float-right" v-else>
+          <LoginModal @authenticated="loggedIn" />
+        </ul>
       </div>
 
       <div class="collapse navbar-collapse bg-info">
         <!-- for logged-in user-->
         <div class="navbar-nav" v-if="isLoggedIn">
-          <a class="nav-item nav-link" style="cursor: pointer" @click="logout">Logout</a>
+          <a class="nav-item nav-link danger" style="cursor: pointer" @click="logout"
+            >Logout</a
+          >
         </div>
         <!-- for non-logged user-->
-        <div class="navbar-nav" v-else><LoginModal /></div>
       </div>
     </nav>
   </header>
@@ -183,20 +187,31 @@
 
 <script>
 import LoginModal from "../auth/LoginModal";
-// import { openModal, container } from "../auth/LoginModal";
-
-// import { openModal, container } from "jenesius-vue-modal";
-// import Modal from "Modal.vue";
 export default {
+  props: ["isLoggedIn"],
   data() {
     return {
-      headers: {
-        "X-CSRF-TOKEN": document.querySelector("meta[name=csrf-token]").content,
-        "Content-Type": "multipart/form-data",
-      },
+      authenticated: false,
     };
   },
-  mounted() {},
+
+  created() {
+    alert("here");
+    if (window.Laravel.user) {
+      this.name = window.Laravel.user.name;
+      alert(this.name);
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    if (!window.Laravel.isLoggedin) {
+      alert("here");
+      //   window.location.href = "/";
+    }
+    next();
+  },
+  mounted() {
+    // this.beforeRouteEnter();
+  },
   components: { LoginModal },
   methods: {
     logout() {
@@ -209,6 +224,14 @@ export default {
     },
     showLoginModal() {
       isShow.value = true;
+    },
+
+    loggedIn(val) {
+      alert("logged nav");
+      alert(val);
+      console.log(val);
+      this.$emit("authenticated", val);
+      this.authenticated = val;
     },
   },
 };
