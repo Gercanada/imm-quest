@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Currency extends Model
+class Criterion extends Model
 {
-    public $incrementing = false;
-    protected $table = "vt_Currency";
     use HasFactory;
-
-
+    public function subfactor()
+    {
+        return $this->belongsTo(Subfactor::class);
+    }
 }

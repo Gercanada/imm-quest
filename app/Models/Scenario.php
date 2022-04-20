@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Document extends Model
+class Scenario extends Model
 {
     use HasFactory;
-    protected $table ='documents';
 
     protected $fillable = [
+        'is_married',
         'user_id',
-        'contact_id',
-        'title',
-        'description',
-        'url_file',
-        'syncronized'
+        'factor_id',
+        'subfactor_id',
+        'criteion_id'
     ];
 }

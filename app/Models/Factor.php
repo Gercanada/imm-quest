@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CLItem extends Model
+class Factor extends Model
 {
     use HasFactory;
-
-    public $incrementing = false;
-    protected $table = 'vt_CLItems';
+    public function subfactors()
+    {
+        return $this->hasMany(Subfactor::class);
+    }
 }

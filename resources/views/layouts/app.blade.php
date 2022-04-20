@@ -54,6 +54,24 @@
         </div>
     </div>
 
+    {{-- @if (Auth::check())
+        @php
+            $user_auth_data = [
+                'isLoggedin' => true,
+                'user' => Auth::user(),
+            ];
+        @endphp
+    @else
+        @php
+            $user_auth_data = [
+                'isLoggedin' => false,
+            ];
+        @endphp
+    @endif
+    <script>
+        window.Laravel = JSON.parse(atob('{{ base64_encode(json_encode($user_auth_data)) }}'));
+    </script> --}}
+
     <div id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
@@ -65,6 +83,13 @@
                 <header class="topbar">
                     @include('layouts.navbar')
                 </header>
+
+                @php
+                    $user_auth_data = [
+                        'isLoggedin' => true,
+                        'user' => Auth::user(),
+                    ];
+                @endphp
             @endif
             {{-- aside --}}
             @if (Auth::user())
@@ -83,7 +108,11 @@
             </div>
         @endif
 
+
     </div>
+    <script>
+        window.Laravel = JSON.parse(atob('{{ base64_encode(json_encode($user_auth_data)) }}'));
+    </script>
 
     <!-- ============================================================== -->
     {{-- <div class="chat-windows"></div> --}}
@@ -152,7 +181,7 @@
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
     </script>
-    
+
     @if (env('APP_ENV') === 'local')
         <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
     @else

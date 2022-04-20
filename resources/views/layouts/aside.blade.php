@@ -47,37 +47,6 @@
                 </li>
 
 
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{ route('cases') }}" aria-expanded="false"><i data-feather="briefcase"
-                            class="feather-icon"></i><span class="hide-menu">Cases</span></a></li>
-
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{ route('checklists') }}" aria-expanded="false"><i data-feather="clipboard"
-                            class="feather-icon"></i><span class="hide-menu">Checklists</span></a></li>
-
-               {{--  <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{ route('quotes') }}" aria-expanded="false"><i data-feather="file-text"
-                            class="feather-icon"></i><span class="hide-menu">Quotes</span></a></li>
-
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{ route('invoices') }}" aria-expanded="false"><i data-feather="file-text"
-                            class="feather-icon"></i><span class="hide-menu">Invoices</span></a></li>
-
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{ route('payments') }}" aria-expanded="false"><i data-feather="credit-card"
-                            class="feather-icon"></i><span class="hide-menu">Payments</span></a></li>
-
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{ route('commboard') }}" aria-expanded="false"><i data-feather="message-square"
-                            class="feather-icon"></i><span class="hide-menu">Comm board</span></a></li>
-
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{ route('documents') }}" aria-expanded="false"><i data-feather="file"
-                            class="feather-icon"></i><span class="hide-menu">Documents</span></a></li>
-
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
-                        aria-expanded="false"><i data-feather="credit-card" class="feather-icon"></i><span
-                            class="hide-menu">Make a payment</span></a></li> --}}
 
 
                 <li class="sidebar-item">
