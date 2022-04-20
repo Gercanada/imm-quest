@@ -11,6 +11,8 @@ class CreateScenariosTable extends Migration
     {
         Schema::create('scenarios', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->json('body')->nullable();
             $table->boolean('is_married')->default(false);
             $table->timestamps();
         });

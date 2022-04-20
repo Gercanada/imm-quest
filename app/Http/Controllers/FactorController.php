@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSituation;
 use App\Models\Factor;
+use App\Models\Scenario;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class FactorController extends Controller
 {
@@ -123,19 +125,41 @@ class FactorController extends Controller
 
     public function factors()/* get factors for  create accordions */
     {
+
+        $scenarios = null;
         $factors = Factor::where('factors.title', '!=', 'default')
             ->with('subfactors')
             // ->where('subfactors.subfactor', '!=', 'default')
             ->with('subfactors.criteria')->get();
-        return $factors;
+
+        if (Auth::user()) {
+            $user = Auth::user();
+            $scenarios = Scenario::Where('user_id', $user->id)->get();
+        }
+        return [$factors, $scenarios];
     }
 
 
     /**
      * To save an scenario be required auth (Loogin or register redirect)
      */
-    public function saveScenario(StoreSituation $request)
+    public function saveScenario(Request $request)
     {
-        return 200;
+        try {
+            // return $request;
+
+            $user = Auth::user();
+            Scenario::create([
+                'user_id' => $user->id,
+                'name' => $request->scenarioName,
+                'is_married' => $request->actualSituation[0] === 'Married' ? true : false,
+                'body' => $request->actualSituation[2]
+            ]);
+            return 200;
+        } catch (Exception $e) {
+            $this->consoleWrite($e->getMessage());
+            $this->consoleWrite($e);
+            return response()->json($e);
+        }
     }
 }

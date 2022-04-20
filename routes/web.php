@@ -57,6 +57,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/user_themme',  [UserController::class, 'getThemme']);
     Route::post('/user_themme', [UserController::class, 'setThemme']);
 
+    //Scenarios
+    Route::post('save-situation', [FactorController::class, 'saveScenario']);
+
 
 
 

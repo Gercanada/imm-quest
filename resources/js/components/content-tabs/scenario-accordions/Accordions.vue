@@ -94,6 +94,7 @@ export default {
   data() {
     return {
       data: [],
+      scenarios: [],
       selectedSubfactor: {},
       factorScoreMarried: {},
       factorScoreSingle: {},
@@ -111,8 +112,8 @@ export default {
     getData() {
       let me = this;
       axios.get("/factors").then(function (response) {
-        // console.log(response);
-        me.data = response.data ? response.data : [];
+        me.data = response.data ? response.data[0] : [];
+        me.scenarios = response.data[1] ? response.data[1] : [];
         console.log(me.data);
       });
     },
@@ -129,12 +130,16 @@ export default {
         me.subfactorsArr.push(subfactor);
 
         me.singleValues.push({
+          factor,
           subfactor,
+          criterion: me.selectedSubfactor[subfactor].id,
           value: me.selectedSubfactor[subfactor].single,
         });
 
         me.marriedValues.push({
+          factor,
           subfactor,
+          criterion: me.selectedSubfactor[subfactor].id,
           value: me.selectedSubfactor[subfactor].married,
         });
       } else {
@@ -152,32 +157,20 @@ export default {
 
         replace(
           me.singleValues,
+          { factor: factor },
           { subfactor: subfactor },
+          { criterion: me.selectedSubfactor[subfactor].id },
           me.selectedSubfactor[subfactor].single
         );
 
         replace(
           me.marriedValues,
+          { factor: factor },
           { subfactor: subfactor },
+          { criterion: me.selectedSubfactor[subfactor].id },
           me.selectedSubfactor[subfactor].married
         );
         replace(me.subfactorsArr, { subfactor: subfactor }, subfactor);
-        /*
-        me.singleValues.splice(
-          me.singleValues.findIndex((e) => e.subfactor === subfactor),
-          1
-        );
-
-        me.subfactorsArr.splice(
-          me.subfactorsArr.findIndex((e) => e === subfactor),
-          1
-        );
-
-        me.subfactorsArr.push(subfactor);
-        me.singleValues.push({
-          subfactor,
-          value: me.selectedSubfactor[subfactor].single,
-        }); */
       }
       function sumArr(arr) {
         return arr.reduce(
@@ -185,19 +178,21 @@ export default {
           0
         );
       }
-
-      //   console.log({ Subfactors: me.subfactorsArr });
       console.log({ ForSingleValues: me.singleValues });
       console.log({ forMarried: me.marriedValues });
 
-      //   me.factorScoreMarried[factor] = me.selectedSubfactor[subfactor].married;
       me.factorScoreSingle[factor] = sumArr(me.singleValues);
       me.factorScoreMarried[factor] = sumArr(me.marriedValues);
 
-      /*  me.singleValues.reduce(
-        (previousValue, currentValue) => previousValue + currentValue.value,
-        0
-      ); */
+      let selectedSituation = [];
+      selectedSituation[0] = this.maritialStatus;
+      selectedSituation[1] = this.scenarios;
+      if (this.maritialStatus === "Single") {
+        selectedSituation[2] = me.singleValues;
+      } else {
+        selectedSituation[2] = me.marriedValues;
+      }
+      this.$emit("selectedSituation", selectedSituation);
 
       console.log(me.factorScoreMarried[factor]);
       console.log(me.factorScoreSingle[factor]);

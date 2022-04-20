@@ -10,10 +10,9 @@ class Scenario extends Model
     use HasFactory;
 
     protected $fillable = [
-        'is_married',
         'user_id',
-        'factor_id',
-        'subfactor_id',
-        'criteion_id'
+        'is_married',
+        'name',
+        'body'
     ];
 }
