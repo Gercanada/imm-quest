@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSituation;
+// use App\Http\Requests\StoreSituation;
 use App\Models\Factor;
 use App\Models\Scenario;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use stdClass;
 
 class FactorController extends Controller
 {
@@ -146,19 +147,39 @@ class FactorController extends Controller
     public function saveScenario(Request $request)
     {
         try {
-            // return $request;
-
             $user = Auth::user();
-            Scenario::create([
-                'user_id' => $user->id,
-                'name' => $request->scenarioName,
-                'is_married' => $request->actualSituation[0] === 'Married' ? true : false,
-                'body' => $request->actualSituation[2]
-            ]);
-            return 200;
+
+            $currentScennarios = $request->actualSituation[1];
+            $actualSituation = null;
+
+            foreach ($currentScennarios as $current) {
+                $actual = false;
+                if (isset($current['is_theactual'])) {
+                    $actual =  $current['is_theactual'] == true ? true : false;
+                }
+                if ($actual === true) {
+                    $actualSituation = $current;
+                    break;
+                }
+            }
+
+            $scenario =  Scenario::updateOrCreate(
+                [
+                    'id' => $actualSituation['id'],
+                    'is_theactual' => true
+                ],
+                [
+                    'user_id' => $user->id,
+                    'name' => $request->scenarioName,
+                    'is_married' => $request->actualSituation[0] === 'Married' ? true : false,
+                    'body' => json_encode($request->actualSituation[2]),
+                ]
+            );
+
+            return response()->json($scenario);
         } catch (Exception $e) {
-            $this->consoleWrite($e->getMessage());
-            $this->consoleWrite($e);
+            $this->consoleWrite()->writeln($e->getMessage());
+            $this->consoleWrite()->writeln($e);
             return response()->json($e);
         }
     }

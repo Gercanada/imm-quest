@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Scenario extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
+    protected $casts = [
+        'body' => 'array',
+    ];
 
     protected $fillable = [
         'user_id',

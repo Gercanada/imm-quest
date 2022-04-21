@@ -15,7 +15,6 @@ class AddUserIdToScenariosTable extends Migration
         });
     }
 
-
     public function down()
     {
         Schema::table('scenarios', function (Blueprint $table) {

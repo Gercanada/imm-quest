@@ -11,7 +11,7 @@
                 name="matrialStatus"
                 id="isSingle"
                 value="Single"
-                checked
+                :checked="maritialStatus == 'Single'"
                 @change="changeStatus('Single')"
               />
               <label class="form-check-label" for="isSingle">Soltero</label>
@@ -23,6 +23,7 @@
                 name="matrialStatus"
                 id="isMarried"
                 value="Married"
+                :checked="maritialStatus == 'Married'"
                 @change="changeStatus('Married')"
               />
               <label class="form-check-label" for="isMarried">Casado</label>
@@ -55,7 +56,11 @@
           </div>
         </div>
 
-        <accordions @selectedSituation="getSituation" :maritialStatus="maritialStatus" />
+        <accordions
+          @selectedSituation="getSituation"
+          @mutableMaritialStatus="getUserData"
+          :maritialStatus="maritialStatus"
+        />
       </div>
     </div>
   </div>
@@ -78,44 +83,98 @@ export default {
   },
   mounted() {},
   methods: {
+    getUserData(value) {
+      this.maritialStatus = value;
+      //   console.log({ value });
+    },
+
     changeStatus(value) {
       this.maritialStatus = value;
     },
+
     getSituation(value) {
-      console.log({ "actual situation": value });
-      this.scenarios = value[1];
-      this.userActualSituation = value;
+      let me = this;
+      me.scenarios = value[1];
+      me.userActualSituation = value;
+
+      let scenario = null;
+      if (me.scenarios.length > 0) {
+        me.scenarios.forEach((element) => {
+          if ("is_theactual" in element) {
+            if (element["is_theactual"] == true) {
+              scenario = element;
+            }
+          }
+        });
+        if (scenario != null) {
+          me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
+          alert(me.maritialStatus);
+        } else {
+          alert("crash");
+        }
+      }
     },
 
     async saveSituation() {
-      console.log(this);
       let me = this;
-      Swal.fire({
-        title: "Sera guardado como : Scenario " + Number(me.scenarios.length + 1),
-        icon: "warning",
-        text:
-          "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
-        input: "text",
-        showConfirmButton: true,
-        showCancelButton: true,
-      })
-        .then(function (result) {
-          console.log(result);
-          console.table(me.userActualSituation);
-          axios
-            .post("save-situation", {
-              scenarioName: result.value
-                ? result.value
-                : "Scenario " + Number(me.scenarios.length + 1),
-              actualSituation: me.userActualSituation,
-            })
-            .then(function (response) {
-              console.log(response);
-            });
-        })
-        .catch(function (error) {
-          console.table(error);
+      if (me.scenarios.length === 0) {
+        Swal.fire({
+          type: "warning",
+          title: "Nada para guardar",
+          text: "No ha hecho ningun cambio. No hay nada que guardar.",
         });
+      } else {
+        let scenario = null;
+        me.scenarios.forEach((element) => {
+          if ("is_theactual" in element) {
+            if (element["is_theactual"] == true) {
+              scenario = element;
+            }
+          }
+        });
+
+        Swal.fire({
+          title:
+            "Sera guardado como : " +
+            (scenario == null
+              ? "Scenario " + Number(me.scenarios.length + 1)
+              : scenario["name"]),
+          type: "warning",
+          text:
+            "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
+          input: "text",
+
+          showDenyButton: true,
+          showCancelButton: true,
+        })
+          .then(function (result) {
+            if ("value" in result) {
+              axios
+                .post("save-situation", {
+                  scenarioName: result.value
+                    ? result.value
+                    : "Scenario " + Number(me.scenarios.length + 1),
+                  actualSituation: me.userActualSituation,
+                })
+                .then(function (response) {
+                  Swal.fire({
+                    type: "success",
+                    title: "Escenario guardado",
+                    text:
+                      "Se ha" + scenario == null
+                        ? "creado"
+                        : "actualizado" + "este escenario",
+                  });
+                  console.log(response);
+                });
+            } else {
+              Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
+            }
+          })
+          .catch(function (error) {
+            console.table(error);
+          });
+      }
     },
   },
 };

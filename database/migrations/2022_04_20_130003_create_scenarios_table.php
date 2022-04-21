@@ -14,10 +14,10 @@ class CreateScenariosTable extends Migration
             $table->string('name')->nullable();
             $table->json('body')->nullable();
             $table->boolean('is_married')->default(false);
+            $table->boolean('is_theactual')->default(true);
             $table->timestamps();
         });
     }
-
 
     public function down()
     {

@@ -2,23 +2,9 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\ChecklistController;
-use App\Http\Controllers\CPCaseController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\QuoteController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\CLItemController;
-use App\Http\Controllers\CommboardController;
-use App\Http\Controllers\VtigerController;
-use App\Http\Controllers\LSurveyController;
-use App\Http\Controllers\CloneDBController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FactorController;
-use App\Http\Controllers\MqttController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,8 +26,6 @@ Route::get('/subfactors', [FactorController::class, 'listSubfactors']); //List s
 /*data for views*/
 Route::get('/factors', [FactorController::class, 'factors']);
 
-
-
 Route::middleware('auth')->group(function () {
     //dashboard
     Route::get('/',                  [DashboardController::class, 'index'])->name('dashboard');
@@ -59,14 +43,6 @@ Route::middleware('auth')->group(function () {
 
     //Scenarios
     Route::post('save-situation', [FactorController::class, 'saveScenario']);
-
-
-
-
-
-
-
-
 
     Route::any('{any}', function () {
         abort(404);

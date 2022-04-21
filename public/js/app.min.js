@@ -2436,6 +2436,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2451,48 +2456,94 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {},
   methods: {
+    getUserData: function getUserData(value) {
+      this.maritialStatus = value; //   console.log({ value });
+    },
     changeStatus: function changeStatus(value) {
       this.maritialStatus = value;
     },
     getSituation: function getSituation(value) {
-      console.log({
-        "actual situation": value
-      });
-      this.scenarios = value[1];
-      this.userActualSituation = value;
+      var me = this;
+      me.scenarios = value[1];
+      me.userActualSituation = value;
+      var scenario = null;
+
+      if (me.scenarios.length > 0) {
+        me.scenarios.forEach(function (element) {
+          if ("is_theactual" in element) {
+            if (element["is_theactual"] == true) {
+              scenario = element;
+            }
+          }
+        });
+
+        if (scenario != null) {
+          me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
+          alert(me.maritialStatus);
+        } else {
+          alert("crash");
+        }
+      }
     },
     saveSituation: function saveSituation() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var me;
+        var me, scenario;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(_this);
                 me = _this;
-                Swal.fire({
-                  title: "Sera guardado como : Scenario " + Number(me.scenarios.length + 1),
-                  icon: "warning",
-                  text: "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
-                  input: "text",
-                  showConfirmButton: true,
-                  showCancelButton: true
-                }).then(function (result) {
-                  console.log(result);
-                  console.table(me.userActualSituation);
-                  axios.post("save-situation", {
-                    scenarioName: result.value ? result.value : "Scenario " + Number(me.scenarios.length + 1),
-                    actualSituation: me.userActualSituation
-                  }).then(function (response) {
-                    console.log(response);
-                  });
-                })["catch"](function (error) {
-                  console.table(error);
-                });
 
-              case 3:
+                if (me.scenarios.length === 0) {
+                  Swal.fire({
+                    type: "warning",
+                    title: "Nada para guardar",
+                    text: "No ha hecho ningun cambio. No hay nada que guardar."
+                  });
+                } else {
+                  scenario = null;
+                  me.scenarios.forEach(function (element) {
+                    if ("is_theactual" in element) {
+                      if (element["is_theactual"] == true) {
+                        scenario = element;
+                      }
+                    }
+                  });
+                  Swal.fire({
+                    title: "Sera guardado como : " + (scenario == null ? "Scenario " + Number(me.scenarios.length + 1) : scenario["name"]),
+                    type: "warning",
+                    text: "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
+                    input: "text",
+                    showDenyButton: true,
+                    showCancelButton: true
+                  }).then(function (result) {
+                    if ("value" in result) {
+                      axios.post("save-situation", {
+                        scenarioName: result.value ? result.value : "Scenario " + Number(me.scenarios.length + 1),
+                        actualSituation: me.userActualSituation
+                      }).then(function (response) {
+                        Swal.fire({
+                          type: "success",
+                          title: "Escenario guardado",
+                          text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
+                        });
+                        console.log(response);
+                      });
+                    } else {
+                      Swal.fire({
+                        type: "info",
+                        title: "No será guardado",
+                        timer: 3000
+                      });
+                    }
+                  })["catch"](function (error) {
+                    console.table(error);
+                  });
+                }
+
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -2635,10 +2686,28 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/bootstrap.js":
+/*!***********************************!*\
+  !*** ./resources/js/bootstrap.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/**
+ * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+ * for JavaScript based Bootstrap features such as modals and tabs. This
+ * code may be modified to fit the specific needs of your application.
+ */
+
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2648,100 +2717,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["maritialStatus"],
   selectedSubfactor: null,
   data: function data() {
     return {
+      loading: false,
       data: [],
       scenarios: [],
       selectedSubfactor: {},
@@ -2749,20 +2730,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       factorScoreSingle: {},
       singleValues: [],
       marriedValues: [],
-      subfactorsArr: []
+      subfactorsArr: [],
+      mutableMaritialStatus: this.maritialStatus
     };
   },
   mounted: function mounted() {
-    console.log(this.maritialStatus);
     this.getData();
   },
   methods: {
     getData: function getData() {
+      alert(this.mutableMaritialStatus);
       var me = this;
       axios.get("/factors").then(function (response) {
         me.data = response.data ? response.data[0] : [];
         me.scenarios = response.data[1] ? response.data[1] : [];
-        console.log(me.data);
+        console.log(me.scenarios);
+        var scenario = null;
+
+        if (me.scenarios.length > 0) {
+          me.scenarios.forEach(function (element) {
+            if ("is_theactual" in element) {
+              if (element["is_theactual"] == true) {
+                scenario = element;
+              }
+            }
+          });
+
+          if (scenario != null) {
+            alert('here');
+            me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married';
+            alert(me.mutableMaritialStatus);
+            me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
+          } else {
+            alert('crash');
+          }
+        } else {
+          alert('crash');
+        }
       });
     },
     criteriaVal: function criteriaVal(factor, subfactor) {
@@ -2789,7 +2793,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           value: me.selectedSubfactor[subfactor].married
         });
       } else {
-        var replace = function replace(arr, obj, newValue) {
+        var replace = function replace(arr, obj, x, y, newValue) {
           var _newObj;
 
           arr.splice(arr.findIndex(function (e) {
@@ -2802,22 +2806,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
 
         replace(me.singleValues, {
-          factor: factor
-        }, {
           subfactor: subfactor
+        }, {
+          factor: factor
         }, {
           criterion: me.selectedSubfactor[subfactor].id
         }, me.selectedSubfactor[subfactor].single);
         replace(me.marriedValues, {
-          factor: factor
-        }, {
           subfactor: subfactor
+        }, {
+          factor: factor
         }, {
           criterion: me.selectedSubfactor[subfactor].id
         }, me.selectedSubfactor[subfactor].married);
         replace(me.subfactorsArr, {
           subfactor: subfactor
-        }, subfactor);
+        }, null, null, subfactor);
       }
 
       function sumArr(arr) {
@@ -2835,39 +2839,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       me.factorScoreSingle[factor] = sumArr(me.singleValues);
       me.factorScoreMarried[factor] = sumArr(me.marriedValues);
       var selectedSituation = [];
-      selectedSituation[0] = this.maritialStatus;
+      selectedSituation[0] = this.mutableMaritialStatus;
       selectedSituation[1] = this.scenarios;
 
-      if (this.maritialStatus === "Single") {
+      if (this.mutableMaritialStatus === "Single") {
         selectedSituation[2] = me.singleValues;
       } else {
         selectedSituation[2] = me.marriedValues;
       }
 
       this.$emit("selectedSituation", selectedSituation);
-      console.log(me.factorScoreMarried[factor]);
-      console.log(me.factorScoreSingle[factor]);
     }
   }
 });
-
-/***/ }),
-
-/***/ "./resources/js/bootstrap.js":
-/*!***********************************!*\
-  !*** ./resources/js/bootstrap.js ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
@@ -21899,7 +21883,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Accordions_vue_vue_type_template_id_d1d861d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Accordions.vue?vue&type=template&id=d1d861d8& */ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=template&id=d1d861d8&");
-/* harmony import */ var _Accordions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Accordions.vue?vue&type=script&lang=js& */ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=script&lang=js&");
+/* harmony import */ var _accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./accordions.js?vue&type=script&lang=js& */ "./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js&");
 /* harmony import */ var _Accordions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Accordions.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -21911,7 +21895,7 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _Accordions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Accordions_vue_vue_type_template_id_d1d861d8___WEBPACK_IMPORTED_MODULE_0__.render,
   _Accordions_vue_vue_type_template_id_d1d861d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -21925,6 +21909,22 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 if (false) { var api; }
 component.options.__file = "resources/js/components/content-tabs/scenario-accordions/Accordions.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./accordions.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -22021,22 +22021,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SummaryTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SummaryTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/SummaryTable.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SummaryTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Accordions.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -22609,8 +22593,8 @@ var render = function () {
                       name: "matrialStatus",
                       id: "isSingle",
                       value: "Single",
-                      checked: "",
                     },
+                    domProps: { checked: _vm.maritialStatus == "Single" },
                     on: {
                       change: function ($event) {
                         return _vm.changeStatus("Single")
@@ -22638,6 +22622,7 @@ var render = function () {
                     id: "isMarried",
                     value: "Married",
                   },
+                  domProps: { checked: _vm.maritialStatus == "Married" },
                   on: {
                     change: function ($event) {
                       return _vm.changeStatus("Married")
@@ -22678,7 +22663,10 @@ var render = function () {
           _vm._v(" "),
           _c("accordions", {
             attrs: { maritialStatus: _vm.maritialStatus },
-            on: { selectedSituation: _vm.getSituation },
+            on: {
+              selectedSituation: _vm.getSituation,
+              mutableMaritialStatus: _vm.getUserData,
+            },
           }),
         ],
         1
@@ -23026,7 +23014,7 @@ var render = function () {
                       attrs: { type: "text", disabled: "" },
                       domProps: {
                         value:
-                          _vm.maritialStatus === "Married"
+                          _vm.mutableMaritialStatus === "Married"
                             ? _vm.factorScoreMarried[factor.id]
                             : _vm.factorScoreSingle[factor.id],
                       },
@@ -23124,17 +23112,17 @@ var render = function () {
                         _c("div", { staticClass: "col-2" }, [
                           _c("input", {
                             staticClass: "form-control",
-                            attrs: { type: "text" },
-                            domProps: {
-                              value:
+                            attrs: {
+                              type: "text",
+                              "v-model":
                                 _vm.selectedSubfactor[subfactor.id] != undefined
-                                  ? _vm.maritialStatus === "Married" &&
+                                  ? _vm.mutableMaritialStatus === "Married" &&
                                     _vm.selectedSubfactor[
                                       subfactor.id
                                     ].hasOwnProperty("married")
                                     ? _vm.selectedSubfactor[subfactor.id]
                                         .married
-                                    : _vm.maritialStatus === "Single" &&
+                                    : _vm.mutableMaritialStatus === "Single" &&
                                       _vm.selectedSubfactor[
                                         subfactor.id
                                       ].hasOwnProperty("single")

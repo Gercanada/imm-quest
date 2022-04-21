@@ -78,6 +78,11 @@
         <!-- ============================================================== -->
         @if (!Auth::user())
             @yield('content'){{-- login view --}}
+            @php
+                $user_auth_data = [
+                    'isLoggedin' => false,
+                ];
+            @endphp
         @else
             @if (Auth::user())
                 <header class="topbar">
