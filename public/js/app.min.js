@@ -2454,19 +2454,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       userActualSituation: []
     };
   },
-  mounted: function mounted() {},
+  //   mounted() {},
   methods: {
     getUserData: function getUserData(value) {
-      this.maritialStatus = value; //   console.log({ value });
+      this.maritialStatus = value;
     },
     changeStatus: function changeStatus(value) {
       this.maritialStatus = value;
     },
     getSituation: function getSituation(value) {
+      var scenario = null;
       var me = this;
       me.scenarios = value[1];
       me.userActualSituation = value;
-      var scenario = null;
 
       if (me.scenarios.length > 0) {
         me.scenarios.forEach(function (element) {
@@ -2479,9 +2479,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
         if (scenario != null) {
           me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
-          alert(me.maritialStatus);
-        } else {
-          alert("crash");
         }
       }
     },
@@ -2719,9 +2716,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["maritialStatus"],
-  selectedSubfactor: null,
+  // selectedSubfactor: null,
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
+      criterion: '',
       loading: false,
       data: [],
       scenarios: [],
@@ -2730,21 +2730,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       factorScoreSingle: {},
       singleValues: [],
       marriedValues: [],
-      subfactorsArr: [],
-      mutableMaritialStatus: this.maritialStatus
-    };
+      subfactorsArr: []
+    }, _defineProperty(_ref, "criterion", {}), _defineProperty(_ref, "SelectedFactor", []), _defineProperty(_ref, "mutableMaritialStatus", this.maritialStatus), _ref;
   },
   mounted: function mounted() {
     this.getData();
   },
   methods: {
     getData: function getData() {
-      alert(this.mutableMaritialStatus);
       var me = this;
       axios.get("/factors").then(function (response) {
         me.data = response.data ? response.data[0] : [];
         me.scenarios = response.data[1] ? response.data[1] : [];
-        console.log(me.scenarios);
         var scenario = null;
 
         if (me.scenarios.length > 0) {
@@ -2757,19 +2754,82 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
 
           if (scenario != null) {
-            alert('here');
-            me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married';
-            alert(me.mutableMaritialStatus);
+            me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status
+
             me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
-          } else {
-            alert('crash');
+            var body = JSON.parse(scenario['body']);
+            var factors = me.data;
+
+            if (Array.isArray(body) && body.length > 0) {
+              body.forEach(function (element) {
+                console.log({
+                  element: element
+                });
+                factors.forEach(function (factor) {
+                  var factorSelected = null;
+
+                  if (factor.id === element['factor']) {
+                    factor.subfactors.forEach(function (subfactor) {
+                      if (subfactor.id === element['subfactor']) {
+                        me.criterion = element['criterion'];
+
+                        if ('factor' in element && 'subfactor' in element && 'criterion' in element) {
+                          me.SelectedFactor = [];
+                          me.SelectedFactor.push({
+                            factor: element['factor']
+                          }, {
+                            subfactor: element['subfactor']
+                          }, {
+                            criterion: element['criterion']
+                          });
+                          return;
+                          /*  me.selectedCtiterion({
+                              factor: element['factor'],
+                              subfactor: element['subfactor'],
+                              criterion: element['criterion']
+                          }); */
+                        }
+                      }
+                    });
+                  }
+                }); // console.log(element['factor'], element['subfactor']);
+                // me.criteriaVal(element['factor'], element['subfactor']);
+              });
+            } //get selected subfactors criterion and put as selected if exists
+
           }
-        } else {
-          alert('crash');
         }
       });
     },
+    selectedCtiterion: function selectedCtiterion(selectedObj) {
+      this.SelectedFactor = [];
+      this.SelectedFactor.push({
+        factor: selectedObj['factor']
+      }, {
+        subfactor: selectedObj['subfactor']
+      }, {
+        criterion: selectedObj['criterion']
+      });
+      console.log({
+        selectedObj: this.SelectedFactor
+      });
+      /*   if (selectedArr != undefined && Array.isArray(selectedArr)) {
+            selectedArr.foreach((selected) => {
+                if (selected["subfactor"] === subfactor.id) {
+                    return selected["criterion"];
+                }
+            });
+        } else {
+            return 'null';
+        } */
+    },
     criteriaVal: function criteriaVal(factor, subfactor) {
+      console.log({
+        factor: factor
+      });
+      console.log({
+        subfactor: subfactor
+      });
       var me = this;
       me.subfactorsArr.sort(function (a, b) {
         return a - b;
@@ -2828,14 +2888,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return arr.reduce(function (previousValue, currentValue) {
           return previousValue + currentValue.value;
         }, 0);
-      }
+      } // console.log({ ForSingleValues: me.singleValues });
+      // console.log({ forMarried: me.marriedValues });
 
-      console.log({
-        ForSingleValues: me.singleValues
-      });
-      console.log({
-        forMarried: me.marriedValues
-      });
+
       me.factorScoreSingle[factor] = sumArr(me.singleValues);
       me.factorScoreMarried[factor] = sumArr(me.marriedValues);
       var selectedSituation = [];
@@ -23095,11 +23151,17 @@ var render = function () {
                             _vm._l(subfactor.criteria, function (criterion) {
                               return _c(
                                 "option",
-                                { domProps: { value: criterion } },
+                                { staticClass: "bg-warning col-4" },
                                 [
                                   _vm._v(
                                     "\n                      " +
-                                      _vm._s(criterion.criterion) +
+                                      _vm._s(criterion.id) +
+                                      "\n                      "
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                      " +
+                                      _vm._s(_vm.SelectedFactor) +
                                       "\n                    "
                                   ),
                                 ]

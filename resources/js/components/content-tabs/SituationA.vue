@@ -81,11 +81,10 @@ export default {
       userActualSituation: [],
     };
   },
-  mounted() {},
+  //   mounted() {},
   methods: {
     getUserData(value) {
       this.maritialStatus = value;
-      //   console.log({ value });
     },
 
     changeStatus(value) {
@@ -93,11 +92,12 @@ export default {
     },
 
     getSituation(value) {
+      let scenario = null;
       let me = this;
+
       me.scenarios = value[1];
       me.userActualSituation = value;
 
-      let scenario = null;
       if (me.scenarios.length > 0) {
         me.scenarios.forEach((element) => {
           if ("is_theactual" in element) {
@@ -106,11 +106,9 @@ export default {
             }
           }
         });
+
         if (scenario != null) {
           me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
-          alert(me.maritialStatus);
-        } else {
-          alert("crash");
         }
       }
     },

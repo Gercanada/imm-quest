@@ -55,9 +55,30 @@
                       v-model="selectedSubfactor[subfactor.id]"
                       @change="criteriaVal(factor.id, subfactor.id)"
                     >
-                      <option v-for="criterion in subfactor.criteria" :value="criterion">
-                        {{ criterion.criterion }}
+                      <option
+                        class="bg-warning col-4"
+                        v-for="criterion in subfactor.criteria"
+                      >
+                        {{ criterion.id }}
+                        <br />
+                        {{ SelectedFactor }}
                       </option>
+                      <!--    <option
+                        v-for="criterion in subfactor.criteria"
+                        :v-model="criterion"
+                        :selected="
+                          criterion.id ===
+                          function () {
+                            selectedFactor.foreach((selected) => {
+                              if (selected['subfactor'] === subfactor.id) {
+                                return selected['criterion'];
+                              }
+                            });
+                          }
+                        "
+                      >
+                        {{ criterion.criterion }}
+                      </option> -->
                     </select>
                   </div>
 
