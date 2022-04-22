@@ -84,6 +84,7 @@ export default {
   //   mounted() {},
   methods: {
     getUserData(value) {
+      //   alert(value);
       this.maritialStatus = value;
     },
 
@@ -92,6 +93,7 @@ export default {
     },
 
     getSituation(value) {
+      //   alert(value);
       let scenario = null;
       let me = this;
 

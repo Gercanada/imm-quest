@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <div id="accordion" class="custom-accordion mb-4">
-        <div class="card mb-0" v-for="factor in data">
+        <!-- <div class="card mb-0" v-for="factor in data">
           <div class="card-header" id="headingOne">
             <div class="row">
               <div class="col-8">
@@ -55,30 +55,9 @@
                       v-model="selectedSubfactor[subfactor.id]"
                       @change="criteriaVal(factor.id, subfactor.id)"
                     >
-                      <option
-                        class="bg-warning col-4"
-                        v-for="criterion in subfactor.criteria"
-                      >
-                        {{ criterion.id }}
-                        <br />
-                        {{ SelectedFactor }}
-                      </option>
-                      <!--    <option
-                        v-for="criterion in subfactor.criteria"
-                        :v-model="criterion"
-                        :selected="
-                          criterion.id ===
-                          function () {
-                            selectedFactor.foreach((selected) => {
-                              if (selected['subfactor'] === subfactor.id) {
-                                return selected['criterion'];
-                              }
-                            });
-                          }
-                        "
-                      >
+                      <option v-for="criterion in subfactor.criteria" :value="criterion">
                         {{ criterion.criterion }}
-                      </option> -->
+                      </option>
                     </select>
                   </div>
 
@@ -86,7 +65,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      :v-model="
+                      :value="
                         selectedSubfactor[subfactor.id] != undefined
                           ? mutableMaritialStatus === 'Married' &&
                             selectedSubfactor[subfactor.id].hasOwnProperty('married')
@@ -97,6 +76,111 @@
                             : 0
                           : 0
                       "
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- +==============+ -->
+
+        <div class="card mb-0" v-for="object in data">
+          <div v-text="object.items"></div>
+          <div class="card-header" id="headingOne">
+            <div class="row">
+              <div class="col-8">
+                <h5 class="m-0">
+                  <a
+                    class="custom-accordion-title d-block pt-2 pb-2"
+                    data-toggle="collapse"
+                    :href="'#collapse' + object.factor.id"
+                    aria-expanded="false"
+                    :aria-controls="'collapse' + object.factor.id"
+                  >
+                    {{ object.factor.title + " " + object.factor.sub_title }}
+                    <span class="float-right"
+                      ><i class="mdi mdi-chevron-down accordion-arrow"></i>
+                    </span>
+                  </a>
+                </h5>
+              </div>
+              <div class="col-4">
+                <input
+                  type="text"
+                  disabled
+                  :value="
+                    mutableMaritialStatus === 'Married'
+                      ? factorScoreMarried[object.factor.id]
+                      : factorScoreSingle[object.factor.id]
+                  "
+                  class="form-control float-right"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!--   <select class="form-control c-select" name="user_type">
+            <option>Parent</option>
+            <option>Student</option>
+            <option :selected="1 < 2">Teacher</option>
+          </select> -->
+
+          <div
+            :id="'collapse' + object.factor.id"
+            class="collapse"
+            aria-labelledby="headingOne"
+            data-parent="#accordion"
+          >
+            <div class="card-body">
+              <div class="form-group">
+                <div class="row" v-for="subfactor in object.factor.subfactors">
+                  <div class="col-6">
+                    <label>{{ subfactor.subfactor }}</label>
+                  </div>
+                  <div class="col-4">
+                    <button @click="setSelected"></button>
+
+                    <select
+                      class="form-control"
+                      id="select2-search-hide"
+                      style="width: 100%; height: 36px"
+                      @change="criteriaVal(object.factor.id, subfactor.id)"
+                      v-model="selectedSubfactor[subfactor.id]"
+                    >
+                      <!-- <option selected value="1">any</option>
+                      <option value="2">any2</option> -->
+                      <option
+                        v-for="criterion in subfactor.criteria"
+                        :value="criterion.id"
+                        :selected="criterion.id == 4 ? true : false"
+                      >
+                        <!-- :selected=" factorWasSelected( [object.items], //x [ { factorId:
+                        object.factor.id }, { subfactorId: subfactor.id }, { criterionId:
+                        criterion.id }, ] //y ) " -->
+                        {{ criterion.criterion }} \ {{ criterion.id }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      :value="
+                        selectedSubfactor[subfactor.id] != undefined
+                          ? mutableMaritialStatus === 'Married' &&
+                            selectedSubfactor[subfactor.id].hasOwnProperty('married')
+                            ? selectedSubfactor[subfactor.id].married
+                            : mutableMaritialStatus === 'Single' &&
+                              selectedSubfactor[subfactor.id].hasOwnProperty('single')
+                            ? selectedSubfactor[subfactor.id].single
+                            : 0
+                          : 0
+                      "
+                      disabled
                     />
                   </div>
                 </div>
@@ -104,6 +188,7 @@
             </div>
           </div>
         </div>
+        <!--  -->
       </div>
     </div>
   </div>

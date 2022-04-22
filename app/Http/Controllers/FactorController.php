@@ -175,7 +175,6 @@ class FactorController extends Controller
                     'body' => json_encode($request->actualSituation[2]),
                 ]
             );
-
             return response()->json($scenario);
         } catch (Exception $e) {
             $this->consoleWrite()->writeln($e->getMessage());

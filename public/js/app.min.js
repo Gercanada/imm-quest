@@ -2457,12 +2457,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   //   mounted() {},
   methods: {
     getUserData: function getUserData(value) {
+      //   alert(value);
       this.maritialStatus = value;
     },
     changeStatus: function changeStatus(value) {
       this.maritialStatus = value;
     },
     getSituation: function getSituation(value) {
+      //   alert(value);
       var scenario = null;
       var me = this;
       me.scenarios = value[1];
@@ -2712,7 +2714,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["maritialStatus"],
@@ -2740,93 +2745,140 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getData: function getData() {
       var me = this;
       axios.get("/factors").then(function (response) {
-        me.data = response.data ? response.data[0] : [];
+        // me.data = response.data ? response.data[0] : [];
         me.scenarios = response.data[1] ? response.data[1] : [];
-        var scenario = null;
+        console.log(me.data);
+        var scenario = null; //actual
 
         if (me.scenarios.length > 0) {
           me.scenarios.forEach(function (element) {
-            if ("is_theactual" in element) {
-              if (element["is_theactual"] == true) {
-                scenario = element;
-              }
+            if ("is_theactual" in element && element["is_theactual"] == true) {
+              scenario = element; // return;
             }
           });
+          var factors = response.data ? response.data[0] : [];
+          var newData = [];
 
-          if (scenario != null) {
+          if (scenario != null && Array.isArray(JSON.parse(scenario['body'])) && JSON.parse(scenario['body']).length > 0) {
             me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status
 
             me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
             var body = JSON.parse(scenario['body']);
-            var factors = me.data;
-
-            if (Array.isArray(body) && body.length > 0) {
-              body.forEach(function (element) {
-                console.log({
-                  element: element
-                });
-                factors.forEach(function (factor) {
-                  var factorSelected = null;
-
-                  if (factor.id === element['factor']) {
-                    factor.subfactors.forEach(function (subfactor) {
-                      if (subfactor.id === element['subfactor']) {
-                        me.criterion = element['criterion'];
-
-                        if ('factor' in element && 'subfactor' in element && 'criterion' in element) {
-                          me.SelectedFactor = [];
-                          me.SelectedFactor.push({
-                            factor: element['factor']
-                          }, {
-                            subfactor: element['subfactor']
-                          }, {
-                            criterion: element['criterion']
-                          });
+            console.log({
+              factors: factors
+            }, {
+              body: body
+            });
+            factors.forEach(function (factor) {
+              var items = [];
+              body.forEach(function (item) {
+                if (item['factor'] === factor.id) {
+                  factor.subfactors.forEach(function (subfactor) {
+                    if (item['subfactor'] === subfactor.id) {
+                      subfactor.criteria.forEach(function (criterion) {
+                        if (item['criterion'] == criterion.id) {
+                          items.push(item);
                           return;
-                          /*  me.selectedCtiterion({
-                              factor: element['factor'],
-                              subfactor: element['subfactor'],
-                              criterion: element['criterion']
-                          }); */
                         }
-                      }
-                    });
-                  }
-                }); // console.log(element['factor'], element['subfactor']);
-                // me.criteriaVal(element['factor'], element['subfactor']);
+                      });
+                    }
+                  });
+                }
               });
-            } //get selected subfactors criterion and put as selected if exists
-
+              newData.push({
+                items: items,
+                factor: factor
+              });
+            });
+          } else {
+            factors.forEach(function (factor) {
+              newData.push({
+                items: null,
+                factor: factor
+              });
+            });
           }
+
+          me.data = newData;
+          console.log({
+            newData: newData
+          }); //get selected subfactors criterion and put as selected if exists
+
+          /*
+              ->TENEMOS LA LISTA DE FACTORES QUE POR DEFECTO NOS DEVI=UELVE LA RUTA.
+              Si el usuario ha guardado un escenario (principal) lo cargamos tambien
+              Lo que buscamos es disparar el select y marcar como seleccionado cada criterio en base al escenario devuelto
+              Tonz tenemos cada objeto del factor y otra lista de los ya guardados
+              queremos
+              A lo que por defecto cada objeto es algo como
+                      {
+                          id: 1
+                          sub_title: "Any"
+                          subfactors: [
+                          {
+                                  criteria: []
+                                  factor_id: 1
+                                  id: 1
+                                  subfactor: "Any name"
+                                  }
+                          ]
+                      }
+                      Si se ha devuelto el arreglo del escenario guardado contendra objetos como {factor: 2, subfactor: 4, criterion: 33, value: 8}
+                       Ahora bien : en el arreglo de factores vamo a comparar el id del factor con el factor en el objeto2, luego el subfactor , y luego el criterio.
+                       Si es coincide , nuestro objeto de factores será como
+                        {
+                         {factor: 1, subfactor: 2, criterion: 3, value: 8},
+                          id: 1
+                          sub_title: "Any"
+                          subfactors: [
+                          {
+                                  criteria: [
+                                                 { criterion: "17 años o menos",
+             ESTE ES EL BUENO   ------>           id: 3,
+                                                  married: 0,
+                                                  single: 0,
+                                                  subfactor_id: 2,
+                                                   },
+                                              ],
+                                  factor_id: 1
+                                  id: 1
+                                  subfactor: "Any name"
+                                  }
+                          ]
+                      }
+                      Por poner un ejemplo ......
+                      Ok Ox , Here go.
+               */
+          // }
+          // me.data = newData;
+
+          /* newData.forEach(element => {
+              .push(element);
+           }); */
         }
       });
     },
-    selectedCtiterion: function selectedCtiterion(selectedObj) {
-      this.SelectedFactor = [];
-      this.SelectedFactor.push({
-        factor: selectedObj['factor']
-      }, {
-        subfactor: selectedObj['subfactor']
-      }, {
-        criterion: selectedObj['criterion']
+    factorWasSelected: function factorWasSelected(x, y) {
+      // console.log({ x }, { y });
+      return x.some(function (i) {
+        return i.factor === y.factorId;
       });
-      console.log({
-        selectedObj: this.SelectedFactor
-      });
-      /*   if (selectedArr != undefined && Array.isArray(selectedArr)) {
-            selectedArr.foreach((selected) => {
-                if (selected["subfactor"] === subfactor.id) {
-                    return selected["criterion"];
-                }
-            });
-        } else {
-            return 'null';
-        } */
+      console.log(x.some(function (i) {
+        return i.factor === y.factorId;
+      }));
+      /*
+                  y.forEach(element => {
+                      if(x.some(  ))
+                   });
+       */
+
+      /*  this.SelectedFactor = [];
+       this.SelectedFactor.push({ factor: selectedObj['factor'] }, { subfactor: selectedObj['subfactor'] }, {
+           criterion: selectedObj['criterion']
+       });
+       console.log({ selectedObj: this.SelectedFactor }); */
     },
     criteriaVal: function criteriaVal(factor, subfactor) {
-      console.log({
-        factor: factor
-      });
       console.log({
         subfactor: subfactor
       });
@@ -2888,8 +2940,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return arr.reduce(function (previousValue, currentValue) {
           return previousValue + currentValue.value;
         }, 0);
-      } // console.log({ ForSingleValues: me.singleValues });
-      // console.log({ forMarried: me.marriedValues });
+      }
+      /*  console.log({ ForSingleValues: me.singleValues });
+       console.log({ forMarried: me.marriedValues }); */
 
 
       me.factorScoreSingle[factor] = sumArr(me.singleValues);
@@ -2897,6 +2950,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var selectedSituation = [];
       selectedSituation[0] = this.mutableMaritialStatus;
       selectedSituation[1] = this.scenarios;
+      console.log(this.mutableMaritialStatus);
 
       if (this.mutableMaritialStatus === "Single") {
         selectedSituation[2] = me.singleValues;
@@ -23031,8 +23085,10 @@ var render = function () {
       _c(
         "div",
         { staticClass: "custom-accordion mb-4", attrs: { id: "accordion" } },
-        _vm._l(_vm.data, function (factor) {
+        _vm._l(_vm.data, function (object) {
           return _c("div", { staticClass: "card mb-0" }, [
+            _c("div", { domProps: { textContent: _vm._s(object.items) } }),
+            _vm._v(" "),
             _c(
               "div",
               { staticClass: "card-header", attrs: { id: "headingOne" } },
@@ -23047,15 +23103,19 @@ var render = function () {
                             "custom-accordion-title d-block pt-2 pb-2",
                           attrs: {
                             "data-toggle": "collapse",
-                            href: "#collapse" + factor.id,
+                            href: "#collapse" + object.factor.id,
                             "aria-expanded": "false",
-                            "aria-controls": "collapse" + factor.id,
+                            "aria-controls": "collapse" + object.factor.id,
                           },
                         },
                         [
                           _vm._v(
                             "\n                  " +
-                              _vm._s(factor.title + " " + factor.sub_title) +
+                              _vm._s(
+                                object.factor.title +
+                                  " " +
+                                  object.factor.sub_title
+                              ) +
                               "\n                  "
                           ),
                           _vm._m(0, true),
@@ -23071,8 +23131,8 @@ var render = function () {
                       domProps: {
                         value:
                           _vm.mutableMaritialStatus === "Married"
-                            ? _vm.factorScoreMarried[factor.id]
-                            : _vm.factorScoreSingle[factor.id],
+                            ? _vm.factorScoreMarried[object.factor.id]
+                            : _vm.factorScoreSingle[object.factor.id],
                       },
                     }),
                   ]),
@@ -23085,7 +23145,7 @@ var render = function () {
               {
                 staticClass: "collapse",
                 attrs: {
-                  id: "collapse" + factor.id,
+                  id: "collapse" + object.factor.id,
                   "aria-labelledby": "headingOne",
                   "data-parent": "#accordion",
                 },
@@ -23095,13 +23155,15 @@ var render = function () {
                   _c(
                     "div",
                     { staticClass: "form-group" },
-                    _vm._l(factor.subfactors, function (subfactor) {
+                    _vm._l(object.factor.subfactors, function (subfactor) {
                       return _c("div", { staticClass: "row" }, [
                         _c("div", { staticClass: "col-6" }, [
                           _c("label", [_vm._v(_vm._s(subfactor.subfactor))]),
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-4" }, [
+                          _c("button", { on: { click: _vm.setSelected } }),
+                          _vm._v(" "),
                           _c(
                             "select",
                             {
@@ -23141,7 +23203,7 @@ var render = function () {
                                   },
                                   function ($event) {
                                     return _vm.criteriaVal(
-                                      factor.id,
+                                      object.factor.id,
                                       subfactor.id
                                     )
                                   },
@@ -23151,17 +23213,18 @@ var render = function () {
                             _vm._l(subfactor.criteria, function (criterion) {
                               return _c(
                                 "option",
-                                { staticClass: "bg-warning col-4" },
+                                {
+                                  domProps: {
+                                    value: criterion.id,
+                                    selected: criterion.id == 4 ? true : false,
+                                  },
+                                },
                                 [
                                   _vm._v(
                                     "\n                      " +
+                                      _vm._s(criterion.criterion) +
+                                      " \\ " +
                                       _vm._s(criterion.id) +
-                                      "\n                      "
-                                  ),
-                                  _c("br"),
-                                  _vm._v(
-                                    "\n                      " +
-                                      _vm._s(_vm.SelectedFactor) +
                                       "\n                    "
                                   ),
                                 ]
@@ -23174,9 +23237,9 @@ var render = function () {
                         _c("div", { staticClass: "col-2" }, [
                           _c("input", {
                             staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              "v-model":
+                            attrs: { type: "text", disabled: "" },
+                            domProps: {
+                              value:
                                 _vm.selectedSubfactor[subfactor.id] != undefined
                                   ? _vm.mutableMaritialStatus === "Married" &&
                                     _vm.selectedSubfactor[
