@@ -141,27 +141,93 @@
                     <label>{{ subfactor.subfactor }}</label>
                   </div>
                   <div class="col-4">
-                    <button @click="setSelected"></button>
+                    <!--   <button
+                      class="btn-info"
+                      @click="
+                        factorWasSelected(
+                          [object.items], //x
+                          [
+                            { factorId: object.factor.id },
+                            { subfactorId: subfactor.id },
+                            { criterionId: criterion.id },
+                          ] //y
+                        )
+                      "
+                    >
+                      <i class="fas fa-refresh"></i>
+                    </button> -->
+
+                    <button
+                      @click="setSelection()"
+                      class="fas fa-refresh success"
+                    ></button>
 
                     <select
                       class="form-control"
                       id="select2-search-hide"
                       style="width: 100%; height: 36px"
-                      @change="criteriaVal(object.factor.id, subfactor.id)"
+                      @change="criteriaVal"
                       v-model="selectedSubfactor[subfactor.id]"
                     >
-                      <!-- <option selected value="1">any</option>
-                      <option value="2">any2</option> -->
+                      <!-- v-model="selectedSubfactor[subfactor.id]" -->
+                      <!-- @change="criteriaVal(object.factor.id, subfactor.id)" -->
                       <option
+                        :v-for="criterion in subfactor.criteria"
+                        :value="{
+                          criterion,
+                          factor: object.factor.id,
+                          subfactor: subfactor.id,
+                        }"
+                        :selected="
+                          factorWasSelected(
+                            objectItems(object.items, {
+                              opt: {
+                                factorId: object.factor.id,
+                                subfactorId: subfactor.id,
+                                criterionId: criterion.id,
+                              },
+                            }),
+                            {
+                              opt: {
+                                factorId: object.factor.id,
+                                subfactorId: subfactor.id,
+                                criterionId: criterion.id,
+                              },
+                            }
+                          )
+                        "
+                      >
+                        criterion:{{ criterion.id }}, subfactor{{ subfactor.id }},
+                        factor:{{ object.factor.id }}
+                      </option>
+
+                      <!--  <option
                         v-for="criterion in subfactor.criteria"
                         :value="criterion.id"
-                        :selected="criterion.id == 4 ? true : false"
+                        :class="
+                          factorWasSelected(
+                            objectItems(object.items, {
+                              opt: {
+                                factorId: object.factor.id,
+                                subfactorId: subfactor.id,
+                                criterionId: criterion.id,
+                              },
+                            }),
+                            {
+                              opt: {
+                                factorId: object.factor.id,
+                                subfactorId: subfactor.id,
+                                criterionId: criterion.id,
+                              },
+                            } //y
+                          ) == true
+                            ? 'bg-success'
+                            : ''
+                        "
                       >
-                        <!-- :selected=" factorWasSelected( [object.items], //x [ { factorId:
-                        object.factor.id }, { subfactorId: subfactor.id }, { criterionId:
-                        criterion.id }, ] //y ) " -->
-                        {{ criterion.criterion }} \ {{ criterion.id }}
-                      </option>
+                        criterion:{{ criterion.id }}, subfactor{{ subfactor.id }},
+                        factor:{{ object.factor.id }}
+                      </option> -->
                     </select>
                   </div>
 
