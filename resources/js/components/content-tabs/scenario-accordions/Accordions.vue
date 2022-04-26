@@ -108,7 +108,7 @@
                 </h5>
               </div>
               <div class="col-4">
-                <input
+                <!-- <input
                   type="text"
                   disabled
                   :value="
@@ -116,6 +116,12 @@
                       ? factorScoreMarried[object.factor.id]
                       : factorScoreSingle[object.factor.id]
                   "
+                  class="form-control float-right"
+                /> -->
+                <input
+                  type="text"
+                  disabled
+                  :value="factorScore[object.factor.id]"
                   class="form-control float-right"
                 />
               </div>
@@ -141,61 +147,22 @@
                     <label>{{ subfactor.subfactor }}</label>
                   </div>
                   <div class="col-4">
-                    <!--   <button
-                      class="btn-info"
-                      @click="
-                        factorWasSelected(
-                          [object.items], //x
-                          [
-                            { factorId: object.factor.id },
-                            { subfactorId: subfactor.id },
-                            { criterionId: criterion.id },
-                          ] //y
-                        )
-                      "
-                    >
-                      <i class="fas fa-refresh"></i>
-                    </button> -->
-
-                    <button
-                      @click="setSelection()"
-                      class="fas fa-refresh success"
-                    ></button>
-
                     <select
                       class="form-control"
                       id="select2-search-hide"
                       style="width: 100%; height: 36px"
                       @change="criteriaVal"
                       v-model="selectedSubfactor[subfactor.id]"
+                      :name="selectedSubfactor[subfactor.id]"
                     >
-                      <!-- v-model="selectedSubfactor[subfactor.id]" -->
-                      <!-- @change="criteriaVal(object.factor.id, subfactor.id)" -->
                       <option
-                        :v-for="criterion in subfactor.criteria"
+                        v-for="criterion in subfactor.criteria"
                         :value="{
                           criterion,
                           factor: object.factor.id,
                           subfactor: subfactor.id,
                         }"
-                        :selected="
-                          factorWasSelected(
-                            objectItems(object.items, {
-                              opt: {
-                                factorId: object.factor.id,
-                                subfactorId: subfactor.id,
-                                criterionId: criterion.id,
-                              },
-                            }),
-                            {
-                              opt: {
-                                factorId: object.factor.id,
-                                subfactorId: subfactor.id,
-                                criterionId: criterion.id,
-                              },
-                            }
-                          )
-                        "
+                        :class="criterion.selected ? 'bg-success' : ''"
                       >
                         criterion:{{ criterion.id }}, subfactor{{ subfactor.id }},
                         factor:{{ object.factor.id }}
@@ -231,21 +198,42 @@
                     </select>
                   </div>
 
+                  <p
+                    v-text="
+                      selectedSubfactor[subfactor.id] != undefined &&
+                      'criterion' in selectedSubfactor[subfactor.id]
+                        ? selectedSubfactor[subfactor.id].criterion
+                        : null
+                    "
+                  ></p>
+
                   <div class="col-2">
-                    <input
+                    <!--  <input
                       type="text"
                       class="form-control"
                       :value="
-                        selectedSubfactor[subfactor.id] != undefined
+                        selectedSubfactor[subfactor.id] != undefined &&
+                        'criterion' in selectedSubfactor[subfactor.id]
                           ? mutableMaritialStatus === 'Married' &&
-                            selectedSubfactor[subfactor.id].hasOwnProperty('married')
-                            ? selectedSubfactor[subfactor.id].married
+                            selectedSubfactor[subfactor.id].criterion.hasOwnProperty(
+                              'married'
+                            )
+                            ? selectedSubfactor[subfactor.id].criterion.married
                             : mutableMaritialStatus === 'Single' &&
-                              selectedSubfactor[subfactor.id].hasOwnProperty('single')
-                            ? selectedSubfactor[subfactor.id].single
-                            : 0
-                          : 0
+                              selectedSubfactor[subfactor.id].criterion.hasOwnProperty(
+                                'single'
+                              )
+                            ? selectedSubfactor[subfactor.id].criterion.single
+                            : ''
+                          : null
                       "
+                      disabled
+                    /> -->
+
+                    <input
+                      type="text"
+                      class="form-control"
+                      :value="selectedCriterion[subfactor.id]"
                       disabled
                     />
                   </div>

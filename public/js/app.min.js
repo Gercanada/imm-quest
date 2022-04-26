@@ -2736,9 +2736,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       subfactorsArr: [],
       SelectedFactor: [],
       selectedSubfactor: {},
+      factorScore: {},
       factorScoreMarried: {},
       factorScoreSingle: {}
-    }, _defineProperty(_ref, "criterion", {}), _defineProperty(_ref, "selectedCriterion", ''), _defineProperty(_ref, "mutableMaritialStatus", this.maritialStatus), _ref;
+    }, _defineProperty(_ref, "criterion", {}), _defineProperty(_ref, "selectedCriterion", {}), _defineProperty(_ref, "mutableMaritialStatus", this.maritialStatus), _ref;
   },
   mounted: function mounted() {
     this.getData();
@@ -2747,15 +2748,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getData: function getData() {
       var me = this;
       axios.get("/factors").then(function (response) {
-        // me.data = response.data ? response.data[0] : [];
-        me.scenarios = response.data[1] ? response.data[1] : []; // console.log(me.data);
-
+        me.scenarios = response.data[1] ? response.data[1] : [];
         var scenario = null; //actual
 
         if (me.scenarios.length > 0) {
           me.scenarios.forEach(function (element) {
             if ("is_theactual" in element && element["is_theactual"] == true) {
-              scenario = element; // return;
+              scenario = element;
             }
           });
           me.factors = response.data ? response.data[0] : [];
@@ -2774,8 +2773,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     if (item['subfactor'] === subfactor.id) {
                       subfactor.criteria.forEach(function (criterion) {
                         if (item['criterion'] == criterion.id) {
-                          items.push(item);
-                          return;
+                          criterion.selected = true;
+                          me.criteriaVal({
+                            criterion: criterion,
+                            factor: factor.id,
+                            subfactor: subfactor.id
+                          });
+                        } else {
+                          criterion.selected = false;
                         }
                       });
                     }
@@ -2796,7 +2801,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             });
           }
 
-          me.data = newData; //get selected subfactors criterion and put as selected if exists
+          me.data = newData; // console.log(newData);
+          // return;
+          //get selected subfactors criterion and put as selected if exists
 
           /*
               ->TENEMOS LA LISTA DE FACTORES QUE POR DEFECTO NOS DEVI=UELVE LA RUTA.
@@ -2862,8 +2869,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return obItems;
     },
     factorWasSelected: function factorWasSelected(x, y) {
-      // console.log(this.factors);
-      console.log("here");
       var crit = null;
 
       if (0 in x && x[0].factor === y.opt.factorId && x[0].subfactor === y.opt.subfactorId && x[0].criterion === y.opt.criterionId) {
@@ -2884,20 +2889,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           criterion: crit,
           factor: x[0].factor,
           subfactor: x[0].factor
-        };
-        return true;
-      }
+        }; // return true;
+      } // return false; console.log("here");;
 
-      return false;
+    },
+    sumArr: function sumArr(arr) {
+      return arr.reduce(function (previousValue, currentValue) {
+        return previousValue + currentValue.value;
+      }, 0);
+    },
+    replace: function replace(arr, obj, x, y, newValue) {
+      var _newObj;
+
+      console.log('replacing');
+      arr.splice(arr.findIndex(function (e) {
+        return e.hasOwnProperty("value") ? e.value : e === obj;
+      }), 1);
+      var obKey = Object.keys(obj);
+      var ovVal = Object.values(obj);
+      var newObj = (_newObj = {}, _defineProperty(_newObj, obKey, ovVal[0]), _defineProperty(_newObj, "value", newValue), _newObj);
+      arr.push(newObj);
     },
     criteriaVal: function criteriaVal(event) {
       var me = this;
+      var newVal = null;
+      var called = false;
+      var changed = false;
 
-      var newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
+      if ('criterion' in event) {
+        called = true;
+        console.log('loaded');
+        newVal = event;
+      } else {
+        changed = true;
+        console.log('changed');
+        newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
+      }
 
-      console.log({
-        newVal: newVal
-      });
+      me.selectedSubfactor[newVal.subfactor] = {
+        criterion: newVal.criterion,
+        factor: newVal.factor,
+        subfactor: newVal.subfactor
+      };
       var factor = newVal.factor;
       var subfactor = newVal.subfactor;
       var criterion = newVal.criterion;
@@ -2908,7 +2941,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return a.subfactor - b.subfactor;
       });
 
-      if (!me.subfactorsArr.includes(subfactor)) {
+      if (!me.subfactorsArr.includes(subfactor) || called === true) {
         me.subfactorsArr.push(subfactor);
         me.singleValues.push({
           factor: factor,
@@ -2916,7 +2949,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           criterion: criterion.id,
           value: criterion.single
         });
-        console.log(me.singleValues);
         me.marriedValues.push({
           factor: factor,
           subfactor: subfactor,
@@ -2924,59 +2956,54 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           value: criterion.married
         });
       } else {
-        var replace = function replace(arr, obj, x, y, newValue) {
-          var _newObj;
-
-          arr.splice(arr.findIndex(function (e) {
-            return e.hasOwnProperty("value") ? e.value : e === obj;
-          }), 1);
-          var obKey = Object.keys(obj);
-          var ovVal = Object.values(obj);
-          var newObj = (_newObj = {}, _defineProperty(_newObj, obKey, ovVal[0]), _defineProperty(_newObj, "value", newValue), _newObj);
-          arr.push(newObj);
-        };
-
-        replace(me.singleValues, {
+        me.replace(me.singleValues, {
           subfactor: subfactor
         }, {
           factor: factor
         }, {
-          criterion: me.selectedSubfactor[subfactor].id
+          criterion: me.selectedSubfactor[subfactor].criterion
         }, me.selectedSubfactor[subfactor].single);
-        replace(me.marriedValues, {
+        me.replace(me.marriedValues, {
           subfactor: subfactor
         }, {
           factor: factor
         }, {
-          criterion: me.selectedSubfactor[subfactor].id
+          criterion: me.selectedSubfactor[subfactor].criterion
         }, me.selectedSubfactor[subfactor].married);
-        replace(me.subfactorsArr, {
+        me.replace(me.subfactorsArr, {
           subfactor: subfactor
         }, null, null, subfactor);
       }
 
-      function sumArr(arr) {
-        return arr.reduce(function (previousValue, currentValue) {
-          return previousValue + currentValue.value;
-        }, 0);
-      }
+      console.log(me.singleValues); // return
 
+      me.factorScoreSingle[factor] = me.sumArr(me.singleValues);
+      me.factorScoreMarried[factor] = me.sumArr(me.marriedValues);
       console.log({
-        ForSingleValues: me.singleValues
+        singleSum: me.factorScoreMarried[factor]
       });
       console.log({
-        forMarried: me.marriedValues
+        marriedSum: me.factorScoreSingle[factor]
       });
-      me.factorScoreSingle[factor] = sumArr(me.singleValues);
-      me.factorScoreMarried[factor] = sumArr(me.marriedValues);
       var selectedSituation = [];
       selectedSituation[0] = this.mutableMaritialStatus;
       selectedSituation[1] = this.scenarios;
+      console.log({
+        fs: factor
+      });
+      console.log(criterion.id);
+      me.selectedCriterion[subfactor] = criterion.id;
+      return; // me.selectedCriterion[criterion.id] = criterion.single;
 
       if (this.mutableMaritialStatus === "Single") {
+        console.log('a');
         selectedSituation[2] = me.singleValues;
+        me.factorScore[factor] = me.factorScoreSingle[factor];
       } else {
+        console.log('b');
+        me.selectedCriterion[criterion.id] = criterion.married;
         selectedSituation[2] = me.marriedValues;
+        me.factorScore[factor] = me.factorScoreMarried[factor];
       }
 
       this.$emit("selectedSituation", selectedSituation);
@@ -23149,12 +23176,7 @@ var render = function () {
                     _c("input", {
                       staticClass: "form-control float-right",
                       attrs: { type: "text", disabled: "" },
-                      domProps: {
-                        value:
-                          _vm.mutableMaritialStatus === "Married"
-                            ? _vm.factorScoreMarried[object.factor.id]
-                            : _vm.factorScoreSingle[object.factor.id],
-                      },
+                      domProps: { value: _vm.factorScore[object.factor.id] },
                     }),
                   ]),
                 ]),
@@ -23183,15 +23205,6 @@ var render = function () {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-4" }, [
-                          _c("button", {
-                            staticClass: "fas fa-refresh success",
-                            on: {
-                              click: function ($event) {
-                                return _vm.setSelection()
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
                           _c(
                             "select",
                             {
@@ -23205,7 +23218,10 @@ var render = function () {
                               ],
                               staticClass: "form-control",
                               staticStyle: { width: "100%", height: "36px" },
-                              attrs: { id: "select2-search-hide" },
+                              attrs: {
+                                id: "select2-search-hide",
+                                name: _vm.selectedSubfactor[subfactor.id],
+                              },
                               on: {
                                 change: [
                                   function ($event) {
@@ -23233,42 +23249,23 @@ var render = function () {
                                 ],
                               },
                             },
-                            [
-                              _c(
+                            _vm._l(subfactor.criteria, function (criterion) {
+                              return _c(
                                 "option",
                                 {
-                                  attrs: {
-                                    "v-for":
-                                      _vm.criterion in subfactor.criteria,
-                                  },
+                                  class: criterion.selected ? "bg-success" : "",
                                   domProps: {
                                     value: {
-                                      criterion: _vm.criterion,
+                                      criterion: criterion,
                                       factor: object.factor.id,
                                       subfactor: subfactor.id,
                                     },
-                                    selected: _vm.factorWasSelected(
-                                      _vm.objectItems(object.items, {
-                                        opt: {
-                                          factorId: object.factor.id,
-                                          subfactorId: subfactor.id,
-                                          criterionId: _vm.criterion.id,
-                                        },
-                                      }),
-                                      {
-                                        opt: {
-                                          factorId: object.factor.id,
-                                          subfactorId: subfactor.id,
-                                          criterionId: _vm.criterion.id,
-                                        },
-                                      }
-                                    ),
                                   },
                                 },
                                 [
                                   _vm._v(
                                     "\n                      criterion:" +
-                                      _vm._s(_vm.criterion.id) +
+                                      _vm._s(criterion.id) +
                                       ", subfactor" +
                                       _vm._s(subfactor.id) +
                                       ",\n                      factor:" +
@@ -23276,31 +23273,31 @@ var render = function () {
                                       "\n                    "
                                   ),
                                 ]
-                              ),
-                            ]
+                              )
+                            }),
+                            0
                           ),
                         ]),
+                        _vm._v(" "),
+                        _c("p", {
+                          domProps: {
+                            textContent: _vm._s(
+                              _vm.selectedSubfactor[subfactor.id] !=
+                                undefined &&
+                                "criterion" in
+                                  _vm.selectedSubfactor[subfactor.id]
+                                ? _vm.selectedSubfactor[subfactor.id].criterion
+                                : null
+                            ),
+                          },
+                        }),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-2" }, [
                           _c("input", {
                             staticClass: "form-control",
                             attrs: { type: "text", disabled: "" },
                             domProps: {
-                              value:
-                                _vm.selectedSubfactor[subfactor.id] != undefined
-                                  ? _vm.mutableMaritialStatus === "Married" &&
-                                    _vm.selectedSubfactor[
-                                      subfactor.id
-                                    ].hasOwnProperty("married")
-                                    ? _vm.selectedSubfactor[subfactor.id]
-                                        .married
-                                    : _vm.mutableMaritialStatus === "Single" &&
-                                      _vm.selectedSubfactor[
-                                        subfactor.id
-                                      ].hasOwnProperty("single")
-                                    ? _vm.selectedSubfactor[subfactor.id].single
-                                    : 0
-                                  : 0,
+                              value: _vm.selectedCriterion[subfactor.id],
                             },
                           }),
                         ]),

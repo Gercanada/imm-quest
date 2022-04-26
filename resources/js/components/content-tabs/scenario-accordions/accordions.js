@@ -15,10 +15,11 @@ export default {
             subfactorsArr: [],
             SelectedFactor: [],
             selectedSubfactor: {},
+            factorScore: {},
             factorScoreMarried: {},
             factorScoreSingle: {},
             criterion: {},
-            selectedCriterion: '',
+            selectedCriterion: {},
             mutableMaritialStatus: this.maritialStatus
         };
     },
@@ -31,22 +32,18 @@ export default {
         getData() {
             let me = this;
             axios.get("/factors").then(function(response) {
-                // me.data = response.data ? response.data[0] : [];
                 me.scenarios = response.data[1] ? response.data[1] : [];
-                // console.log(me.data);
                 let scenario = null; //actual
                 if (me.scenarios.length > 0) {
-
                     me.scenarios.forEach((element) => {
                         if ("is_theactual" in element && element["is_theactual"] == true) {
                             scenario = element;
-                            // return;
                         }
                     });
 
                     me.factors = response.data ? response.data[0] : [];
-                    let newData = [];
 
+                    let newData = [];
                     if (scenario != null &&
                         Array.isArray(JSON.parse(scenario['body'])) &&
                         JSON.parse(scenario['body']).length > 0
@@ -55,16 +52,25 @@ export default {
                         //get maritial status
                         me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
                         let body = JSON.parse(scenario['body']);
+
+
                         me.factors.forEach(factor => {
                             let items = [];
+
                             body.forEach(item => {
                                 if (item['factor'] === factor.id) {
                                     factor.subfactors.forEach(subfactor => {
                                         if (item['subfactor'] === subfactor.id) {
                                             subfactor.criteria.forEach(criterion => {
                                                 if (item['criterion'] == criterion.id) {
-                                                    items.push(item)
-                                                    return;
+                                                    criterion.selected = true;
+                                                    me.criteriaVal({
+                                                        criterion: criterion,
+                                                        factor: factor.id,
+                                                        subfactor: subfactor.id,
+                                                    });
+                                                } else {
+                                                    criterion.selected = false
                                                 }
                                             });
                                         }
@@ -79,6 +85,9 @@ export default {
                         });
                     }
                     me.data = newData;
+
+                    // console.log(newData);
+                    // return;
 
                     //get selected subfactors criterion and put as selected if exists
                     /*
@@ -157,9 +166,6 @@ export default {
         },
 
         factorWasSelected(x, y) {
-            // console.log(this.factors);
-
-            console.log("here");
             let crit = null;
 
             if ((0 in x) &&
@@ -167,7 +173,6 @@ export default {
                 (x[0].subfactor === y.opt.subfactorId) &&
                 (x[0].criterion === y.opt.criterionId)
             ) {
-
                 this.factors.forEach(fac => {
                     if (fac.id === x[0].factor) {
                         fac.subfactors.forEach(subfactor => {
@@ -183,21 +188,59 @@ export default {
                     }
                 });
                 this.criteriaVal = {
-                    criterion: crit,
-                    factor: x[0].factor,
-                    subfactor: x[0].factor,
-                }
-                return true;
+                        criterion: crit,
+                        factor: x[0].factor,
+                        subfactor: x[0].factor,
+                    }
+                    // return true;
             }
-            return false;
+            // return false; console.log("here");;
         },
 
 
+        sumArr(arr) {
+            return arr.reduce(
+                (previousValue, currentValue) => previousValue + currentValue.value,
+                0
+            );
+        },
+
+        replace(arr, obj, x, y, newValue) {
+            console.log('replacing');
+            arr.splice(
+                arr.findIndex((e) => (e.hasOwnProperty("value") ? e.value : e === obj)),
+                1
+            );
+            let obKey = Object.keys(obj);
+            let ovVal = Object.values(obj);
+            let newObj = {
+                [obKey]: ovVal[0],
+                value: newValue,
+            };
+            arr.push(newObj);
+        },
 
         criteriaVal(event) {
             let me = this;
-            let newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
-            console.log({ newVal });
+            let newVal = null;
+            let called = false;
+            let changed = false;
+
+            if ('criterion' in event) {
+                called = true;
+                console.log('loaded');
+                newVal = event;
+            } else {
+                changed = true;
+                console.log('changed');
+                newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
+            }
+
+            me.selectedSubfactor[newVal.subfactor] = {
+                criterion: newVal.criterion,
+                factor: newVal.factor,
+                subfactor: newVal.subfactor,
+            };
 
             let factor = newVal.factor;
             let subfactor = newVal.subfactor;
@@ -206,75 +249,73 @@ export default {
             me.subfactorsArr.sort(function(a, b) {
                 return a - b;
             });
+
             me.singleValues.sort(function(a, b) {
                 return a.subfactor - b.subfactor;
             });
 
-            if (!me.subfactorsArr.includes(subfactor)) {
-                me.subfactorsArr.push(subfactor);
 
+            if (!me.subfactorsArr.includes(subfactor) || called === true) {
+                me.subfactorsArr.push(subfactor);
                 me.singleValues.push({
                     factor,
                     subfactor,
                     criterion: criterion.id,
                     value: criterion.single,
                 });
-
-                console.log(me.singleValues);
-
                 me.marriedValues.push({
                     factor,
                     subfactor,
                     criterion: criterion,
                     value: criterion.married,
                 });
-            } else {
-                function replace(arr, obj, x, y, newValue) {
-                    arr.splice(
-                        arr.findIndex((e) => (e.hasOwnProperty("value") ? e.value : e === obj)),
-                        1
-                    );
-                    let obKey = Object.keys(obj);
-                    let ovVal = Object.values(obj);
-                    let newObj = {
-                        [obKey]: ovVal[0],
-                        value: newValue,
-                    };
-                    arr.push(newObj);
-                }
 
-                replace(
-                    me.singleValues, { subfactor: subfactor }, { factor: factor }, { criterion: me.selectedSubfactor[subfactor].id },
+            } else {
+                me.replace(
+                    me.singleValues, { subfactor: subfactor }, { factor: factor }, { criterion: me.selectedSubfactor[subfactor].criterion },
                     me.selectedSubfactor[subfactor].single
                 );
-
-                replace(
-                    me.marriedValues, { subfactor: subfactor }, { factor: factor }, { criterion: me.selectedSubfactor[subfactor].id },
+                me.replace(
+                    me.marriedValues, { subfactor: subfactor }, { factor: factor }, { criterion: me.selectedSubfactor[subfactor].criterion },
                     me.selectedSubfactor[subfactor].married
                 );
-                replace(me.subfactorsArr, { subfactor: subfactor }, null, null, subfactor);
+                me.replace(me.subfactorsArr, { subfactor: subfactor }, null, null, subfactor);
             }
+            console.log(me.singleValues);
+            // return
 
-            function sumArr(arr) {
-                return arr.reduce(
-                    (previousValue, currentValue) => previousValue + currentValue.value,
-                    0
-                );
-            }
-            console.log({ ForSingleValues: me.singleValues });
-            console.log({ forMarried: me.marriedValues });
+            me.factorScoreSingle[factor] = me.sumArr(me.singleValues);
+            me.factorScoreMarried[factor] = me.sumArr(me.marriedValues);
 
-            me.factorScoreSingle[factor] = sumArr(me.singleValues);
-            me.factorScoreMarried[factor] = sumArr(me.marriedValues);
+            console.log({ singleSum: me.factorScoreMarried[factor] });
+            console.log({ marriedSum: me.factorScoreSingle[factor] });
 
             let selectedSituation = [];
             selectedSituation[0] = this.mutableMaritialStatus;
             selectedSituation[1] = this.scenarios;
 
+            console.log({ fs: factor })
+
+
+            console.log(criterion.id)
+            me.selectedCriterion[subfactor] = criterion.id;
+            return;
+            // me.selectedCriterion[criterion.id] = criterion.single;
+
+
             if (this.mutableMaritialStatus === "Single") {
+                console.log('a')
+
+
                 selectedSituation[2] = me.singleValues;
+                me.factorScore[factor] = me.factorScoreSingle[factor];
             } else {
+                console.log('b')
+                me.selectedCriterion[criterion.id] = criterion.married;
+
+
                 selectedSituation[2] = me.marriedValues;
+                me.factorScore[factor] = me.factorScoreMarried[factor];
             }
 
             this.$emit("selectedSituation", selectedSituation);
