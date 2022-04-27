@@ -2714,10 +2714,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["maritialStatus"],
@@ -2826,7 +2823,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                           ]
                       }
                       Si se ha devuelto el arreglo del escenario guardado contendra objetos como {factor: 2, subfactor: 4, criterion: 33, value: 8}
-                       Ahora bien : en el arreglo de factores vamo a comparar el id del factor con el factor en el objeto2, luego el subfactor , y luego el criterio.
+                      Ahora bien : en el arreglo de factores vamo a comparar el id del factor con el factor en el objeto2, luego el subfactor , y luego el criterio.
                        Si es coincide , nuestro objeto de factores será como
                         {
                          {factor: 1, subfactor: 2, criterion: 3, value: 8},
@@ -2850,13 +2847,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                       }
                       Por poner un ejemplo ......
                       Ok Ox , Here go.
-               */
+              */
           // }
           // me.data = newData;
 
           /* newData.forEach(element => {
               .push(element);
-           }); */
+          }); */
         }
       });
     },
@@ -2868,7 +2865,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     replace: function replace(arr, obj, x, y, newValue) {
       var _newObj;
 
-      console.log('replacing');
+      // console.log('replacing');
       arr.splice(arr.findIndex(function (e) {
         return e.hasOwnProperty("value") ? e.value : e === obj;
       }), 1);
@@ -2893,61 +2890,103 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
       }
 
+      console.log(newVal); // return
+
       me.selectedSubfactor[newVal.subfactor] = {
         criterion: newVal.criterion,
         factor: newVal.factor,
         subfactor: newVal.subfactor
       };
-      console.log(newVal.subfactor, me.selectedSubfactor[newVal.subfactor]);
-      return;
       var factor = newVal.factor;
       var subfactor = newVal.subfactor;
       var criterion = newVal.criterion;
-      me.subfactorsArr.sort(function (a, b) {
-        return a - b;
+      /*  me.subfactorsArr.sort(function(a, b) {
+          return a - b;
       });
+      */
+
       me.singleValues.sort(function (a, b) {
         return a.subfactor - b.subfactor;
-      });
+      }); // if (!me.subfactorsArr.includes(subfactor)) {
+      // me.subfactorsArr.push(subfactor);
 
-      if (!me.subfactorsArr.includes(subfactor) || called === true) {
-        me.subfactorsArr.push(subfactor);
+      if (!me.singleValues.some(function (o) {
+        return o["subfactor"] === subfactor;
+      })) {
+        console.log('here');
         me.singleValues.push({
           factor: factor,
           subfactor: subfactor,
           criterion: criterion.id,
-          value: criterion.single
+          value: criterion.single != null ? criterion.single : 0
         });
         me.marriedValues.push({
           factor: factor,
           subfactor: subfactor,
-          criterion: criterion,
-          value: criterion.married
+          criterion: criterion.id,
+          value: criterion.married != null ? criterion.married : 0
         });
       } else {
-        me.replace(me.singleValues, {
-          subfactor: subfactor
-        }, {
-          factor: factor
-        }, {
-          criterion: me.selectedSubfactor[subfactor].criterion
-        }, me.selectedSubfactor[subfactor].single);
-        me.replace(me.marriedValues, {
-          subfactor: subfactor
-        }, {
-          factor: factor
-        }, {
-          criterion: me.selectedSubfactor[subfactor].criterion
-        }, me.selectedSubfactor[subfactor].married);
-        me.replace(me.subfactorsArr, {
-          subfactor: subfactor
-        }, null, null, subfactor);
-      }
+        /*  me.singleValues.splice(me.singleValues.indexOf(criterion), subfactor, criterion)
+         me.marriedValues.splice(me.marriedValues.indexOf(criterion), subfactor, criterion) */
+        console.log(me.singleValues);
+        console.log(me.singleValues.subfactor, subfactor);
 
-      console.log(me.singleValues); // return
+        if (me.singleValues['factor'] === factor && me.singleValues['subfactor'] === subfactor) {
+          me.singleValues['criterion'] = criterion.id;
+          me.singleValues['value'] = criterion.single != null ? criterion.single : 0;
+        } else {
+          alert('crashs');
+        }
 
-      me.factorScoreSingle[factor] = me.sumArr(me.singleValues);
-      me.factorScoreMarried[factor] = me.sumArr(me.marriedValues);
+        if (me.marriedValues['factor'] === factor && me.marriedValues['subfactor'] === subfactor) {
+          me.marriedValues['criterion'] = criterion.id;
+          me.marriedValues['value'] = criterion.married != null ? criterion.married : 0;
+        } else {
+          alert('crashs');
+        }
+        /* me.replace(
+            me.singleValues, factor, { criterion },
+            me.selectedSubfactor[subfactor].single
+        );
+         me.replace(
+            me.marriedValues, { criterion },
+            factor, subfactor,
+            me.selectedSubfactor[subfactor].married
+        ); */
+        // me.replace(me.subfactorsArr, { subfactor: subfactor }, null, null, subfactor);
+
+      } // return
+      // console.log(me.singleValues);
+
+
+      var groupByFactoS = me.singleValues.reduce(function (group, product) {
+        var factor = product.factor;
+        group[factor] = group[factor] ? group[factor] : [];
+        group[factor].push(product);
+        return group;
+      }, {});
+      var groupByFactoM = me.marriedValues.reduce(function (group, product) {
+        var factor = product.factor;
+        group[factor] = group[factor] ? group[factor] : [];
+        group[factor].push(product);
+        return group;
+      }, {}); //grouped by factor
+      // console.log(JSON.stringify(groupByFacto, null, 2));
+
+      console.log(groupByFactoS[factor].reduce(function (n, _ref2) {
+        var value = _ref2.value;
+        return n + value;
+      }, 0));
+      me.factorScoreSingle[factor] = groupByFactoS[factor].reduce(function (n, _ref3) {
+        var value = _ref3.value;
+        return n + value;
+      }, 0); // me.factorScoreSingle[factor] = me.sumArr(me.singleValues);
+
+      me.factorScoreMarried[factor] = groupByFactoM[factor].reduce(function (n, _ref4) {
+        var value = _ref4.value;
+        return n + value;
+      }, 0);
       console.log({
         singleSum: me.factorScoreMarried[factor]
       });
@@ -2957,10 +2996,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var selectedSituation = [];
       selectedSituation[0] = this.mutableMaritialStatus;
       selectedSituation[1] = this.scenarios;
-      console.log({
-        fs: factor
-      });
-      console.log(criterion.id);
+      /*      console.log({ fs: factor })
+             console.log(criterion.id) */
+
       me.selectedCriterion[subfactor] = criterion.id;
 
       if (this.mutableMaritialStatus === "Single") {
@@ -23245,7 +23283,7 @@ var render = function () {
                                   _vm._v(
                                     "\n                      " +
                                       _vm._s(criterion.criterion) +
-                                      "\n                      "
+                                      "\n                    "
                                   ),
                                 ]
                               )

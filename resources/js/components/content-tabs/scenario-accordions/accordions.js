@@ -1,5 +1,3 @@
-import { some } from "lodash";
-
 export default {
     props: ["maritialStatus"],
     data() {
@@ -115,7 +113,6 @@ export default {
                                     ]
                                 }
                                 Si se ha devuelto el arreglo del escenario guardado contendra objetos como {factor: 2, subfactor: 4, criterion: 33, value: 8}
-
                                 Ahora bien : en el arreglo de factores vamo a comparar el id del factor con el factor en el objeto2, luego el subfactor , y luego el criterio.
                                  Si es coincide , nuestro objeto de factores será como
                                   {
@@ -140,7 +137,6 @@ export default {
                                 }
                                 Por poner un ejemplo ......
                                 Ok Ox , Here go.
-
                         */
 
                     // }
@@ -149,7 +145,6 @@ export default {
                     // me.data = newData;
                     /* newData.forEach(element => {
                         .push(element);
-
                     }); */
                 }
 
@@ -165,7 +160,7 @@ export default {
         },
 
         replace(arr, obj, x, y, newValue) {
-            console.log('replacing');
+            // console.log('replacing');
             arr.splice(
                 arr.findIndex((e) => (e.hasOwnProperty("value") ? e.value : e === obj)),
                 1
@@ -185,6 +180,7 @@ export default {
             let called = false;
             let changed = false;
 
+
             if ('criterion' in event) {
                 called = true;
                 console.log('loaded');
@@ -195,60 +191,105 @@ export default {
                 newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
             }
 
+            console.log(newVal);
+            // return
+
             me.selectedSubfactor[newVal.subfactor] = {
                 criterion: newVal.criterion,
                 factor: newVal.factor,
                 subfactor: newVal.subfactor,
             };
 
-            console.log(newVal.subfactor,
-                me.selectedSubfactor[newVal.subfactor]);
-            return;
-
             let factor = newVal.factor;
             let subfactor = newVal.subfactor;
             let criterion = newVal.criterion;
 
-            me.subfactorsArr.sort(function(a, b) {
+            /*  me.subfactorsArr.sort(function(a, b) {
                 return a - b;
             });
-
+ */
             me.singleValues.sort(function(a, b) {
                 return a.subfactor - b.subfactor;
             });
 
 
-            if (!me.subfactorsArr.includes(subfactor) || called === true) {
-                me.subfactorsArr.push(subfactor);
+            // if (!me.subfactorsArr.includes(subfactor)) {
+            // me.subfactorsArr.push(subfactor);
+            if (!me.singleValues.some(function(o) { return o["subfactor"] === subfactor; })) {
+                console.log('here')
                 me.singleValues.push({
                     factor,
                     subfactor,
                     criterion: criterion.id,
-                    value: criterion.single,
+                    value: criterion.single != null ? criterion.single : 0,
                 });
                 me.marriedValues.push({
                     factor,
                     subfactor,
-                    criterion: criterion,
-                    value: criterion.married,
+                    criterion: criterion.id,
+                    value: criterion.married != null ? criterion.married : 0,
                 });
 
             } else {
-                me.replace(
-                    me.singleValues, { subfactor: subfactor }, { factor: factor }, { criterion: me.selectedSubfactor[subfactor].criterion },
+
+                /*  me.singleValues.splice(me.singleValues.indexOf(criterion), subfactor, criterion)
+                 me.marriedValues.splice(me.marriedValues.indexOf(criterion), subfactor, criterion) */
+
+                console.log(me.singleValues)
+                console.log(me.singleValues.subfactor, subfactor)
+
+
+                if (me.singleValues['factor'] === factor && me.singleValues['subfactor'] === subfactor) {
+                    me.singleValues['criterion'] = criterion.id
+                    me.singleValues['value'] = criterion.single != null ? criterion.single : 0
+                } else {
+                    alert('crashs')
+                }
+                if (me.marriedValues['factor'] === factor && me.marriedValues['subfactor'] === subfactor) {
+                    me.marriedValues['criterion'] = criterion.id
+                    me.marriedValues['value'] = criterion.married != null ? criterion.married : 0
+                } else {
+                    alert('crashs')
+
+                }
+
+                /* me.replace(
+                    me.singleValues, factor, { criterion },
                     me.selectedSubfactor[subfactor].single
                 );
+
                 me.replace(
-                    me.marriedValues, { subfactor: subfactor }, { factor: factor }, { criterion: me.selectedSubfactor[subfactor].criterion },
+                    me.marriedValues, { criterion },
+                    factor, subfactor,
                     me.selectedSubfactor[subfactor].married
-                );
-                me.replace(me.subfactorsArr, { subfactor: subfactor }, null, null, subfactor);
+                ); */
+                // me.replace(me.subfactorsArr, { subfactor: subfactor }, null, null, subfactor);
             }
-            console.log(me.singleValues);
             // return
 
-            me.factorScoreSingle[factor] = me.sumArr(me.singleValues);
-            me.factorScoreMarried[factor] = me.sumArr(me.marriedValues);
+            // console.log(me.singleValues);
+
+            let groupByFactoS = me.singleValues.reduce((group, product) => {
+                const { factor } = product;
+                group[factor] = group[factor] ? group[factor] : [];
+                group[factor].push(product);
+                return group;
+            }, {});
+
+            let groupByFactoM = me.marriedValues.reduce((group, product) => {
+                const { factor } = product;
+                group[factor] = group[factor] ? group[factor] : [];
+                group[factor].push(product);
+                return group;
+            }, {});
+            //grouped by factor
+            // console.log(JSON.stringify(groupByFacto, null, 2));
+
+            console.log(groupByFactoS[factor].reduce((n, { value }) => n + value, 0));
+
+            me.factorScoreSingle[factor] = groupByFactoS[factor].reduce((n, { value }) => n + value, 0);
+            // me.factorScoreSingle[factor] = me.sumArr(me.singleValues);
+            me.factorScoreMarried[factor] = groupByFactoM[factor].reduce((n, { value }) => n + value, 0);
 
             console.log({ singleSum: me.factorScoreMarried[factor] });
             console.log({ marriedSum: me.factorScoreSingle[factor] });
@@ -257,10 +298,10 @@ export default {
             selectedSituation[0] = this.mutableMaritialStatus;
             selectedSituation[1] = this.scenarios;
 
-            console.log({ fs: factor })
+            /*      console.log({ fs: factor })
 
 
-            console.log(criterion.id)
+                 console.log(criterion.id) */
             me.selectedCriterion[subfactor] = criterion.id;
 
 
