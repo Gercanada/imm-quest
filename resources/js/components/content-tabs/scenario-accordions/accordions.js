@@ -2,7 +2,6 @@ import { some } from "lodash";
 
 export default {
     props: ["maritialStatus"],
-    // selectedSubfactor: null,
     data() {
         return {
             criterion: '',
@@ -14,13 +13,19 @@ export default {
             marriedValues: [],
             subfactorsArr: [],
             SelectedFactor: [],
-            selectedSubfactor: {},
+            selectedSubfactor: {
+                selections: []
+            },
             factorScore: {},
             factorScoreMarried: {},
             factorScoreSingle: {},
             criterion: {},
             selectedCriterion: {},
-            mutableMaritialStatus: this.maritialStatus
+            mutableMaritialStatus: this.maritialStatus,
+
+            subfacts: {
+
+            }
         };
     },
 
@@ -152,52 +157,6 @@ export default {
 
         },
 
-        objectItems(items, option) {
-            let obItems = [];
-            items.forEach(item => {
-                if (
-                    item.factor === option.opt.factorId &&
-                    item.subfactor === option.opt.subfactorId
-                ) {
-                    obItems.push(item);
-                }
-            });
-            return obItems;
-        },
-
-        factorWasSelected(x, y) {
-            let crit = null;
-
-            if ((0 in x) &&
-                (x[0].factor === y.opt.factorId) &&
-                (x[0].subfactor === y.opt.subfactorId) &&
-                (x[0].criterion === y.opt.criterionId)
-            ) {
-                this.factors.forEach(fac => {
-                    if (fac.id === x[0].factor) {
-                        fac.subfactors.forEach(subfactor => {
-                            if (subfactor.id === x[0].subfactor) {
-                                subfactor.criteria.forEach(criterion => {
-                                    if (criterion.id === x[0].criterion) {
-                                        crit = criterion;
-                                    }
-                                });
-                            }
-
-                        });
-                    }
-                });
-                this.criteriaVal = {
-                        criterion: crit,
-                        factor: x[0].factor,
-                        subfactor: x[0].factor,
-                    }
-                    // return true;
-            }
-            // return false; console.log("here");;
-        },
-
-
         sumArr(arr) {
             return arr.reduce(
                 (previousValue, currentValue) => previousValue + currentValue.value,
@@ -241,6 +200,10 @@ export default {
                 factor: newVal.factor,
                 subfactor: newVal.subfactor,
             };
+
+            console.log(newVal.subfactor,
+                me.selectedSubfactor[newVal.subfactor]);
+            return;
 
             let factor = newVal.factor;
             let subfactor = newVal.subfactor;
@@ -299,20 +262,15 @@ export default {
 
             console.log(criterion.id)
             me.selectedCriterion[subfactor] = criterion.id;
-            return;
-            // me.selectedCriterion[criterion.id] = criterion.single;
 
 
             if (this.mutableMaritialStatus === "Single") {
                 console.log('a')
-
-
                 selectedSituation[2] = me.singleValues;
                 me.factorScore[factor] = me.factorScoreSingle[factor];
             } else {
                 console.log('b')
                 me.selectedCriterion[criterion.id] = criterion.married;
-
 
                 selectedSituation[2] = me.marriedValues;
                 me.factorScore[factor] = me.factorScoreMarried[factor];

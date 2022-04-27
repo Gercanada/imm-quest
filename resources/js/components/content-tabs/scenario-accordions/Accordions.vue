@@ -88,7 +88,6 @@
         <!-- +==============+ -->
 
         <div class="card mb-0" v-for="object in data">
-          <div v-text="object.items"></div>
           <div class="card-header" id="headingOne">
             <div class="row">
               <div class="col-8">
@@ -108,7 +107,7 @@
                 </h5>
               </div>
               <div class="col-4">
-                <!-- <input
+                <input
                   type="text"
                   disabled
                   :value="
@@ -117,22 +116,16 @@
                       : factorScoreSingle[object.factor.id]
                   "
                   class="form-control float-right"
-                /> -->
-                <input
+                />
+                <!-- <input
                   type="text"
                   disabled
                   :value="factorScore[object.factor.id]"
                   class="form-control float-right"
-                />
+                /> -->
               </div>
             </div>
           </div>
-
-          <!--   <select class="form-control c-select" name="user_type">
-            <option>Parent</option>
-            <option>Student</option>
-            <option :selected="1 < 2">Teacher</option>
-          </select> -->
 
           <div
             :id="'collapse' + object.factor.id"
@@ -144,7 +137,7 @@
               <div class="form-group">
                 <div class="row" v-for="subfactor in object.factor.subfactors">
                   <div class="col-6">
-                    <label>{{ subfactor.subfactor }}</label>
+                    {{ subfactor.subfactor }}
                   </div>
                   <div class="col-4">
                     <select
@@ -152,8 +145,8 @@
                       id="select2-search-hide"
                       style="width: 100%; height: 36px"
                       @change="criteriaVal"
-                      v-model="selectedSubfactor[subfactor.id]"
-                      :name="selectedSubfactor[subfactor.id]"
+                      v-model="selectedSubfactor.selections[subfactor.id]"
+                      :value="selectedSubfactor[subfactor.id]"
                     >
                       <option
                         v-for="criterion in subfactor.criteria"
@@ -164,51 +157,24 @@
                         }"
                         :class="criterion.selected ? 'bg-success' : ''"
                       >
-                        criterion:{{ criterion.id }}, subfactor{{ subfactor.id }},
-                        factor:{{ object.factor.id }}
+                        {{ criterion.criterion }}
+                        <!--   criterion:{{ criterion.id }}, subfactor{{ subfactor.id }},
+                        factor:{{ object.factor.id }} -->
                       </option>
-
-                      <!--  <option
-                        v-for="criterion in subfactor.criteria"
-                        :value="criterion.id"
-                        :class="
-                          factorWasSelected(
-                            objectItems(object.items, {
-                              opt: {
-                                factorId: object.factor.id,
-                                subfactorId: subfactor.id,
-                                criterionId: criterion.id,
-                              },
-                            }),
-                            {
-                              opt: {
-                                factorId: object.factor.id,
-                                subfactorId: subfactor.id,
-                                criterionId: criterion.id,
-                              },
-                            } //y
-                          ) == true
-                            ? 'bg-success'
-                            : ''
-                        "
-                      >
-                        criterion:{{ criterion.id }}, subfactor{{ subfactor.id }},
-                        factor:{{ object.factor.id }}
-                      </option> -->
                     </select>
                   </div>
 
-                  <p
+                  <!--     <p
                     v-text="
                       selectedSubfactor[subfactor.id] != undefined &&
                       'criterion' in selectedSubfactor[subfactor.id]
                         ? selectedSubfactor[subfactor.id].criterion
                         : null
                     "
-                  ></p>
+                  ></p> -->
 
                   <div class="col-2">
-                    <!--  <input
+                    <input
                       type="text"
                       class="form-control"
                       :value="
@@ -227,13 +193,6 @@
                             : ''
                           : null
                       "
-                      disabled
-                    /> -->
-
-                    <input
-                      type="text"
-                      class="form-control"
-                      :value="selectedCriterion[subfactor.id]"
                       disabled
                     />
                   </div>

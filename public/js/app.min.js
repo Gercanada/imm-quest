@@ -2721,7 +2721,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["maritialStatus"],
-  // selectedSubfactor: null,
   data: function data() {
     var _ref;
 
@@ -2735,11 +2734,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       marriedValues: [],
       subfactorsArr: [],
       SelectedFactor: [],
-      selectedSubfactor: {},
+      selectedSubfactor: {
+        selections: []
+      },
       factorScore: {},
       factorScoreMarried: {},
       factorScoreSingle: {}
-    }, _defineProperty(_ref, "criterion", {}), _defineProperty(_ref, "selectedCriterion", {}), _defineProperty(_ref, "mutableMaritialStatus", this.maritialStatus), _ref;
+    }, _defineProperty(_ref, "criterion", {}), _defineProperty(_ref, "selectedCriterion", {}), _defineProperty(_ref, "mutableMaritialStatus", this.maritialStatus), _defineProperty(_ref, "subfacts", {}), _ref;
   },
   mounted: function mounted() {
     this.getData();
@@ -2859,40 +2860,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     },
-    objectItems: function objectItems(items, option) {
-      var obItems = [];
-      items.forEach(function (item) {
-        if (item.factor === option.opt.factorId && item.subfactor === option.opt.subfactorId) {
-          obItems.push(item);
-        }
-      });
-      return obItems;
-    },
-    factorWasSelected: function factorWasSelected(x, y) {
-      var crit = null;
-
-      if (0 in x && x[0].factor === y.opt.factorId && x[0].subfactor === y.opt.subfactorId && x[0].criterion === y.opt.criterionId) {
-        this.factors.forEach(function (fac) {
-          if (fac.id === x[0].factor) {
-            fac.subfactors.forEach(function (subfactor) {
-              if (subfactor.id === x[0].subfactor) {
-                subfactor.criteria.forEach(function (criterion) {
-                  if (criterion.id === x[0].criterion) {
-                    crit = criterion;
-                  }
-                });
-              }
-            });
-          }
-        });
-        this.criteriaVal = {
-          criterion: crit,
-          factor: x[0].factor,
-          subfactor: x[0].factor
-        }; // return true;
-      } // return false; console.log("here");;
-
-    },
     sumArr: function sumArr(arr) {
       return arr.reduce(function (previousValue, currentValue) {
         return previousValue + currentValue.value;
@@ -2931,6 +2898,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         factor: newVal.factor,
         subfactor: newVal.subfactor
       };
+      console.log(newVal.subfactor, me.selectedSubfactor[newVal.subfactor]);
+      return;
       var factor = newVal.factor;
       var subfactor = newVal.subfactor;
       var criterion = newVal.criterion;
@@ -2993,7 +2962,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       console.log(criterion.id);
       me.selectedCriterion[subfactor] = criterion.id;
-      return; // me.selectedCriterion[criterion.id] = criterion.single;
 
       if (this.mutableMaritialStatus === "Single") {
         console.log('a');
@@ -23135,8 +23103,6 @@ var render = function () {
         { staticClass: "custom-accordion mb-4", attrs: { id: "accordion" } },
         _vm._l(_vm.data, function (object) {
           return _c("div", { staticClass: "card mb-0" }, [
-            _c("div", { domProps: { textContent: _vm._s(object.items) } }),
-            _vm._v(" "),
             _c(
               "div",
               { staticClass: "card-header", attrs: { id: "headingOne" } },
@@ -23176,7 +23142,12 @@ var render = function () {
                     _c("input", {
                       staticClass: "form-control float-right",
                       attrs: { type: "text", disabled: "" },
-                      domProps: { value: _vm.factorScore[object.factor.id] },
+                      domProps: {
+                        value:
+                          _vm.mutableMaritialStatus === "Married"
+                            ? _vm.factorScoreMarried[object.factor.id]
+                            : _vm.factorScoreSingle[object.factor.id],
+                      },
                     }),
                   ]),
                 ]),
@@ -23201,7 +23172,11 @@ var render = function () {
                     _vm._l(object.factor.subfactors, function (subfactor) {
                       return _c("div", { staticClass: "row" }, [
                         _c("div", { staticClass: "col-6" }, [
-                          _c("label", [_vm._v(_vm._s(subfactor.subfactor))]),
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(subfactor.subfactor) +
+                              "\n                "
+                          ),
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-4" }, [
@@ -23212,15 +23187,19 @@ var render = function () {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.selectedSubfactor[subfactor.id],
-                                  expression: "selectedSubfactor[subfactor.id]",
+                                  value:
+                                    _vm.selectedSubfactor.selections[
+                                      subfactor.id
+                                    ],
+                                  expression:
+                                    "selectedSubfactor.selections[subfactor.id]",
                                 },
                               ],
                               staticClass: "form-control",
                               staticStyle: { width: "100%", height: "36px" },
-                              attrs: {
-                                id: "select2-search-hide",
-                                name: _vm.selectedSubfactor[subfactor.id],
+                              attrs: { id: "select2-search-hide" },
+                              domProps: {
+                                value: _vm.selectedSubfactor[subfactor.id],
                               },
                               on: {
                                 change: [
@@ -23238,7 +23217,7 @@ var render = function () {
                                         return val
                                       })
                                     _vm.$set(
-                                      _vm.selectedSubfactor,
+                                      _vm.selectedSubfactor.selections,
                                       subfactor.id,
                                       $event.target.multiple
                                         ? $$selectedVal
@@ -23264,13 +23243,9 @@ var render = function () {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                      criterion:" +
-                                      _vm._s(criterion.id) +
-                                      ", subfactor" +
-                                      _vm._s(subfactor.id) +
-                                      ",\n                      factor:" +
-                                      _vm._s(object.factor.id) +
-                                      "\n                    "
+                                    "\n                      " +
+                                      _vm._s(criterion.criterion) +
+                                      "\n                      "
                                   ),
                                 ]
                               )
@@ -23279,25 +23254,30 @@ var render = function () {
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("p", {
-                          domProps: {
-                            textContent: _vm._s(
-                              _vm.selectedSubfactor[subfactor.id] !=
-                                undefined &&
-                                "criterion" in
-                                  _vm.selectedSubfactor[subfactor.id]
-                                ? _vm.selectedSubfactor[subfactor.id].criterion
-                                : null
-                            ),
-                          },
-                        }),
-                        _vm._v(" "),
                         _c("div", { staticClass: "col-2" }, [
                           _c("input", {
                             staticClass: "form-control",
                             attrs: { type: "text", disabled: "" },
                             domProps: {
-                              value: _vm.selectedCriterion[subfactor.id],
+                              value:
+                                _vm.selectedSubfactor[subfactor.id] !=
+                                  undefined &&
+                                "criterion" in
+                                  _vm.selectedSubfactor[subfactor.id]
+                                  ? _vm.mutableMaritialStatus === "Married" &&
+                                    _vm.selectedSubfactor[
+                                      subfactor.id
+                                    ].criterion.hasOwnProperty("married")
+                                    ? _vm.selectedSubfactor[subfactor.id]
+                                        .criterion.married
+                                    : _vm.mutableMaritialStatus === "Single" &&
+                                      _vm.selectedSubfactor[
+                                        subfactor.id
+                                      ].criterion.hasOwnProperty("single")
+                                    ? _vm.selectedSubfactor[subfactor.id]
+                                        .criterion.single
+                                    : ""
+                                  : null,
                             },
                           }),
                         ]),
