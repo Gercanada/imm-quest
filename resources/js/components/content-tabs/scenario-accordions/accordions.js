@@ -21,6 +21,8 @@ export default {
             selectedCriterion: {},
             mutableMaritialStatus: this.maritialStatus,
 
+            factorNames: [],
+            arraySums: [],
             subfacts: {
 
             }
@@ -29,10 +31,7 @@ export default {
 
     mounted() {
         this.getData();
-        console.log(this.maritialStatus);
     },
-
-
 
     methods: {
         getData() {
@@ -48,6 +47,17 @@ export default {
                     });
 
                     me.factors = response.data ? response.data[0] : [];
+
+                    me.factors.forEach(element => {
+                        console.log(element)
+                            // let obj = {[]};
+                        me.factorNames.push({
+                            id: element.id,
+                            name: element.title + ' ' + element.sub_title
+                        });
+                    });
+                    // return
+                    me.$emit("factorNames", me.factorNames);
 
                     let newData = [];
                     if (scenario != null &&
@@ -95,19 +105,20 @@ export default {
 
         },
 
-
         criteriaVal(event) {
-
-
-
-
             let me = this;
             let newVal = null;
+            let existingS = null;
+            let existingM = null;
+
             if ('criterion' in event) {
                 newVal = event;
             } else {
-                newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
+                newVal = JSON.parse(
+                    JSON.stringify(event.target.options[event.target.options.selectedIndex])
+                )._value;
             }
+
             me.selectedSubfactor.selections[newVal.subfactor] = {
                 criterion: newVal.criterion,
                 factor: newVal.factor,
@@ -121,10 +132,6 @@ export default {
             me.singleValues.sort(function(a, b) {
                 return a.subfactor - b.subfactor;
             });
-
-
-            let existingS = null;
-            let existingM = null;
 
             me.singleValues.forEach(element => {
                 if (element['factor'] == factor && element['subfactor'] == subfactor) {
@@ -153,7 +160,6 @@ export default {
             });
 
             if (!existingM) {
-                console.log('push')
                 me.marriedValues.push({
                     factor,
                     subfactor,
@@ -172,10 +178,8 @@ export default {
                     return group;
                 }, {});
                 me.factorScoreSingle[factor] = groupByFactoS[factor].reduce((n, { value }) => n + value, 0);
-                // console.log({ singleSum: me.factorScoreSingle[factor] });
-
-
             }
+
             if (me.marriedValues.length > 0) {
                 let groupByFactoM = me.marriedValues.reduce((group, product) => {
                     const { factor } = product;
@@ -185,30 +189,69 @@ export default {
                 }, {});
 
                 me.factorScoreMarried[factor] = groupByFactoM[factor].reduce((n, { value }) => n + value, 0);
-                // console.log({ marriedSum: me.factorScoreMarried[factor] });
             }
             //grouped by factor
             // console.log(JSON.stringify(groupByFacto, null, 2));
-
             let selectedSituation = [];
             selectedSituation[0] = this.mutableMaritialStatus;
             selectedSituation[1] = this.scenarios;
-
             me.selectedCriterion[subfactor] = criterion.id;
 
 
             if (this.mutableMaritialStatus === "Single") {
-                console.log('a')
                 selectedSituation[2] = me.singleValues;
                 me.factorScore[factor] = me.factorScoreSingle[factor];
-            } else {
-                console.log('b')
-                me.selectedCriterion[criterion.id] = criterion.married;
 
+                // this.$emit({ scoreSingle: factor }, me.factorScoreSingle[factor]); //send the sum
+            } else {
+                me.selectedCriterion[criterion.id] = criterion.married;
                 selectedSituation[2] = me.marriedValues;
                 me.factorScore[factor] = me.factorScoreMarried[factor];
             }
-            this.$emit("selectedSituation", selectedSituation);
+
+            //Create or update scores array to emmit to another file
+
+            let hasSumS = null;
+            let hasSumM = null;
+
+            me.arraySums.forEach(element => {
+                // console.log('singleSum' in element && ('factor' in element['singleSum'] && element['singleSum'].factor === factor));
+                if (('singleSum' in element && ('factor' in element['singleSum']) && element['singleSum'].factor === factor)) {
+                    hasSumS = element;
+                    element['singleSum']['sum'] = me.factorScoreSingle[factor]
+                }
+            });
+
+
+            me.arraySums.forEach(element => {
+                if ('marriedSum' in element && 'factor' in element['marriedSum'] && element['marriedSum'].factor === factor) {
+                    hasSumM = element;
+                    element['marriedSum']['sum'] = me.factorScoreMarried[factor]
+                }
+            });
+
+            if (!hasSumS) {
+                me.arraySums.push({
+                    singleSum: {
+                        factor: factor,
+                        sum: me.factorScoreSingle[factor]
+                    }
+                });
+            }
+            if (!hasSumM) {
+                me.arraySums.push({
+                    marriedSum: {
+                        factor: factor,
+                        sum: me.factorScoreMarried[factor]
+                    }
+                });
+            }
+
+            me.$emit("sumScore", me.arraySums);
+
+            // send the sum
+
+            me.$emit("selectedSituation", selectedSituation);
         },
     },
 };

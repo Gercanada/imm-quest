@@ -16,15 +16,26 @@
       </button>
     </div>
     <div class="col-12">
-      <SummaryTable />
+      <SummaryTable :summary="summary" :factors="factors" :scores="scores" />
     </div>
   </div>
 </template>
 <script>
 import SummaryTable from "./SummaryTable.vue";
 export default {
+  props: ["summary", "factors", "scores"],
   components: {
     SummaryTable,
+  },
+  data() {
+    return {
+      //   summary: this.summary,
+      //   factors: this.factors,
+    };
+  },
+  mounted() {
+    console.log("summary");
+    console.log(this.summary);
   },
 };
 </script>

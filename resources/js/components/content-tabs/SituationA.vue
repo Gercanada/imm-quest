@@ -44,6 +44,7 @@
             <button
               class="btn btn-outline-success waves-effect waves-light"
               type="button"
+              @click="copyScennario()"
             >
               <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
             </button>
@@ -57,6 +58,8 @@
         </div>
 
         <accordions
+          @sumScore="getScore"
+          @factorNames="getFactors"
           @selectedSituation="getSituation"
           @mutableMaritialStatus="getUserData"
           :maritialStatus="maritialStatus"
@@ -68,7 +71,6 @@
 
 <script>
 import Accordions from "./scenario-accordions/Accordions.vue";
-
 export default {
   components: {
     Accordions,
@@ -81,10 +83,8 @@ export default {
       userActualSituation: [],
     };
   },
-  //   mounted() {},
   methods: {
     getUserData(value) {
-      //   alert(value);
       this.maritialStatus = value;
     },
 
@@ -93,10 +93,9 @@ export default {
     },
 
     getSituation(value) {
-      //   alert(value);
+      console.log("getted");
       let scenario = null;
       let me = this;
-
       me.scenarios = value[1];
       me.userActualSituation = value;
 
@@ -113,6 +112,8 @@ export default {
           me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
         }
       }
+
+      this.$emit("selectedSituation", me.userActualSituation);
     },
 
     async saveSituation() {
@@ -151,6 +152,82 @@ export default {
             if ("value" in result) {
               axios
                 .post("save-situation", {
+                  scenarioName: result.value
+                    ? result.value
+                    : "Scenario " + Number(me.scenarios.length + 1),
+                  actualSituation: me.userActualSituation,
+                })
+                .then(function (response) {
+                  Swal.fire({
+                    type: "success",
+                    title: "Escenario guardado",
+                    text:
+                      "Se ha" + scenario == null
+                        ? "creado"
+                        : "actualizado" + "este escenario",
+                  });
+                  console.log(response);
+                });
+            } else {
+              Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
+            }
+          })
+          .catch(function (error) {
+            console.table(error);
+          });
+      }
+    },
+    getFactors(value) {
+      console.log("factors");
+      this.$emit("FactorsTitles", value);
+    },
+
+    getScore(value) {
+      //   let facts = this.getFactors();
+      this.$emit("scoresArr", value);
+      console.log("Score");
+      //   console.log(value);
+    },
+
+    copyScennario() {
+      let me = this;
+      console.log(me.userActualSituation[2]);
+
+      if (!me.userActualSituation[2].length > 0) {
+        Swal.fire({
+          type: "warning",
+          title: "Nada para guardar",
+          text: "No ha hecho ningun cambio. No hay nada que guardar.",
+        });
+      } else {
+        let scenario = null;
+        me.scenarios.forEach((element) => {
+          if ("is_theactual" in element) {
+            if (element["is_theactual"] == true) {
+              scenario = element;
+            }
+          }
+        });
+        //copy of
+
+        Swal.fire({
+          title:
+            "Sera guardado como : " +
+            (scenario == null
+              ? "Scenario " + Number(me.scenarios.length + 1)
+              : scenario["name"]),
+          type: "warning",
+          text:
+            "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
+          input: "text",
+
+          showDenyButton: true,
+          showCancelButton: true,
+        })
+          .then(function (result) {
+            if ("value" in result) {
+              axios
+                .post("copy", {
                   scenarioName: result.value
                     ? result.value
                     : "Scenario " + Number(me.scenarios.length + 1),

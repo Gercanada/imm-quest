@@ -13,7 +13,9 @@
         <!-- -->
         <thead>
           <tr>
-            <th class="detail"></th>
+            <th class="detail bg-gray">
+              {{ [0] in summary && summary[0] != null ? summary[0] : "Single" }}
+            </th>
             <th data-sortable="" data-width="auto">Actual situation</th>
             <th data-field="forks_count" data-sortable="" data-width="auto">
               Scenario 2
@@ -23,6 +25,48 @@
             </th>
           </tr>
         </thead>
+        <!-- <p>{{ summary }}</p> -->
+        <!-- {{
+          factors
+        }} -->
+        <!-- <p>{{ factorData }}</p> -->
+        <p>{{ scores }}</p>
+
+        <tbody>
+          <tr v-for="fact in factors">
+            <td>{{ fact.name }}</td>
+            <td v-for="score in scores">
+              {{
+                [0] in summary && summary[0] != null && summary[0] === "Married"
+                  ? score.marriedSum != undefined &&
+                    score.marriedSum["factor"] === fact.id
+                    ? score.marriedSum["sum"]
+                    : 0
+                  : 0
+              }}
+            </td>
+            <!-- <td>{{ score }}</td> -->
+            <!-- <td>{{ fact.name }}</td>
+            <p>{{ fact.id }}</p> -->
+
+            <!-- <td>
+              {{
+                [0] in summary && summary[0] != null && summary[0] === "Married"
+                  ? "marriedSum" in scores &&
+                    "factor" in scores.marriedSum &&
+                    scores.marriedSum.factor == fact.id
+                    ? scores.marriedSum.sum
+                    : "a"
+                  : "singleSum" in scores &&
+                    "factor" in scores.singleSum &&
+                    scores.singleSum.factor == fact.id
+                  ? scores.singleSum.sum
+                  : "b"
+              }}
+            </td> -->
+          </tr>
+        </tbody>
+
         <tbody>
           <tr>
             <td class="rowName">Total de puntos</td>
@@ -64,11 +108,23 @@
 
 <script>
 export default {
+  props: ["summary", "factors", "scores"],
+
   data() {
     return {
       f1ScoreMarried: 0,
       f1ScoreSingle: 0,
+
+      //   factorData: { factors: this.factors, scores: this.scores },
     };
+  },
+  mounted() {
+    console.log("Summary Table");
+    console.log(this.summary);
+  },
+  created() {
+    // alert("here");
+    console.log(this.scores);
   },
   methods: {},
 };

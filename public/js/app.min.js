@@ -2273,6 +2273,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2290,7 +2294,10 @@ __webpack_require__.r(__webpack_exports__);
       requiredBeAuth: false,
       loading: true,
       isAuthenticated: false,
-      user: {}
+      user: {},
+      summary: [],
+      Factors: [],
+      scores: null
     };
   },
   created: function created() {
@@ -2310,6 +2317,28 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
       });
+    },
+    getSituation: function getSituation(value) {
+      var me = this;
+      console.log("at Content");
+      me.summary = value;
+      console.log(value);
+    },
+    getTitles: function getTitles(value) {
+      this.Factors = value;
+    },
+    getScores: function getScores(value) {
+      var _this = this;
+
+      this.scores = value;
+      console.log(this.Factors);
+      this.Factors.forEach(function (fact) {
+        _this.scores.forEach(function (score) {
+          console.log(score);
+        });
+      });
+      console.log("some getted");
+      console.log(value);
     }
   }
 });
@@ -2441,6 +2470,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2454,17 +2486,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       userActualSituation: []
     };
   },
-  //   mounted() {},
   methods: {
     getUserData: function getUserData(value) {
-      //   alert(value);
       this.maritialStatus = value;
     },
     changeStatus: function changeStatus(value) {
       this.maritialStatus = value;
     },
     getSituation: function getSituation(value) {
-      //   alert(value);
+      console.log("getted");
       var scenario = null;
       var me = this;
       me.scenarios = value[1];
@@ -2483,6 +2513,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
         }
       }
+
+      this.$emit("selectedSituation", me.userActualSituation);
     },
     saveSituation: function saveSituation() {
       var _this = this;
@@ -2549,6 +2581,67 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    getFactors: function getFactors(value) {
+      console.log("factors");
+      this.$emit("FactorsTitles", value);
+    },
+    getScore: function getScore(value) {
+      //   let facts = this.getFactors();
+      this.$emit("scoresArr", value);
+      console.log("Score"); //   console.log(value);
+    },
+    copyScennario: function copyScennario() {
+      var me = this;
+      console.log(me.userActualSituation[2]);
+
+      if (!me.userActualSituation[2].length > 0) {
+        Swal.fire({
+          type: "warning",
+          title: "Nada para guardar",
+          text: "No ha hecho ningun cambio. No hay nada que guardar."
+        });
+      } else {
+        var scenario = null;
+        me.scenarios.forEach(function (element) {
+          if ("is_theactual" in element) {
+            if (element["is_theactual"] == true) {
+              scenario = element;
+            }
+          }
+        }); //copy of
+
+        Swal.fire({
+          title: "Sera guardado como : " + (scenario == null ? "Scenario " + Number(me.scenarios.length + 1) : scenario["name"]),
+          type: "warning",
+          text: "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
+          input: "text",
+          showDenyButton: true,
+          showCancelButton: true
+        }).then(function (result) {
+          if ("value" in result) {
+            axios.post("copy", {
+              scenarioName: result.value ? result.value : "Scenario " + Number(me.scenarios.length + 1),
+              actualSituation: me.userActualSituation
+            }).then(function (response) {
+              Swal.fire({
+                type: "success",
+                title: "Escenario guardado",
+                text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
+              });
+              console.log(response);
+            });
+          } else {
+            Swal.fire({
+              type: "info",
+              title: "No será guardado",
+              timer: 3000
+            });
+          }
+        })["catch"](function (error) {
+          console.table(error);
+        });
+      }
     }
   }
 });
@@ -2591,8 +2684,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["summary", "factors", "scores"],
   components: {
     SummaryTable: _SummaryTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {//   summary: this.summary,
+      //   factors: this.factors,
+    };
+  },
+  mounted: function mounted() {
+    console.log("summary");
+    console.log(this.summary);
   }
 });
 
@@ -2673,12 +2776,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["summary", "factors", "scores"],
   data: function data() {
     return {
       f1ScoreMarried: 0,
-      f1ScoreSingle: 0
+      f1ScoreSingle: 0 //   factorData: { factors: this.factors, scores: this.scores },
+
     };
+  },
+  mounted: function mounted() {
+    console.log("Summary Table");
+    console.log(this.summary);
+  },
+  created: function created() {
+    // alert("here");
+    console.log(this.scores);
   },
   methods: {}
 });
@@ -2737,11 +2894,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       factorScore: {},
       factorScoreMarried: {},
       factorScoreSingle: {}
-    }, _defineProperty(_ref, "criterion", {}), _defineProperty(_ref, "selectedCriterion", {}), _defineProperty(_ref, "mutableMaritialStatus", this.maritialStatus), _defineProperty(_ref, "subfacts", {}), _ref;
+    }, _defineProperty(_ref, "criterion", {}), _defineProperty(_ref, "selectedCriterion", {}), _defineProperty(_ref, "mutableMaritialStatus", this.maritialStatus), _defineProperty(_ref, "factorNames", []), _defineProperty(_ref, "arraySums", []), _defineProperty(_ref, "subfacts", {}), _ref;
   },
   mounted: function mounted() {
     this.getData();
-    console.log(this.maritialStatus);
   },
   methods: {
     getData: function getData() {
@@ -2757,6 +2913,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           });
           me.factors = response.data ? response.data[0] : [];
+          me.factors.forEach(function (element) {
+            console.log(element); // let obj = {[]};
+
+            me.factorNames.push({
+              id: element.id,
+              name: element.title + ' ' + element.sub_title
+            });
+          }); // return
+
+          me.$emit("factorNames", me.factorNames);
           var newData = [];
 
           if (scenario != null && Array.isArray(JSON.parse(scenario['body'])) && JSON.parse(scenario['body']).length > 0) {
@@ -2807,6 +2973,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     criteriaVal: function criteriaVal(event) {
       var me = this;
       var newVal = null;
+      var existingS = null;
+      var existingM = null;
 
       if ('criterion' in event) {
         newVal = event;
@@ -2825,8 +2993,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       me.singleValues.sort(function (a, b) {
         return a.subfactor - b.subfactor;
       });
-      var existingS = null;
-      var existingM = null;
       me.singleValues.forEach(function (element) {
         if (element['factor'] == factor && element['subfactor'] == subfactor) {
           existingS = element;
@@ -2854,7 +3020,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
 
       if (!existingM) {
-        console.log('push');
         me.marriedValues.push({
           factor: factor,
           subfactor: subfactor,
@@ -2876,7 +3041,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         me.factorScoreSingle[factor] = groupByFactoS[factor].reduce(function (n, _ref2) {
           var value = _ref2.value;
           return n + value;
-        }, 0); // console.log({ singleSum: me.factorScoreSingle[factor] });
+        }, 0);
       }
 
       if (me.marriedValues.length > 0) {
@@ -2889,7 +3054,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         me.factorScoreMarried[factor] = groupByFactoM[factor].reduce(function (n, _ref3) {
           var value = _ref3.value;
           return n + value;
-        }, 0); // console.log({ marriedSum: me.factorScoreMarried[factor] });
+        }, 0);
       } //grouped by factor
       // console.log(JSON.stringify(groupByFacto, null, 2));
 
@@ -2900,17 +3065,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       me.selectedCriterion[subfactor] = criterion.id;
 
       if (this.mutableMaritialStatus === "Single") {
-        console.log('a');
         selectedSituation[2] = me.singleValues;
-        me.factorScore[factor] = me.factorScoreSingle[factor];
+        me.factorScore[factor] = me.factorScoreSingle[factor]; // this.$emit({ scoreSingle: factor }, me.factorScoreSingle[factor]); //send the sum
       } else {
-        console.log('b');
         me.selectedCriterion[criterion.id] = criterion.married;
         selectedSituation[2] = me.marriedValues;
         me.factorScore[factor] = me.factorScoreMarried[factor];
+      } //Create or update scores array to emmit to another file
+
+
+      var hasSumS = null;
+      var hasSumM = null;
+      me.arraySums.forEach(function (element) {
+        // console.log('singleSum' in element && ('factor' in element['singleSum'] && element['singleSum'].factor === factor));
+        if ('singleSum' in element && 'factor' in element['singleSum'] && element['singleSum'].factor === factor) {
+          hasSumS = element;
+          element['singleSum']['sum'] = me.factorScoreSingle[factor];
+        }
+      });
+      me.arraySums.forEach(function (element) {
+        if ('marriedSum' in element && 'factor' in element['marriedSum'] && element['marriedSum'].factor === factor) {
+          hasSumM = element;
+          element['marriedSum']['sum'] = me.factorScoreMarried[factor];
+        }
+      });
+
+      if (!hasSumS) {
+        me.arraySums.push({
+          singleSum: {
+            factor: factor,
+            sum: me.factorScoreSingle[factor]
+          }
+        });
       }
 
-      this.$emit("selectedSituation", selectedSituation);
+      if (!hasSumM) {
+        me.arraySums.push({
+          marriedSum: {
+            factor: factor,
+            sum: me.factorScoreMarried[factor]
+          }
+        });
+      }
+
+      me.$emit("sumScore", me.arraySums); // send the sum
+
+      me.$emit("selectedSituation", selectedSituation);
     }
   }
 });
@@ -22451,14 +22651,30 @@ var render = function () {
                   staticClass: "tab-pane show active",
                   attrs: { id: "Summary" },
                 },
-                [_c("Summary")],
+                [
+                  _c("Summary", {
+                    attrs: {
+                      summary: _vm.summary,
+                      factors: _vm.Factors,
+                      scores: _vm.scores,
+                    },
+                  }),
+                ],
                 1
               ),
               _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "tab-pane", attrs: { id: "Situation" } },
-                [_c("SituationA")],
+                [
+                  _c("SituationA", {
+                    on: {
+                      selectedSituation: _vm.getSituation,
+                      FactorsTitles: _vm.getTitles,
+                      scoresArr: _vm.getScores,
+                    },
+                  }),
+                ],
                 1
               ),
               _vm._v(" "),
@@ -22718,7 +22934,22 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm._m(1),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-outline-success waves-effect waves-light",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.copyScennario()
+                    },
+                  },
+                },
+                [_vm._m(1), _vm._v(" Copiar ecenario\n          ")]
+              ),
+            ]),
             _vm._v(" "),
             _vm._m(2),
           ]),
@@ -22726,6 +22957,8 @@ var render = function () {
           _c("accordions", {
             attrs: { maritialStatus: _vm.maritialStatus },
             on: {
+              sumScore: _vm.getScore,
+              factorNames: _vm.getFactors,
               selectedSituation: _vm.getSituation,
               mutableMaritialStatus: _vm.getUserData,
             },
@@ -22749,20 +22982,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-success waves-effect waves-light",
-          attrs: { type: "button" },
-        },
-        [
-          _c("span", { staticClass: "btn-label" }, [
-            _c("i", { staticClass: "fas fa-copy" }),
-          ]),
-          _vm._v(" Copiar ecenario\n          "),
-        ]
-      ),
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "fas fa-copy" }),
     ])
   },
   function () {
@@ -22813,7 +23034,20 @@ var render = function () {
     _vm._v(" "),
     _vm._m(1),
     _vm._v(" "),
-    _c("div", { staticClass: "col-12" }, [_c("SummaryTable")], 1),
+    _c(
+      "div",
+      { staticClass: "col-12" },
+      [
+        _c("SummaryTable", {
+          attrs: {
+            summary: _vm.summary,
+            factors: _vm.factors,
+            scores: _vm.scores,
+          },
+        }),
+      ],
+      1
+    ),
   ])
 }
 var staticRenderFns = [
@@ -22879,133 +23113,176 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-body" }, [
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Sortable table")]),
+      _vm._v(" "),
+      _c("h6", { staticClass: "card-subtitle" }, [
+        _vm._v("Basic sortable table"),
+      ]),
+      _vm._v(" "),
+      _c(
+        "table",
+        {
+          staticClass: "table table-bordered",
+          attrs: {
+            "data-toggle": "table",
+            "data-mobile-responsive": "true",
+            "data-sort-order": "default",
+          },
+        },
+        [
+          _c("thead", [
+            _c("tr", [
+              _c("th", { staticClass: "detail bg-gray" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(
+                      [0] in _vm.summary && _vm.summary[0] != null
+                        ? _vm.summary[0]
+                        : "Single"
+                    ) +
+                    "\n          "
+                ),
+              ]),
+              _vm._v(" "),
+              _c(
+                "th",
+                { attrs: { "data-sortable": "", "data-width": "auto" } },
+                [_vm._v("Actual situation")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  attrs: {
+                    "data-field": "forks_count",
+                    "data-sortable": "",
+                    "data-width": "auto",
+                  },
+                },
+                [_vm._v("\n            Scenario 2\n          ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  attrs: {
+                    "data-field": "description",
+                    "data-sortable": "",
+                    "data-width": "auto",
+                  },
+                },
+                [_vm._v("\n            Scenario n\n          ")]
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.scores))]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.factors, function (fact) {
+              return _c(
+                "tr",
+                [
+                  _c("td", [_vm._v(_vm._s(fact.name))]),
+                  _vm._v(" "),
+                  _vm._l(_vm.scores, function (score) {
+                    return _c("td", [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(
+                            [0] in _vm.summary &&
+                              _vm.summary[0] != null &&
+                              _vm.summary[0] === "Married"
+                              ? score.marriedSum != undefined &&
+                                score.marriedSum["factor"] === fact.id
+                                ? score.marriedSum["sum"]
+                                : 0
+                              : 0
+                          ) +
+                          "\n          "
+                      ),
+                    ])
+                  }),
+                ],
+                2
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _vm._m(0),
+        ]
+      ),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("h4", { staticClass: "card-title" }, [_vm._v("Sortable table")]),
+    return _c("tbody", [
+      _c("tr", [
+        _c("td", { staticClass: "rowName" }, [_vm._v("Total de puntos")]),
         _vm._v(" "),
-        _c("h6", { staticClass: "card-subtitle" }, [
-          _vm._v("Basic sortable table"),
+        _c("td", [_vm._v("1")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("3")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("4")]),
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", { staticClass: "rowName" }, [
+          _vm._v("Factor 1: Factores centrales de capital humano"),
         ]),
         _vm._v(" "),
-        _c(
-          "table",
-          {
-            staticClass: "table table-bordered",
-            attrs: {
-              "data-toggle": "table",
-              "data-mobile-responsive": "true",
-              "data-sort-order": "default",
-            },
-          },
-          [
-            _c("thead", [
-              _c("tr", [
-                _c("th", { staticClass: "detail" }),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  { attrs: { "data-sortable": "", "data-width": "auto" } },
-                  [_vm._v("Actual situation")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    attrs: {
-                      "data-field": "forks_count",
-                      "data-sortable": "",
-                      "data-width": "auto",
-                    },
-                  },
-                  [_vm._v("\n            Scenario 2\n          ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    attrs: {
-                      "data-field": "description",
-                      "data-sortable": "",
-                      "data-width": "auto",
-                    },
-                  },
-                  [_vm._v("\n            Scenario n\n          ")]
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("tbody", [
-              _c("tr", [
-                _c("td", { staticClass: "rowName" }, [
-                  _vm._v("Total de puntos"),
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v("1")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("3")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("4")]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "rowName" }, [
-                  _vm._v("Factor 1: Factores centrales de capital humano"),
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v("1")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("4")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("3")]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "rowName" }, [
-                  _vm._v("Factor 2: Transferibilidad de actividades"),
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v("2")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("3")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("1")]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "rowName" }, [
-                  _vm._v("Factor 3: Puntos adicionales"),
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v("2")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("3")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("1")]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "rowName" }, [
-                  _vm._v(
-                    "\n            Factor 4: Atributos de pareja (En caso de que aplique)\n          "
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v("2")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("3")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("1")]),
-              ]),
-            ]),
-          ]
-        ),
+        _c("td", [_vm._v("1")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("4")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("3")]),
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", { staticClass: "rowName" }, [
+          _vm._v("Factor 2: Transferibilidad de actividades"),
+        ]),
+        _vm._v(" "),
+        _c("td", [_vm._v("2")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("3")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("1")]),
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", { staticClass: "rowName" }, [
+          _vm._v("Factor 3: Puntos adicionales"),
+        ]),
+        _vm._v(" "),
+        _c("td", [_vm._v("2")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("3")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("1")]),
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", { staticClass: "rowName" }, [
+          _vm._v(
+            "\n            Factor 4: Atributos de pareja (En caso de que aplique)\n          "
+          ),
+        ]),
+        _vm._v(" "),
+        _c("td", [_vm._v("2")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("3")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("1")]),
       ]),
     ])
   },

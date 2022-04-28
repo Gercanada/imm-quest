@@ -97,10 +97,14 @@
 
           <div class="tab-content" style="width: 100%">
             <div class="tab-pane show active" id="Summary">
-              <Summary />
+              <Summary :summary="summary" :factors="Factors" :scores="scores" />
             </div>
             <div class="tab-pane" id="Situation">
-              <SituationA />
+              <SituationA
+                @selectedSituation="getSituation"
+                @FactorsTitles="getTitles"
+                @scoresArr="getScores"
+              />
             </div>
             <div class="tab-pane" id="scenario-2">
               <Scenario2 />
@@ -130,10 +134,12 @@ export default {
       name: "",
       last_name: "",
       requiredBeAuth: false,
-
       loading: true,
       isAuthenticated: false,
       user: {},
+      summary: [],
+      Factors: [],
+      scores: null,
     };
   },
 
@@ -153,6 +159,30 @@ export default {
         .then(function (response) {
           console.log(response);
         });
+    },
+
+    getSituation(value) {
+      let me = this;
+      console.log("at Content");
+      me.summary = value;
+      console.log(value);
+    },
+    getTitles(value) {
+      this.Factors = value;
+    },
+
+    getScores(value) {
+      this.scores = value;
+      console.log(this.Factors);
+
+      this.Factors.forEach((fact) => {
+        this.scores.forEach((score) => {
+          console.log(score);
+        });
+      });
+
+      console.log("some getted");
+      console.log(value);
     },
   },
 };

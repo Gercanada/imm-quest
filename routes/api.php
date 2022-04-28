@@ -22,15 +22,6 @@ use Illuminate\Http\Request;
 |
 */
 
-/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-}); */
-/* Route::get('/env/{var}', function($var){
-    return response()->json([$var=>env($var)]);
-  });
- */
-
-//Route::get('/users', [UserController::class, 'users']);
 
 Route::get('/hash_pass/{pass}', function ($pass) {
     return password_hash($pass, PASSWORD_DEFAULT);

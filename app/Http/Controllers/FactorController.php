@@ -148,7 +148,6 @@ class FactorController extends Controller
     {
         try {
             $user = Auth::user();
-
             $currentScennarios = $request->actualSituation[1];
             $actualSituation = null;
 
@@ -179,6 +178,25 @@ class FactorController extends Controller
         } catch (Exception $e) {
             $this->consoleWrite()->writeln($e->getMessage());
             $this->consoleWrite()->writeln($e);
+            return response()->json($e);
+        }
+    }
+
+    public function copyScenario(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $scenario =  Scenario::create(
+                [
+                    'user_id' => $user->id,
+                    'is_theactual' => false,
+                    'name' => $request->scenarioName,
+                    'is_married' => $request->actualSituation[0] === 'Married' ? true : false,
+                    'body' => json_encode($request->actualSituation[2]),
+                ]
+            );
+            return response()->json($scenario);
+        } catch (Exception $e) {
             return response()->json($e);
         }
     }

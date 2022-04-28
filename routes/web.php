@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     //Scenarios
     Route::post('save-situation', [FactorController::class, 'saveScenario']);
+    Route::post('copy', [FactorController::class, 'copyScenario']);
 
     Route::any('{any}', function () {
         abort(404);
