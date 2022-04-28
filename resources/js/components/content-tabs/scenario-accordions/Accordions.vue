@@ -22,6 +22,12 @@
                 </h5>
               </div>
               <div class="col-4">
+                <label class="bg-warning"
+                  >Married {{ factorScoreMarried[object.factor.id] }}</label
+                >
+                <label class="bg-danger"
+                  >Single{{ factorScoreSingle[object.factor.id] }}</label
+                >
                 <input
                   type="text"
                   disabled

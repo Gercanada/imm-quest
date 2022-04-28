@@ -2877,20 +2877,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     criteriaVal: function criteriaVal(event) {
       var me = this;
       var newVal = null;
-      var called = false;
-      var changed = false;
 
       if ('criterion' in event) {
-        called = true;
-        console.log('loaded');
         newVal = event;
       } else {
-        changed = true;
-        console.log('changed');
         newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
       }
-
-      console.log(newVal); // return
 
       me.selectedSubfactor[newVal.subfactor] = {
         criterion: newVal.criterion,
@@ -2900,105 +2892,88 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var factor = newVal.factor;
       var subfactor = newVal.subfactor;
       var criterion = newVal.criterion;
-      /*  me.subfactorsArr.sort(function(a, b) {
-          return a - b;
-      });
-      */
-
       me.singleValues.sort(function (a, b) {
         return a.subfactor - b.subfactor;
-      }); // if (!me.subfactorsArr.includes(subfactor)) {
-      // me.subfactorsArr.push(subfactor);
+      });
+      var existingS = null;
+      var existingM = null;
+      me.singleValues.forEach(function (element) {
+        if (element['factor'] == factor && element['subfactor'] == subfactor) {
+          existingS = element;
+          element['criterion'] = criterion.id;
+          element['value'] = criterion.single != null ? criterion.single : 0; //replace
+        }
+      });
 
-      if (!me.singleValues.some(function (o) {
-        return o["subfactor"] === subfactor;
-      })) {
-        console.log('here');
+      if (!existingS) {
         me.singleValues.push({
           factor: factor,
           subfactor: subfactor,
           criterion: criterion.id,
           value: criterion.single != null ? criterion.single : 0
         });
+      }
+
+      me.marriedValues.forEach(function (element) {
+        //Find factor and subfactor for replace criterion value
+        if (element['factor'] == factor && element['subfactor'] == subfactor) {
+          existingM = element;
+          element['criterion'] = criterion.id;
+          element['value'] = criterion.married != null ? criterion.married : 0; //replace
+        }
+      });
+
+      if (!existingM) {
+        console.log('push');
         me.marriedValues.push({
           factor: factor,
           subfactor: subfactor,
           criterion: criterion.id,
           value: criterion.married != null ? criterion.married : 0
         });
-      } else {
-        /*  me.singleValues.splice(me.singleValues.indexOf(criterion), subfactor, criterion)
-         me.marriedValues.splice(me.marriedValues.indexOf(criterion), subfactor, criterion) */
-        console.log(me.singleValues);
-        console.log(me.singleValues.subfactor, subfactor);
+      }
 
-        if (me.singleValues['factor'] === factor && me.singleValues['subfactor'] === subfactor) {
-          me.singleValues['criterion'] = criterion.id;
-          me.singleValues['value'] = criterion.single != null ? criterion.single : 0;
-        } else {
-          alert('crashs');
-        }
+      me.factorScoreMarried[factor] = 0;
+      me.factorScoreSingle[factor] = 0;
 
-        if (me.marriedValues['factor'] === factor && me.marriedValues['subfactor'] === subfactor) {
-          me.marriedValues['criterion'] = criterion.id;
-          me.marriedValues['value'] = criterion.married != null ? criterion.married : 0;
-        } else {
-          alert('crashs');
-        }
-        /* me.replace(
-            me.singleValues, factor, { criterion },
-            me.selectedSubfactor[subfactor].single
-        );
-         me.replace(
-            me.marriedValues, { criterion },
-            factor, subfactor,
-            me.selectedSubfactor[subfactor].married
-        ); */
-        // me.replace(me.subfactorsArr, { subfactor: subfactor }, null, null, subfactor);
+      if (me.singleValues.length > 0) {
+        console.log('has');
+        var groupByFactoS = me.singleValues.reduce(function (group, product) {
+          var factor = product.factor;
+          group[factor] = group[factor] ? group[factor] : [];
+          group[factor].push(product);
+          return group;
+        }, {});
+        me.factorScoreSingle[factor] = groupByFactoS[factor].reduce(function (n, _ref2) {
+          var value = _ref2.value;
+          return n + value;
+        }, 0);
+        console.log({
+          singleSum: me.factorScoreSingle[factor]
+        });
+      }
 
-      } // return
-      // console.log(me.singleValues);
-
-
-      var groupByFactoS = me.singleValues.reduce(function (group, product) {
-        var factor = product.factor;
-        group[factor] = group[factor] ? group[factor] : [];
-        group[factor].push(product);
-        return group;
-      }, {});
-      var groupByFactoM = me.marriedValues.reduce(function (group, product) {
-        var factor = product.factor;
-        group[factor] = group[factor] ? group[factor] : [];
-        group[factor].push(product);
-        return group;
-      }, {}); //grouped by factor
+      if (me.marriedValues.length > 0) {
+        var groupByFactoM = me.marriedValues.reduce(function (group, product) {
+          var factor = product.factor;
+          group[factor] = group[factor] ? group[factor] : [];
+          group[factor].push(product);
+          return group;
+        }, {});
+        me.factorScoreMarried[factor] = groupByFactoM[factor].reduce(function (n, _ref3) {
+          var value = _ref3.value;
+          return n + value;
+        }, 0);
+        console.log({
+          marriedSum: me.factorScoreMarried[factor]
+        });
+      } //grouped by factor
       // console.log(JSON.stringify(groupByFacto, null, 2));
 
-      console.log(groupByFactoS[factor].reduce(function (n, _ref2) {
-        var value = _ref2.value;
-        return n + value;
-      }, 0));
-      me.factorScoreSingle[factor] = groupByFactoS[factor].reduce(function (n, _ref3) {
-        var value = _ref3.value;
-        return n + value;
-      }, 0); // me.factorScoreSingle[factor] = me.sumArr(me.singleValues);
 
-      me.factorScoreMarried[factor] = groupByFactoM[factor].reduce(function (n, _ref4) {
-        var value = _ref4.value;
-        return n + value;
-      }, 0);
-      console.log({
-        singleSum: me.factorScoreMarried[factor]
-      });
-      console.log({
-        marriedSum: me.factorScoreSingle[factor]
-      });
       var selectedSituation = [];
       selectedSituation[0] = this.mutableMaritialStatus;
       selectedSituation[1] = this.scenarios;
-      /*      console.log({ fs: factor })
-             console.log(criterion.id) */
-
       me.selectedCriterion[subfactor] = criterion.id;
 
       if (this.mutableMaritialStatus === "Single") {
@@ -23177,6 +23152,20 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-4" }, [
+                    _c("label", { staticClass: "bg-warning" }, [
+                      _vm._v(
+                        "Married " +
+                          _vm._s(_vm.factorScoreMarried[object.factor.id])
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("label", { staticClass: "bg-danger" }, [
+                      _vm._v(
+                        "Single" +
+                          _vm._s(_vm.factorScoreSingle[object.factor.id])
+                      ),
+                    ]),
+                    _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control float-right",
                       attrs: { type: "text", disabled: "" },
