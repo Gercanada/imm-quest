@@ -2741,6 +2741,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.getData();
+    console.log(this.maritialStatus);
   },
   methods: {
     getData: function getData() {
@@ -2759,7 +2760,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var newData = [];
 
           if (scenario != null && Array.isArray(JSON.parse(scenario['body'])) && JSON.parse(scenario['body']).length > 0) {
-            me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status
+            me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
 
             me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
             var body = JSON.parse(scenario['body']);
@@ -2799,80 +2800,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             });
           }
 
-          me.data = newData; // console.log(newData);
-          // return;
-          //get selected subfactors criterion and put as selected if exists
-
-          /*
-              ->TENEMOS LA LISTA DE FACTORES QUE POR DEFECTO NOS DEVI=UELVE LA RUTA.
-              Si el usuario ha guardado un escenario (principal) lo cargamos tambien
-              Lo que buscamos es disparar el select y marcar como seleccionado cada criterio en base al escenario devuelto
-              Tonz tenemos cada objeto del factor y otra lista de los ya guardados
-              queremos
-              A lo que por defecto cada objeto es algo como
-                      {
-                          id: 1
-                          sub_title: "Any"
-                          subfactors: [
-                          {
-                                  criteria: []
-                                  factor_id: 1
-                                  id: 1
-                                  subfactor: "Any name"
-                                  }
-                          ]
-                      }
-                      Si se ha devuelto el arreglo del escenario guardado contendra objetos como {factor: 2, subfactor: 4, criterion: 33, value: 8}
-                      Ahora bien : en el arreglo de factores vamo a comparar el id del factor con el factor en el objeto2, luego el subfactor , y luego el criterio.
-                       Si es coincide , nuestro objeto de factores será como
-                        {
-                         {factor: 1, subfactor: 2, criterion: 3, value: 8},
-                          id: 1
-                          sub_title: "Any"
-                          subfactors: [
-                          {
-                                  criteria: [
-                                                 { criterion: "17 años o menos",
-             ESTE ES EL BUENO   ------>           id: 3,
-                                                  married: 0,
-                                                  single: 0,
-                                                  subfactor_id: 2,
-                                                   },
-                                              ],
-                                  factor_id: 1
-                                  id: 1
-                                  subfactor: "Any name"
-                                  }
-                          ]
-                      }
-                      Por poner un ejemplo ......
-                      Ok Ox , Here go.
-              */
-          // }
-          // me.data = newData;
-
-          /* newData.forEach(element => {
-              .push(element);
-          }); */
+          me.data = newData;
         }
       });
-    },
-    sumArr: function sumArr(arr) {
-      return arr.reduce(function (previousValue, currentValue) {
-        return previousValue + currentValue.value;
-      }, 0);
-    },
-    replace: function replace(arr, obj, x, y, newValue) {
-      var _newObj;
-
-      // console.log('replacing');
-      arr.splice(arr.findIndex(function (e) {
-        return e.hasOwnProperty("value") ? e.value : e === obj;
-      }), 1);
-      var obKey = Object.keys(obj);
-      var ovVal = Object.values(obj);
-      var newObj = (_newObj = {}, _defineProperty(_newObj, obKey, ovVal[0]), _defineProperty(_newObj, "value", newValue), _newObj);
-      arr.push(newObj);
     },
     criteriaVal: function criteriaVal(event) {
       var me = this;
@@ -2884,7 +2814,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
       }
 
-      me.selectedSubfactor[newVal.subfactor] = {
+      me.selectedSubfactor.selections[newVal.subfactor] = {
         criterion: newVal.criterion,
         factor: newVal.factor,
         subfactor: newVal.subfactor
@@ -2901,7 +2831,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (element['factor'] == factor && element['subfactor'] == subfactor) {
           existingS = element;
           element['criterion'] = criterion.id;
-          element['value'] = criterion.single != null ? criterion.single : 0; //replace
+          element['value'] = criterion.single != null ? criterion.single : 0;
         }
       });
 
@@ -2937,7 +2867,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       me.factorScoreSingle[factor] = 0;
 
       if (me.singleValues.length > 0) {
-        console.log('has');
         var groupByFactoS = me.singleValues.reduce(function (group, product) {
           var factor = product.factor;
           group[factor] = group[factor] ? group[factor] : [];
@@ -2947,10 +2876,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         me.factorScoreSingle[factor] = groupByFactoS[factor].reduce(function (n, _ref2) {
           var value = _ref2.value;
           return n + value;
-        }, 0);
-        console.log({
-          singleSum: me.factorScoreSingle[factor]
-        });
+        }, 0); // console.log({ singleSum: me.factorScoreSingle[factor] });
       }
 
       if (me.marriedValues.length > 0) {
@@ -2963,10 +2889,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         me.factorScoreMarried[factor] = groupByFactoM[factor].reduce(function (n, _ref3) {
           var value = _ref3.value;
           return n + value;
-        }, 0);
-        console.log({
-          marriedSum: me.factorScoreMarried[factor]
-        });
+        }, 0); // console.log({ marriedSum: me.factorScoreMarried[factor] });
       } //grouped by factor
       // console.log(JSON.stringify(groupByFacto, null, 2));
 
@@ -23152,26 +23075,12 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-4" }, [
-                    _c("label", { staticClass: "bg-warning" }, [
-                      _vm._v(
-                        "Married " +
-                          _vm._s(_vm.factorScoreMarried[object.factor.id])
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("label", { staticClass: "bg-danger" }, [
-                      _vm._v(
-                        "Single" +
-                          _vm._s(_vm.factorScoreSingle[object.factor.id])
-                      ),
-                    ]),
-                    _vm._v(" "),
                     _c("input", {
                       staticClass: "form-control float-right",
                       attrs: { type: "text", disabled: "" },
                       domProps: {
                         value:
-                          _vm.mutableMaritialStatus === "Married"
+                          _vm.maritialStatus === "Married"
                             ? _vm.factorScoreMarried[object.factor.id]
                             : _vm.factorScoreSingle[object.factor.id],
                       },
@@ -23225,9 +23134,6 @@ var render = function () {
                               staticClass: "form-control",
                               staticStyle: { width: "100%", height: "36px" },
                               attrs: { id: "select2-search-hide" },
-                              domProps: {
-                                value: _vm.selectedSubfactor[subfactor.id],
-                              },
                               on: {
                                 change: [
                                   function ($event) {
@@ -23287,24 +23193,29 @@ var render = function () {
                             attrs: { type: "text", disabled: "" },
                             domProps: {
                               value:
-                                _vm.selectedSubfactor[subfactor.id] !=
-                                  undefined &&
+                                _vm.selectedSubfactor != undefined &&
+                                _vm.selectedSubfactor.selections != undefined &&
+                                _vm.selectedSubfactor.selections[
+                                  subfactor.id
+                                ] != undefined &&
                                 "criterion" in
-                                  _vm.selectedSubfactor[subfactor.id]
-                                  ? _vm.mutableMaritialStatus === "Married" &&
-                                    _vm.selectedSubfactor[
+                                  _vm.selectedSubfactor.selections[subfactor.id]
+                                  ? _vm.maritialStatus === "Married" &&
+                                    _vm.selectedSubfactor.selections[
                                       subfactor.id
                                     ].criterion.hasOwnProperty("married")
-                                    ? _vm.selectedSubfactor[subfactor.id]
-                                        .criterion.married
-                                    : _vm.mutableMaritialStatus === "Single" &&
-                                      _vm.selectedSubfactor[
+                                    ? _vm.selectedSubfactor.selections[
+                                        subfactor.id
+                                      ].criterion.married
+                                    : _vm.maritialStatus === "Single" &&
+                                      _vm.selectedSubfactor.selections[
                                         subfactor.id
                                       ].criterion.hasOwnProperty("single")
-                                    ? _vm.selectedSubfactor[subfactor.id]
-                                        .criterion.single
+                                    ? _vm.selectedSubfactor.selections[
+                                        subfactor.id
+                                      ].criterion.single
                                     : ""
-                                  : null,
+                                  : 0,
                             },
                           }),
                         ]),

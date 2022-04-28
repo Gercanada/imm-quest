@@ -22,17 +22,11 @@
                 </h5>
               </div>
               <div class="col-4">
-                <label class="bg-warning"
-                  >Married {{ factorScoreMarried[object.factor.id] }}</label
-                >
-                <label class="bg-danger"
-                  >Single{{ factorScoreSingle[object.factor.id] }}</label
-                >
                 <input
                   type="text"
                   disabled
                   :value="
-                    mutableMaritialStatus === 'Married'
+                    maritialStatus === 'Married'
                       ? factorScoreMarried[object.factor.id]
                       : factorScoreSingle[object.factor.id]
                   "
@@ -61,7 +55,6 @@
                       style="width: 100%; height: 36px"
                       @change="criteriaVal"
                       v-model="selectedSubfactor.selections[subfactor.id]"
-                      :value="selectedSubfactor[subfactor.id]"
                     >
                       <option
                         v-for="criterion in subfactor.criteria"
@@ -82,20 +75,22 @@
                       type="text"
                       class="form-control"
                       :value="
-                        selectedSubfactor[subfactor.id] != undefined &&
-                        'criterion' in selectedSubfactor[subfactor.id]
-                          ? mutableMaritialStatus === 'Married' &&
-                            selectedSubfactor[subfactor.id].criterion.hasOwnProperty(
-                              'married'
-                            )
-                            ? selectedSubfactor[subfactor.id].criterion.married
-                            : mutableMaritialStatus === 'Single' &&
-                              selectedSubfactor[subfactor.id].criterion.hasOwnProperty(
-                                'single'
-                              )
-                            ? selectedSubfactor[subfactor.id].criterion.single
+                        selectedSubfactor != undefined &&
+                        selectedSubfactor.selections != undefined &&
+                        selectedSubfactor.selections[subfactor.id] != undefined &&
+                        'criterion' in selectedSubfactor.selections[subfactor.id]
+                          ? maritialStatus === 'Married' &&
+                            selectedSubfactor.selections[
+                              subfactor.id
+                            ].criterion.hasOwnProperty('married')
+                            ? selectedSubfactor.selections[subfactor.id].criterion.married
+                            : maritialStatus === 'Single' &&
+                              selectedSubfactor.selections[
+                                subfactor.id
+                              ].criterion.hasOwnProperty('single')
+                            ? selectedSubfactor.selections[subfactor.id].criterion.single
                             : ''
-                          : null
+                          : 0
                       "
                       disabled
                     />
