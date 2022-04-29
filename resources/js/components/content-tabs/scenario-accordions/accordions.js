@@ -1,16 +1,19 @@
 export default {
     props: ["maritialStatus"],
+    watch: {
+        maritialStatus: function() {
+            this.$emit("MaritialStatusChanged", this.maritialStatus); // send the sum
+        }
+    },
     data() {
         return {
-            criterion: '',
             loading: false,
             data: [],
             factors: [],
             scenarios: [],
+            additionalScenarios: [],
             singleValues: [],
             marriedValues: [],
-            subfactorsArr: [],
-            SelectedFactor: [],
             selectedSubfactor: {
                 selections: []
             },
@@ -23,9 +26,7 @@ export default {
 
             factorNames: [],
             arraySums: [],
-            subfacts: {
-
-            }
+            situation: []
         };
     },
 
@@ -42,15 +43,19 @@ export default {
                 if (me.scenarios.length > 0) {
                     me.scenarios.forEach((element) => {
                         if ("is_theactual" in element && element["is_theactual"] == true) {
-                            scenario = element;
+                            scenario = element; ///Actial situation scennario only it is editable
+                        }
+                        if (!"is_theactual" in element || element["is_theactual"] == false) {
+                            me.additionalScenarios.push(element);
                         }
                     });
 
-                    me.factors = response.data ? response.data[0] : [];
+                    console.log({ anotherScennarios: me.additionalScenarios })
 
+
+                    me.factors = response.data ? response.data[0] : [];
                     me.factors.forEach(element => {
-                        console.log(element)
-                            // let obj = {[]};
+                        // console.log(element)
                         me.factorNames.push({
                             id: element.id,
                             name: element.title + ' ' + element.sub_title
@@ -67,10 +72,8 @@ export default {
                         me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
                         me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
                         let body = JSON.parse(scenario['body']);
-
                         me.factors.forEach(factor => {
                             let items = [];
-
                             body.forEach(item => {
                                 if (item['factor'] === factor.id) {
                                     factor.subfactors.forEach(subfactor => {
@@ -100,12 +103,11 @@ export default {
                     }
                     me.data = newData;
                 }
-
             });
-
         },
 
         criteriaVal(event) {
+            // console.log('called');
             let me = this;
             let newVal = null;
             let existingS = null;
@@ -244,8 +246,8 @@ export default {
                     }
                 });
             }
-
-            me.$emit("sumScore", me.arraySums); // send the sum
+            // me.situation.push(selectedSituation);
+            me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
             me.$emit("selectedSituation", selectedSituation);
         },
     },

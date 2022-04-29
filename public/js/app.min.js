@@ -2280,8 +2280,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -2303,7 +2301,8 @@ __webpack_require__.r(__webpack_exports__);
       summary: [],
       Factors: [],
       scores: null,
-      FactorsWithScores: []
+      FactorsWithScores: [],
+      maritialStatusChanged: null
     };
   },
   created: function created() {
@@ -2313,23 +2312,26 @@ __webpack_require__.r(__webpack_exports__);
       this.last_name = window.Laravel.user.last_name;
     }
   },
-  //   mounted() {},
   methods: {
     getSituation: function getSituation(value) {
+      //   console.log("situation");
       var me = this;
-      console.log("at Content");
       me.summary = value;
-      console.log(value);
     },
     getTitles: function getTitles(value) {
       this.Factors = value;
     },
+    getMaritialChanged: function getMaritialChanged(value) {
+      console.log("CONTENT");
+      this.maritialStatusChanged = value; //   console.log(value);
+    },
     getScores: function getScores(value) {
       var _this = this;
 
-      //Group scores with his factor
-      console.log("some getted");
-      this.scores = value;
+      console.log(value); //   console.log("some getted");
+      //   return;
+
+      this.scores = value[0];
       var factArr = [];
       this.Factors.forEach(function (factor) {
         _this.scores.forEach(function (score) {
@@ -2348,7 +2350,6 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       });
-      console.log(factArr);
       var Grouped = [];
       Grouped = _.mapValues(_.groupBy(factArr, "factor"), function (list) {
         return list.map(function (val) {
@@ -2510,7 +2511,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.maritialStatus = value;
     },
     changeStatus: function changeStatus(value) {
+      //   console.log("changed");
       this.maritialStatus = value;
+    },
+    maritialChanged: function maritialChanged(value) {
+      console.log("changed emmit");
+      this.$emit("maritialChanged", value);
+      console.log(value);
     },
     getSituation: function getSituation(value) {
       console.log("getted");
@@ -2607,27 +2614,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.factors = value; //   let factors = value;
     },
     getScore: function getScore(value) {
-      //   let facts = this.getFactors();
-      this.$emit("scoresArr", value); //   console.log("Score");
-
-      this.scores = value;
-      /*
-      this.factors.forEach((factor) => {
-        console.log(factor);
-        this.scores.forEach((score) => {
-          if (
-            score["singleSum"] != undefined &&
-            score["singleSum"].factor === factor.id &&
-            score["marriedSum"] != undefined &&
-            score["marriedSum"].factor === factor.id
-          ) {
-            factsWithScores.push(score);
-          }
-        });
-      }); */
-      //   console.log(value);
+      console.log("getScore");
+      this.$emit("scoresArr", value);
+      this.scores = value[0];
     },
     copyScennario: function copyScennario() {
+      /* Save scennario as copy of current on view */
       var me = this;
       console.log(me.userActualSituation[2]);
 
@@ -2723,9 +2715,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores", "FactorsWithScores"],
+  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged"],
   components: {
     SummaryTable: _SummaryTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2810,49 +2803,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores", "FactorsWithScores"],
+  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged"],
   watch: {
     FactorsWithScores: function FactorsWithScores() {
       var _this = this;
 
       var toSumArr = [];
       this.factors.forEach(function (fact) {
-        toSumArr.push([0] in _this.summary && _this.summary[0] != null && _this.summary[0] === "Married" ? fact.id in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][1].marriedSum : [0] in _this.summary && _this.summary[0] != null && _this.summary[0] === "Single" ? fact.id in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][0].singleSum : 0 : 0 : 0);
+        // console.log(this.maritialStatusChanged);
+        toSumArr.push(_this.maritialStatusChanged === "Married" && [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][1].marriedSum : _this.maritialStatusChanged === "Single" && [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][0].singleSum : 0);
+      }); //   console.log({ toSumArr });
+
+      var sum = 0;
+
+      for (var i = 0; i < toSumArr.length; i++) {
+        sum += toSumArr[i];
+      }
+
+      this.totalForFactor = sum;
+    },
+    maritialStatusChanged: function maritialStatusChanged() {
+      var _this2 = this;
+
+      var toSumArr = [];
+      this.factors.forEach(function (fact) {
+        // console.log("SUMMARY");
+        // console.log(this.maritialStatusChanged);
+        toSumArr.push(_this2.maritialStatusChanged === "Married" && [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][1].marriedSum : _this2.maritialStatusChanged === "Single" && [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][0].singleSum : 0);
       }); //   console.log({ toSumArr });
 
       var sum = 0;
@@ -2870,20 +2848,6 @@ __webpack_require__.r(__webpack_exports__);
       f1ScoreSingle: 0,
       totalForFactor: 0
     };
-  },
-  mounted: function mounted() {
-    console.log("Summary Table");
-    console.log(this.summary);
-  },
-  created: function created() {
-    // alert("here");
-    console.log(this.scores);
-  },
-  methods: {
-    getTotal: function getTotal() {
-      console.log("total");
-      console.log(this.FactorsWithScores);
-    }
   }
 });
 
@@ -2918,30 +2882,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["maritialStatus"],
+  watch: {
+    maritialStatus: function maritialStatus() {
+      this.$emit("MaritialStatusChanged", this.maritialStatus); // send the sum
+    }
+  },
   data: function data() {
-    var _ref;
-
-    return _ref = {
-      criterion: '',
+    return {
       loading: false,
       data: [],
       factors: [],
       scenarios: [],
+      additionalScenarios: [],
       singleValues: [],
       marriedValues: [],
-      subfactorsArr: [],
-      SelectedFactor: [],
       selectedSubfactor: {
         selections: []
       },
       factorScore: {},
       factorScoreMarried: {},
-      factorScoreSingle: {}
-    }, _defineProperty(_ref, "criterion", {}), _defineProperty(_ref, "selectedCriterion", {}), _defineProperty(_ref, "mutableMaritialStatus", this.maritialStatus), _defineProperty(_ref, "factorNames", []), _defineProperty(_ref, "arraySums", []), _defineProperty(_ref, "subfacts", {}), _ref;
+      factorScoreSingle: {},
+      criterion: {},
+      selectedCriterion: {},
+      mutableMaritialStatus: this.maritialStatus,
+      factorNames: [],
+      arraySums: [],
+      situation: []
+    };
   },
   mounted: function mounted() {
     this.getData();
@@ -2956,13 +2925,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (me.scenarios.length > 0) {
           me.scenarios.forEach(function (element) {
             if ("is_theactual" in element && element["is_theactual"] == true) {
-              scenario = element;
+              scenario = element; ///Actial situation scennario only it is editable
             }
+
+            if (!"is_theactual" in element || element["is_theactual"] == false) {
+              me.additionalScenarios.push(element);
+            }
+          });
+          console.log({
+            anotherScennarios: me.additionalScenarios
           });
           me.factors = response.data ? response.data[0] : [];
           me.factors.forEach(function (element) {
-            console.log(element); // let obj = {[]};
-
+            // console.log(element)
             me.factorNames.push({
               id: element.id,
               name: element.title + ' ' + element.sub_title
@@ -3018,6 +2993,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     criteriaVal: function criteriaVal(event) {
+      // console.log('called');
       var me = this;
       var newVal = null;
       var existingS = null;
@@ -3085,8 +3061,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           group[factor].push(product);
           return group;
         }, {});
-        me.factorScoreSingle[factor] = groupByFactoS[factor].reduce(function (n, _ref2) {
-          var value = _ref2.value;
+        me.factorScoreSingle[factor] = groupByFactoS[factor].reduce(function (n, _ref) {
+          var value = _ref.value;
           return n + value;
         }, 0);
       }
@@ -3098,8 +3074,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           group[factor].push(product);
           return group;
         }, {});
-        me.factorScoreMarried[factor] = groupByFactoM[factor].reduce(function (n, _ref3) {
-          var value = _ref3.value;
+        me.factorScoreMarried[factor] = groupByFactoM[factor].reduce(function (n, _ref2) {
+          var value = _ref2.value;
           return n + value;
         }, 0);
       } //grouped by factor
@@ -3152,9 +3128,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             sum: me.factorScoreMarried[factor]
           }
         });
-      }
+      } // me.situation.push(selectedSituation);
 
-      me.$emit("sumScore", me.arraySums); // send the sum
+
+      me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
 
       me.$emit("selectedSituation", selectedSituation);
     }
@@ -3228,7 +3205,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ntable[data-v-322bc84a] {\n  height: auto;\n  overflow: auto;\n  position: relative;\n}\ntbody tr td[data-v-322bc84a] {\n  text-align: center;\n}\ntbody tr .rowName[data-v-322bc84a] {\n  text-align: left;\n  width: 40%;\n  min-width: 20%;\n}\n.card[data-v-322bc84a] {\n  height: 100%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ntable[data-v-322bc84a] {\n  height: auto;\n  overflow: auto;\n  position: relative;\n}\ntbody tr td[data-v-322bc84a] {\n  text-align: center;\n}\ntbody tr td p .right[data-v-322bc84a] {\n  text-align: right;\n}\ntbody tr td p .left[data-v-322bc84a] {\n  text-align: left;\n}\ntbody tr .rowName[data-v-322bc84a] {\n  text-align: left;\n  width: 40%;\n  min-width: 20%;\n}\n.card[data-v-322bc84a] {\n  height: 100%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22704,6 +22681,7 @@ var render = function () {
                       factors: _vm.Factors,
                       scores: _vm.scores,
                       FactorsWithScores: _vm.FactorsWithScores,
+                      maritialStatusChanged: _vm.maritialStatusChanged,
                     },
                   }),
                 ],
@@ -22716,6 +22694,7 @@ var render = function () {
                 [
                   _c("SituationA", {
                     on: {
+                      maritialChanged: _vm.getMaritialChanged,
                       selectedSituation: _vm.getSituation,
                       FactorsTitles: _vm.getTitles,
                       scoresArr: _vm.getScores,
@@ -22966,7 +22945,7 @@ var render = function () {
               ]),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "col-md-2" }, [
               _c(
                 "button",
                 {
@@ -22981,7 +22960,7 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-2" }, [
+            _c("div", { staticClass: "col-md-2" }, [
               _c(
                 "button",
                 {
@@ -23008,6 +22987,7 @@ var render = function () {
               factorNames: _vm.getFactors,
               selectedSituation: _vm.getSituation,
               mutableMaritialStatus: _vm.getUserData,
+              MaritialStatusChanged: _vm.maritialChanged,
             },
           }),
         ],
@@ -23037,7 +23017,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
+    return _c("div", { staticClass: "col-md-2" }, [
       _c(
         "button",
         {
@@ -23091,6 +23071,7 @@ var render = function () {
             factors: _vm.factors,
             scores: _vm.scores,
             FactorsWithScores: _vm.FactorsWithScores,
+            maritialStatusChanged: _vm.maritialStatusChanged,
           },
         }),
       ],
@@ -23163,11 +23144,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-body" }, [
-      _c("h4", { staticClass: "card-title" }, [_vm._v("Sortable table")]),
-      _vm._v(" "),
-      _c("h6", { staticClass: "card-subtitle" }, [
-        _vm._v("Basic sortable table"),
-      ]),
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Sumario de puntos")]),
       _vm._v(" "),
       _c(
         "table",
@@ -23192,8 +23169,8 @@ var render = function () {
                   _vm._v(
                     "\n            " +
                       _vm._s(
-                        [0] in _vm.summary && _vm.summary[0] != null
-                          ? _vm.summary[0]
+                        _vm.maritialStatusChanged != null
+                          ? _vm.maritialStatusChanged
                           : "Single"
                       ) +
                       "\n          "
@@ -23209,26 +23186,24 @@ var render = function () {
               _vm._v(" "),
               _vm._l(_vm.factors, function (fact) {
                 return _c("tr", [
-                  _c("td", [_vm._v(_vm._s(fact.name))]),
+                  _c("td", [
+                    _c("p", { staticClass: "left" }, [
+                      _vm._v(_vm._s(fact.name)),
+                    ]),
+                  ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "bg-info" }, [
                     _vm._v(
                       "\n            " +
                         _vm._s(
-                          [0] in _vm.summary &&
-                            _vm.summary[0] != null &&
-                            _vm.summary[0] === "Married"
-                            ? fact.id in _vm.FactorsWithScores &&
+                          _vm.maritialStatusChanged === "Married" &&
+                            fact.id in _vm.FactorsWithScores &&
+                            _vm.FactorsWithScores[fact.id]
+                            ? _vm.FactorsWithScores[fact.id][1].marriedSum
+                            : _vm.maritialStatusChanged === "Single" &&
+                              fact.id in _vm.FactorsWithScores &&
                               _vm.FactorsWithScores[fact.id]
-                              ? _vm.FactorsWithScores[fact.id][1].marriedSum
-                              : [0] in _vm.summary &&
-                                _vm.summary[0] != null &&
-                                _vm.summary[0] === "Single"
-                              ? fact.id in _vm.FactorsWithScores &&
-                                _vm.FactorsWithScores[fact.id]
-                                ? _vm.FactorsWithScores[fact.id][0].singleSum
-                                : 0
-                              : 0
+                            ? _vm.FactorsWithScores[fact.id][0].singleSum
                             : 0
                         ) +
                         "\n          "
@@ -23494,8 +23469,8 @@ var render = function () {
                                     ? _vm.selectedSubfactor.selections[
                                         subfactor.id
                                       ].criterion.single
-                                    : ""
-                                  : 0,
+                                    : "a"
+                                  : "b",
                             },
                           }),
                         ]),

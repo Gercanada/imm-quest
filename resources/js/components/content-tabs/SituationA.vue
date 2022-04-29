@@ -30,7 +30,7 @@
             </div>
           </div>
 
-          <div class="col-2">
+          <div class="col-md-2">
             <button
               class="btn btn-outline-info waves-effect waves-light"
               type="button"
@@ -40,7 +40,7 @@
               Situacion actual
             </button>
           </div>
-          <div class="col-2">
+          <div class="col-md-2">
             <button
               class="btn btn-outline-success waves-effect waves-light"
               type="button"
@@ -49,19 +49,19 @@
               <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
             </button>
           </div>
-          <div class="col-2">
+          <div class="col-md-2">
             <button class="btn btn-outline-danger waves-effect waves-light" type="button">
               <span class="btn-label"><i class="fas fa-trash-alt"></i></span> Eliminar
               escenario
             </button>
           </div>
         </div>
-
         <accordions
           @sumScore="getScore"
           @factorNames="getFactors"
           @selectedSituation="getSituation"
           @mutableMaritialStatus="getUserData"
+          @MaritialStatusChanged="maritialChanged"
           :maritialStatus="maritialStatus"
         />
       </div>
@@ -91,7 +91,14 @@ export default {
     },
 
     changeStatus(value) {
+      //   console.log("changed");
       this.maritialStatus = value;
+    },
+
+    maritialChanged(value) {
+      console.log("changed emmit");
+      this.$emit("maritialChanged", value);
+      console.log(value);
     },
 
     getSituation(value) {
@@ -109,12 +116,10 @@ export default {
             }
           }
         });
-
         if (scenario != null) {
           me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
         }
       }
-
       this.$emit("selectedSituation", me.userActualSituation);
     },
 
@@ -188,30 +193,13 @@ export default {
     },
 
     getScore(value) {
-      //   let facts = this.getFactors();
+      console.log("getScore");
       this.$emit("scoresArr", value);
-      //   console.log("Score");
-      this.scores = value;
-
-      /*
-      this.factors.forEach((factor) => {
-        console.log(factor);
-        this.scores.forEach((score) => {
-          if (
-            score["singleSum"] != undefined &&
-            score["singleSum"].factor === factor.id &&
-            score["marriedSum"] != undefined &&
-            score["marriedSum"].factor === factor.id
-          ) {
-            factsWithScores.push(score);
-          }
-        });
-      }); */
-
-      //   console.log(value);
+      this.scores = value[0];
     },
 
     copyScennario() {
+      /* Save scennario as copy of current on view */
       let me = this;
       console.log(me.userActualSituation[2]);
 
@@ -231,7 +219,6 @@ export default {
           }
         });
         //copy of
-
         Swal.fire({
           title:
             "Sera guardado como : " +

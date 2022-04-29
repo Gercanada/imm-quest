@@ -89,8 +89,8 @@
                                 subfactor.id
                               ].criterion.hasOwnProperty('single')
                             ? selectedSubfactor.selections[subfactor.id].criterion.single
-                            : ''
-                          : 0
+                            : 'a'
+                          : 'b'
                       "
                       disabled
                     />

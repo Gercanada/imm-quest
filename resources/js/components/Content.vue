@@ -43,13 +43,6 @@
                 </div>
               </div>
             </div>
-            <!--   <div class="form-actions">
-              <div class="text-right">
-                <button type="submit" class="btn btn-info" @click.stop.prevent="saveData">
-                  <i class="fas fa-save"></i> Save
-                </button>
-              </div>
-            </div> -->
           </form>
         </div>
       </div>
@@ -97,21 +90,26 @@
 
           <div class="tab-content" style="width: 100%">
             <div class="tab-pane show active" id="Summary">
+              <!-- Contains SumMMaryTable component -->
               <Summary
                 :summary="summary"
                 :factors="Factors"
                 :scores="scores"
                 :FactorsWithScores="FactorsWithScores"
+                :maritialStatusChanged="maritialStatusChanged"
               />
             </div>
             <div class="tab-pane" id="Situation">
+              <!-- Contains scennarios accordions and change maritial status -->
               <SituationA
+                @maritialChanged="getMaritialChanged"
                 @selectedSituation="getSituation"
                 @FactorsTitles="getTitles"
                 @scoresArr="getScores"
               />
             </div>
             <div class="tab-pane" id="scenario-2">
+              <!-- Temp example -->
               <Scenario2 />
             </div>
           </div>
@@ -146,6 +144,7 @@ export default {
       Factors: [],
       scores: null,
       FactorsWithScores: [],
+      maritialStatusChanged: null,
     };
   },
 
@@ -156,22 +155,28 @@ export default {
       this.last_name = window.Laravel.user.last_name;
     }
   },
-  //   mounted() {},
+
   methods: {
     getSituation(value) {
+      //   console.log("situation");
       let me = this;
-      console.log("at Content");
       me.summary = value;
-      console.log(value);
     },
     getTitles(value) {
       this.Factors = value;
     },
 
+    getMaritialChanged(value) {
+      console.log("CONTENT");
+      this.maritialStatusChanged = value;
+      //   console.log(value);
+    },
+
     getScores(value) {
-      //Group scores with his factor
-      console.log("some getted");
-      this.scores = value;
+      console.log(value);
+      //   console.log("some getted");
+      //   return;
+      this.scores = value[0];
       let factArr = [];
 
       this.Factors.forEach((factor) => {
@@ -192,11 +197,7 @@ export default {
           }
         });
       });
-
-      console.log(factArr);
-
       let Grouped = [];
-
       Grouped = _.mapValues(_.groupBy(factArr, "factor"), (list) =>
         list.map((val) => _.omit(val, "factor"))
       );
