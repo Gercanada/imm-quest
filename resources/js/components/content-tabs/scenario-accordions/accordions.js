@@ -215,13 +215,11 @@ export default {
             let hasSumM = null;
 
             me.arraySums.forEach(element => {
-                // console.log('singleSum' in element && ('factor' in element['singleSum'] && element['singleSum'].factor === factor));
                 if (('singleSum' in element && ('factor' in element['singleSum']) && element['singleSum'].factor === factor)) {
                     hasSumS = element;
                     element['singleSum']['sum'] = me.factorScoreSingle[factor]
                 }
             });
-
 
             me.arraySums.forEach(element => {
                 if ('marriedSum' in element && 'factor' in element['marriedSum'] && element['marriedSum'].factor === factor) {
@@ -247,10 +245,7 @@ export default {
                 });
             }
 
-            me.$emit("sumScore", me.arraySums);
-
-            // send the sum
-
+            me.$emit("sumScore", me.arraySums); // send the sum
             me.$emit("selectedSituation", selectedSituation);
         },
     },

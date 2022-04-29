@@ -81,6 +81,8 @@ export default {
       scenarioName: "",
       scenarios: [],
       userActualSituation: [],
+      scores: [],
+      Factors: [],
     };
   },
   methods: {
@@ -177,15 +179,35 @@ export default {
           });
       }
     },
+
     getFactors(value) {
       console.log("factors");
       this.$emit("FactorsTitles", value);
+      this.factors = value;
+      //   let factors = value;
     },
 
     getScore(value) {
       //   let facts = this.getFactors();
       this.$emit("scoresArr", value);
-      console.log("Score");
+      //   console.log("Score");
+      this.scores = value;
+
+      /*
+      this.factors.forEach((factor) => {
+        console.log(factor);
+        this.scores.forEach((score) => {
+          if (
+            score["singleSum"] != undefined &&
+            score["singleSum"].factor === factor.id &&
+            score["marriedSum"] != undefined &&
+            score["marriedSum"].factor === factor.id
+          ) {
+            factsWithScores.push(score);
+          }
+        });
+      }); */
+
       //   console.log(value);
     },
 

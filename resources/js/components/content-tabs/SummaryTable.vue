@@ -13,9 +13,7 @@
         <!-- -->
         <thead>
           <tr>
-            <th class="detail bg-gray">
-              {{ [0] in summary && summary[0] != null ? summary[0] : "Single" }}
-            </th>
+            <th></th>
             <th data-sortable="" data-width="auto">Actual situation</th>
             <th data-field="forks_count" data-sortable="" data-width="auto">
               Scenario 2
@@ -25,47 +23,37 @@
             </th>
           </tr>
         </thead>
-        <!-- <p>{{ summary }}</p> -->
-        <!-- {{
-          factors
-        }} -->
-        <!-- <p>{{ factorData }}</p> -->
-        <p>{{ scores }}</p>
-
         <tbody>
+          <tr>
+            <th><b>Maritial status</b></th>
+            <th class="detail">
+              {{ [0] in summary && summary[0] != null ? summary[0] : "Single" }}
+            </th>
+          </tr>
+          <tr>
+            <th>Total de puntos</th>
+            <td>{{ totalForFactor }}</td>
+            <!-- <td>Sum here</td> -->
+            <!-- <td>{{ totalScore }}</td> -->
+          </tr>
           <tr v-for="fact in factors">
             <td>{{ fact.name }}</td>
-            <td v-for="score in scores">
+            <td class="bg-info">
               {{
                 [0] in summary && summary[0] != null && summary[0] === "Married"
-                  ? score.marriedSum != undefined &&
-                    score.marriedSum["factor"] === fact.id
-                    ? score.marriedSum["sum"]
+                  ? fact.id in FactorsWithScores && FactorsWithScores[fact.id]
+                    ? FactorsWithScores[fact.id][1].marriedSum
+                    : [0] in summary && summary[0] != null && summary[0] === "Single"
+                    ? fact.id in FactorsWithScores && FactorsWithScores[fact.id]
+                      ? FactorsWithScores[fact.id][0].singleSum
+                      : 0
                     : 0
                   : 0
               }}
             </td>
-            <!-- <td>{{ score }}</td> -->
-            <!-- <td>{{ fact.name }}</td>
-            <p>{{ fact.id }}</p> -->
-
-            <!-- <td>
-              {{
-                [0] in summary && summary[0] != null && summary[0] === "Married"
-                  ? "marriedSum" in scores &&
-                    "factor" in scores.marriedSum &&
-                    scores.marriedSum.factor == fact.id
-                    ? scores.marriedSum.sum
-                    : "a"
-                  : "singleSum" in scores &&
-                    "factor" in scores.singleSum &&
-                    scores.singleSum.factor == fact.id
-                  ? scores.singleSum.sum
-                  : "b"
-              }}
-            </td> -->
           </tr>
         </tbody>
+        <!--
 
         <tbody>
           <tr>
@@ -100,7 +88,7 @@
             <td>3</td>
             <td>1</td>
           </tr>
-        </tbody>
+        </tbody> -->
       </table>
     </div>
   </div>
@@ -108,14 +96,40 @@
 
 <script>
 export default {
-  props: ["summary", "factors", "scores"],
+  props: ["summary", "factors", "scores", "FactorsWithScores"],
+  watch: {
+    FactorsWithScores: function () {
+      let toSumArr = [];
+
+      this.factors.forEach((fact) => {
+        toSumArr.push(
+          [0] in this.summary && this.summary[0] != null && this.summary[0] === "Married"
+            ? fact.id in this.FactorsWithScores && this.FactorsWithScores[fact.id]
+              ? this.FactorsWithScores[fact.id][1].marriedSum
+              : [0] in this.summary &&
+                this.summary[0] != null &&
+                this.summary[0] === "Single"
+              ? fact.id in this.FactorsWithScores && this.FactorsWithScores[fact.id]
+                ? this.FactorsWithScores[fact.id][0].singleSum
+                : 0
+              : 0
+            : 0
+        );
+      });
+      //   console.log({ toSumArr });
+      let sum = 0;
+      for (let i = 0; i < toSumArr.length; i++) {
+        sum += toSumArr[i];
+      }
+      this.totalForFactor = sum;
+    },
+  },
 
   data() {
     return {
       f1ScoreMarried: 0,
       f1ScoreSingle: 0,
-
-      //   factorData: { factors: this.factors, scores: this.scores },
+      totalForFactor: 0,
     };
   },
   mounted() {
@@ -126,7 +140,13 @@ export default {
     // alert("here");
     console.log(this.scores);
   },
-  methods: {},
+
+  methods: {
+    getTotal() {
+      console.log("total");
+      console.log(this.FactorsWithScores);
+    },
+  },
 };
 </script>
 

@@ -2277,6 +2277,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2297,7 +2302,8 @@ __webpack_require__.r(__webpack_exports__);
       user: {},
       summary: [],
       Factors: [],
-      scores: null
+      scores: null,
+      FactorsWithScores: []
     };
   },
   created: function created() {
@@ -2307,17 +2313,8 @@ __webpack_require__.r(__webpack_exports__);
       this.last_name = window.Laravel.user.last_name;
     }
   },
-  mounted: function mounted() {},
+  //   mounted() {},
   methods: {
-    saveData: function saveData() {
-      this.requiredBeAuth = true;
-      axios.post("/save_situation", {
-        email: this.eMail,
-        name: this.fullName
-      }).then(function (response) {
-        console.log(response);
-      });
-    },
     getSituation: function getSituation(value) {
       var me = this;
       console.log("at Content");
@@ -2330,15 +2327,35 @@ __webpack_require__.r(__webpack_exports__);
     getScores: function getScores(value) {
       var _this = this;
 
+      //Group scores with his factor
+      console.log("some getted");
       this.scores = value;
-      console.log(this.Factors);
-      this.Factors.forEach(function (fact) {
+      var factArr = [];
+      this.Factors.forEach(function (factor) {
         _this.scores.forEach(function (score) {
-          console.log(score);
+          if (score["singleSum"] != undefined && "factor" in score["singleSum"] && score["singleSum"].factor === factor.id) {
+            factArr.push({
+              factor: factor.id,
+              singleSum: score["singleSum"].sum
+            });
+          }
+
+          if (score["marriedSum"] != undefined && "factor" in score["marriedSum"] && score["marriedSum"].factor === factor.id) {
+            factArr.push({
+              factor: factor.id,
+              marriedSum: score["marriedSum"].sum
+            });
+          }
         });
       });
-      console.log("some getted");
-      console.log(value);
+      console.log(factArr);
+      var Grouped = [];
+      Grouped = _.mapValues(_.groupBy(factArr, "factor"), function (list) {
+        return list.map(function (val) {
+          return _.omit(val, "factor");
+        });
+      });
+      this.FactorsWithScores = Grouped;
     }
   }
 });
@@ -2483,7 +2500,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       maritialStatus: "Single",
       scenarioName: "",
       scenarios: [],
-      userActualSituation: []
+      userActualSituation: [],
+      scores: [],
+      Factors: []
     };
   },
   methods: {
@@ -2585,11 +2604,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getFactors: function getFactors(value) {
       console.log("factors");
       this.$emit("FactorsTitles", value);
+      this.factors = value; //   let factors = value;
     },
     getScore: function getScore(value) {
       //   let facts = this.getFactors();
-      this.$emit("scoresArr", value);
-      console.log("Score"); //   console.log(value);
+      this.$emit("scoresArr", value); //   console.log("Score");
+
+      this.scores = value;
+      /*
+      this.factors.forEach((factor) => {
+        console.log(factor);
+        this.scores.forEach((score) => {
+          if (
+            score["singleSum"] != undefined &&
+            score["singleSum"].factor === factor.id &&
+            score["marriedSum"] != undefined &&
+            score["marriedSum"].factor === factor.id
+          ) {
+            factsWithScores.push(score);
+          }
+        });
+      }); */
+      //   console.log(value);
     },
     copyScennario: function copyScennario() {
       var me = this;
@@ -2682,21 +2718,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores"],
+  props: ["summary", "factors", "scores", "FactorsWithScores"],
   components: {
     SummaryTable: _SummaryTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
-    return {//   summary: this.summary,
-      //   factors: this.factors,
-    };
-  },
-  mounted: function mounted() {
-    console.log("summary");
-    console.log(this.summary);
-  }
+    return {};
+  } //   mounted() {},
+
 });
 
 /***/ }),
@@ -2808,25 +2844,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores"],
+  props: ["summary", "factors", "scores", "FactorsWithScores"],
+  watch: {
+    FactorsWithScores: function FactorsWithScores() {
+      var _this = this;
+
+      var toSumArr = [];
+      this.factors.forEach(function (fact) {
+        toSumArr.push([0] in _this.summary && _this.summary[0] != null && _this.summary[0] === "Married" ? fact.id in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][1].marriedSum : [0] in _this.summary && _this.summary[0] != null && _this.summary[0] === "Single" ? fact.id in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][0].singleSum : 0 : 0 : 0);
+      }); //   console.log({ toSumArr });
+
+      var sum = 0;
+
+      for (var i = 0; i < toSumArr.length; i++) {
+        sum += toSumArr[i];
+      }
+
+      this.totalForFactor = sum;
+    }
+  },
   data: function data() {
     return {
       f1ScoreMarried: 0,
-      f1ScoreSingle: 0 //   factorData: { factors: this.factors, scores: this.scores },
-
+      f1ScoreSingle: 0,
+      totalForFactor: 0
     };
   },
   mounted: function mounted() {
@@ -2837,7 +2879,12 @@ __webpack_require__.r(__webpack_exports__);
     // alert("here");
     console.log(this.scores);
   },
-  methods: {}
+  methods: {
+    getTotal: function getTotal() {
+      console.log("total");
+      console.log(this.FactorsWithScores);
+    }
+  }
 });
 
 /***/ }),
@@ -3077,7 +3124,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var hasSumS = null;
       var hasSumM = null;
       me.arraySums.forEach(function (element) {
-        // console.log('singleSum' in element && ('factor' in element['singleSum'] && element['singleSum'].factor === factor));
         if ('singleSum' in element && 'factor' in element['singleSum'] && element['singleSum'].factor === factor) {
           hasSumS = element;
           element['singleSum']['sum'] = me.factorScoreSingle[factor];
@@ -22657,6 +22703,7 @@ var render = function () {
                       summary: _vm.summary,
                       factors: _vm.Factors,
                       scores: _vm.scores,
+                      FactorsWithScores: _vm.FactorsWithScores,
                     },
                   }),
                 ],
@@ -23043,6 +23090,7 @@ var render = function () {
             summary: _vm.summary,
             factors: _vm.factors,
             scores: _vm.scores,
+            FactorsWithScores: _vm.FactorsWithScores,
           },
         }),
       ],
@@ -23132,88 +23180,65 @@ var render = function () {
           },
         },
         [
-          _c("thead", [
-            _c("tr", [
-              _c("th", { staticClass: "detail bg-gray" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(
-                      [0] in _vm.summary && _vm.summary[0] != null
-                        ? _vm.summary[0]
-                        : "Single"
-                    ) +
-                    "\n          "
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "th",
-                { attrs: { "data-sortable": "", "data-width": "auto" } },
-                [_vm._v("Actual situation")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                {
-                  attrs: {
-                    "data-field": "forks_count",
-                    "data-sortable": "",
-                    "data-width": "auto",
-                  },
-                },
-                [_vm._v("\n            Scenario 2\n          ")]
-              ),
-              _vm._v(" "),
-              _c(
-                "th",
-                {
-                  attrs: {
-                    "data-field": "description",
-                    "data-sortable": "",
-                    "data-width": "auto",
-                  },
-                },
-                [_vm._v("\n            Scenario n\n          ")]
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.scores))]),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.factors, function (fact) {
-              return _c(
-                "tr",
-                [
+            [
+              _c("tr", [
+                _vm._m(1),
+                _vm._v(" "),
+                _c("th", { staticClass: "detail" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(
+                        [0] in _vm.summary && _vm.summary[0] != null
+                          ? _vm.summary[0]
+                          : "Single"
+                      ) +
+                      "\n          "
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("th", [_vm._v("Total de puntos")]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm.totalForFactor))]),
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.factors, function (fact) {
+                return _c("tr", [
                   _c("td", [_vm._v(_vm._s(fact.name))]),
                   _vm._v(" "),
-                  _vm._l(_vm.scores, function (score) {
-                    return _c("td", [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(
-                            [0] in _vm.summary &&
-                              _vm.summary[0] != null &&
-                              _vm.summary[0] === "Married"
-                              ? score.marriedSum != undefined &&
-                                score.marriedSum["factor"] === fact.id
-                                ? score.marriedSum["sum"]
+                  _c("td", { staticClass: "bg-info" }, [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(
+                          [0] in _vm.summary &&
+                            _vm.summary[0] != null &&
+                            _vm.summary[0] === "Married"
+                            ? fact.id in _vm.FactorsWithScores &&
+                              _vm.FactorsWithScores[fact.id]
+                              ? _vm.FactorsWithScores[fact.id][1].marriedSum
+                              : [0] in _vm.summary &&
+                                _vm.summary[0] != null &&
+                                _vm.summary[0] === "Single"
+                              ? fact.id in _vm.FactorsWithScores &&
+                                _vm.FactorsWithScores[fact.id]
+                                ? _vm.FactorsWithScores[fact.id][0].singleSum
                                 : 0
                               : 0
-                          ) +
-                          "\n          "
-                      ),
-                    ])
-                  }),
-                ],
-                2
-              )
-            }),
-            0
+                            : 0
+                        ) +
+                        "\n          "
+                    ),
+                  ]),
+                ])
+              }),
+            ],
+            2
           ),
-          _vm._v(" "),
-          _vm._m(0),
         ]
       ),
     ]),
@@ -23224,67 +23249,45 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tbody", [
+    return _c("thead", [
       _c("tr", [
-        _c("td", { staticClass: "rowName" }, [_vm._v("Total de puntos")]),
+        _c("th"),
         _vm._v(" "),
-        _c("td", [_vm._v("1")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("3")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("4")]),
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("td", { staticClass: "rowName" }, [
-          _vm._v("Factor 1: Factores centrales de capital humano"),
+        _c("th", { attrs: { "data-sortable": "", "data-width": "auto" } }, [
+          _vm._v("Actual situation"),
         ]),
         _vm._v(" "),
-        _c("td", [_vm._v("1")]),
+        _c(
+          "th",
+          {
+            attrs: {
+              "data-field": "forks_count",
+              "data-sortable": "",
+              "data-width": "auto",
+            },
+          },
+          [_vm._v("\n            Scenario 2\n          ")]
+        ),
         _vm._v(" "),
-        _c("td", [_vm._v("4")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("3")]),
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("td", { staticClass: "rowName" }, [
-          _vm._v("Factor 2: Transferibilidad de actividades"),
-        ]),
-        _vm._v(" "),
-        _c("td", [_vm._v("2")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("3")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("1")]),
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("td", { staticClass: "rowName" }, [
-          _vm._v("Factor 3: Puntos adicionales"),
-        ]),
-        _vm._v(" "),
-        _c("td", [_vm._v("2")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("3")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("1")]),
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("td", { staticClass: "rowName" }, [
-          _vm._v(
-            "\n            Factor 4: Atributos de pareja (En caso de que aplique)\n          "
-          ),
-        ]),
-        _vm._v(" "),
-        _c("td", [_vm._v("2")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("3")]),
-        _vm._v(" "),
-        _c("td", [_vm._v("1")]),
+        _c(
+          "th",
+          {
+            attrs: {
+              "data-field": "description",
+              "data-sortable": "",
+              "data-width": "auto",
+            },
+          },
+          [_vm._v("\n            Scenario n\n          ")]
+        ),
       ]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("b", [_vm._v("Maritial status")])])
   },
 ]
 render._withStripped = true

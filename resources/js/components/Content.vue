@@ -97,7 +97,12 @@
 
           <div class="tab-content" style="width: 100%">
             <div class="tab-pane show active" id="Summary">
-              <Summary :summary="summary" :factors="Factors" :scores="scores" />
+              <Summary
+                :summary="summary"
+                :factors="Factors"
+                :scores="scores"
+                :FactorsWithScores="FactorsWithScores"
+              />
             </div>
             <div class="tab-pane" id="Situation">
               <SituationA
@@ -140,6 +145,7 @@ export default {
       summary: [],
       Factors: [],
       scores: null,
+      FactorsWithScores: [],
     };
   },
 
@@ -150,17 +156,8 @@ export default {
       this.last_name = window.Laravel.user.last_name;
     }
   },
-  mounted() {},
+  //   mounted() {},
   methods: {
-    saveData() {
-      this.requiredBeAuth = true;
-      axios
-        .post("/save_situation", { email: this.eMail, name: this.fullName })
-        .then(function (response) {
-          console.log(response);
-        });
-    },
-
     getSituation(value) {
       let me = this;
       console.log("at Content");
@@ -172,17 +169,38 @@ export default {
     },
 
     getScores(value) {
+      //Group scores with his factor
+      console.log("some getted");
       this.scores = value;
-      console.log(this.Factors);
+      let factArr = [];
 
-      this.Factors.forEach((fact) => {
+      this.Factors.forEach((factor) => {
         this.scores.forEach((score) => {
-          console.log(score);
+          if (
+            score["singleSum"] != undefined &&
+            "factor" in score["singleSum"] &&
+            score["singleSum"].factor === factor.id
+          ) {
+            factArr.push({ factor: factor.id, singleSum: score["singleSum"].sum });
+          }
+          if (
+            score["marriedSum"] != undefined &&
+            "factor" in score["marriedSum"] &&
+            score["marriedSum"].factor === factor.id
+          ) {
+            factArr.push({ factor: factor.id, marriedSum: score["marriedSum"].sum });
+          }
         });
       });
 
-      console.log("some getted");
-      console.log(value);
+      console.log(factArr);
+
+      let Grouped = [];
+
+      Grouped = _.mapValues(_.groupBy(factArr, "factor"), (list) =>
+        list.map((val) => _.omit(val, "factor"))
+      );
+      this.FactorsWithScores = Grouped;
     },
   },
 };
