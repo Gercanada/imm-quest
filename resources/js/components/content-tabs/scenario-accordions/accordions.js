@@ -45,12 +45,13 @@ export default {
                         if ("is_theactual" in element && element["is_theactual"] == true) {
                             scenario = element; ///Actial situation scennario only it is editable
                         }
-                        if (!"is_theactual" in element || element["is_theactual"] == false) {
+                        if (element["is_theactual"] == false) {
                             me.additionalScenarios.push(element);
                         }
                     });
 
-                    console.log({ anotherScennarios: me.additionalScenarios })
+                    me.$emit("additionalScennarios", me.additionalScenarios);
+                    console.log({ anotherScennarios: me.additionalScenarios });
 
 
                     me.factors = response.data ? response.data[0] : [];

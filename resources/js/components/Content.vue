@@ -75,7 +75,7 @@
                 <span class="d-none d-lg-block">Situacion actual</span>
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-for="sCopy in scennariosCopies">
               <a
                 href="#scenario-2"
                 data-toggle="tab"
@@ -83,7 +83,7 @@
                 class="nav-link"
               >
                 <i class="fas fa-cogs d-lg-none d-block mr-1"></i>
-                <span class="d-none d-lg-block">Escenario x</span>
+                <span class="d-none d-lg-block">{{ sCopy.name }}</span>
               </a>
             </li>
           </ul>
@@ -97,6 +97,7 @@
                 :scores="scores"
                 :FactorsWithScores="FactorsWithScores"
                 :maritialStatusChanged="maritialStatusChanged"
+                :scennariosCopies="scennariosCopies"
               />
             </div>
             <div class="tab-pane" id="Situation">
@@ -106,6 +107,7 @@
                 @selectedSituation="getSituation"
                 @FactorsTitles="getTitles"
                 @scoresArr="getScores"
+                @additionalScennarios="getAdditionalScennarios"
               />
             </div>
             <div class="tab-pane" id="scenario-2">
@@ -145,6 +147,7 @@ export default {
       scores: null,
       FactorsWithScores: [],
       maritialStatusChanged: null,
+      scennariosCopies: [],
     };
   },
 
@@ -169,6 +172,12 @@ export default {
     getMaritialChanged(value) {
       console.log("CONTENT");
       this.maritialStatusChanged = value;
+      //   console.log(value);
+    },
+
+    getAdditionalScennarios(value) {
+      console.log("Extra scennarios");
+      this.scennariosCopies = value;
       //   console.log(value);
     },
 

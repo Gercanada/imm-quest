@@ -22,6 +22,7 @@
         :scores="scores"
         :FactorsWithScores="FactorsWithScores"
         :maritialStatusChanged="maritialStatusChanged"
+        :scennariosCopies="scennariosCopies"
       />
     </div>
   </div>
@@ -29,7 +30,14 @@
 <script>
 import SummaryTable from "./SummaryTable.vue";
 export default {
-  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged"],
+  props: [
+    "summary",
+    "factors",
+    "scores",
+    "FactorsWithScores",
+    "maritialStatusChanged",
+    "scennariosCopies",
+  ],
   components: {
     SummaryTable,
   },

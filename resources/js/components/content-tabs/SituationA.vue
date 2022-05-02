@@ -62,6 +62,7 @@
           @selectedSituation="getSituation"
           @mutableMaritialStatus="getUserData"
           @MaritialStatusChanged="maritialChanged"
+          @additionalScennarios="getExtraScennarios"
           :maritialStatus="maritialStatus"
         />
       </div>
@@ -96,8 +97,14 @@ export default {
     },
 
     maritialChanged(value) {
-      console.log("changed emmit");
+      //   console.log("changed emmit");
       this.$emit("maritialChanged", value);
+      console.log(value);
+    },
+
+    getExtraScennarios(value) {
+      console.log("Scennarios copy getted");
+      this.$emit("additionalScennarios", value);
       console.log(value);
     },
 

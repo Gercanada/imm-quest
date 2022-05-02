@@ -2280,6 +2280,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2302,7 +2304,8 @@ __webpack_require__.r(__webpack_exports__);
       Factors: [],
       scores: null,
       FactorsWithScores: [],
-      maritialStatusChanged: null
+      maritialStatusChanged: null,
+      scennariosCopies: []
     };
   },
   created: function created() {
@@ -2324,6 +2327,10 @@ __webpack_require__.r(__webpack_exports__);
     getMaritialChanged: function getMaritialChanged(value) {
       console.log("CONTENT");
       this.maritialStatusChanged = value; //   console.log(value);
+    },
+    getAdditionalScennarios: function getAdditionalScennarios(value) {
+      console.log("Extra scennarios");
+      this.scennariosCopies = value; //   console.log(value);
     },
     getScores: function getScores(value) {
       var _this = this;
@@ -2491,6 +2498,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2515,8 +2523,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.maritialStatus = value;
     },
     maritialChanged: function maritialChanged(value) {
-      console.log("changed emmit");
+      //   console.log("changed emmit");
       this.$emit("maritialChanged", value);
+      console.log(value);
+    },
+    getExtraScennarios: function getExtraScennarios(value) {
+      console.log("Scennarios copy getted");
+      this.$emit("additionalScennarios", value);
       console.log(value);
     },
     getSituation: function getSituation(value) {
@@ -2716,9 +2729,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged"],
+  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies"],
   components: {
     SummaryTable: _SummaryTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2803,8 +2817,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged"],
+  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies"],
   watch: {
     FactorsWithScores: function FactorsWithScores() {
       var _this = this;
@@ -2840,13 +2872,70 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.totalForFactor = sum;
+    },
+    scennariosCopies: function scennariosCopies() {
+      var snennarios = {
+        copies: [],
+        sumOf: []
+      };
+      this.scennariosCopies.forEach(function (copy) {
+        var groupByFacto = JSON.parse(copy.body).reduce(function (group, product) {
+          var factor = product.factor;
+          group[factor] = group[factor] ? group[factor] : []; //   group[factor].push(product);
+
+          group[factor].push(product.value);
+          return group;
+        }, {});
+        snennarios["copies"][copy.name] = groupByFacto;
+        console.log(snennarios["copies"]);
+        return;
+        snennarios["copies"].forEach(function (element) {
+          alert("any");
+          console.log(element);
+          /*  if (copy.name in snennarios["copies"]) {
+            let sum = 0;
+            for (let i = 0; i < snennarios["copies"][copy.name].length; i++) {
+              sum += toSumArr[i];
+            }
+            snennarios["sumOf"][copy.name] = sum;
+          } */
+        });
+        return; // console.log(groupByFacto["copies"]);
+
+        return;
+        /*  */
+
+        groupByFacto.copies[copy.name].forEach(function (element) {
+          console.log(element);
+          return;
+          var toSumArr = [];
+          snennarios["copies"][copy.name].forEach(function (element) {
+            toSumArr.push(element.value);
+          });
+          var sum = 0;
+          var totel = 0;
+
+          for (var i = 0; i < toSumArr.length; i++) {
+            sum += toSumArr[i];
+          }
+
+          total = sum;
+          snennarios["sumOf"][copy.name] = total;
+        });
+        return;
+      });
+      console.log(snennarios);
+      return;
     }
   },
   data: function data() {
     return {
       f1ScoreMarried: 0,
       f1ScoreSingle: 0,
-      totalForFactor: 0
+      totalForFactor: 0,
+      sumScoreCopies: [{
+        copy: 0
+      }]
     };
   }
 });
@@ -2928,10 +3017,11 @@ __webpack_require__.r(__webpack_exports__);
               scenario = element; ///Actial situation scennario only it is editable
             }
 
-            if (!"is_theactual" in element || element["is_theactual"] == false) {
+            if (element["is_theactual"] == false) {
               me.additionalScenarios.push(element);
             }
           });
+          me.$emit("additionalScennarios", me.additionalScenarios);
           console.log({
             anotherScennarios: me.additionalScenarios
           });
@@ -22662,7 +22752,44 @@ var render = function () {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-body" }, [
-          _vm._m(0),
+          _c(
+            "ul",
+            {
+              staticClass:
+                "nav nav-tabs nav-justified nav-bordered mb-3 customtab",
+            },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._l(_vm.scennariosCopies, function (sCopy) {
+                return _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      attrs: {
+                        href: "#scenario-2",
+                        "data-toggle": "tab",
+                        "aria-expanded": "false",
+                      },
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fas fa-cogs d-lg-none d-block mr-1",
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "d-none d-lg-block" }, [
+                        _vm._v(_vm._s(sCopy.name)),
+                      ]),
+                    ]
+                  ),
+                ])
+              }),
+            ],
+            2
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -22682,6 +22809,7 @@ var render = function () {
                       scores: _vm.scores,
                       FactorsWithScores: _vm.FactorsWithScores,
                       maritialStatusChanged: _vm.maritialStatusChanged,
+                      scennariosCopies: _vm.scennariosCopies,
                     },
                   }),
                 ],
@@ -22698,6 +22826,7 @@ var render = function () {
                       selectedSituation: _vm.getSituation,
                       FactorsTitles: _vm.getTitles,
                       scoresArr: _vm.getScores,
+                      additionalScennarios: _vm.getAdditionalScennarios,
                     },
                   }),
                 ],
@@ -22722,78 +22851,53 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "nav nav-tabs nav-justified nav-bordered mb-3 customtab" },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: {
-                href: "#Summary",
-                "data-toggle": "tab",
-                "aria-expanded": "false",
-              },
-            },
-            [
-              _c("i", {
-                staticClass: "mdi mdi-home-variant d-lg-none d-block mr-1",
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none d-lg-block" }, [
-                _vm._v("Sumario"),
-              ]),
-            ]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                href: "#Situation",
-                "data-toggle": "tab",
-                "aria-expanded": "true",
-              },
-            },
-            [
-              _c("i", {
-                staticClass: "mdi mdi-account-circle d-lg-none d-block mr-1",
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none d-lg-block" }, [
-                _vm._v("Situacion actual"),
-              ]),
-            ]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                href: "#scenario-2",
-                "data-toggle": "tab",
-                "aria-expanded": "false",
-              },
-            },
-            [
-              _c("i", { staticClass: "fas fa-cogs d-lg-none d-block mr-1" }),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none d-lg-block" }, [
-                _vm._v("Escenario x"),
-              ]),
-            ]
-          ),
-        ]),
-      ]
-    )
+    return _c("li", { staticClass: "nav-item" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link active",
+          attrs: {
+            href: "#Summary",
+            "data-toggle": "tab",
+            "aria-expanded": "false",
+          },
+        },
+        [
+          _c("i", {
+            staticClass: "mdi mdi-home-variant d-lg-none d-block mr-1",
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "d-none d-lg-block" }, [_vm._v("Sumario")]),
+        ]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link",
+          attrs: {
+            href: "#Situation",
+            "data-toggle": "tab",
+            "aria-expanded": "true",
+          },
+        },
+        [
+          _c("i", {
+            staticClass: "mdi mdi-account-circle d-lg-none d-block mr-1",
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "d-none d-lg-block" }, [
+            _vm._v("Situacion actual"),
+          ]),
+        ]
+      ),
+    ])
   },
 ]
 render._withStripped = true
@@ -22988,6 +23092,7 @@ var render = function () {
               selectedSituation: _vm.getSituation,
               mutableMaritialStatus: _vm.getUserData,
               MaritialStatusChanged: _vm.maritialChanged,
+              additionalScennarios: _vm.getExtraScennarios,
             },
           }),
         ],
@@ -23072,6 +23177,7 @@ var render = function () {
             scores: _vm.scores,
             FactorsWithScores: _vm.FactorsWithScores,
             maritialStatusChanged: _vm.maritialStatusChanged,
+            scennariosCopies: _vm.scennariosCopies,
           },
         }),
       ],
@@ -23157,32 +23263,91 @@ var render = function () {
           },
         },
         [
-          _vm._m(0),
+          _c("thead", [
+            _c(
+              "tr",
+              [
+                _c("th"),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  { attrs: { "data-sortable": "", "data-width": "auto" } },
+                  [_vm._v("Actual situation")]
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.scennariosCopies, function (sCopy) {
+                  return _c(
+                    "th",
+                    {
+                      staticClass: "bg-warning",
+                      attrs: { "data-sortable": "", "data-width": "auto" },
+                    },
+                    [
+                      _vm._v(
+                        "\n            " + _vm._s(sCopy.name) + "\n          "
+                      ),
+                    ]
+                  )
+                }),
+              ],
+              2
+            ),
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
             [
-              _c("tr", [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("th", { staticClass: "detail" }, [
-                  _vm._v(
-                    "\n            " +
-                      _vm._s(
-                        _vm.maritialStatusChanged != null
-                          ? _vm.maritialStatusChanged
-                          : "Single"
-                      ) +
-                      "\n          "
-                  ),
-                ]),
-              ]),
+              _c(
+                "tr",
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "detail" }, [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(
+                          _vm.maritialStatusChanged != null
+                            ? _vm.maritialStatusChanged
+                            : "Single"
+                        ) +
+                        "\n          "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.scennariosCopies, function (sCopy1) {
+                    return _c("th", [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(
+                            sCopy1.is_married == true ? "Married" : "Single"
+                          ) +
+                          "\n          "
+                      ),
+                    ])
+                  }),
+                ],
+                2
+              ),
               _vm._v(" "),
-              _c("tr", [
-                _c("th", [_vm._v("Total de puntos")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.totalForFactor))]),
-              ]),
+              _c(
+                "tr",
+                [
+                  _c("th", [_vm._v("Total de puntos")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.totalForFactor))]),
+                  _vm._v(" "),
+                  _vm._l(_vm.scennariosCopies, function (sCopy2) {
+                    return _c("td", [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(JSON.parse(sCopy2.body)) +
+                          "\n          "
+                      ),
+                    ])
+                  }),
+                ],
+                2
+              ),
               _vm._v(" "),
               _vm._l(_vm.factors, function (fact) {
                 return _c("tr", [
@@ -23209,6 +23374,8 @@ var render = function () {
                         "\n          "
                     ),
                   ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("TonzHere")]),
                 ])
               }),
             ],
@@ -23220,44 +23387,6 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th"),
-        _vm._v(" "),
-        _c("th", { attrs: { "data-sortable": "", "data-width": "auto" } }, [
-          _vm._v("Actual situation"),
-        ]),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            attrs: {
-              "data-field": "forks_count",
-              "data-sortable": "",
-              "data-width": "auto",
-            },
-          },
-          [_vm._v("\n            Scenario 2\n          ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            attrs: {
-              "data-field": "description",
-              "data-sortable": "",
-              "data-width": "auto",
-            },
-          },
-          [_vm._v("\n            Scenario n\n          ")]
-        ),
-      ]),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
