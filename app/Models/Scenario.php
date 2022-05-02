@@ -18,6 +18,7 @@ class Scenario extends Model
         'user_id',
         'is_married',
         'name',
-        'body'
+        'body',
+        'is_theactual'
     ];
 }

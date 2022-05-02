@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FactorController;
+use App\Mail\TestingMail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,21 @@ use App\Http\Controllers\FactorController;
 |
 */
 
+Route::get('/send_mail', function () {
+    try {
+        Mail::to('heriberto.h@gercanada.com')->send(new TestingMail());
+        /*  Mail::send(array(), array(), function ($message) {
+            $message->to('heribertolord@gmail.com')
+                ->subject("Hola")
+                ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+                ->setBody("Some here");
+        }); */
+        return "Sent";
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+});
+
 Auth::routes();
 Route::get('/tempdata', [FactorController::class, 'dataFile']); //returns a json response
 Route::get('/factors-table/{subfactor}', [FactorController::class, 'factorsTable']); //returns ajson response
@@ -25,6 +42,7 @@ Route::get('/subfactors', [FactorController::class, 'listSubfactors']); //List s
 
 /*data for views*/
 Route::get('/factors', [FactorController::class, 'factors']);
+
 
 Route::middleware('auth')->group(function () {
     //dashboard
