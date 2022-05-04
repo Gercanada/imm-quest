@@ -8,7 +8,6 @@ use App\Models\Scenario;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use stdClass;
 
 class FactorController extends Controller
 {

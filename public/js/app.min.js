@@ -2156,8 +2156,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _content_tabs_Summary_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./content-tabs/Summary.vue */ "./resources/js/components/content-tabs/Summary.vue");
-/* harmony import */ var _content_tabs_SituationA_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./content-tabs/SituationA.vue */ "./resources/js/components/content-tabs/SituationA.vue");
+/* harmony import */ var _content_tabs_actual_scennario_SituationA_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./content-tabs/actual-scennario/SituationA.vue */ "./resources/js/components/content-tabs/actual-scennario/SituationA.vue");
 /* harmony import */ var _content_tabs_Scenario2_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./content-tabs/Scenario2.vue */ "./resources/js/components/content-tabs/Scenario2.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2288,7 +2298,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Summary: _content_tabs_Summary_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    SituationA: _content_tabs_SituationA_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    SituationA: _content_tabs_actual_scennario_SituationA_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     Scenario2: _content_tabs_Scenario2_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
@@ -2305,7 +2315,8 @@ __webpack_require__.r(__webpack_exports__);
       scores: null,
       FactorsWithScores: [],
       maritialStatusChanged: null,
-      scennariosCopies: []
+      scennariosCopies: [],
+      factorsWithSubfactors: []
     };
   },
   created: function created() {
@@ -2317,27 +2328,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getSituation: function getSituation(value) {
-      //   console.log("situation");
       var me = this;
       me.summary = value;
     },
     getTitles: function getTitles(value) {
       this.Factors = value;
     },
+    getFactsWSubfacts: function getFactsWSubfacts(value) {
+      this.factorsWithSubfactors = value;
+    },
     getMaritialChanged: function getMaritialChanged(value) {
-      console.log("CONTENT");
-      this.maritialStatusChanged = value; //   console.log(value);
+      //   console.log("CONTENT");
+      this.maritialStatusChanged = value;
     },
     getAdditionalScennarios: function getAdditionalScennarios(value) {
-      console.log("Extra scennarios");
-      this.scennariosCopies = value; //   console.log(value);
+      //   console.log("Extra scennarios");
+      this.scennariosCopies = value;
     },
     getScores: function getScores(value) {
       var _this = this;
 
-      console.log(value); //   console.log("some getted");
-      //   return;
-
+      //   console.log(value);
       this.scores = value[0];
       var factArr = [];
       this.Factors.forEach(function (factor) {
@@ -2407,10 +2418,10 @@ Para lo cual de la vista content importamos una variable como requiredBeAuth = t
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/SituationA.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/SituationA.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/Scenario2.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/Scenario2.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2418,15 +2429,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scenario-accordions/Accordions.vue */ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 //
 //
 //
@@ -2445,246 +2447,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  components: {
-    Accordions: _scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  data: function data() {
-    return {
-      maritialStatus: "Single",
-      scenarioName: "",
-      scenarios: [],
-      userActualSituation: [],
-      scores: [],
-      Factors: []
-    };
-  },
-  methods: {
-    getUserData: function getUserData(value) {
-      this.maritialStatus = value;
-    },
-    changeStatus: function changeStatus(value) {
-      //   console.log("changed");
-      this.maritialStatus = value;
-    },
-    maritialChanged: function maritialChanged(value) {
-      //   console.log("changed emmit");
-      this.$emit("maritialChanged", value);
-      console.log(value);
-    },
-    getExtraScennarios: function getExtraScennarios(value) {
-      console.log("Scennarios copy getted");
-      this.$emit("additionalScennarios", value);
-      console.log(value);
-    },
-    getSituation: function getSituation(value) {
-      console.log("getted");
-      var scenario = null;
-      var me = this;
-      me.scenarios = value[1];
-      me.userActualSituation = value;
-
-      if (me.scenarios.length > 0) {
-        me.scenarios.forEach(function (element) {
-          if ("is_theactual" in element) {
-            if (element["is_theactual"] == true) {
-              scenario = element;
-            }
-          }
-        });
-
-        if (scenario != null) {
-          me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
-        }
-      }
-
-      this.$emit("selectedSituation", me.userActualSituation);
-    },
-    saveSituation: function saveSituation() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var me, scenario;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                me = _this;
-
-                if (me.scenarios.length === 0) {
-                  Swal.fire({
-                    type: "warning",
-                    title: "Nada para guardar",
-                    text: "No ha hecho ningun cambio. No hay nada que guardar."
-                  });
-                } else {
-                  scenario = null;
-                  me.scenarios.forEach(function (element) {
-                    if ("is_theactual" in element) {
-                      if (element["is_theactual"] == true) {
-                        scenario = element;
-                      }
-                    }
-                  });
-                  Swal.fire({
-                    title: "Sera guardado como : " + (scenario == null ? "Scenario " + Number(me.scenarios.length + 1) : scenario["name"]),
-                    type: "warning",
-                    text: "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
-                    input: "text",
-                    showDenyButton: true,
-                    showCancelButton: true
-                  }).then(function (result) {
-                    if ("value" in result) {
-                      axios.post("save-situation", {
-                        scenarioName: result.value ? result.value : "Scenario " + Number(me.scenarios.length + 1),
-                        actualSituation: me.userActualSituation
-                      }).then(function (response) {
-                        Swal.fire({
-                          type: "success",
-                          title: "Escenario guardado",
-                          text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
-                        });
-                        console.log(response);
-                      });
-                    } else {
-                      Swal.fire({
-                        type: "info",
-                        title: "No será guardado",
-                        timer: 3000
-                      });
-                    }
-                  })["catch"](function (error) {
-                    console.table(error);
-                  });
-                }
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    getFactors: function getFactors(value) {
-      console.log("factors");
-      this.$emit("FactorsTitles", value);
-      this.factors = value; //   let factors = value;
-    },
-    getScore: function getScore(value) {
-      console.log("getScore");
-      this.$emit("scoresArr", value);
-      this.scores = value[0];
-    },
-    copyScennario: function copyScennario() {
-      /* Save scennario as copy of current on view */
-      var me = this;
-      console.log(me.userActualSituation[2]);
-
-      if (!me.userActualSituation[2].length > 0) {
-        Swal.fire({
-          type: "warning",
-          title: "Nada para guardar",
-          text: "No ha hecho ningun cambio. No hay nada que guardar."
-        });
-      } else {
-        var scenario = null;
-        me.scenarios.forEach(function (element) {
-          if ("is_theactual" in element) {
-            if (element["is_theactual"] == true) {
-              scenario = element;
-            }
-          }
-        }); //copy of
-
-        Swal.fire({
-          title: "Sera guardado como : " + (scenario == null ? "Scenario " + Number(me.scenarios.length + 1) : scenario["name"]),
-          type: "warning",
-          text: "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
-          input: "text",
-          showDenyButton: true,
-          showCancelButton: true
-        }).then(function (result) {
-          if ("value" in result) {
-            axios.post("copy", {
-              scenarioName: result.value ? result.value : "Scenario " + Number(me.scenarios.length + 1),
-              actualSituation: me.userActualSituation
-            }).then(function (response) {
-              Swal.fire({
-                type: "success",
-                title: "Escenario guardado",
-                text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
-              });
-              console.log(response);
-            });
-          } else {
-            Swal.fire({
-              type: "info",
-              title: "No será guardado",
-              timer: 3000
-            });
-          }
-        })["catch"](function (error) {
-          console.table(error);
-        });
-      }
-    }
-  }
+  props: ["body", "factors", "subfactors"]
 });
 
 /***/ }),
@@ -2899,8 +2663,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, {});
         scNames.push(copy.name);
         scennarios["copies"].push(_defineProperty({}, copy.name, groupByFacto));
-      });
-      console.log(scNames);
+      }); //   console.log(scNames);
 
       for (var i = 0; i < scennarios.copies.length; i++) {
         var scennary = scennarios.copies[i]; // console.log(scennary);
@@ -2940,8 +2703,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
 
-      this.sumScoreCopies = scennarios;
-      console.log(scennarios);
+      this.sumScoreCopies = scennarios; //   console.log(scennarios);
+
       return;
     }
   },
@@ -2962,14 +2725,293 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               key = _Object$entries3$_i[0],
               value = _Object$entries3$_i[1];
 
-          console.log(key);
-          console.log(value);
           newVal = _defineProperty({}, pos, value);
         }
       });
-      /*  */
-
       return newVal; //   return "ok ox";
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actual_scennario_scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actual-scennario/scenario-accordions/Accordions.vue */ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    Accordions: _actual_scennario_scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      maritialStatus: "Single",
+      scenarioName: "",
+      scenarios: [],
+      userActualSituation: [],
+      scores: [],
+      Factors: []
+    };
+  },
+  methods: {
+    getUserData: function getUserData(value) {
+      this.maritialStatus = value;
+    },
+    changeStatus: function changeStatus(value) {
+      //   console.log("changed");
+      this.maritialStatus = value;
+    },
+    getFactsWSubfacts: function getFactsWSubfacts(value) {
+      //   console.log("changed");factorsWithSubfactors
+      this.$emit("factorsWithSubfactors", value); //   this.getFactsWSubfacts = value;
+    },
+    maritialChanged: function maritialChanged(value) {
+      //   console.log("changed emmit");
+      this.$emit("maritialChanged", value); //   console.log(value);
+    },
+    getExtraScennarios: function getExtraScennarios(value) {
+      //   console.log("Scennarios copy getted");
+      this.$emit("additionalScennarios", value); //   console.log(value);
+    },
+    getSituation: function getSituation(value) {
+      //   console.log("getted");
+      var scenario = null;
+      var me = this;
+      me.scenarios = value[1];
+      me.userActualSituation = value;
+
+      if (me.scenarios.length > 0) {
+        me.scenarios.forEach(function (element) {
+          if ("is_theactual" in element) {
+            if (element["is_theactual"] == true) {
+              scenario = element;
+            }
+          }
+        });
+
+        if (scenario != null) {
+          me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
+        }
+      }
+
+      this.$emit("selectedSituation", me.userActualSituation);
+    },
+    saveSituation: function saveSituation() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var me, scenario;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                me = _this;
+
+                if (me.scenarios.length === 0) {
+                  Swal.fire({
+                    type: "warning",
+                    title: "Nada para guardar",
+                    text: "No ha hecho ningun cambio. No hay nada que guardar."
+                  });
+                } else {
+                  scenario = null;
+                  me.scenarios.forEach(function (element) {
+                    if ("is_theactual" in element) {
+                      if (element["is_theactual"] == true) {
+                        scenario = element;
+                      }
+                    }
+                  });
+                  Swal.fire({
+                    title: "Sera guardado como : " + (scenario == null ? "Scenario " + Number(me.scenarios.length + 1) : scenario["name"]),
+                    type: "warning",
+                    text: "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
+                    input: "text",
+                    showDenyButton: true,
+                    showCancelButton: true
+                  }).then(function (result) {
+                    if ("value" in result) {
+                      axios.post("save-situation", {
+                        scenarioName: result.value ? result.value : "Scenario " + Number(me.scenarios.length + 1),
+                        actualSituation: me.userActualSituation
+                      }).then(function (response) {
+                        Swal.fire({
+                          type: "success",
+                          title: "Escenario guardado",
+                          text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
+                        }); //   console.log(response);
+                      });
+                    } else {
+                      Swal.fire({
+                        type: "info",
+                        title: "No será guardado",
+                        timer: 3000
+                      });
+                    }
+                  })["catch"](function (error) {
+                    console.table(error);
+                  });
+                }
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    getFactors: function getFactors(value) {
+      //   console.log("factors");
+      this.$emit("FactorsTitles", value);
+      this.factors = value; //   let factors = value;
+    },
+    getScore: function getScore(value) {
+      //   console.log("getScore");
+      this.$emit("scoresArr", value);
+      this.scores = value[0];
+    },
+    copyScennario: function copyScennario() {
+      /* Save scennario as copy of current on view */
+      var me = this; //   console.log(me.userActualSituation[2]);
+
+      if (!me.userActualSituation[2].length > 0) {
+        Swal.fire({
+          type: "warning",
+          title: "Nada para guardar",
+          text: "No ha hecho ningun cambio. No hay nada que guardar."
+        });
+      } else {
+        var scenario = null;
+        me.scenarios.forEach(function (element) {
+          if ("is_theactual" in element) {
+            if (element["is_theactual"] == true) {
+              scenario = element;
+            }
+          }
+        }); //copy of
+
+        Swal.fire({
+          title: "Sera guardado como : " + (scenario == null ? "Scenario " + Number(me.scenarios.length + 1) : scenario["name"]),
+          type: "warning",
+          text: "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
+          input: "text",
+          showDenyButton: true,
+          showCancelButton: true
+        }).then(function (result) {
+          if ("value" in result) {
+            axios.post("copy", {
+              scenarioName: result.value ? result.value : "Scenario " + Number(me.scenarios.length + 1),
+              actualSituation: me.userActualSituation
+            }).then(function (response) {
+              Swal.fire({
+                type: "success",
+                title: "Escenario guardado",
+                text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
+              });
+              console.log(response);
+            });
+          } else {
+            Swal.fire({
+              type: "info",
+              title: "No será guardado",
+              timer: 3000
+            });
+          }
+        })["catch"](function (error) {
+          console.table(error);
+        });
+      }
     }
   }
 });
@@ -2994,10 +3036,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/accordions.js?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/accordions.js?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3005,6 +3047,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["maritialStatus"],
   watch: {
@@ -3055,13 +3099,11 @@ __webpack_require__.r(__webpack_exports__);
               me.additionalScenarios.push(element);
             }
           });
-          me.$emit("additionalScennarios", me.additionalScenarios);
-          console.log({
-            anotherScennarios: me.additionalScenarios
-          });
+          me.$emit("additionalScennarios", me.additionalScenarios); // console.log({ anotherScennarios: me.additionalScenarios });
+
           me.factors = response.data ? response.data[0] : [];
           me.factors.forEach(function (element) {
-            // console.log(element)
+            console.log(element);
             me.factorNames.push({
               id: element.id,
               name: element.title + ' ' + element.sub_title
@@ -3076,11 +3118,16 @@ __webpack_require__.r(__webpack_exports__);
 
             me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
             var body = JSON.parse(scenario['body']);
+            var factorsWithSubfactors = [];
             me.factors.forEach(function (factor) {
               var items = [];
               body.forEach(function (item) {
                 if (item['factor'] === factor.id) {
+                  var subfactors = [];
                   factor.subfactors.forEach(function (subfactor) {
+                    console.log(subfactor.subfactor);
+                    subfactors.push(_defineProperty({}, subfactor.id, subfactor.subfactor)); // subfactors.push({[factor.id]})
+
                     if (item['subfactor'] === subfactor.id) {
                       subfactor.criteria.forEach(function (criterion) {
                         if (item['criterion'] == criterion.id) {
@@ -3096,8 +3143,12 @@ __webpack_require__.r(__webpack_exports__);
                       });
                     }
                   });
+                  /*  factorsWithSubfactors.push({
+                       [factor.id]: subfactors
+                   }); */
                 }
               });
+              me.$emit("factorsWithSubfactors", factorsWithSubfactors);
               newData.push({
                 items: items,
                 factor: factor
@@ -3336,10 +3387,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\ntable[data-v-322bc84a] {\n  height: 
 
 /***/ }),
 
-/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3347,7 +3398,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js */ "./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js */ "./node_modules/laravel-mix/node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
 // Imports
 
@@ -21696,10 +21747,10 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21707,9 +21758,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Accordions.vue?vue&type=style&index=0&lang=css& */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Accordions.vue?vue&type=style&index=0&lang=css& */ "./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&");
 
             
 
@@ -22136,15 +22187,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Scenario2_vue_vue_type_template_id_9770aae0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Scenario2.vue?vue&type=template&id=9770aae0& */ "./resources/js/components/content-tabs/Scenario2.vue?vue&type=template&id=9770aae0&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Scenario2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Scenario2.vue?vue&type=script&lang=js& */ "./resources/js/components/content-tabs/Scenario2.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Scenario2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Scenario2_vue_vue_type_template_id_9770aae0___WEBPACK_IMPORTED_MODULE_0__.render,
   _Scenario2_vue_vue_type_template_id_9770aae0___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -22157,45 +22210,6 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/content-tabs/Scenario2.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/content-tabs/SituationA.vue":
-/*!*************************************************************!*\
-  !*** ./resources/js/components/content-tabs/SituationA.vue ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _SituationA_vue_vue_type_template_id_fd7fe0f6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SituationA.vue?vue&type=template&id=fd7fe0f6& */ "./resources/js/components/content-tabs/SituationA.vue?vue&type=template&id=fd7fe0f6&");
-/* harmony import */ var _SituationA_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SituationA.vue?vue&type=script&lang=js& */ "./resources/js/components/content-tabs/SituationA.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _SituationA_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SituationA_vue_vue_type_template_id_fd7fe0f6___WEBPACK_IMPORTED_MODULE_0__.render,
-  _SituationA_vue_vue_type_template_id_fd7fe0f6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/content-tabs/SituationA.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -22280,10 +22294,10 @@ component.options.__file = "resources/js/components/content-tabs/SummaryTable.vu
 
 /***/ }),
 
-/***/ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/content-tabs/scenario-accordions/Accordions.vue ***!
-  \*********************************************************************************/
+/***/ "./resources/js/components/content-tabs/actual-scennario/SituationA.vue":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/content-tabs/actual-scennario/SituationA.vue ***!
+  \******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -22291,10 +22305,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Accordions_vue_vue_type_template_id_d1d861d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Accordions.vue?vue&type=template&id=d1d861d8& */ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=template&id=d1d861d8&");
-/* harmony import */ var _accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./accordions.js?vue&type=script&lang=js& */ "./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js&");
-/* harmony import */ var _Accordions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Accordions.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _SituationA_vue_vue_type_template_id_6b9a6cd3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SituationA.vue?vue&type=template&id=6b9a6cd3& */ "./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=template&id=6b9a6cd3&");
+/* harmony import */ var _SituationA_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SituationA.vue?vue&type=script&lang=js& */ "./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SituationA_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SituationA_vue_vue_type_template_id_6b9a6cd3___WEBPACK_IMPORTED_MODULE_0__.render,
+  _SituationA_vue_vue_type_template_id_6b9a6cd3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/content-tabs/actual-scennario/SituationA.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Accordions_vue_vue_type_template_id_38387962___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Accordions.vue?vue&type=template&id=38387962& */ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=template&id=38387962&");
+/* harmony import */ var _accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./accordions.js?vue&type=script&lang=js& */ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/accordions.js?vue&type=script&lang=js&");
+/* harmony import */ var _Accordions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Accordions.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -22305,8 +22358,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Accordions_vue_vue_type_template_id_d1d861d8___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Accordions_vue_vue_type_template_id_d1d861d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _Accordions_vue_vue_type_template_id_38387962___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Accordions_vue_vue_type_template_id_38387962___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -22316,15 +22369,15 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/content-tabs/scenario-accordions/Accordions.vue"
+component.options.__file = "resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js&":
-/*!*********************************************************************************************************!*\
-  !*** ./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************/
+/***/ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/accordions.js?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/content-tabs/actual-scennario/scenario-accordions/accordions.js?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -22332,7 +22385,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./accordions.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./resources/js/components/content-tabs/scenario-accordions/accordions.js?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./accordions.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/accordions.js?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_accordions_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
@@ -22385,10 +22438,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/content-tabs/SituationA.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/content-tabs/SituationA.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/content-tabs/Scenario2.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/content-tabs/Scenario2.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -22396,8 +22449,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SituationA.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/SituationA.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Scenario2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Scenario2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/Scenario2.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Scenario2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -22433,6 +22486,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SituationA.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Content.vue?vue&type=style&index=0&id=7f690d44&scoped=true&lang=css&":
 /*!******************************************************************************************************!*\
   !*** ./resources/js/components/Content.vue?vue&type=style&index=0&id=7f690d44&scoped=true&lang=css& ***!
@@ -22459,15 +22528,15 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&":
-/*!******************************************************************************************************************!*\
-  !*** ./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************************************************/
+/***/ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************************************************!*\
+  !*** ./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Accordions.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_laravel_mix_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader/dist/cjs.js!../../../../../../node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Accordions.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/laravel-mix/node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=style&index=0&lang=css&");
 
 
 /***/ }),
@@ -22540,23 +22609,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/content-tabs/SituationA.vue?vue&type=template&id=fd7fe0f6&":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/components/content-tabs/SituationA.vue?vue&type=template&id=fd7fe0f6& ***!
-  \********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_template_id_fd7fe0f6___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_template_id_fd7fe0f6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_template_id_fd7fe0f6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SituationA.vue?vue&type=template&id=fd7fe0f6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/SituationA.vue?vue&type=template&id=fd7fe0f6&");
-
-
-/***/ }),
-
 /***/ "./resources/js/components/content-tabs/Summary.vue?vue&type=template&id=fca061d8&":
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/content-tabs/Summary.vue?vue&type=template&id=fca061d8& ***!
@@ -22591,19 +22643,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=template&id=d1d861d8&":
-/*!****************************************************************************************************************!*\
-  !*** ./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=template&id=d1d861d8& ***!
-  \****************************************************************************************************************/
+/***/ "./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=template&id=6b9a6cd3&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=template&id=6b9a6cd3& ***!
+  \*************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_template_id_d1d861d8___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_template_id_d1d861d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_template_id_6b9a6cd3___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_template_id_6b9a6cd3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_template_id_d1d861d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Accordions.vue?vue&type=template&id=d1d861d8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=template&id=d1d861d8&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SituationA_vue_vue_type_template_id_6b9a6cd3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SituationA.vue?vue&type=template&id=6b9a6cd3& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=template&id=6b9a6cd3&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=template&id=38387962&":
+/*!*********************************************************************************************************************************!*\
+  !*** ./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=template&id=38387962& ***!
+  \*********************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_template_id_38387962___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_template_id_38387962___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Accordions_vue_vue_type_template_id_38387962___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Accordions.vue?vue&type=template&id=38387962& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=template&id=38387962&");
 
 
 /***/ }),
@@ -22804,7 +22873,7 @@ var render = function () {
                     {
                       staticClass: "nav-link",
                       attrs: {
-                        href: "#scenario-2",
+                        href: "#copy" + sCopy.id,
                         "data-toggle": "tab",
                         "aria-expanded": "false",
                       },
@@ -22861,19 +22930,31 @@ var render = function () {
                       FactorsTitles: _vm.getTitles,
                       scoresArr: _vm.getScores,
                       additionalScennarios: _vm.getAdditionalScennarios,
+                      factorsWithSubfactors: _vm.getFactsWSubfacts,
                     },
                   }),
                 ],
                 1
               ),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "tab-pane", attrs: { id: "scenario-2" } },
-                [_c("Scenario2")],
-                1
-              ),
-            ]
+              _vm._l(_vm.scennariosCopies, function (copy) {
+                return _c(
+                  "div",
+                  { staticClass: "tab-pane", attrs: { id: "copy" + copy.id } },
+                  [
+                    _c("Scenario2", {
+                      attrs: {
+                        body: copy.body,
+                        factors: _vm.Factors,
+                        subfactors: _vm.factorsWithSubfactors,
+                      },
+                    }),
+                  ],
+                  1
+                )
+              }),
+            ],
+            2
           ),
         ]),
       ]),
@@ -22981,198 +23062,19 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("p", [_vm._v("This uis scenario 2")])])
-  },
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/SituationA.vue?vue&type=template&id=fd7fe0f6&":
-/*!***********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/SituationA.vue?vue&type=template&id=fd7fe0f6& ***!
-  \***********************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "card" }, [
-      _c(
-        "div",
-        { staticClass: "card-body" },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-6" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "form-check form-check-inline",
-                  attrs: { id: "maritial-status" },
-                },
-                [
-                  _c("input", {
-                    staticClass: "form-check-input material-inputs",
-                    attrs: {
-                      type: "radio",
-                      name: "matrialStatus",
-                      id: "isSingle",
-                      value: "Single",
-                    },
-                    domProps: { checked: _vm.maritialStatus == "Single" },
-                    on: {
-                      change: function ($event) {
-                        return _vm.changeStatus("Single")
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label",
-                      attrs: { for: "isSingle" },
-                    },
-                    [_vm._v("Soltero")]
-                  ),
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-check form-check-inline" }, [
-                _c("input", {
-                  staticClass: "form-check-input material-inputs",
-                  attrs: {
-                    type: "radio",
-                    name: "matrialStatus",
-                    id: "isMarried",
-                    value: "Married",
-                  },
-                  domProps: { checked: _vm.maritialStatus == "Married" },
-                  on: {
-                    change: function ($event) {
-                      return _vm.changeStatus("Married")
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "form-check-label",
-                    attrs: { for: "isMarried" },
-                  },
-                  [_vm._v("Casado")]
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-2" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-outline-info waves-effect waves-light",
-                  attrs: { type: "button" },
-                  on: { click: _vm.saveSituation },
-                },
-                [
-                  _vm._m(0),
-                  _vm._v(" Guardar\n            Situacion actual\n          "),
-                ]
-              ),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-2" }, [
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "btn btn-outline-success waves-effect waves-light",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.copyScennario()
-                    },
-                  },
-                },
-                [_vm._m(1), _vm._v(" Copiar ecenario\n          ")]
-              ),
-            ]),
-            _vm._v(" "),
-            _vm._m(2),
-          ]),
-          _vm._v(" "),
-          _c("accordions", {
-            attrs: { maritialStatus: _vm.maritialStatus },
-            on: {
-              sumScore: _vm.getScore,
-              factorNames: _vm.getFactors,
-              selectedSituation: _vm.getSituation,
-              mutableMaritialStatus: _vm.getUserData,
-              MaritialStatusChanged: _vm.maritialChanged,
-              additionalScennarios: _vm.getExtraScennarios,
-            },
-          }),
-        ],
-        1
-      ),
-    ]),
+    _vm._v("\n  Subfactors "),
+    _c("br"),
+    _vm._v("\n  " + _vm._s(_vm.subfactors) + "\n  factors "),
+    _c("br"),
+    _vm._v("\n  " + _vm._s(_vm.factors) + "\n  "),
+    _c("p", [_vm._v("This uis scenario 2")]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v("\n  " + _vm._s(_vm.body) + "\n"),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "btn-label" }, [
-      _c("i", { staticClass: "fas fa-save" }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "btn-label" }, [
-      _c("i", { staticClass: "fas fa-copy" }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-danger waves-effect waves-light",
-          attrs: { type: "button" },
-        },
-        [
-          _c("span", { staticClass: "btn-label" }, [
-            _c("i", { staticClass: "fas fa-trash-alt" }),
-          ]),
-          _vm._v(" Eliminar\n            escenario\n          "),
-        ]
-      ),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -23368,10 +23270,10 @@ var render = function () {
                 [
                   _c("th", [_vm._v("Total de puntos")]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(_vm.totalForFactor))]),
+                  _c("th", [_vm._v(_vm._s(_vm.totalForFactor))]),
                   _vm._v(" "),
                   _vm._l(_vm.sumScoreCopies.copies, function (sumS) {
-                    return _c("td", [
+                    return _c("th", [
                       _vm._v(
                         "\n            " + _vm._s(sumS.total) + "\n          "
                       ),
@@ -23452,10 +23354,193 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=template&id=d1d861d8&":
-/*!*******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/scenario-accordions/Accordions.vue?vue&type=template&id=d1d861d8& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=template&id=6b9a6cd3&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/SituationA.vue?vue&type=template&id=6b9a6cd3& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card" }, [
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-6" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "form-check form-check-inline",
+                  attrs: { id: "maritial-status" },
+                },
+                [
+                  _c("input", {
+                    staticClass: "form-check-input material-inputs",
+                    attrs: {
+                      type: "radio",
+                      name: "matrialStatus",
+                      id: "isSingle",
+                      value: "Single",
+                    },
+                    domProps: { checked: _vm.maritialStatus == "Single" },
+                    on: {
+                      change: function ($event) {
+                        return _vm.changeStatus("Single")
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "form-check-label",
+                      attrs: { for: "isSingle" },
+                    },
+                    [_vm._v("Soltero")]
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-check form-check-inline" }, [
+                _c("input", {
+                  staticClass: "form-check-input material-inputs",
+                  attrs: {
+                    type: "radio",
+                    name: "matrialStatus",
+                    id: "isMarried",
+                    value: "Married",
+                  },
+                  domProps: { checked: _vm.maritialStatus == "Married" },
+                  on: {
+                    change: function ($event) {
+                      return _vm.changeStatus("Married")
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-check-label",
+                    attrs: { for: "isMarried" },
+                  },
+                  [_vm._v("Casado")]
+                ),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-info waves-effect waves-light",
+                  attrs: { type: "button" },
+                  on: { click: _vm.saveSituation },
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" Guardar\n            Situacion actual\n          "),
+                ]
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-outline-success waves-effect waves-light",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.copyScennario()
+                    },
+                  },
+                },
+                [_vm._m(1), _vm._v(" Copiar ecenario\n          ")]
+              ),
+            ]),
+            _vm._v(" "),
+            _vm._m(2),
+          ]),
+          _vm._v(" "),
+          _c("accordions", {
+            attrs: { maritialStatus: _vm.maritialStatus },
+            on: {
+              sumScore: _vm.getScore,
+              factorNames: _vm.getFactors,
+              selectedSituation: _vm.getSituation,
+              mutableMaritialStatus: _vm.getUserData,
+              MaritialStatusChanged: _vm.maritialChanged,
+              additionalScennarios: _vm.getExtraScennarios,
+              factorsWithSubfactors: _vm.getFactsWSubfacts,
+            },
+          }),
+        ],
+        1
+      ),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "fas fa-save" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "fas fa-copy" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-danger waves-effect waves-light",
+          attrs: { type: "button" },
+        },
+        [
+          _c("span", { staticClass: "btn-label" }, [
+            _c("i", { staticClass: "fas fa-trash-alt" }),
+          ]),
+          _vm._v(" Eliminar\n            escenario\n          "),
+        ]
+      ),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=template&id=38387962&":
+/*!************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue?vue&type=template&id=38387962& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";

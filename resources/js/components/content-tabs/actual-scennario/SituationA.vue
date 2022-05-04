@@ -63,6 +63,7 @@
           @mutableMaritialStatus="getUserData"
           @MaritialStatusChanged="maritialChanged"
           @additionalScennarios="getExtraScennarios"
+          @factorsWithSubfactors="getFactsWSubfacts"
           :maritialStatus="maritialStatus"
         />
       </div>
@@ -71,7 +72,7 @@
 </template>
 
 <script>
-import Accordions from "./scenario-accordions/Accordions.vue";
+import Accordions from "../actual-scennario/scenario-accordions/Accordions.vue";
 export default {
   components: {
     Accordions,
@@ -96,20 +97,26 @@ export default {
       this.maritialStatus = value;
     },
 
+    getFactsWSubfacts(value) {
+      //   console.log("changed");factorsWithSubfactors
+      this.$emit("factorsWithSubfactors", value);
+      //   this.getFactsWSubfacts = value;
+    },
+
     maritialChanged(value) {
       //   console.log("changed emmit");
       this.$emit("maritialChanged", value);
-      console.log(value);
+      //   console.log(value);
     },
 
     getExtraScennarios(value) {
-      console.log("Scennarios copy getted");
+      //   console.log("Scennarios copy getted");
       this.$emit("additionalScennarios", value);
-      console.log(value);
+      //   console.log(value);
     },
 
     getSituation(value) {
-      console.log("getted");
+      //   console.log("getted");
       let scenario = null;
       let me = this;
       me.scenarios = value[1];
@@ -180,7 +187,7 @@ export default {
                         ? "creado"
                         : "actualizado" + "este escenario",
                   });
-                  console.log(response);
+                  //   console.log(response);
                 });
             } else {
               Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
@@ -193,14 +200,14 @@ export default {
     },
 
     getFactors(value) {
-      console.log("factors");
+      //   console.log("factors");
       this.$emit("FactorsTitles", value);
       this.factors = value;
       //   let factors = value;
     },
 
     getScore(value) {
-      console.log("getScore");
+      //   console.log("getScore");
       this.$emit("scoresArr", value);
       this.scores = value[0];
     },
@@ -208,8 +215,7 @@ export default {
     copyScennario() {
       /* Save scennario as copy of current on view */
       let me = this;
-      console.log(me.userActualSituation[2]);
-
+      //   console.log(me.userActualSituation[2]);
       if (!me.userActualSituation[2].length > 0) {
         Swal.fire({
           type: "warning",

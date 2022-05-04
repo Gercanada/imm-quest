@@ -38,10 +38,10 @@
           </tr>
           <tr>
             <th>Total de puntos</th>
-            <td>{{ totalForFactor }}</td>
-            <td v-for="sumS in sumScoreCopies.copies">
+            <th>{{ totalForFactor }}</th>
+            <th v-for="sumS in sumScoreCopies.copies">
               {{ sumS.total }}
-            </td>
+            </th>
           </tr>
 
           <tr v-for="fact in factors">
@@ -150,9 +150,7 @@ export default {
         scNames.push(copy.name);
         scennarios["copies"].push({ [copy.name]: groupByFacto });
       });
-
-      console.log(scNames);
-
+      //   console.log(scNames);
       for (let i = 0; i < scennarios.copies.length; i++) {
         let scennary = scennarios.copies[i];
         // console.log(scennary);
@@ -180,7 +178,7 @@ export default {
         }
       }
       this.sumScoreCopies = scennarios;
-      console.log(scennarios);
+      //   console.log(scennarios);
       return;
     },
   },
@@ -198,12 +196,9 @@ export default {
       let newVal = 0;
       val.forEach((element) => {
         for (const [key, value] of Object.entries(element)) {
-          console.log(key);
-          console.log(value);
           newVal = { [pos]: value };
         }
       });
-      /*  */
       return newVal;
       //   return "ok ox";
     },

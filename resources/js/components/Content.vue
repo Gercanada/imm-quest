@@ -77,7 +77,7 @@
             </li>
             <li class="nav-item" v-for="sCopy in scennariosCopies">
               <a
-                href="#scenario-2"
+                :href="'#copy' + sCopy.id"
                 data-toggle="tab"
                 aria-expanded="false"
                 class="nav-link"
@@ -91,6 +91,7 @@
           <div class="tab-content" style="width: 100%">
             <div class="tab-pane show active" id="Summary">
               <!-- Contains SumMMaryTable component -->
+              <!-- Send values from thit tho his children -->
               <Summary
                 :summary="summary"
                 :factors="Factors"
@@ -102,18 +103,27 @@
             </div>
             <div class="tab-pane" id="Situation">
               <!-- Contains scennarios accordions and change maritial status -->
+              <!-- receiving values from child of this like a function -->
               <SituationA
                 @maritialChanged="getMaritialChanged"
                 @selectedSituation="getSituation"
                 @FactorsTitles="getTitles"
                 @scoresArr="getScores"
                 @additionalScennarios="getAdditionalScennarios"
+                @factorsWithSubfactors="getFactsWSubfacts"
               />
             </div>
-            <div class="tab-pane" id="scenario-2">
-              <!-- Temp example -->
-              <Scenario2 />
+
+            <div v-for="copy in scennariosCopies" :id="'copy' + copy.id" class="tab-pane">
+              <!-- {{ copy }} -->
+              <!-- <p>{{ scennariosCopies }}</p> -->
+              <Scenario2
+                :body="copy.body"
+                :factors="Factors"
+                :subfactors="factorsWithSubfactors"
+              />
             </div>
+            <!-- -->
           </div>
         </div>
         <!-- end card-body-->
@@ -124,7 +134,7 @@
 
 <script>
 import Summary from "./content-tabs/Summary.vue";
-import SituationA from "./content-tabs/SituationA.vue";
+import SituationA from "./content-tabs/actual-scennario/SituationA.vue";
 import Scenario2 from "./content-tabs/Scenario2.vue";
 
 export default {
@@ -148,6 +158,7 @@ export default {
       FactorsWithScores: [],
       maritialStatusChanged: null,
       scennariosCopies: [],
+      factorsWithSubfactors: [],
     };
   },
 
@@ -161,30 +172,28 @@ export default {
 
   methods: {
     getSituation(value) {
-      //   console.log("situation");
       let me = this;
       me.summary = value;
     },
     getTitles(value) {
       this.Factors = value;
     },
+    getFactsWSubfacts(value) {
+      this.factorsWithSubfactors = value;
+    },
 
     getMaritialChanged(value) {
-      console.log("CONTENT");
+      //   console.log("CONTENT");
       this.maritialStatusChanged = value;
-      //   console.log(value);
     },
 
     getAdditionalScennarios(value) {
-      console.log("Extra scennarios");
+      //   console.log("Extra scennarios");
       this.scennariosCopies = value;
-      //   console.log(value);
     },
 
     getScores(value) {
-      console.log(value);
-      //   console.log("some getted");
-      //   return;
+      //   console.log(value);
       this.scores = value[0];
       let factArr = [];
 
