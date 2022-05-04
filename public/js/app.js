@@ -2755,8 +2755,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2874,57 +2886,62 @@ __webpack_require__.r(__webpack_exports__);
       this.totalForFactor = sum;
     },
     scennariosCopies: function scennariosCopies() {
-      var snennarios = {
-        copies: [],
-        sumOf: []
+      var scennarios = {
+        copies: []
       };
+      var scNames = [];
       this.scennariosCopies.forEach(function (copy) {
         var groupByFacto = JSON.parse(copy.body).reduce(function (group, product) {
           var factor = product.factor;
-          group[factor] = group[factor] ? group[factor] : []; //   group[factor].push(product);
-
+          group[factor] = group[factor] ? group[factor] : [];
           group[factor].push(product.value);
           return group;
         }, {});
-        snennarios["copies"][copy.name] = groupByFacto;
-        console.log(snennarios["copies"]);
-        return;
-        snennarios["copies"].forEach(function (element) {
-          alert("any");
-          console.log(element);
-          /*  if (copy.name in snennarios["copies"]) {
-            let sum = 0;
-            for (let i = 0; i < snennarios["copies"][copy.name].length; i++) {
-              sum += toSumArr[i];
+        scNames.push(copy.name);
+        scennarios["copies"].push(_defineProperty({}, copy.name, groupByFacto));
+      });
+      console.log(scNames);
+
+      for (var i = 0; i < scennarios.copies.length; i++) {
+        var scennary = scennarios.copies[i]; // console.log(scennary);
+
+        for (var _i = 0, _Object$entries = Object.entries(scennary); _i < _Object$entries.length; _i++) {
+          var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+              key = _Object$entries$_i[0],
+              value = _Object$entries$_i[1];
+
+          /*  console.log(key);
+          console.log(value); */
+          var totals = [];
+
+          for (var _i2 = 0, _Object$entries2 = Object.entries(value); _i2 < _Object$entries2.length; _i2++) {
+            var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
+                _key = _Object$entries2$_i[0],
+                _value = _Object$entries2$_i[1];
+
+            // console.log(value);
+            var sum = 0;
+
+            for (var b = 0; b < _value.length; b++) {
+              sum += _value[b];
             }
-            snennarios["sumOf"][copy.name] = sum;
-          } */
-        });
-        return; // console.log(groupByFacto["copies"]);
 
-        return;
-        /*  */
-
-        groupByFacto.copies[copy.name].forEach(function (element) {
-          console.log(element);
-          return;
-          var toSumArr = [];
-          snennarios["copies"][copy.name].forEach(function (element) {
-            toSumArr.push(element.value);
-          });
-          var sum = 0;
-          var totel = 0;
-
-          for (var i = 0; i < toSumArr.length; i++) {
-            sum += toSumArr[i];
+            totals.push(_defineProperty({}, _key, sum));
           }
 
-          total = sum;
-          snennarios["sumOf"][copy.name] = total;
-        });
-        return;
-      });
-      console.log(snennarios);
+          scennary["sums"] = totals;
+          var total = 0;
+
+          for (var _b = 0; _b < totals.length; _b++) {
+            total += Number(Object.values(totals[_b]));
+          }
+
+          scennary["total"] = total;
+        }
+      }
+
+      this.sumScoreCopies = scennarios;
+      console.log(scennarios);
       return;
     }
   },
@@ -2933,10 +2950,27 @@ __webpack_require__.r(__webpack_exports__);
       f1ScoreMarried: 0,
       f1ScoreSingle: 0,
       totalForFactor: 0,
-      sumScoreCopies: [{
-        copy: 0
-      }]
+      sumScoreCopies: []
     };
+  },
+  methods: {
+    sumEachs: function sumEachs(val, pos) {
+      var newVal = 0;
+      val.forEach(function (element) {
+        for (var _i3 = 0, _Object$entries3 = Object.entries(element); _i3 < _Object$entries3.length; _i3++) {
+          var _Object$entries3$_i = _slicedToArray(_Object$entries3[_i3], 2),
+              key = _Object$entries3$_i[0],
+              value = _Object$entries3$_i[1];
+
+          console.log(key);
+          console.log(value);
+          newVal = _defineProperty({}, pos, value);
+        }
+      });
+      /*  */
+
+      return newVal; //   return "ok ox";
+    }
   }
 });
 
@@ -23336,12 +23370,10 @@ var render = function () {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(_vm.totalForFactor))]),
                   _vm._v(" "),
-                  _vm._l(_vm.scennariosCopies, function (sCopy2) {
+                  _vm._l(_vm.sumScoreCopies.copies, function (sumS) {
                     return _c("td", [
                       _vm._v(
-                        "\n            " +
-                          _vm._s(JSON.parse(sCopy2.body)) +
-                          "\n          "
+                        "\n            " + _vm._s(sumS.total) + "\n          "
                       ),
                     ])
                   }),
@@ -23350,33 +23382,53 @@ var render = function () {
               ),
               _vm._v(" "),
               _vm._l(_vm.factors, function (fact) {
-                return _c("tr", [
-                  _c("td", [
-                    _c("p", { staticClass: "left" }, [
-                      _vm._v(_vm._s(fact.name)),
+                return _c(
+                  "tr",
+                  [
+                    _c("td", [
+                      _c("p", { staticClass: "left" }, [
+                        _vm._v(_vm._s(fact.name)),
+                      ]),
                     ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "bg-info" }, [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(
-                          _vm.maritialStatusChanged === "Married" &&
-                            fact.id in _vm.FactorsWithScores &&
-                            _vm.FactorsWithScores[fact.id]
-                            ? _vm.FactorsWithScores[fact.id][1].marriedSum
-                            : _vm.maritialStatusChanged === "Single" &&
+                    _vm._v(" "),
+                    _c("td", { staticClass: "bg-info" }, [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(
+                            _vm.maritialStatusChanged === "Married" &&
                               fact.id in _vm.FactorsWithScores &&
                               _vm.FactorsWithScores[fact.id]
-                            ? _vm.FactorsWithScores[fact.id][0].singleSum
-                            : 0
-                        ) +
-                        "\n          "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("TonzHere")]),
-                ])
+                              ? _vm.FactorsWithScores[fact.id][1].marriedSum
+                              : _vm.maritialStatusChanged === "Single" &&
+                                fact.id in _vm.FactorsWithScores &&
+                                _vm.FactorsWithScores[fact.id]
+                              ? _vm.FactorsWithScores[fact.id][0].singleSum
+                              : 0
+                          ) +
+                          "\n          "
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.sumScoreCopies.copies, function (sumEach) {
+                      return _c(
+                        "td",
+                        _vm._l(sumEach.sums, function (value, name, index) {
+                          return Object.keys(value)[0] == fact.id
+                            ? _c("p", [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(Object.values(value)[0]) +
+                                    "\n            "
+                                ),
+                              ])
+                            : _vm._e()
+                        }),
+                        0
+                      )
+                    }),
+                  ],
+                  2
+                )
               }),
             ],
             2

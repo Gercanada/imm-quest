@@ -13,9 +13,6 @@
       >
         <!-- -->
         <thead>
-          <!--  <tr v-for="sCopy in scennariosCopies">
-            <td>{{ sCopy.name }}</td>
-          </tr> -->
           <tr>
             <th></th>
             <th data-sortable="" data-width="auto">Actual situation</th>
@@ -27,12 +24,6 @@
             >
               {{ sCopy.name }}
             </th>
-            <!--  <th data-field="forks_count" data-sortable="" data-width="auto">
-              Scenario 2
-            </th>
-            <th data-field="description" data-sortable="" data-width="auto">
-              Scenario n
-            </th> -->
           </tr>
         </thead>
         <tbody>
@@ -48,8 +39,8 @@
           <tr>
             <th>Total de puntos</th>
             <td>{{ totalForFactor }}</td>
-            <td v-for="sCopy2 in scennariosCopies">
-              {{ JSON.parse(sCopy2.body) }}
+            <td v-for="sumS in sumScoreCopies.copies">
+              {{ sumS.total }}
             </td>
           </tr>
 
@@ -70,7 +61,14 @@
                   : 0
               }}
             </td>
-            <td>TonzHere</td>
+            <td v-for="sumEach in sumScoreCopies.copies">
+              <p
+                v-for="(value, name, index) in sumEach.sums"
+                v-if="Object.keys(value)[0] == fact.id"
+              >
+                {{ Object.values(value)[0] }}
+              </p>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -140,57 +138,49 @@ export default {
     },
 
     scennariosCopies: function () {
-      let snennarios = { copies: [], sumOf: [] };
+      let scennarios = { copies: [] };
+      let scNames = [];
       this.scennariosCopies.forEach((copy) => {
         let groupByFacto = JSON.parse(copy.body).reduce((group, product) => {
           const { factor } = product;
           group[factor] = group[factor] ? group[factor] : [];
-          //   group[factor].push(product);
           group[factor].push(product.value);
           return group;
         }, {});
-        snennarios["copies"][copy.name] = groupByFacto;
-
-        console.log(snennarios["copies"]);
-        return;
-
-        snennarios["copies"].forEach((element) => {
-          alert("any");
-          console.log(element);
-          /*  if (copy.name in snennarios["copies"]) {
-            let sum = 0;
-            for (let i = 0; i < snennarios["copies"][copy.name].length; i++) {
-              sum += toSumArr[i];
-            }
-            snennarios["sumOf"][copy.name] = sum;
-          } */
-        });
-        return;
-
-        // console.log(groupByFacto["copies"]);
-        return;
-        /*  */
-        groupByFacto.copies[copy.name].forEach((element) => {
-          console.log(element);
-          return;
-          let toSumArr = [];
-          snennarios["copies"][copy.name].forEach((element) => {
-            toSumArr.push(element.value);
-          });
-          let sum = 0;
-          let totel = 0;
-          for (let i = 0; i < toSumArr.length; i++) {
-            sum += toSumArr[i];
-          }
-          total = sum;
-
-          snennarios["sumOf"][copy.name] = total;
-        });
-
-        return;
+        scNames.push(copy.name);
+        scennarios["copies"].push({ [copy.name]: groupByFacto });
       });
 
-      console.log(snennarios);
+      console.log(scNames);
+
+      for (let i = 0; i < scennarios.copies.length; i++) {
+        let scennary = scennarios.copies[i];
+        // console.log(scennary);
+
+        for (const [key, value] of Object.entries(scennary)) {
+          /*  console.log(key);
+          console.log(value); */
+          let totals = [];
+
+          for (const [key, value] of Object.entries(value)) {
+            // console.log(value);
+            let sum = 0;
+            for (let b = 0; b < value.length; b++) {
+              sum += value[b];
+            }
+            totals.push({ [key]: sum });
+          }
+          scennary["sums"] = totals;
+
+          let total = 0;
+          for (let b = 0; b < totals.length; b++) {
+            total += Number(Object.values(totals[b]));
+          }
+          scennary["total"] = total;
+        }
+      }
+      this.sumScoreCopies = scennarios;
+      console.log(scennarios);
       return;
     },
   },
@@ -200,8 +190,23 @@ export default {
       f1ScoreMarried: 0,
       f1ScoreSingle: 0,
       totalForFactor: 0,
-      sumScoreCopies: [{ copy: 0 }],
+      sumScoreCopies: [],
     };
+  },
+  methods: {
+    sumEachs(val, pos) {
+      let newVal = 0;
+      val.forEach((element) => {
+        for (const [key, value] of Object.entries(element)) {
+          console.log(key);
+          console.log(value);
+          newVal = { [pos]: value };
+        }
+      });
+      /*  */
+      return newVal;
+      //   return "ok ox";
+    },
   },
 };
 </script>
