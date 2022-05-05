@@ -1,12 +1,118 @@
 <template>
-  <div>
-    Subfactors <br />
-    {{ subfactors }}
-    factors <br />
-    {{ factors }}
-    <p>This uis scenario 2</p>
-    <br />
-    {{ body }}
+  <div class="row">
+    <div class="col-12">
+      <div id="accordion" class="custom-accordion mb-4">
+        <div class="card mb-0" v-for="object in data">
+          <div class="card-header" id="headingOne">
+            <div class="row">
+              <div class="col-8">
+                <h5 class="m-0">
+                  <a
+                    class="custom-accordion-title d-block pt-2 pb-2"
+                    data-toggle="collapse"
+                    :href="'#collapse' + object.factor.id"
+                    aria-expanded="false"
+                    :aria-controls="'collapse' + object.factor.id"
+                  >
+                    {{ object.factor.title + " " + object.factor.sub_title }}
+                    <span class="float-right"
+                      ><i class="mdi mdi-chevron-down accordion-arrow"></i>
+                    </span>
+                  </a>
+                </h5>
+              </div>
+              <div class="col-4">
+                <input
+                  type="text"
+                  disabled
+                  :value="
+                    maritialStatusCopy === 'Married'
+                      ? factorScoreMarried[object.factor.id]
+                      : factorScoreSingle[object.factor.id]
+                  "
+                  class="form-control float-right"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div
+            :id="'collapse' + object.factor.id"
+            class="collapse"
+            aria-labelledby="headingOne"
+            data-parent="#accordion"
+          >
+            <div class="card-body">
+              <div class="form-group">
+                <div class="row" v-for="subfactor in object.factor.subfactors">
+                  <div class="col-6">
+                    {{ subfactor.subfactor }}
+                  </div>
+                  <div class="col-4">
+                    <select
+                      class="form-control"
+                      id="select2-search-hide"
+                      style="width: 100%; height: 36px"
+                      @change="criteriaVal"
+                      v-model="selectedSubfactor.selections[subfactor.id]"
+                    >
+                      <option
+                        v-for="criterion in subfactor.criteria"
+                        :value="{
+                          criterion,
+                          factor: object.factor.id,
+                          subfactor: subfactor.id,
+                        }"
+                        :class="criterion.selected ? 'bg-success' : ''"
+                      >
+                        {{ criterion.criterion }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      :value="
+                        selectedSubfactor != undefined &&
+                        selectedSubfactor.selections != undefined &&
+                        selectedSubfactor.selections[subfactor.id] != undefined &&
+                        'criterion' in selectedSubfactor.selections[subfactor.id]
+                          ? maritialStatusCopy === 'Married' &&
+                            selectedSubfactor.selections[
+                              subfactor.id
+                            ].criterion.hasOwnProperty('married')
+                            ? selectedSubfactor.selections[subfactor.id].criterion.married
+                            : maritialStatusCopy === 'Single' &&
+                              selectedSubfactor.selections[
+                                subfactor.id
+                              ].criterion.hasOwnProperty('single')
+                            ? selectedSubfactor.selections[subfactor.id].criterion.single
+                            : 'a'
+                          : 'b'
+                      "
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <!--    <div>
+      Subfactors <br />
+      {{ factors }}
+      <h1 class="success">
+        {{ maritialSituation }}
+      </h1>
+      <p>This uis scenario 2</p>
+      <br />
+      {{ body }}
+    </div> -->
   </div>
   <!--
 
@@ -17,5 +123,206 @@
    -->
 </template>
 <script>
-export default { props: ["body", "factors", "subfactors"] };
+export default {
+  props: ["body", "factors", "maritialSituation"],
+  data() {
+    return {
+      data: [],
+      selectedSubfactor: {
+        selections: [],
+      },
+      singleValues: [],
+      marriedValues: [],
+      maritialStatusCopy: "",
+      factorScore: {},
+      factorScoreMarried: {},
+      factorScoreSingle: {},
+      selectedCriterion: {},
+      arraySums: [],
+    };
+  },
+  mounted() {
+    this.getData();
+  },
+
+  methods: {
+    getData() {
+      let me = this;
+      let arr = [];
+      let body = JSON.parse(me.body);
+      me.maritialStatusCopy = me.maritialSituation == 1 ? "Married" : "Single";
+      if (me.factors.length > 0 && body.length > 0) {
+        me.factors.forEach((factor) => {
+          let items = [];
+          body.forEach((item) => {
+            if (item["factor"] === factor.id && factor.subfactors.length > 0) {
+              factor.subfactors.forEach((subfactor) => {
+                if (item["subfactor"] === subfactor.id) {
+                  //   return;
+                  subfactor.criteria.forEach((criterion) => {
+                    if (item["criterion"] == criterion.id) {
+                      criterion.selected = true;
+                      me.criteriaVal({
+                        criterion: criterion,
+                        factor: factor.id,
+                        subfactor: subfactor.id,
+                      });
+                    } else {
+                      criterion.selected = false;
+                    }
+                  });
+                }
+              });
+            }
+          });
+          arr.push({ items: items, factor: factor });
+        });
+      }
+      me.data = arr;
+    },
+
+    criteriaVal(event) {
+      let me = this;
+      let newVal = null;
+      let existingS = null;
+      let existingM = null;
+      if ("criterion" in event) {
+        newVal = event;
+      } else {
+        newVal = JSON.parse(
+          JSON.stringify(event.target.options[event.target.options.selectedIndex])
+        )._value;
+      }
+      me.selectedSubfactor.selections[newVal.subfactor] = {
+        criterion: newVal.criterion,
+        factor: newVal.factor,
+        subfactor: newVal.subfactor,
+      };
+
+      let factor = newVal.factor;
+      let subfactor = newVal.subfactor;
+      let criterion = newVal.criterion;
+
+      me.singleValues.sort(function (a, b) {
+        return a.subfactor - b.subfactor;
+      });
+
+      me.singleValues.forEach((element) => {
+        if (element["factor"] == factor && element["subfactor"] == subfactor) {
+          existingS = element;
+          element["criterion"] = criterion.id;
+          element["value"] = criterion.single != null ? criterion.single : 0;
+        }
+      });
+
+      if (!existingS) {
+        me.singleValues.push({
+          factor,
+          subfactor,
+          criterion: criterion.id,
+          value: criterion.single != null ? criterion.single : 0,
+        });
+      }
+
+      me.marriedValues.forEach((element) => {
+        //Find factor and subfactor for replace criterion value
+        if (element["factor"] == factor && element["subfactor"] == subfactor) {
+          existingM = element;
+          element["criterion"] = criterion.id;
+          element["value"] = criterion.married != null ? criterion.married : 0;
+          //replace
+        }
+      });
+
+      if (!existingM) {
+        me.marriedValues.push({
+          factor,
+          subfactor,
+          criterion: criterion.id,
+          value: criterion.married != null ? criterion.married : 0,
+        });
+      }
+      me.factorScoreMarried[factor] = 0;
+      me.factorScoreSingle[factor] = 0;
+
+      if (me.singleValues.length > 0) {
+        let groupByFactoS = me.singleValues.reduce((group, product) => {
+          const { factor } = product;
+          group[factor] = group[factor] ? group[factor] : [];
+          group[factor].push(product);
+          return group;
+        }, {});
+        me.factorScoreSingle[factor] = groupByFactoS[factor].reduce(
+          (n, { value }) => n + value,
+          0
+        );
+      }
+
+      if (me.marriedValues.length > 0) {
+        let groupByFactoM = me.marriedValues.reduce((group, product) => {
+          const { factor } = product;
+          group[factor] = group[factor] ? group[factor] : [];
+          group[factor].push(product);
+          return group;
+        }, {});
+
+        me.factorScoreMarried[factor] = groupByFactoM[factor].reduce(
+          (n, { value }) => n + value,
+          0
+        );
+      }
+      //grouped by factor
+      me.selectedCriterion[subfactor] = criterion.id;
+
+      if (me.maritialStatusCopy === "Single") {
+        me.factorScore[factor] = me.factorScoreSingle[factor];
+      } else {
+        me.selectedCriterion[criterion.id] = criterion.married;
+        me.factorScore[factor] = me.factorScoreMarried[factor];
+      }
+      //Create or update scores array to emmit to another file
+      let hasSumS = null;
+      let hasSumM = null;
+
+      me.arraySums.forEach((element) => {
+        if (
+          "singleSum" in element &&
+          "factor" in element["singleSum"] &&
+          element["singleSum"].factor === factor
+        ) {
+          hasSumS = element;
+          element["singleSum"]["sum"] = me.factorScoreSingle[factor];
+        }
+      });
+
+      me.arraySums.forEach((element) => {
+        if (
+          "marriedSum" in element &&
+          "factor" in element["marriedSum"] &&
+          element["marriedSum"].factor === factor
+        ) {
+          hasSumM = element;
+          element["marriedSum"]["sum"] = me.factorScoreMarried[factor];
+        }
+      });
+
+      if (!hasSumS) {
+        me.arraySums.push({
+          singleSum: {
+            factor: factor,
+            sum: me.factorScoreSingle[factor],
+          },
+        });
+      }
+      if (!hasSumM) {
+        me.arraySums.push({
+          marriedSum: {
+            factor: factor,
+            sum: me.factorScoreMarried[factor],
+          },
+        });
+      }
+    },
+  },
+};
 </script>

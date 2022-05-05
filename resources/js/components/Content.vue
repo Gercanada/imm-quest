@@ -113,14 +113,12 @@
                 @factorsWithSubfactors="getFactsWSubfacts"
               />
             </div>
-
             <div v-for="copy in scennariosCopies" :id="'copy' + copy.id" class="tab-pane">
               <!-- {{ copy }} -->
-              <!-- <p>{{ scennariosCopies }}</p> -->
               <Scenario2
                 :body="copy.body"
-                :factors="Factors"
-                :subfactors="factorsWithSubfactors"
+                :factors="factorsWithSubfactors"
+                :maritialSituation="copy.is_married ? copy.is_married : 0"
               />
             </div>
             <!-- -->

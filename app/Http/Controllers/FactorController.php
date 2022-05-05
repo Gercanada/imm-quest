@@ -117,9 +117,6 @@ class FactorController extends Controller
                 }
             }
         }
-        // return $subfactors;
-        //return [$subfactors, $criteria];
-        // return [$subfactors, $criteria];
         return  $criteria;
     }
 

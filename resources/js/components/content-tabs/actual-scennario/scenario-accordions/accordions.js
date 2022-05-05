@@ -56,7 +56,6 @@ export default {
 
                     me.factors = response.data ? response.data[0] : [];
                     me.factors.forEach(element => {
-                        console.log(element)
                         me.factorNames.push({
                             id: element.id,
                             name: element.title + ' ' + element.sub_title
@@ -72,18 +71,12 @@ export default {
                         me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
                         me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
                         let body = JSON.parse(scenario['body']);
-                        let factorsWithSubfactors = [];
+                        me.$emit("factorsWithSubfactors", me.factors);
                         me.factors.forEach(factor => {
                             let items = [];
                             body.forEach(item => {
                                 if (item['factor'] === factor.id) {
-                                    let subfactors = [];
                                     factor.subfactors.forEach(subfactor => {
-                                        console.log(subfactor.subfactor)
-                                        subfactors.push({
-                                            [subfactor.id]: subfactor.subfactor
-                                        });
-                                        // subfactors.push({[factor.id]})
                                         if (item['subfactor'] === subfactor.id) {
                                             subfactor.criteria.forEach(criterion => {
                                                 if (item['criterion'] == criterion.id) {
@@ -99,13 +92,8 @@ export default {
                                             });
                                         }
                                     });
-                                    /*  factorsWithSubfactors.push({
-                                         [factor.id]: subfactors
-                                     }); */
                                 }
                             });
-
-                            me.$emit("factorsWithSubfactors", factorsWithSubfactors);
                             newData.push({ items: items, factor: factor })
                         });
                     } else {
