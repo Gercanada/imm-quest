@@ -1,17 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/@babel/runtime/regenerator/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -2290,6 +2279,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2314,7 +2307,8 @@ __webpack_require__.r(__webpack_exports__);
       FactorsWithScores: [],
       maritialStatusChanged: null,
       scennariosCopies: [],
-      factorsWithSubfactors: []
+      factorsWithSubfactors: [],
+      reloader: null
     };
   },
   created: function created() {
@@ -2342,6 +2336,9 @@ __webpack_require__.r(__webpack_exports__);
     getAdditionalScennarios: function getAdditionalScennarios(value) {
       //   console.log("Extra scennarios");
       this.scennariosCopies = value;
+    },
+    callReloader: function callReloader(value) {
+      this.reloader = value;
     },
     getScores: function getScores(value) {
       var _this = this;
@@ -2551,8 +2548,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["body", "factors", "maritialSituation"],
+  props: ["body", "factors", "maritialSituation", "copyId", "scennarioName"],
   data: function data() {
     return {
       data: [],
@@ -2566,7 +2608,8 @@ __webpack_require__.r(__webpack_exports__);
       factorScoreMarried: {},
       factorScoreSingle: {},
       selectedCriterion: {},
-      arraySums: []
+      arraySums: [],
+      selectedSituation: []
     };
   },
   mounted: function mounted() {
@@ -2577,7 +2620,7 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       var arr = [];
       var body = JSON.parse(me.body);
-      me.maritialStatusCopy = me.maritialSituation == 1 ? "Married" : "Single";
+      me.maritialStatusCopy = me.maritialSituation === 1 ? "Married" : "Single";
 
       if (me.factors.length > 0 && body.length > 0) {
         me.factors.forEach(function (factor) {
@@ -2700,15 +2743,21 @@ __webpack_require__.r(__webpack_exports__);
       } //grouped by factor
 
 
+      var selectedSituation = [];
+      selectedSituation[0] = me.maritialStatusCopy; //   selectedSituation[1] = this.scenarios;
+
       me.selectedCriterion[subfactor] = criterion.id;
 
       if (me.maritialStatusCopy === "Single") {
+        selectedSituation[2] = me.singleValues;
         me.factorScore[factor] = me.factorScoreSingle[factor];
       } else {
         me.selectedCriterion[criterion.id] = criterion.married;
+        selectedSituation[2] = me.marriedValues;
         me.factorScore[factor] = me.factorScoreMarried[factor];
-      } //Create or update scores array to emmit to another file
+      }
 
+      me.selectedSituation = selectedSituation; //Create or update scores array to emmit to another file
 
       var hasSumS = null;
       var hasSumM = null;
@@ -2742,6 +2791,110 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
+    },
+    changeStatus: function changeStatus(value) {
+      this.maritialStatusCopy = value;
+    },
+    saveScennarioCopy: function saveScennarioCopy() {
+      var me = this;
+      var scenario = null;
+      Swal.fire({
+        title: "Guardar cambios en  " + me.scennarioName,
+        type: "warning",
+        showDenyButton: true,
+        showCancelButton: true
+      }).then(function (result) {
+        if ("value" in result) {
+          axios.post("save-situation", {
+            scennarioId: me.copyId,
+            maritialStatus: me.maritialStatusCopy,
+            actualSituation: me.selectedSituation
+          }).then(function (response) {
+            Swal.fire({
+              type: "success",
+              title: "Escenario guardado",
+              text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
+            });
+            me.$emit("CallReloader", Date.now());
+          });
+        } else {
+          Swal.fire({
+            type: "info",
+            title: "No será guardado",
+            timer: 3000
+          });
+        }
+      })["catch"](function (error) {
+        console.table(error);
+      });
+    },
+    copyScennario: function copyScennario() {
+      /* Save scennario as copy of current on view */
+      var me = this;
+      Swal.fire({
+        title: "Guardar copia de  : " + me.scennarioName,
+        type: "warning",
+        text: "Ingrese nombre para la nueva copia ",
+        input: "text",
+        showDenyButton: true,
+        showCancelButton: true
+      }).then(function (result) {
+        if ("value" in result) {
+          if (!result.value) {
+            Swal.fire({
+              type: "danger",
+              title: "Ingrese algo en el campo nombre",
+              timer: 3000
+            });
+          } else {
+            axios.post("copy", {
+              scennarioId: me.copyId,
+              maritialStatus: me.maritialStatusCopy,
+              actualSituation: me.selectedSituation,
+              scenarioName: result.value
+            }).then(function (response) {
+              Swal.fire({
+                type: "success",
+                title: "Escenario guardado",
+                text: "Se ha guardado su copia exitosamente "
+              });
+              me.$emit("CallReloader", Date.now());
+            });
+          }
+        } else {
+          Swal.fire({
+            type: "info",
+            title: "No será guardado",
+            timer: 3000
+          });
+        }
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    deleteScennary: function deleteScennary(id) {
+      var me = this;
+      Swal.fire({
+        title: "Desea eliminar el escenario " + me.scennarioName + "?",
+        type: "warning",
+        icon: "trash",
+        showDenyButton: true,
+        confirmButtonText: "Delete",
+        confirmButtonColor: "red",
+        showCancelButton: true
+      }).then(function () {
+        axios.post("/delete/" + id).then(function (response) {
+          console.log(response);
+          Swal.fire({
+            type: "success",
+            title: "Escenario eliminado",
+            text: "Se ha eliminado el escenario"
+          });
+          me.$emit("CallReloader", Date.now());
+        })["catch"](function (error) {
+          console.error(error);
+        });
+      });
     }
   }
 });
@@ -2904,8 +3057,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies"],
   watch: {
@@ -2914,7 +3065,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var toSumArr = [];
       this.factors.forEach(function (fact) {
-        // console.log(this.maritialStatusChanged);
         toSumArr.push(_this.maritialStatusChanged === "Married" && [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][1].marriedSum : _this.maritialStatusChanged === "Single" && [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][0].singleSum : 0);
       }); //   console.log({ toSumArr });
 
@@ -2934,8 +3084,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         // console.log("SUMMARY");
         // console.log(this.maritialStatusChanged);
         toSumArr.push(_this2.maritialStatusChanged === "Married" && [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][1].marriedSum : _this2.maritialStatusChanged === "Single" && [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][0].singleSum : 0);
-      }); //   console.log({ toSumArr });
-
+      });
       var sum = 0;
 
       for (var i = 0; i < toSumArr.length; i++) {
@@ -3041,20 +3190,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _actual_scennario_scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actual-scennario/scenario-accordions/Accordions.vue */ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
+/* harmony import */ var _actual_scennario_scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actual-scennario/scenario-accordions/Accordions.vue */ "./resources/js/components/content-tabs/actual-scennario/scenario-accordions/Accordions.vue");
 //
 //
 //
@@ -3125,8 +3261,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["reloader"],
   components: {
-    Accordions: _actual_scennario_scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Accordions: _actual_scennario_scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
@@ -3143,23 +3280,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.maritialStatus = value;
     },
     changeStatus: function changeStatus(value) {
-      //   console.log("changed");
       this.maritialStatus = value;
     },
     getFactsWSubfacts: function getFactsWSubfacts(value) {
-      //   console.log("changed");factorsWithSubfactors
-      this.$emit("factorsWithSubfactors", value); //   this.getFactsWSubfacts = value;
+      this.$emit("factorsWithSubfactors", value);
     },
     maritialChanged: function maritialChanged(value) {
-      //   console.log("changed emmit");
-      this.$emit("maritialChanged", value); //   console.log(value);
+      this.$emit("maritialChanged", value);
     },
     getExtraScennarios: function getExtraScennarios(value) {
-      //   console.log("Scennarios copy getted");
-      this.$emit("additionalScennarios", value); //   console.log(value);
+      this.$emit("additionalScennarios", value);
     },
     getSituation: function getSituation(value) {
-      //   console.log("getted");
       var scenario = null;
       var me = this;
       me.scenarios = value[1];
@@ -3182,83 +3314,65 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$emit("selectedSituation", me.userActualSituation);
     },
     saveSituation: function saveSituation() {
-      var _this = this;
+      var me = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var me, scenario;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                me = _this;
-
-                if (me.scenarios.length === 0) {
-                  Swal.fire({
-                    type: "warning",
-                    title: "Nada para guardar",
-                    text: "No ha hecho ningun cambio. No hay nada que guardar."
-                  });
-                } else {
-                  scenario = null;
-                  me.scenarios.forEach(function (element) {
-                    if ("is_theactual" in element) {
-                      if (element["is_theactual"] == true) {
-                        scenario = element;
-                      }
-                    }
-                  });
-                  Swal.fire({
-                    title: "Sera guardado como : " + (scenario == null ? "Scenario " + Number(me.scenarios.length + 1) : scenario["name"]),
-                    type: "warning",
-                    text: "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
-                    input: "text",
-                    showDenyButton: true,
-                    showCancelButton: true
-                  }).then(function (result) {
-                    if ("value" in result) {
-                      axios.post("save-situation", {
-                        scenarioName: result.value ? result.value : "Scenario " + Number(me.scenarios.length + 1),
-                        actualSituation: me.userActualSituation
-                      }).then(function (response) {
-                        Swal.fire({
-                          type: "success",
-                          title: "Escenario guardado",
-                          text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
-                        }); //   console.log(response);
-                      });
-                    } else {
-                      Swal.fire({
-                        type: "info",
-                        title: "No será guardado",
-                        timer: 3000
-                      });
-                    }
-                  })["catch"](function (error) {
-                    console.table(error);
-                  });
-                }
-
-              case 2:
-              case "end":
-                return _context.stop();
+      if (me.scenarios.length === 0) {
+        Swal.fire({
+          type: "warning",
+          title: "Nada para guardar",
+          text: "No ha hecho ningun cambio. No hay nada que guardar."
+        });
+      } else {
+        var scenario = null;
+        me.scenarios.forEach(function (element) {
+          if ("is_theactual" in element) {
+            if (element["is_theactual"] == true) {
+              scenario = element;
             }
           }
-        }, _callee);
-      }))();
+        });
+        Swal.fire({
+          title: "Guardar situacion actual ",
+          type: "warning",
+          text: "Guardar situacion actial.A partir de este escenario podra crear otros nuevos para comparar y etc.",
+          showDenyButton: true,
+          showCancelButton: true
+        }).then(function (result) {
+          if ("value" in result) {
+            axios.post("save-situation", {
+              scenarioName: "Situacion actual",
+              actualSituation: me.userActualSituation,
+              maritialStatus: me.maritialStatus
+            }).then(function (response) {
+              console.log(response.data);
+              Swal.fire({
+                type: "success",
+                title: "Escenario guardado",
+                text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
+              });
+            });
+          } else {
+            Swal.fire({
+              type: "info",
+              title: "No será guardado",
+              timer: 3000
+            });
+          }
+        })["catch"](function (error) {
+          console.table(error);
+        });
+      }
     },
     getFactors: function getFactors(value) {
-      //   console.log("factors");
       this.$emit("FactorsTitles", value);
-      this.factors = value; //   let factors = value;
+      this.factors = value;
     },
     getScore: function getScore(value) {
-      //   console.log("getScore");
       this.$emit("scoresArr", value);
       this.scores = value[0];
     },
     copyScennario: function copyScennario() {
-      /* Save scennario as copy of current on view */
-      var me = this; //   console.log(me.userActualSituation[2]);
+      var me = this;
 
       if (!me.userActualSituation[2].length > 0) {
         Swal.fire({
@@ -3277,7 +3391,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }); //copy of
 
         Swal.fire({
-          title: "Sera guardado como : " + (scenario == null ? "Scenario " + Number(me.scenarios.length + 1) : scenario["name"]),
+          title: "Guardar copia como : " + (scenario == null ? "Scenario " + Number(me.scenarios.length + 1) : scenario["name"]),
           type: "warning",
           text: "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
           input: "text",
@@ -3287,7 +3401,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           if ("value" in result) {
             axios.post("copy", {
               scenarioName: result.value ? result.value : "Scenario " + Number(me.scenarios.length + 1),
-              actualSituation: me.userActualSituation
+              actualSituation: me.userActualSituation,
+              maritialStatus: me.maritialStatus
             }).then(function (response) {
               Swal.fire({
                 type: "success",
@@ -3343,10 +3458,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["maritialStatus"],
+  props: ["maritialStatus", 'reloader'],
   watch: {
     maritialStatus: function maritialStatus() {
-      this.$emit("MaritialStatusChanged", this.maritialStatus); // send the sum
+      this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+    },
+    reloader: function reloader() {
+      alert('called');
+      window.location.reload(); // this.getData;
     }
   },
   data: function data() {
@@ -3392,15 +3511,14 @@ __webpack_require__.r(__webpack_exports__);
               me.additionalScenarios.push(element);
             }
           });
-          me.$emit("additionalScennarios", me.additionalScenarios); // console.log({ anotherScennarios: me.additionalScenarios });
-
+          me.$emit("additionalScennarios", me.additionalScenarios);
           me.factors = response.data ? response.data[0] : [];
           me.factors.forEach(function (element) {
             me.factorNames.push({
               id: element.id,
               name: element.title + ' ' + element.sub_title
             });
-          }); // return
+          }); //
 
           me.$emit("factorNames", me.factorNames);
           var newData = [];
@@ -3450,9 +3568,9 @@ __webpack_require__.r(__webpack_exports__);
           me.data = newData;
         }
       });
+      this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
     },
     criteriaVal: function criteriaVal(event) {
-      // console.log('called');
       var me = this;
       var newVal = null;
       var existingS = null;
@@ -3587,8 +3705,7 @@ __webpack_require__.r(__webpack_exports__);
             sum: me.factorScoreMarried[factor]
           }
         });
-      } // me.situation.push(selectedSituation);
-
+      }
 
       me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
 
@@ -21177,770 +21294,6 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/regenerator-runtime/runtime.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime.js ***!
-  \*****************************************************/
-/***/ ((module) => {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var runtime = (function (exports) {
-  "use strict";
-
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  function define(obj, key, value) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-    return obj[key];
-  }
-  try {
-    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
-    define({}, "");
-  } catch (err) {
-    define = function(obj, key, value) {
-      return obj[key] = value;
-    };
-  }
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  exports.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  define(IteratorPrototype, iteratorSymbol, function () {
-    return this;
-  });
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = GeneratorFunctionPrototype;
-  define(Gp, "constructor", GeneratorFunctionPrototype);
-  define(GeneratorFunctionPrototype, "constructor", GeneratorFunction);
-  GeneratorFunction.displayName = define(
-    GeneratorFunctionPrototype,
-    toStringTagSymbol,
-    "GeneratorFunction"
-  );
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      define(prototype, method, function(arg) {
-        return this._invoke(method, arg);
-      });
-    });
-  }
-
-  exports.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  exports.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      define(genFun, toStringTagSymbol, "GeneratorFunction");
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  exports.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator, PromiseImpl) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return PromiseImpl.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return PromiseImpl.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration.
-          result.value = unwrapped;
-          resolve(result);
-        }, function(error) {
-          // If a rejected Promise was yielded, throw the rejection back
-          // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
-    return this;
-  });
-  exports.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    if (PromiseImpl === void 0) PromiseImpl = Promise;
-
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList),
-      PromiseImpl
-    );
-
-    return exports.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        // Note: ["return"] must be used for ES3 parsing compatibility.
-        if (delegate.iterator["return"]) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  define(Gp, toStringTagSymbol, "Generator");
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  define(Gp, iteratorSymbol, function() {
-    return this;
-  });
-
-  define(Gp, "toString", function() {
-    return "[object Generator]";
-  });
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  exports.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  exports.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-
-  // Regardless of whether this script is executing as a CommonJS module
-  // or not, return the runtime object so that we can declare the variable
-  // regeneratorRuntime in the outer scope, which allows this module to be
-  // injected easily by `bin/regenerator --include-runtime script.js`.
-  return exports;
-
-}(
-  // If this script is executing as a CommonJS module, use module.exports
-  // as the regeneratorRuntime namespace. Otherwise create a new empty
-  // object. Either way, the resulting object will be used to initialize
-  // the regeneratorRuntime variable at the top of this file.
-   true ? module.exports : 0
-));
-
-try {
-  regeneratorRuntime = runtime;
-} catch (accidentalStrictMode) {
-  // This module should not be running in strict mode, so the above
-  // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, in modern engines
-  // we can explicitly access globalThis. In older engines we can escape
-  // strict mode using a global Function call. This could conceivably fail
-  // if a Content Security Policy forbids using Function, but in that case
-  // the proper solution is to fix the accidental strict mode problem. If
-  // you've misconfigured your bundler to force strict mode and applied a
-  // CSP to forbid Function, and you're not willing to fix either of those
-  // problems, please detail your unique predicament in a GitHub issue.
-  if (typeof globalThis === "object") {
-    globalThis.regeneratorRuntime = runtime;
-  } else {
-    Function("r", "regeneratorRuntime = r")(runtime);
-  }
-}
-
-
-/***/ }),
-
 /***/ "./resources/css/vue_modal.css":
 /*!*************************************!*\
   !*** ./resources/css/vue_modal.css ***!
@@ -23208,6 +22561,7 @@ var render = function () {
                 { staticClass: "tab-pane", attrs: { id: "Situation" } },
                 [
                   _c("SituationA", {
+                    attrs: { reloader: _vm.reloader },
                     on: {
                       maritialChanged: _vm.getMaritialChanged,
                       selectedSituation: _vm.getSituation,
@@ -23228,12 +22582,15 @@ var render = function () {
                   [
                     _c("Scenario2", {
                       attrs: {
+                        copyId: copy.id,
                         body: copy.body,
                         factors: _vm.factorsWithSubfactors,
                         maritialSituation: copy.is_married
                           ? copy.is_married
                           : 0,
+                        scennarioName: copy.name,
                       },
+                      on: { CallReloader: _vm.callReloader },
                     }),
                   ],
                   1
@@ -23348,208 +22705,363 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-12" }, [
-      _c(
-        "div",
-        { staticClass: "custom-accordion mb-4", attrs: { id: "accordion" } },
-        _vm._l(_vm.data, function (object) {
-          return _c("div", { staticClass: "card mb-0" }, [
-            _c(
-              "div",
-              { staticClass: "card-header", attrs: { id: "headingOne" } },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("h5", { staticClass: "m-0" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "custom-accordion-title d-block pt-2 pb-2",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            href: "#collapse" + object.factor.id,
-                            "aria-expanded": "false",
-                            "aria-controls": "collapse" + object.factor.id,
-                          },
-                        },
-                        [
-                          _vm._v(
-                            "\n                  " +
-                              _vm._s(
-                                object.factor.title +
-                                  " " +
-                                  object.factor.sub_title
-                              ) +
-                              "\n                  "
-                          ),
-                          _vm._m(0, true),
-                        ]
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-4" }, [
-                    _c("input", {
-                      staticClass: "form-control float-right",
-                      attrs: { type: "text", disabled: "" },
-                      domProps: {
-                        value:
-                          _vm.maritialStatusCopy === "Married"
-                            ? _vm.factorScoreMarried[object.factor.id]
-                            : _vm.factorScoreSingle[object.factor.id],
-                      },
-                    }),
-                  ]),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse",
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-6" }, [
+          _c(
+            "div",
+            {
+              staticClass: "form-check form-check-inline",
+              attrs: { id: "maritial-status" },
+            },
+            [
+              _c("input", {
+                staticClass: "form-check-input material-inputs",
                 attrs: {
-                  id: "collapse" + object.factor.id,
-                  "aria-labelledby": "headingOne",
-                  "data-parent": "#accordion",
+                  type: "radio",
+                  name: _vm.copyId + "matrialStatusCopy",
+                  id: _vm.copyId + "isSingleCopy",
+                },
+                domProps: { checked: _vm.maritialStatusCopy == "Single" },
+                on: {
+                  change: function ($event) {
+                    return _vm.changeStatus("Single")
+                  },
+                },
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "form-check-label",
+                  attrs: { for: _vm.copyId + "isSingleCopy" },
+                },
+                [_vm._v("Soltero")]
+              ),
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-check form-check-inline" }, [
+            _c("input", {
+              staticClass: "form-check-input material-inputs",
+              attrs: {
+                type: "radio",
+                name: _vm.copyId + "matrialStatusCopy",
+                id: _vm.copyId + "isMarriedCopy",
+              },
+              domProps: { checked: _vm.maritialStatusCopy == "Married" },
+              on: {
+                change: function ($event) {
+                  return _vm.changeStatus("Married")
                 },
               },
-              [
-                _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group" },
-                    _vm._l(object.factor.subfactors, function (subfactor) {
-                      return _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-6" }, [
-                          _vm._v(
-                            "\n                  " +
-                              _vm._s(subfactor.subfactor) +
-                              "\n                "
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-4" }, [
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "form-check-label",
+                attrs: { for: _vm.copyId + "isMarriedCopy" },
+              },
+              [_vm._v("Casado")]
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-info waves-effect waves-light",
+              attrs: { type: "button" },
+              on: { click: _vm.saveScennarioCopy },
+            },
+            [
+              _vm._m(0),
+              _vm._v(" Guardar cambios en\n          escenario\n        "),
+            ]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-success waves-effect waves-light",
+              attrs: { type: "button" },
+              on: {
+                click: function ($event) {
+                  return _vm.copyScennario()
+                },
+              },
+            },
+            [_vm._m(1), _vm._v(" Copiar ecenario\n        ")]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-danger waves-effect waves-light",
+              attrs: { type: "button" },
+              on: {
+                click: function ($event) {
+                  return _vm.deleteScennary(_vm.copyId)
+                },
+              },
+            },
+            [_vm._m(2), _vm._v(" Eliminar\n          escenario\n        ")]
+          ),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c(
+            "div",
+            {
+              staticClass: "custom-accordion mb-4",
+              attrs: { id: "accordion" },
+            },
+            _vm._l(_vm.data, function (object) {
+              return _c("div", { staticClass: "card mb-0" }, [
+                _c(
+                  "div",
+                  { staticClass: "card-header", attrs: { id: "headingOne" } },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-8" }, [
+                        _c("h5", { staticClass: "m-0" }, [
                           _c(
-                            "select",
+                            "a",
                             {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value:
-                                    _vm.selectedSubfactor.selections[
-                                      subfactor.id
-                                    ],
-                                  expression:
-                                    "selectedSubfactor.selections[subfactor.id]",
-                                },
-                              ],
-                              staticClass: "form-control",
-                              staticStyle: { width: "100%", height: "36px" },
-                              attrs: { id: "select2-search-hide" },
-                              on: {
-                                change: [
-                                  function ($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call(
-                                        $event.target.options,
-                                        function (o) {
-                                          return o.selected
-                                        }
-                                      )
-                                      .map(function (o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.$set(
-                                      _vm.selectedSubfactor.selections,
-                                      subfactor.id,
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    )
-                                  },
-                                  _vm.criteriaVal,
-                                ],
+                              staticClass:
+                                "custom-accordion-title d-block pt-2 pb-2",
+                              attrs: {
+                                "data-toggle": "collapse",
+                                href: "#collapse" + object.factor.id,
+                                "aria-expanded": "false",
+                                "aria-controls": "collapse" + object.factor.id,
                               },
                             },
-                            _vm._l(subfactor.criteria, function (criterion) {
-                              return _c(
-                                "option",
-                                {
-                                  class: criterion.selected ? "bg-success" : "",
-                                  domProps: {
-                                    value: {
-                                      criterion: criterion,
-                                      factor: object.factor.id,
-                                      subfactor: subfactor.id,
-                                    },
-                                  },
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                      " +
-                                      _vm._s(criterion.criterion) +
-                                      "\n                    "
-                                  ),
-                                ]
-                              )
-                            }),
-                            0
+                            [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(
+                                    object.factor.title +
+                                      " " +
+                                      object.factor.sub_title
+                                  ) +
+                                  "\n                      "
+                              ),
+                              _vm._m(3, true),
+                            ]
                           ),
                         ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-2" }, [
-                          _c("input", {
-                            staticClass: "form-control",
-                            attrs: { type: "text", disabled: "" },
-                            domProps: {
-                              value:
-                                _vm.selectedSubfactor != undefined &&
-                                _vm.selectedSubfactor.selections != undefined &&
-                                _vm.selectedSubfactor.selections[
-                                  subfactor.id
-                                ] != undefined &&
-                                "criterion" in
-                                  _vm.selectedSubfactor.selections[subfactor.id]
-                                  ? _vm.maritialStatusCopy === "Married" &&
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-4" }, [
+                        _c("input", {
+                          staticClass: "form-control float-right",
+                          attrs: { type: "text", disabled: "" },
+                          domProps: {
+                            value:
+                              _vm.maritialStatusCopy === "Married"
+                                ? _vm.factorScoreMarried[object.factor.id]
+                                : _vm.factorScoreSingle[object.factor.id],
+                          },
+                        }),
+                      ]),
+                    ]),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "collapse",
+                    attrs: {
+                      id: "collapse" + object.factor.id,
+                      "aria-labelledby": "headingOne",
+                      "data-parent": "#accordion",
+                    },
+                  },
+                  [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        _vm._l(object.factor.subfactors, function (subfactor) {
+                          return _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-6" }, [
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(subfactor.subfactor) +
+                                  "\n                    "
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-4" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.selectedSubfactor.selections[
+                                          subfactor.id
+                                        ],
+                                      expression:
+                                        "selectedSubfactor.selections[subfactor.id]",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  staticStyle: {
+                                    width: "100%",
+                                    height: "36px",
+                                  },
+                                  attrs: { id: "select2-search-hide" },
+                                  on: {
+                                    change: [
+                                      function ($event) {
+                                        var $$selectedVal =
+                                          Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function (o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function (o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                        _vm.$set(
+                                          _vm.selectedSubfactor.selections,
+                                          subfactor.id,
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      _vm.criteriaVal,
+                                    ],
+                                  },
+                                },
+                                _vm._l(
+                                  subfactor.criteria,
+                                  function (criterion) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        class: criterion.selected
+                                          ? "bg-success"
+                                          : "",
+                                        domProps: {
+                                          value: {
+                                            criterion: criterion,
+                                            factor: object.factor.id,
+                                            subfactor: subfactor.id,
+                                          },
+                                        },
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                          " +
+                                            _vm._s(criterion.criterion) +
+                                            "\n                        "
+                                        ),
+                                      ]
+                                    )
+                                  }
+                                ),
+                                0
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: { type: "text", disabled: "" },
+                                domProps: {
+                                  value:
+                                    _vm.selectedSubfactor != undefined &&
+                                    _vm.selectedSubfactor.selections !=
+                                      undefined &&
                                     _vm.selectedSubfactor.selections[
                                       subfactor.id
-                                    ].criterion.hasOwnProperty("married")
-                                    ? _vm.selectedSubfactor.selections[
-                                        subfactor.id
-                                      ].criterion.married
-                                    : _vm.maritialStatusCopy === "Single" &&
+                                    ] != undefined &&
+                                    "criterion" in
                                       _vm.selectedSubfactor.selections[
                                         subfactor.id
-                                      ].criterion.hasOwnProperty("single")
-                                    ? _vm.selectedSubfactor.selections[
-                                        subfactor.id
-                                      ].criterion.single
-                                    : "a"
-                                  : "b",
-                            },
-                          }),
-                        ]),
-                      ])
-                    }),
-                    0
-                  ),
-                ]),
-              ]
-            ),
-          ])
-        }),
-        0
-      ),
+                                      ]
+                                      ? _vm.maritialStatusCopy === "Married" &&
+                                        _vm.selectedSubfactor.selections[
+                                          subfactor.id
+                                        ].criterion.hasOwnProperty("married")
+                                        ? _vm.selectedSubfactor.selections[
+                                            subfactor.id
+                                          ].criterion.married
+                                        : _vm.maritialStatusCopy === "Single" &&
+                                          _vm.selectedSubfactor.selections[
+                                            subfactor.id
+                                          ].criterion.hasOwnProperty("single")
+                                        ? _vm.selectedSubfactor.selections[
+                                            subfactor.id
+                                          ].criterion.single
+                                        : "a"
+                                      : "b",
+                                },
+                              }),
+                            ]),
+                          ])
+                        }),
+                        0
+                      ),
+                    ]),
+                  ]
+                ),
+              ])
+            }),
+            0
+          ),
+        ]),
+      ]),
     ]),
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "fas fa-save" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "fas fa-copy" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "fas fa-trash-alt" }),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -23699,7 +23211,7 @@ var render = function () {
                   return _c(
                     "th",
                     {
-                      staticClass: "bg-warning",
+                      staticClass: "text-center",
                       attrs: { "data-sortable": "", "data-width": "auto" },
                     },
                     [
@@ -23754,10 +23266,12 @@ var render = function () {
                 [
                   _c("th", [_vm._v("Total de puntos")]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.totalForFactor))]),
+                  _c("th", { staticClass: "text-center" }, [
+                    _vm._v(_vm._s(_vm.totalForFactor)),
+                  ]),
                   _vm._v(" "),
                   _vm._l(_vm.sumScoreCopies.copies, function (sumS) {
-                    return _c("th", [
+                    return _c("th", { staticClass: "text-center" }, [
                       _vm._v(
                         "\n            " + _vm._s(sumS.total) + "\n          "
                       ),
@@ -23777,7 +23291,7 @@ var render = function () {
                       ]),
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "bg-info" }, [
+                    _c("td", {}, [
                       _vm._v(
                         "\n            " +
                           _vm._s(
@@ -23924,7 +23438,7 @@ var render = function () {
               ]),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-2" }, [
+            _c("div", { staticClass: "col-md-3" }, [
               _c(
                 "button",
                 {
@@ -23939,7 +23453,7 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-2" }, [
+            _c("div", { staticClass: "col-md-3" }, [
               _c(
                 "button",
                 {
@@ -23955,12 +23469,13 @@ var render = function () {
                 [_vm._m(1), _vm._v(" Copiar ecenario\n          ")]
               ),
             ]),
-            _vm._v(" "),
-            _vm._m(2),
           ]),
           _vm._v(" "),
           _c("accordions", {
-            attrs: { maritialStatus: _vm.maritialStatus },
+            attrs: {
+              maritialStatus: _vm.maritialStatus,
+              reloader: _vm.reloader,
+            },
             on: {
               sumScore: _vm.getScore,
               factorNames: _vm.getFactors,
@@ -23992,26 +23507,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "btn-label" }, [
       _c("i", { staticClass: "fas fa-copy" }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-danger waves-effect waves-light",
-          attrs: { type: "button" },
-        },
-        [
-          _c("span", { staticClass: "btn-label" }, [
-            _c("i", { staticClass: "fas fa-trash-alt" }),
-          ]),
-          _vm._v(" Eliminar\n            escenario\n          "),
-        ]
-      ),
     ])
   },
 ]

@@ -147,6 +147,18 @@ class FactorController extends Controller
             $currentScennarios = $request->actualSituation[1];
             $actualSituation = null;
 
+            // return $request;
+
+            // Save changes on scennarios copies
+            if ($request->scennarioId) {
+                $scennario =  Scenario::Where('id', $request->scennarioId)->first();
+                $scennario->is_married = $request->maritialStatus === 'Married' ? true : false;
+                $scennario->body = json_encode($request->actualSituation[2]);
+                $scennario->save();
+            }
+
+            // return $request;
+
             foreach ($currentScennarios as $current) {
                 $actual = false;
                 if (isset($current['is_theactual'])) {
@@ -161,12 +173,12 @@ class FactorController extends Controller
             $scenario =  Scenario::updateOrCreate(
                 [
                     'id' => $actualSituation['id'],
-                    'is_theactual' => true
+                    // 'is_theactual' => true
                 ],
                 [
                     'user_id' => $user->id,
                     'name' => $request->scenarioName,
-                    'is_married' => $request->actualSituation[0] === 'Married' ? true : false,
+                    'is_married' => $request->maritialStatus === 'Married' ? true : false,
                     'body' => json_encode($request->actualSituation[2]),
                 ]
             );
@@ -182,16 +194,35 @@ class FactorController extends Controller
     {
         try {
             $user = Auth::user();
+            $maritial = false;
+            if ($request->maritialStatus) {
+                $maritial = $request->maritialStatus === 'Married' ? true : false;
+            }
+            if ($request->actualSituation[0]) {
+                $maritial = $request->actualSituation[0] === 'Married' ? true : false;
+            }
+
+
             $scenario =  Scenario::create(
                 [
                     'user_id' => $user->id,
                     'is_theactual' => false,
                     'name' => $request->scenarioName,
-                    'is_married' => $request->actualSituation[0] === 'Married' ? true : false,
+                    'is_married' => $maritial,
                     'body' => json_encode($request->actualSituation[2]),
                 ]
             );
             return response()->json($scenario);
+        } catch (Exception $e) {
+            return response()->json($e);
+        }
+    }
+
+    public function deleteScennary($id)
+    {
+        try {
+            Scenario::where('id', $id)->delete();
+            return response()->json(200);
         } catch (Exception $e) {
             return response()->json($e);
         }

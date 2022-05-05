@@ -30,7 +30,7 @@
             </div>
           </div>
 
-          <div class="col-md-2">
+          <div class="col-md-3">
             <button
               class="btn btn-outline-info waves-effect waves-light"
               type="button"
@@ -40,19 +40,13 @@
               Situacion actual
             </button>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <button
               class="btn btn-outline-success waves-effect waves-light"
               type="button"
               @click="copyScennario()"
             >
               <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
-            </button>
-          </div>
-          <div class="col-md-2">
-            <button class="btn btn-outline-danger waves-effect waves-light" type="button">
-              <span class="btn-label"><i class="fas fa-trash-alt"></i></span> Eliminar
-              escenario
             </button>
           </div>
         </div>
@@ -65,6 +59,7 @@
           @additionalScennarios="getExtraScennarios"
           @factorsWithSubfactors="getFactsWSubfacts"
           :maritialStatus="maritialStatus"
+          :reloader="reloader"
         />
       </div>
     </div>
@@ -74,6 +69,7 @@
 <script>
 import Accordions from "../actual-scennario/scenario-accordions/Accordions.vue";
 export default {
+  props: ["reloader"],
   components: {
     Accordions,
   },
@@ -93,30 +89,22 @@ export default {
     },
 
     changeStatus(value) {
-      //   console.log("changed");
       this.maritialStatus = value;
     },
 
     getFactsWSubfacts(value) {
-      //   console.log("changed");factorsWithSubfactors
       this.$emit("factorsWithSubfactors", value);
-      //   this.getFactsWSubfacts = value;
     },
 
     maritialChanged(value) {
-      //   console.log("changed emmit");
       this.$emit("maritialChanged", value);
-      //   console.log(value);
     },
 
     getExtraScennarios(value) {
-      //   console.log("Scennarios copy getted");
       this.$emit("additionalScennarios", value);
-      //   console.log(value);
     },
 
     getSituation(value) {
-      //   console.log("getted");
       let scenario = null;
       let me = this;
       me.scenarios = value[1];
@@ -137,7 +125,7 @@ export default {
       this.$emit("selectedSituation", me.userActualSituation);
     },
 
-    async saveSituation() {
+    saveSituation() {
       let me = this;
       if (me.scenarios.length === 0) {
         Swal.fire({
@@ -156,16 +144,10 @@ export default {
         });
 
         Swal.fire({
-          title:
-            "Sera guardado como : " +
-            (scenario == null
-              ? "Scenario " + Number(me.scenarios.length + 1)
-              : scenario["name"]),
+          title: "Guardar situacion actual ",
           type: "warning",
           text:
-            "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
-          input: "text",
-
+            "Guardar situacion actial.A partir de este escenario podra crear otros nuevos para comparar y etc.",
           showDenyButton: true,
           showCancelButton: true,
         })
@@ -173,12 +155,12 @@ export default {
             if ("value" in result) {
               axios
                 .post("save-situation", {
-                  scenarioName: result.value
-                    ? result.value
-                    : "Scenario " + Number(me.scenarios.length + 1),
+                  scenarioName: "Situacion actual",
                   actualSituation: me.userActualSituation,
+                  maritialStatus: me.maritialStatus,
                 })
                 .then(function (response) {
+                  console.log(response.data);
                   Swal.fire({
                     type: "success",
                     title: "Escenario guardado",
@@ -187,7 +169,6 @@ export default {
                         ? "creado"
                         : "actualizado" + "este escenario",
                   });
-                  //   console.log(response);
                 });
             } else {
               Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
@@ -200,22 +181,17 @@ export default {
     },
 
     getFactors(value) {
-      //   console.log("factors");
       this.$emit("FactorsTitles", value);
       this.factors = value;
-      //   let factors = value;
     },
 
     getScore(value) {
-      //   console.log("getScore");
       this.$emit("scoresArr", value);
       this.scores = value[0];
     },
 
     copyScennario() {
-      /* Save scennario as copy of current on view */
       let me = this;
-      //   console.log(me.userActualSituation[2]);
       if (!me.userActualSituation[2].length > 0) {
         Swal.fire({
           type: "warning",
@@ -234,7 +210,7 @@ export default {
         //copy of
         Swal.fire({
           title:
-            "Sera guardado como : " +
+            "Guardar copia como : " +
             (scenario == null
               ? "Scenario " + Number(me.scenarios.length + 1)
               : scenario["name"]),
@@ -254,6 +230,7 @@ export default {
                     ? result.value
                     : "Scenario " + Number(me.scenarios.length + 1),
                   actualSituation: me.userActualSituation,
+                  maritialStatus: me.maritialStatus,
                 })
                 .then(function (response) {
                   Swal.fire({

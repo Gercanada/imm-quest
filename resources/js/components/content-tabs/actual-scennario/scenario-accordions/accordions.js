@@ -1,9 +1,14 @@
 export default {
-    props: ["maritialStatus"],
+    props: ["maritialStatus", 'reloader'],
     watch: {
         maritialStatus: function() {
-            this.$emit("MaritialStatusChanged", this.maritialStatus); // send the sum
-        }
+            this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+        },
+        reloader: function() {
+            alert('called');
+            window.location.reload();
+            // this.getData;
+        },
     },
     data() {
         return {
@@ -23,7 +28,6 @@ export default {
             criterion: {},
             selectedCriterion: {},
             mutableMaritialStatus: this.maritialStatus,
-
             factorNames: [],
             arraySums: [],
             situation: []
@@ -32,6 +36,7 @@ export default {
 
     mounted() {
         this.getData();
+
     },
 
     methods: {
@@ -51,9 +56,6 @@ export default {
                     });
 
                     me.$emit("additionalScennarios", me.additionalScenarios);
-                    // console.log({ anotherScennarios: me.additionalScenarios });
-
-
                     me.factors = response.data ? response.data[0] : [];
                     me.factors.forEach(element => {
                         me.factorNames.push({
@@ -61,7 +63,7 @@ export default {
                             name: element.title + ' ' + element.sub_title
                         });
                     });
-                    // return
+                    //
                     me.$emit("factorNames", me.factorNames);
                     let newData = [];
                     if (scenario != null &&
@@ -104,10 +106,10 @@ export default {
                     me.data = newData;
                 }
             });
+            this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
         },
 
         criteriaVal(event) {
-            // console.log('called');
             let me = this;
             let newVal = null;
             let existingS = null;
@@ -203,7 +205,6 @@ export default {
             if (this.mutableMaritialStatus === "Single") {
                 selectedSituation[2] = me.singleValues;
                 me.factorScore[factor] = me.factorScoreSingle[factor];
-
                 // this.$emit({ scoreSingle: factor }, me.factorScoreSingle[factor]); //send the sum
             } else {
                 me.selectedCriterion[criterion.id] = criterion.married;
@@ -246,7 +247,6 @@ export default {
                     }
                 });
             }
-            // me.situation.push(selectedSituation);
             me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
             me.$emit("selectedSituation", selectedSituation);
         },

@@ -3,8 +3,6 @@
   <div class="card">
     <div class="card-body">
       <h4 class="card-title">Sumario de puntos</h4>
-      <!-- <p class="bg-danger">{{ maritialStatusChanged }}</p> -->
-      <!-- <h6 class="card-subtitle">Basic sortable table</h6> -->
       <table
         data-toggle="table"
         data-mobile-responsive="true"
@@ -19,7 +17,7 @@
             <th
               data-sortable=""
               data-width="auto"
-              class="bg-warning"
+              class="text-center"
               v-for="sCopy in scennariosCopies"
             >
               {{ sCopy.name }}
@@ -38,8 +36,8 @@
           </tr>
           <tr>
             <th>Total de puntos</th>
-            <th>{{ totalForFactor }}</th>
-            <th v-for="sumS in sumScoreCopies.copies">
+            <th class="text-center">{{ totalForFactor }}</th>
+            <th class="text-center" v-for="sumS in sumScoreCopies.copies">
               {{ sumS.total }}
             </th>
           </tr>
@@ -48,7 +46,7 @@
             <td>
               <p class="left">{{ fact.name }}</p>
             </td>
-            <td class="bg-info">
+            <td class="">
               {{
                 maritialStatusChanged === "Married" &&
                 fact.id in FactorsWithScores &&
@@ -90,7 +88,6 @@ export default {
     FactorsWithScores: function () {
       let toSumArr = [];
       this.factors.forEach((fact) => {
-        // console.log(this.maritialStatusChanged);
         toSumArr.push(
           this.maritialStatusChanged === "Married" &&
             [fact.id] in this.FactorsWithScores &&
@@ -129,7 +126,6 @@ export default {
             : 0
         );
       });
-      //   console.log({ toSumArr });
       let sum = 0;
       for (let i = 0; i < toSumArr.length; i++) {
         sum += toSumArr[i];

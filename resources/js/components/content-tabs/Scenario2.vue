@@ -1,99 +1,162 @@
 <template>
-  <div class="row">
-    <div class="col-12">
-      <div id="accordion" class="custom-accordion mb-4">
-        <div class="card mb-0" v-for="object in data">
-          <div class="card-header" id="headingOne">
-            <div class="row">
-              <div class="col-8">
-                <h5 class="m-0">
-                  <a
-                    class="custom-accordion-title d-block pt-2 pb-2"
-                    data-toggle="collapse"
-                    :href="'#collapse' + object.factor.id"
-                    aria-expanded="false"
-                    :aria-controls="'collapse' + object.factor.id"
-                  >
-                    {{ object.factor.title + " " + object.factor.sub_title }}
-                    <span class="float-right"
-                      ><i class="mdi mdi-chevron-down accordion-arrow"></i>
-                    </span>
-                  </a>
-                </h5>
-              </div>
-              <div class="col-4">
-                <input
-                  type="text"
-                  disabled
-                  :value="
-                    maritialStatusCopy === 'Married'
-                      ? factorScoreMarried[object.factor.id]
-                      : factorScoreSingle[object.factor.id]
-                  "
-                  class="form-control float-right"
-                />
-              </div>
-            </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-check form-check-inline" id="maritial-status">
+            <input
+              class="form-check-input material-inputs"
+              type="radio"
+              :name="copyId + 'matrialStatusCopy'"
+              :id="copyId + 'isSingleCopy'"
+              :checked="maritialStatusCopy == 'Single'"
+              @change="changeStatus('Single')"
+            />
+            <label class="form-check-label" :for="copyId + 'isSingleCopy'">Soltero</label>
           </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input material-inputs"
+              type="radio"
+              :name="copyId + 'matrialStatusCopy'"
+              :id="copyId + 'isMarriedCopy'"
+              :checked="maritialStatusCopy == 'Married'"
+              @change="changeStatus('Married')"
+            />
+            <label class="form-check-label" :for="copyId + 'isMarriedCopy'">Casado</label>
+          </div>
+        </div>
 
-          <div
-            :id="'collapse' + object.factor.id"
-            class="collapse"
-            aria-labelledby="headingOne"
-            data-parent="#accordion"
+        <div class="col-md-2">
+          <button
+            class="btn btn-outline-info waves-effect waves-light"
+            type="button"
+            @click="saveScennarioCopy"
           >
-            <div class="card-body">
-              <div class="form-group">
-                <div class="row" v-for="subfactor in object.factor.subfactors">
-                  <div class="col-6">
-                    {{ subfactor.subfactor }}
+            <span class="btn-label"> <i class="fas fa-save"></i></span> Guardar cambios en
+            escenario
+          </button>
+        </div>
+        <div class="col-md-2">
+          <button
+            class="btn btn-outline-success waves-effect waves-light"
+            type="button"
+            @click="copyScennario()"
+          >
+            <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
+          </button>
+        </div>
+        <div class="col-md-2">
+          <button
+            class="btn btn-outline-danger waves-effect waves-light"
+            type="button"
+            @click="deleteScennary(copyId)"
+          >
+            <span class="btn-label"><i class="fas fa-trash-alt"></i></span> Eliminar
+            escenario
+          </button>
+        </div>
+      </div>
+      <!-- Accordions -->
+      <div class="row">
+        <div class="col-12">
+          <div id="accordion" class="custom-accordion mb-4">
+            <div class="card mb-0" v-for="object in data">
+              <div class="card-header" id="headingOne">
+                <div class="row">
+                  <div class="col-8">
+                    <h5 class="m-0">
+                      <a
+                        class="custom-accordion-title d-block pt-2 pb-2"
+                        data-toggle="collapse"
+                        :href="'#collapse' + object.factor.id"
+                        aria-expanded="false"
+                        :aria-controls="'collapse' + object.factor.id"
+                      >
+                        {{ object.factor.title + " " + object.factor.sub_title }}
+                        <span class="float-right"
+                          ><i class="mdi mdi-chevron-down accordion-arrow"></i>
+                        </span>
+                      </a>
+                    </h5>
                   </div>
                   <div class="col-4">
-                    <select
-                      class="form-control"
-                      id="select2-search-hide"
-                      style="width: 100%; height: 36px"
-                      @change="criteriaVal"
-                      v-model="selectedSubfactor.selections[subfactor.id]"
-                    >
-                      <option
-                        v-for="criterion in subfactor.criteria"
-                        :value="{
-                          criterion,
-                          factor: object.factor.id,
-                          subfactor: subfactor.id,
-                        }"
-                        :class="criterion.selected ? 'bg-success' : ''"
-                      >
-                        {{ criterion.criterion }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="col-2">
                     <input
                       type="text"
-                      class="form-control"
-                      :value="
-                        selectedSubfactor != undefined &&
-                        selectedSubfactor.selections != undefined &&
-                        selectedSubfactor.selections[subfactor.id] != undefined &&
-                        'criterion' in selectedSubfactor.selections[subfactor.id]
-                          ? maritialStatusCopy === 'Married' &&
-                            selectedSubfactor.selections[
-                              subfactor.id
-                            ].criterion.hasOwnProperty('married')
-                            ? selectedSubfactor.selections[subfactor.id].criterion.married
-                            : maritialStatusCopy === 'Single' &&
-                              selectedSubfactor.selections[
-                                subfactor.id
-                              ].criterion.hasOwnProperty('single')
-                            ? selectedSubfactor.selections[subfactor.id].criterion.single
-                            : 'a'
-                          : 'b'
-                      "
                       disabled
+                      :value="
+                        maritialStatusCopy === 'Married'
+                          ? factorScoreMarried[object.factor.id]
+                          : factorScoreSingle[object.factor.id]
+                      "
+                      class="form-control float-right"
                     />
+                  </div>
+                </div>
+              </div>
+
+              <div
+                :id="'collapse' + object.factor.id"
+                class="collapse"
+                aria-labelledby="headingOne"
+                data-parent="#accordion"
+              >
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row" v-for="subfactor in object.factor.subfactors">
+                      <div class="col-6">
+                        {{ subfactor.subfactor }}
+                      </div>
+                      <div class="col-4">
+                        <select
+                          class="form-control"
+                          id="select2-search-hide"
+                          style="width: 100%; height: 36px"
+                          @change="criteriaVal"
+                          v-model="selectedSubfactor.selections[subfactor.id]"
+                        >
+                          <option
+                            v-for="criterion in subfactor.criteria"
+                            :value="{
+                              criterion,
+                              factor: object.factor.id,
+                              subfactor: subfactor.id,
+                            }"
+                            :class="criterion.selected ? 'bg-success' : ''"
+                          >
+                            {{ criterion.criterion }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="col-2">
+                        <input
+                          type="text"
+                          class="form-control"
+                          :value="
+                            selectedSubfactor != undefined &&
+                            selectedSubfactor.selections != undefined &&
+                            selectedSubfactor.selections[subfactor.id] != undefined &&
+                            'criterion' in selectedSubfactor.selections[subfactor.id]
+                              ? maritialStatusCopy === 'Married' &&
+                                selectedSubfactor.selections[
+                                  subfactor.id
+                                ].criterion.hasOwnProperty('married')
+                                ? selectedSubfactor.selections[subfactor.id].criterion
+                                    .married
+                                : maritialStatusCopy === 'Single' &&
+                                  selectedSubfactor.selections[
+                                    subfactor.id
+                                  ].criterion.hasOwnProperty('single')
+                                ? selectedSubfactor.selections[subfactor.id].criterion
+                                    .single
+                                : 'a'
+                              : 'b'
+                          "
+                          disabled
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -102,29 +165,11 @@
         </div>
       </div>
     </div>
-    <!--  -->
-    <!--    <div>
-      Subfactors <br />
-      {{ factors }}
-      <h1 class="success">
-        {{ maritialSituation }}
-      </h1>
-      <p>This uis scenario 2</p>
-      <br />
-      {{ body }}
-    </div> -->
   </div>
-  <!--
-
-      TODO Esto sigue siendo accordions y cnsume la  ruta factors que devuelve factores y escenarios.
-      Para este caso, excluimos actualsituation, y se mostrara el acordion(estatico) en base al tab seleccionado
-      Checar maritial status al momento de guardar. Tal vez esta tomando el mutable
-      Good job, see tomorrow sr
-   -->
 </template>
 <script>
 export default {
-  props: ["body", "factors", "maritialSituation"],
+  props: ["body", "factors", "maritialSituation", "copyId", "scennarioName"],
   data() {
     return {
       data: [],
@@ -139,6 +184,7 @@ export default {
       factorScoreSingle: {},
       selectedCriterion: {},
       arraySums: [],
+      selectedSituation: [],
     };
   },
   mounted() {
@@ -150,7 +196,7 @@ export default {
       let me = this;
       let arr = [];
       let body = JSON.parse(me.body);
-      me.maritialStatusCopy = me.maritialSituation == 1 ? "Married" : "Single";
+      me.maritialStatusCopy = me.maritialSituation === 1 ? "Married" : "Single";
       if (me.factors.length > 0 && body.length > 0) {
         me.factors.forEach((factor) => {
           let items = [];
@@ -272,14 +318,20 @@ export default {
         );
       }
       //grouped by factor
+      let selectedSituation = [];
+      selectedSituation[0] = me.maritialStatusCopy;
+      //   selectedSituation[1] = this.scenarios;
       me.selectedCriterion[subfactor] = criterion.id;
 
       if (me.maritialStatusCopy === "Single") {
+        selectedSituation[2] = me.singleValues;
         me.factorScore[factor] = me.factorScoreSingle[factor];
       } else {
         me.selectedCriterion[criterion.id] = criterion.married;
+        selectedSituation[2] = me.marriedValues;
         me.factorScore[factor] = me.factorScoreMarried[factor];
       }
+      me.selectedSituation = selectedSituation;
       //Create or update scores array to emmit to another file
       let hasSumS = null;
       let hasSumM = null;
@@ -322,6 +374,122 @@ export default {
           },
         });
       }
+    },
+
+    changeStatus(value) {
+      this.maritialStatusCopy = value;
+    },
+
+    saveScennarioCopy() {
+      let me = this;
+      let scenario = null;
+
+      Swal.fire({
+        title: "Guardar cambios en  " + me.scennarioName,
+        type: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+      })
+        .then(function (result) {
+          if ("value" in result) {
+            axios
+              .post("save-situation", {
+                scennarioId: me.copyId,
+                maritialStatus: me.maritialStatusCopy,
+                actualSituation: me.selectedSituation,
+              })
+              .then(function (response) {
+                Swal.fire({
+                  type: "success",
+                  title: "Escenario guardado",
+                  text:
+                    "Se ha" + scenario == null
+                      ? "creado"
+                      : "actualizado" + "este escenario",
+                });
+
+                me.$emit("CallReloader", Date.now());
+              });
+          } else {
+            Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
+          }
+        })
+        .catch(function (error) {
+          console.table(error);
+        });
+    },
+
+    copyScennario() {
+      /* Save scennario as copy of current on view */
+      let me = this;
+      Swal.fire({
+        title: "Guardar copia de  : " + me.scennarioName,
+        type: "warning",
+        text: "Ingrese nombre para la nueva copia ",
+        input: "text",
+        showDenyButton: true,
+        showCancelButton: true,
+      })
+        .then(function (result) {
+          if ("value" in result) {
+            if (!result.value) {
+              Swal.fire({
+                type: "danger",
+                title: "Ingrese algo en el campo nombre",
+                timer: 3000,
+              });
+            } else {
+              axios
+                .post("copy", {
+                  scennarioId: me.copyId,
+                  maritialStatus: me.maritialStatusCopy,
+                  actualSituation: me.selectedSituation,
+                  scenarioName: result.value,
+                })
+                .then(function (response) {
+                  Swal.fire({
+                    type: "success",
+                    title: "Escenario guardado",
+                    text: "Se ha guardado su copia exitosamente ",
+                  });
+                  me.$emit("CallReloader", Date.now());
+                });
+            }
+          } else {
+            Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
+          }
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    },
+
+    deleteScennary(id) {
+      let me = this;
+      Swal.fire({
+        title: "Desea eliminar el escenario " + me.scennarioName + "?",
+        type: "warning",
+        icon: "trash",
+        showDenyButton: true,
+        confirmButtonText: "Delete",
+        confirmButtonColor: "red",
+        showCancelButton: true,
+      }).then(() => {
+        axios
+          .post("/delete/" + id)
+          .then((response) => {
+            console.log(response);
+            Swal.fire({
+              type: "success",
+              title: "Escenario eliminado",
+              text: "Se ha eliminado el escenario",
+            });
+            me.$emit("CallReloader", Date.now());
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
     },
   },
 };

@@ -111,14 +111,18 @@
                 @scoresArr="getScores"
                 @additionalScennarios="getAdditionalScennarios"
                 @factorsWithSubfactors="getFactsWSubfacts"
+                :reloader="reloader"
               />
             </div>
             <div v-for="copy in scennariosCopies" :id="'copy' + copy.id" class="tab-pane">
               <!-- {{ copy }} -->
               <Scenario2
+                :copyId="copy.id"
                 :body="copy.body"
                 :factors="factorsWithSubfactors"
                 :maritialSituation="copy.is_married ? copy.is_married : 0"
+                :scennarioName="copy.name"
+                @CallReloader="callReloader"
               />
             </div>
             <!-- -->
@@ -157,6 +161,7 @@ export default {
       maritialStatusChanged: null,
       scennariosCopies: [],
       factorsWithSubfactors: [],
+      reloader: null,
     };
   },
 
@@ -188,6 +193,10 @@ export default {
     getAdditionalScennarios(value) {
       //   console.log("Extra scennarios");
       this.scennariosCopies = value;
+    },
+
+    callReloader(value) {
+      this.reloader = value;
     },
 
     getScores(value) {
