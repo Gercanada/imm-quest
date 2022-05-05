@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::post('save-situation', [FactorController::class, 'saveScenario']);
     Route::post('copy', [FactorController::class, 'copyScenario']);
     Route::post('delete/{id}', [FactorController::class, 'deleteScennary']);
+    Route::post('print-summary', [FactorController::class, 'printSummary']);
 
     Route::any('{any}', function () {
         abort(404);

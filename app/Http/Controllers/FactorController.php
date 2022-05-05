@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 use App\Models\Factor;
 use App\Models\Scenario;
 use Illuminate\Http\Request;
-use Exception;
 use Illuminate\Support\Facades\Auth;
+use Exception;
+
+use Barryvdh\DomPDF\Facade as PDF;
 
 class FactorController extends Controller
 {
@@ -224,6 +226,26 @@ class FactorController extends Controller
             Scenario::where('id', $id)->delete();
             return response()->json(200);
         } catch (Exception $e) {
+            return response()->json($e);
+        }
+    }
+
+    public function printSummary(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            // return $request->data;
+            $data = [
+                'name' => "$user->name $user->last_name",
+                'date' => date('Y/M/d'),
+                // 'content' => $request->data
+            ];
+            $pdf = PDF::loadView('pdfSummary', "any");
+
+            return 'braked';
+            return $pdf->download("$user->name $user->last_name _summary.pdf");
+        } catch (Exception $e) {
+            $this->consoleWrite()->writeln($e->getMessage());
             return response()->json($e);
         }
     }

@@ -1,4 +1,15 @@
 <?php return array (
+  'barryvdh/laravel-dompdf' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\DomPDF\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'PDF' => 'Barryvdh\\DomPDF\\Facade',
+    ),
+  ),
   'facade/ignition' => 
   array (
     'providers' => 
@@ -15,20 +26,6 @@
     'providers' => 
     array (
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
-    ),
-  ),
-  'geekshubs/rabbitmq' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Geekshubs\\RabbitMQ\\RabbitMQServiceProvider',
-    ),
-  ),
-  'jbtje/vtiger-laravel' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'JBtje\\VtigerLaravel\\VtigerServiceProvider',
     ),
   ),
   'laravel/breeze' => 

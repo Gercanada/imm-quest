@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-9">
+    <div class="col-md-12">
       <p>
         <a href="http://">Calcula Tus Puntos de Express Entry </a>
         <!--     </br> -->
@@ -10,11 +10,7 @@
         <a href="http://"> crea tu cuenta gratis</a>
       </p>
     </div>
-    <div class="col-3">
-      <button class="btn btn-outline-danger waves-effect waves-light" type="button">
-        <span class="btn-label"><i class="far fa-file-pdf"></i></span> Generar pdf
-      </button>
-    </div>
+
     <div class="col-12">
       <SummaryTable
         :summary="summary"

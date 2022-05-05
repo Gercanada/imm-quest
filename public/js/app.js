@@ -2938,10 +2938,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies"],
@@ -2981,6 +2977,28 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3107,18 +3125,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, {});
         scNames.push(copy.name);
         scennarios["copies"].push(_defineProperty({}, copy.name, groupByFacto));
-      }); //   console.log(scNames);
+      });
 
       for (var i = 0; i < scennarios.copies.length; i++) {
-        var scennary = scennarios.copies[i]; // console.log(scennary);
+        var scennary = scennarios.copies[i];
 
         for (var _i = 0, _Object$entries = Object.entries(scennary); _i < _Object$entries.length; _i++) {
           var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
               key = _Object$entries$_i[0],
               value = _Object$entries$_i[1];
 
-          /*  console.log(key);
-          console.log(value); */
           var totals = [];
 
           for (var _i2 = 0, _Object$entries2 = Object.entries(value); _i2 < _Object$entries2.length; _i2++) {
@@ -3126,7 +3142,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _key = _Object$entries2$_i[0],
                 _value = _Object$entries2$_i[1];
 
-            // console.log(value);
             var sum = 0;
 
             for (var b = 0; b < _value.length; b++) {
@@ -3147,8 +3162,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
 
-      this.sumScoreCopies = scennarios; //   console.log(scennarios);
-
+      this.sumScoreCopies = scennarios;
       return;
     }
   },
@@ -3173,6 +3187,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
       return newVal; //   return "ok ox";
+    },
+    printSummary: function printSummary(data) {
+      axios.post("print-summary", data).then(function (response) {
+        console.table(response);
+      })["catch"](function (error) {
+        console.table(error);
+      });
     }
   }
 });
@@ -23096,8 +23117,6 @@ var render = function () {
   return _c("div", { staticClass: "row" }, [
     _vm._m(0),
     _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
     _c(
       "div",
       { staticClass: "col-12" },
@@ -23122,7 +23141,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-9" }, [
+    return _c("div", { staticClass: "col-md-12" }, [
       _c("p", [
         _c("a", { attrs: { href: "http://" } }, [
           _vm._v("Calcula Tus Puntos de Express Entry "),
@@ -23135,26 +23154,6 @@ var staticRenderFns = [
           _vm._v(" crea tu cuenta gratis"),
         ]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-danger waves-effect waves-light",
-          attrs: { type: "button" },
-        },
-        [
-          _c("span", { staticClass: "btn-label" }, [
-            _c("i", { staticClass: "far fa-file-pdf" }),
-          ]),
-          _vm._v(" Generar pdf\n    "),
-        ]
-      ),
     ])
   },
 ]
@@ -23182,7 +23181,32 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-body" }, [
-      _c("h4", { staticClass: "card-title" }, [_vm._v("Sumario de puntos")]),
+      _c("div", { staticClass: "row pb-3 mb-2" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-danger waves-effect waves-light",
+              attrs: { type: "button" },
+              on: {
+                click: function ($event) {
+                  return _vm.printSummary([
+                    _vm.factors,
+                    _vm.scennariosCopies,
+                    _vm.maritialStatusChanged,
+                    _vm.totalForFactor,
+                    _vm.sumScoreCopies.copies,
+                    _vm.FactorsWithScores,
+                  ])
+                },
+              },
+            },
+            [_vm._m(1), _vm._v(" Generar pdf\n        ")]
+          ),
+        ]),
+      ]),
       _vm._v(" "),
       _c(
         "table",
@@ -23232,7 +23256,7 @@ var render = function () {
               _c(
                 "tr",
                 [
-                  _vm._m(0),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("th", { staticClass: "detail" }, [
                     _vm._v(
@@ -23339,6 +23363,22 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-8" }, [
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Sumario de puntos")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "btn-label" }, [
+      _c("i", { staticClass: "far fa-file-pdf" }),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

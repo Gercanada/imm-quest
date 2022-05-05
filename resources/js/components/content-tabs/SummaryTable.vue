@@ -2,7 +2,29 @@
   <!-- Table -->
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Sumario de puntos</h4>
+      <div class="row pb-3 mb-2">
+        <div class="col-md-8">
+          <h4 class="card-title">Sumario de puntos</h4>
+        </div>
+        <div class="col-md-4">
+          <button
+            class="btn btn-outline-danger waves-effect waves-light"
+            type="button"
+            @click="
+              printSummary([
+                factors,
+                scennariosCopies,
+                maritialStatusChanged,
+                totalForFactor,
+                sumScoreCopies.copies,
+                FactorsWithScores,
+              ])
+            "
+          >
+            <span class="btn-label"><i class="far fa-file-pdf"></i></span> Generar pdf
+          </button>
+        </div>
+      </div>
       <table
         data-toggle="table"
         data-mobile-responsive="true"
@@ -146,18 +168,13 @@ export default {
         scNames.push(copy.name);
         scennarios["copies"].push({ [copy.name]: groupByFacto });
       });
-      //   console.log(scNames);
+
       for (let i = 0; i < scennarios.copies.length; i++) {
         let scennary = scennarios.copies[i];
-        // console.log(scennary);
-
         for (const [key, value] of Object.entries(scennary)) {
-          /*  console.log(key);
-          console.log(value); */
           let totals = [];
 
           for (const [key, value] of Object.entries(value)) {
-            // console.log(value);
             let sum = 0;
             for (let b = 0; b < value.length; b++) {
               sum += value[b];
@@ -174,7 +191,6 @@ export default {
         }
       }
       this.sumScoreCopies = scennarios;
-      //   console.log(scennarios);
       return;
     },
   },
@@ -197,6 +213,17 @@ export default {
       });
       return newVal;
       //   return "ok ox";
+    },
+
+    printSummary(data) {
+      axios
+        .post("print-summary", data)
+        .then(function (response) {
+          console.table(response);
+        })
+        .catch((error) => {
+          console.table(error);
+        });
     },
   },
 };
