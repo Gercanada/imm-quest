@@ -7,6 +7,7 @@ use App\Models\Factor;
 use App\Models\Scenario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Exception;
 
 use Barryvdh\DomPDF\Facade as PDF;
@@ -233,20 +234,112 @@ class FactorController extends Controller
     public function printSummary(Request $request)
     {
         try {
+            // $user = Auth::user();
             $user = Auth::user();
-            // return $request->data;
+            $factorsHtml = '';
+            $scennariosHtml = '';
+            $scennarioMaritialSituationHtml = '';
+            $fileName = $user->name . '_' . $user->last_name . '_summary.pdf';
+
+
+            $scennarios = Scenario::Where('user_id', $user->id)->get();
+            $factors = Factor::where('factors.title', '!=', 'default')
+                ->with('subfactors')
+                ->with('subfactors.criteria')->get();
+
+
+            $toSumFactor = [];
+            $totals = '';
+            foreach ($factors as $factor) {
+                $toSum = [];
+                $tdSum = '';
+
+                foreach ($scennarios as $scennario) {
+                    $body = json_decode($scennario['body']);
+                    if (is_array($body)) {
+                        foreach ($body as $item) {
+                            if ($item->factor === $factor['id']) {
+                                array_push($toSum, $item->value);
+                            }
+                        }
+                    }
+                    $tdSum = $tdSum . "<td>" . array_sum($toSum) . "</td>";
+                }
+                array_push($toSumFactor,  array_sum($toSum));
+
+                $factorsHtml =  $factorsHtml  . "<tr>"
+                    . "<td>" .  $factor['title'] . ' ' . $factor['sub_title'] . "</td>"
+                    . $tdSum
+                    . "</tr>";
+            }
+
+            return $toSumFactor;
+
+
+
+            // $totals = $totals. "<th>".0."</th>";
+
+
+            foreach ($scennarios as $scennario) {
+                $married = $scennario['is_married'] == 1 ? 'Married' : 'Single';
+                $scennariosHtml =  $scennariosHtml  . "<th>" .  $scennario['name'] . "</th>";
+                $scennarioMaritialSituationHtml =  $scennarioMaritialSituationHtml  . "<th>" . $married . "</th>";
+            }
+
+            // return $factorsHtml;
+            /*    return $factors;
+            return $request; */
+
+            //TODO Revisar calculos y valores guardados en el body del escenario para mostrar aqui.
+
             $data = [
+                'fileName' => $fileName,
                 'name' => "$user->name $user->last_name",
                 'date' => date('Y/M/d'),
+                'factors' =>  $factorsHtml,
+                'scennarios' =>  $scennariosHtml,
+                'maritialSituations' => $scennarioMaritialSituationHtml,
+                'totals' => $totals
+                // 'content' => response()->json($request->data)
+                // 'content' => $table
+                // 'content' => json_encode($request->data)
                 // 'content' => $request->data
             ];
-            $pdf = PDF::loadView('pdfSummary', "any");
-
-            return 'braked';
-            return $pdf->download("$user->name $user->last_name _summary.pdf");
+            $pdf = PDF::loadView('pdfSummary', $data);
+            Storage::put('public/pdf/' . $fileName, $pdf->output()); //EVPPV
+            return response()->json($fileName, 200);
         } catch (Exception $e) {
             $this->consoleWrite()->writeln($e->getMessage());
             return response()->json($e);
+        }
+    }
+
+    /**
+     * It be open pdf generated in new view as file
+     */
+    public function openPdf($fileName)
+    {
+        try {
+            $filePath = "app/public/pdf/" . $fileName;
+            return response()->file(storage_path($filePath));
+        } catch (Exception $e) {
+            $this->consoleWrite()->writeln($e->getMessage());
+            return response()->json($e->getMessage());
+        }
+    }
+
+    /**
+     * The pdf file be deleted then of open
+     */
+    public function deletePdf($fileName)
+    {
+        try {
+            $filePath = "pdf/" . $fileName;
+            Storage::disk('public')->delete($filePath);
+            return  response()->json("File deleted");
+        } catch (Exception $e) {
+            $this->consoleWrite()->writeln($e->getMessage());
+            return response()->json($e->getMessage());
         }
     }
 }

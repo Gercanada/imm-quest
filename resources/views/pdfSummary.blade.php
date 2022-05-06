@@ -3,14 +3,45 @@
 <h1>
     Some info
 </h1>
-{{-- <head>
-    <title>{{ $name }} {{ $date }}</title>
+
+<head>
+    <title>{{ $fileName }} </title>
 </head>
 
 <body>
-    <h1>{{ $title }}</h1>
+    <h1>{{ $name }}</h1>
     <p>{{ $date }}</p>
-    <p>{{ $content }}</p>
-</body> --}}
+
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                {!! $scennarios !!}
+            </tr>
+            <tr>
+                <th><b>Maritial status</b></th>
+                {{!! $maritialSituations !!}}
+            </tr>
+            <tr>
+                <th>Totals</th>
+            </tr>
+        </thead>
+
+        <tbody>
+             {!! $factors !!}
+        </tbody>
+    </table>
+
+</body>
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid;
+    }
+
+</style>
 
 </html>

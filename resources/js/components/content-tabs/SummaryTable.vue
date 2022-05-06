@@ -10,17 +10,15 @@
           <button
             class="btn btn-outline-danger waves-effect waves-light"
             type="button"
-            @click="
-              printSummary([
-                factors,
-                scennariosCopies,
+            @click="printSummary"
+          >
+            <!--
                 maritialStatusChanged,
                 totalForFactor,
                 sumScoreCopies.copies,
                 FactorsWithScores,
-              ])
-            "
-          >
+           -->
+
             <span class="btn-label"><i class="far fa-file-pdf"></i></span> Generar pdf
           </button>
         </div>
@@ -212,14 +210,40 @@ export default {
         }
       });
       return newVal;
-      //   return "ok ox";
     },
 
-    printSummary(data) {
+    async printSummary() {
+      let fileName = "";
+      let response1 = null;
+      function delay(time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
+      }
       axios
-        .post("print-summary", data)
+        .post("print-summary", { data })
         .then(function (response) {
           console.table(response);
+          response1 = response;
+          Swal.fire({
+            type: "info",
+            title:
+              "Se abrirá el documento en una nueva ventana." +
+              " Desde ahi lo puede descargar. Para volver a generarlo hay que volver a esta vista",
+          });
+        })
+        .catch((error) => {
+          console.table(error);
+        })
+        .then(() => {
+          fileName = response1.data;
+          window.open("/open_pdf/" + fileName);
+          console.table(response1);
+        });
+      delay(10000)
+        .then(() => {
+          axios.get("delete_temp_file/" + fileName).then(function (response) {
+            console.log("then3");
+            console.log(response);
+          });
         })
         .catch((error) => {
           console.table(error);
