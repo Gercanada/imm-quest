@@ -234,7 +234,6 @@ class FactorController extends Controller
     public function printSummary(Request $request)
     {
         try {
-            // $user = Auth::user();
             $user = Auth::user();
             $factorsHtml = '';
             $scennariosHtml = '';
@@ -248,24 +247,30 @@ class FactorController extends Controller
                 ->with('subfactors.criteria')->get();
 
 
-            $toSumFactor = [];
+            $totalsForScennario = [];
             $totals = '';
             foreach ($factors as $factor) {
-                $toSum = [];
                 $tdSum = '';
-
+                $same = $factor->id;
+                $scennarioSums = [];
                 foreach ($scennarios as $scennario) {
+                    $toSum = [];
+                    $toSumSC = [];
                     $body = json_decode($scennario['body']);
                     if (is_array($body)) {
                         foreach ($body as $item) {
-                            if ($item->factor === $factor['id']) {
-                                array_push($toSum, $item->value);
+                            if ($same ==  $factor['id']) {
+                                if ($item->factor === $factor['id']) {
+                                    array_push($toSum, $item->value);
+                                }
+                                array_push($toSumSC, $item->value);
                             }
                         }
                     }
-                    $tdSum = $tdSum . "<td>" . array_sum($toSum) . "</td>";
+                    $tdSum = $tdSum . "<td class='num-val '>" . array_sum($toSum) . "</td>";
+                    array_push($scennarioSums, array_sum($toSumSC));
                 }
-                array_push($toSumFactor,  array_sum($toSum));
+                $totalsForScennario = $scennarioSums;
 
                 $factorsHtml =  $factorsHtml  . "<tr>"
                     . "<td>" .  $factor['title'] . ' ' . $factor['sub_title'] . "</td>"
@@ -273,11 +278,11 @@ class FactorController extends Controller
                     . "</tr>";
             }
 
-            return $toSumFactor;
+            foreach ($totalsForScennario as $scennarioSum) {
+                $totals = $totals . "<th class='num-val totals'>" . $scennarioSum . "</th>";
+            }
 
-
-
-            // $totals = $totals. "<th>".0."</th>";
+            // return $toSumFactor;
 
 
             foreach ($scennarios as $scennario) {
@@ -286,9 +291,6 @@ class FactorController extends Controller
                 $scennarioMaritialSituationHtml =  $scennarioMaritialSituationHtml  . "<th>" . $married . "</th>";
             }
 
-            // return $factorsHtml;
-            /*    return $factors;
-            return $request; */
 
             //TODO Revisar calculos y valores guardados en el body del escenario para mostrar aqui.
 
@@ -300,13 +302,9 @@ class FactorController extends Controller
                 'scennarios' =>  $scennariosHtml,
                 'maritialSituations' => $scennarioMaritialSituationHtml,
                 'totals' => $totals
-                // 'content' => response()->json($request->data)
-                // 'content' => $table
-                // 'content' => json_encode($request->data)
-                // 'content' => $request->data
             ];
-            $pdf = PDF::loadView('pdfSummary', $data);
-            Storage::put('public/pdf/' . $fileName, $pdf->output()); //EVPPV
+            $pdf = PDF::loadView('pdfSummary', $data)->setPaper('a4', 'landscape');
+            Storage::put('public/pdf/' . $fileName, $pdf->output());
             return response()->json($fileName, 200);
         } catch (Exception $e) {
             $this->consoleWrite()->writeln($e->getMessage());

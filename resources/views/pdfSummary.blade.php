@@ -9,13 +9,19 @@
 </head>
 
 <body>
-    <h1>{{ $name }}</h1>
-    <p>{{ $date }}</p>
+    <div class="user">
+            <h1 class="left"> {{ $name }}</h1>
+            <h4 class="right">  {{ $date }}</h4>
+
+    </div>
 
 
-    <table>
+
+
+
+    <table class="center">
         <thead>
-            <tr>
+            <tr >
                 <th></th>
                 {!! $scennarios !!}
             </tr>
@@ -25,22 +31,53 @@
             </tr>
             <tr>
                 <th>Totals</th>
+                {!! $totals !!}
             </tr>
         </thead>
-
         <tbody>
              {!! $factors !!}
         </tbody>
     </table>
-
 </body>
 
 <style>
     table,
     th,
     td {
-        border: 1px solid;
+        border-right: 1px dotted;
     }
+    .num-val{
+        text-align: right;
+    }
+table, td, th {
+  border: 1px solid;
+
+}
+
+th{
+     font-weight: bold;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 60px
+}
+
+
+
+.left{
+    text-align: left;
+    float:left
+}
+.right{
+    text-align: right;
+    float: right
+}
+
+.user{
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
 
 </style>
 
