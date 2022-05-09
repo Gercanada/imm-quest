@@ -30,7 +30,6 @@
     <link rel="stylesheet"
         href="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jvectormap/jquery-jvectormap.css">
 
-
     <link rel="stylesheet"
         href="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
 
@@ -76,55 +75,54 @@
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
+        <header class="topbar">
+            @include('layouts.navbar')
+        </header>
+        @include('layouts.aside')
+
         @if (!Auth::user())
-            @yield('content'){{-- login view --}}
+            {{-- @yield('content') --}}{{-- login view --}}
             @php
                 $user_auth_data = [
                     'isLoggedin' => false,
                 ];
             @endphp
-        @else
-            @if (Auth::user())
-                <header class="topbar">
-                    @include('layouts.navbar')
-                </header>
-
-                @php
-                    $user_auth_data = [
-                        'isLoggedin' => true,
-                        'user' => Auth::user(),
-                    ];
-                @endphp
-            @endif
-            {{-- aside --}}
-            @if (Auth::user())
-                @include('layouts.aside')
-            @endif
-            {{-- body --}}
-            <div class="page-wrapper">
-                <div class="container-fluid">
-                    @if (Auth::user())
-                        @yield('content')
-                    @endif
-                </div>
-                <footer class="footer">
-                    © 2020 Admin Pro Admin by wrappixel.com
-                </footer>
-            </div>
         @endif
+        {{-- @else --}}
+        @if (Auth::user())
+            {{-- <header class="topbar">
+            @include('layouts.navbar')
+             </header> --}}
+            @php
+                $user_auth_data = [
+                    'isLoggedin' => true,
+                    'user' => Auth::user(),
+                ];
+            @endphp
+        @endif
+        {{-- aside --}}
+        @if (Auth::user())
+            {{-- @include('layouts.aside') --}}
+        @endif
+        {{-- body --}}
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                @yield('content')
+                @if (Auth::user())
+                    {{-- @yield('content') --}}
+                @endif
+            </div>
+            <footer class="footer">
+                © 2020 Admin Pro Admin by wrappixel.com
+            </footer>
+        </div>
+        {{-- @endif --}}
 
 
     </div>
     <script>
         window.Laravel = JSON.parse(atob('{{ base64_encode(json_encode($user_auth_data)) }}'));
     </script>
-
-    <!-- ============================================================== -->
-    {{-- <div class="chat-windows"></div> --}}
-    <!-- ============================================================== -->
-    <!-- Popper JS -->
-
-
 
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/src/assets/libs/jquery/dist/jquery.min.js">

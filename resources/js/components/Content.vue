@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-body">
           <!-- <h4 class="card-title">Grid With Row Label</h4> -->
-          <form action="#">
+          <form action="#" v-if="authenticated">
             <div class="form-body">
               <div class="form-group">
                 <div class="row">
@@ -112,6 +112,7 @@
                 @additionalScennarios="getAdditionalScennarios"
                 @factorsWithSubfactors="getFactsWSubfacts"
                 :reloader="reloader"
+                :authenticated="authenticated"
               />
             </div>
             <div v-for="copy in scennariosCopies" :id="'copy' + copy.id" class="tab-pane">
@@ -152,7 +153,6 @@ export default {
       last_name: "",
       requiredBeAuth: false,
       loading: true,
-      isAuthenticated: false,
       user: {},
       summary: [],
       Factors: [],
@@ -162,6 +162,7 @@ export default {
       scennariosCopies: [],
       factorsWithSubfactors: [],
       reloader: null,
+      authenticated: false,
     };
   },
 
@@ -170,6 +171,9 @@ export default {
       this.email = window.Laravel.user.email;
       this.name = window.Laravel.user.name;
       this.last_name = window.Laravel.user.last_name;
+      this.authenticated = true;
+    } else {
+      this.authenticated = false;
     }
   },
 
@@ -200,7 +204,6 @@ export default {
     },
 
     getScores(value) {
-      //   console.log(value);
       this.scores = value[0];
       let factArr = [];
 

@@ -30,7 +30,7 @@
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-md-3" v-if="authenticated">
             <button
               class="btn btn-outline-info waves-effect waves-light"
               type="button"
@@ -40,7 +40,7 @@
               Situacion actual
             </button>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" v-if="authenticated">
             <button
               class="btn btn-outline-success waves-effect waves-light"
               type="button"
@@ -60,6 +60,7 @@
           @factorsWithSubfactors="getFactsWSubfacts"
           :maritialStatus="maritialStatus"
           :reloader="reloader"
+          :authenticated="authenticated"
         />
       </div>
     </div>
@@ -69,7 +70,7 @@
 <script>
 import Accordions from "../actual-scennario/scenario-accordions/Accordions.vue";
 export default {
-  props: ["reloader"],
+  props: ["reloader", "authenticated"],
   components: {
     Accordions,
   },
@@ -147,7 +148,7 @@ export default {
           title: "Guardar situacion actual ",
           type: "warning",
           text:
-            "Guardar situacion actial.A partir de este escenario podra crear otros nuevos para comparar y etc.",
+            "Guardar situacion actial. A partir de este escenario podra crear otros nuevos para comparar y etc.",
           showDenyButton: true,
           showCancelButton: true,
         })

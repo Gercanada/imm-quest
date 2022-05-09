@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-Route::get('/send_mail', function () {
+Route::get('/send_mail', function () { //test function only
     try {
         Mail::to('heriberto.h@gercanada.com')->send(new TestingMail());
         /*  Mail::send(array(), array(), function ($message) {
@@ -34,7 +34,10 @@ Route::get('/send_mail', function () {
     }
 });
 
+Route::get('/',                  [DashboardController::class, 'index'])->name('dashboard');
+
 Auth::routes();
+
 Route::get('/tempdata', [FactorController::class, 'dataFile']); //returns a json response
 Route::get('/factors-table/{subfactor}', [FactorController::class, 'factorsTable']); //returns ajson response
 Route::get('/factor/{subFactor}', [FactorController::class, 'getFactor']);
@@ -46,7 +49,7 @@ Route::get('/factors', [FactorController::class, 'factors']);
 
 Route::middleware('auth')->group(function () {
     //dashboard
-    Route::get('/',                  [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/',                  [DashboardController::class, 'index'])->name('dashboard');
     //user
     Route::get('/profile',  [UserController::class, 'profile'])->name('profile');
     Route::get('/account',  [UserController::class, 'account']);

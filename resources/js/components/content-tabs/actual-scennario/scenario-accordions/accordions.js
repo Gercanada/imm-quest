@@ -1,5 +1,5 @@
 export default {
-    props: ["maritialStatus", 'reloader'],
+    props: ["maritialStatus", 'reloader', "authenticated"],
     watch: {
         maritialStatus: function() {
             this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
@@ -35,8 +35,8 @@ export default {
     },
 
     mounted() {
+        // alert(this.authenticated)
         this.getData();
-
     },
 
     methods: {
@@ -45,68 +45,83 @@ export default {
             axios.get("/factors").then(function(response) {
                 me.scenarios = response.data[1] ? response.data[1] : [];
                 let scenario = null; //actual
-                if (me.scenarios.length > 0) {
-                    me.scenarios.forEach((element) => {
-                        if ("is_theactual" in element && element["is_theactual"] == true) {
-                            scenario = element; ///Actial situation scennario only it is editable
+
+                if (me.authenticated) {
+                    if (me.scenarios.length > 0) {
+                        me.scenarios.forEach((element) => {
+                            if ("is_theactual" in element && element["is_theactual"] == true) {
+                                scenario = element; ///Actial situation scennario only it is editable
+                            }
+                            if (element["is_theactual"] == false) {
+                                me.additionalScenarios.push(element);
+                            }
+                        });
+
+                        me.$emit("additionalScennarios", me.additionalScenarios);
+                        me.factors = response.data ? response.data[0] : [];
+                        me.factors.forEach(element => {
+                            me.factorNames.push({
+                                id: element.id,
+                                name: element.title + ' ' + element.sub_title
+                            });
+                        });
+                        //
+                        me.$emit("factorNames", me.factorNames);
+                        let newData = [];
+                        if (scenario != null &&
+                            Array.isArray(JSON.parse(scenario['body'])) &&
+                            JSON.parse(scenario['body']).length > 0
+                        ) {
+                            me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
+                            me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
+                            let body = JSON.parse(scenario['body']);
+                            me.$emit("factorsWithSubfactors", me.factors);
+                            me.factors.forEach(factor => {
+                                let items = [];
+                                body.forEach(item => {
+                                    if (item['factor'] === factor.id) {
+                                        factor.subfactors.forEach(subfactor => {
+                                            if (item['subfactor'] === subfactor.id) {
+                                                subfactor.criteria.forEach(criterion => {
+                                                    if (item['criterion'] == criterion.id) {
+                                                        criterion.selected = true;
+                                                        me.criteriaVal({
+                                                            criterion: criterion,
+                                                            factor: factor.id,
+                                                            subfactor: subfactor.id,
+                                                        });
+                                                    } else {
+                                                        criterion.selected = false
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                                newData.push({ items: items, factor: factor })
+                            });
+                        } else {
+                            me.factors.forEach(factor => {
+                                newData.push({ items: null, factor: factor })
+                            });
                         }
-                        if (element["is_theactual"] == false) {
-                            me.additionalScenarios.push(element);
-                        }
+                        me.data = newData;
+                    }
+                    this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
+                } else { //When not authenticated
+                    let newData = [];
+                    me.factors = response.data ? response.data[0] : [];
+
+                    me.factors.forEach(factor => {
+                        newData.push({ items: null, factor: factor })
                     });
 
-                    me.$emit("additionalScennarios", me.additionalScenarios);
-                    me.factors = response.data ? response.data[0] : [];
-                    me.factors.forEach(element => {
-                        me.factorNames.push({
-                            id: element.id,
-                            name: element.title + ' ' + element.sub_title
-                        });
-                    });
-                    //
-                    me.$emit("factorNames", me.factorNames);
-                    let newData = [];
-                    if (scenario != null &&
-                        Array.isArray(JSON.parse(scenario['body'])) &&
-                        JSON.parse(scenario['body']).length > 0
-                    ) {
-                        me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
-                        me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
-                        let body = JSON.parse(scenario['body']);
-                        me.$emit("factorsWithSubfactors", me.factors);
-                        me.factors.forEach(factor => {
-                            let items = [];
-                            body.forEach(item => {
-                                if (item['factor'] === factor.id) {
-                                    factor.subfactors.forEach(subfactor => {
-                                        if (item['subfactor'] === subfactor.id) {
-                                            subfactor.criteria.forEach(criterion => {
-                                                if (item['criterion'] == criterion.id) {
-                                                    criterion.selected = true;
-                                                    me.criteriaVal({
-                                                        criterion: criterion,
-                                                        factor: factor.id,
-                                                        subfactor: subfactor.id,
-                                                    });
-                                                } else {
-                                                    criterion.selected = false
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-                            });
-                            newData.push({ items: items, factor: factor })
-                        });
-                    } else {
-                        me.factors.forEach(factor => {
-                            newData.push({ items: null, factor: factor })
-                        });
-                    }
                     me.data = newData;
+                    // me.data.push(me.factors);
                 }
+                me.$emit("factorNames", me.factorNames);
+                // console.log({ factors: me.factors });
             });
-            this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
         },
 
         criteriaVal(event) {

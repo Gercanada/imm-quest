@@ -231,24 +231,28 @@ class FactorController extends Controller
         }
     }
 
-    public function printSummary(Request $request)
+    /**
+     * It method be called by an user to generate a temporal pdf file that be downloaded next of be generated
+     * usung openPdf, Then of the file is opened at new window be deleted from storage
+     */
+    public function printSummary()
     {
         try {
             $user = Auth::user();
             $factorsHtml = '';
             $scennariosHtml = '';
+            $totals = '';
             $scennarioMaritialSituationHtml = '';
+            $totalsForScennario = [];
+
             $fileName = $user->name . '_' . $user->last_name . '_summary.pdf';
 
-
             $scennarios = Scenario::Where('user_id', $user->id)->get();
+
             $factors = Factor::where('factors.title', '!=', 'default')
                 ->with('subfactors')
                 ->with('subfactors.criteria')->get();
 
-
-            $totalsForScennario = [];
-            $totals = '';
             foreach ($factors as $factor) {
                 $tdSum = '';
                 $same = $factor->id;
@@ -281,23 +285,19 @@ class FactorController extends Controller
             foreach ($totalsForScennario as $scennarioSum) {
                 $totals = $totals . "<th class='num-val totals'>" . $scennarioSum . "</th>";
             }
-
-            // return $toSumFactor;
-
-
             foreach ($scennarios as $scennario) {
                 $married = $scennario['is_married'] == 1 ? 'Married' : 'Single';
                 $scennariosHtml =  $scennariosHtml  . "<th>" .  $scennario['name'] . "</th>";
                 $scennarioMaritialSituationHtml =  $scennarioMaritialSituationHtml  . "<th>" . $married . "</th>";
             }
 
-
-            //TODO Revisar calculos y valores guardados en el body del escenario para mostrar aqui.
-
+            /**
+             * Data for fill file
+             */
             $data = [
                 'fileName' => $fileName,
                 'name' => "$user->name $user->last_name",
-                'date' => date('Y/M/d'),
+                'date' => date('Y/m/d'),
                 'factors' =>  $factorsHtml,
                 'scennarios' =>  $scennariosHtml,
                 'maritialSituations' => $scennarioMaritialSituationHtml,

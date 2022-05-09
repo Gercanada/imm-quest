@@ -2294,6 +2294,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2310,7 +2311,6 @@ __webpack_require__.r(__webpack_exports__);
       last_name: "",
       requiredBeAuth: false,
       loading: true,
-      isAuthenticated: false,
       user: {},
       summary: [],
       Factors: [],
@@ -2319,7 +2319,8 @@ __webpack_require__.r(__webpack_exports__);
       maritialStatusChanged: null,
       scennariosCopies: [],
       factorsWithSubfactors: [],
-      reloader: null
+      reloader: null,
+      authenticated: false
     };
   },
   created: function created() {
@@ -2327,6 +2328,9 @@ __webpack_require__.r(__webpack_exports__);
       this.email = window.Laravel.user.email;
       this.name = window.Laravel.user.name;
       this.last_name = window.Laravel.user.last_name;
+      this.authenticated = true;
+    } else {
+      this.authenticated = false;
     }
   },
   methods: {
@@ -2354,7 +2358,6 @@ __webpack_require__.r(__webpack_exports__);
     getScores: function getScores(value) {
       var _this = this;
 
-      //   console.log(value);
       this.scores = value[0];
       var factArr = [];
       this.Factors.forEach(function (factor) {
@@ -2399,7 +2402,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Content__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Content */ "./resources/js/components/Content.vue");
-//
 //
 //
 //
@@ -2949,6 +2951,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies"],
@@ -3338,9 +3341,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["reloader"],
+  props: ["reloader", "authenticated"],
   components: {
     Accordions: _actual_scennario_scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3413,7 +3417,7 @@ __webpack_require__.r(__webpack_exports__);
         Swal.fire({
           title: "Guardar situacion actual ",
           type: "warning",
-          text: "Guardar situacion actial.A partir de este escenario podra crear otros nuevos para comparar y etc.",
+          text: "Guardar situacion actial. A partir de este escenario podra crear otros nuevos para comparar y etc.",
           showDenyButton: true,
           showCancelButton: true
         }).then(function (result) {
@@ -3537,7 +3541,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["maritialStatus", 'reloader'],
+  props: ["maritialStatus", 'reloader', "authenticated"],
   watch: {
     maritialStatus: function maritialStatus() {
       this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
@@ -3571,6 +3575,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    // alert(this.authenticated)
     this.getData();
   },
   methods: {
@@ -3580,74 +3585,90 @@ __webpack_require__.r(__webpack_exports__);
         me.scenarios = response.data[1] ? response.data[1] : [];
         var scenario = null; //actual
 
-        if (me.scenarios.length > 0) {
-          me.scenarios.forEach(function (element) {
-            if ("is_theactual" in element && element["is_theactual"] == true) {
-              scenario = element; ///Actial situation scennario only it is editable
+        if (me.authenticated) {
+          if (me.scenarios.length > 0) {
+            me.scenarios.forEach(function (element) {
+              if ("is_theactual" in element && element["is_theactual"] == true) {
+                scenario = element; ///Actial situation scennario only it is editable
+              }
+
+              if (element["is_theactual"] == false) {
+                me.additionalScenarios.push(element);
+              }
+            });
+            me.$emit("additionalScennarios", me.additionalScenarios);
+            me.factors = response.data ? response.data[0] : [];
+            me.factors.forEach(function (element) {
+              me.factorNames.push({
+                id: element.id,
+                name: element.title + ' ' + element.sub_title
+              });
+            }); //
+
+            me.$emit("factorNames", me.factorNames);
+            var newData = [];
+
+            if (scenario != null && Array.isArray(JSON.parse(scenario['body'])) && JSON.parse(scenario['body']).length > 0) {
+              me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
+
+              me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
+              var body = JSON.parse(scenario['body']);
+              me.$emit("factorsWithSubfactors", me.factors);
+              me.factors.forEach(function (factor) {
+                var items = [];
+                body.forEach(function (item) {
+                  if (item['factor'] === factor.id) {
+                    factor.subfactors.forEach(function (subfactor) {
+                      if (item['subfactor'] === subfactor.id) {
+                        subfactor.criteria.forEach(function (criterion) {
+                          if (item['criterion'] == criterion.id) {
+                            criterion.selected = true;
+                            me.criteriaVal({
+                              criterion: criterion,
+                              factor: factor.id,
+                              subfactor: subfactor.id
+                            });
+                          } else {
+                            criterion.selected = false;
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+                newData.push({
+                  items: items,
+                  factor: factor
+                });
+              });
+            } else {
+              me.factors.forEach(function (factor) {
+                newData.push({
+                  items: null,
+                  factor: factor
+                });
+              });
             }
 
-            if (element["is_theactual"] == false) {
-              me.additionalScenarios.push(element);
-            }
-          });
-          me.$emit("additionalScennarios", me.additionalScenarios);
-          me.factors = response.data ? response.data[0] : [];
-          me.factors.forEach(function (element) {
-            me.factorNames.push({
-              id: element.id,
-              name: element.title + ' ' + element.sub_title
-            });
-          }); //
-
-          me.$emit("factorNames", me.factorNames);
-          var newData = [];
-
-          if (scenario != null && Array.isArray(JSON.parse(scenario['body'])) && JSON.parse(scenario['body']).length > 0) {
-            me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
-
-            me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
-            var body = JSON.parse(scenario['body']);
-            me.$emit("factorsWithSubfactors", me.factors);
-            me.factors.forEach(function (factor) {
-              var items = [];
-              body.forEach(function (item) {
-                if (item['factor'] === factor.id) {
-                  factor.subfactors.forEach(function (subfactor) {
-                    if (item['subfactor'] === subfactor.id) {
-                      subfactor.criteria.forEach(function (criterion) {
-                        if (item['criterion'] == criterion.id) {
-                          criterion.selected = true;
-                          me.criteriaVal({
-                            criterion: criterion,
-                            factor: factor.id,
-                            subfactor: subfactor.id
-                          });
-                        } else {
-                          criterion.selected = false;
-                        }
-                      });
-                    }
-                  });
-                }
-              });
-              newData.push({
-                items: items,
-                factor: factor
-              });
-            });
-          } else {
-            me.factors.forEach(function (factor) {
-              newData.push({
-                items: null,
-                factor: factor
-              });
-            });
+            me.data = newData;
           }
 
-          me.data = newData;
+          this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
+        } else {
+          //When not authenticated
+          var _newData = [];
+          me.factors = response.data ? response.data[0] : [];
+          me.factors.forEach(function (factor) {
+            _newData.push({
+              items: null,
+              factor: factor
+            });
+          });
+          me.data = _newData; // me.data.push(me.factors);
         }
+
+        me.$emit("factorNames", me.factorNames); // console.log({ factors: me.factors });
       });
-      this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
     },
     criteriaVal: function criteriaVal(event) {
       var me = this;
@@ -23265,69 +23286,77 @@ var render = function () {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-body" }, [
-          _c("form", { attrs: { action: "#" } }, [
-            _c("div", { staticClass: "form-body" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("label", { staticClass: "col-lg-1" }, [_vm._v("Name")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-11" }, [
+          _vm.authenticated
+            ? _c("form", { attrs: { action: "#" } }, [
+                _c("div", { staticClass: "form-body" }, [
+                  _c("div", { staticClass: "form-group" }, [
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-12" }, [
-                        _c("input", {
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Your Full Name",
-                            disabled: "",
-                          },
-                          domProps: { value: _vm.name + " " + _vm.last_name },
-                        }),
+                      _c("label", { staticClass: "col-lg-1" }, [
+                        _vm._v("Name"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-11" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Your Full Name",
+                                disabled: "",
+                              },
+                              domProps: {
+                                value: _vm.name + " " + _vm.last_name,
+                              },
+                            }),
+                          ]),
+                        ]),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("label", { staticClass: "col-lg-1" }, [
+                        _vm._v("Email"),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-11" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.email,
+                                  expression: "email",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "email",
+                                placeholder: "example@mailsrv.any",
+                                disabled: "",
+                              },
+                              domProps: { value: _vm.email },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.email = $event.target.value
+                                },
+                              },
+                            }),
+                          ]),
+                        ]),
                       ]),
                     ]),
                   ]),
                 ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("label", { staticClass: "col-lg-1" }, [_vm._v("Email")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-11" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-12" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.email,
-                              expression: "email",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "email",
-                            placeholder: "example@mailsrv.any",
-                            disabled: "",
-                          },
-                          domProps: { value: _vm.email },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.email = $event.target.value
-                            },
-                          },
-                        }),
-                      ]),
-                    ]),
-                  ]),
-                ]),
-              ]),
-            ]),
-          ]),
+              ])
+            : _vm._e(),
         ]),
       ]),
     ]),
@@ -23404,7 +23433,10 @@ var render = function () {
                 { staticClass: "tab-pane", attrs: { id: "Situation" } },
                 [
                   _c("SituationA", {
-                    attrs: { reloader: _vm.reloader },
+                    attrs: {
+                      reloader: _vm.reloader,
+                      authenticated: _vm.authenticated,
+                    },
                     on: {
                       maritialChanged: _vm.getMaritialChanged,
                       selectedSituation: _vm.getSituation,
@@ -24289,43 +24321,51 @@ var render = function () {
               ]),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-outline-info waves-effect waves-light",
-                  attrs: { type: "button" },
-                  on: { click: _vm.saveSituation },
-                },
-                [
-                  _vm._m(0),
-                  _vm._v(" Guardar\n            Situacion actual\n          "),
-                ]
-              ),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "btn btn-outline-success waves-effect waves-light",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.copyScennario()
+            _vm.authenticated
+              ? _c("div", { staticClass: "col-md-3" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-outline-info waves-effect waves-light",
+                      attrs: { type: "button" },
+                      on: { click: _vm.saveSituation },
                     },
-                  },
-                },
-                [_vm._m(1), _vm._v(" Copiar ecenario\n          ")]
-              ),
-            ]),
+                    [
+                      _vm._m(0),
+                      _vm._v(
+                        " Guardar\n            Situacion actual\n          "
+                      ),
+                    ]
+                  ),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.authenticated
+              ? _c("div", { staticClass: "col-md-3" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-outline-success waves-effect waves-light",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.copyScennario()
+                        },
+                      },
+                    },
+                    [_vm._m(1), _vm._v(" Copiar ecenario\n          ")]
+                  ),
+                ])
+              : _vm._e(),
           ]),
           _vm._v(" "),
           _c("accordions", {
             attrs: {
               maritialStatus: _vm.maritialStatus,
               reloader: _vm.reloader,
+              authenticated: _vm.authenticated,
             },
             on: {
               sumScore: _vm.getScore,
@@ -24565,8 +24605,8 @@ var render = function () {
                                     ? _vm.selectedSubfactor.selections[
                                         subfactor.id
                                       ].criterion.single
-                                    : "a"
-                                  : "b",
+                                    : 0
+                                  : 0,
                             },
                           }),
                         ]),

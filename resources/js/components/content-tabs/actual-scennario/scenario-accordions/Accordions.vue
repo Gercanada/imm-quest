@@ -3,6 +3,7 @@
     <div class="col-12">
       <div id="accordion" class="custom-accordion mb-4">
         <div class="card mb-0" v-for="object in data">
+          <!-- TODO If object id factor == 5 (hasnt values for single). Hide if radio single is selected  -->
           <div class="card-header" id="headingOne">
             <div class="row">
               <div class="col-8">
@@ -89,8 +90,8 @@
                                 subfactor.id
                               ].criterion.hasOwnProperty('single')
                             ? selectedSubfactor.selections[subfactor.id].criterion.single
-                            : 'a'
-                          : 'b'
+                            : 0
+                          : 0
                       "
                       disabled
                     />

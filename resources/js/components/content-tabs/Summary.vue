@@ -12,6 +12,7 @@
     </div>
 
     <div class="col-12">
+      <!--  v-if="authenticated" TODO  -->
       <SummaryTable
         :summary="summary"
         :factors="factors"
