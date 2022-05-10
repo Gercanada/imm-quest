@@ -106,12 +106,12 @@
         @endif
         {{-- body --}}
         <div class="page-wrapper">
-            <div class="container-fluid">
-                @yield('content')
-                @if (Auth::user())
-                    {{-- @yield('content') --}}
-                @endif
-            </div>
+            {{-- <div class="container-fluid"> --}}
+            @yield('content')
+            @if (Auth::user())
+                {{-- @yield('content') --}}
+            @endif
+            {{-- </div> --}}
             <footer class="footer">
                 © 2020 Admin Pro Admin by wrappixel.com
             </footer>

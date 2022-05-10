@@ -1,10 +1,10 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" v-if="authenticated">
       <div class="card">
         <div class="card-body">
           <!-- <h4 class="card-title">Grid With Row Label</h4> -->
-          <form action="#" v-if="authenticated">
+          <form action="#">
             <div class="form-body">
               <div class="form-group">
                 <div class="row">
@@ -13,7 +13,7 @@
                     <div class="row">
                       <div class="col-md-12">
                         <input
-                          :value="name + ' ' + last_name"
+                          :value="(name ? name : '') + ' ' + (last_name ? last_name : '')"
                           type="text"
                           class="form-control"
                           placeholder="Your Full Name"

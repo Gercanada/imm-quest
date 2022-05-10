@@ -61,7 +61,11 @@
       <div class="row">
         <div class="col-12">
           <div id="accordion" class="custom-accordion mb-4">
-            <div class="card mb-0" v-for="object in data">
+            <div
+              class="card mb-0"
+              v-for="object in data"
+              v-show="maritialStatusCopy === 'Single' ? object.factor.id != 5 : true"
+            >
               <div class="card-header" id="headingOne">
                 <div class="row">
                   <div class="col-8">
@@ -478,7 +482,7 @@ export default {
         axios
           .post("/delete/" + id)
           .then((response) => {
-            console.log(response);
+            // console.log(response);
             Swal.fire({
               type: "success",
               title: "Escenario eliminado",

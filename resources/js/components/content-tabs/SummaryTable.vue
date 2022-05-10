@@ -1,5 +1,4 @@
 <template>
-  <!-- Table -->
   <div class="card">
     <div class="card-body">
       <div class="row pb-3 mb-2">
@@ -51,7 +50,6 @@
                 {{ sumS.total }}
               </th>
             </tr>
-
             <tr v-for="fact in factors">
               <td>{{ fact.name }}</td>
               <td class="text-right">
@@ -60,11 +58,9 @@
                   fact.id in FactorsWithScores &&
                   FactorsWithScores[fact.id]
                     ? FactorsWithScores[fact.id][1].marriedSum
-                    : maritialStatusChanged === "Single" &&
-                      fact.id in FactorsWithScores &&
-                      FactorsWithScores[fact.id]
+                    : fact.id in FactorsWithScores && FactorsWithScores[fact.id]
                     ? FactorsWithScores[fact.id][0].singleSum
-                    : 0
+                    : "x"
                 }}
               </td>
               <td v-for="sumEach in sumScoreCopies.copies" class="text-right">
@@ -102,9 +98,7 @@ export default {
             [fact.id] in this.FactorsWithScores &&
             this.FactorsWithScores[fact.id]
             ? this.FactorsWithScores[fact.id][1].marriedSum
-            : this.maritialStatusChanged === "Single" &&
-              [fact.id] in this.FactorsWithScores &&
-              this.FactorsWithScores[fact.id]
+            : [fact.id] in this.FactorsWithScores && this.FactorsWithScores[fact.id]
             ? this.FactorsWithScores[fact.id][0].singleSum
             : 0
         );
@@ -125,9 +119,7 @@ export default {
             [fact.id] in this.FactorsWithScores &&
             this.FactorsWithScores[fact.id]
             ? this.FactorsWithScores[fact.id][1].marriedSum
-            : this.maritialStatusChanged === "Single" &&
-              [fact.id] in this.FactorsWithScores &&
-              this.FactorsWithScores[fact.id]
+            : [fact.id] in this.FactorsWithScores && this.FactorsWithScores[fact.id]
             ? this.FactorsWithScores[fact.id][0].singleSum
             : 0
         );
@@ -207,7 +199,6 @@ export default {
       axios
         .post("print-summary", { data })
         .then(function (response) {
-          console.table(response);
           response1 = response;
           Swal.fire({
             type: "info",
@@ -226,10 +217,7 @@ export default {
         });
       delay(10000)
         .then(() => {
-          axios.get("delete_temp_file/" + fileName).then(function (response) {
-            console.log("then3");
-            console.log(response);
-          });
+          axios.get("delete_temp_file/" + fileName).then(function (response) {});
         })
         .catch((error) => {
           console.table(error);

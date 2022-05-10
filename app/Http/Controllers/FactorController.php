@@ -149,42 +149,46 @@ class FactorController extends Controller
             $user = Auth::user();
             $currentScennarios = $request->actualSituation[1];
             $actualSituation = null;
-
-            // return $request;
-
             // Save changes on scennarios copies
             if ($request->scennarioId) {
                 $scennario =  Scenario::Where('id', $request->scennarioId)->first();
                 $scennario->is_married = $request->maritialStatus === 'Married' ? true : false;
                 $scennario->body = json_encode($request->actualSituation[2]);
                 $scennario->save();
-            }
-
-            // return $request;
-
-            foreach ($currentScennarios as $current) {
-                $actual = false;
-                if (isset($current['is_theactual'])) {
-                    $actual =  $current['is_theactual'] == true ? true : false;
+            } else {
+                if (count($currentScennarios) > 0) {
+                    foreach ($currentScennarios as $current) {
+                        $actual = false;
+                        if (isset($current['is_theactual'])) {
+                            $actual =  $current['is_theactual'] == true ? true : false;
+                        }
+                        if ($actual === true) {
+                            $actualSituation = $current;
+                            break;
+                        }
+                    }
+                    $scenario =  Scenario::updateOrCreate(
+                        [
+                            'id' => $actualSituation['id'],
+                        ],
+                        [
+                            'user_id' => $user->id,
+                            'name' => $request->scenarioName,
+                            'is_married' => $request->maritialStatus === 'Married' ? true : false,
+                            'body' => json_encode($request->actualSituation[2]),
+                        ]
+                    );
+                } else {
+                    $scenario =  Scenario::Create(
+                        [
+                            'user_id' => $user->id,
+                            'name' => $request->scenarioName,
+                            'is_married' => $request->maritialStatus === 'Married' ? true : false,
+                            'body' => json_encode($request->actualSituation[2]),
+                        ]
+                    );
                 }
-                if ($actual === true) {
-                    $actualSituation = $current;
-                    break;
-                }
             }
-
-            $scenario =  Scenario::updateOrCreate(
-                [
-                    'id' => $actualSituation['id'],
-                    // 'is_theactual' => true
-                ],
-                [
-                    'user_id' => $user->id,
-                    'name' => $request->scenarioName,
-                    'is_married' => $request->maritialStatus === 'Married' ? true : false,
-                    'body' => json_encode($request->actualSituation[2]),
-                ]
-            );
             return response()->json($scenario);
         } catch (Exception $e) {
             $this->consoleWrite()->writeln($e->getMessage());

@@ -2607,6 +2607,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["body", "factors", "maritialSituation", "copyId", "scennarioName"],
   data: function data() {
@@ -2898,7 +2902,7 @@ __webpack_require__.r(__webpack_exports__);
         showCancelButton: true
       }).then(function () {
         axios.post("/delete/" + id).then(function (response) {
-          console.log(response);
+          // console.log(response);
           Swal.fire({
             type: "success",
             title: "Escenario eliminado",
@@ -3078,10 +3082,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies"],
   watch: {
@@ -3090,7 +3090,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var toSumArr = [];
       this.factors.forEach(function (fact) {
-        toSumArr.push(_this.maritialStatusChanged === "Married" && [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][1].marriedSum : _this.maritialStatusChanged === "Single" && [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][0].singleSum : 0);
+        toSumArr.push(_this.maritialStatusChanged === "Married" && [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][1].marriedSum : [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][0].singleSum : 0);
       }); //   console.log({ toSumArr });
 
       var sum = 0;
@@ -3106,7 +3106,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var toSumArr = [];
       this.factors.forEach(function (fact) {
-        toSumArr.push(_this2.maritialStatusChanged === "Married" && [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][1].marriedSum : _this2.maritialStatusChanged === "Single" && [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][0].singleSum : 0);
+        toSumArr.push(_this2.maritialStatusChanged === "Married" && [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][1].marriedSum : [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][0].singleSum : 0);
       });
       var sum = 0;
 
@@ -3211,7 +3211,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 axios.post("print-summary", {
                   data: data
                 }).then(function (response) {
-                  console.table(response);
                   response1 = response;
                   Swal.fire({
                     type: "info",
@@ -3225,10 +3224,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   console.table(response1);
                 });
                 delay(10000).then(function () {
-                  axios.get("delete_temp_file/" + fileName).then(function (response) {
-                    console.log("then3");
-                    console.log(response);
-                  });
+                  axios.get("delete_temp_file/" + fileName).then(function (response) {});
                 })["catch"](function (error) {
                   console.table(error);
                 });
@@ -3345,15 +3341,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getUserData: function getUserData(value) {
+      console.log("status changed 1");
+      return;
       this.maritialStatus = value;
     },
     changeStatus: function changeStatus(value) {
+      console.log("status changed 2");
       this.maritialStatus = value;
     },
     getFactsWSubfacts: function getFactsWSubfacts(value) {
       this.$emit("factorsWithSubfactors", value);
     },
     maritialChanged: function maritialChanged(value) {
+      console.log("status changed 3");
+      return;
       this.$emit("maritialChanged", value);
     },
     getExtraScennarios: function getExtraScennarios(value) {
@@ -3377,21 +3378,16 @@ __webpack_require__.r(__webpack_exports__);
         if (scenario != null) {
           me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
         }
-      }
+      } //   return;
+
 
       this.$emit("selectedSituation", me.userActualSituation);
     },
     saveSituation: function saveSituation() {
       var me = this;
+      var scenario = null;
 
-      if (me.scenarios.length === 0) {
-        Swal.fire({
-          type: "warning",
-          title: "Nada para guardar",
-          text: "No ha hecho ningun cambio. No hay nada que guardar."
-        });
-      } else {
-        var scenario = null;
+      if (me.scenarios.length > 0) {
         me.scenarios.forEach(function (element) {
           if ("is_theactual" in element) {
             if (element["is_theactual"] == true) {
@@ -3399,37 +3395,40 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
         });
-        Swal.fire({
-          title: "Guardar situacion actual ",
-          type: "warning",
-          text: "Guardar situacion actial. A partir de este escenario podra crear otros nuevos para comparar y etc.",
-          showDenyButton: true,
-          showCancelButton: true
-        }).then(function (result) {
-          if ("value" in result) {
-            axios.post("save-situation", {
-              scenarioName: "Situacion actual",
-              actualSituation: me.userActualSituation,
-              maritialStatus: me.maritialStatus
-            }).then(function (response) {
-              console.log(response.data);
-              Swal.fire({
-                type: "success",
-                title: "Escenario guardado",
-                text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
-              });
-            });
-          } else {
-            Swal.fire({
-              type: "info",
-              title: "No será guardado",
-              timer: 3000
-            });
-          }
-        })["catch"](function (error) {
-          console.table(error);
-        });
       }
+
+      Swal.fire({
+        title: "Guardar situacion actual ",
+        type: "warning",
+        text: "Guardar situacion actual. A partir de este escenario podra crear otros nuevos para comparar y etc.",
+        showDenyButton: true,
+        showCancelButton: true
+      }).then(function (result) {
+        if ("value" in result) {
+          console.log(me.userActualSituation);
+          console.log(me.maritialStatus);
+          axios.post("save-situation", {
+            scenarioName: "Situacion actual",
+            actualSituation: me.userActualSituation,
+            maritialStatus: me.maritialStatus
+          }).then(function (response) {
+            console.log(response.data);
+            Swal.fire({
+              type: "success",
+              title: "Escenario guardado",
+              text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
+            });
+          });
+        } else {
+          Swal.fire({
+            type: "info",
+            title: "No será guardado",
+            timer: 3000
+          });
+        }
+      })["catch"](function (error) {
+        console.table(error);
+      });
     },
     getFactors: function getFactors(value) {
       this.$emit("FactorsTitles", value);
@@ -3476,8 +3475,7 @@ __webpack_require__.r(__webpack_exports__);
                 type: "success",
                 title: "Escenario guardado",
                 text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
-              });
-              console.log(response);
+              }); //   console.log(response);
             });
           } else {
             Swal.fire({
@@ -3529,11 +3527,14 @@ __webpack_require__.r(__webpack_exports__);
   props: ["maritialStatus", 'reloader', "authenticated"],
   watch: {
     maritialStatus: function maritialStatus() {
-      this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+      this.changed = this.maritialStatus;
+      console.log(this.changed); // this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+
+      console.log('watch');
     },
     reloader: function reloader() {
-      alert('called');
-      window.location.reload(); // this.getData;
+      this.getData(); // alert('called');
+      // window.location.reload();
     }
   },
   data: function data() {
@@ -3556,7 +3557,8 @@ __webpack_require__.r(__webpack_exports__);
       mutableMaritialStatus: this.maritialStatus,
       factorNames: [],
       arraySums: [],
-      situation: []
+      situation: [],
+      changed: null
     };
   },
   mounted: function mounted() {
@@ -3593,6 +3595,10 @@ __webpack_require__.r(__webpack_exports__);
             var newData = [];
 
             if (scenario != null && Array.isArray(JSON.parse(scenario['body'])) && JSON.parse(scenario['body']).length > 0) {
+              console.log({
+                changed: me.changed
+              }); // return
+
               me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
 
               me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
@@ -3635,20 +3641,30 @@ __webpack_require__.r(__webpack_exports__);
             }
 
             me.data = newData;
+          } else {
+            var _newData = [];
+            me.factors = response.data ? response.data[0] : [];
+            me.factors.forEach(function (factor) {
+              _newData.push({
+                items: null,
+                factor: factor
+              });
+            });
+            me.data = _newData;
           }
 
           this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
         } else {
           //When not authenticated
-          var _newData = [];
+          var _newData2 = [];
           me.factors = response.data ? response.data[0] : [];
           me.factors.forEach(function (factor) {
-            _newData.push({
+            _newData2.push({
               items: null,
               factor: factor
             });
           });
-          me.data = _newData;
+          me.data = _newData2;
         } // me.$emit("factorNames", me.factorNames);
         // me.$emit("factorsWithSubfactors", me.factors);
         // console.log({ factors: me.factors });
@@ -3742,10 +3758,13 @@ __webpack_require__.r(__webpack_exports__);
         }, 0);
       } //grouped by factor
       // console.log(JSON.stringify(groupByFacto, null, 2));
+      // return
 
 
       var selectedSituation = [];
-      selectedSituation[0] = this.mutableMaritialStatus;
+      console.log("here");
+      console.log(this.changed); // selectedSituation[0] = this.changed ? this.changed : this.mutableMaritialStatus;
+
       selectedSituation[1] = this.scenarios;
       me.selectedCriterion[subfactor] = criterion.id;
 
@@ -23269,11 +23288,11 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _vm.authenticated
-            ? _c("form", { attrs: { action: "#" } }, [
+    _vm.authenticated
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("form", { attrs: { action: "#" } }, [
                 _c("div", { staticClass: "form-body" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("div", { staticClass: "row" }, [
@@ -23292,7 +23311,10 @@ var render = function () {
                                 disabled: "",
                               },
                               domProps: {
-                                value: _vm.name + " " + _vm.last_name,
+                                value:
+                                  (_vm.name ? _vm.name : "") +
+                                  " " +
+                                  (_vm.last_name ? _vm.last_name : ""),
                               },
                             }),
                           ]),
@@ -23341,11 +23363,11 @@ var render = function () {
                     ]),
                   ]),
                 ]),
-              ])
-            : _vm._e(),
-        ]),
-      ]),
-    ]),
+              ]),
+            ]),
+          ]),
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "card" }, [
@@ -23688,209 +23710,237 @@ var render = function () {
               attrs: { id: "accordion" },
             },
             _vm._l(_vm.data, function (object) {
-              return _c("div", { staticClass: "card mb-0" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-header", attrs: { id: "headingOne" } },
-                  [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-8" }, [
-                        _c("h5", { staticClass: "m-0" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass:
-                                "custom-accordion-title d-block pt-2 pb-2",
-                              attrs: {
-                                "data-toggle": "collapse",
-                                href: "#collapse" + object.factor.id,
-                                "aria-expanded": "false",
-                                "aria-controls": "collapse" + object.factor.id,
+              return _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.maritialStatusCopy === "Single"
+                          ? object.factor.id != 5
+                          : true,
+                      expression:
+                        "maritialStatusCopy === 'Single' ? object.factor.id != 5 : true",
+                    },
+                  ],
+                  staticClass: "card mb-0",
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "card-header", attrs: { id: "headingOne" } },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-8" }, [
+                          _c("h5", { staticClass: "m-0" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "custom-accordion-title d-block pt-2 pb-2",
+                                attrs: {
+                                  "data-toggle": "collapse",
+                                  href: "#collapse" + object.factor.id,
+                                  "aria-expanded": "false",
+                                  "aria-controls":
+                                    "collapse" + object.factor.id,
+                                },
                               },
+                              [
+                                _vm._v(
+                                  "\n                      " +
+                                    _vm._s(
+                                      object.factor.title +
+                                        " " +
+                                        object.factor.sub_title
+                                    ) +
+                                    "\n                      "
+                                ),
+                                _vm._m(3, true),
+                              ]
+                            ),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4" }, [
+                          _c("input", {
+                            staticClass: "form-control float-right",
+                            attrs: { type: "text", disabled: "" },
+                            domProps: {
+                              value:
+                                _vm.maritialStatusCopy === "Married"
+                                  ? _vm.factorScoreMarried[object.factor.id]
+                                  : _vm.factorScoreSingle[object.factor.id],
                             },
-                            [
-                              _vm._v(
-                                "\n                      " +
-                                  _vm._s(
-                                    object.factor.title +
-                                      " " +
-                                      object.factor.sub_title
-                                  ) +
-                                  "\n                      "
-                              ),
-                              _vm._m(3, true),
-                            ]
-                          ),
+                          }),
                         ]),
                       ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-4" }, [
-                        _c("input", {
-                          staticClass: "form-control float-right",
-                          attrs: { type: "text", disabled: "" },
-                          domProps: {
-                            value:
-                              _vm.maritialStatusCopy === "Married"
-                                ? _vm.factorScoreMarried[object.factor.id]
-                                : _vm.factorScoreSingle[object.factor.id],
-                          },
-                        }),
-                      ]),
-                    ]),
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "collapse",
-                    attrs: {
-                      id: "collapse" + object.factor.id,
-                      "aria-labelledby": "headingOne",
-                      "data-parent": "#accordion",
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "collapse",
+                      attrs: {
+                        id: "collapse" + object.factor.id,
+                        "aria-labelledby": "headingOne",
+                        "data-parent": "#accordion",
+                      },
                     },
-                  },
-                  [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        _vm._l(object.factor.subfactors, function (subfactor) {
-                          return _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-6" }, [
-                              _vm._v(
-                                "\n                      " +
-                                  _vm._s(subfactor.subfactor) +
-                                  "\n                    "
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-4" }, [
-                              _c(
-                                "select",
-                                {
-                                  directives: [
+                    [
+                      _c("div", { staticClass: "card-body" }, [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          _vm._l(
+                            object.factor.subfactors,
+                            function (subfactor) {
+                              return _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-6" }, [
+                                  _vm._v(
+                                    "\n                      " +
+                                      _vm._s(subfactor.subfactor) +
+                                      "\n                    "
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-4" }, [
+                                  _c(
+                                    "select",
                                     {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.selectedSubfactor.selections[
-                                          subfactor.id
-                                        ],
-                                      expression:
-                                        "selectedSubfactor.selections[subfactor.id]",
-                                    },
-                                  ],
-                                  staticClass: "form-control",
-                                  staticStyle: {
-                                    width: "100%",
-                                    height: "36px",
-                                  },
-                                  attrs: { id: "select2-search-hide" },
-                                  on: {
-                                    change: [
-                                      function ($event) {
-                                        var $$selectedVal =
-                                          Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function (o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function (o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                        _vm.$set(
-                                          _vm.selectedSubfactor.selections,
-                                          subfactor.id,
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      },
-                                      _vm.criteriaVal,
-                                    ],
-                                  },
-                                },
-                                _vm._l(
-                                  subfactor.criteria,
-                                  function (criterion) {
-                                    return _c(
-                                      "option",
-                                      {
-                                        class: criterion.selected
-                                          ? "bg-success"
-                                          : "",
-                                        domProps: {
-                                          value: {
-                                            criterion: criterion,
-                                            factor: object.factor.id,
-                                            subfactor: subfactor.id,
-                                          },
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.selectedSubfactor.selections[
+                                              subfactor.id
+                                            ],
+                                          expression:
+                                            "selectedSubfactor.selections[subfactor.id]",
                                         },
+                                      ],
+                                      staticClass: "form-control",
+                                      staticStyle: {
+                                        width: "100%",
+                                        height: "36px",
                                       },
-                                      [
-                                        _vm._v(
-                                          "\n                          " +
-                                            _vm._s(criterion.criterion) +
-                                            "\n                        "
-                                        ),
-                                      ]
-                                    )
-                                  }
-                                ),
-                                0
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-2" }, [
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: { type: "text", disabled: "" },
-                                domProps: {
-                                  value:
-                                    _vm.selectedSubfactor != undefined &&
-                                    _vm.selectedSubfactor.selections !=
-                                      undefined &&
-                                    _vm.selectedSubfactor.selections[
-                                      subfactor.id
-                                    ] != undefined &&
-                                    "criterion" in
-                                      _vm.selectedSubfactor.selections[
-                                        subfactor.id
-                                      ]
-                                      ? _vm.maritialStatusCopy === "Married" &&
+                                      attrs: { id: "select2-search-hide" },
+                                      on: {
+                                        change: [
+                                          function ($event) {
+                                            var $$selectedVal =
+                                              Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function (o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function (o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                            _vm.$set(
+                                              _vm.selectedSubfactor.selections,
+                                              subfactor.id,
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          },
+                                          _vm.criteriaVal,
+                                        ],
+                                      },
+                                    },
+                                    _vm._l(
+                                      subfactor.criteria,
+                                      function (criterion) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            class: criterion.selected
+                                              ? "bg-success"
+                                              : "",
+                                            domProps: {
+                                              value: {
+                                                criterion: criterion,
+                                                factor: object.factor.id,
+                                                subfactor: subfactor.id,
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                          " +
+                                                _vm._s(criterion.criterion) +
+                                                "\n                        "
+                                            ),
+                                          ]
+                                        )
+                                      }
+                                    ),
+                                    0
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-2" }, [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: { type: "text", disabled: "" },
+                                    domProps: {
+                                      value:
+                                        _vm.selectedSubfactor != undefined &&
+                                        _vm.selectedSubfactor.selections !=
+                                          undefined &&
                                         _vm.selectedSubfactor.selections[
                                           subfactor.id
-                                        ].criterion.hasOwnProperty("married")
-                                        ? _vm.selectedSubfactor.selections[
-                                            subfactor.id
-                                          ].criterion.married
-                                        : _vm.maritialStatusCopy === "Single" &&
+                                        ] != undefined &&
+                                        "criterion" in
                                           _vm.selectedSubfactor.selections[
                                             subfactor.id
-                                          ].criterion.hasOwnProperty("single")
-                                        ? _vm.selectedSubfactor.selections[
-                                            subfactor.id
-                                          ].criterion.single
-                                        : "a"
-                                      : "b",
-                                },
-                              }),
-                            ]),
-                          ])
-                        }),
-                        0
-                      ),
-                    ]),
-                  ]
-                ),
-              ])
+                                          ]
+                                          ? _vm.maritialStatusCopy ===
+                                              "Married" &&
+                                            _vm.selectedSubfactor.selections[
+                                              subfactor.id
+                                            ].criterion.hasOwnProperty(
+                                              "married"
+                                            )
+                                            ? _vm.selectedSubfactor.selections[
+                                                subfactor.id
+                                              ].criterion.married
+                                            : _vm.maritialStatusCopy ===
+                                                "Single" &&
+                                              _vm.selectedSubfactor.selections[
+                                                subfactor.id
+                                              ].criterion.hasOwnProperty(
+                                                "single"
+                                              )
+                                            ? _vm.selectedSubfactor.selections[
+                                                subfactor.id
+                                              ].criterion.single
+                                            : "a"
+                                          : "b",
+                                    },
+                                  }),
+                                ]),
+                              ])
+                            }
+                          ),
+                          0
+                        ),
+                      ]),
+                    ]
+                  ),
+                ]
+              )
             }),
             0
           ),
@@ -24157,11 +24207,10 @@ var render = function () {
                                 fact.id in _vm.FactorsWithScores &&
                                 _vm.FactorsWithScores[fact.id]
                                 ? _vm.FactorsWithScores[fact.id][1].marriedSum
-                                : _vm.maritialStatusChanged === "Single" &&
-                                  fact.id in _vm.FactorsWithScores &&
+                                : fact.id in _vm.FactorsWithScores &&
                                   _vm.FactorsWithScores[fact.id]
                                 ? _vm.FactorsWithScores[fact.id][0].singleSum
-                                : 0
+                                : "x"
                             ) +
                             "\n            "
                         ),

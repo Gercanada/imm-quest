@@ -45,6 +45,7 @@ class LoginController extends Controller
     }
 
 
+
     /* ------------------- */
     /**
      * Show the application's login form.
@@ -108,14 +109,6 @@ class LoginController extends Controller
             $this->username() => 'required|string',
             'password' => 'required|string',
         ]);
-        /*
-        $field = filter_var($request->get($this->username()))
-            ? $this->username()
-            : 'alternative_username';
-        return [
-            $field => $request->get($this->username()),
-            'password' => $request->password,
-        ]; */
     }
 
     /**
@@ -140,7 +133,16 @@ class LoginController extends Controller
      */
     protected function credentials(Request $request)
     {
-        return $request->only($this->username(), 'password');
+        // return $request->only($this->username(), 'password');
+
+        $field = filter_var($request->get($this->username()), FILTER_VALIDATE_EMAIL)
+            ? 'email'
+            : 'user_name';
+
+        return [
+            $field => $request->get($this->username()),
+            'password' => $request->password,
+        ];
     }
 
     /**

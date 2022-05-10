@@ -110,7 +110,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-dark" href="" aria-haspopup="true">
+                    <a class="nav-link waves-effect waves-dark" href="/register" aria-haspopup="true">
                         <span class=" text-info d-inline-block text-center btn btn-outline-info">
                             <i class="fas fa-user-plus"> Register</i>
                         </span>

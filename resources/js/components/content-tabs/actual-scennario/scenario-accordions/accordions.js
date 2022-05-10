@@ -2,12 +2,15 @@ export default {
     props: ["maritialStatus", 'reloader', "authenticated"],
     watch: {
         maritialStatus: function() {
-            this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+            this.changed = this.maritialStatus;
+            console.log(this.changed)
+                // this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+            console.log('watch')
         },
         reloader: function() {
-            alert('called');
-            window.location.reload();
-            // this.getData;
+            this.getData();
+            // alert('called');
+            // window.location.reload();
         },
     },
     data() {
@@ -30,7 +33,8 @@ export default {
             mutableMaritialStatus: this.maritialStatus,
             factorNames: [],
             arraySums: [],
-            situation: []
+            situation: [],
+            changed: null
         };
     },
 
@@ -71,6 +75,8 @@ export default {
                             Array.isArray(JSON.parse(scenario['body'])) &&
                             JSON.parse(scenario['body']).length > 0
                         ) {
+                            console.log({ changed: me.changed });
+                            // return
                             me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
                             me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
                             let body = JSON.parse(scenario['body']);
@@ -104,6 +110,14 @@ export default {
                                 newData.push({ items: null, factor: factor })
                             });
                         }
+                        me.data = newData;
+                    } else {
+                        let newData = [];
+                        me.factors = response.data ? response.data[0] : [];
+
+                        me.factors.forEach(factor => {
+                            newData.push({ items: null, factor: factor })
+                        });
                         me.data = newData;
                     }
                     this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
@@ -209,8 +223,11 @@ export default {
             }
             //grouped by factor
             // console.log(JSON.stringify(groupByFacto, null, 2));
+            // return
             let selectedSituation = [];
-            selectedSituation[0] = this.mutableMaritialStatus;
+            console.log("here");
+            console.log(this.changed);
+            // selectedSituation[0] = this.changed ? this.changed : this.mutableMaritialStatus;
             selectedSituation[1] = this.scenarios;
             me.selectedCriterion[subfactor] = criterion.id;
 

@@ -86,10 +86,13 @@ export default {
   },
   methods: {
     getUserData(value) {
+      console.log("status changed 1");
+      return;
       this.maritialStatus = value;
     },
 
     changeStatus(value) {
+      console.log("status changed 2");
       this.maritialStatus = value;
     },
 
@@ -98,6 +101,8 @@ export default {
     },
 
     maritialChanged(value) {
+      console.log("status changed 3");
+      return;
       this.$emit("maritialChanged", value);
     },
 
@@ -123,19 +128,14 @@ export default {
           me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
         }
       }
+      //   return;
       this.$emit("selectedSituation", me.userActualSituation);
     },
 
     saveSituation() {
       let me = this;
-      if (me.scenarios.length === 0) {
-        Swal.fire({
-          type: "warning",
-          title: "Nada para guardar",
-          text: "No ha hecho ningun cambio. No hay nada que guardar.",
-        });
-      } else {
-        let scenario = null;
+      let scenario = null;
+      if (me.scenarios.length > 0) {
         me.scenarios.forEach((element) => {
           if ("is_theactual" in element) {
             if (element["is_theactual"] == true) {
@@ -143,42 +143,44 @@ export default {
             }
           }
         });
-
-        Swal.fire({
-          title: "Guardar situacion actual ",
-          type: "warning",
-          text:
-            "Guardar situacion actial. A partir de este escenario podra crear otros nuevos para comparar y etc.",
-          showDenyButton: true,
-          showCancelButton: true,
-        })
-          .then(function (result) {
-            if ("value" in result) {
-              axios
-                .post("save-situation", {
-                  scenarioName: "Situacion actual",
-                  actualSituation: me.userActualSituation,
-                  maritialStatus: me.maritialStatus,
-                })
-                .then(function (response) {
-                  console.log(response.data);
-                  Swal.fire({
-                    type: "success",
-                    title: "Escenario guardado",
-                    text:
-                      "Se ha" + scenario == null
-                        ? "creado"
-                        : "actualizado" + "este escenario",
-                  });
-                });
-            } else {
-              Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
-            }
-          })
-          .catch(function (error) {
-            console.table(error);
-          });
       }
+
+      Swal.fire({
+        title: "Guardar situacion actual ",
+        type: "warning",
+        text:
+          "Guardar situacion actual. A partir de este escenario podra crear otros nuevos para comparar y etc.",
+        showDenyButton: true,
+        showCancelButton: true,
+      })
+        .then(function (result) {
+          if ("value" in result) {
+            console.log(me.userActualSituation);
+            console.log(me.maritialStatus);
+            axios
+              .post("save-situation", {
+                scenarioName: "Situacion actual",
+                actualSituation: me.userActualSituation,
+                maritialStatus: me.maritialStatus,
+              })
+              .then(function (response) {
+                console.log(response.data);
+                Swal.fire({
+                  type: "success",
+                  title: "Escenario guardado",
+                  text:
+                    "Se ha" + scenario == null
+                      ? "creado"
+                      : "actualizado" + "este escenario",
+                });
+              });
+          } else {
+            Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
+          }
+        })
+        .catch(function (error) {
+          console.table(error);
+        });
     },
 
     getFactors(value) {
@@ -242,7 +244,7 @@ export default {
                         ? "creado"
                         : "actualizado" + "este escenario",
                   });
-                  console.log(response);
+                  //   console.log(response);
                 });
             } else {
               Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
