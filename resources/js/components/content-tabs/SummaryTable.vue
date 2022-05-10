@@ -12,84 +12,73 @@
             type="button"
             @click="printSummary"
           >
-            <!--
-                maritialStatusChanged,
-                totalForFactor,
-                sumScoreCopies.copies,
-                FactorsWithScores,
-           -->
-
             <span class="btn-label"><i class="far fa-file-pdf"></i></span> Generar pdf
           </button>
         </div>
       </div>
-      <table
-        data-toggle="table"
-        data-mobile-responsive="true"
-        class="table table-bordered"
-        data-sort-order="default"
-      >
-        <!-- -->
-        <thead>
-          <tr>
-            <th></th>
-            <th data-sortable="" data-width="auto">Actual situation</th>
-            <th
-              data-sortable=""
-              data-width="auto"
-              class="text-center"
-              v-for="sCopy in scennariosCopies"
-            >
-              {{ sCopy.name }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th><b>Maritial status</b></th>
-            <th class="detail">
-              {{ maritialStatusChanged != null ? maritialStatusChanged : "Single" }}
-            </th>
-            <th v-for="sCopy1 in scennariosCopies">
-              {{ sCopy1.is_married == true ? "Married" : "Single" }}
-            </th>
-          </tr>
-          <tr>
-            <th>Total de puntos</th>
-            <th class="text-center">{{ totalForFactor }}</th>
-            <th class="text-center" v-for="sumS in sumScoreCopies.copies">
-              {{ sumS.total }}
-            </th>
-          </tr>
 
-          <tr v-for="fact in factors">
-            <td>
-              <p class="left">{{ fact.name }}</p>
-            </td>
-            <td class="">
-              {{
-                maritialStatusChanged === "Married" &&
-                fact.id in FactorsWithScores &&
-                FactorsWithScores[fact.id]
-                  ? FactorsWithScores[fact.id][1].marriedSum
-                  : maritialStatusChanged === "Single" &&
-                    fact.id in FactorsWithScores &&
-                    FactorsWithScores[fact.id]
-                  ? FactorsWithScores[fact.id][0].singleSum
-                  : 0
-              }}
-            </td>
-            <td v-for="sumEach in sumScoreCopies.copies">
-              <p
-                v-for="(value, name, index) in sumEach.sums"
-                v-if="Object.keys(value)[0] == fact.id"
-              >
-                {{ Object.values(value)[0] }}
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="bootstrap-table">
+        <table
+          data-toggle="table"
+          data-mobile-responsive="true"
+          class="table-striped table table-hover table-bordered"
+          data-sort-order="default"
+        >
+          <!-- -->
+          <thead>
+            <tr>
+              <th></th>
+              <th data-sortable="" data-width="auto">Actual situation</th>
+              <th class="text-center" data-width="auto" v-for="sCopy in scennariosCopies">
+                {{ sCopy.name }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th><b>Maritial status</b></th>
+              <th class="detail">
+                {{ maritialStatusChanged != null ? maritialStatusChanged : "Single" }}
+              </th>
+              <th v-for="sCopy1 in scennariosCopies">
+                {{ sCopy1.is_married == true ? "Married" : "Single" }}
+              </th>
+            </tr>
+            <tr>
+              <th>Total de puntos</th>
+              <th class="text-right">{{ totalForFactor }}</th>
+              <th class="text-right" v-for="sumS in sumScoreCopies.copies">
+                {{ sumS.total }}
+              </th>
+            </tr>
+
+            <tr v-for="fact in factors">
+              <td>{{ fact.name }}</td>
+              <td class="text-right">
+                {{
+                  maritialStatusChanged === "Married" &&
+                  fact.id in FactorsWithScores &&
+                  FactorsWithScores[fact.id]
+                    ? FactorsWithScores[fact.id][1].marriedSum
+                    : maritialStatusChanged === "Single" &&
+                      fact.id in FactorsWithScores &&
+                      FactorsWithScores[fact.id]
+                    ? FactorsWithScores[fact.id][0].singleSum
+                    : 0
+                }}
+              </td>
+              <td v-for="sumEach in sumScoreCopies.copies" class="text-right">
+                <p
+                  v-for="(value, name, index) in sumEach.sums"
+                  v-if="Object.keys(value)[0] == fact.id"
+                >
+                  {{ Object.values(value)[0] }}
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -131,9 +120,6 @@ export default {
     maritialStatusChanged: function () {
       let toSumArr = [];
       this.factors.forEach((fact) => {
-        // console.log("SUMMARY");
-        // console.log(this.maritialStatusChanged);
-
         toSumArr.push(
           this.maritialStatusChanged === "Married" &&
             [fact.id] in this.FactorsWithScores &&
@@ -258,9 +244,6 @@ table {
   height: auto;
   overflow: auto;
   position: relative;
-}
-tbody tr td {
-  text-align: center;
 }
 
 tbody tr td p .right {

@@ -2295,6 +2295,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2952,16 +2953,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies"],
+  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies", "authenticated"],
   components: {
     SummaryTable: _SummaryTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    return {};
-  } //   mounted() {},
-
+  }
 });
 
 /***/ }),
@@ -3084,17 +3082,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies"],
   watch: {
@@ -3119,8 +3106,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var toSumArr = [];
       this.factors.forEach(function (fact) {
-        // console.log("SUMMARY");
-        // console.log(this.maritialStatusChanged);
         toSumArr.push(_this2.maritialStatusChanged === "Married" && [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][1].marriedSum : _this2.maritialStatusChanged === "Single" && [fact.id] in _this2.FactorsWithScores && _this2.FactorsWithScores[fact.id] ? _this2.FactorsWithScores[fact.id][0].singleSum : 0);
       });
       var sum = 0;
@@ -3575,7 +3560,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    // alert(this.authenticated)
     this.getData();
   },
   methods: {
@@ -3589,7 +3573,7 @@ __webpack_require__.r(__webpack_exports__);
           if (me.scenarios.length > 0) {
             me.scenarios.forEach(function (element) {
               if ("is_theactual" in element && element["is_theactual"] == true) {
-                scenario = element; ///Actial situation scennario only it is editable
+                scenario = element; ///Actual situation scennario only it is editable
               }
 
               if (element["is_theactual"] == false) {
@@ -3664,10 +3648,11 @@ __webpack_require__.r(__webpack_exports__);
               factor: factor
             });
           });
-          me.data = _newData; // me.data.push(me.factors);
-        }
+          me.data = _newData;
+        } // me.$emit("factorNames", me.factorNames);
+        // me.$emit("factorsWithSubfactors", me.factors);
+        // console.log({ factors: me.factors });
 
-        me.$emit("factorNames", me.factorNames); // console.log({ factors: me.factors });
       });
     },
     criteriaVal: function criteriaVal(event) {
@@ -3810,7 +3795,8 @@ __webpack_require__.r(__webpack_exports__);
       me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
 
       me.$emit("selectedSituation", selectedSituation);
-    }
+    },
+    showFactor: function showFactor() {}
   }
 });
 
@@ -3881,7 +3867,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ntable[data-v-322bc84a] {\n  height: auto;\n  overflow: auto;\n  position: relative;\n}\ntbody tr td[data-v-322bc84a] {\n  text-align: center;\n}\ntbody tr td p .right[data-v-322bc84a] {\n  text-align: right;\n}\ntbody tr td p .left[data-v-322bc84a] {\n  text-align: left;\n}\ntbody tr .rowName[data-v-322bc84a] {\n  text-align: left;\n  width: 40%;\n  min-width: 20%;\n}\n.card[data-v-322bc84a] {\n  height: 100%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ntable[data-v-322bc84a] {\n  height: auto;\n  overflow: auto;\n  position: relative;\n}\ntbody tr td p .right[data-v-322bc84a] {\n  text-align: right;\n}\ntbody tr td p .left[data-v-322bc84a] {\n  text-align: left;\n}\ntbody tr .rowName[data-v-322bc84a] {\n  text-align: left;\n  width: 40%;\n  min-width: 20%;\n}\n.card[data-v-322bc84a] {\n  height: 100%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23422,6 +23408,7 @@ var render = function () {
                       FactorsWithScores: _vm.FactorsWithScores,
                       maritialStatusChanged: _vm.maritialStatusChanged,
                       scennariosCopies: _vm.scennariosCopies,
+                      authenticated: _vm.authenticated,
                     },
                   }),
                 ],
@@ -23969,22 +23956,27 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _vm._m(0),
+    !_vm.authenticated
+      ? _c("div", { staticClass: "col-md-12" }, [_vm._m(0)])
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "col-12" },
       [
-        _c("SummaryTable", {
-          attrs: {
-            summary: _vm.summary,
-            factors: _vm.factors,
-            scores: _vm.scores,
-            FactorsWithScores: _vm.FactorsWithScores,
-            maritialStatusChanged: _vm.maritialStatusChanged,
-            scennariosCopies: _vm.scennariosCopies,
-          },
-        }),
+        _vm.authenticated
+          ? _c("SummaryTable", {
+              attrs: {
+                summary: _vm.summary,
+                factors: _vm.factors,
+                scores: _vm.scores,
+                FactorsWithScores: _vm.FactorsWithScores,
+                maritialStatusChanged: _vm.maritialStatusChanged,
+                scennariosCopies: _vm.scennariosCopies,
+                authenticated: _vm.authenticated,
+              },
+            })
+          : _vm._e(),
       ],
       1
     ),
@@ -23995,18 +23987,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("p", [
-        _c("a", { attrs: { href: "http://" } }, [
-          _vm._v("Calcula Tus Puntos de Express Entry "),
-        ]),
-        _vm._v(" "),
-        _vm._v(
-          "\n      Tambien puedes crear Escenarios para calcular cuantos puntos tendrias si tuvieras\n      Experiencia Canadiense o algun tipo de estudios. Para Guardar tus Resultados,\n      Descargarlos en un PDF o comparar tus resultados,\n      "
-        ),
-        _c("a", { attrs: { href: "http://" } }, [
-          _vm._v(" crea tu cuenta gratis"),
-        ]),
+    return _c("p", [
+      _c("a", { attrs: { href: "http://" } }, [
+        _vm._v("Calcula Tus Puntos de Express Entry "),
+      ]),
+      _vm._v(" "),
+      _vm._v(
+        "\n      Tambien puedes crear Escenarios para calcular cuantos puntos tendrias si tuvieras\n      Experiencia Canadiense o algun tipo de estudios. Para Guardar tus Resultados,\n      Descargarlos en un PDF o comparar tus resultados,\n      "
+      ),
+      _c("a", { attrs: { href: "http://" } }, [
+        _vm._v(" crea tu cuenta gratis"),
       ]),
     ])
   },
@@ -24051,157 +24041,160 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c(
-        "table",
-        {
-          staticClass: "table table-bordered",
-          attrs: {
-            "data-toggle": "table",
-            "data-mobile-responsive": "true",
-            "data-sort-order": "default",
+      _c("div", { staticClass: "bootstrap-table" }, [
+        _c(
+          "table",
+          {
+            staticClass: "table-striped table table-hover table-bordered",
+            attrs: {
+              "data-toggle": "table",
+              "data-mobile-responsive": "true",
+              "data-sort-order": "default",
+            },
           },
-        },
-        [
-          _c("thead", [
+          [
+            _c("thead", [
+              _c(
+                "tr",
+                [
+                  _c("th"),
+                  _vm._v(" "),
+                  _c(
+                    "th",
+                    { attrs: { "data-sortable": "", "data-width": "auto" } },
+                    [_vm._v("Actual situation")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.scennariosCopies, function (sCopy) {
+                    return _c(
+                      "th",
+                      {
+                        staticClass: "text-center",
+                        attrs: { "data-width": "auto" },
+                      },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(sCopy.name) +
+                            "\n            "
+                        ),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
+            ]),
+            _vm._v(" "),
             _c(
-              "tr",
+              "tbody",
               [
-                _c("th"),
-                _vm._v(" "),
                 _c(
-                  "th",
-                  { attrs: { "data-sortable": "", "data-width": "auto" } },
-                  [_vm._v("Actual situation")]
+                  "tr",
+                  [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "detail" }, [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(
+                            _vm.maritialStatusChanged != null
+                              ? _vm.maritialStatusChanged
+                              : "Single"
+                          ) +
+                          "\n            "
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.scennariosCopies, function (sCopy1) {
+                      return _c("th", [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(
+                              sCopy1.is_married == true ? "Married" : "Single"
+                            ) +
+                            "\n            "
+                        ),
+                      ])
+                    }),
+                  ],
+                  2
                 ),
                 _vm._v(" "),
-                _vm._l(_vm.scennariosCopies, function (sCopy) {
+                _c(
+                  "tr",
+                  [
+                    _c("th", [_vm._v("Total de puntos")]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(_vm.totalForFactor)),
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.sumScoreCopies.copies, function (sumS) {
+                      return _c("th", { staticClass: "text-right" }, [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(sumS.total) +
+                            "\n            "
+                        ),
+                      ])
+                    }),
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.factors, function (fact) {
                   return _c(
-                    "th",
-                    {
-                      staticClass: "text-center",
-                      attrs: { "data-sortable": "", "data-width": "auto" },
-                    },
+                    "tr",
                     [
-                      _vm._v(
-                        "\n            " + _vm._s(sCopy.name) + "\n          "
-                      ),
-                    ]
+                      _c("td", [_vm._v(_vm._s(fact.name))]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-right" }, [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(
+                              _vm.maritialStatusChanged === "Married" &&
+                                fact.id in _vm.FactorsWithScores &&
+                                _vm.FactorsWithScores[fact.id]
+                                ? _vm.FactorsWithScores[fact.id][1].marriedSum
+                                : _vm.maritialStatusChanged === "Single" &&
+                                  fact.id in _vm.FactorsWithScores &&
+                                  _vm.FactorsWithScores[fact.id]
+                                ? _vm.FactorsWithScores[fact.id][0].singleSum
+                                : 0
+                            ) +
+                            "\n            "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.sumScoreCopies.copies, function (sumEach) {
+                        return _c(
+                          "td",
+                          { staticClass: "text-right" },
+                          _vm._l(sumEach.sums, function (value, name, index) {
+                            return Object.keys(value)[0] == fact.id
+                              ? _c("p", [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(Object.values(value)[0]) +
+                                      "\n              "
+                                  ),
+                                ])
+                              : _vm._e()
+                          }),
+                          0
+                        )
+                      }),
+                    ],
+                    2
                   )
                 }),
               ],
               2
             ),
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            [
-              _c(
-                "tr",
-                [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "detail" }, [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(
-                          _vm.maritialStatusChanged != null
-                            ? _vm.maritialStatusChanged
-                            : "Single"
-                        ) +
-                        "\n          "
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.scennariosCopies, function (sCopy1) {
-                    return _c("th", [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(
-                            sCopy1.is_married == true ? "Married" : "Single"
-                          ) +
-                          "\n          "
-                      ),
-                    ])
-                  }),
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "tr",
-                [
-                  _c("th", [_vm._v("Total de puntos")]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "text-center" }, [
-                    _vm._v(_vm._s(_vm.totalForFactor)),
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.sumScoreCopies.copies, function (sumS) {
-                    return _c("th", { staticClass: "text-center" }, [
-                      _vm._v(
-                        "\n            " + _vm._s(sumS.total) + "\n          "
-                      ),
-                    ])
-                  }),
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.factors, function (fact) {
-                return _c(
-                  "tr",
-                  [
-                    _c("td", [
-                      _c("p", { staticClass: "left" }, [
-                        _vm._v(_vm._s(fact.name)),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", {}, [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(
-                            _vm.maritialStatusChanged === "Married" &&
-                              fact.id in _vm.FactorsWithScores &&
-                              _vm.FactorsWithScores[fact.id]
-                              ? _vm.FactorsWithScores[fact.id][1].marriedSum
-                              : _vm.maritialStatusChanged === "Single" &&
-                                fact.id in _vm.FactorsWithScores &&
-                                _vm.FactorsWithScores[fact.id]
-                              ? _vm.FactorsWithScores[fact.id][0].singleSum
-                              : 0
-                          ) +
-                          "\n          "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.sumScoreCopies.copies, function (sumEach) {
-                      return _c(
-                        "td",
-                        _vm._l(sumEach.sums, function (value, name, index) {
-                          return Object.keys(value)[0] == fact.id
-                            ? _c("p", [
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(Object.values(value)[0]) +
-                                    "\n            "
-                                ),
-                              ])
-                            : _vm._e()
-                        }),
-                        0
-                      )
-                    }),
-                  ],
-                  2
-                )
-              }),
-            ],
-            2
-          ),
-        ]
-      ),
+          ]
+        ),
+      ]),
     ]),
   ])
 }
@@ -24429,195 +24422,218 @@ var render = function () {
         "div",
         { staticClass: "custom-accordion mb-4", attrs: { id: "accordion" } },
         _vm._l(_vm.data, function (object) {
-          return _c("div", { staticClass: "card mb-0" }, [
-            _c(
-              "div",
-              { staticClass: "card-header", attrs: { id: "headingOne" } },
-              [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-8" }, [
-                    _c("h5", { staticClass: "m-0" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "custom-accordion-title d-block pt-2 pb-2",
-                          attrs: {
-                            "data-toggle": "collapse",
-                            href: "#collapse" + object.factor.id,
-                            "aria-expanded": "false",
-                            "aria-controls": "collapse" + object.factor.id,
+          return _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.maritialStatus === "Single"
+                      ? object.factor.id != 5
+                      : true,
+                  expression:
+                    "maritialStatus === 'Single' ? object.factor.id != 5 : true",
+                },
+              ],
+              staticClass: "card mb-0",
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "card-header", attrs: { id: "headingOne" } },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-8" }, [
+                      _c("h5", { staticClass: "m-0" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "custom-accordion-title d-block pt-2 pb-2",
+                            attrs: {
+                              "data-toggle": "collapse",
+                              href: "#collapse" + object.factor.id,
+                              "aria-expanded": "false",
+                              "aria-controls": "collapse" + object.factor.id,
+                            },
                           },
+                          [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(
+                                  object.factor.title +
+                                    " " +
+                                    object.factor.sub_title
+                                ) +
+                                "\n                  "
+                            ),
+                            _vm._m(0, true),
+                          ]
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-4" }, [
+                      _c("input", {
+                        staticClass: "form-control float-right",
+                        attrs: { type: "text", disabled: "" },
+                        domProps: {
+                          value:
+                            _vm.maritialStatus === "Married"
+                              ? _vm.factorScoreMarried[object.factor.id]
+                              : _vm.factorScoreSingle[object.factor.id],
                         },
-                        [
-                          _vm._v(
-                            "\n                  " +
-                              _vm._s(
-                                object.factor.title +
-                                  " " +
-                                  object.factor.sub_title
-                              ) +
-                              "\n                  "
-                          ),
-                          _vm._m(0, true),
-                        ]
-                      ),
+                      }),
                     ]),
                   ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-4" }, [
-                    _c("input", {
-                      staticClass: "form-control float-right",
-                      attrs: { type: "text", disabled: "" },
-                      domProps: {
-                        value:
-                          _vm.maritialStatus === "Married"
-                            ? _vm.factorScoreMarried[object.factor.id]
-                            : _vm.factorScoreSingle[object.factor.id],
-                      },
-                    }),
-                  ]),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse",
-                attrs: {
-                  id: "collapse" + object.factor.id,
-                  "aria-labelledby": "headingOne",
-                  "data-parent": "#accordion",
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "collapse",
+                  attrs: {
+                    id: "collapse" + object.factor.id,
+                    "aria-labelledby": "headingOne",
+                    "data-parent": "#accordion",
+                  },
                 },
-              },
-              [
-                _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group" },
-                    _vm._l(object.factor.subfactors, function (subfactor) {
-                      return _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-6" }, [
-                          _vm._v(
-                            "\n                  " +
-                              _vm._s(subfactor.subfactor) +
-                              "\n                "
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-4" }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value:
-                                    _vm.selectedSubfactor.selections[
-                                      subfactor.id
-                                    ],
-                                  expression:
-                                    "selectedSubfactor.selections[subfactor.id]",
-                                },
-                              ],
-                              staticClass: "form-control",
-                              staticStyle: { width: "100%", height: "36px" },
-                              attrs: { id: "select2-search-hide" },
-                              on: {
-                                change: [
-                                  function ($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call(
-                                        $event.target.options,
-                                        function (o) {
-                                          return o.selected
-                                        }
-                                      )
-                                      .map(function (o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.$set(
-                                      _vm.selectedSubfactor.selections,
-                                      subfactor.id,
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    )
-                                  },
-                                  _vm.criteriaVal,
-                                ],
-                              },
-                            },
-                            _vm._l(subfactor.criteria, function (criterion) {
-                              return _c(
-                                "option",
-                                {
-                                  class: criterion.selected ? "bg-success" : "",
-                                  domProps: {
-                                    value: {
-                                      criterion: criterion,
-                                      factor: object.factor.id,
-                                      subfactor: subfactor.id,
-                                    },
-                                  },
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                      " +
-                                      _vm._s(criterion.criterion) +
-                                      "\n                    "
-                                  ),
-                                ]
-                              )
-                            }),
-                            0
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-2" }, [
-                          _c("input", {
-                            staticClass: "form-control",
-                            attrs: { type: "text", disabled: "" },
-                            domProps: {
-                              value:
-                                _vm.selectedSubfactor != undefined &&
-                                _vm.selectedSubfactor.selections != undefined &&
-                                _vm.selectedSubfactor.selections[
-                                  subfactor.id
-                                ] != undefined &&
-                                "criterion" in
-                                  _vm.selectedSubfactor.selections[subfactor.id]
-                                  ? _vm.maritialStatus === "Married" &&
-                                    _vm.selectedSubfactor.selections[
-                                      subfactor.id
-                                    ].criterion.hasOwnProperty("married")
-                                    ? _vm.selectedSubfactor.selections[
-                                        subfactor.id
-                                      ].criterion.married
-                                    : _vm.maritialStatus === "Single" &&
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      _vm._l(object.factor.subfactors, function (subfactor) {
+                        return _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-6" }, [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(subfactor.subfactor) +
+                                "\n                "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-4" }, [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value:
                                       _vm.selectedSubfactor.selections[
                                         subfactor.id
-                                      ].criterion.hasOwnProperty("single")
-                                    ? _vm.selectedSubfactor.selections[
+                                      ],
+                                    expression:
+                                      "selectedSubfactor.selections[subfactor.id]",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                staticStyle: { width: "100%", height: "36px" },
+                                attrs: { id: "select2-search-hide" },
+                                on: {
+                                  change: [
+                                    function ($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call(
+                                          $event.target.options,
+                                          function (o) {
+                                            return o.selected
+                                          }
+                                        )
+                                        .map(function (o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.selectedSubfactor.selections,
+                                        subfactor.id,
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    },
+                                    _vm.criteriaVal,
+                                  ],
+                                },
+                              },
+                              _vm._l(subfactor.criteria, function (criterion) {
+                                return _c(
+                                  "option",
+                                  {
+                                    class: criterion.selected
+                                      ? "bg-success"
+                                      : "",
+                                    domProps: {
+                                      value: {
+                                        criterion: criterion,
+                                        factor: object.factor.id,
+                                        subfactor: subfactor.id,
+                                      },
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                      " +
+                                        _vm._s(criterion.criterion) +
+                                        "\n                    "
+                                    ),
+                                  ]
+                                )
+                              }),
+                              0
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-2" }, [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: { type: "text", disabled: "" },
+                              domProps: {
+                                value:
+                                  _vm.selectedSubfactor != undefined &&
+                                  _vm.selectedSubfactor.selections !=
+                                    undefined &&
+                                  _vm.selectedSubfactor.selections[
+                                    subfactor.id
+                                  ] != undefined &&
+                                  "criterion" in
+                                    _vm.selectedSubfactor.selections[
+                                      subfactor.id
+                                    ]
+                                    ? _vm.maritialStatus === "Married" &&
+                                      _vm.selectedSubfactor.selections[
                                         subfactor.id
-                                      ].criterion.single
-                                    : 0
-                                  : 0,
-                            },
-                          }),
-                        ]),
-                      ])
-                    }),
-                    0
-                  ),
-                ]),
-              ]
-            ),
-          ])
+                                      ].criterion.hasOwnProperty("married")
+                                      ? _vm.selectedSubfactor.selections[
+                                          subfactor.id
+                                        ].criterion.married
+                                      : _vm.maritialStatus === "Single" &&
+                                        _vm.selectedSubfactor.selections[
+                                          subfactor.id
+                                        ].criterion.hasOwnProperty("single")
+                                      ? _vm.selectedSubfactor.selections[
+                                          subfactor.id
+                                        ].criterion.single
+                                      : 0
+                                    : 0,
+                              },
+                            }),
+                          ]),
+                        ])
+                      }),
+                      0
+                    ),
+                  ]),
+                ]
+              ),
+            ]
+          )
         }),
         0
       ),

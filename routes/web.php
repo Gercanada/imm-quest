@@ -22,12 +22,6 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/send_mail', function () { //test function only
     try {
         Mail::to('heriberto.h@gercanada.com')->send(new TestingMail());
-        /*  Mail::send(array(), array(), function ($message) {
-            $message->to('heribertolord@gmail.com')
-                ->subject("Hola")
-                ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
-                ->setBody("Some here");
-        }); */
         return "Sent";
     } catch (Exception $e) {
         return $e->getMessage();
@@ -35,7 +29,6 @@ Route::get('/send_mail', function () { //test function only
 });
 
 Route::get('/',                  [DashboardController::class, 'index'])->name('dashboard');
-
 Auth::routes();
 
 Route::get('/tempdata', [FactorController::class, 'dataFile']); //returns a json response

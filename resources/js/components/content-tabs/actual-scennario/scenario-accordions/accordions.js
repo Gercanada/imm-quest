@@ -35,7 +35,6 @@ export default {
     },
 
     mounted() {
-        // alert(this.authenticated)
         this.getData();
     },
 
@@ -50,7 +49,7 @@ export default {
                     if (me.scenarios.length > 0) {
                         me.scenarios.forEach((element) => {
                             if ("is_theactual" in element && element["is_theactual"] == true) {
-                                scenario = element; ///Actial situation scennario only it is editable
+                                scenario = element; ///Actual situation scennario only it is editable
                             }
                             if (element["is_theactual"] == false) {
                                 me.additionalScenarios.push(element);
@@ -115,11 +114,10 @@ export default {
                     me.factors.forEach(factor => {
                         newData.push({ items: null, factor: factor })
                     });
-
                     me.data = newData;
-                    // me.data.push(me.factors);
                 }
-                me.$emit("factorNames", me.factorNames);
+                // me.$emit("factorNames", me.factorNames);
+                // me.$emit("factorsWithSubfactors", me.factors);
                 // console.log({ factors: me.factors });
             });
         },
@@ -265,5 +263,9 @@ export default {
             me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
             me.$emit("selectedSituation", selectedSituation);
         },
+
+        showFactor() {
+
+        }
     },
 };

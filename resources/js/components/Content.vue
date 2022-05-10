@@ -99,6 +99,7 @@
                 :FactorsWithScores="FactorsWithScores"
                 :maritialStatusChanged="maritialStatusChanged"
                 :scennariosCopies="scennariosCopies"
+                :authenticated="authenticated"
               />
             </div>
             <div class="tab-pane" id="Situation">

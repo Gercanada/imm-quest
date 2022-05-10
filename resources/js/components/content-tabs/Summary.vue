@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" v-if="!authenticated">
       <p>
         <a href="http://">Calcula Tus Puntos de Express Entry </a>
         <!--     </br> -->
@@ -12,14 +12,15 @@
     </div>
 
     <div class="col-12">
-      <!--  v-if="authenticated" TODO  -->
       <SummaryTable
+        v-if="authenticated"
         :summary="summary"
         :factors="factors"
         :scores="scores"
         :FactorsWithScores="FactorsWithScores"
         :maritialStatusChanged="maritialStatusChanged"
         :scennariosCopies="scennariosCopies"
+        :authenticated="authenticated"
       />
     </div>
   </div>
@@ -34,13 +35,10 @@ export default {
     "FactorsWithScores",
     "maritialStatusChanged",
     "scennariosCopies",
+    "authenticated",
   ],
   components: {
     SummaryTable,
   },
-  data() {
-    return {};
-  },
-  //   mounted() {},
 };
 </script>
