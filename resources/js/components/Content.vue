@@ -100,6 +100,7 @@
                 :maritialStatusChanged="maritialStatusChanged"
                 :scennariosCopies="scennariosCopies"
                 :authenticated="authenticated"
+                :reloadAt="reloadAt"
               />
             </div>
             <div class="tab-pane" id="Situation">
@@ -112,7 +113,7 @@
                 @scoresArr="getScores"
                 @additionalScennarios="getAdditionalScennarios"
                 @factorsWithSubfactors="getFactsWSubfacts"
-                :reloader="reloader"
+                @reloader="getReloader"
                 :authenticated="authenticated"
               />
             </div>
@@ -124,7 +125,6 @@
                 :factors="factorsWithSubfactors"
                 :maritialSituation="copy.is_married ? copy.is_married : 0"
                 :scennarioName="copy.name"
-                @CallReloader="callReloader"
               />
             </div>
             <!-- -->
@@ -162,7 +162,7 @@ export default {
       maritialStatusChanged: null,
       scennariosCopies: [],
       factorsWithSubfactors: [],
-      reloader: null,
+      reloadAt: null,
       authenticated: false,
     };
   },
@@ -180,6 +180,7 @@ export default {
 
   methods: {
     getSituation(value) {
+      //   console.log("Summary");
       let me = this;
       me.summary = value;
     },
@@ -187,6 +188,7 @@ export default {
       this.Factors = value;
     },
     getFactsWSubfacts(value) {
+      //   console.log("Facts");
       this.factorsWithSubfactors = value;
     },
 
@@ -200,9 +202,14 @@ export default {
       this.scennariosCopies = value;
     },
 
-    callReloader(value) {
-      this.reloader = value;
+    getReloader(value) {
+      this.reloadAt = value;
     },
+    /* callReloader(value) {
+      console.log("callReloader");
+      //   this.$forceUpdate();
+      this.reloader = value;
+    }, */
 
     getScores(value) {
       this.scores = value[0];

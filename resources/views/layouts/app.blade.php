@@ -185,10 +185,11 @@
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
     </script>
 
+    <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
     @if (env('APP_ENV') === 'local')
-        <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
+        {{-- <script src="/{{ env('ASSET_URL') }}js/app.js"></script> --}}
     @else
-        <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script>
+        {{-- <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script> --}}
     @endif
 
     @yield('scripts')

@@ -21,6 +21,7 @@
         :maritialStatusChanged="maritialStatusChanged"
         :scennariosCopies="scennariosCopies"
         :authenticated="authenticated"
+        :reloadAt="reloadAt"
       />
     </div>
   </div>
@@ -36,6 +37,7 @@ export default {
     "maritialStatusChanged",
     "scennariosCopies",
     "authenticated",
+    "reloadAt",
   ],
   components: {
     SummaryTable,

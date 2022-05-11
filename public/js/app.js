@@ -2320,7 +2320,7 @@ __webpack_require__.r(__webpack_exports__);
       maritialStatusChanged: null,
       scennariosCopies: [],
       factorsWithSubfactors: [],
-      reloader: null,
+      reloadAt: null,
       authenticated: false
     };
   },
@@ -2336,6 +2336,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getSituation: function getSituation(value) {
+      //   console.log("Summary");
       var me = this;
       me.summary = value;
     },
@@ -2343,6 +2344,7 @@ __webpack_require__.r(__webpack_exports__);
       this.Factors = value;
     },
     getFactsWSubfacts: function getFactsWSubfacts(value) {
+      //   console.log("Facts");
       this.factorsWithSubfactors = value;
     },
     getMaritialChanged: function getMaritialChanged(value) {
@@ -2353,9 +2355,15 @@ __webpack_require__.r(__webpack_exports__);
       //   console.log("Extra scennarios");
       this.scennariosCopies = value;
     },
-    callReloader: function callReloader(value) {
-      this.reloader = value;
+    getReloader: function getReloader(value) {
+      this.reloadAt = value;
     },
+
+    /* callReloader(value) {
+      console.log("callReloader");
+      //   this.$forceUpdate();
+      this.reloader = value;
+    }, */
     getScores: function getScores(value) {
       var _this = this;
 
@@ -2627,7 +2635,9 @@ __webpack_require__.r(__webpack_exports__);
       factorScoreSingle: {},
       selectedCriterion: {},
       arraySums: [],
-      selectedSituation: []
+      selectedSituation: [],
+      singleSelectedSituation: [],
+      marriedSelectedSituation: []
     };
   },
   mounted: function mounted() {
@@ -2647,7 +2657,6 @@ __webpack_require__.r(__webpack_exports__);
             if (item["factor"] === factor.id && factor.subfactors.length > 0) {
               factor.subfactors.forEach(function (subfactor) {
                 if (item["subfactor"] === subfactor.id) {
-                  //   return;
                   subfactor.criteria.forEach(function (criterion) {
                     if (item["criterion"] == criterion.id) {
                       criterion.selected = true;
@@ -2674,6 +2683,7 @@ __webpack_require__.r(__webpack_exports__);
       me.data = arr;
     },
     criteriaVal: function criteriaVal(event) {
+      console.log("Criterionn changed");
       var me = this;
       var newVal = null;
       var existingS = null;
@@ -2762,20 +2772,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
       var selectedSituation = [];
-      selectedSituation[0] = me.maritialStatusCopy; //   selectedSituation[1] = this.scenarios;
-
+      var sSelectedSituation = [];
+      var mSelectedSituation = [];
+      selectedSituation[0] = me.maritialStatusCopy;
       me.selectedCriterion[subfactor] = criterion.id;
-
-      if (me.maritialStatusCopy === "Single") {
-        selectedSituation[2] = me.singleValues;
-        me.factorScore[factor] = me.factorScoreSingle[factor];
-      } else {
-        me.selectedCriterion[criterion.id] = criterion.married;
-        selectedSituation[2] = me.marriedValues;
-        me.factorScore[factor] = me.factorScoreMarried[factor];
-      }
-
-      me.selectedSituation = selectedSituation; //Create or update scores array to emmit to another file
+      sSelectedSituation[1] = me.singleValues;
+      me.factorScore[factor] = me.factorScoreSingle[factor];
+      me.singleSelectedSituation = sSelectedSituation;
+      me.selectedCriterion[criterion.id] = criterion.married;
+      mSelectedSituation[1] = me.marriedValues;
+      me.factorScore[factor] = me.factorScoreMarried[factor];
+      me.marriedSelectedSituation = mSelectedSituation;
+      console.log({
+        selectedSituation: [me.marriedSelectedSituation, me.singleSelectedSituation]
+      }); //Create or update scores array to emmit to another file
 
       var hasSumS = null;
       var hasSumM = null;
@@ -2811,6 +2821,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     changeStatus: function changeStatus(value) {
+      this.copyId = this.copyId;
+      this.maritialStatusCop = value;
+      console.log(this.copyId, this.maritialStatusCop);
       this.maritialStatusCopy = value;
     },
     saveScennarioCopy: function saveScennarioCopy() {
@@ -2822,18 +2835,27 @@ __webpack_require__.r(__webpack_exports__);
         showDenyButton: true,
         showCancelButton: true
       }).then(function (result) {
+        console.log(me.marriedSelectedSituation);
+        console.log(me.singleSelectedSituation);
+        console.log(me.maritialStatusCopy);
+        var request = {
+          scennarioId: me.copyId ? me.copyId : "crash",
+          maritialStatus: me.maritialStatusCopy,
+          actualSituation: me.maritialStatusCopy == "Married" ? me.marriedSelectedSituation : me.singleSelectedSituation
+        };
+        console.log({
+          request: request
+        });
+
         if ("value" in result) {
-          axios.post("save-situation", {
-            scennarioId: me.copyId,
-            maritialStatus: me.maritialStatusCopy,
-            actualSituation: me.selectedSituation
-          }).then(function (response) {
+          axios.post("save-situation", request).then(function (response) {
             Swal.fire({
               type: "success",
               title: "Escenario guardado",
               text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
             });
             me.$emit("CallReloader", Date.now());
+            console.log(response);
           });
         } else {
           Swal.fire({
@@ -2865,17 +2887,19 @@ __webpack_require__.r(__webpack_exports__);
               timer: 3000
             });
           } else {
-            axios.post("copy", {
-              scennarioId: me.copyId,
+            var request = {
+              scennarioId: me.copyId ? me.copyId : "crash",
+              scenarioName: result.value,
               maritialStatus: me.maritialStatusCopy,
-              actualSituation: me.selectedSituation,
-              scenarioName: result.value
-            }).then(function (response) {
+              actualSituation: me.maritialStatusCopy == "Married" ? me.marriedSelectedSituation : me.singleSelectedSituation
+            };
+            axios.post("copy", request).then(function (response) {
               Swal.fire({
                 type: "success",
                 title: "Escenario guardado",
                 text: "Se ha guardado su copia exitosamente "
               });
+              console.log(response);
               me.$emit("CallReloader", Date.now());
             });
           }
@@ -2902,7 +2926,6 @@ __webpack_require__.r(__webpack_exports__);
         showCancelButton: true
       }).then(function () {
         axios.post("/delete/" + id).then(function (response) {
-          // console.log(response);
           Swal.fire({
             type: "success",
             title: "Escenario eliminado",
@@ -2958,9 +2981,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies", "authenticated"],
+  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies", "authenticated", "reloadAt"],
   components: {
     SummaryTable: _SummaryTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -3082,8 +3106,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies"],
+  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies", "reloadAt"],
   watch: {
     FactorsWithScores: function FactorsWithScores() {
       var _this = this;
@@ -3091,8 +3118,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var toSumArr = [];
       this.factors.forEach(function (fact) {
         toSumArr.push(_this.maritialStatusChanged === "Married" && [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][1].marriedSum : [fact.id] in _this.FactorsWithScores && _this.FactorsWithScores[fact.id] ? _this.FactorsWithScores[fact.id][0].singleSum : 0);
-      }); //   console.log({ toSumArr });
-
+      });
       var sum = 0;
 
       for (var i = 0; i < toSumArr.length; i++) {
@@ -3169,6 +3195,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.sumScoreCopies = scennarios;
       return;
+    },
+    reloadAt: function reloadAt() {
+      //   alert("here");
+      this.$forceUpdate();
     }
   },
   data: function data() {
@@ -3220,8 +3250,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   console.table(error);
                 }).then(function () {
                   fileName = response1.data;
-                  window.open("/open_pdf/" + fileName);
-                  console.table(response1);
+                  window.open("/open_pdf/" + fileName); //   console.table(response1);
                 });
                 delay(10000).then(function () {
                   axios.get("delete_temp_file/" + fileName).then(function (response) {});
@@ -3336,25 +3365,21 @@ __webpack_require__.r(__webpack_exports__);
       scenarios: [],
       userActualSituation: [],
       scores: [],
-      Factors: []
+      Factors: [],
+      reloader2: null
     };
   },
   methods: {
     getUserData: function getUserData(value) {
-      console.log("status changed 1");
-      return;
       this.maritialStatus = value;
     },
     changeStatus: function changeStatus(value) {
-      console.log("status changed 2");
       this.maritialStatus = value;
     },
     getFactsWSubfacts: function getFactsWSubfacts(value) {
       this.$emit("factorsWithSubfactors", value);
     },
     maritialChanged: function maritialChanged(value) {
-      console.log("status changed 3");
-      return;
       this.$emit("maritialChanged", value);
     },
     getExtraScennarios: function getExtraScennarios(value) {
@@ -3363,6 +3388,7 @@ __webpack_require__.r(__webpack_exports__);
     getSituation: function getSituation(value) {
       var scenario = null;
       var me = this;
+      var changed = value[0] ? value[0] : null;
       me.scenarios = value[1];
       me.userActualSituation = value;
 
@@ -3376,12 +3402,19 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         if (scenario != null) {
-          me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
+          me.maritialStatus = changed != null ? changed : scenario["is_married"] == false ? "Single" : "Married";
         }
-      } //   return;
-
+      }
 
       this.$emit("selectedSituation", me.userActualSituation);
+    },
+    getFactors: function getFactors(value) {
+      this.$emit("FactorsTitles", value);
+      this.factors = value;
+    },
+    getScore: function getScore(value) {
+      this.$emit("scoresArr", value);
+      this.scores = value[0];
     },
     saveSituation: function saveSituation() {
       var me = this;
@@ -3405,19 +3438,21 @@ __webpack_require__.r(__webpack_exports__);
         showCancelButton: true
       }).then(function (result) {
         if ("value" in result) {
-          console.log(me.userActualSituation);
-          console.log(me.maritialStatus);
           axios.post("save-situation", {
             scenarioName: "Situacion actual",
             actualSituation: me.userActualSituation,
             maritialStatus: me.maritialStatus
           }).then(function (response) {
-            console.log(response.data);
             Swal.fire({
               type: "success",
               title: "Escenario guardado",
-              text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
+              text: "Se ha" + scenario == null ? "creado" : "actualizado" + " este escenario"
             });
+            var now = Date.now();
+            me.reloader2 = now; // console.log(me.reloader2);
+
+            me.$emit("reloader", now);
+            console.log(response);
           });
         } else {
           Swal.fire({
@@ -3429,14 +3464,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.table(error);
       });
-    },
-    getFactors: function getFactors(value) {
-      this.$emit("FactorsTitles", value);
-      this.factors = value;
-    },
-    getScore: function getScore(value) {
-      this.$emit("scoresArr", value);
-      this.scores = value[0];
     },
     copyScennario: function copyScennario() {
       var me = this;
@@ -3475,7 +3502,10 @@ __webpack_require__.r(__webpack_exports__);
                 type: "success",
                 title: "Escenario guardado",
                 text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
-              }); //   console.log(response);
+              });
+              var now = Date.now();
+              me.reloader2 = now;
+              this.$emit("reloader", now);
             });
           } else {
             Swal.fire({
@@ -3524,17 +3554,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["maritialStatus", 'reloader', "authenticated"],
+  props: ["maritialStatus", 'reloader2', "authenticated"],
   watch: {
     maritialStatus: function maritialStatus() {
       this.changed = this.maritialStatus;
-      console.log(this.changed); // this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+      console.log({
+        watch: this.changed
+      });
+      this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
 
       console.log('watch');
     },
-    reloader: function reloader() {
-      this.getData(); // alert('called');
-      // window.location.reload();
+    reloader2: function reloader2() {
+      this.$forceUpdate();
     }
   },
   data: function data() {
@@ -3652,8 +3684,6 @@ __webpack_require__.r(__webpack_exports__);
             });
             me.data = _newData;
           }
-
-          this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
         } else {
           //When not authenticated
           var _newData2 = [];
@@ -3665,10 +3695,10 @@ __webpack_require__.r(__webpack_exports__);
             });
           });
           me.data = _newData2;
-        } // me.$emit("factorNames", me.factorNames);
-        // me.$emit("factorsWithSubfactors", me.factors);
-        // console.log({ factors: me.factors });
+        }
 
+        me.$emit("factorNames", me.factorNames);
+        me.$emit("factorsWithSubfactors", me.factors);
       });
     },
     criteriaVal: function criteriaVal(event) {
@@ -3758,12 +3788,10 @@ __webpack_require__.r(__webpack_exports__);
         }, 0);
       } //grouped by factor
       // console.log(JSON.stringify(groupByFacto, null, 2));
-      // return
 
 
       var selectedSituation = [];
-      console.log("here");
-      console.log(this.changed); // selectedSituation[0] = this.changed ? this.changed : this.mutableMaritialStatus;
+      selectedSituation[0] = this.changed; //? this.changed : this.mutableMaritialStatus;
 
       selectedSituation[1] = this.scenarios;
       me.selectedCriterion[subfactor] = criterion.id;
@@ -3814,8 +3842,7 @@ __webpack_require__.r(__webpack_exports__);
       me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
 
       me.$emit("selectedSituation", selectedSituation);
-    },
-    showFactor: function showFactor() {}
+    }
   }
 });
 
@@ -23431,6 +23458,7 @@ var render = function () {
                       maritialStatusChanged: _vm.maritialStatusChanged,
                       scennariosCopies: _vm.scennariosCopies,
                       authenticated: _vm.authenticated,
+                      reloadAt: _vm.reloadAt,
                     },
                   }),
                 ],
@@ -23442,10 +23470,7 @@ var render = function () {
                 { staticClass: "tab-pane", attrs: { id: "Situation" } },
                 [
                   _c("SituationA", {
-                    attrs: {
-                      reloader: _vm.reloader,
-                      authenticated: _vm.authenticated,
-                    },
+                    attrs: { authenticated: _vm.authenticated },
                     on: {
                       maritialChanged: _vm.getMaritialChanged,
                       selectedSituation: _vm.getSituation,
@@ -23453,6 +23478,7 @@ var render = function () {
                       scoresArr: _vm.getScores,
                       additionalScennarios: _vm.getAdditionalScennarios,
                       factorsWithSubfactors: _vm.getFactsWSubfacts,
+                      reloader: _vm.getReloader,
                     },
                   }),
                 ],
@@ -23474,7 +23500,6 @@ var render = function () {
                           : 0,
                         scennarioName: copy.name,
                       },
-                      on: { CallReloader: _vm.callReloader },
                     }),
                   ],
                   1
@@ -24024,6 +24049,7 @@ var render = function () {
                 maritialStatusChanged: _vm.maritialStatusChanged,
                 scennariosCopies: _vm.scennariosCopies,
                 authenticated: _vm.authenticated,
+                reloadAt: _vm.reloadAt,
               },
             })
           : _vm._e(),
@@ -24210,7 +24236,7 @@ var render = function () {
                                 : fact.id in _vm.FactorsWithScores &&
                                   _vm.FactorsWithScores[fact.id]
                                 ? _vm.FactorsWithScores[fact.id][0].singleSum
-                                : "x"
+                                : 0
                             ) +
                             "\n            "
                         ),
@@ -24406,7 +24432,7 @@ var render = function () {
           _c("accordions", {
             attrs: {
               maritialStatus: _vm.maritialStatus,
-              reloader: _vm.reloader,
+              reloader2: _vm.reloader2,
               authenticated: _vm.authenticated,
             },
             on: {

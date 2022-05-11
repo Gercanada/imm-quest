@@ -149,11 +149,12 @@ class FactorController extends Controller
             $user = Auth::user();
             $currentScennarios = $request->actualSituation[1];
             $actualSituation = null;
+            $scennario = null;
             // Save changes on scennarios copies
             if ($request->scennarioId) {
                 $scennario =  Scenario::Where('id', $request->scennarioId)->first();
                 $scennario->is_married = $request->maritialStatus === 'Married' ? true : false;
-                $scennario->body = json_encode($request->actualSituation[2]);
+                $scennario->body = json_encode($request->actualSituation[1]);
                 $scennario->save();
             } else {
                 if (count($currentScennarios) > 0) {
@@ -174,7 +175,7 @@ class FactorController extends Controller
                         [
                             'user_id' => $user->id,
                             'name' => $request->scenarioName,
-                            'is_married' => $request->maritialStatus === 'Married' ? true : false,
+                            'is_married' => $request->maritialStatus == 'Married' ? true : false,
                             'body' => json_encode($request->actualSituation[2]),
                         ]
                     );
@@ -201,6 +202,7 @@ class FactorController extends Controller
     {
         try {
             $user = Auth::user();
+            // return $request;
             $maritial = false;
             if ($request->maritialStatus) {
                 $maritial = $request->maritialStatus === 'Married' ? true : false;
@@ -209,16 +211,16 @@ class FactorController extends Controller
                 $maritial = $request->actualSituation[0] === 'Married' ? true : false;
             }
 
-
             $scenario =  Scenario::create(
                 [
                     'user_id' => $user->id,
                     'is_theactual' => false,
                     'name' => $request->scenarioName,
                     'is_married' => $maritial,
-                    'body' => json_encode($request->actualSituation[2]),
+                    'body' => json_encode($request->actualSituation[1]),
                 ]
             );
+
             return response()->json($scenario);
         } catch (Exception $e) {
             return response()->json($e);

@@ -36,6 +36,9 @@
           <tbody>
             <tr>
               <th><b>Maritial status</b></th>
+              <!--   {{
+                maritialStatusChanged
+              }} -->
               <th class="detail">
                 {{ maritialStatusChanged != null ? maritialStatusChanged : "Single" }}
               </th>
@@ -60,7 +63,7 @@
                     ? FactorsWithScores[fact.id][1].marriedSum
                     : fact.id in FactorsWithScores && FactorsWithScores[fact.id]
                     ? FactorsWithScores[fact.id][0].singleSum
-                    : "x"
+                    : 0
                 }}
               </td>
               <td v-for="sumEach in sumScoreCopies.copies" class="text-right">
@@ -88,6 +91,7 @@ export default {
     "FactorsWithScores",
     "maritialStatusChanged",
     "scennariosCopies",
+    "reloadAt",
   ],
   watch: {
     FactorsWithScores: function () {
@@ -103,7 +107,6 @@ export default {
             : 0
         );
       });
-      //   console.log({ toSumArr });
       let sum = 0;
       for (let i = 0; i < toSumArr.length; i++) {
         sum += toSumArr[i];
@@ -169,6 +172,11 @@ export default {
       this.sumScoreCopies = scennarios;
       return;
     },
+
+    reloadAt: function () {
+      //   alert("here");
+      this.$forceUpdate();
+    },
   },
 
   data() {
@@ -213,7 +221,7 @@ export default {
         .then(() => {
           fileName = response1.data;
           window.open("/open_pdf/" + fileName);
-          console.table(response1);
+          //   console.table(response1);
         });
       delay(10000)
         .then(() => {

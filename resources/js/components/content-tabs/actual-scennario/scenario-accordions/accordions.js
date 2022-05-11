@@ -1,16 +1,14 @@
 export default {
-    props: ["maritialStatus", 'reloader', "authenticated"],
+    props: ["maritialStatus", 'reloader2', "authenticated"],
     watch: {
         maritialStatus: function() {
             this.changed = this.maritialStatus;
-            console.log(this.changed)
-                // this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+            console.log({ watch: this.changed })
+            this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
             console.log('watch')
         },
-        reloader: function() {
-            this.getData();
-            // alert('called');
-            // window.location.reload();
+        reloader2: function() {
+            this.$forceUpdate();
         },
     },
     data() {
@@ -34,7 +32,8 @@ export default {
             factorNames: [],
             arraySums: [],
             situation: [],
-            changed: null
+            changed: null,
+
         };
     },
 
@@ -120,19 +119,16 @@ export default {
                         });
                         me.data = newData;
                     }
-                    this.$emit("MaritialStatusChanged", this.mutableMaritialStatus);
                 } else { //When not authenticated
                     let newData = [];
                     me.factors = response.data ? response.data[0] : [];
-
                     me.factors.forEach(factor => {
                         newData.push({ items: null, factor: factor })
                     });
                     me.data = newData;
                 }
-                // me.$emit("factorNames", me.factorNames);
-                // me.$emit("factorsWithSubfactors", me.factors);
-                // console.log({ factors: me.factors });
+                me.$emit("factorNames", me.factorNames);
+                me.$emit("factorsWithSubfactors", me.factors);
             });
         },
 
@@ -223,14 +219,10 @@ export default {
             }
             //grouped by factor
             // console.log(JSON.stringify(groupByFacto, null, 2));
-            // return
             let selectedSituation = [];
-            console.log("here");
-            console.log(this.changed);
-            // selectedSituation[0] = this.changed ? this.changed : this.mutableMaritialStatus;
+            selectedSituation[0] = this.changed; //? this.changed : this.mutableMaritialStatus;
             selectedSituation[1] = this.scenarios;
             me.selectedCriterion[subfactor] = criterion.id;
-
 
             if (this.mutableMaritialStatus === "Single") {
                 selectedSituation[2] = me.singleValues;
@@ -241,21 +233,26 @@ export default {
                 selectedSituation[2] = me.marriedValues;
                 me.factorScore[factor] = me.factorScoreMarried[factor];
             }
-
             //Create or update scores array to emmit to another file
 
             let hasSumS = null;
             let hasSumM = null;
 
             me.arraySums.forEach(element => {
-                if (('singleSum' in element && ('factor' in element['singleSum']) && element['singleSum'].factor === factor)) {
+                if (
+                    ('singleSum' in element &&
+                        ('factor' in element['singleSum']) &&
+                        element['singleSum'].factor === factor)
+                ) {
                     hasSumS = element;
                     element['singleSum']['sum'] = me.factorScoreSingle[factor]
                 }
             });
 
             me.arraySums.forEach(element => {
-                if ('marriedSum' in element && 'factor' in element['marriedSum'] && element['marriedSum'].factor === factor) {
+                if ('marriedSum' in element &&
+                    'factor' in element['marriedSum'] &&
+                    element['marriedSum'].factor === factor) {
                     hasSumM = element;
                     element['marriedSum']['sum'] = me.factorScoreMarried[factor]
                 }
@@ -279,10 +276,6 @@ export default {
             }
             me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
             me.$emit("selectedSituation", selectedSituation);
-        },
-
-        showFactor() {
-
         }
     },
 };

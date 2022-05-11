@@ -59,7 +59,7 @@
           @additionalScennarios="getExtraScennarios"
           @factorsWithSubfactors="getFactsWSubfacts"
           :maritialStatus="maritialStatus"
-          :reloader="reloader"
+          :reloader2="reloader2"
           :authenticated="authenticated"
         />
       </div>
@@ -82,17 +82,15 @@ export default {
       userActualSituation: [],
       scores: [],
       Factors: [],
+      reloader2: null,
     };
   },
   methods: {
     getUserData(value) {
-      console.log("status changed 1");
-      return;
       this.maritialStatus = value;
     },
 
     changeStatus(value) {
-      console.log("status changed 2");
       this.maritialStatus = value;
     },
 
@@ -101,8 +99,6 @@ export default {
     },
 
     maritialChanged(value) {
-      console.log("status changed 3");
-      return;
       this.$emit("maritialChanged", value);
     },
 
@@ -113,9 +109,9 @@ export default {
     getSituation(value) {
       let scenario = null;
       let me = this;
+      let changed = value[0] ? value[0] : null;
       me.scenarios = value[1];
       me.userActualSituation = value;
-
       if (me.scenarios.length > 0) {
         me.scenarios.forEach((element) => {
           if ("is_theactual" in element) {
@@ -125,11 +121,25 @@ export default {
           }
         });
         if (scenario != null) {
-          me.maritialStatus = scenario["is_married"] == false ? "Single" : "Married";
+          me.maritialStatus =
+            changed != null
+              ? changed
+              : scenario["is_married"] == false
+              ? "Single"
+              : "Married";
         }
       }
-      //   return;
       this.$emit("selectedSituation", me.userActualSituation);
+    },
+
+    getFactors(value) {
+      this.$emit("FactorsTitles", value);
+      this.factors = value;
+    },
+
+    getScore(value) {
+      this.$emit("scoresArr", value);
+      this.scores = value[0];
     },
 
     saveSituation() {
@@ -155,8 +165,6 @@ export default {
       })
         .then(function (result) {
           if ("value" in result) {
-            console.log(me.userActualSituation);
-            console.log(me.maritialStatus);
             axios
               .post("save-situation", {
                 scenarioName: "Situacion actual",
@@ -164,15 +172,20 @@ export default {
                 maritialStatus: me.maritialStatus,
               })
               .then(function (response) {
-                console.log(response.data);
                 Swal.fire({
                   type: "success",
                   title: "Escenario guardado",
                   text:
                     "Se ha" + scenario == null
                       ? "creado"
-                      : "actualizado" + "este escenario",
+                      : "actualizado" + " este escenario",
                 });
+                let now = Date.now();
+                me.reloader2 = now;
+
+                // console.log(me.reloader2);
+                me.$emit("reloader", now);
+                console.log(response);
               });
           } else {
             Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
@@ -181,16 +194,6 @@ export default {
         .catch(function (error) {
           console.table(error);
         });
-    },
-
-    getFactors(value) {
-      this.$emit("FactorsTitles", value);
-      this.factors = value;
-    },
-
-    getScore(value) {
-      this.$emit("scoresArr", value);
-      this.scores = value[0];
     },
 
     copyScennario() {
@@ -244,7 +247,9 @@ export default {
                         ? "creado"
                         : "actualizado" + "este escenario",
                   });
-                  //   console.log(response);
+                  let now = Date.now();
+                  me.reloader2 = now;
+                  this.$emit("reloader", now);
                 });
             } else {
               Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });

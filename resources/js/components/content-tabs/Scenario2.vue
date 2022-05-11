@@ -189,6 +189,8 @@ export default {
       selectedCriterion: {},
       arraySums: [],
       selectedSituation: [],
+      singleSelectedSituation: [],
+      marriedSelectedSituation: [],
     };
   },
   mounted() {
@@ -208,7 +210,6 @@ export default {
             if (item["factor"] === factor.id && factor.subfactors.length > 0) {
               factor.subfactors.forEach((subfactor) => {
                 if (item["subfactor"] === subfactor.id) {
-                  //   return;
                   subfactor.criteria.forEach((criterion) => {
                     if (item["criterion"] == criterion.id) {
                       criterion.selected = true;
@@ -232,6 +233,7 @@ export default {
     },
 
     criteriaVal(event) {
+      console.log("Criterionn changed");
       let me = this;
       let newVal = null;
       let existingS = null;
@@ -323,19 +325,25 @@ export default {
       }
       //grouped by factor
       let selectedSituation = [];
+      let sSelectedSituation = [];
+      let mSelectedSituation = [];
+
       selectedSituation[0] = me.maritialStatusCopy;
-      //   selectedSituation[1] = this.scenarios;
       me.selectedCriterion[subfactor] = criterion.id;
 
-      if (me.maritialStatusCopy === "Single") {
-        selectedSituation[2] = me.singleValues;
-        me.factorScore[factor] = me.factorScoreSingle[factor];
-      } else {
-        me.selectedCriterion[criterion.id] = criterion.married;
-        selectedSituation[2] = me.marriedValues;
-        me.factorScore[factor] = me.factorScoreMarried[factor];
-      }
-      me.selectedSituation = selectedSituation;
+      sSelectedSituation[1] = me.singleValues;
+      me.factorScore[factor] = me.factorScoreSingle[factor];
+      me.singleSelectedSituation = sSelectedSituation;
+
+      me.selectedCriterion[criterion.id] = criterion.married;
+      mSelectedSituation[1] = me.marriedValues;
+      me.factorScore[factor] = me.factorScoreMarried[factor];
+      me.marriedSelectedSituation = mSelectedSituation;
+
+      console.log({
+        selectedSituation: [me.marriedSelectedSituation, me.singleSelectedSituation],
+      });
+
       //Create or update scores array to emmit to another file
       let hasSumS = null;
       let hasSumM = null;
@@ -381,6 +389,10 @@ export default {
     },
 
     changeStatus(value) {
+      this.copyId = this.copyId;
+      this.maritialStatusCop = value;
+      console.log(this.copyId, this.maritialStatusCop);
+
       this.maritialStatusCopy = value;
     },
 
@@ -395,25 +407,34 @@ export default {
         showCancelButton: true,
       })
         .then(function (result) {
-          if ("value" in result) {
-            axios
-              .post("save-situation", {
-                scennarioId: me.copyId,
-                maritialStatus: me.maritialStatusCopy,
-                actualSituation: me.selectedSituation,
-              })
-              .then(function (response) {
-                Swal.fire({
-                  type: "success",
-                  title: "Escenario guardado",
-                  text:
-                    "Se ha" + scenario == null
-                      ? "creado"
-                      : "actualizado" + "este escenario",
-                });
+          console.log(me.marriedSelectedSituation);
+          console.log(me.singleSelectedSituation);
+          console.log(me.maritialStatusCopy);
+          let request = {
+            scennarioId: me.copyId ? me.copyId : "crash",
+            maritialStatus: me.maritialStatusCopy,
+            actualSituation:
+              me.maritialStatusCopy == "Married"
+                ? me.marriedSelectedSituation
+                : me.singleSelectedSituation,
+          };
 
-                me.$emit("CallReloader", Date.now());
+          console.log({ request });
+          if ("value" in result) {
+            axios.post("save-situation", request).then(function (response) {
+              Swal.fire({
+                type: "success",
+                title: "Escenario guardado",
+                text:
+                  "Se ha" + scenario == null
+                    ? "creado"
+                    : "actualizado" + "este escenario",
               });
+
+              me.$emit("CallReloader", Date.now());
+
+              console.log(response);
+            });
           } else {
             Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
           }
@@ -443,21 +464,25 @@ export default {
                 timer: 3000,
               });
             } else {
-              axios
-                .post("copy", {
-                  scennarioId: me.copyId,
-                  maritialStatus: me.maritialStatusCopy,
-                  actualSituation: me.selectedSituation,
-                  scenarioName: result.value,
-                })
-                .then(function (response) {
-                  Swal.fire({
-                    type: "success",
-                    title: "Escenario guardado",
-                    text: "Se ha guardado su copia exitosamente ",
-                  });
-                  me.$emit("CallReloader", Date.now());
+              let request = {
+                scennarioId: me.copyId ? me.copyId : "crash",
+                scenarioName: result.value,
+                maritialStatus: me.maritialStatusCopy,
+                actualSituation:
+                  me.maritialStatusCopy == "Married"
+                    ? me.marriedSelectedSituation
+                    : me.singleSelectedSituation,
+              };
+
+              axios.post("copy", request).then(function (response) {
+                Swal.fire({
+                  type: "success",
+                  title: "Escenario guardado",
+                  text: "Se ha guardado su copia exitosamente ",
                 });
+                console.log(response);
+                me.$emit("CallReloader", Date.now());
+              });
             }
           } else {
             Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
@@ -482,7 +507,6 @@ export default {
         axios
           .post("/delete/" + id)
           .then((response) => {
-            // console.log(response);
             Swal.fire({
               type: "success",
               title: "Escenario eliminado",
