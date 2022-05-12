@@ -233,7 +233,7 @@ export default {
     },
 
     criteriaVal(event) {
-      console.log("Criterionn changed");
+      //   console.log("Criterionn changed");
       let me = this;
       let newVal = null;
       let existingS = null;
@@ -340,9 +340,9 @@ export default {
       me.factorScore[factor] = me.factorScoreMarried[factor];
       me.marriedSelectedSituation = mSelectedSituation;
 
-      console.log({
+      /*  console.log({
         selectedSituation: [me.marriedSelectedSituation, me.singleSelectedSituation],
-      });
+      }); */
 
       //Create or update scores array to emmit to another file
       let hasSumS = null;
@@ -391,7 +391,7 @@ export default {
     changeStatus(value) {
       this.copyId = this.copyId;
       this.maritialStatusCop = value;
-      console.log(this.copyId, this.maritialStatusCop);
+      //   console.log(this.copyId, this.maritialStatusCop);
 
       this.maritialStatusCopy = value;
     },
@@ -407,9 +407,6 @@ export default {
         showCancelButton: true,
       })
         .then(function (result) {
-          console.log(me.marriedSelectedSituation);
-          console.log(me.singleSelectedSituation);
-          console.log(me.maritialStatusCopy);
           let request = {
             scennarioId: me.copyId ? me.copyId : "crash",
             maritialStatus: me.maritialStatusCopy,
@@ -419,7 +416,6 @@ export default {
                 : me.singleSelectedSituation,
           };
 
-          console.log({ request });
           if ("value" in result) {
             axios.post("save-situation", request).then(function (response) {
               Swal.fire({
@@ -434,7 +430,7 @@ export default {
               me.$emit("CallReloader", Date.now());
               window.location.reload();
 
-              console.log(response);
+              //   console.log(response);
             });
           } else {
             Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });

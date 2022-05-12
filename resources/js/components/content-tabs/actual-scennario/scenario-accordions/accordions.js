@@ -3,9 +3,9 @@ export default {
     watch: {
         maritialStatus: function() {
             this.changed = this.maritialStatus;
-            console.log({ watch: this.changed })
+            // console.log({ watch: this.changed })
             this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
-            console.log('watch')
+            // console.log('watch')
         },
         reloader2: function() {
             this.$forceUpdate();
@@ -23,6 +23,9 @@ export default {
             selectedSubfactor: {
                 selections: []
             },
+            previusSelectedSubfactor: {
+                selections: []
+            },
             factorScore: {},
             factorScoreMarried: {},
             factorScoreSingle: {},
@@ -33,7 +36,6 @@ export default {
             arraySums: [],
             situation: [],
             changed: null,
-
         };
     },
 
@@ -47,7 +49,6 @@ export default {
             axios.get("/factors").then(function(response) {
                 me.scenarios = response.data[1] ? response.data[1] : [];
                 let scenario = null; //actual
-
                 if (me.authenticated) {
                     if (me.scenarios.length > 0) {
                         me.scenarios.forEach((element) => {
@@ -74,7 +75,7 @@ export default {
                             Array.isArray(JSON.parse(scenario['body'])) &&
                             JSON.parse(scenario['body']).length > 0
                         ) {
-                            console.log({ changed: me.changed });
+                            // console.log({ changed: me.changed });d
                             // return
                             me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
                             me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
@@ -151,6 +152,9 @@ export default {
                 factor: newVal.factor,
                 subfactor: newVal.subfactor,
             };
+
+
+            console.log(newVal);
 
             let factor = newVal.factor;
             let subfactor = newVal.subfactor;

@@ -2683,7 +2683,7 @@ __webpack_require__.r(__webpack_exports__);
       me.data = arr;
     },
     criteriaVal: function criteriaVal(event) {
-      console.log("Criterionn changed");
+      //   console.log("Criterionn changed");
       var me = this;
       var newVal = null;
       var existingS = null;
@@ -2783,9 +2783,10 @@ __webpack_require__.r(__webpack_exports__);
       mSelectedSituation[1] = me.marriedValues;
       me.factorScore[factor] = me.factorScoreMarried[factor];
       me.marriedSelectedSituation = mSelectedSituation;
-      console.log({
-        selectedSituation: [me.marriedSelectedSituation, me.singleSelectedSituation]
-      }); //Create or update scores array to emmit to another file
+      /*  console.log({
+        selectedSituation: [me.marriedSelectedSituation, me.singleSelectedSituation],
+      }); */
+      //Create or update scores array to emmit to another file
 
       var hasSumS = null;
       var hasSumM = null;
@@ -2822,8 +2823,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     changeStatus: function changeStatus(value) {
       this.copyId = this.copyId;
-      this.maritialStatusCop = value;
-      console.log(this.copyId, this.maritialStatusCop);
+      this.maritialStatusCop = value; //   console.log(this.copyId, this.maritialStatusCop);
+
       this.maritialStatusCopy = value;
     },
     saveScennarioCopy: function saveScennarioCopy() {
@@ -2835,17 +2836,11 @@ __webpack_require__.r(__webpack_exports__);
         showDenyButton: true,
         showCancelButton: true
       }).then(function (result) {
-        console.log(me.marriedSelectedSituation);
-        console.log(me.singleSelectedSituation);
-        console.log(me.maritialStatusCopy);
         var request = {
           scennarioId: me.copyId ? me.copyId : "crash",
           maritialStatus: me.maritialStatusCopy,
           actualSituation: me.maritialStatusCopy == "Married" ? me.marriedSelectedSituation : me.singleSelectedSituation
         };
-        console.log({
-          request: request
-        });
 
         if ("value" in result) {
           axios.post("save-situation", request).then(function (response) {
@@ -2855,8 +2850,7 @@ __webpack_require__.r(__webpack_exports__);
               text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
             });
             me.$emit("CallReloader", Date.now());
-            window.location.reload();
-            console.log(response);
+            window.location.reload(); //   console.log(response);
           });
         } else {
           Swal.fire({
@@ -3566,13 +3560,10 @@ __webpack_require__.r(__webpack_exports__);
   props: ["maritialStatus", 'reloader2', "authenticated"],
   watch: {
     maritialStatus: function maritialStatus() {
-      this.changed = this.maritialStatus;
-      console.log({
-        watch: this.changed
-      });
-      this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+      this.changed = this.maritialStatus; // console.log({ watch: this.changed })
 
-      console.log('watch');
+      this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
+      // console.log('watch')
     },
     reloader2: function reloader2() {
       this.$forceUpdate();
@@ -3588,6 +3579,9 @@ __webpack_require__.r(__webpack_exports__);
       singleValues: [],
       marriedValues: [],
       selectedSubfactor: {
+        selections: []
+      },
+      previusSelectedSubfactor: {
         selections: []
       },
       factorScore: {},
@@ -3636,10 +3630,8 @@ __webpack_require__.r(__webpack_exports__);
             var newData = [];
 
             if (scenario != null && Array.isArray(JSON.parse(scenario['body'])) && JSON.parse(scenario['body']).length > 0) {
-              console.log({
-                changed: me.changed
-              }); // return
-
+              // console.log({ changed: me.changed });d
+              // return
               me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
 
               me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
@@ -3727,6 +3719,7 @@ __webpack_require__.r(__webpack_exports__);
         factor: newVal.factor,
         subfactor: newVal.subfactor
       };
+      console.log(newVal);
       var factor = newVal.factor;
       var subfactor = newVal.subfactor;
       var criterion = newVal.criterion;
@@ -24590,127 +24583,165 @@ var render = function () {
                     _c(
                       "div",
                       { staticClass: "form-group" },
-                      _vm._l(object.factor.subfactors, function (subfactor) {
-                        return _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-6" }, [
-                            _vm._v(
-                              "\n                  " +
-                                _vm._s(subfactor.subfactor) +
-                                "\n                "
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-4" }, [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value:
-                                      _vm.selectedSubfactor.selections[
-                                        subfactor.id
-                                      ],
-                                    expression:
-                                      "selectedSubfactor.selections[subfactor.id]",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                staticStyle: { width: "100%", height: "36px" },
-                                attrs: { id: "select2-search-hide" },
-                                on: {
-                                  change: [
-                                    function ($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call(
-                                          $event.target.options,
-                                          function (o) {
-                                            return o.selected
-                                          }
-                                        )
-                                        .map(function (o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.$set(
-                                        _vm.selectedSubfactor.selections,
-                                        subfactor.id,
-                                        $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      )
-                                    },
-                                    _vm.criteriaVal,
-                                  ],
-                                },
-                              },
-                              _vm._l(subfactor.criteria, function (criterion) {
-                                return _c(
-                                  "option",
-                                  {
-                                    class: criterion.selected
-                                      ? "bg-success"
-                                      : "",
-                                    domProps: {
-                                      value: {
-                                        criterion: criterion,
-                                        factor: object.factor.id,
-                                        subfactor: subfactor.id,
-                                      },
-                                    },
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                      " +
-                                        _vm._s(criterion.criterion) +
-                                        "\n                    "
-                                    ),
-                                  ]
-                                )
-                              }),
-                              0
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-2" }, [
-                            _c("input", {
-                              staticClass: "form-control",
-                              attrs: { type: "text", disabled: "" },
-                              domProps: {
-                                value:
-                                  _vm.selectedSubfactor != undefined &&
-                                  _vm.selectedSubfactor.selections !=
-                                    undefined &&
-                                  _vm.selectedSubfactor.selections[
-                                    subfactor.id
-                                  ] != undefined &&
-                                  "criterion" in
-                                    _vm.selectedSubfactor.selections[
-                                      subfactor.id
-                                    ]
-                                    ? _vm.maritialStatus === "Married" &&
-                                      _vm.selectedSubfactor.selections[
-                                        subfactor.id
-                                      ].criterion.hasOwnProperty("married")
-                                      ? _vm.selectedSubfactor.selections[
-                                          subfactor.id
-                                        ].criterion.married
-                                      : _vm.maritialStatus === "Single" &&
+                      _vm._l(
+                        object.factor.subfactors,
+                        function (subfactor, index) {
+                          return _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-6" }, [
+                              _c("h3", [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(subfactor.subfactor) +
+                                    _vm._s(subfactor.id) +
+                                    " " +
+                                    _vm._s(subfactor.id + 1) +
+                                    "\n                  "
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              object.factor.id === 3 && index > 0
+                                ? _c("p", { staticClass: "bg-danger" })
+                                : _vm._e(),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-4" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
                                         _vm.selectedSubfactor.selections[
                                           subfactor.id
-                                        ].criterion.hasOwnProperty("single")
-                                      ? _vm.selectedSubfactor.selections[
+                                        ],
+                                      expression:
+                                        "selectedSubfactor.selections[subfactor.id]",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  staticStyle: { "max-width": "100%" },
+                                  attrs: {
+                                    id: "select2-search-hide",
+                                    disabled:
+                                      subfactor.id == 17 &&
+                                      _vm.selectedSubfactor.selections[16]
+                                        .criterion.single >= 50
+                                        ? true
+                                        : false,
+                                  },
+                                  on: {
+                                    change: [
+                                      function ($event) {
+                                        var $$selectedVal =
+                                          Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function (o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function (o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                        _vm.$set(
+                                          _vm.selectedSubfactor.selections,
+                                          subfactor.id,
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      _vm.criteriaVal,
+                                    ],
+                                  },
+                                },
+                                _vm._l(
+                                  subfactor.criteria,
+                                  function (criterion, sfIndex) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        class: criterion.selected
+                                          ? "bg-success"
+                                          : "",
+                                        domProps: {
+                                          value: {
+                                            criterion: criterion,
+                                            factor: object.factor.id,
+                                            subfactor: subfactor.id,
+                                          },
+                                        },
+                                      },
+                                      [
+                                        _c("p", [
+                                          _vm._v(
+                                            "\n                        " +
+                                              _vm._s(criterion.criterion) +
+                                              "\n                      "
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("br"),
+                                        _vm._v(" "),
+                                        _c("p", { staticClass: "bg-info" }, [
+                                          _vm._v(
+                                            _vm._s(
+                                              subfactor.criteria[sfIndex].single
+                                            )
+                                          ),
+                                        ]),
+                                      ]
+                                    )
+                                  }
+                                ),
+                                0
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-2" }, [
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: { type: "text", disabled: "" },
+                                domProps: {
+                                  value:
+                                    _vm.selectedSubfactor != undefined &&
+                                    _vm.selectedSubfactor.selections !=
+                                      undefined &&
+                                    _vm.selectedSubfactor.selections[
+                                      subfactor.id
+                                    ] != undefined &&
+                                    "criterion" in
+                                      _vm.selectedSubfactor.selections[
+                                        subfactor.id
+                                      ]
+                                      ? _vm.maritialStatus === "Married" &&
+                                        _vm.selectedSubfactor.selections[
                                           subfactor.id
-                                        ].criterion.single
-                                      : 0
-                                    : 0,
-                              },
-                            }),
-                          ]),
-                        ])
-                      }),
+                                        ].criterion.hasOwnProperty("married")
+                                        ? _vm.selectedSubfactor.selections[
+                                            subfactor.id
+                                          ].criterion.married
+                                        : _vm.maritialStatus === "Single" &&
+                                          _vm.selectedSubfactor.selections[
+                                            subfactor.id
+                                          ].criterion.hasOwnProperty("single")
+                                        ? _vm.selectedSubfactor.selections[
+                                            subfactor.id
+                                          ].criterion.single
+                                        : 0
+                                      : 0,
+                                },
+                              }),
+                            ]),
+                          ])
+                        }
+                      ),
                       0
                     ),
                   ]),

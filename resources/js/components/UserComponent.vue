@@ -69,11 +69,6 @@
               <div class="card">
                 <div class="card-body">
                   <center class="mt-4">
-                    <!-- <img
-                      src="/templates/theme-forest-admin-pro/main/admin-pro/src/assets/images/users/5.jpg"
-                      class="rounded-circle"
-                      width="150"
-                    /> -->
                     <span
                       class="rounded-circle bg-success text-center display-1 w-100 p-3 font-weight-bold"
                       width="150"
@@ -175,7 +170,6 @@
                 </div>
               </div>
             </div>
-
             <!-- Edit profile -->
             <div
               class="tab-pane fade"
