@@ -185,6 +185,7 @@ export default {
 
                 // console.log(me.reloader2);
                 me.$emit("reloader", now);
+                window.location.reload();
                 console.log(response);
               });
           } else {
@@ -250,6 +251,7 @@ export default {
                   let now = Date.now();
                   me.reloader2 = now;
                   this.$emit("reloader", now);
+                  window.location.reload();
                 });
             } else {
               Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });

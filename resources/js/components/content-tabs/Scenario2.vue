@@ -432,6 +432,7 @@ export default {
               });
 
               me.$emit("CallReloader", Date.now());
+              window.location.reload();
 
               console.log(response);
             });
@@ -481,7 +482,9 @@ export default {
                   text: "Se ha guardado su copia exitosamente ",
                 });
                 console.log(response);
+
                 me.$emit("CallReloader", Date.now());
+                window.location.reload();
               });
             }
           } else {
@@ -513,6 +516,7 @@ export default {
               text: "Se ha eliminado el escenario",
             });
             me.$emit("CallReloader", Date.now());
+            window.location.reload();
           })
           .catch((error) => {
             console.error(error);
