@@ -217,7 +217,7 @@ class FactorController extends Controller
                     'is_theactual' => false,
                     'name' => $request->scenarioName,
                     'is_married' => $maritial,
-                    'body' => json_encode($request->actualSituation[1]),
+                    'body' => json_encode($request->actualSituation[2]),
                 ]
             );
 
