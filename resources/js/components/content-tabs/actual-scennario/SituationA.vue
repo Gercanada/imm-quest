@@ -182,7 +182,6 @@ export default {
                 });
                 let now = Date.now();
                 me.reloader2 = now;
-
                 // console.log(me.reloader2);
                 me.$emit("reloader", now);
                 window.location.reload();
@@ -230,6 +229,8 @@ export default {
           showCancelButton: true,
         })
           .then(function (result) {
+            // console.log(me.userActualSituation);
+            // return;
             if ("value" in result) {
               axios
                 .post("copy", {
@@ -238,6 +239,7 @@ export default {
                     : "Scenario " + Number(me.scenarios.length + 1),
                   actualSituation: me.userActualSituation,
                   maritialStatus: me.maritialStatus,
+                  isActual: true,
                 })
                 .then(function (response) {
                   Swal.fire({
@@ -250,8 +252,9 @@ export default {
                   });
                   let now = Date.now();
                   me.reloader2 = now;
-                  this.$emit("reloader", now);
+                  console.log(response);
                   window.location.reload();
+                  this.$emit("reloader", now);
                 });
             } else {
               Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });

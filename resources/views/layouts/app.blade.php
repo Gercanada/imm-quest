@@ -39,6 +39,28 @@
     <link rel="stylesheet"
         href="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/css/style.min.css">
     @yield('styles')
+
+    <style>
+        .preloader {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            position: fixed;
+            z-index: 99999;
+            background: url(/{{ env('ASSET_URL') }}images/fondocanada.jpg) no-repeat center center;
+            background-size: cover;
+            /* background-color: rgb(21, 122, 184); */
+        }
+
+        .lds-pos2 {
+            position: absolute;
+            border: 0.8px solid #0ca66b;
+            opacity: 1;
+            border-radius: 50%;
+            animation: lds-ripple 1s cubic-bezier(0, .1, .5, 1) infinite;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -48,8 +70,8 @@
 
     <div class="preloader">
         <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
+            <img src="/{{ env('ASSET_URL') }}images/maple1.png" alt="mappleSheet" width="175px"
+                class="lds-pos2 fas fa-spin shadow-lg rounded-circle">
         </div>
     </div>
 
@@ -185,11 +207,11 @@
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
     </script>
 
-    <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
+    {{-- <script src="/{{ env('ASSET_URL') }}js/app.js"></script> --}}
     @if (env('APP_ENV') === 'local')
-        {{-- <script src="/{{ env('ASSET_URL') }}js/app.js"></script> --}}
+        <script src="/{{ env('ASSET_URL') }}js/app.js"></script>
     @else
-        {{-- <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script> --}}
+        <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script>
     @endif
 
     @yield('scripts')

@@ -202,7 +202,6 @@ class FactorController extends Controller
     {
         try {
             $user = Auth::user();
-            // return $request;
             $maritial = false;
             if ($request->maritialStatus) {
                 $maritial = $request->maritialStatus === 'Married' ? true : false;
@@ -210,6 +209,8 @@ class FactorController extends Controller
             if ($request->actualSituation[0]) {
                 $maritial = $request->actualSituation[0] === 'Married' ? true : false;
             }
+            $isActual = false;
+            $isActual = $request->isActual;
 
             $scenario =  Scenario::create(
                 [
@@ -217,7 +218,7 @@ class FactorController extends Controller
                     'is_theactual' => false,
                     'name' => $request->scenarioName,
                     'is_married' => $maritial,
-                    'body' => json_encode($request->actualSituation[2]),
+                    'body' => $isActual == true ? json_encode($request->actualSituation[2]) : json_encode($request->actualSituation[1]),
                 ]
             );
 
