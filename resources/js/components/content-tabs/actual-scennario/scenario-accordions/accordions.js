@@ -75,7 +75,6 @@ export default {
                             Array.isArray(JSON.parse(scenario['body'])) &&
                             JSON.parse(scenario['body']).length > 0
                         ) {
-                            // console.log({ changed: me.changed });d
                             // return
                             me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
                             me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
@@ -133,11 +132,19 @@ export default {
             });
         },
 
+
+        setOption(criterion, factor, subfactor) {
+            this.criteriaVal({
+                criterion,
+                factor,
+                subfactor,
+            });
+        },
+
         criteriaVal(event) {
             let me = this;
             let newVal = null;
-            let existingS = null;
-            let existingM = null;
+
 
             if ('criterion' in event) {
                 newVal = event;
@@ -147,57 +154,222 @@ export default {
                 )._value;
             }
 
-            me.selectedSubfactor.selections[newVal.subfactor] = {
-                criterion: newVal.criterion,
-                factor: newVal.factor,
-                subfactor: newVal.subfactor,
-            };
-
-
-            console.log(newVal);
-
             let factor = newVal.factor;
             let subfactor = newVal.subfactor;
             let criterion = newVal.criterion;
+
+            me.selectedSubfactor.selections[newVal.subfactor] = {
+                criterion: criterion,
+                factor: factor,
+                subfactor: subfactor,
+            };
+
+            if (factor === 3) {
+                me.selectedSubfactor.selections.forEach((element, index) => {
+                    if (element.factor === 3) {
+                        if (me.selectedSubfactor.selections[index - 1] &&
+                            me.selectedSubfactor.selections[index - 1].subfactor == 16 &&
+                            me.selectedSubfactor.selections[index - 1].criterion.single == 50 &&
+                            me.selectedSubfactor.selections[index].subfactor == 17
+                        ) {
+                            me.selectedSubfactor.selections[index] = {
+                                criterion: {
+                                    id: 106,
+                                    criterion: "No tiene experiencia laboral en Canadá o no tiene carrera profesional o técnica.",
+                                    single: 0,
+                                    married: 0,
+                                    subfactor_id: 17,
+                                    selected: true
+                                },
+                                factor: 3,
+                                subfactor: 17,
+                            }
+                        }
+                        //
+                        if (me.selectedSubfactor.selections[index + 1] &&
+                            me.selectedSubfactor.selections[index + 1].subfactor == 17 &&
+                            me.selectedSubfactor.selections[index + 1].criterion.single == 50 &&
+                            me.selectedSubfactor.selections[index].subfactor == 16
+                        ) {
+                            me.selectedSubfactor.selections[index] = {
+                                criterion: {
+                                    id: 101,
+                                    criterion: "No tiene el nivel de inglés mínimo para los puntos o solo estudio hasta preparatoria o menos.",
+                                    single: 0,
+                                    married: 0,
+                                    subfactor_id: 16,
+                                    selected: true
+                                },
+                                factor: 3,
+                                subfactor: 16,
+                            }
+                        }
+                        //16 && 17
+                        if (me.selectedSubfactor.selections[index - 1] &&
+                            me.selectedSubfactor.selections[index - 1].subfactor == 18 &&
+                            me.selectedSubfactor.selections[index - 1].criterion.single == 50 &&
+                            me.selectedSubfactor.selections[index].subfactor == 19
+                        ) {
+                            me.selectedSubfactor.selections[index] = {
+                                criterion: {
+                                    id: 116,
+                                    criterion: "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                                    single: 0,
+                                    married: 0,
+                                    subfactor_id: 19
+                                },
+                                factor: 3,
+                                subfactor: 19,
+                            }
+                        }
+                        // 18 && 19 && 20
+                        //
+                        // console.log((me.selectedSubfactor.selections[index + 3] == 20));
+
+                        if (me.selectedSubfactor.selections[index].subfactor == 18 &&
+                            me.selectedSubfactor.selections[index + 1] &&
+                            me.selectedSubfactor.selections[index + 1].subfactor == 19 &&
+                            me.selectedSubfactor.selections[index + 2] &&
+                            me.selectedSubfactor.selections[index + 2] == 20 &&
+
+                            (me.selectedSubfactor.selections[index + 1].criterion.single >= 50 ||
+                                (me.selectedSubfactor.selections[index + 1].criterion.single +
+                                    me.selectedSubfactor.selections[index + 2].criterion.single >= 50) ||
+                                me.selectedSubfactor.selections[index + 2].criterion.single >= 50
+                            )
+                        ) {
+                            console.log("here");
+                            console.log(me.selectedSubfactor.selections[index + 1].criterion.single +
+                                me.selectedSubfactor.selections[index + 2].criterion.single);
+                            me.selectedSubfactor.selections[index] = {
+                                criterion: {
+                                    id: 111,
+                                    criterion: "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
+                                    single: 0,
+                                    married: 0,
+                                    subfactor_id: 18
+                                },
+                                factor: 3,
+                                subfactor: 18,
+                            }
+                        }
+
+                        //y
+                        if (me.selectedSubfactor.selections[index].subfactor == 19 &&
+                            me.selectedSubfactor.selections[index + 1] &&
+                            me.selectedSubfactor.selections[index + 1].subfactor == 20 &&
+                            (me.selectedSubfactor.selections[index + 1].criterion.single >= 50 || //20
+                                me.selectedSubfactor.selections[index - 1].criterion.single >= 50 || //18
+                                (me.selectedSubfactor.selections[index + 1].criterion.single + me.selectedSubfactor.selections[index - 1].criterion.single >= 50))
+
+                        ) {
+                            me.selectedSubfactor.selections[index] = {
+                                criterion: {
+                                    id: 116,
+                                    criterion: "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                                    single: 0,
+                                    married: 0,
+                                    subfactor_id: 19
+                                },
+                                factor: 3,
+                                subfactor: 19,
+                            }
+
+                            me.selectedSubfactor.selections[index - 2] = {
+                                criterion: {
+                                    id: 111,
+                                    criterion: "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
+                                    single: 0,
+                                    married: 0,
+                                    subfactor_id: 18
+                                },
+                                factor: 3,
+                                subfactor: 18,
+                            }
+                        }
+
+                        //TODO Continue review critewrion sums
+                        //here
+                        if (me.selectedSubfactor.selections[index].subfactor == 20 &&
+                            me.selectedSubfactor.selections[index - 1] &&
+                            me.selectedSubfactor.selections[index - 1].subfactor == 19 &&
+                            (me.selectedSubfactor.selections[index - 1].criterion.single >= 50 ||
+                                (
+                                    me.selectedSubfactor.selections[index - 1] ?
+                                    me.selectedSubfactor.selections[index - 1].criterion.single : 0 +
+                                    me.selectedSubfactor.selections[index - 2] ?
+                                    me.selectedSubfactor.selections[index - 2].criterion.single : 0) >= 50 ||
+                                me.selectedSubfactor.selections[index - 2].criterion.single >= 50)
+                        ) {
+                            me.selectedSubfactor.selections[index] = {
+                                criterion: {
+                                    id: 116,
+                                    criterion: "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                                    single: 0,
+                                    married: 0,
+                                    subfactor_id: 20
+                                },
+                                factor: 3,
+                                subfactor: 20,
+                            }
+                        }
+
+                    }
+                });
+            }
+            console.log(me.selectedSubfactor.selections);
+            // console
 
             me.singleValues.sort(function(a, b) {
                 return a.subfactor - b.subfactor;
             });
 
-            me.singleValues.forEach(element => {
-                if (element['factor'] == factor && element['subfactor'] == subfactor) {
-                    existingS = element;
-                    element['criterion'] = criterion.id
-                    element['value'] = criterion.single != null ? criterion.single : 0
-                }
-            });
+            let selectedSituation = [];
+            selectedSituation[0] = this.changed; //? this.changed : this.mutableMaritialStatus;
+            selectedSituation[1] = this.scenarios;
 
-            if (!existingS) {
-                me.singleValues.push({
-                    factor,
-                    subfactor,
-                    criterion: criterion.id,
-                    value: criterion.single != null ? criterion.single : 0,
+            me.selectedSubfactor.selections.forEach(selection => {
+                // console.log({ selection });
+                let existingS = null;
+                let existingM = null;
+
+                me.singleValues.forEach(element => {
+                    if (element['factor'] == selection.factor && element['subfactor'] == selection.subfactor) {
+                        existingS = element;
+                        element['criterion'] = selection.criterion.id
+                        element['value'] = selection.criterion.single != null ? selection.criterion.single : 0
+                    }
                 });
-            }
 
-            me.marriedValues.forEach(element => { //Find factor and subfactor for replace criterion value
-                if (element['factor'] == factor && element['subfactor'] == subfactor) {
-                    existingM = element;
-                    element['criterion'] = criterion.id
-                    element['value'] = criterion.married != null ? criterion.married : 0
-                        //replace
+                if (!existingS) {
+                    me.singleValues.push({
+                        factor: selection.factor,
+                        subfactor: selection.subfactor,
+                        criterion: selection.criterion.id,
+                        value: selection.criterion.single != null ? selection.criterion.single : 0,
+                    });
                 }
-            });
 
-            if (!existingM) {
-                me.marriedValues.push({
-                    factor,
-                    subfactor,
-                    criterion: criterion.id,
-                    value: criterion.married != null ? criterion.married : 0,
+                me.marriedValues.forEach(element => { //Find factor and subfactor for replace criterion value
+                    if (element['factor'] == selection.factor && element['subfactor'] == selection.subfactor) {
+                        existingM = element;
+                        element['criterion'] = selection.criterion.id
+                        element['value'] = selection.criterion.married != null ? selection.criterion.married : 0
+                            //replace
+                    }
                 });
-            }
+
+                if (!existingM) {
+                    me.marriedValues.push({
+                        factor: selection.factor,
+                        subfactor: selection.subfactor,
+                        criterion: selection.criterion.id,
+                        value: selection.criterion.married != null ? selection.criterion.married : 0,
+                    });
+                }
+                /*
+                 */
+            });
             me.factorScoreMarried[factor] = 0;
             me.factorScoreSingle[factor] = 0;
 
@@ -223,9 +395,7 @@ export default {
             }
             //grouped by factor
             // console.log(JSON.stringify(groupByFacto, null, 2));
-            let selectedSituation = [];
-            selectedSituation[0] = this.changed; //? this.changed : this.mutableMaritialStatus;
-            selectedSituation[1] = this.scenarios;
+
             me.selectedCriterion[subfactor] = criterion.id;
 
             if (this.mutableMaritialStatus === "Single") {
@@ -237,8 +407,9 @@ export default {
                 selectedSituation[2] = me.marriedValues;
                 me.factorScore[factor] = me.factorScoreMarried[factor];
             }
-            //Create or update scores array to emmit to another file
 
+
+            //Create or update scores array to emmit to another file
             let hasSumS = null;
             let hasSumM = null;
 
@@ -278,6 +449,7 @@ export default {
                     }
                 });
             }
+
             me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
             me.$emit("selectedSituation", selectedSituation);
         }

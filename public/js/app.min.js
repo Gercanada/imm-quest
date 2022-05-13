@@ -3630,7 +3630,6 @@ __webpack_require__.r(__webpack_exports__);
             var newData = [];
 
             if (scenario != null && Array.isArray(JSON.parse(scenario['body'])) && JSON.parse(scenario['body']).length > 0) {
-              // console.log({ changed: me.changed });d
               // return
               me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
 
@@ -3702,11 +3701,16 @@ __webpack_require__.r(__webpack_exports__);
         me.$emit("factorsWithSubfactors", me.factors);
       });
     },
+    setOption: function setOption(criterion, factor, subfactor) {
+      this.criteriaVal({
+        criterion: criterion,
+        factor: factor,
+        subfactor: subfactor
+      });
+    },
     criteriaVal: function criteriaVal(event) {
       var me = this;
       var newVal = null;
-      var existingS = null;
-      var existingM = null;
 
       if ('criterion' in event) {
         newVal = event;
@@ -3714,53 +3718,181 @@ __webpack_require__.r(__webpack_exports__);
         newVal = JSON.parse(JSON.stringify(event.target.options[event.target.options.selectedIndex]))._value;
       }
 
-      me.selectedSubfactor.selections[newVal.subfactor] = {
-        criterion: newVal.criterion,
-        factor: newVal.factor,
-        subfactor: newVal.subfactor
-      };
-      console.log(newVal);
       var factor = newVal.factor;
       var subfactor = newVal.subfactor;
       var criterion = newVal.criterion;
+      me.selectedSubfactor.selections[newVal.subfactor] = {
+        criterion: criterion,
+        factor: factor,
+        subfactor: subfactor
+      };
+
+      if (factor === 3) {
+        me.selectedSubfactor.selections.forEach(function (element, index) {
+          if (element.factor === 3) {
+            if (me.selectedSubfactor.selections[index - 1] && me.selectedSubfactor.selections[index - 1].subfactor == 16 && me.selectedSubfactor.selections[index - 1].criterion.single == 50 && me.selectedSubfactor.selections[index].subfactor == 17) {
+              me.selectedSubfactor.selections[index] = {
+                criterion: {
+                  id: 106,
+                  criterion: "No tiene experiencia laboral en Canadá o no tiene carrera profesional o técnica.",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 17,
+                  selected: true
+                },
+                factor: 3,
+                subfactor: 17
+              };
+            } //
+
+
+            if (me.selectedSubfactor.selections[index + 1] && me.selectedSubfactor.selections[index + 1].subfactor == 17 && me.selectedSubfactor.selections[index + 1].criterion.single == 50 && me.selectedSubfactor.selections[index].subfactor == 16) {
+              me.selectedSubfactor.selections[index] = {
+                criterion: {
+                  id: 101,
+                  criterion: "No tiene el nivel de inglés mínimo para los puntos o solo estudio hasta preparatoria o menos.",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 16,
+                  selected: true
+                },
+                factor: 3,
+                subfactor: 16
+              };
+            } //16 && 17
+
+
+            if (me.selectedSubfactor.selections[index - 1] && me.selectedSubfactor.selections[index - 1].subfactor == 18 && me.selectedSubfactor.selections[index - 1].criterion.single == 50 && me.selectedSubfactor.selections[index].subfactor == 19) {
+              me.selectedSubfactor.selections[index] = {
+                criterion: {
+                  id: 116,
+                  criterion: "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 19
+                },
+                factor: 3,
+                subfactor: 19
+              };
+            } // 18 && 19 && 20
+            //
+            // console.log((me.selectedSubfactor.selections[index + 3] == 20));
+
+
+            if (me.selectedSubfactor.selections[index].subfactor == 18 && me.selectedSubfactor.selections[index + 1] && me.selectedSubfactor.selections[index + 1].subfactor == 19 && me.selectedSubfactor.selections[index + 2] && me.selectedSubfactor.selections[index + 2] == 20 && (me.selectedSubfactor.selections[index + 1].criterion.single >= 50 || me.selectedSubfactor.selections[index + 1].criterion.single + me.selectedSubfactor.selections[index + 2].criterion.single >= 50 || me.selectedSubfactor.selections[index + 2].criterion.single >= 50)) {
+              console.log("here");
+              console.log(me.selectedSubfactor.selections[index + 1].criterion.single + me.selectedSubfactor.selections[index + 2].criterion.single);
+              me.selectedSubfactor.selections[index] = {
+                criterion: {
+                  id: 111,
+                  criterion: "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 18
+                },
+                factor: 3,
+                subfactor: 18
+              };
+            } //y
+
+
+            if (me.selectedSubfactor.selections[index].subfactor == 19 && me.selectedSubfactor.selections[index + 1] && me.selectedSubfactor.selections[index + 1].subfactor == 20 && (me.selectedSubfactor.selections[index + 1].criterion.single >= 50 || //20
+            me.selectedSubfactor.selections[index - 1].criterion.single >= 50 || //18
+            me.selectedSubfactor.selections[index + 1].criterion.single + me.selectedSubfactor.selections[index - 1].criterion.single >= 50)) {
+              me.selectedSubfactor.selections[index] = {
+                criterion: {
+                  id: 116,
+                  criterion: "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 19
+                },
+                factor: 3,
+                subfactor: 19
+              };
+              me.selectedSubfactor.selections[index - 2] = {
+                criterion: {
+                  id: 111,
+                  criterion: "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 18
+                },
+                factor: 3,
+                subfactor: 18
+              };
+            } //TODO Continue review critewrion sums
+            //here
+
+
+            if (me.selectedSubfactor.selections[index].subfactor == 20 && me.selectedSubfactor.selections[index - 1] && me.selectedSubfactor.selections[index - 1].subfactor == 19 && (me.selectedSubfactor.selections[index - 1].criterion.single >= 50 || (me.selectedSubfactor.selections[index - 1] ? me.selectedSubfactor.selections[index - 1].criterion.single : 0 + me.selectedSubfactor.selections[index - 2] ? me.selectedSubfactor.selections[index - 2].criterion.single : 0) >= 50 || me.selectedSubfactor.selections[index - 2].criterion.single >= 50)) {
+              me.selectedSubfactor.selections[index] = {
+                criterion: {
+                  id: 116,
+                  criterion: "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 20
+                },
+                factor: 3,
+                subfactor: 20
+              };
+            }
+          }
+        });
+      }
+
+      console.log(me.selectedSubfactor.selections); // console
+
       me.singleValues.sort(function (a, b) {
         return a.subfactor - b.subfactor;
       });
-      me.singleValues.forEach(function (element) {
-        if (element['factor'] == factor && element['subfactor'] == subfactor) {
-          existingS = element;
-          element['criterion'] = criterion.id;
-          element['value'] = criterion.single != null ? criterion.single : 0;
-        }
-      });
+      var selectedSituation = [];
+      selectedSituation[0] = this.changed; //? this.changed : this.mutableMaritialStatus;
 
-      if (!existingS) {
-        me.singleValues.push({
-          factor: factor,
-          subfactor: subfactor,
-          criterion: criterion.id,
-          value: criterion.single != null ? criterion.single : 0
+      selectedSituation[1] = this.scenarios;
+      me.selectedSubfactor.selections.forEach(function (selection) {
+        // console.log({ selection });
+        var existingS = null;
+        var existingM = null;
+        me.singleValues.forEach(function (element) {
+          if (element['factor'] == selection.factor && element['subfactor'] == selection.subfactor) {
+            existingS = element;
+            element['criterion'] = selection.criterion.id;
+            element['value'] = selection.criterion.single != null ? selection.criterion.single : 0;
+          }
         });
-      }
 
-      me.marriedValues.forEach(function (element) {
-        //Find factor and subfactor for replace criterion value
-        if (element['factor'] == factor && element['subfactor'] == subfactor) {
-          existingM = element;
-          element['criterion'] = criterion.id;
-          element['value'] = criterion.married != null ? criterion.married : 0; //replace
+        if (!existingS) {
+          me.singleValues.push({
+            factor: selection.factor,
+            subfactor: selection.subfactor,
+            criterion: selection.criterion.id,
+            value: selection.criterion.single != null ? selection.criterion.single : 0
+          });
         }
-      });
 
-      if (!existingM) {
-        me.marriedValues.push({
-          factor: factor,
-          subfactor: subfactor,
-          criterion: criterion.id,
-          value: criterion.married != null ? criterion.married : 0
+        me.marriedValues.forEach(function (element) {
+          //Find factor and subfactor for replace criterion value
+          if (element['factor'] == selection.factor && element['subfactor'] == selection.subfactor) {
+            existingM = element;
+            element['criterion'] = selection.criterion.id;
+            element['value'] = selection.criterion.married != null ? selection.criterion.married : 0; //replace
+          }
         });
-      }
 
+        if (!existingM) {
+          me.marriedValues.push({
+            factor: selection.factor,
+            subfactor: selection.subfactor,
+            criterion: selection.criterion.id,
+            value: selection.criterion.married != null ? selection.criterion.married : 0
+          });
+        }
+        /*
+         */
+
+      });
       me.factorScoreMarried[factor] = 0;
       me.factorScoreSingle[factor] = 0;
 
@@ -3792,10 +3924,6 @@ __webpack_require__.r(__webpack_exports__);
       // console.log(JSON.stringify(groupByFacto, null, 2));
 
 
-      var selectedSituation = [];
-      selectedSituation[0] = this.changed; //? this.changed : this.mutableMaritialStatus;
-
-      selectedSituation[1] = this.scenarios;
       me.selectedCriterion[subfactor] = criterion.id;
 
       if (this.mutableMaritialStatus === "Single") {
@@ -24592,16 +24720,9 @@ var render = function () {
                                 _vm._v(
                                   "\n                    " +
                                     _vm._s(subfactor.subfactor) +
-                                    _vm._s(subfactor.id) +
-                                    " " +
-                                    _vm._s(subfactor.id + 1) +
                                     "\n                  "
                                 ),
                               ]),
-                              _vm._v(" "),
-                              object.factor.id === 3 && index > 0
-                                ? _c("p", { staticClass: "bg-danger" })
-                                : _vm._e(),
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-4" }, [
@@ -24620,17 +24741,10 @@ var render = function () {
                                         "selectedSubfactor.selections[subfactor.id]",
                                     },
                                   ],
-                                  staticClass: "form-control",
-                                  staticStyle: { "max-width": "100%" },
-                                  attrs: {
-                                    id: "select2-search-hide",
-                                    disabled:
-                                      subfactor.id == 17 &&
-                                      _vm.selectedSubfactor.selections[16]
-                                        .criterion.single >= 50
-                                        ? true
-                                        : false,
-                                  },
+                                  staticClass:
+                                    "select2 form-control custom-select",
+                                  staticStyle: { width: "100%" },
+                                  attrs: { id: "select2-search-hide" },
                                   on: {
                                     change: [
                                       function ($event) {
@@ -24663,7 +24777,7 @@ var render = function () {
                                 },
                                 _vm._l(
                                   subfactor.criteria,
-                                  function (criterion, sfIndex) {
+                                  function (criterion) {
                                     return _c(
                                       "option",
                                       {
@@ -24688,14 +24802,6 @@ var render = function () {
                                         ]),
                                         _vm._v(" "),
                                         _c("br"),
-                                        _vm._v(" "),
-                                        _c("p", { staticClass: "bg-info" }, [
-                                          _vm._v(
-                                            _vm._s(
-                                              subfactor.criteria[sfIndex].single
-                                            )
-                                          ),
-                                        ]),
                                       ]
                                     )
                                   }

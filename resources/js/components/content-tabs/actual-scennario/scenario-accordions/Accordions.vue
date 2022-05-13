@@ -51,33 +51,25 @@
                 <div class="row" v-for="(subfactor, index) in object.factor.subfactors">
                   <div class="col-6">
                     <h3>
-                      {{ subfactor.subfactor }}{{ subfactor.id }} {{ subfactor.id + 1 }}
+                      {{ subfactor.subfactor }}
                     </h3>
-                    <p class="bg-danger" v-if="object.factor.id === 3 && index > 0">
-                      <!--   {{ object.factor.subfactors[index - 1].subfactor }}
-                      {{ object.factor.subfactors[index - 1].id }} -->
-                    </p>
                   </div>
                   <div class="col-4">
-                    <!--  <h1 class="text-info">
-                      {{ subfactor.id }}
-                      {{ selectedSubfactor.selections[subfactor.id] }}
-                    </h1> -->
+                    <!--  {{ selectedSubfactor.selections[subfactor.id] }} -->
                     <select
-                      class="form-control"
+                      class="select2 form-control custom-select"
                       id="select2-search-hide"
-                      style="max-width: 100%"
-                      @change="criteriaVal"
+                      style="width: 100%"
                       v-model="selectedSubfactor.selections[subfactor.id]"
-                      :disabled="
-                        subfactor.id == 17 &&
-                        selectedSubfactor.selections[16].criterion.single >= 50
-                          ? true
-                          : false
-                      "
+                      @change="criteriaVal"
                     >
+                      <!--  :disabled=" subfactor.id == 17 &&
+                      selectedSubfactor.selections[16].criterion.single >= 50 ? true :
+                      false " -->
+                      <!--  v-model="selectedSubfactor.selections[subfactor.id]" -->
+
                       <option
-                        v-for="(criterion, sfIndex) in subfactor.criteria"
+                        v-for="criterion in subfactor.criteria"
                         :value="{
                           criterion,
                           factor: object.factor.id,
@@ -89,15 +81,6 @@
                           {{ criterion.criterion }}
                         </p>
                         <br />
-                        <p class="bg-info">{{ subfactor.criteria[sfIndex].single }}</p>
-
-                        <!-- :disabled="
-                          object.factor.subfactors[index - 1].subfactor.criterion.value >=
-                          50
-                            ? true
-                            : false
-                        "
-                         -->
                       </option>
                     </select>
                   </div>
