@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-md-12" v-if="!authenticated">
       <p>
-        <a href="http://">Calcula Tus Puntos de Express Entry </a>
+        <a href="/register">Calcula Tus Puntos de Express Entry </a>
         <!--     </br> -->
         Tambien puedes crear Escenarios para calcular cuantos puntos tendrias si tuvieras
         Experiencia Canadiense o algun tipo de estudios. Para Guardar tus Resultados,
         Descargarlos en un PDF o comparar tus resultados,
-        <a href="http://"> crea tu cuenta gratis</a>
+        <a href="/register"> crea tu cuenta gratis</a>
       </p>
     </div>
 
