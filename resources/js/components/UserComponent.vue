@@ -73,14 +73,14 @@
                       class="rounded-circle bg-success text-center display-1 w-100 p-3 font-weight-bold"
                       width="150"
                       v-text="
-                        userObj.firstname.substring(0, 1) +
-                        userObj.lastname.substring(0, 1)
+                        (userObj.name? userObj.name.substring(0, 1):null) +
+                        (userObj.last_name? userObj.last_name.substring(0, 1):null)
                       "
                     >
                     </span>
                     <h4 class="card-title mt-2">
-                      <b v-text="userObj.firstname"></b><b></b>
-                      <b v-text="userObj.lastname"></b>
+                      <b v-text="userObj.name"></b><b></b>
+                      <b v-text="userObj.last_name"></b>
                     </h4>
                     <h6 class="card-subtitle" v-text="userObj.cf_1704"></h6>
                     <div class="row text-center justify-content-md-center"></div>
@@ -93,80 +93,9 @@
                   <div class="row">
                     <div class="col-md-6">
                       <small class="text-muted">Email </small>
-                      <h6 v-text="userObj.email"></h6>
-                      <small class="text-muted pt-4 db">Mobile phone</small>
-                      <h6 v-text="userObj.mobile"></h6>
-                      <small class="text-muted pt-4 db">Address</small>
-                      <h6 v-text="userObj.mailingstreet"></h6>
-                    </div>
-
-                    <div class="col-md-6">
-                      <small class="text-muted">Alternate Email </small>
-                      <h6 v-text="userObj.secondaryemail"></h6>
-                      <small class="text-muted pt-4 db">Date of birth</small>
-                      <h6 v-text="userObj.birthday"></h6>
-                      <small class="text-muted pt-4 db">Age</small>
-                      <h6 v-text="userObj.cf_1334"></h6>
-                    </div>
-                  </div>
-
-                  <small class="text-muted pt-4 db">Social Profile</small>
-                  <br />
-                  <a
-                    class="btn btn-circle btn-secondary"
-                    type="btn"
-                    data-toggle="tooltip"
-                    :title="userObj.cf_2246"
-                    :href="userObj.cf_2246"
-                  >
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-
-                  <a
-                    class="btn btn-circle btn-secondary"
-                    type="btn"
-                    data-toggle="tooltip"
-                    :title="userObj.cf_2252"
-                    :href="userObj.cf_2252"
-                  >
-                    <i class="fab fa-instagram"></i>
-                  </a>
-                  <a
-                    class="btn btn-circle btn-secondary"
-                    type="btn"
-                    data-toggle="tooltip"
-                    :title="userObj.cf_2250"
-                    :href="userObj.cf_2250"
-                  >
-                    <i class="fab fa-linkedin"></i>
-                  </a>
-                  <a
-                    class="btn btn-circle btn-secondary"
-                    type="btn"
-                    data-toggle="tooltip"
-                    :title="userObj.cf_2254"
-                    :href="userObj.cf_2254"
-                  >
-                    <i class="fab fa-skype"></i>
-                  </a>
-                  <a
-                    class="btn btn-circle btn-secondary"
-                    type="btn"
-                    data-toggle="tooltip"
-                    :title="userObj.cf_2248"
-                    :href="userObj.cf_2248"
-                  >
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                  <a
-                    class="btn btn-circle btn-secondary"
-                    type="btn"
-                    data-toggle="tooltip"
-                    :title="userObj.cf_1945"
-                    :href="userObj.cf_1945"
-                  >
-                    <i class="fab fa-whatsapp"></i>
-                  </a>
+                      <h6 v-text="userObj.email"></h6>                     
+                    </div>                  
+                  </div>        
                 </div>
               </div>
             </div>
@@ -190,158 +119,36 @@
                     style="display: none"
                   />
                   <div class="form-group" autocomplete="none">
-                    <label class="col-md-12" for="secondaryemail"
-                      >Alternative email</label
+                    <label class="col-md-12" for="name"
+                      >Name</label
                     >
                     <div class="col-md-12">
                       <input
-                        type="email"
-                        placeholder="name@mail.com"
+                        type="text"
+                        placeholder="John"
                         class="form-control form-control-line"
-                        id="secondaryemail"
-                        v-model="userObj.secondaryemail"
+                        id="name"
+                        v-model="userObj.name"
                         autocomplete="off"
                       />
                     </div>
                   </div>
+                 
                   <div class="form-group" autocomplete="none">
-                    <label class="col-md-12" for="mobile">Mobile</label>
+                    <label for="last_name" class="col-md-12">Last name</label>
                     <div class="col-md-12">
                       <input
                         type="tel"
                         placeholder="123 456 7890"
                         class="form-control form-control-line"
-                        id="mobile"
-                        v-model="userObj.mobile"
-                        autocomplete="off"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group" autocomplete="none">
-                    <label for="whatsapp" class="col-md-12">WhatsApp</label>
-                    <div class="col-md-12">
-                      <input
-                        type="tel"
-                        placeholder="123 456 7890"
-                        class="form-control form-control-line"
-                        id="whatsapp"
-                        v-model="userObj.cf_1945"
+                        id="last_name"
+                        v-model="userObj.last_name"
                         autocomplete="off"
                       />
                     </div>
                   </div>
 
-                  <div class="form-group" autocomplete="none">
-                    <label class="col-md-12" for="skypeLink">Skype </label>
-                    <div class="col-md-12">
-                      <input
-                        id="skypeLink"
-                        autocomplete="off"
-                        type="url"
-                        placeholder="skype.com/profile.01"
-                        class="form-control form-control-line"
-                        v-model="userObj.cf_2254"
-                      />
-
-                      <small
-                        v-if="submitted && errors.skype"
-                        class="text-danger font-14"
-                        >{{ errors.skype }}</small
-                      >
-                    </div>
-                  </div>
-                  <div class="form-group" autocomplete="none">
-                    <label class="col-md-12" for="inputfb">Facebook </label>
-                    <div class="col-md-12">
-                      <input
-                        id="inputfb"
-                        type="url"
-                        placeholder="facebook.com/profile.01"
-                        class="form-control form-control-line"
-                        v-model="userObj.cf_2246"
-                        autocomplete="off"
-                      />
-                      <small
-                        v-if="submitted && errors.facebook"
-                        class="text-danger font-14"
-                        >{{ errors.facebook }}</small
-                      >
-                    </div>
-                  </div>
-                  <div class="form-group" autocomplete="none">
-                    <label class="col-md-12" for="instagramLink">Instagram </label>
-                    <div class="col-md-12">
-                      <input
-                        type="url"
-                        id="instagramLink"
-                        placeholder="instagram.com/profile.01"
-                        class="form-control form-control-line"
-                        v-model="userObj.cf_2252"
-                        autocomplete="off"
-                      />
-                      <small
-                        v-if="submitted && errors.instagram"
-                        class="text-danger font-14"
-                        >{{ errors.instagram }}</small
-                      >
-                    </div>
-                  </div>
-                  <div class="form-group" autocomplete="off">
-                    <label class="col-md-12" for="gotolinkedin">Linkedin </label>
-                    <div class="col-md-12">
-                      <input
-                        v-model="userObj.cf_2250"
-                        name="gotolinkedin"
-                        placeholder="linkedin.com/profile.01"
-                        class="form-control form-control-line"
-                        type="url"
-                        autocomplete="off"
-                      />
-                      <small
-                        v-if="submitted && errors.linkedin"
-                        class="text-danger font-14"
-                        >{{ errors.linkedin }}</small
-                      >
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group" autocomplete="none">
-                        <label class="col-md-12">CommBoard Notifications</label>
-
-                        <div class="switch col-md-12">
-                          <label
-                            >OFF
-                            <input
-                              id="user_donotcall"
-                              v-model="user_donotcall"
-                              true-value="yes"
-                              false-value="no"
-                              type="checkbox"
-                            /><span class="lever"></span>ON</label
-                          >
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group" autocomplete="none">
-                        <label class="col-md-12">SMS</label>
-                        <div class="switch col-md-12">
-                          <label
-                            >OFF
-                            <input
-                              type="checkbox"
-                              v-model="user_emailoptout"
-                              true-value="yes"
-                              false-value="no"
-                            /><span class="lever"></span>ON</label
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
+                                   <div class="form-group">
                     <div class="col-sm-12">
                       <a href="#" class="btn btn-success" v-on:click="updateAccount()">
                         Update Profile
@@ -450,7 +257,6 @@ export default {
     return {
       loading: false,
       id: "",
-      alternative_username: "",
       message: "",
       new_password: "",
       old_password: "",
@@ -458,7 +264,6 @@ export default {
 
       user_donotcall: false,
       user_emailoptout: false,
-
       userObj: {},
       submitted: false,
       errors: {},
@@ -476,6 +281,7 @@ export default {
         .get("/account")
         .then(function (response) {
           me.userObj = response.data;
+          console.log(me.userObj)
 
           if (me.userObj["donotcall"] == 0 || false) {
             me.user_donotcall === "yes";

@@ -46,7 +46,7 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                         href="{{ route('dashboard') }}" aria-expanded="false"><i data-feather="home"
                             class="feather-icon"></i>
-                        <span class="hide-menu">Dashboard</span></a>
+                        <span class="hide-menu">Home</span></a>
                 </li>
                 @if (Auth::user())
                     <li class="sidebar-item">

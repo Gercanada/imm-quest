@@ -8,15 +8,15 @@
             <!-- Logo icon -->
             <b class="logo-icon">
                 <!--You can put here icon as well  -->
-                <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png" alt="homepage" class="dark-logo" />
-                <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png" alt="homepage" class="light-logo" />
+                <img src="/{{ env('ASSET_URL') }}images\cropped_ger_logo.png" width="40px" sizes="40x40" alt="homepage" class="dark-logo" />
+                <img src="/{{ env('ASSET_URL') }}images\cropped_ger_logo.png" width="40px" sizes="40x40" alt="homepage" class="light-logo" />
             </b>
             <!--End Logo icon -->
             <!-- Logo text -->
             <span class="logo-text">
-                <img src="/{{ env('ASSET_URL') }}images\immvisas_1080.png" alt="homepage" class="light-logo "
+                <img src="/{{ env('ASSET_URL') }}images\ger_logo.png" sizes="160x34" alt="homepage" class="light-logo "
                     width="160px" />
-                <img src="/{{ env('ASSET_URL') }}images\immvisas_1080.png" alt="homepage" class="dark-logo "
+                <img src="/{{ env('ASSET_URL') }}images\ger_logo.png" sizes="160x34" alt="homepage" class="dark-logo "
                     width="160px" />
             </span>
         </a>
@@ -42,9 +42,12 @@
         <!-- Right side toggle and nav items -->
         <!-- ============================================================== -->
         <ul class="navbar-nav float-right">
-            <li class="nav-item d-md-block waves-effect waves-dark">
-                <change_themme></change_themme>
-            </li>
+            @if (Auth::user())
+                <li class="nav-item d-md-block waves-effect waves-dark">
+                    <change_themme></change_themme>
+                </li>
+            @else
+            @endif
             <li class="nav-item d-none ">
             </li>
             @if (Auth::user())
@@ -83,13 +86,7 @@
                                     </span>
                                     My Account Setting</a>
                             </li>
-
-                            {{-- <li role="separator" class="dropdown-divider"></li> --}}
-                            {{-- <li class="user-list">
-                            <sync-cp-component></sync-cp-component>
-                        </li> --}}
                             <li role="separator" class="dropdown-divider"></li>
-
                             <li class="user-list">
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

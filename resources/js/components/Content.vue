@@ -82,7 +82,7 @@
                 aria-expanded="false"
                 class="nav-link"
               >
-                <i class="fas fa-cogs d-lg-none d-block mr-1"></i>
+                <i class="mdi mdi-playlist-plus d-lg-none d-block mr-1"></i>
                 <span class="d-none d-lg-block">{{ sCopy.name }}</span>
               </a>
             </li>
@@ -127,10 +127,8 @@
                 :scennarioName="copy.name"
               />
             </div>
-            <!-- -->
           </div>
         </div>
-        <!-- end card-body-->
       </div>
     </div>
   </div>
@@ -205,11 +203,6 @@ export default {
     getReloader(value) {
       this.reloadAt = value;
     },
-    /* callReloader(value) {
-      console.log("callReloader");
-      //   this.$forceUpdate();
-      this.reloader = value;
-    }, */
 
     getScores(value) {
       this.scores = value[0];

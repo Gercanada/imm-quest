@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-12">
+    <div class="col-md-12">
       <div id="accordion" class="custom-accordion mb-4">
         <div
           class="card mb-0"
@@ -9,7 +9,7 @@
         >
           <div class="card-header" id="headingOne">
             <div class="row">
-              <div class="col-8">
+              <div class="col-lg-8 col-md-6">
                 <h5 class="m-0">
                   <a
                     class="custom-accordion-title d-block pt-2 pb-2"
@@ -25,7 +25,7 @@
                   </a>
                 </h5>
               </div>
-              <div class="col-4">
+              <div class="col-lg-4 col-md-6">
                 <input
                   type="text"
                   disabled
@@ -49,13 +49,12 @@
             <div class="card-body">
               <div class="form-group">
                 <div class="row" v-for="(subfactor, index) in object.factor.subfactors">
-                  <div class="col-6">
+                  <div class="col-lg-6 col-md-4">
                     <h3>
                       {{ subfactor.subfactor }}
                     </h3>
                   </div>
-                  <div class="col-4">
-                    <!--  {{ selectedSubfactor.selections[subfactor.id] }} -->
+                  <div class="col-lg-4 col-md-4">
                     <select
                       class="select2 form-control custom-select"
                       id="select2-search-hide"
@@ -63,10 +62,6 @@
                       v-model="selectedSubfactor.selections[subfactor.id]"
                       @change="criteriaVal"
                     >
-                      <!--  :disabled=" subfactor.id == 17 &&
-                      selectedSubfactor.selections[16].criterion.single >= 50 ? true :
-                      false " -->
-                      <!--  v-model="selectedSubfactor.selections[subfactor.id]" -->
 
                       <option
                         v-for="criterion in subfactor.criteria"
@@ -85,7 +80,7 @@
                     </select>
                   </div>
 
-                  <div class="col-2">
+                  <div class="col-lg-2 col-md-4">
                     <input
                       type="text"
                       class="form-control"

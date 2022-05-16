@@ -329,7 +329,7 @@ class FactorController extends Controller
             return response()->file(storage_path($filePath));
         } catch (Exception $e) {
             $this->consoleWrite()->writeln($e->getMessage());
-            return response()->json($e->getMessage());
+            return response()->json("$fileName not found :(");
         }
     }
 

@@ -28,33 +28,30 @@ Route::get('/send_mail', function () { //test function only
     }
 });
 
-Route::get('/',                  [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Auth::routes();
 
-Route::get('/tempdata', [FactorController::class, 'dataFile']); //returns a json response
-Route::get('/factors-table/{subfactor}', [FactorController::class, 'factorsTable']); //returns ajson response
-Route::get('/factor/{subFactor}', [FactorController::class, 'getFactor']);
-Route::get('/subfactors', [FactorController::class, 'listSubfactors']); //List subfactors for create seeders
+if (env('APP_ENV') === 'local') {
+    Route::get('/tempdata', [FactorController::class, 'dataFile']); //returns a json response
+    Route::get('/factors-table/{subfactor}', [FactorController::class, 'factorsTable']); //returns ajson response
+    Route::get('/factor/{subFactor}', [FactorController::class, 'getFactor']);
+    Route::get('/subfactors', [FactorController::class, 'listSubfactors']); //List subfactors for create seeders
+}
 
 /*data for views*/
 Route::get('/factors', [FactorController::class, 'factors']);
 
-
 Route::middleware('auth')->group(function () {
-    //dashboard
-    // Route::get('/',                  [DashboardController::class, 'index'])->name('dashboard');
     //user
     Route::get('/profile',  [UserController::class, 'profile'])->name('profile');
     Route::get('/account',  [UserController::class, 'account']);
     Route::post('/account', [UserController::class, 'update']);
-
     Route::post('/new_password', [UserController::class, 'newPassword']);
     Route::post('/new_username', [UserController::class, 'newUserName']);
-
+    Route::post('/user_themme', [UserController::class, 'setThemme']);
     //User themme
     Route::get('/user_themme',  [UserController::class, 'getThemme']);
-    Route::post('/user_themme', [UserController::class, 'setThemme']);
-    //Route::get('/user_themme', [UserController::class, 'changeThemme']);
+    Route::get('/user_themme', [UserController::class, 'changeThemme']);
 
     //Scenarios
     Route::post('save-situation', [FactorController::class, 'saveScenario']);

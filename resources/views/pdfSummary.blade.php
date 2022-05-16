@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-   <h1>
-      Some info
-   </h1>
+            <h1>
+               Express Entry
+            </h1>
    <head>
       <title>{{ $fileName }} </title>
    </head>
