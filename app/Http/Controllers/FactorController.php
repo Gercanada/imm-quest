@@ -192,9 +192,9 @@ class FactorController extends Controller
             }
             return response()->json($scenario);
         } catch (Exception $e) {
-            $this->consoleWrite()->writeln($e->getMessage());
-            $this->consoleWrite()->writeln($e);
-            return response()->json($e);
+            /* $this->consoleWrite()->writeln($e->getMessage());
+            $this->consoleWrite()->writeln($e); */
+            return response()->json($e->getMessage());
         }
     }
 
@@ -314,7 +314,7 @@ class FactorController extends Controller
             Storage::put('public/pdf/' . $fileName, $pdf->output());
             return response()->json($fileName, 200);
         } catch (Exception $e) {
-            $this->consoleWrite()->writeln($e->getMessage());
+            // $this->consoleWrite()->writeln($e->getMessage());
             return response()->json($e);
         }
     }
@@ -328,7 +328,7 @@ class FactorController extends Controller
             $filePath = "app/public/pdf/" . $fileName;
             return response()->file(storage_path($filePath));
         } catch (Exception $e) {
-            $this->consoleWrite()->writeln($e->getMessage());
+            // $this->consoleWrite()->writeln($e->getMessage());
             return response()->json("$fileName not found :(");
         }
     }
@@ -343,7 +343,7 @@ class FactorController extends Controller
             Storage::disk('public')->delete($filePath);
             return  response()->json("File deleted");
         } catch (Exception $e) {
-            $this->consoleWrite()->writeln($e->getMessage());
+            // $this->consoleWrite()->writeln($e->getMessage());
             return response()->json($e->getMessage());
         }
     }
