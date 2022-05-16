@@ -19,9 +19,9 @@
                         </a>
 
                         <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item">
+                           {{--  <li class="sidebar-item">
                                 <change_themme></change_themme>
-                            </li>
+                            </li> --}}
                             <li class="sidebar-item">
                                 <a href="{{ route('profile') }}" class="sidebar-link p-0">
                                     <i class="mdi mdi-adjust"></i>

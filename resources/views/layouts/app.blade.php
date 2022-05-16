@@ -164,13 +164,11 @@
     @if (Auth::user() && Auth::user()->themme_layout === 0)
         <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.darks5.js">
         </script>
-    @elseif (Auth::user() && Auth::user()->themme_layout === 1)
+    @else
         <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.ligth.js">
         </script>
-    @else
-        <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/app.init.darks5.js">
-        </script>
     @endif
+
     <script src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/app-style-switcher.js">
     </script>
 

@@ -254,7 +254,7 @@ export default {
       };
 
       //Limit sum for factor 3
-      if (factor === 3) {
+      if (factor === 3 || factor === 4) {
         me.selectedSubfactor.selections.forEach((element, index) => {
           if (element.factor === 3) {
             if (
@@ -376,6 +376,64 @@ export default {
                 },
                 factor: 3,
                 subfactor: 20,
+              };
+            }
+          }
+
+          //Max 600
+          if (element.factor === 4) {
+            if (
+              me.selectedSubfactor.selections[index].subfactor == 21 &&
+              me.selectedSubfactor.selections[index + 2] &&
+              me.selectedSubfactor.selections[index + 2].subfactor === 23 &&
+              me.selectedSubfactor.selections[index + 2].criterion.single >= 600
+            ) {
+              me.selectedSubfactor.selections[index] = {
+                criterion: {
+                  id: 124,
+                  criterion: "Sin estudios en Canadá o menos de 1 año de duración.",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 21,
+                },
+                factor: 4,
+                subfactor: 21,
+              };
+            }
+
+            if (
+              me.selectedSubfactor.selections[index].subfactor == 22 &&
+              me.selectedSubfactor.selections[index + 1] &&
+              me.selectedSubfactor.selections[index + 1].subfactor === 23 &&
+              me.selectedSubfactor.selections[index + 1].criterion.single >= 600
+            ) {
+              me.selectedSubfactor.selections[index] = {
+                criterion: {
+                  id: 127,
+                  criterion: "Sin oferta de trabajo laboral.",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 22,
+                },
+                factor: 4,
+                subfactor: 22,
+              };
+            }
+            if (
+              me.selectedSubfactor.selections[index].subfactor == 24 &&
+              me.selectedSubfactor.selections[index - 1].subfactor === 23 &&
+              me.selectedSubfactor.selections[index - 1].criterion.single >= 600
+            ) {
+              me.selectedSubfactor.selections[index] = {
+                criterion: {
+                  id: 132,
+                  criterion: "Sin familiar directo en Canadá",
+                  single: 0,
+                  married: 0,
+                  subfactor_id: 24,
+                },
+                factor: 4,
+                subfactor: 24,
               };
             }
           }

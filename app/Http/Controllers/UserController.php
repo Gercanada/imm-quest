@@ -119,12 +119,34 @@ class UserController extends Controller
     public function getThemme()
     {
         $user = Auth::user();
-        return $user->themme_layout;
+        if ($user) {
+            return $user->themme_layout;
+            // $newTheme = $user->themme_layout;
+        }
+        // return view('layouts.theme', compact('newTheme'));
     }
     public function setThemme(Request $request)
     {
         $user = User::where('id', Auth::user()->id)->firstOrFail();
-        $user->themme_layout = $request->themme_layout;
-        $user->save();
+        $newTheme = $request->themme_layout;
+
+        if ($user) {
+            $user->themme_layout = $newTheme;
+            $user->save();
+        }
+        return view('layouts.theme', compact('newTheme'));
+    }
+
+    public function changeThemme(Request $request)
+    {
+        $user = User::where('id', Auth::user()->id)->firstOrFail();
+        $newTheme = $request->themme_layout;
+        if ($user) {
+            $newTheme = $user->themme_layout;
+            $user->themme_layout = $newTheme;
+            $user->save();
+        }
+
+        // return view('layouts.theme', compact('newTheme'));
     }
 }

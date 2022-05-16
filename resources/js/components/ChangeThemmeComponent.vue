@@ -1,5 +1,5 @@
 <template>
-  <div class="form-group" autocomplete="none">
+  <div class="form-group nav-link" autocomplete="none">
     <div class="switch col-md-12">
       <label
         ><i class="far fa-moon"></i>

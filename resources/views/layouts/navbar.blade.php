@@ -43,6 +43,9 @@
         <!-- ============================================================== -->
         <ul class="navbar-nav float-right">
             <li class="nav-item d-md-block waves-effect waves-dark">
+                <change_themme></change_themme>
+            </li>
+            <li class="nav-item d-none ">
             </li>
             @if (Auth::user())
                 <li class="nav-item dropdown">
@@ -85,7 +88,6 @@
                             {{-- <li class="user-list">
                             <sync-cp-component></sync-cp-component>
                         </li> --}}
-
                             <li role="separator" class="dropdown-divider"></li>
 
                             <li class="user-list">
@@ -114,8 +116,6 @@
                         <span class=" text-info d-inline-block text-center btn btn-outline-info">
                             <i class="fas fa-user-plus"> Register</i>
                         </span>
-
-
                     </a>
                 </li>
             @endif
