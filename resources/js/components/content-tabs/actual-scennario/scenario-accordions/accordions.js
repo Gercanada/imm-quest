@@ -3,9 +3,7 @@ export default {
     watch: {
         maritialStatus: function() {
             this.changed = this.maritialStatus;
-            // console.log({ watch: this.changed })
             this.$emit("MaritialStatusChanged", this.mutableMaritialStatus); // send the sum
-            // console.log('watch')
         },
         reloader2: function() {
             this.$forceUpdate();
@@ -42,7 +40,6 @@ export default {
     mounted() {
         this.getData();
     },
-
     methods: {
         getData() {
             let me = this;
@@ -75,7 +72,6 @@ export default {
                             Array.isArray(JSON.parse(scenario['body'])) &&
                             JSON.parse(scenario['body']).length > 0
                         ) {
-                            // return
                             me.mutableMaritialStatus = scenario['is_married'] == false ? 'Single' : 'Married'; //get maritial status of scennario
                             me.$emit("mutableMaritialStatus", me.mutableMaritialStatus);
                             let body = JSON.parse(scenario['body']);
@@ -144,8 +140,6 @@ export default {
         criteriaVal(event) {
             let me = this;
             let newVal = null;
-
-
             if ('criterion' in event) {
                 newVal = event;
             } else {
@@ -153,24 +147,24 @@ export default {
                     JSON.stringify(event.target.options[event.target.options.selectedIndex])
                 )._value;
             }
-
             let factor = newVal.factor;
             let subfactor = newVal.subfactor;
             let criterion = newVal.criterion;
 
-            me.selectedSubfactor.selections[newVal.subfactor] = {
+            me.selectedSubfactor.selections[subfactor] = {
                 criterion: criterion,
                 factor: factor,
                 subfactor: subfactor,
             };
 
+            //Limit sum for factor 3
             if (factor === 3) {
                 me.selectedSubfactor.selections.forEach((element, index) => {
                     if (element.factor === 3) {
-                        if (me.selectedSubfactor.selections[index - 1] &&
+                        if (me.selectedSubfactor.selections[index].subfactor == 17 &&
+                            me.selectedSubfactor.selections[index - 1] &&
                             me.selectedSubfactor.selections[index - 1].subfactor == 16 &&
-                            me.selectedSubfactor.selections[index - 1].criterion.single == 50 &&
-                            me.selectedSubfactor.selections[index].subfactor == 17
+                            me.selectedSubfactor.selections[index - 1].criterion.single >= 50
                         ) {
                             me.selectedSubfactor.selections[index] = {
                                 criterion: {
@@ -186,10 +180,13 @@ export default {
                             }
                         }
                         //
-                        if (me.selectedSubfactor.selections[index + 1] &&
+                        if (
+                            me.selectedSubfactor.selections[index].subfactor == 16 &&
+                            me.selectedSubfactor.selections[index].criterion.single < 50 &&
+                            me.selectedSubfactor.selections[index + 1] &&
                             me.selectedSubfactor.selections[index + 1].subfactor == 17 &&
-                            me.selectedSubfactor.selections[index + 1].criterion.single == 50 &&
-                            me.selectedSubfactor.selections[index].subfactor == 16
+                            me.selectedSubfactor.selections[index + 1].criterion.single >= 50
+
                         ) {
                             me.selectedSubfactor.selections[index] = {
                                 criterion: {
@@ -204,65 +201,17 @@ export default {
                                 subfactor: 16,
                             }
                         }
-                        //16 && 17
-                        if (me.selectedSubfactor.selections[index - 1] &&
+                        //19
+                        if (me.selectedSubfactor.selections[index].subfactor == 19 &&
+                            me.selectedSubfactor.selections[index - 1] &&
                             me.selectedSubfactor.selections[index - 1].subfactor == 18 &&
-                            me.selectedSubfactor.selections[index - 1].criterion.single == 50 &&
-                            me.selectedSubfactor.selections[index].subfactor == 19
-                        ) {
-                            me.selectedSubfactor.selections[index] = {
-                                criterion: {
-                                    id: 116,
-                                    criterion: "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
-                                    single: 0,
-                                    married: 0,
-                                    subfactor_id: 19
-                                },
-                                factor: 3,
-                                subfactor: 19,
-                            }
-                        }
-                        // 18 && 19 && 20
-                        //
-                        // console.log((me.selectedSubfactor.selections[index + 3] == 20));
-
-                        if (me.selectedSubfactor.selections[index].subfactor == 18 &&
-                            me.selectedSubfactor.selections[index + 1] &&
-                            me.selectedSubfactor.selections[index + 1].subfactor == 19 &&
-                            me.selectedSubfactor.selections[index + 2] &&
-                            me.selectedSubfactor.selections[index + 2] == 20 &&
-
-                            (me.selectedSubfactor.selections[index + 1].criterion.single >= 50 ||
-                                (me.selectedSubfactor.selections[index + 1].criterion.single +
-                                    me.selectedSubfactor.selections[index + 2].criterion.single >= 50) ||
-                                me.selectedSubfactor.selections[index + 2].criterion.single >= 50
+                            (me.selectedSubfactor.selections[index - 1].criterion.single >= 50 ||
+                                me.selectedSubfactor.selections[index + 1] && (me.selectedSubfactor.selections[index + 1].criterion.single >= 50 ||
+                                    (
+                                        me.selectedSubfactor.selections[index + 1].criterion.single + me.selectedSubfactor.selections[index - 1].criterion.single >= 50
+                                    ))
                             )
                         ) {
-                            console.log("here");
-                            console.log(me.selectedSubfactor.selections[index + 1].criterion.single +
-                                me.selectedSubfactor.selections[index + 2].criterion.single);
-                            me.selectedSubfactor.selections[index] = {
-                                criterion: {
-                                    id: 111,
-                                    criterion: "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
-                                    single: 0,
-                                    married: 0,
-                                    subfactor_id: 18
-                                },
-                                factor: 3,
-                                subfactor: 18,
-                            }
-                        }
-
-                        //y
-                        if (me.selectedSubfactor.selections[index].subfactor == 19 &&
-                            me.selectedSubfactor.selections[index + 1] &&
-                            me.selectedSubfactor.selections[index + 1].subfactor == 20 &&
-                            (me.selectedSubfactor.selections[index + 1].criterion.single >= 50 || //20
-                                me.selectedSubfactor.selections[index - 1].criterion.single >= 50 || //18
-                                (me.selectedSubfactor.selections[index + 1].criterion.single + me.selectedSubfactor.selections[index - 1].criterion.single >= 50))
-
-                        ) {
                             me.selectedSubfactor.selections[index] = {
                                 criterion: {
                                     id: 116,
@@ -274,8 +223,22 @@ export default {
                                 factor: 3,
                                 subfactor: 19,
                             }
+                        }
+                        // 18
+                        if (me.selectedSubfactor.selections[index].subfactor == 18 &&
+                            me.selectedSubfactor.selections[index].criterion.single < 50 &&
+                            me.selectedSubfactor.selections[index + 1] &&
+                            me.selectedSubfactor.selections[index + 1].subfactor == 19 &&
 
-                            me.selectedSubfactor.selections[index - 2] = {
+                            (me.selectedSubfactor.selections[index + 1].criterion.single >= 50 ||
+                                (me.selectedSubfactor.selections[index + 2] &&
+                                    (me.selectedSubfactor.selections[index + 2].subfactor == 20 &&
+                                        me.selectedSubfactor.selections[index + 2].criterion.single >= 50 || (
+                                            me.selectedSubfactor.selections[index + 1].criterion.single + me.selectedSubfactor.selections[index + 2].criterion.single >= 50
+                                        )
+                                    )
+                                ))) {
+                            me.selectedSubfactor.selections[index] = {
                                 criterion: {
                                     id: 111,
                                     criterion: "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
@@ -287,20 +250,17 @@ export default {
                                 subfactor: 18,
                             }
                         }
-
-                        //TODO Continue review critewrion sums
-                        //here
-                        if (me.selectedSubfactor.selections[index].subfactor == 20 &&
-                            me.selectedSubfactor.selections[index - 1] &&
-                            me.selectedSubfactor.selections[index - 1].subfactor == 19 &&
-                            (me.selectedSubfactor.selections[index - 1].criterion.single >= 50 ||
-                                (
-                                    me.selectedSubfactor.selections[index - 1] ?
-                                    me.selectedSubfactor.selections[index - 1].criterion.single : 0 +
-                                    me.selectedSubfactor.selections[index - 2] ?
-                                    me.selectedSubfactor.selections[index - 2].criterion.single : 0) >= 50 ||
-                                me.selectedSubfactor.selections[index - 2].criterion.single >= 50)
-                        ) {
+                        //20
+                        if ((me.selectedSubfactor.selections[index].subfactor == 20 &&
+                                me.selectedSubfactor.selections[index - 1] &&
+                                me.selectedSubfactor.selections[index - 1].subfactor == 19 &&
+                                (me.selectedSubfactor.selections[index - 1].criterion.single >= 50 ||
+                                    (me.selectedSubfactor.selections[index - 2] &&
+                                        me.selectedSubfactor.selections[index - 2].subfactor == 18 &&
+                                        (me.selectedSubfactor.selections[index - 2].criterion.single >= 50 ||
+                                            (me.selectedSubfactor.selections[index - 2].subfactor == 18 &&
+                                                (me.selectedSubfactor.selections[index - 1].criterion.single + me.selectedSubfactor.selections[index - 2].criterion.single >= 50)
+                                            )))))) {
                             me.selectedSubfactor.selections[index] = {
                                 criterion: {
                                     id: 116,
@@ -313,23 +273,17 @@ export default {
                                 subfactor: 20,
                             }
                         }
-
                     }
                 });
             }
-            console.log(me.selectedSubfactor.selections);
-            // console
-
             me.singleValues.sort(function(a, b) {
                 return a.subfactor - b.subfactor;
             });
-
             let selectedSituation = [];
             selectedSituation[0] = this.changed; //? this.changed : this.mutableMaritialStatus;
             selectedSituation[1] = this.scenarios;
 
             me.selectedSubfactor.selections.forEach(selection => {
-                // console.log({ selection });
                 let existingS = null;
                 let existingM = null;
 
@@ -401,14 +355,11 @@ export default {
             if (this.mutableMaritialStatus === "Single") {
                 selectedSituation[2] = me.singleValues;
                 me.factorScore[factor] = me.factorScoreSingle[factor];
-                // this.$emit({ scoreSingle: factor }, me.factorScoreSingle[factor]); //send the sum
             } else {
                 me.selectedCriterion[criterion.id] = criterion.married;
                 selectedSituation[2] = me.marriedValues;
                 me.factorScore[factor] = me.factorScoreMarried[factor];
             }
-
-
             //Create or update scores array to emmit to another file
             let hasSumS = null;
             let hasSumM = null;
@@ -449,7 +400,6 @@ export default {
                     }
                 });
             }
-
             me.$emit("sumScore", [me.arraySums, me.maritialStatus]); // send the sum
             me.$emit("selectedSituation", selectedSituation);
         }
