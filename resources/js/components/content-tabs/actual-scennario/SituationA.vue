@@ -224,7 +224,6 @@ export default {
           text:
             "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
           input: "text",
-
           showDenyButton: true,
           showCancelButton: true,
         })

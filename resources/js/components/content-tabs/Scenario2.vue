@@ -617,21 +617,23 @@ export default {
           };
 
           if ("value" in result) {
-            axios.post("save-situation", request).then(function (response) {
-              Swal.fire({
-                type: "success",
-                title: "Escenario guardado",
-                text:
-                  "Se ha" + scenario == null
-                    ? "creado"
-                    : "actualizado" + "este escenario",
+            axios
+              .post("save-situation", request)
+              .then(function (response) {
+                Swal.fire({
+                  type: "success",
+                  title: "Escenario guardado",
+                  text:
+                    "Se ha" + scenario == null
+                      ? "creado"
+                      : "actualizado" + "este escenario",
+                });
+                me.$emit("CallReloader", Date.now());
+                window.location.reload();
+              })
+              .catch(function (error) {
+                console.table(error);
               });
-
-              me.$emit("CallReloader", Date.now());
-              window.location.reload();
-
-              //   console.log(response);
-            });
           } else {
             Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
           }
