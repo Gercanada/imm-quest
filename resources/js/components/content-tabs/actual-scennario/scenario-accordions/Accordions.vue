@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-md-12">
-      <div id="accordion" class="custom-accordion mb-4">
+    <div class="col-md-12 p-0">
+      <div id="accordion" class="custom-accordion">
         <div
-          class="card mb-0"
+          class="card  shadow-lg mb-4 rounded"
           v-for="object in data"
           v-show="maritialStatus === 'Single' ? object.factor.id != 5 : true"
         >
@@ -12,7 +12,7 @@
               <div class="col-lg-8 col-md-6">
                 <h5 class="m-0">
                   <a
-                    class="custom-accordion-title d-block pt-2 pb-2"
+                    class="custom-accordion-title d-block align-items-center"
                     data-toggle="collapse"
                     :href="'#collapse' + object.factor.id"
                     aria-expanded="false"
@@ -48,11 +48,12 @@
           >
             <div class="card-body">
               <div class="form-group">
-                <div class="row" v-for="(subfactor, index) in object.factor.subfactors">
+                <div
+                  class="row shadow p-1 mb-2"
+                  v-for="(subfactor, index) in object.factor.subfactors"
+                >
                   <div class="col-lg-6 col-md-4">
-                    <h3>
                       {{ subfactor.subfactor }}
-                    </h3>
                   </div>
                   <div class="col-lg-4 col-md-4">
                     <select
@@ -62,7 +63,6 @@
                       v-model="selectedSubfactor.selections[subfactor.id]"
                       @change="criteriaVal"
                     >
-
                       <option
                         v-for="criterion in subfactor.criteria"
                         :value="{

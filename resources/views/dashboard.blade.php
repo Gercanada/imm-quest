@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Dashboard
+    Home
 @endsection
 
 @section('styles')
@@ -87,5 +87,6 @@
 @endsection
 
 @section('content')
-    <main-component />
+    <content-component />
+    {{-- <main-component /> --}}
 @endsection

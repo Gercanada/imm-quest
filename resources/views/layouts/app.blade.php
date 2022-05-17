@@ -16,7 +16,7 @@
     @else
         <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('ASSET_URL') }}images/cropped_ger_logo.png">
     @endif
-    <title>GetCanada CP | @yield('title') </title>
+    <title>Express entry evaluarion| @yield('title') </title>
     <link rel="canonical" href="https://www.wrappixel.com/{{ env('ASSET_URL') }}templates/adminpro/" />
 
     <link rel="stylesheet"
@@ -65,34 +65,12 @@
 </head>
 
 <body>
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-
     <div class="preloader">
         <div class="lds-ripple">
             <img src="/{{ env('ASSET_URL') }}images/maple1.png" alt="mappleSheet" width="175px"
                 class="lds-pos2 fas fa-spin shadow-lg rounded-circle">
         </div>
     </div>
-
-    {{-- @if (Auth::check())
-        @php
-            $user_auth_data = [
-                'isLoggedin' => true,
-                'user' => Auth::user(),
-            ];
-        @endphp
-    @else
-        @php
-            $user_auth_data = [
-                'isLoggedin' => false,
-            ];
-        @endphp
-    @endif
-    <script>
-        window.Laravel = JSON.parse(atob('{{ base64_encode(json_encode($user_auth_data)) }}'));
-    </script> --}}
 
     <div id="main-wrapper">
         <!-- ============================================================== -->
@@ -101,7 +79,7 @@
         <header class="topbar">
             @include('layouts.navbar')
         </header>
-        @include('layouts.aside')
+       {{--  @include('layouts.aside') --}}
 
         @if (!Auth::user())
             {{-- @yield('content') --}}{{-- login view --}}
@@ -128,7 +106,7 @@
             {{-- @include('layouts.aside') --}}
         @endif
         {{-- body --}}
-        <div class="page-wrapper">
+        <div class="page-wrapper ml-0">
             {{-- <div class="container-fluid"> --}}
             @yield('content')
             @if (Auth::user())

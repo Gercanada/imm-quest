@@ -73,8 +73,8 @@ class UserController extends Controller
     public function getThemme()
     {
         $user = Auth::user();
+        return $user->themme_layout;
         if ($user) {
-            return $user->themme_layout;
         }
     }
     public function setThemme(Request $request)

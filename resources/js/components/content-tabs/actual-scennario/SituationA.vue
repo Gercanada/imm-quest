@@ -1,9 +1,33 @@
 <template>
   <div>
     <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-6">
+      <div class="card-header">
+        <div class="row justify-content-end">
+          <div class="col-md-3 align-self-end" v-if="authenticated">
+            <button
+              class="btn btn-outline-info waves-effect waves-light"
+              type="button"
+              @click="saveSituation"
+            >
+              <span class="btn-label"> <i class="fas fa-save"></i></span> Guardar
+              Situacion actual
+            </button>
+          </div>
+          <div class="col-md-3 align-self-end" v-if="authenticated">
+            <button
+              class="btn btn-outline-success waves-effect waves-light"
+              type="button"
+              @click="copyScennario()"
+            >
+              <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body shadow">
+        <!--  <div class="shadow-sm "> -->
+        <div class="row justify-content-center shadow mb-4 mt-1">
+          <div class="col-lg-6 col-md-12 pb-2">
             <div class="form-check form-check-inline" id="maritial-status">
               <input
                 class="form-check-input material-inputs"
@@ -28,26 +52,6 @@
               />
               <label class="form-check-label" for="isMarried">Casado</label>
             </div>
-          </div>
-
-          <div class="col-md-3" v-if="authenticated">
-            <button
-              class="btn btn-outline-info waves-effect waves-light"
-              type="button"
-              @click="saveSituation"
-            >
-              <span class="btn-label"> <i class="fas fa-save"></i></span> Guardar
-              Situacion actual
-            </button>
-          </div>
-          <div class="col-md-3" v-if="authenticated">
-            <button
-              class="btn btn-outline-success waves-effect waves-light"
-              type="button"
-              @click="copyScennario()"
-            >
-              <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
-            </button>
           </div>
         </div>
         <accordions

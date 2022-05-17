@@ -11,7 +11,7 @@ window.Vue = require('vue').default;
 
 
 Vue.component('change_themme', require('./components/ChangeThemmeComponent.vue').default);
-Vue.component('main-component', require('./components/MainComponent.vue').default);
+Vue.component('content-component', require('./components/Content.vue').default);
 Vue.component('user-component', require('./components/UserComponent.vue').default);
 
 

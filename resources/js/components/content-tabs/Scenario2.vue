@@ -1,8 +1,42 @@
 <template>
   <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
+      <div class="card-header">
+      <div class="row justify-content-end">
+        <div class="col-md-3  align-self-end">
+          <button
+            class="btn btn-outline-info waves-effect waves-light"
+            type="button"
+            @click="saveScennarioCopy"
+          >
+            <span class="btn-label"> <i class="fas fa-save"></i></span> Guardar cambios en
+            escenario
+          </button>
+        </div>
+        <div class="col-md-3  align-self-end">
+          <button
+            class="btn btn-outline-success waves-effect waves-light"
+            type="button"
+            @click="copyScennario()"
+          >
+            <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
+          </button>
+        </div>
+        <div class="col-md-3  align-self-end">
+          <button
+            class="btn btn-outline-danger waves-effect waves-light"
+            type="button"
+            @click="deleteScennary(copyId)"
+          >
+            <span class="btn-label"><i class="fas fa-trash-alt"></i></span> Eliminar
+            escenario
+          </button>
+        </div>
+      </div>
+
+      </div>
+    <div class="card-body shadow">
+      <div class="row row justify-content-center shadow mb-4 mt-1">
+        <div class="col-lg-6 col-md-12 pb-2">
           <div class="form-check form-check-inline" id="maritial-status">
             <input
               class="form-check-input material-inputs"
@@ -26,43 +60,13 @@
             <label class="form-check-label" :for="copyId + 'isMarriedCopy'">Casado</label>
           </div>
         </div>
-
-        <div class="col-md-2">
-          <button
-            class="btn btn-outline-info waves-effect waves-light"
-            type="button"
-            @click="saveScennarioCopy"
-          >
-            <span class="btn-label"> <i class="fas fa-save"></i></span> Guardar cambios en
-            escenario
-          </button>
-        </div>
-        <div class="col-md-2">
-          <button
-            class="btn btn-outline-success waves-effect waves-light"
-            type="button"
-            @click="copyScennario()"
-          >
-            <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
-          </button>
-        </div>
-        <div class="col-md-2">
-          <button
-            class="btn btn-outline-danger waves-effect waves-light"
-            type="button"
-            @click="deleteScennary(copyId)"
-          >
-            <span class="btn-label"><i class="fas fa-trash-alt"></i></span> Eliminar
-            escenario
-          </button>
-        </div>
       </div>
       <!-- Accordions -->
       <div class="row">
-        <div class="col-md-12">
-          <div id="accordion" class="custom-accordion mb-4">
+        <div class="col-md-12 p-0">
+          <div id="accordion" class="custom-accordion  ">
             <div
-              class="card mb-0"
+              class="card  shadow-lg mb-4 rounded"
               v-for="object in data"
               v-show="maritialStatusCopy === 'Single' ? object.factor.id != 5 : true"
             >
@@ -71,7 +75,7 @@
                   <div class="col-lg-8 col-md-6">
                     <h5 class="m-0">
                       <a
-                        class="custom-accordion-title d-block pt-2 pb-2"
+                        class="custom-accordion-title d-block align-items-center"
                         data-toggle="collapse"
                         :href="'#collapse' + object.factor.id"
                         aria-expanded="false"
@@ -106,7 +110,7 @@
               >
                 <div class="card-body">
                   <div class="form-group">
-                    <div class="row" v-for="subfactor in object.factor.subfactors">
+                    <div class="row shadow p-1 mb-2 rounded " v-for="subfactor in object.factor.subfactors">
                       <div class="col-lg-6 col-md-4">
                         {{ subfactor.subfactor }}
                       </div>

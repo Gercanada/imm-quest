@@ -48,10 +48,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/account', [UserController::class, 'update']);
     Route::post('/new_password', [UserController::class, 'newPassword']);
     Route::post('/new_username', [UserController::class, 'newUserName']);
-    Route::post('/user_themme', [UserController::class, 'setThemme']);
     //User themme
     Route::get('/user_themme',  [UserController::class, 'getThemme']);
-    Route::get('/user_themme', [UserController::class, 'changeThemme']);
+    Route::post('/user_themme', [UserController::class, 'setThemme']);
+    // Route::get('/user_themme', [UserController::class, 'changeThemme']);
 
     //Scenarios
     Route::post('save-situation', [FactorController::class, 'saveScenario']);

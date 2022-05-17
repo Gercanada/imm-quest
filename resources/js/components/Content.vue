@@ -1,9 +1,8 @@
 <template>
   <div class="container-fluid">
-    <div class="row" v-if="authenticated">
+   <!--  <div class="row" v-if="authenticated">
       <div class="card">
         <div class="card-body">
-          <!-- <h4 class="card-title">Grid With Row Label</h4> -->
           <form action="#">
             <div class="form-body">
               <div class="form-group">
@@ -46,7 +45,7 @@
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="row">
       <div class="card">

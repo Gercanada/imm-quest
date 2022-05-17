@@ -12,6 +12,8 @@ use Exception;
 
 use Barryvdh\DomPDF\Facade as PDF;
 
+//TODO Checar error 403 en produccion
+
 class FactorController extends Controller
 {
     public function dataFile()
@@ -192,8 +194,6 @@ class FactorController extends Controller
             }
             return response()->json($scenario);
         } catch (Exception $e) {
-            /* $this->consoleWrite()->writeln($e->getMessage());
-            $this->consoleWrite()->writeln($e); */
             return response()->json($e->getMessage());
         }
     }
@@ -328,7 +328,6 @@ class FactorController extends Controller
             $filePath = "app/public/pdf/" . $fileName;
             return response()->file(storage_path($filePath));
         } catch (Exception $e) {
-            // $this->consoleWrite()->writeln($e->getMessage());
             return response()->json("$fileName not found :(");
         }
     }
@@ -343,7 +342,6 @@ class FactorController extends Controller
             Storage::disk('public')->delete($filePath);
             return  response()->json("File deleted");
         } catch (Exception $e) {
-            // $this->consoleWrite()->writeln($e->getMessage());
             return response()->json($e->getMessage());
         }
     }
