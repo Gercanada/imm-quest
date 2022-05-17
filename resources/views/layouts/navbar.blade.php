@@ -73,7 +73,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item float-right">
+                <li class="nav-item float-right ml-4">
                     <a class="nav-link " href="/register" aria-haspopup="true">
                         <span class=" text-info d-inline-block text-center btn btn-outline-info">
                             <i class="fas fa-user-plus"> Register</i>
