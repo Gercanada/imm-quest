@@ -66,14 +66,14 @@
                     </div>
                 </li>
             @else
-                <li class="nav-item">
+                <li class="nav-item float-left">
                     <a class="nav-link " href="/login" aria-haspopup="true">
                         <span class="text-info d-inline-block text-center btn btn-outline-success">
                             <i class="fas fa-key"> Login</i>
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item float-right">
                     <a class="nav-link " href="/register" aria-haspopup="true">
                         <span class=" text-info d-inline-block text-center btn btn-outline-info">
                             <i class="fas fa-user-plus"> Register</i>
