@@ -47,7 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/account',  [UserController::class, 'account']);
     Route::post('/account', [UserController::class, 'update']);
     Route::post('/new_password', [UserController::class, 'newPassword']);
-    Route::post('/new_username', [UserController::class, 'newUserName']);
     //User themme
     Route::get('/user_themme',  [UserController::class, 'getThemme']);
     Route::post('/user_themme', [UserController::class, 'setThemme']);

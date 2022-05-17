@@ -125,20 +125,23 @@ class FactorController extends Controller
         return  $criteria;
     }
 
-    public function factors()/* get factors for  create accordions */
+    public function factors(Request $request)/* get factors for  create accordions */
     {
+        try {
+            $scenarios = null;
+            $factors = Factor::where('factors.title', '!=', 'default')
+                ->with('subfactors')
+                // ->where('subfactors.subfactor', '!=', 'default')
+                ->with('subfactors.criteria')->get();
 
-        $scenarios = null;
-        $factors = Factor::where('factors.title', '!=', 'default')
-            ->with('subfactors')
-            // ->where('subfactors.subfactor', '!=', 'default')
-            ->with('subfactors.criteria')->get();
-
-        if (Auth::user()) {
-            $user = Auth::user();
-            $scenarios = Scenario::Where('user_id', $user->id)->get();
+            if (Auth::user()) {
+                $user = Auth::user();
+                $scenarios = Scenario::Where('user_id', $user->id)->get();
+            }
+            return [$factors, $scenarios];
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
         }
-        return [$factors, $scenarios];
     }
 
 

@@ -12,10 +12,10 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto stylish-nav" style="display: inline-block">
             @if (Auth::user())
-                <li class="nav-item d-md-block waves-effect waves-dark float-left" >
+                <li class="nav-item d-md-block waves-effect waves-dark float-left">
                     <change_themme></change_themme>
                 </li>
-                <li class="nav-item dropdown float-right mr-2" >
+                <li class="nav-item dropdown float-right mr-2">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <span class="round text-white d-inline-block text-center rounded-circle bg-success">
@@ -23,8 +23,7 @@
                             {{ substr(Auth::user()->last_name, 0, 1) }}
                         </span>
                     </a>
-                    <div
-                        class="dropdown-menu mailbox dropdown-menu-right  bounceInDown shadow p-1 rounded">
+                    <div class="dropdown-menu mailbox dropdown-menu-right  bounceInDown shadow p-1 rounded">
                         <ul class="dropdown-user list-style-none">
                             <li>
                                 <div class="dw-user-box p-3 d-flex">
@@ -81,28 +80,6 @@
                     </a>
                 </li>
             @endif
-
-
-            {{--  --}}
-            {{-- <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demos</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="../admin-pro/src/main/index.html" target="_blank">Main</a>
-                    <a class="dropdown-item" href="../admin-pro/src/minisidebar/index.html"
-                        target="_blank">MiniSidebar</a>
-                    <a class="dropdown-item" href="../admin-pro/src/dark/index.html" target="_blank">Dark</a>
-                    <a class="dropdown-item" href="../admin-pro/src/horizontal/index.html"
-                        target="_blank">Horizontal</a>
-                    <a class="dropdown-item" href="../admin-pro/src/stylish-menu/index.html" target="_blank">Stylish
-                        Menu</a>
-                    <a class="dropdown-item" href="../admin-pro/src/minimal/index.html" target="_blank">Minimal</a>
-                    <a class="dropdown-item" href="../admin-pro/src/rtl/index.html" target="_blank">RTL</a>
-                </div>
-            </li>
-            <li class="nav-item"> <a class="nav-link" href="../Documentation/document.html"
-                    target="_blank">Documentation</a> </li>
-            <li class="nav-item"> <a class="m-t-5 btn btn-info font-13"
-                    href="https://wrappixel.com/templates/adminpro/" style="width:120px;">BUY NOW</a> </li> --}}
         </ul>
     </div>
 </nav>
