@@ -215,16 +215,22 @@ class FactorController extends Controller
             $isActual = false;
             $isActual = $request->isActual;
 
-            $scenario =  Scenario::create(
-                [
-                    'user_id' => $user->id,
-                    'is_theactual' => false,
-                    'name' => $request->scenarioName,
-                    'is_married' => $maritial,
-                    'body' => $isActual == true ? json_encode($request->actualSituation[2]) : json_encode($request->actualSituation[1]),
-                ]
-            );
+            $scennarios = Scenario::where('user_id', $user->id)->get();
 
+
+            if (count($scennarios) >= 3) {
+                return response()->json('has_max');
+            } else {
+                $scenario =  Scenario::create(
+                    [
+                        'user_id' => $user->id,
+                        'is_theactual' => false,
+                        'name' => $request->scenarioName,
+                        'is_married' => $maritial,
+                        'body' => $isActual == true ? json_encode($request->actualSituation[2]) : json_encode($request->actualSituation[1]),
+                    ]
+                );
+            }
             return response()->json($scenario);
         } catch (Exception $e) {
             return response()->json($e);
@@ -313,7 +319,7 @@ class FactorController extends Controller
                 'maritialSituations' => $scennarioMaritialSituationHtml,
                 'totals' => $totals
             ];
-            $pdf = PDF::loadView('pdfSummary', $data)->setPaper('a4', 'landscape');
+            $pdf = PDF::loadView('pdfSummary', $data); //->setPaper('a4', 'landscape');
             Storage::put('public/pdf/' . $fileName, $pdf->output());
             return response()->json($fileName, 200);
         } catch (Exception $e) {

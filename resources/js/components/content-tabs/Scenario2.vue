@@ -1,8 +1,8 @@
 <template>
   <div class="card">
-      <div class="card-header">
+    <div class="card-header">
       <div class="row justify-content-end">
-        <div class="col-md-3  align-self-end">
+        <div class="col-md-3 align-self-end">
           <button
             class="btn btn-outline-info waves-effect waves-light"
             type="button"
@@ -12,7 +12,7 @@
             escenario
           </button>
         </div>
-        <div class="col-md-3  align-self-end">
+        <div class="col-md-3 align-self-end">
           <button
             class="btn btn-outline-success waves-effect waves-light"
             type="button"
@@ -21,7 +21,7 @@
             <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
           </button>
         </div>
-        <div class="col-md-3  align-self-end">
+        <div class="col-md-3 align-self-end">
           <button
             class="btn btn-outline-danger waves-effect waves-light"
             type="button"
@@ -32,8 +32,7 @@
           </button>
         </div>
       </div>
-
-      </div>
+    </div>
     <div class="card-body shadow">
       <div class="row row justify-content-center shadow mb-4 mt-1">
         <div class="col-lg-6 col-md-12 pb-2">
@@ -64,9 +63,9 @@
       <!-- Accordions -->
       <div class="row">
         <div class="col-md-12 p-0">
-          <div id="accordion" class="custom-accordion  ">
+          <div id="accordion" class="custom-accordion">
             <div
-              class="card  shadow-lg mb-4 rounded"
+              class="card shadow-lg mb-4 rounded"
               v-for="object in data"
               v-show="maritialStatusCopy === 'Single' ? object.factor.id != 5 : true"
             >
@@ -110,7 +109,10 @@
               >
                 <div class="card-body">
                   <div class="form-group">
-                    <div class="row shadow p-1 mb-2 rounded " v-for="subfactor in object.factor.subfactors">
+                    <div
+                      class="row shadow p-1 mb-2 rounded"
+                      v-for="subfactor in object.factor.subfactors"
+                    >
                       <div class="col-lg-6 col-md-4">
                         {{ subfactor.subfactor }}
                       </div>
@@ -678,15 +680,25 @@ export default {
               };
 
               axios.post("copy", request).then(function (response) {
-                Swal.fire({
-                  type: "success",
-                  title: "Escenario guardado",
-                  text: "Se ha guardado su copia exitosamente ",
-                });
                 console.log(response);
+                if (response.data == "has_max") {
+                  Swal.fire({
+                    type: "warning",
+                    title: "Limite de escenarios completo",
+                    text:
+                      "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)",
+                  });
+                } else {
+                  Swal.fire({
+                    type: "success",
+                    title: "Escenario guardado",
+                    text: "Se ha guardado su copia exitosamente ",
+                  });
+                  console.log(response);
 
-                me.$emit("CallReloader", Date.now());
-                window.location.reload();
+                  me.$emit("CallReloader", Date.now());
+                  window.location.reload();
+                }
               });
             }
           } else {

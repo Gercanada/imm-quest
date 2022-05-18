@@ -10,7 +10,7 @@
               @click="saveSituation"
             >
               <span class="btn-label"> <i class="fas fa-save"></i></span> Guardar
-              Situacion actual
+              Escenario actual
             </button>
           </div>
           <div class="col-md-3 align-self-end" v-if="authenticated">
@@ -160,10 +160,10 @@ export default {
       }
 
       Swal.fire({
-        title: "Guardar situacion actual ",
+        title: "Guardar Escenario actual ",
         type: "warning",
         text:
-          "Guardar situacion actual. A partir de este escenario podra crear otros nuevos para comparar y etc.",
+          "Guardar Escenario actual. A partir de este escenario podra crear otros nuevos para comparar y etc.",
         showDenyButton: true,
         showCancelButton: true,
       })
@@ -171,7 +171,7 @@ export default {
           if ("value" in result) {
             axios
               .post("save-situation", {
-                scenarioName: "Situacion actual",
+                scenarioName: "Escenario actual",
                 actualSituation: me.userActualSituation,
                 maritialStatus: me.maritialStatus,
               })
@@ -219,21 +219,15 @@ export default {
         });
         //copy of
         Swal.fire({
-          title:
-            "Guardar copia como : " +
-            (scenario == null
-              ? "Scenario " + Number(me.scenarios.length + 1)
-              : scenario["name"]),
+          title: "Guardar copia de Escenario actual como : ",
+
           type: "warning",
-          text:
-            "Si desea guardarlo con otro nombre, ingreselo en el campo. De lo contrario dejelo vacio.",
+          text: "Ingrese nombre para la nueva copia",
           input: "text",
           showDenyButton: true,
           showCancelButton: true,
         })
           .then(function (result) {
-            // console.log(me.userActualSituation);
-            // return;
             if ("value" in result) {
               axios
                 .post("copy", {
@@ -245,19 +239,29 @@ export default {
                   isActual: true,
                 })
                 .then(function (response) {
-                  Swal.fire({
-                    type: "success",
-                    title: "Escenario guardado",
-                    text:
-                      "Se ha" + scenario == null
-                        ? "creado"
-                        : "actualizado" + "este escenario",
-                  });
-                  let now = Date.now();
-                  me.reloader2 = now;
                   console.log(response);
-                  window.location.reload();
-                  this.$emit("reloader", now);
+                  if (response.data == "has_max") {
+                    Swal.fire({
+                      type: "warning",
+                      title: "Limite de escenarios completo",
+                      text:
+                        "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)",
+                    });
+                  } else {
+                    Swal.fire({
+                      type: "success",
+                      title: "Escenario guardado",
+                      text:
+                        "Se ha" + scenario == null
+                          ? "creado"
+                          : "actualizado" + "este escenario",
+                    });
+                    let now = Date.now();
+                    me.reloader2 = now;
+                    console.log(response);
+                    window.location.reload();
+                    this.$emit("reloader", now);
+                  }
                 });
             } else {
               Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });

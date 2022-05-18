@@ -71,7 +71,7 @@
                 class="nav-link"
               >
                 <i class="mdi mdi-account-circle d-lg-none d-block mr-1"></i>
-                <span class="d-none d-lg-block">Situacion actual</span>
+                <span class="d-none d-lg-block">Escenario actual</span>
               </a>
             </li>
             <li class="nav-item" v-for="sCopy in scennariosCopies">

@@ -9,9 +9,9 @@
             <div class="auth-box p-4 bg-white rounded">
                 <div id="loginform" style="opacity:85%; position:relative;">
                     <div class="mb-4  text-center mb-4 pb-4 ">
-                        <img src="/{{ env('ASSET_URL') }}images\immvisassquare.png" alt="homepage"
-                            class="dark-logo" />
-                        <img src="/{{ env('ASSET_URL') }}images\immvisas_1080.png" alt="homepage" class="light-logo "
+                        <img src="/{{ env('ASSET_URL') }}images\cropped_ger_logo.png" width="40px" sizes="40x40"
+                            alt="homepage" class="dark-logo" />
+                        <img src="/{{ env('ASSET_URL') }}images\ger_logo.png" sizes="160x34" alt="homepage"
                             width="160px" />
                     </div>
                     <!-- Form -->
@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="form-group text-center mt-4"
                                     style="position:relative;
-                                                                                                                                        z-index:1;">
+                                                                                                                                            z-index:1;">
                                     <div class="col-xs-12">
                                         <button
                                             class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"

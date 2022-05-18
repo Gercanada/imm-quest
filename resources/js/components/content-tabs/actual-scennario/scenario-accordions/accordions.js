@@ -328,7 +328,7 @@ export default {
                     }
                 });
 
-                console.log(me.selectedSubfactor.selections);
+                // console.log(me.selectedSubfactor.selections);
             }
             me.singleValues.sort(function(a, b) {
                 return a.subfactor - b.subfactor;
