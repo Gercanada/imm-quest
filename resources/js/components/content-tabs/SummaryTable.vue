@@ -41,7 +41,13 @@
                 maritialStatusChanged
               }} -->
               <th class="detail">
-                {{ maritialStatusChanged != null ? maritialStatusChanged : "Single" }}
+                {{
+                  maritialStatusChanged != null
+                    ? maritialStatusChanged == "Married"
+                      ? "Casado"
+                      : "Soltero"
+                    : "Single"
+                }}
               </th>
               <th v-for="sCopy1 in scennariosCopies">
                 {{ sCopy1.is_married == true ? "Casado" : "Soltero" }}
