@@ -27,7 +27,7 @@
           <thead>
             <tr>
               <th></th>
-              <th data-sortable="" data-width="auto">Actual situation</th>
+              <th data-sortable="" data-width="auto">Escenario actual</th>
               <th class="text-center" data-width="auto" v-for="sCopy in scennariosCopies">
                 {{ sCopy.name }}
               </th>
@@ -35,7 +35,8 @@
           </thead>
           <tbody>
             <tr>
-              <th><b>Maritial status</b></th>
+              <th><b>Estado civil</b></th>
+              <!-- <th><b>Maritial status</b></th> -->
               <!--   {{
                 maritialStatusChanged
               }} -->
@@ -43,7 +44,8 @@
                 {{ maritialStatusChanged != null ? maritialStatusChanged : "Single" }}
               </th>
               <th v-for="sCopy1 in scennariosCopies">
-                {{ sCopy1.is_married == true ? "Married" : "Single" }}
+                {{ sCopy1.is_married == true ? "Casado" : "Soltero" }}
+                <!-- {{ sCopy1.is_married == true ? "Married" : "Single" }} -->
               </th>
             </tr>
             <tr>
