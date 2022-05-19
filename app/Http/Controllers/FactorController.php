@@ -155,6 +155,8 @@ class FactorController extends Controller
             $currentScennarios = $request->actualSituation[1];
             $actualSituation = null;
             $scennario = null;
+
+            // return $request;
             // Save changes on scennarios copies
             if ($request->scennarioId) {
                 $scennario =  Scenario::Where('id', $request->scennarioId)->first();
@@ -302,7 +304,7 @@ class FactorController extends Controller
                 $totals = $totals . "<th class='num-val totals'>" . $scennarioSum . "</th>";
             }
             foreach ($scennarios as $scennario) {
-                $married = $scennario['is_married'] == 1 ? 'Married' : 'Single';
+                $married = $scennario['is_married'] == 1 ? 'Casado' : 'Soltero';
                 $scennariosHtml =  $scennariosHtml  . "<th>" .  $scennario['name'] . "</th>";
                 $scennarioMaritialSituationHtml =  $scennarioMaritialSituationHtml  . "<th>" . $married . "</th>";
             }

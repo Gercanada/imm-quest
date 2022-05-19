@@ -186,7 +186,6 @@ export default {
                 });
                 let now = Date.now();
                 me.reloader2 = now;
-                // console.log(me.reloader2);
                 me.$emit("reloader", now);
                 window.location.reload();
                 console.log(response);
@@ -220,7 +219,6 @@ export default {
         //copy of
         Swal.fire({
           title: "Guardar copia de Escenario actual como : ",
-
           type: "warning",
           text: "Ingrese nombre para la nueva copia",
           input: "text",
@@ -229,16 +227,24 @@ export default {
         })
           .then(function (result) {
             if ("value" in result) {
-              axios
-                .post("copy", {
-                  scenarioName: result.value
-                    ? result.value
-                    : "Scenario " + Number(me.scenarios.length + 1),
-                  actualSituation: me.userActualSituation,
-                  maritialStatus: me.maritialStatus,
-                  isActual: true,
-                })
-                .then(function (response) {
+              if (!result.value) {
+                Swal.fire({
+                  type: "danger",
+                  title: "Ingrese algo en el campo nombre",
+                  timer: 3000,
+                });
+              } else {
+                let request = {
+                  scennarioId: me.copyId ? me.copyId : "crash",
+                  scenarioName: result.value,
+                  maritialStatus: me.maritialStatusCopy,
+                  actualSituation:
+                    me.maritialStatusCopy == "Married"
+                      ? me.marriedSelectedSituation
+                      : me.singleSelectedSituation,
+                };
+
+                axios.post("copy", request).then(function (response) {
                   console.log(response);
                   if (response.data == "has_max") {
                     Swal.fire({
@@ -251,18 +257,15 @@ export default {
                     Swal.fire({
                       type: "success",
                       title: "Escenario guardado",
-                      text:
-                        "Se ha" + scenario == null
-                          ? "creado"
-                          : "actualizado" + "este escenario",
+                      text: "Se ha guardado su copia exitosamente ",
                     });
-                    let now = Date.now();
-                    me.reloader2 = now;
                     console.log(response);
+
+                    me.$emit("CallReloader", Date.now());
                     window.location.reload();
-                    this.$emit("reloader", now);
                   }
                 });
+              }
             } else {
               Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
             }
