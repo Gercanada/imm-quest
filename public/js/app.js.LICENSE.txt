@@ -1,6 +1,21 @@
 /*!
+ *  Lang.js for Laravel localization in JavaScript.
+ *
+ *  @version 1.1.12
+ *  @license MIT https://github.com/rmariuzzo/Lang.js/blob/master/LICENSE
+ *  @site    https://github.com/rmariuzzo/Lang.js
+ *  @author  Rubens Mariuzzo <rubens@mariuzzo.com>
+ */
+
+/*!
  * Vue.js v2.6.14
  * (c) 2014-2021 Evan You
+ * Released under the MIT License.
+ */
+
+/*!
+ * vue-lang-js v1.3.1 
+ * (c) 2018 undefined
  * Released under the MIT License.
  */
 

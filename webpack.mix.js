@@ -11,15 +11,18 @@ require('dotenv').config();
  |
  */
 
-const WebpackShellPlugin = require('webpack-shell-plugin');
+/* const WebpackShellPlugin = require('webpack-shell-plugin');
 
 mix.webpackConfig({
     plugins: [
         new WebpackShellPlugin({ onBuildStart: ['php artisan lang:js resources/js/vue-translations.js --no-lib --quiet'], onBuildEnd: [] })
     ]
 });
+ */
 
-
+/* mix.js(['resources/js/app.js', ], 'public/js/')
+    .vue()
+    .minify('public/js/app.js'); */
 mix.js(['resources/js/app.js', ], 'public/js/')
     .vue()
     .minify('public/js/app.js');
