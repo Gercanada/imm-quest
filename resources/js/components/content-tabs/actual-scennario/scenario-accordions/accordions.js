@@ -44,6 +44,7 @@ export default {
         getData() {
             let me = this;
             axios.get("/factors").then(function(response) {
+                console.log(response);
                 me.scenarios = response.data[1] ? response.data[1] : [];
                 let scenario = null; //actual
                 if (me.authenticated) {

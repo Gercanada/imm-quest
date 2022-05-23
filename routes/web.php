@@ -41,11 +41,16 @@ if (env('APP_ENV') === 'local') {
 /*data for views*/
 Route::get('/factors', [FactorController::class, 'factors']);
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'Language')->group(function () {
+
+    Route::get('/change-language/{lang}',  [UserController::class, 'changeLang']);
     //user
     Route::get('/profile',  [UserController::class, 'profile'])->name('profile');
+
     Route::get('/account',  [UserController::class, 'account']);
+
     Route::post('/account', [UserController::class, 'update']);
+
     Route::post('/new_password', [UserController::class, 'newPassword']);
     //User themme
     Route::get('/user_themme',  [UserController::class, 'getThemme']);

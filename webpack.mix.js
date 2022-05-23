@@ -1,8 +1,5 @@
 const mix = require('laravel-mix');
 require('dotenv').config();
-
-
-// new webpack.EnvironmentPlugin(['APP_ENV', 'MIX_APP_ENV']);
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,11 +11,15 @@ require('dotenv').config();
  |
  */
 
+const WebpackShellPlugin = require('webpack-shell-plugin');
+
+mix.webpackConfig({
+    plugins: [
+        new WebpackShellPlugin({ onBuildStart: ['php artisan lang:js resources/js/vue-translations.js --no-lib --quiet'], onBuildEnd: [] })
+    ]
+});
 
 
 mix.js(['resources/js/app.js', ], 'public/js/')
     .vue()
     .minify('public/js/app.js');
-/*  .combine([
-
- ], 'public/css/main.css') */

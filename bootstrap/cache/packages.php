@@ -74,6 +74,13 @@
       0 => 'Laravel\\Ui\\UiServiceProvider',
     ),
   ),
+  'mariuzzo/laravel-js-localization' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Mariuzzo\\LaravelJsLocalization\\LaravelJsLocalizationServiceProvider',
+    ),
+  ),
   'nesbot/carbon' => 
   array (
     'providers' => 

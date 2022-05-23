@@ -42,6 +42,7 @@
       25 => 'App\\Providers\\RouteServiceProvider',
       26 => 'App\\Providers\\GoogleDriveServiceProvider',
       27 => 'Spatie\\Permission\\PermissionServiceProvider',
+      28 => 'Mariuzzo\\LaravelJsLocalization\\LaravelJsLocalizationServiceProvider',
     ),
     'aliases' => 
     array (
@@ -821,6 +822,13 @@
     'remote_sites_path' => '',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
+  ),
+  'localization-js' => 
+  array (
+    'messages' => 
+    array (
+    ),
+    'path' => 'C:\\laragon\\www\\ImmQuest2\\public\\messages.js',
   ),
   'tinker' => 
   array (

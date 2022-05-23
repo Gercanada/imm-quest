@@ -180,6 +180,8 @@ return [
         App\Providers\GoogleDriveServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
 
+        Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class
+
     ],
 
     /*

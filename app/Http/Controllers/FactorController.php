@@ -10,12 +10,23 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Exception;
 
+
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\App;
 
 //TODO Checar error 403 en produccion
 
 class FactorController extends Controller
 {
+
+    public function changeLang($langcode)
+    {
+        App::setLocale($langcode);
+        session()->put("lang_code", $langcode);
+        return redirect()->back();
+    }
+
+
     public function dataFile()
     {
         return json_decode(file_get_contents(storage_path() . "/temp-data.json"), true);
@@ -129,6 +140,38 @@ class FactorController extends Controller
     {
         try {
             $scenarios = null;
+            $selectQuery = null;
+            $locale = App::getLocale();
+
+            if (App::getLocale() == 'en') {
+                $factors = Factor::where('factors.title', '!=', 'default')
+                    ->select('title', 'sub_title', 'id')
+                    ->with(['subfactors' => function ($query) {
+                        $query->select('id', 'subfactor', 'factor_id');
+                    }])
+                    ->with(['subfactors.criteria' => function ($query) {
+                        $query->select('id', 'criterion', 'single', 'married', 'subfactor_id');
+                    }])
+                    // ->select('subfactor', 'factor_id', 'subfactors.criteria')
+                    ->get();
+            }
+
+
+
+            if (App::getLocale() == 'es') {
+                $factors = Factor::where('factors.title', '!=', 'default')
+                    ->select('titulo as title', 'sub_titulo as sub_title', 'id')
+                    ->with(['subfactors' => function ($query) {
+                        $query->select('id', 'subfactor_es as subfactor', 'factor_id');
+                    }])
+                    ->with(['subfactors.criteria' => function ($query) {
+                        $query->select('id', 'criterio as criterion', 'single', 'married', 'subfactor_id');
+                    }])
+                    // ->select('subfactor', 'factor_id', 'subfactors.criteria')
+                    ->get();
+            }
+
+
             $factors = Factor::where('factors.title', '!=', 'default')
                 ->with('subfactors')
                 // ->where('subfactors.subfactor', '!=', 'default')
@@ -138,7 +181,7 @@ class FactorController extends Controller
                 $user = Auth::user();
                 $scenarios = Scenario::Where('user_id', $user->id)->get();
             }
-            return [$factors, $scenarios];
+            return [$factors, $scenarios,  App::getLocale()];
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }

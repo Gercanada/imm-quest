@@ -1,52 +1,6 @@
 <template>
   <div class="container-fluid">
-   <!--  <div class="row" v-if="authenticated">
-      <div class="card">
-        <div class="card-body">
-          <form action="#">
-            <div class="form-body">
-              <div class="form-group">
-                <div class="row">
-                  <label class="col-lg-1">Name</label>
-                  <div class="col-lg-11">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <input
-                          :value="(name ? name : '') + ' ' + (last_name ? last_name : '')"
-                          type="text"
-                          class="form-control"
-                          placeholder="Your Full Name"
-                          disabled
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <label class="col-lg-1">Email</label>
-                  <div class="col-lg-11">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <input
-                          v-model="email"
-                          type="email"
-                          class="form-control"
-                          placeholder="example@mailsrv.any"
-                          disabled
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div> -->
-
+    <!-- {{ $trans("file.key") }} -->
     <div class="row">
       <div class="card">
         <div class="card-body">
@@ -82,7 +36,7 @@
                 class="nav-link"
               >
                 <i class="mdi mdi-playlist-plus d-lg-none d-block mr-1"></i>
-                <span class="d-none d-lg-block">{{ sCopy.name }}</span>
+                <span class="d-none d-lg-block">{{ $trans(sCopy.name) }}</span>
               </a>
             </li>
           </ul>
