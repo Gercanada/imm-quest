@@ -261,8 +261,6 @@ class FactorController extends Controller
             $isActual = $request->isActual;
 
             $scennarios = Scenario::where('user_id', $user->id)->get();
-
-
             if (count($scennarios) >= 3) {
                 return response()->json('has_max');
             } else {

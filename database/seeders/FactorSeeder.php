@@ -45,7 +45,7 @@ class FactorSeeder extends Seeder
                 // 'sub_titulo' => 'Atributos de la pareja (en caso de que aplique)',
 
                 'title' => 'Factor 4 - What is evaluated?',
-                'sub_title' => 'Couple Attributes (if applicable)'
+                'sub_title' => 'spouse  Attributes (if applicable)'
             ]
         ];
 

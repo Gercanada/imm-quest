@@ -184,18 +184,18 @@ export default {
                       ? "creado"
                       : "actualizado" + " este escenario",
                 });
-                let now = Date.now();
+               /*  let now = Date.now();
                 me.reloader2 = now;
-                me.$emit("reloader", now);
+                me.$emit("reloader", now); */
                 window.location.reload();
-                console.log(response);
+                // console.log(response);
               });
           } else {
-            Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
+            Swal.fire({ type: "info", title: "No será guardado. Debe ingresar un nombre", timer: 3000 });
           }
         })
         .catch(function (error) {
-          console.table(error);
+          console.error(error);
         });
     },
 
@@ -235,17 +235,14 @@ export default {
                 });
               } else {
                 let request = {
-                  scennarioId: me.copyId ? me.copyId : "crash",
                   scenarioName: result.value,
-                  maritialStatus: me.maritialStatusCopy,
-                  actualSituation:
-                    me.maritialStatusCopy == "Married"
-                      ? me.marriedSelectedSituation
-                      : me.singleSelectedSituation,
+                  actualSituation: me.userActualSituation,
+                  maritialStatus: me.maritialStatus,
+                  isActual: true,
                 };
 
                 axios.post("copy", request).then(function (response) {
-                  console.log(response);
+                //   console.log(response);
                   if (response.data == "has_max") {
                     Swal.fire({
                       type: "warning",
@@ -259,8 +256,6 @@ export default {
                       title: "Escenario guardado",
                       text: "Se ha guardado su copia exitosamente ",
                     });
-                    console.log(response);
-
                     me.$emit("CallReloader", Date.now());
                     window.location.reload();
                   }
@@ -271,7 +266,7 @@ export default {
             }
           })
           .catch(function (error) {
-            console.table(error);
+            console.error(error);
           });
       }
     },

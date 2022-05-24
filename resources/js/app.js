@@ -20,6 +20,7 @@ Vue.component('change_themme', require('./components/ChangeThemmeComponent.vue')
 Vue.component('content-component', require('./components/Content.vue').default);
 Vue.component('user-component', require('./components/UserComponent.vue').default);
 Vue.component('lang-component', require('./components/LangComponent.vue').default);
+Vue.component('password-input', require('./components/custom/PasswordInput.vue').default);
 
 
 Vue.use(VueLang, {

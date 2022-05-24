@@ -11,7 +11,7 @@
     <!-- This is the navigation menu -->
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto stylish-nav" style="display: inline-block">
-            <lang-component></lang-component>
+           {{--  <lang-component></lang-component> --}}
             @if (Auth::user())
                 <li class="nav-item d-md-block waves-effect waves-dark float-left">
                     <change_themme></change_themme>

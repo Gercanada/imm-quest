@@ -36,11 +36,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-4">
-                                    <div class="">
-                                        <input id="password" type="password" style="opacity:75%;"
+                                    {{-- <password-input /> --}}
+                                    <div class="input-group" id="show_hide_password">
+                                        <input id="password" style="opacity:75%;" type="password"
                                             class="form-control rounded @error('password') is-invalid @enderror"
                                             name="password" required autocomplete="current-password">
-
+                                        {{-- <div class="input-group-addon">
+                                        <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div> --}}
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -68,7 +71,7 @@
                                 </div>
                                 <div class="form-group text-center mt-4"
                                     style="position:relative;
-                                                                                                                                            z-index:1;">
+                                                                                                                                                                                                            z-index:1;">
                                     <div class="col-xs-12">
                                         <button
                                             class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
@@ -107,4 +110,27 @@
         </div>
 
     </div>
+@endsection
+@section('scripts')
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    {{-- <script>
+        let event = document.querySelector(".reveal").addEventListener('click', function() {
+            var $pwd = document.querySelector(".pwd");
+            //    $pwd;
+            console.log($pwd);
+
+
+            if ($pwd.attr('type') === 'password') {
+                $pwd.attr('type', 'text');
+            } else {
+                $pwd.attr('type', 'password');
+            }
+        });
+
+        let newVal = JSON.parse(
+            JSON.stringify(event.target)
+        )._value;
+
+        console.log(newVal);
+    </script> --}}
 @endsection
