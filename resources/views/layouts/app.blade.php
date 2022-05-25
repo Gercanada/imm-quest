@@ -10,6 +10,9 @@
     <meta name="author" content="">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name=Express Entry GerCanada, Calcula tus Resultados content=Nuestro Sistema de Express Entry Calcula de
+        manera automatica cuantos puntos acumulas.>
+
     <!-- Favicon icon -->
     @if (env('APP_ENV') === 'local')
         <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('ASSET_URL') }}images/cropped_invert.png">
@@ -75,6 +78,8 @@
 
         gtag('config', 'G-5VB3NEWXPJ');
     </script>
+
+
 </head>
 
 <body>
