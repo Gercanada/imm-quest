@@ -93,9 +93,9 @@
                   <div class="row">
                     <div class="col-md-6">
                       <small class="text-muted">Email </small>
-                      <h6 v-text="userObj.email"></h6>                     
-                    </div>                  
-                  </div>        
+                      <h6 v-text="userObj.email"></h6>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@
                       />
                     </div>
                   </div>
-                 
+
                   <div class="form-group" autocomplete="none">
                     <label for="last_name" class="col-md-12">Last name</label>
                     <div class="col-md-12">
@@ -281,7 +281,7 @@ export default {
         .get("/account")
         .then(function (response) {
           me.userObj = response.data;
-          console.log(me.userObj)
+        //   console.log(me.userObj)
 
           if (me.userObj["donotcall"] == 0 || false) {
             me.user_donotcall === "yes";
@@ -296,7 +296,7 @@ export default {
           }
         })
         .catch(function (error) {
-          console.log(error);
+          console.error(error);
         })
         .finally(() => (this.loading = false));
     },
@@ -343,7 +343,7 @@ export default {
             timer: 2000,
             showConfirmButton: false,
           });
-          console.log(error);
+          console.error(error);
         });
     },
 
@@ -408,9 +408,9 @@ export default {
       if (field === "userObj.cf_2252") fail = this.userObj.cf_2252;
       if (field === "userObj.cf_2250") fail = this.userObj.cf_2250;
 
-      console.log(field);
+      /* console.log(field);
       console.log(fail);
-
+ */
       if (
         !/(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/i.test(
           fail

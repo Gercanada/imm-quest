@@ -41,7 +41,7 @@ export default {
           }
         })
         .catch(function (error) {
-          console.log(error);
+          console.error(error);
         });
     },
     setThemme(event) {
@@ -62,7 +62,7 @@ export default {
           window.location.reload();
         })
         .catch(function (error) {
-          console.log(error);
+          console.error(error);
         });
     },
   },

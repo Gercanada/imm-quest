@@ -680,7 +680,7 @@ export default {
               };
 
               axios.post("copy", request).then(function (response) {
-                console.log(response);
+                // console.log(response);
                 if (response.data == "has_max") {
                   Swal.fire({
                     type: "warning",
@@ -694,8 +694,6 @@ export default {
                     title: "Escenario guardado",
                     text: "Se ha guardado su copia exitosamente ",
                   });
-                  console.log(response);
-
                   me.$emit("CallReloader", Date.now());
                   window.location.reload();
                 }

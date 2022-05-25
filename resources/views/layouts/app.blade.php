@@ -62,6 +62,19 @@
         }
 
     </style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VB3NEWXPJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-5VB3NEWXPJ');
+    </script>
 </head>
 
 <body>
@@ -79,7 +92,7 @@
         <header class="topbar">
             @include('layouts.navbar')
         </header>
-       {{--  @include('layouts.aside') --}}
+        {{-- @include('layouts.aside') --}}
 
         @if (!Auth::user())
             {{-- @yield('content') --}}{{-- login view --}}
