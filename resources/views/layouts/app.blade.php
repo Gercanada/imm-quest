@@ -131,10 +131,12 @@
                 {{-- @yield('content') --}}
             @endif
             {{-- </div> --}}
-            <footer class="footer">
+
+            {{-- <footer class="footer">
                 © 2020 Admin Pro Admin by wrappixel.com
-            </footer>
+            </footer> --}}
         </div>
+          @include('layouts.footer')
         {{-- @endif --}}
 
 
@@ -202,6 +204,7 @@
     <script
         src="/{{ env('ASSET_URL') }}templates/theme-forest-admin-pro/main/admin-pro/dist/js/pages/forms/select2/select2.init.js">
     </script>
+    @yield('scripts')
 
     {{-- <script src="/{{ env('ASSET_URL') }}js/app.js"></script> --}}
     @if (env('APP_ENV') === 'local')
@@ -209,9 +212,6 @@
     @else
         <script src="/{{ env('ASSET_URL') }}js/app.min.js"></script>
     @endif
-
-    @yield('scripts')
-
 </body>
 
 
