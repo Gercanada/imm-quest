@@ -192,21 +192,21 @@
                     </ol>
                     <div class="carousel-inner pt-4" role="listbox">
                         <div class="carousel-item active text-center">
-                            <img class="img-fluid" src="https://placekitten.com/500/500" alt="First slide">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Register.png" alt="First slide">
                             <div class="carousel-caption d-none d-md-block">
                                 <h3 class="text-white">Registrate</h3>
                                 <p>Crea un usuario para poder calcular y guardar tus resultados</p>
                             </div>
                         </div>
                         <div class="carousel-item text-center">
-                            <img class="img-fluid" src="https://placekitten.com/500/500" alt="Second slide">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/ActualSituacion.png" alt="Second slide">
                             <div class="carousel-caption d-none d-md-block">
                                 <h3 class="text-white">Calcula tu estado actual</h3>
                                 <p>Calcula el puntaje que obtendrias en tu situacion actual para poder migrar</p>
                             </div>
                         </div>
                         <div class="carousel-item text-center ">
-                            <img class="img-fluid" src="https://placekitten.com/500/500" alt="Third slide">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/CopyActual.png" alt="Third slide">
                             <div class="carousel-caption d-none d-md-block">
                                 <h3 class="text-white">Simula otros posibles escenarios</h3>
                                 <p>Copia tu escenario y calcula el puntaje que obtendrias para migrar en una situacion
@@ -215,7 +215,14 @@
                             </div>
                         </div>
                         <div class="carousel-item text-center ">
-                            <img class="img-fluid" src="https://placekitten.com/500/500" alt="Forth slide">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Summary.png" alt="Forth slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3 class="text-white">Mostrar  resultados</h3>
+                                <p>Muestra los puntos obtenidos en los distintos escntarios del usuario</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item text-center ">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Document.png" alt="Forth slide">
                             <div class="carousel-caption d-none d-md-block">
                                 <h3 class="text-white">Imprime tus resultados</h3>
                                 <p>Genera e imprime un documento que contenga los resustados de tu situacion y los
