@@ -146,7 +146,7 @@
             player = new YT.Player('player', {
                 height: '360',
                 width: '640',
-                videoId: 'UurrZLMjbyg',
+                videoId: 'S_CMGVbM1ns',
                 events: {
                     'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
@@ -251,7 +251,7 @@
 
         <div class="row pt-4">
             <div class="col-md-12 text-center shadow-lg p-4 m-4">
-                <button class="btn btn-lg btn-success pm4 mt-4">Registrate</button>
+                <a href="/register" class="btn btn-lg btn-success pm4 mt-4" type="button">Registrate</a>
             </div>
         </div>
 
