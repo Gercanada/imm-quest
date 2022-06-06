@@ -3172,9 +3172,9 @@ __webpack_require__.r(__webpack_exports__);
         subfactor: subfactor
       }; //Limit sum for factor 3
 
-      if (factor === 3 || factor === 4) {
+      if (factor === 4 || factor === 5) {
         me.selectedSubfactor.selections.forEach(function (element, index) {
-          if (element.factor === 3) {
+          if (element.factor === 4) {
             if (me.selectedSubfactor.selections[index].subfactor == 17 && me.selectedSubfactor.selections[index - 1] && me.selectedSubfactor.selections[index - 1].subfactor == 16 && me.selectedSubfactor.selections[index - 1].criterion.single >= 50) {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
@@ -3185,7 +3185,7 @@ __webpack_require__.r(__webpack_exports__);
                   subfactor_id: 17,
                   selected: true
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 17
               };
             } //
@@ -3201,7 +3201,7 @@ __webpack_require__.r(__webpack_exports__);
                   subfactor_id: 16,
                   selected: true
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 16
               };
             } //19
@@ -3216,7 +3216,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 19
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 19
               };
             } // 18
@@ -3231,7 +3231,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 18
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 18
               };
             } //20
@@ -3246,14 +3246,14 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 20
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 20
               };
             }
           } //Max 600
 
 
-          if (element.factor === 4) {
+          if (element.factor === 5) {
             if (me.selectedSubfactor.selections[index].subfactor == 21 && me.selectedSubfactor.selections[index + 2] && me.selectedSubfactor.selections[index + 2].subfactor === 23 && me.selectedSubfactor.selections[index + 2].criterion.single >= 600) {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
@@ -3263,7 +3263,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 21
                 },
-                factor: 4,
+                factor: 5,
                 subfactor: 21
               };
             }
@@ -3277,7 +3277,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 22
                 },
-                factor: 4,
+                factor: 5,
                 subfactor: 22
               };
             }
@@ -3291,7 +3291,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 24
                 },
-                factor: 4,
+                factor: 5,
                 subfactor: 24
               };
             }
@@ -4381,15 +4381,13 @@ __webpack_require__.r(__webpack_exports__);
           }
         } else {
           //When not authenticated
-          var _newData2 = [];
-          me.factors = response.data ? response.data[0] : [];
-          me.factors.forEach(function (factor) {
-            _newData2.push({
-              items: null,
-              factor: factor
+          console.log(null);
+          /*   let newData = [];
+            me.factors = response.data ? response.data[0] : [];
+            me.factors.forEach(factor => {
+                newData.push({ items: null, factor: factor })
             });
-          });
-          me.data = _newData2;
+            me.data = newData; */
         }
 
         me.$emit("factorNames", me.factorNames);
@@ -4422,9 +4420,9 @@ __webpack_require__.r(__webpack_exports__);
         subfactor: subfactor
       }; //Limit sum for factor 3
 
-      if (factor === 3 || factor === 4) {
+      if (factor === 4 || factor === 5) {
         me.selectedSubfactor.selections.forEach(function (element, index) {
-          if (element.factor === 3) {
+          if (element.factor === 4) {
             if (me.selectedSubfactor.selections[index].subfactor == 17 && me.selectedSubfactor.selections[index - 1] && me.selectedSubfactor.selections[index - 1].subfactor == 16 && me.selectedSubfactor.selections[index - 1].criterion.single >= 50) {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
@@ -4435,7 +4433,7 @@ __webpack_require__.r(__webpack_exports__);
                   subfactor_id: 17,
                   selected: true
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 17
               };
             } //
@@ -4451,7 +4449,7 @@ __webpack_require__.r(__webpack_exports__);
                   subfactor_id: 16,
                   selected: true
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 16
               };
             } //19
@@ -4466,7 +4464,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 19
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 19
               };
             } // 18
@@ -4481,7 +4479,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 18
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 18
               };
             } //20
@@ -4496,14 +4494,14 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 20
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 20
               };
             }
           } //Max 600
 
 
-          if (element.factor === 4) {
+          if (element.factor === 5) {
             if (me.selectedSubfactor.selections[index].subfactor == 21 && me.selectedSubfactor.selections[index + 2] && me.selectedSubfactor.selections[index + 2].subfactor === 23 && me.selectedSubfactor.selections[index + 2].criterion.single >= 600) {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
@@ -4513,7 +4511,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 21
                 },
-                factor: 4,
+                factor: 5,
                 subfactor: 21
               };
             }
@@ -4527,7 +4525,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 22
                 },
-                factor: 4,
+                factor: 5,
                 subfactor: 22
               };
             }
@@ -4541,7 +4539,7 @@ __webpack_require__.r(__webpack_exports__);
                   married: 0,
                   subfactor_id: 24
                 },
-                factor: 4,
+                factor: 5,
                 subfactor: 24
               };
             }
@@ -26234,10 +26232,10 @@ var render = function () {
                       rawName: "v-show",
                       value:
                         _vm.maritialStatusCopy === "Single"
-                          ? object.factor.id != 5
+                          ? object.factor.id != 3
                           : true,
                       expression:
-                        "maritialStatusCopy === 'Single' ? object.factor.id != 5 : true",
+                        "maritialStatusCopy === 'Single' ? object.factor.id != 3 : true",
                     },
                   ],
                   staticClass: "card shadow-lg mb-4 rounded",
@@ -27025,10 +27023,10 @@ var render = function () {
                   rawName: "v-show",
                   value:
                     _vm.maritialStatus === "Single"
-                      ? object.factor.id != 5
+                      ? object.factor.id != 3
                       : true,
                   expression:
-                    "maritialStatus === 'Single' ? object.factor.id != 5 : true",
+                    "maritialStatus === 'Single' ? object.factor.id != 3 : true",
                 },
               ],
               staticClass: "card  shadow-lg mb-4 rounded",

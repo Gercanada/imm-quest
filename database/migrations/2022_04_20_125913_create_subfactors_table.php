@@ -12,6 +12,7 @@ class CreateSubfactorsTable extends Migration
         Schema::create('subfactors', function (Blueprint $table) {
             $table->id();
             $table->string('subfactor');
+            $table->string('subfacto')->nullable();//es
             $table->timestamps();
         });
     }

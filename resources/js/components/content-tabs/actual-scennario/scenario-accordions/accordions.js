@@ -117,12 +117,13 @@ export default {
                         me.data = newData;
                     }
                 } else { //When not authenticated
-                    let newData = [];
-                    me.factors = response.data ? response.data[0] : [];
-                    me.factors.forEach(factor => {
-                        newData.push({ items: null, factor: factor })
-                    });
-                    me.data = newData;
+                    console.log(null);
+                    /*   let newData = [];
+                      me.factors = response.data ? response.data[0] : [];
+                      me.factors.forEach(factor => {
+                          newData.push({ items: null, factor: factor })
+                      });
+                      me.data = newData; */
                 }
                 me.$emit("factorNames", me.factorNames);
                 me.$emit("factorsWithSubfactors", me.factors);
@@ -159,9 +160,9 @@ export default {
             };
 
             //Limit sum for factor 3
-            if (factor === 3 || factor === 4) {
+            if (factor === 4 || factor === 5) {
                 me.selectedSubfactor.selections.forEach((element, index) => {
-                    if (element.factor === 3) {
+                    if (element.factor === 4) {
                         if (me.selectedSubfactor.selections[index].subfactor == 17 &&
                             me.selectedSubfactor.selections[index - 1] &&
                             me.selectedSubfactor.selections[index - 1].subfactor == 16 &&
@@ -176,7 +177,7 @@ export default {
                                     subfactor_id: 17,
                                     selected: true
                                 },
-                                factor: 3,
+                                factor: 4,
                                 subfactor: 17,
                             }
                         }
@@ -198,7 +199,7 @@ export default {
                                     subfactor_id: 16,
                                     selected: true
                                 },
-                                factor: 3,
+                                factor: 4,
                                 subfactor: 16,
                             }
                         }
@@ -221,7 +222,7 @@ export default {
                                     married: 0,
                                     subfactor_id: 19
                                 },
-                                factor: 3,
+                                factor: 4,
                                 subfactor: 19,
                             }
                         }
@@ -247,7 +248,7 @@ export default {
                                     married: 0,
                                     subfactor_id: 18
                                 },
-                                factor: 3,
+                                factor: 4,
                                 subfactor: 18,
                             }
                         }
@@ -270,13 +271,13 @@ export default {
                                     married: 0,
                                     subfactor_id: 20
                                 },
-                                factor: 3,
+                                factor: 4,
                                 subfactor: 20,
                             }
                         }
                     }
                     //Max 600
-                    if (element.factor === 4) {
+                    if (element.factor === 5) {
                         if (me.selectedSubfactor.selections[index].subfactor == 21 &&
                             me.selectedSubfactor.selections[index + 2] &&
                             me.selectedSubfactor.selections[index + 2].subfactor === 23 &&
@@ -289,7 +290,7 @@ export default {
                                     married: 0,
                                     subfactor_id: 21
                                 },
-                                factor: 4,
+                                factor: 5,
                                 subfactor: 21,
                             }
                         }
@@ -306,7 +307,7 @@ export default {
                                     married: 0,
                                     subfactor_id: 22
                                 },
-                                factor: 4,
+                                factor: 5,
                                 subfactor: 22,
                             }
                         }
@@ -321,7 +322,7 @@ export default {
                                     married: 0,
                                     subfactor_id: 24
                                 },
-                                factor: 4,
+                                factor: 5,
                                 subfactor: 24,
                             }
                         }

@@ -26,10 +26,13 @@ class FactorController extends Controller
         return redirect()->back();
     }
 
-
     public function dataFile()
     {
         return json_decode(file_get_contents(storage_path() . "/temp-data.json"), true);
+    }
+    public function translatedFile()
+    {
+        return json_decode(file_get_contents(storage_path() . "/translations.json"), true);
     }
 
     public function factorsTable($subfactor)
@@ -136,52 +139,240 @@ class FactorController extends Controller
         return  $criteria;
     }
 
+
+
+    public function translatedFactors()
+    {
+        $data =   $this->translatedFile();
+
+        // return $data;
+        $factArr = [];
+        $en = $data['en'];
+        $es = $data['es'];
+
+        $index = 1;
+        $factEn = [];
+        $factEs = [];
+
+        foreach ($en as $key => $item) {
+            $addFact = [
+                'title' => substr($item['Factor'], 0, 8),
+                'sub_title' => substr($item['Factor'], 8),
+                // 'id' => $index
+            ];
+            if (!in_array($addFact, $factEn)) {
+                array_push($factEn, $addFact);
+            }
+            $index = $index + 1;
+        }
+        array_push($factArr, ['en' => $factEn]);
+
+
+        foreach ($es as $key => $item) {
+            $addFact = [
+                'titulo' => substr($item['Factor'], 0, 8),
+                'sub_titulo' => substr($item['Factor'], 8),
+            ];
+            if (!in_array($addFact, $factEs,)) {
+                array_push($factEs, $addFact);
+            }
+        }
+        array_push($factArr, ['es' => $factEs]);
+        //EN
+        $subfactorsEn = [];
+        foreach ($en as $item) {
+            $factor =
+                ($item['Factor'] == 'Factor 1 - Core Human Capital factors' ? 1
+                    : ($item['Factor'] == "Factor 2 - Spouse Attributes" ? 2
+                        : ($item['Factor'] == "Factor 3 - Skills transferability" ? 3
+                            : ($item['Factor'] == "Factor 4 - Additional Points" ? 4 : null))));
+            if (isset($item["Sub Factor"])) {
+                $addSub = ['factor_id' => $factor, 'subfactor' => $item['Sub Factor']];
+                if (!in_array($addSub, $subfactorsEn,)) {
+                    array_push($subfactorsEn, $addSub);
+                }
+            }
+        }
+        $subfactorsEs = [];
+        foreach ($es as $item) {
+            $factor =
+                ($item['Factor'] == "Factor 1 | Capital Humano" ? 1
+                    : ($item['Factor'] == "Factor 2 | Capital Humano de la Pareja" ? 2
+                        : ($item['Factor'] == "Factor 3 | Transferencia de Habilidades" ? 3
+                            : ($item['Factor'] == "Factor 4 | Puntos Adicionales" ? 4 : null))));
+            if (isset($item["Sub Facto"])) {
+                $addSub = ['factor_id' => $factor, 'subfacto' => $item['Sub Facto']];
+                if (!in_array($addSub, $subfactorsEs,)) {
+                    array_push($subfactorsEs, $addSub);
+                }
+            }
+        }
+
+        $subfArr = [];
+        foreach ($subfactorsEn as $o) {
+            array_push($subfArr, $o);
+        }
+
+
+        $i = 0;
+        $e = 2;
+        foreach ($subfactorsEs as $key => $it) {
+            $subfArr[$i]['subfacto'] = $it['subfacto'];
+            $subfArr[$i]['id'] = $e;
+            $i++;
+            $e++;
+        }
+        //  return $subfArr;
+        //Subfactors
+
+        //////CRITERIONS
+        $criterionsEn = [];
+        //Criterion
+        // return $en;
+
+        foreach ($en as $item) {
+            foreach ($subfArr as $sub) {
+                if ($sub['subfactor'] === $item['Sub Factor']) {
+                    array_push(
+                        $criterionsEn,
+                        [
+                            'subfactor_id' => $sub['id'],
+                            'criterion' => $item['Criterion'],
+                            'Single' => $item['Single'],
+                            'Married' => $item['Married'],
+
+                        ]
+                    );
+                }
+            }
+        }
+
+
+        $a = 0;
+        $b = 2;
+        foreach ($es as $obj) {
+            foreach ($criterionsEn as $crit) {
+                $criterionsEn[$a]['Criterio'] = $obj['Criterion'];
+                $criterionsEn[$a]['id'] = $b;
+            }
+            $a++;
+            $b++;
+        }
+
+
+
+
+        return   $criterionsEn;
+        return ['factors' => $factArr];
+    }
+
+    public function translatedSubfactors()
+    {
+        $data =   $this->translatedFile();
+
+        return $data;
+    }
+
+
+
+
+
+
+
+
+
+    //////////////////
     public function factors(Request $request)/* get factors for  create accordions */
     {
         try {
             $scenarios = null;
-            $selectQuery = null;
-            $locale = App::getLocale();
+            // $selectQuery = null;
+            $locale = App::getLocale() ? App::getLocale() : 'en';
 
-            if (App::getLocale() == 'en') {
-                $factors = Factor::where('factors.title', '!=', 'default')
-                    ->select('title', 'sub_title', 'id')
-                    ->with(['subfactors' => function ($query) {
-                        $query->select('id', 'subfactor', 'factor_id');
-                    }])
-                    ->with(['subfactors.criteria' => function ($query) {
-                        $query->select('id', 'criterion', 'single', 'married', 'subfactor_id');
-                    }])
-                    // ->select('subfactor', 'factor_id', 'subfactors.criteria')
-                    ->get();
-            }
+            $locale = 'en';
 
-
-
-            if (App::getLocale() == 'es') {
-                $factors = Factor::where('factors.title', '!=', 'default')
-                    ->select('titulo as title', 'sub_titulo as sub_title', 'id')
-                    ->with(['subfactors' => function ($query) {
-                        $query->select('id', 'subfactor_es as subfactor', 'factor_id');
-                    }])
-                    ->with(['subfactors.criteria' => function ($query) {
-                        $query->select('id', 'criterio as criterion', 'single', 'married', 'subfactor_id');
-                    }])
-                    // ->select('subfactor', 'factor_id', 'subfactors.criteria')
-                    ->get();
-            }
-
+            // return $locale;
 
             $factors = Factor::where('factors.title', '!=', 'default')
                 ->with('subfactors')
                 // ->where('subfactors.subfactor', '!=', 'default')
                 ->with('subfactors.criteria')->get();
 
+
+            $response = [];
+            if ($locale == 'en') {
+                foreach ($factors as $factor) {
+                    $subs = [];
+                    foreach ($factor['subfactors'] as $sub) {
+                        $criteria = [];
+                        foreach ($sub['criteria'] as $crit) {
+                            array_push($criteria, [
+                                'id' => $crit->id,
+                                'criterion' => $crit['criterion'],
+                                'married' => $crit['married'],
+                                'single' => $crit['single']
+                            ]);
+                        }
+                        array_push($subs, [
+                            'id' => $sub->id,
+                            'subfactor' => $sub['subfactor'],
+                            'factor_id' => $sub['factor_id'],
+                            'criteria' => $criteria
+                        ]);
+                    }
+                    array_push($response, [
+                        'id' => $factor['id'],
+                        'title' => $factor['title'],
+                        'sub_title' => $factor['sub_title'],
+                        'subfactors' => $subs
+                    ]);
+                }
+            }
+
+
+
+            if ($locale == 'es') {
+                foreach ($factors as $factor) {
+                    $subs = [];
+                    foreach ($factor['subfactors'] as $sub) {
+                        $criteria = [];
+                        foreach ($sub['criteria'] as $crit) {
+                            array_push($criteria, [
+                                'id' => $crit->id,
+                                'criterion' => $crit['criterio'],
+                                'married' => $crit['married'],
+                                'single' => $crit['single']
+                            ]);
+                        }
+                        array_push($subs, [
+                            'id' => $sub->id,
+                            'subfactor' => $sub['subfacto'],
+                            'factor_id' => $sub['factor_id'],
+                            'criteria' => $criteria
+                        ]);
+                    }
+
+                    array_push($response, [
+                        'id' => $factor['id'],
+                        'title' => $factor['titulo'],
+                        'sub_title' => $factor['sub_titulo'],
+                        'subfactors' => $subs
+                    ]);
+                }
+            }
+
+
+            /*    $factors = Factor::where('factors.title', '!=', 'default')
+                ->with('subfactors')
+                // ->where('subfactors.subfactor', '!=', 'default')
+                ->with('subfactors.criteria')->get(); */
+
             if (Auth::user()) {
                 $user = Auth::user();
                 $scenarios = Scenario::Where('user_id', $user->id)->get();
             }
-            return [$factors, $scenarios,  App::getLocale()];
+
+            return [$response, $scenarios,  $locale];
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }

@@ -36,6 +36,9 @@ if (env('APP_ENV') === 'local') {
     Route::get('/factors-table/{subfactor}', [FactorController::class, 'factorsTable']); //returns ajson response
     Route::get('/factor/{subFactor}', [FactorController::class, 'getFactor']);
     Route::get('/subfactors', [FactorController::class, 'listSubfactors']); //List subfactors for create seeders
+
+    Route::get('/translated', [FactorController::class, 'translatedFactors']); //List subfactors for create seeders
+    Route::get('/translated/subfactors', [FactorController::class, 'translatedSubfactors']); //List subfactors for create seeders
 }
 
 /*data for views*/

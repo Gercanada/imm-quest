@@ -12,4 +12,9 @@ class Factor extends Model
     {
         return $this->hasMany(Subfactor::class);
     }
+
+    public function subfactores()
+    {
+        return $this->hasMany(Subfactor::class)->select('subfacto');
+    }
 }

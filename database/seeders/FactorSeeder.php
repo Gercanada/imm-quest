@@ -49,7 +49,40 @@ class FactorSeeder extends Seeder
             ]
         ];
 
-        foreach ($data as $item) {
+        $translated = [
+            [
+                "title" => "Factor 1",
+                "sub_title" => " - Core Human Capital factors",
+                "titulo" => "Factor 1",
+                "sub_titulo" => " | Capital Humano",
+                "id" => 2
+            ],
+            [
+                "title" => "Factor 2",
+                "sub_title" => " - Spouse Attributes",
+                "titulo" => "Factor 2",
+                "sub_titulo" => " | Capital Humano de la Pareja",
+                "id" => 3
+            ],
+            [
+                "title" => "Factor 3",
+                "sub_title" => " - Skills transferability",
+                "titulo" => "Factor 3",
+                "sub_titulo" => " | Transferencia de Habilidades",
+                "id" => 4
+            ],
+            [
+                "title" => "Factor 4",
+                "sub_title" => " - Additional Points",
+                "titulo" => "Factor 4",
+                "sub_titulo" => " | Puntos Adicionales",
+                "id" => 5
+            ]
+        ];
+
+
+
+        foreach ($translated as $item) {
             Factor::create($item);
         }
     }

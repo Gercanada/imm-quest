@@ -12,6 +12,7 @@ class CreateCriteriaTable extends Migration
         Schema::create('criteria', function (Blueprint $table) {
             $table->id();
             $table->string('criterion');
+            $table->string('criterio')->nullable();//Es
             $table->double('single')->nullable();
             $table->double('married')->nullable();
             $table->timestamps();

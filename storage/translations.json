@@ -1,0 +1,1852 @@
+{
+    "es": [{
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "17 años o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "18 años",
+            "Single": "99",
+            "Married": "90"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "19 años",
+            "Single": "105",
+            "Married": "95"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "21 a 29 años",
+            "Single": "110",
+            "Married": "100"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "30 años",
+            "Single": "105",
+            "Married": "95"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "31 años",
+            "Single": "99",
+            "Married": "90"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "32 años",
+            "Single": "94",
+            "Married": "85"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "33 años",
+            "Single": "88",
+            "Married": "80"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "34 años",
+            "Single": "83",
+            "Married": "75"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "35 años",
+            "Single": "77",
+            "Married": "70"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "36 años",
+            "Single": "72",
+            "Married": "65"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "37 años",
+            "Single": "66",
+            "Married": "60"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "38 años",
+            "Single": "61",
+            "Married": "55"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "39 años",
+            "Single": "55",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "40 años",
+            "Single": "50",
+            "Married": "45"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "41 años",
+            "Single": "39",
+            "Married": "35"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "42 años",
+            "Single": "28",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "43 años",
+            "Single": "17",
+            "Married": "15"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "44 años ",
+            "Single": "6",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Edad",
+            "Criterion": "45 años o más",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Educación",
+            "Criterion": "Secundaria o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Educación",
+            "Criterion": "Preparatoia o Bachiller",
+            "Single": "30",
+            "Married": "28"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Educación",
+            "Criterion": "Carrera Profesional o técnica de 1 año de duración",
+            "Single": "90",
+            "Married": "84"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Educación",
+            "Criterion": "Carrera Profesional o técnica de 2 años de duración",
+            "Single": "98",
+            "Married": "91"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Educación",
+            "Criterion": "Carrera Profesional o técnica de 3 años de duración o más",
+            "Single": "120",
+            "Married": "112"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Educación",
+            "Criterion": "2 o más carreras o titulos profesionales o técnicos (uno tiene que ser de al menos de 3 años)",
+            "Single": "128",
+            "Married": "119"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Educación",
+            "Criterion": "Maestría",
+            "Single": "135",
+            "Married": "126"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Educación",
+            "Criterion": "Doctorado",
+            "Single": "150",
+            "Married": "140"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Reading",
+            "Criterion": "Reading | CLB 3 | CELPIP Nivel 3 o menos | IELTS Nivel 3 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Reading",
+            "Criterion": "Reading | CLB 4 | CELPIP Nivel 4 | IELTS Nivel 3.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Reading",
+            "Criterion": "Reading | CLB 5 | CELPIP Nivel 5 | IELTS Nivel 4",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Reading",
+            "Criterion": "Reading | CLB 6 | CELPIP Nivel 6 | IELTS Nivel 5.0",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Reading",
+            "Criterion": "Reading | CLB 7 | CELPIP Nivel 7 | IELTS Nivel 6.0 | Mínimo requerido para FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Reading",
+            "Criterion": "Reading | CLB 8 | CELPIP Nivel 8 | IELTS Nivel 6.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Reading",
+            "Criterion": "Reading | CLB 9 | CELPIP Nivel 9 | IELTS Nivel 7 o 7.5",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Reading",
+            "Criterion": "Reading | CLB 10 | CELPIP Nivel 10 o más | IELTS Nivel 8 o más",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Listening",
+            "Criterion": "Listening | CLB 3 | CELPIP Nivel 3 o menos | IELTS Nivel 4 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Listening",
+            "Criterion": "Listening | CLB 4 | CELPIP Nivel 4 | IELTS Nivel 4.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Listening",
+            "Criterion": "Listening | CLB 5 | CELPIP Nivel 5 | IELTS Nivel 5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Listening",
+            "Criterion": "Listening | CLB 6 | CELPIP Nivel 6 | IELTS Nivel 5.5",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Listening",
+            "Criterion": "Listening | CLB 7 | CELPIP Nivel 7 | IELTS Nivel 6 o 7 | Mínimo requerido para FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Listening",
+            "Criterion": "Listening | CLB 8 | CELPIP Nivel 8 | IELTS Nivel 7.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Listening",
+            "Criterion": "Listening | CLB 9 | CELPIP Nivel 9 | IELTS Nivel 8",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Listening",
+            "Criterion": "Listening | CLB 10 | CELPIP Nivel 10 o más | IELTS Nivel 8.5 o más",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Writing",
+            "Criterion": "Writing| CLB 3 | CELPIP Nivel 3 o menos | IELTS Nivel 3.5 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Writing",
+            "Criterion": "Writing| CLB 4 | CELPIP Nivel 4 | IELTS Nivel 4 o 4.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Writing",
+            "Criterion": "Writing| CLB 5 | CELPIP Nivel 5 | IELTS Nivel 5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Writing",
+            "Criterion": "Writing| CLB 6 | CELPIP Nivel 6 | IELTS Nivel 5.5",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Writing",
+            "Criterion": "Writing| CLB 7 | CELPIP Nivel 7 | IELTS Nivel 6 | Mínimo requerido para FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Writing",
+            "Criterion": "Writing| CLB 8 | CELPIP Nivel 8 | IELTS Nivel 6.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Writing",
+            "Criterion": "Writing| CLB 9| CELPIP Nivel 9 | IELTS Nivel 7 ",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Writing",
+            "Criterion": "Writing| CLB 10 | CELPIP Nivel 10 o más | IELTS Nivel 7.5 o más",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Speaking",
+            "Criterion": "Speaking | CLB 3 | CELPIP Nivel 3 o menos | IELTS Nivel 3.5 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Speaking",
+            "Criterion": "Speaking | CLB 4 | CELPIP Nivel 4 | IELTS Nivel 4 o 4.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Speaking",
+            "Criterion": "Speaking | CLB 5 | CELPIP Nivel 5 | IELTS Nivel 5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Speaking",
+            "Criterion": "Speaking | CLB 6 | CELPIP Nivel 6 | IELTS Nivel 5.5",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Speaking",
+            "Criterion": "Speaking | CLB 7 | CELPIP Nivel 7 | IELTS Nivel 6 | Mínimo requerido para FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Speaking",
+            "Criterion": "Speaking | CLB 8 | CELPIP Nivel 8 | IELTS Nivel 6.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Speaking",
+            "Criterion": "Speaking | CLB 9 | CELPIP Nivel 9 | IELTS Nivel 7 ",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Inglés | Speaking",
+            "Criterion": "Speaking | CLB 10 | CELPIP Nivel 10 o más | IELTS Nivel 7.5 o más",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Segundo idioma |Francés",
+            "Criterion": "CLB Nivel 4 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Segundo idioma |Francés",
+            "Criterion": "CLB Nivel 5 o 7",
+            "Single": "1",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Segundo idioma |Francés",
+            "Criterion": "CLB Nivel 7 o 9",
+            "Single": "3",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Segundo idioma |Francés",
+            "Criterion": "CLB Nivel 9 o más",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Experiencia Laboral Canadiense",
+            "Criterion": "Sin experiencia laboral en Canadá o menos de 1 año",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Experiencia Laboral Canadiense",
+            "Criterion": "1 año de experiencia laboral en Canadá",
+            "Single": "40",
+            "Married": "35"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Experiencia Laboral Canadiense",
+            "Criterion": "2 años de experiencia laboral en Canadá",
+            "Single": "53",
+            "Married": "46"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Experiencia Laboral Canadiense",
+            "Criterion": "3 años de experiencia laboral en Canadá",
+            "Single": "64",
+            "Married": "56"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Experiencia Laboral Canadiense",
+            "Criterion": "4 años de experiencia laboral en Canadá",
+            "Single": "72",
+            "Married": "63"
+        },
+        {
+            "Factor": "Factor 1 | Capital Humano",
+            "Sub Facto": "Experiencia Laboral Canadiense",
+            "Criterion": "5 o más años de experiencia laboral en Canadá",
+            "Single": "80",
+            "Married": "70"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Educación",
+            "Criterion": "Pareja Educación | Secundaria o menos",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Educación",
+            "Criterion": "Pareja Educación | Preparatoria",
+            "Single": "",
+            "Married": "2"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Educación",
+            "Criterion": "Pareja Educación | Carrera Profesional o técnica de 1 año de duración",
+            "Single": "",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Educación",
+            "Criterion": "Pareja Educación | Carrera Profesional o técnica de 2 años de duración",
+            "Single": "",
+            "Married": "7"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Educación",
+            "Criterion": "Pareja Educación | Carrera Profesional o técnica de 3 años de duración o más",
+            "Single": "",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Educación",
+            "Criterion": "Pareja Educación | 2 Carreras profesionales o técnicas (1 de al menos 3 años de duración=",
+            "Single": "",
+            "Married": "9"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Educación",
+            "Criterion": "Pareja Educación | Maestría o Doctoado",
+            "Single": "",
+            "Married": "10"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Reading",
+            "Criterion": "Pareja Inglés Reading| CLB Nivel 4 o menos",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Reading",
+            "Criterion": "Pareja Inglés Reading | CLB Nivel 5 o 6",
+            "Single": "",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Reading",
+            "Criterion": "Pareja Inglés Reading | CLB Nivel 7 o 8",
+            "Single": "",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Reading",
+            "Criterion": "Pareja Inglés Reading | CLB Nivel 9 o más",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Writing",
+            "Criterion": "Pareja Inglés Writing | CLB Nivel 4 o menos",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Writing",
+            "Criterion": "Pareja Inglés Writing | CLB Nivel 5 o 6",
+            "Single": "",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Writing",
+            "Criterion": "Pareja Inglés Writing | CLB Nivel 7 o 8",
+            "Single": "",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Writing",
+            "Criterion": "Pareja Inglés Writing | CLB Nivel 9 o más",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Listening",
+            "Criterion": "Pareja Inglés Listening | CLB Nivel 4 o menos",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Listening",
+            "Criterion": "Pareja Inglés Listening | CLB Nivel 5 o 6",
+            "Single": "",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Listening",
+            "Criterion": "Pareja Inglés Listening | CLB Nivel 7 o 8",
+            "Single": "",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Listening",
+            "Criterion": "Pareja Inglés Listening | CLB Nivel 9 o más",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Speaking",
+            "Criterion": "Pareja Inglés Speaking | CLB Nivel 4 o menos",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Speaking",
+            "Criterion": "Pareja Inglés Speaking | CLB Nivel 5 o 6",
+            "Single": "",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Speaking",
+            "Criterion": "Pareja Inglés Speaking | CLB Nivel 7 o 8",
+            "Single": "",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja Nivel de Inglés | Speaking",
+            "Criterion": "Pareja Inglés Speaking | CLB Nivel 9 o más",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Experiencia Laboral Canadiense",
+            "Criterion": "Pareja Expeiencia Laboral en Canadá | Sin experiencia laboral en Canadá o menos de 1 año",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Experiencia Laboral Canadiense",
+            "Criterion": "Pareja Expeiencia Laboral en Canadá | 1 año de experiencia laboral en Canadá",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Experiencia Laboral Canadiense",
+            "Criterion": "Pareja Expeiencia Laboral en Canadá | 2 años de experiencia laboral en Canadá",
+            "Single": "",
+            "Married": "7"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Experiencia Laboral Canadiense",
+            "Criterion": "Pareja Expeiencia Laboral en Canadá | 3 años de experiencia laboral en Canadá",
+            "Single": "",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Experiencia Laboral Canadiense",
+            "Criterion": "Pareja Expeiencia Laboral en Canadá | 4 años de experiencia laboral en Canadá",
+            "Single": "",
+            "Married": "9"
+        },
+        {
+            "Factor": "Factor 2 | Capital Humano de la Pareja",
+            "Sub Facto": "Pareja | Experiencia Laboral Canadiense",
+            "Criterion": "Pareja Expeiencia Laboral en Canadá | 5 o más años de experiencia laboral en Canadá",
+            "Single": "",
+            "Married": "10"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación e Inglés",
+            "Criterion": "No tiene el nivel de inglés mínimo para los puntos o solo estudio hasta preparatoria o menos.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación e Inglés",
+            "Criterion": "Estudió 1 carrera (de al menos 1 año de duración) y tiene Nivel de Inglés CLB 7 en 3 areas y 1 área en CLB nivel 9 o más",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación e Inglés",
+            "Criterion": "Estudió 1 carrera (de al menos 1 año de duración) y tiene Nivel de Inglés CLB 9 o más en todas las áreas de inglés",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación e Inglés",
+            "Criterion": "Estudió 2 o más carreras (una al menos de 3 años de duración) y tiene al menos nivel de Inglés CLB 7 en 3 areas y 1 área en CLB nivel 9 o más",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación e Inglés",
+            "Criterion": "Estudió 2 o más carreras (una al menos de 3 años de duración) y tiene nivel de Inglés CLB 9  o más en todas las áreas de inglés",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación y Experiencia laboral en Canadá",
+            "Criterion": "No tiene experiencia laboral en Canadá o no tiene carrera profesional o técnica.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación y Experiencia laboral en Canadá",
+            "Criterion": "Estudió 1 carrera (de al menos 1 año de duración) y tiene 1 año de experiencia laboral en Canadá",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación y Experiencia laboral en Canadá",
+            "Criterion": "Estudió 1 carrera (de al menos 1 año de duración) y tiene 2 o más años de experiencia laboral en Canadá",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación y Experiencia laboral en Canadá",
+            "Criterion": "Estudió 2 o más carreras (una al menos de 3 años de duración) y tiene 1 año de experiencia laboral en Canadá",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Educación y Experiencia laboral en Canadá",
+            "Criterion": "Estudió 2 o más carreras (una al menos de 3 años de duración) y tiene 2 o más años de experiencia laboral en Canadá",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Inglés y Experiencia Laboral Fuera de Canadá.",
+            "Criterion": "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Inglés y Experiencia Laboral Fuera de Canadá.",
+            "Criterion": "Tiene 1 o 2 años de experiencia laboral fuera de Canadá y tiene Nivel de Inglés CLB 7 en 3 areas y 1 área en CLB nivel 9 o más",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Inglés y Experiencia Laboral Fuera de Canadá.",
+            "Criterion": "Tiene 1 o 2 años de experiencia laboral fuera de Canadá y tiene Nivel de Inglés CLB 9 o más en todas las áreas de inglés",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Inglés y Experiencia Laboral Fuera de Canadá.",
+            "Criterion": "Tiene 3 o más años de experiencia laboral fuera de Canadá  y tiene al menos nivel de Inglés CLB 7 en 3 areas y 1 área en CLB nivel 9 o más",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Inglés y Experiencia Laboral Fuera de Canadá.",
+            "Criterion": "Tiene 3 o más años de experiencia laboral fuera de Canadá y tiene nivel de Inglés CLB 9  o más en todas las áreas de inglés",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Experiencia Laboral Dentro y Fuera de Canadá",
+            "Criterion": "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Experiencia Laboral Dentro y Fuera de Canadá",
+            "Criterion": "Tiene 1 o 2 años de experiencia laboral fuera de Canadá y tiene 1 año de experiencia laboral en Canadá",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Experiencia Laboral Dentro y Fuera de Canadá",
+            "Criterion": "Tiene 1 o 2 años de experiencia laboral fuera de Canadá y tiene 2 o más años de experiencia laboral en Canadá",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Experiencia Laboral Dentro y Fuera de Canadá",
+            "Criterion": "Tiene 3 o más años de experiencia laboral fuera de Canadá y tiene 1 año de experiencia laboral en Canadá",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Experiencia Laboral Dentro y Fuera de Canadá",
+            "Criterion": "Tiene 3 o más años de experiencia laboral fuera de Canadá y tiene 2 o más años de experiencia laboral en Canadá",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Inglés y Certificado de Oficio en Canadá",
+            "Criterion": "Sin Certificado de Calificacion/Oficio de alguna provincia (CoQ)",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Inglés y Certificado de Oficio en Canadá",
+            "Criterion": "Con Certificado de Calificación/Oficio de alguna provincia (CoQ) y CLB Nivel 5 o más en inglés, y una al menos en CLB Nivel 7",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 | Transferencia de Habilidades",
+            "Sub Facto": "Inglés y Certificado de Oficio en Canadá",
+            "Criterion": "Con Certificado de Calificación/Oficio de alguna provincia (CoQ) y CLB Nivel 7 o más en todas las areas de inglés.",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Educación en Canadá",
+            "Criterion": "Sin estudios en Canadá o menos de 1 año de duración.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Educación en Canadá",
+            "Criterion": "Estudios en Canadá de 1 o dos años.",
+            "Single": "15",
+            "Married": "15"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Educación en Canadá",
+            "Criterion": "Estudios en Canadá de al menos 3 años",
+            "Single": "30",
+            "Married": "30"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Oferta Laboral Canadiense",
+            "Criterion": "Sin oferta de trabajo laboral.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Oferta Laboral Canadiense",
+            "Criterion": "Con oferta de trabajo laboral en un empleo Categoría NOC 00",
+            "Single": "200",
+            "Married": "200"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Oferta Laboral Canadiense",
+            "Criterion": "Con oferta de trabajo laboral en un empleo Categoría NOC 0, A o B",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Certificado Provincial PNP",
+            "Criterion": "Sin Certificado de nominación Provincial (PNP Certificate)",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Certificado Provincial PNP",
+            "Criterion": "Con Certificado de nominación Provincial PNP (PNP Certificate)",
+            "Single": "600",
+            "Married": "600"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Familiar Directo Canadiense o Residente Permanente",
+            "Criterion": "Sin familiar directo en Canadá",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 4 | Puntos Adicionales",
+            "Sub Facto": "Puntos Adicionales | Familiar Directo Canadiense o Residente Permanente",
+            "Criterion": "Hermano o Hermana que es Ciudadano Canadiense o Residente Permanente de Canadá",
+            "Single": "15",
+            "Married": "15"
+        }
+    ],
+    "en": [{
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "17 years of age or less",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "18 years of age",
+            "Single": "99",
+            "Married": "90"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "19 years of age",
+            "Single": "105",
+            "Married": "95"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "21 to 29 years of age",
+            "Single": "110",
+            "Married": "100"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "30 years of age",
+            "Single": "105",
+            "Married": "95"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "31 years of age",
+            "Single": "99",
+            "Married": "90"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "32 years of age",
+            "Single": "94",
+            "Married": "85"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "33 years of age",
+            "Single": "88",
+            "Married": "80"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "34 years of age",
+            "Single": "83",
+            "Married": "75"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "35 years of age",
+            "Single": "77",
+            "Married": "70"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "36 years of age",
+            "Single": "72",
+            "Married": "65"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "37 years of age",
+            "Single": "66",
+            "Married": "60"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "38 years of age",
+            "Single": "61",
+            "Married": "55"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "39 years of age",
+            "Single": "55",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "40 years of age",
+            "Single": "50",
+            "Married": "45"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "41 years of age",
+            "Single": "39",
+            "Married": "35"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "42 years of age",
+            "Single": "28",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "43 years of age",
+            "Single": "17",
+            "Married": "15"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "44 years of age ",
+            "Single": "6",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Age",
+            "Criterion": "45+ years of age",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Education",
+            "Criterion": "Less than a secondary school credential",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Education",
+            "Criterion": "Secondary School Credential",
+            "Single": "30",
+            "Married": "28"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Education",
+            "Criterion": "One-year post-secondary credential",
+            "Single": "90",
+            "Married": "84"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Education",
+            "Criterion": "Two-year post-secondary credential",
+            "Single": "98",
+            "Married": "91"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Education",
+            "Criterion": "Three-year or more post-secondary credential",
+            "Single": "120",
+            "Married": "112"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Education",
+            "Criterion": "2 or more credentials and 1 being three years or more",
+            "Single": "128",
+            "Married": "119"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Education",
+            "Criterion": "Master Degree",
+            "Single": "135",
+            "Married": "126"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Education",
+            "Criterion": "Doctoral Degree",
+            "Single": "150",
+            "Married": "140"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Reading",
+            "Criterion": "Reading | CLB 3 | CELPIP level 3 or less | IELTS 3 or less",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Reading",
+            "Criterion": "Reading | CLB 4 | CELPIP level 4 | IELTS 3.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Reading",
+            "Criterion": "Reading | CLB 5 | CELPIP level 5 | IELTS 4",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Reading",
+            "Criterion": "Reading | CLB 6 | CELPIP level 6 | IELTS 5.0",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Reading",
+            "Criterion": "Reading | CLB 7 | CELPIP level 7 | IELTS 6.0 | Minimum for FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Reading",
+            "Criterion": "Reading | CLB 8 | CELPIP level 8 | IELTS 6.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Reading",
+            "Criterion": "Reading | CLB 9 | CELPIP level 9 | IELTS 7.0 or 7.5",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Reading",
+            "Criterion": "Reading | CLB 10 | CELPIP level 10 or higher | IELTS 8 and above",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Listening",
+            "Criterion": "Listening | CLB 3 | CELPIP level 3 or less | IELTS 4 or less",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Listening",
+            "Criterion": "Listening | CLB 4 | CELPIP level 4 | IELTS 4.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Listening",
+            "Criterion": "Listening | CLB 5 | CELPIP level 5 | IELTS 5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Listening",
+            "Criterion": "Listening | CLB 6 | CELPIP level 6 | IELTS 5.5",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Listening",
+            "Criterion": "Listening | CLB 7 | CELPIP level 7 | IELTS 6 to 7 | Minimum for FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Listening",
+            "Criterion": "Listening | CLB 8 | CELPIP level 8 | IELTS 7.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Listening",
+            "Criterion": "Listening | CLB 9 | CELPIP level 9 | IELTS 8",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Listening",
+            "Criterion": "Listening |CLB 10 | CELPIP level 10 or higher | IELTS 8.5 and above",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Writing",
+            "Criterion": "Writing | CLB 3 | CELPIP level 3 or less | IELTS 3.5 or less",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Writing",
+            "Criterion": "Writing | CLB 4 | CELPIP level 4 | IELTS 4 or 4.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Writing",
+            "Criterion": "Writing | CLB 5 | CELPIP level 5 | IELTS 5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Writing",
+            "Criterion": "Writing | CLB 6 | CELPIP level 6 | IELTS 5.5",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Writing",
+            "Criterion": "Writing | CLB 7 | CELPIP level 7 | IELTS 6.0 | Minimum for FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Writing",
+            "Criterion": "Writing | CLB 8 | CELPIP level 8 | IELTS 6.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Writing",
+            "Criterion": "Writing | CLB 9 | CELPIP level 9 | IELTS 7.0 ",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Writing",
+            "Criterion": "Writing | CLB 10 | CELPIP level 10 or higher | IELTS 7.5 and above",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Speaking",
+            "Criterion": "Speaking | CLB 3 | CELPIP level 3 or less | IELTS 3.5 or less",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Speaking",
+            "Criterion": "Speaking | CLB 4 | CELPIP level 4 | IELTS 4 or 4.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Speaking",
+            "Criterion": "Speaking | CLB 5 | CELPIP level 5 | IELTS 5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Speaking",
+            "Criterion": "Speaking | CLB 6 | CELPIP level 6 | IELTS 5.5",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Speaking",
+            "Criterion": "Speaking | CLB 7 | CELPIP level 7 | IELTS 6.0 | Minimumfor FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Speaking",
+            "Criterion": "Speaking | CLB 8 | CELPIP level 8 | IELTS 6.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Speaking",
+            "Criterion": "Speaking | CLB 9 | CELPIP level 9 | IELTS 7.0 ",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Language - Speaking",
+            "Criterion": "Speaking | CLB 10 | CELPIP level 10 or higher | IELTS 7.5 and above",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Second Language",
+            "Criterion": "CLB level 4 or less",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Second Language",
+            "Criterion": "CLB level 5 or 7",
+            "Single": "1",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Second Language",
+            "Criterion": "CLB level 7 or 9",
+            "Single": "3",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Second Language",
+            "Criterion": "CLB level 9 or higher;",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Canada Experience",
+            "Criterion": "No work experience or less than one year ",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Canada Experience",
+            "Criterion": "1 year of Canadian work experience",
+            "Single": "40",
+            "Married": "35"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Canada Experience",
+            "Criterion": "2 years of Canadian work experience",
+            "Single": "53",
+            "Married": "46"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Canada Experience",
+            "Criterion": "3 years of Canadian work experience",
+            "Single": "64",
+            "Married": "56"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Canada Experience",
+            "Criterion": "4 years of Canadian work experience",
+            "Single": "72",
+            "Married": "63"
+        },
+        {
+            "Factor": "Factor 1 - Core Human Capital factors",
+            "Sub Factor": "Canada Experience",
+            "Criterion": "5 or more years of Canadian work experience",
+            "Single": "80",
+            "Married": "70"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Education",
+            "Criterion": "SP - Less than a secondary school credential",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Education",
+            "Criterion": "SP - Secondary school credential",
+            "Single": "",
+            "Married": "2"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Education",
+            "Criterion": "SP - 1 year post-secondary program credential",
+            "Single": "",
+            "Married": "6"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Education",
+            "Criterion": "SP - 2 year post-secondary program credential",
+            "Single": "",
+            "Married": "7"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Education",
+            "Criterion": "SP - 3 year or more post-secondary program credential",
+            "Single": "",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Education",
+            "Criterion": "SP - 2 or more credentials & 1 being three years or more",
+            "Single": "",
+            "Married": "9"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Education",
+            "Criterion": "SP - Master or Doctoral Degree",
+            "Single": "",
+            "Married": "10"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Reading",
+            "Criterion": "SP Reading - CLB level 4 or less",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Reading",
+            "Criterion": "SP Reading - CLB level 5 or 6",
+            "Single": "",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Reading",
+            "Criterion": "SP Reading - CLB level 7 or 8",
+            "Single": "",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Reading",
+            "Criterion": "SP Reading - CLB level 9 or higher",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Writing",
+            "Criterion": "SP Writing - CLB level 4 or less",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Writing",
+            "Criterion": "SP Writing - CLB level 5 or 6",
+            "Single": "",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Writing",
+            "Criterion": "SP Writing - CLB level 7 or 8",
+            "Single": "",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Writing",
+            "Criterion": "SP Writing - CLB level 9 or higher",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Listening",
+            "Criterion": "SP Listening - CLB level 4 or less",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Listening",
+            "Criterion": "SP Listening - CLB level 5 or 6",
+            "Single": "",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Listening",
+            "Criterion": "SP Listening - CLB level 7 or 8",
+            "Single": "",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Listening",
+            "Criterion": "SP Listening - CLB level 9 or higher",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Speaking",
+            "Criterion": "SP Speaking - CLB level 4 or less",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Speaking",
+            "Criterion": "SP Speaking - CLB level 5 or 6",
+            "Single": "",
+            "Married": "1"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Speaking",
+            "Criterion": "SP Speaking - CLB level 7 or 8",
+            "Single": "",
+            "Married": "3"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse language - Speaking",
+            "Criterion": "SP Speaking - CLB level 9 or higher",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Can W. Exp",
+            "Criterion": "SP - No work experience or less than one year ",
+            "Single": "",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Can W. Exp",
+            "Criterion": "SP - 1  year of Canadian work experience",
+            "Single": "",
+            "Married": "5"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Can W. Exp",
+            "Criterion": "SP - 2 years of Canadian work experience",
+            "Single": "",
+            "Married": "7"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Can W. Exp",
+            "Criterion": "SP - 3 years of Canadian work experience",
+            "Single": "",
+            "Married": "8"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Can W. Exp",
+            "Criterion": "SP - 4 years of Canadian work experience",
+            "Single": "",
+            "Married": "9"
+        },
+        {
+            "Factor": "Factor 2 - Spouse Attributes",
+            "Sub Factor": "Spouse Can W. Exp",
+            "Criterion": "SP - 5 or more years of Canadian work experience",
+            "Single": "",
+            "Married": "10"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Language",
+            "Criterion": "Secondary school credential, regardless of their proficiency in their first official language",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Language",
+            "Criterion": "1 or more years and CLB level 7 on all language skill areas, with one or more areas assessed at level 9",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Language",
+            "Criterion": "1 or more years and CLB level 9 or higher on all language skill areas",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Language",
+            "Criterion": "2 or more credentials, (one is 3 years or more), and CLB level 7 on all areas with 1 or more areas assessed at level 9",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Language",
+            "Criterion": "2 or more credentials, (one is 3 years or more), and CLB level 9 or higher on all language skill areas",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Canadian Work Experience",
+            "Criterion": "Secondary school credential, regardless of their Canadian work experience",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Canadian Work Experience",
+            "Criterion": "Credential of 1 or more years or more and 1 year of Canadian work experience",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Canadian Work Experience",
+            "Criterion": "Credential of 1 or more years and 2 or more years of Canadian work experience",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Canadian Work Experience",
+            "Criterion": "2 or more credentials (1 must be 3+ years) and 1 year of Canadian work experience",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Education and Canadian Work Experience",
+            "Criterion": "2 or more credentials (1 must be 3+ years) and 2+ years of Canadian work experience",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Language and Foreign Work Experience",
+            "Criterion": "No foreign work experience , regardless of their proficiency",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Language and Foreign Work Experience",
+            "Criterion": "one or two years of foreign experience and language at level 7 on all language skill areas, (1 @  level 9)",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Language and Foreign Work Experience",
+            "Criterion": "one or two years of foreign experience and language at level 9 on all language skill areas",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Language and Foreign Work Experience",
+            "Criterion": "3+ years of foreign experience and language at level 7 on all language skill areas, (1 @ level 9)",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Language and Foreign Work Experience",
+            "Criterion": "3+ years of foreign experience and language at level 9 on all language skill areas",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Canadian Work Experience and Foreign Work Experience",
+            "Criterion": "no foreign work experience, regardless of their Canadian work experience",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Canadian Work Experience and Foreign Work Experience",
+            "Criterion": "one or two years of foreign work experience and one year of Canadian work experience",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Canadian Work Experience and Foreign Work Experience",
+            "Criterion": "one or two years of foreign work experience and two or more years of Canadian work experience",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Canadian Work Experience and Foreign Work Experience",
+            "Criterion": "three or more years of foreign work experience and one year of Canadian work experience and",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Canadian Work Experience and Foreign Work Experience",
+            "Criterion": "three or more years of foreign work experience and two or more years of Canadian work experience.",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Certificate of Qualification and Language",
+            "Criterion": "NO certificate of Qualification",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Certificate of Qualification and Language",
+            "Criterion": "CofQ certificate and CLB level 5 or higher on all language skill areas, with one or more areas assessed under level 7",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Factor": "Factor 3 - Skills transferability",
+            "Sub Factor": "Certificate of Qualification and Language",
+            "Criterion": "CofQ certificate and CLB level 7 or higher on all language skill areas, ",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - Education",
+            "Criterion": "No Post secondary education in Canada or less than a year",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - Education",
+            "Criterion": "Post-secondary education in  Canada - credential of one or two years",
+            "Single": "15",
+            "Married": "15"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - Education",
+            "Criterion": "Post-secondary education in  Canada - credential three years or longer",
+            "Single": "30",
+            "Married": "30"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - Job Offer",
+            "Criterion": "No Job offer",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - Job Offer",
+            "Criterion": "Arranged employment - NOC 00",
+            "Single": "200",
+            "Married": "200"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - Job Offer",
+            "Criterion": "Arranged employment – any other NOC 0, A or B",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - PNP",
+            "Criterion": "No PNP Certificate",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - PNP",
+            "Criterion": "PNP Certificate",
+            "Single": "600",
+            "Married": "600"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - Family Member in Canada",
+            "Criterion": "No Family Member in Canada",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Factor": "Factor 4 - Additional Points",
+            "Sub Factor": "Additional Points - Family Member in Canada",
+            "Criterion": "Brother or sister living in Canada who is a citizen or permanent resident of Canada",
+            "Single": "15",
+            "Married": "15"
+        }
+    ]
+}

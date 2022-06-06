@@ -1,0 +1,1638 @@
+{
+    "Summary": [{
+            "Summary and comparison": "Name"
+        },
+        {
+            "undefined": "1 año de exp foranea y WES de escuela"
+        },
+        {
+            "Summary and comparison": "Married",
+            "undefined": "358"
+        },
+        {
+            "Summary and comparison": "Factor 1.",
+            "undefined": "291"
+        },
+        {
+            "Summary and comparison": "Edad",
+            "undefined": "45"
+        },
+        {
+            "Summary and comparison": "Experiencia Laboral en Canadá",
+            "undefined": "35"
+        },
+        {
+            "Summary and comparison": "Educación",
+            "undefined": "112"
+        },
+        {
+            "Summary and comparison": "Idioma - Reading",
+            "undefined": "29"
+        },
+        {
+            "Summary and comparison": "Idioma - Listening",
+            "undefined": "32"
+        },
+        {
+            "Summary and comparison": "Idioma - Writing",
+            "undefined": "16"
+        },
+        {
+            "Summary and comparison": "Idioma - Speaking",
+            "undefined": "22"
+        },
+        {
+            "Summary and comparison": "Segundo Idioma",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Factor 2",
+            "undefined": "52"
+        },
+        {
+            "Summary and comparison": "Education and Language",
+            "undefined": "13"
+        },
+        {
+            "Summary and comparison": "Education and Canadian Work Experience",
+            "undefined": "13"
+        },
+        {
+            "Summary and comparison": "Language and Foreign Work Experience",
+            "undefined": "13"
+        },
+        {
+            "Summary and comparison": "Canadian Work Experience and Foreign Work Experience",
+            "undefined": "13"
+        },
+        {
+            "Summary and comparison": "Certificate of Qualification and Language",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Factor 3",
+            "undefined": "15"
+        },
+        {
+            "Summary and comparison": "Additional Points - Family member in Canada",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Additional Points - Education",
+            "undefined": "15"
+        },
+        {
+            "Summary and comparison": "Additional Points - Job offer in Canada",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Additional Points - PNP",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Factor 4. If applicable.",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Spouse - Experiencia Laboral en Canadá",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Spouse - Eduación",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Spouse - Idioma - Reading",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Spouse - Idioma - Writing",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Spouse - Idioma - Listening",
+            "undefined": "0"
+        },
+        {
+            "Summary and comparison": "Spouse - Idioma - Speaking",
+            "undefined": "0"
+        }
+    ],
+    "Scenario 1. Actual situation": [{
+            "Evaluación con Actual": "Name",
+            "undefined": "DOB"
+        },
+        {
+            "Evaluación con Actual": "Marital Status",
+            "undefined": "622"
+        },
+        {
+            "Evaluación con Actual": "Factor 1 - ¿Qué se evalúa?",
+            "undefined": "Columna1"
+        },
+        {
+            "Evaluación con Actual": "Edad",
+            "undefined": "90"
+        },
+        {
+            "Evaluación con Actual": "Experiencia Laboral en Canadá",
+            "undefined": "35"
+        },
+        {
+            "Evaluación con Actual": "Educación",
+            "undefined": "140"
+        },
+        {
+            "Evaluación con Actual": "Idioma - Reading",
+            "undefined": "32"
+        },
+        {
+            "Evaluación con Actual": "Idioma - Listening",
+            "undefined": "8"
+        },
+        {
+            "Evaluación con Actual": "Idioma - Writing",
+            "undefined": "16"
+        },
+        {
+            "Evaluación con Actual": "Idioma - Speaking",
+            "undefined": "22"
+        },
+        {
+            "Evaluación con Actual": "Segundo Idioma",
+            "undefined": "0"
+        },
+        {
+            "undefined": "MAX"
+        },
+        {
+            "Evaluación con Actual": "Factor 2 - ¿Qué se evalúa?",
+            "undefined": "100"
+        },
+        {
+            "Evaluación con Actual": "Education and Language",
+            "undefined": "25"
+        },
+        {
+            "Evaluación con Actual": "Education and Canadian Work Experience",
+            "undefined": "50"
+        },
+        {
+            "Evaluación con Actual": "Language and Foreign Work Experience",
+            "undefined": "50"
+        },
+        {
+            "Evaluación con Actual": "Canadian Work Experience and Foreign Work Experience",
+            "undefined": "50"
+        },
+        {
+            "Evaluación con Actual": "Certificate of Qualification and Language",
+            "undefined": "0"
+        },
+        {
+            "undefined": "MAX"
+        },
+        {
+            "Evaluación con Actual": "Factor 3 - ¿Qué se evalúa?",
+            "undefined": "600"
+        },
+        {
+            "Evaluación con Actual": "Additional Points - Family member in Canada",
+            "undefined": "15"
+        },
+        {
+            "Evaluación con Actual": "Additional Points - Education",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con Actual": "Additional Points - Job offer in Canada",
+            "undefined": "200"
+        },
+        {
+            "Evaluación con Actual": "Additional Points - PNP",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con Actual": "Factor 4 - ¿Qué se evalúa?",
+            "undefined": "14"
+        },
+        {
+            "Evaluación con Actual": "Spouse - Experiencia Laboral en Canadá",
+            "undefined": "8"
+        },
+        {
+            "Evaluación con Actual": "Spouse - Eduación",
+            "undefined": "6"
+        },
+        {
+            "Evaluación con Actual": "Spouse - Idioma - Reading",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con Actual": "Spouse - Idioma - Writing",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con Actual": "Spouse - Idioma - Listening",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con Actual": "Spouse - Idioma - Speaking",
+            "undefined": "0"
+        }
+    ],
+    "Scenario 2. 1 Year Exp": [{
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Name",
+            "undefined": "DOB"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Marital Status",
+            "undefined": "435"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Factor 1 - ¿Qué se evalúa?",
+            "undefined": "346"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Edad",
+            "undefined": "100"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Experiencia Laboral en Canadá",
+            "undefined": "35"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Educación",
+            "undefined": "112"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Idioma - Reading",
+            "undefined": "29"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Idioma - Listening",
+            "undefined": "32"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Idioma - Writing",
+            "undefined": "16"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Idioma - Speaking",
+            "undefined": "22"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Segundo Idioma",
+            "undefined": "0"
+        },
+        {
+            "undefined": "MAX"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Factor 2 - ¿Qué se evalúa?",
+            "undefined": "100"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Education and Language",
+            "undefined": "13"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Education and Canadian Work Experience",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Language and Foreign Work Experience",
+            "undefined": "13"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Canadian Work Experience and Foreign Work Experience",
+            "undefined": "13"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Certificate of Qualification and Language",
+            "undefined": "0"
+        },
+        {
+            "undefined": "MAX"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Factor 3 - ¿Qué se evalúa?",
+            "undefined": "600"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Additional Points - Family member in Canada",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Additional Points - Education",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Additional Points - Job offer in Canada",
+            "undefined": "50"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Additional Points - PNP",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Factor 4 - ¿Qué se evalúa?",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Spouse - Experiencia Laboral en Canadá",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Spouse - Eduación",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Spouse - Idioma - Reading",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Spouse - Idioma - Writing",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Spouse - Idioma - Listening",
+            "undefined": "0"
+        },
+        {
+            "Evaluación con 1 año de experiencia laboral en Canadá": "Spouse - Idioma - Speaking",
+            "undefined": "0"
+        }
+    ],
+    "Scenario 3. Study and 1 Year Ex": [{
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Name",
+            "undefined": "DOB"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Marital Status",
+            "undefined": "358"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Factor 1 - ¿Qué se evalúa?",
+            "undefined": "291"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Edad",
+            "undefined": "45"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Experiencia Laboral en Canadá",
+            "undefined": "35"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Educación",
+            "undefined": "112"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Idioma - Reading",
+            "undefined": "29"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Idioma - Listening",
+            "undefined": "32"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Idioma - Writing",
+            "undefined": "16"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Idioma - Speaking",
+            "undefined": "22"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Segundo Idioma",
+            "undefined": "0"
+        },
+        {
+            "undefined": "MAX"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Factor 2 - ¿Qué se evalúa?",
+            "undefined": "100"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Education and Language",
+            "undefined": "13"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Education and Canadian Work Experience",
+            "undefined": "13"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Language and Foreign Work Experience",
+            "undefined": "13"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Canadian Work Experience and Foreign Work Experience",
+            "undefined": "13"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Certificate of Qualification and Language",
+            "undefined": "0"
+        },
+        {
+            "undefined": "MAX"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Factor 3 - ¿Qué se evalúa?",
+            "undefined": "600"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Additional Points - Family member in Canada",
+            "undefined": "0"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Additional Points - Education",
+            "undefined": "15"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Additional Points - Job offer in Canada",
+            "undefined": "0"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Additional Points - PNP",
+            "undefined": "0"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Factor 4 - ¿Qué se evalúa?",
+            "undefined": "0"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Spouse - Experiencia Laboral en Canadá",
+            "undefined": "0"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Spouse - Eduación",
+            "undefined": "0"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Spouse - Idioma - Reading",
+            "undefined": "0"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Spouse - Idioma - Writing",
+            "undefined": "0"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Spouse - Idioma - Listening",
+            "undefined": "0"
+        },
+        {
+            "Evaluación haciendo estudios en Canadá de al menos 2 años y 1 año de experiencia laboral.": "Spouse - Idioma - Speaking",
+            "undefined": "0"
+        }
+    ],
+    "Tabla": [{
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "1",
+            "Sub Facto": "Age",
+            "Criterion": "17 años o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "2",
+            "Sub Facto": "Age",
+            "Criterion": "18 años",
+            "Single": "99",
+            "Married": "90"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "3",
+            "Sub Facto": "Age",
+            "Criterion": "19 años",
+            "Single": "105",
+            "Married": "95"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "4",
+            "Sub Facto": "Age",
+            "Criterion": "21 a 29 años",
+            "Single": "110",
+            "Married": "100"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "5",
+            "Sub Facto": "Age",
+            "Criterion": "30 años",
+            "Single": "105",
+            "Married": "95"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "6",
+            "Sub Facto": "Age",
+            "Criterion": "31 años",
+            "Single": "99",
+            "Married": "90"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "7",
+            "Sub Facto": "Age",
+            "Criterion": "32 años",
+            "Single": "94",
+            "Married": "85"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "8",
+            "Sub Facto": "Age",
+            "Criterion": "33 años",
+            "Single": "88",
+            "Married": "80"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "9",
+            "Sub Facto": "Age",
+            "Criterion": "34 años",
+            "Single": "83",
+            "Married": "75"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "10",
+            "Sub Facto": "Age",
+            "Criterion": "35 años",
+            "Single": "77",
+            "Married": "70"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "11",
+            "Sub Facto": "Age",
+            "Criterion": "36 años",
+            "Single": "72",
+            "Married": "65"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "12",
+            "Sub Facto": "Age",
+            "Criterion": "37 años",
+            "Single": "66",
+            "Married": "60"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "13",
+            "Sub Facto": "Age",
+            "Criterion": "38 años",
+            "Single": "61",
+            "Married": "55"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "14",
+            "Sub Facto": "Age",
+            "Criterion": "39 años",
+            "Single": "55",
+            "Married": "50"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "15",
+            "Sub Facto": "Age",
+            "Criterion": "40 años",
+            "Single": "50",
+            "Married": "45"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "16",
+            "Sub Facto": "Age",
+            "Criterion": "41 años",
+            "Single": "39",
+            "Married": "35"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "17",
+            "Sub Facto": "Age",
+            "Criterion": "42 años",
+            "Single": "28",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "18",
+            "Sub Facto": "Age",
+            "Criterion": "43 años",
+            "Single": "17",
+            "Married": "15"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "19",
+            "Sub Facto": "Age",
+            "Criterion": "44 años ",
+            "Single": "6",
+            "Married": "5"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|A",
+            "UC": "20",
+            "Sub Facto": "Age",
+            "Criterion": "45 años o más",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|E",
+            "UC": "21",
+            "Sub Facto": "Education",
+            "Criterion": "Secundaria o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|E",
+            "UC": "22",
+            "Sub Facto": "Education",
+            "Criterion": "Preparatoia o Bachiller",
+            "Single": "30",
+            "Married": "28"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|E",
+            "UC": "23",
+            "Sub Facto": "Education",
+            "Criterion": "Carrera Profesional o técnica de 1 año de duración",
+            "Single": "90",
+            "Married": "84"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|E",
+            "UC": "24",
+            "Sub Facto": "Education",
+            "Criterion": "Carrera Profesional o técnica de 2 años de duración",
+            "Single": "98",
+            "Married": "91"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|E",
+            "UC": "25",
+            "Sub Facto": "Education",
+            "Criterion": "Carrera Profesional o técnica de 3 años de duración o más",
+            "Single": "120",
+            "Married": "112"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|E",
+            "UC": "26",
+            "Sub Facto": "Education",
+            "Criterion": "2 o más carreras o titulos profesionales o técnicos (uno tiene que ser de al menos de 3 años)",
+            "Single": "128",
+            "Married": "119"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|E",
+            "UC": "27",
+            "Sub Facto": "Education",
+            "Criterion": "Maestría",
+            "Single": "135",
+            "Married": "126"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|E",
+            "UC": "28",
+            "Sub Facto": "Education",
+            "Criterion": "Doctoado",
+            "Single": "150",
+            "Married": "140"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "29",
+            "Sub Facto": "Language | Reading",
+            "Criterion": "Reading | CLB 3 | CELPIP Nivel 3 o menos | IELTS Nivel 3 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "30",
+            "Sub Facto": "Language | Reading",
+            "Criterion": "Reading | CLB 4 | CELPIP Nivel 4 | IELTS Nivel 3.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "31",
+            "Sub Facto": "Language | Reading",
+            "Criterion": "Reading | CLB 5 | CELPIP Nivel 5 | IELTS Nivel 4",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "32",
+            "Sub Facto": "Language | Reading",
+            "Criterion": "Reading | CLB 6 | CELPIP Nivel 6 | IELTS Nivel 5.0",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "33",
+            "Sub Facto": "Language | Reading",
+            "Criterion": "Reading | CLB 7 | CELPIP Nivel 7 | IELTS Nivel 6.0 | Mínimo requerido para FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "34",
+            "Sub Facto": "Language | Reading",
+            "Criterion": "Reading | CLB 8 | CELPIP Nivel 8 | IELTS Nivel 6.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "35",
+            "Sub Facto": "Language | Reading",
+            "Criterion": "Reading | CLB 9 | CELPIP Nivel 9 | IELTS Nivel 7 o 7.5",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "36",
+            "Sub Facto": "Language | Reading",
+            "Criterion": "Reading | CLB 10 | CELPIP Nivel 10 o más | IELTS Nivel 8 o más",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "37",
+            "Sub Facto": "Language | Listening",
+            "Criterion": "Listening | CLB 3 | CELPIP Nivel 3 o menos | IELTS Nivel 4 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "38",
+            "Sub Facto": "Language | Listening",
+            "Criterion": "Listening | CLB 4 | CELPIP Nivel 4 | IELTS Nivel 4.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "39",
+            "Sub Facto": "Language | Listening",
+            "Criterion": "Listening | CLB 5 | CELPIP Nivel 5 | IELTS Nivel 5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "40",
+            "Sub Facto": "Language | Listening",
+            "Criterion": "Listening | CLB 6 | CELPIP Nivel 6 | IELTS Nivel 5.5",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "41",
+            "Sub Facto": "Language | Listening",
+            "Criterion": "Listening | CLB 7 | CELPIP Nivel 7 | IELTS Nivel 6 o 7 | Mínimo requerido para FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "42",
+            "Sub Facto": "Language | Listening",
+            "Criterion": "Listening | CLB 8 | CELPIP Nivel 8 | IELTS Nivel 7.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "43",
+            "Sub Facto": "Language | Listening",
+            "Criterion": "Listening | CLB 9 | CELPIP Nivel 9 | IELTS Nivel 8",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "44",
+            "Sub Facto": "Language | Listening",
+            "Criterion": "Listening | CLB 10 | CELPIP Nivel 10 o más | IELTS Nivel 8.5 o más",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "45",
+            "Sub Facto": "Language | Writing",
+            "Criterion": "Writing| CLB 3 | CELPIP Nivel 3 o menos | IELTS Nivel 3.5 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "46",
+            "Sub Facto": "Language | Writing",
+            "Criterion": "Writing| CLB 4 | CELPIP Nivel 4 | IELTS Nivel 4 o 4.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "47",
+            "Sub Facto": "Language | Writing",
+            "Criterion": "Writing| CLB 5 | CELPIP Nivel 5 | IELTS Nivel 5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "48",
+            "Sub Facto": "Language | Writing",
+            "Criterion": "Writing| CLB 6 | CELPIP Nivel 6 | IELTS Nivel 5.5",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "49",
+            "Sub Facto": "Language | Writing",
+            "Criterion": "Writing| CLB 7 | CELPIP Nivel 7 | IELTS Nivel 6 | Mínimo requerido para FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "50",
+            "Sub Facto": "Language | Writing",
+            "Criterion": "Writing| CLB 8 | CELPIP Nivel 8 | IELTS Nivel 6.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "51",
+            "Sub Facto": "Language | Writing",
+            "Criterion": "Writing| CLB 9| CELPIP Nivel 9 | IELTS Nivel 7 ",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "52",
+            "Sub Facto": "Language | Writing",
+            "Criterion": "Writing| CLB 10 | CELPIP Nivel 10 o más | IELTS Nivel 7.5 o más",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "53",
+            "Sub Facto": "Language | Speaking",
+            "Criterion": "Speaking | CLB 3 | CELPIP Nivel 3 o menos | IELTS Nivel 3.5 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "54",
+            "Sub Facto": "Language | Speaking",
+            "Criterion": "Speaking | CLB 4 | CELPIP Nivel 4 | IELTS Nivel 4 o 4.5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "55",
+            "Sub Facto": "Language | Speaking",
+            "Criterion": "Speaking | CLB 5 | CELPIP Nivel 5 | IELTS Nivel 5",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "56",
+            "Sub Facto": "Language | Speaking",
+            "Criterion": "Speaking | CLB 6 | CELPIP Nivel 6 | IELTS Nivel 5.5",
+            "Single": "9",
+            "Married": "8"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "57",
+            "Sub Facto": "Language | Speaking",
+            "Criterion": "Speaking | CLB 7 | CELPIP Nivel 7 | IELTS Nivel 6 | Mínimo requerido para FSW",
+            "Single": "17",
+            "Married": "16"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "58",
+            "Sub Facto": "Language | Speaking",
+            "Criterion": "Speaking | CLB 8 | CELPIP Nivel 8 | IELTS Nivel 6.5",
+            "Single": "23",
+            "Married": "22"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "59",
+            "Sub Facto": "Language | Speaking",
+            "Criterion": "Speaking | CLB 9 | CELPIP Nivel 9 | IELTS Nivel 7 ",
+            "Single": "31",
+            "Married": "29"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L1",
+            "UC": "60",
+            "Sub Facto": "Language | Speaking",
+            "Criterion": "Speaking | CLB 10 | CELPIP Nivel 10 o más | IELTS Nivel 7.5 o más",
+            "Single": "34",
+            "Married": "32"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L2",
+            "UC": "61",
+            "Sub Facto": "Second Language",
+            "Criterion": "CLB Nivel 4 o menos",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L2",
+            "UC": "62",
+            "Sub Facto": "Second Language",
+            "Criterion": "CLB Nivel 5 o 7",
+            "Single": "1",
+            "Married": "1"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L2",
+            "UC": "63",
+            "Sub Facto": "Second Language",
+            "Criterion": "CLB Nivel 7 o 9",
+            "Single": "3",
+            "Married": "3"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|L2",
+            "UC": "64",
+            "Sub Facto": "Second Language",
+            "Criterion": "CLB Nivel 9 o más",
+            "Single": "6",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|CE",
+            "UC": "65",
+            "Sub Facto": "Canada Experience",
+            "Criterion": "Sin experiencia laboral en Canadá o menos de 1 año",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|CE",
+            "UC": "66",
+            "Sub Facto": "Canada Experience",
+            "Criterion": "1 año de experiencia laboral en Canadá",
+            "Single": "40",
+            "Married": "35"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|CE",
+            "UC": "67",
+            "Sub Facto": "Canada Experience",
+            "Criterion": "2 años de experiencia laboral en Canadá",
+            "Single": "53",
+            "Married": "46"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|CE",
+            "UC": "68",
+            "Sub Facto": "Canada Experience",
+            "Criterion": "3 años de experiencia laboral en Canadá",
+            "Single": "64",
+            "Married": "56"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|CE",
+            "UC": "69",
+            "Sub Facto": "Canada Experience",
+            "Criterion": "4 años de experiencia laboral en Canadá",
+            "Single": "72",
+            "Married": "63"
+        },
+        {
+            "Facto": "Facto 1 | Coe Human Capital factos",
+            "Sub Code": "1|CE",
+            "UC": "70",
+            "Sub Facto": "Canada Experience",
+            "Criterion": "5 o más años de experiencia laboral en Canadá",
+            "Single": "80",
+            "Married": "70"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|E",
+            "UC": "71",
+            "Sub Facto": "Spouse Education",
+            "Criterion": "Spouse | Secundaria o menos",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|E",
+            "UC": "72",
+            "Sub Facto": "Spouse Education",
+            "Criterion": "Spouse | Preparatoia",
+            "Married": "2"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|E",
+            "UC": "73",
+            "Sub Facto": "Spouse Education",
+            "Criterion": "Spouse | Carrera Profesional o técnica de 1 año de duración",
+            "Married": "6"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|E",
+            "UC": "74",
+            "Sub Facto": "Spouse Education",
+            "Criterion": "Spouse | Carrera Profesional o técnica de 2 años de duración",
+            "Married": "7"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|E",
+            "UC": "75",
+            "Sub Facto": "Spouse Education",
+            "Criterion": "Spouse | Carrera Profesional o técnica de 3 años de duración o más",
+            "Married": "8"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|E",
+            "UC": "76",
+            "Sub Facto": "Spouse Education",
+            "Criterion": "Spouse | 2 Carreras profesionales o técnicas (1 de al menos 3 años de duración=",
+            "Married": "9"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|E",
+            "UC": "77",
+            "Sub Facto": "Spouse Education",
+            "Criterion": "Spouse | Maestría o Doctoado",
+            "Married": "10"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "78",
+            "Sub Facto": "Spouse language | Reading",
+            "Criterion": "Spouse Reading| CLB Nivel 4 o menos",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "79",
+            "Sub Facto": "Spouse language | Reading",
+            "Criterion": "Spouse Reading | CLB Nivel 5 o 6",
+            "Married": "1"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "80",
+            "Sub Facto": "Spouse language | Reading",
+            "Criterion": "Spouse Reading | CLB Nivel 7 o 8",
+            "Married": "3"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "81",
+            "Sub Facto": "Spouse language | Reading",
+            "Criterion": "Spouse Reading | CLB Nivel 9 o más",
+            "Married": "5"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "78",
+            "Sub Facto": "Spouse language | Writing",
+            "Criterion": "Spouse Writing | CLB Nivel 4 o menos",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "79",
+            "Sub Facto": "Spouse language | Writing",
+            "Criterion": "Spouse Writing | CLB Nivel 5 o 6",
+            "Married": "1"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "80",
+            "Sub Facto": "Spouse language | Writing",
+            "Criterion": "Spouse Writing | CLB Nivel 7 o 8",
+            "Married": "3"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "81",
+            "Sub Facto": "Spouse language | Writing",
+            "Criterion": "Spouse Writing | CLB Nivel 9 o más",
+            "Married": "5"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "78",
+            "Sub Facto": "Spouse language | Listening",
+            "Criterion": "Spouse Listening | CLB Nivel 4 o menos",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "79",
+            "Sub Facto": "Spouse language | Listening",
+            "Criterion": "Spouse Listening | CLB Nivel 5 o 6",
+            "Married": "1"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "80",
+            "Sub Facto": "Spouse language | Listening",
+            "Criterion": "Spouse Listening | CLB Nivel 7 o 8",
+            "Married": "3"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "81",
+            "Sub Facto": "Spouse language | Listening",
+            "Criterion": "Spouse Listening | CLB Nivel 9 o más",
+            "Married": "5"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "78",
+            "Sub Facto": "Spouse language | Speaking",
+            "Criterion": "Spouse Speaking | CLB Nivel 4 o menos",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "79",
+            "Sub Facto": "Spouse language | Speaking",
+            "Criterion": "Spouse Speaking | CLB Nivel 5 o 6",
+            "Married": "1"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "80",
+            "Sub Facto": "Spouse language | Speaking",
+            "Criterion": "Spouse Speaking | CLB Nivel 7 o 8",
+            "Married": "3"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|L",
+            "UC": "81",
+            "Sub Facto": "Spouse language | Speaking",
+            "Criterion": "Spouse Speaking | CLB Nivel 9 o más",
+            "Married": "5"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|CE",
+            "UC": "82",
+            "Sub Facto": "Spouse Can W. Exp",
+            "Criterion": "Spouse | Sin experiencia laboral en Canadá o menos de 1 año",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|CE",
+            "UC": "83",
+            "Sub Facto": "Spouse Can W. Exp",
+            "Criterion": "Spouse | 1 año de experiencia laboral en Canadá",
+            "Married": "5"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|CE",
+            "UC": "84",
+            "Sub Facto": "Spouse Can W. Exp",
+            "Criterion": "Spouse | 2 años de experiencia laboral en Canadá",
+            "Married": "7"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|CE",
+            "UC": "85",
+            "Sub Facto": "Spouse Can W. Exp",
+            "Criterion": "Spouse | 3 años de experiencia laboral en Canadá",
+            "Married": "8"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|CE",
+            "UC": "86",
+            "Sub Facto": "Spouse Can W. Exp",
+            "Criterion": "Spouse | 4 años de experiencia laboral en Canadá",
+            "Married": "9"
+        },
+        {
+            "Facto": "Facto 2 | Spouse Attributes",
+            "Sub Code": "2|CE",
+            "UC": "87",
+            "Sub Facto": "Spouse Can W. Exp",
+            "Criterion": "Spouse | 5 o más años de experiencia laboral en Canadá",
+            "Married": "10"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1A",
+            "UC": "88",
+            "Sub Facto": "Education and Language",
+            "Criterion": "No tiene el nivel de inglés mínimo para los puntos o solo estudio hasta preparatoria o menos.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1A",
+            "UC": "89",
+            "Sub Facto": "Education and Language",
+            "Criterion": "Estudió 1 carrera (de al menos 1 año de duración) y tiene Nivel de Inglés CLB 7 en 3 areas y 1 área en CLB nivel 9 o más",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1A",
+            "UC": "90",
+            "Sub Facto": "Education and Language",
+            "Criterion": "Estudió 1 carrera (de al menos 1 año de duración) y tiene Nivel de Inglés CLB 9 o más en todas las áreas de inglés",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1A",
+            "UC": "91",
+            "Sub Facto": "Education and Language",
+            "Criterion": "Estudió 2 o más carreras (una al menos de 3 años de duración) y tiene al menos nivel de Inglés CLB 7 en 3 areas y 1 área en CLB nivel 9 o más",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1A",
+            "UC": "92",
+            "Sub Facto": "Education and Language",
+            "Criterion": "Estudió 2 o más carreras (una al menos de 3 años de duración) y tiene nivel de Inglés CLB 9  o más en todas las áreas de inglés",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1B",
+            "UC": "93",
+            "Sub Facto": "Education and Canadian Wok Experience",
+            "Criterion": "No tiene experiencia laboral en Canadá o no tiene carrera profesional o técnica.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1B",
+            "UC": "94",
+            "Sub Facto": "Education and Canadian Wok Experience",
+            "Criterion": "Estudió 1 carrera (de al menos 1 año de duración) y tiene 1 año de experiencia laboral en Canadá",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1B",
+            "UC": "95",
+            "Sub Facto": "Education and Canadian Wok Experience",
+            "Criterion": "Estudió 1 carrera (de al menos 1 año de duración) y tiene 2 o más años de experiencia laboral en Canadá",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1B",
+            "UC": "96",
+            "Sub Facto": "Education and Canadian Wok Experience",
+            "Criterion": "Estudió 2 o más carreras (una al menos de 3 años de duración) y tiene 1 año de experiencia laboral en Canadá",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC1B",
+            "UC": "97",
+            "Sub Facto": "Education and Canadian Wok Experience",
+            "Criterion": "Estudió 2 o más carreras (una al menos de 3 años de duración) y tiene 2 o más años de experiencia laboral en Canadá",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2A",
+            "UC": "98",
+            "Sub Facto": "Language and Foeign Wok Experience",
+            "Criterion": "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2A",
+            "UC": "99",
+            "Sub Facto": "Language and Foeign Wok Experience",
+            "Criterion": "Tiene 1 o 2 años de experiencia laboral fuera de Canadá y tiene Nivel de Inglés CLB 7 en 3 areas y 1 área en CLB nivel 9 o más",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2A",
+            "UC": "100",
+            "Sub Facto": "Language and Foeign Wok Experience",
+            "Criterion": "Tiene 1 o 2 años de experiencia laboral fuera de Canadá y tiene Nivel de Inglés CLB 9 o más en todas las áreas de inglés",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2A",
+            "UC": "101",
+            "Sub Facto": "Language and Foeign Wok Experience",
+            "Criterion": "Tiene 3 o más años de experiencia laboral fuera de Canadá  y tiene al menos nivel de Inglés CLB 7 en 3 areas y 1 área en CLB nivel 9 o más",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2A",
+            "UC": "102",
+            "Sub Facto": "Language and Foeign Wok Experience",
+            "Criterion": "Tiene 3 o más años de experiencia laboral fuera de Canadá y tiene nivel de Inglés CLB 9  o más en todas las áreas de inglés",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2B",
+            "UC": "103",
+            "Sub Facto": "Canadian Wok Experience and Foeign Wok Experience",
+            "Criterion": "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2B",
+            "UC": "104",
+            "Sub Facto": "Canadian Wok Experience and Foeign Wok Experience",
+            "Criterion": "Tiene 1 o 2 años de experiencia laboral fuera de Canadá y tiene 1 año de experiencia laboral en Canadá",
+            "Single": "13",
+            "Married": "13"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2B",
+            "UC": "105",
+            "Sub Facto": "Canadian Wok Experience and Foeign Wok Experience",
+            "Criterion": "Tiene 1 o 2 años de experiencia laboral fuera de Canadá y tiene 2 o más años de experiencia laboral en Canadá",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2B",
+            "UC": "106",
+            "Sub Facto": "Canadian Wok Experience and Foeign Wok Experience",
+            "Criterion": "Tiene 3 o más años de experiencia laboral fuera de Canadá y tiene 1 año de experiencia laboral en Canadá",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|ELC2B",
+            "UC": "107",
+            "Sub Facto": "Canadian Wok Experience and Foeign Wok Experience",
+            "Criterion": "Tiene 3 o más años de experiencia laboral fuera de Canadá y tiene 2 o más años de experiencia laboral en Canadá",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|COQ",
+            "Sub Facto": "Certificate of Qualification and Language",
+            "Criterion": "Sin Certificado de Calificacion de alguna provincia (CoQ)",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|COQ",
+            "UC": "108",
+            "Sub Facto": "Certificate of Qualification and Language",
+            "Criterion": "Con Certificado de Calificación de alguna provincia (CoQ) y CLB Nivel 5 o más en inglés, y una al menos en CLB Nivel 7",
+            "Single": "25",
+            "Married": "25"
+        },
+        {
+            "Facto": "Facto 3 | Skills transferability",
+            "Sub Code": "3|COQ",
+            "UC": "109",
+            "Sub Facto": "Certificate of Qualification and Language",
+            "Criterion": "Con Certificado de Calificación de alguna provincia (CoQ) y CLB Nivel 7 o más en todas las areas de ingles.",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Sub Facto": "Additional Points | Education",
+            "Criterion": "Sin estudios en Canadá o menos de 1 año de duración.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 4 | Additional Points",
+            "Sub Code": "4|AP1",
+            "UC": "110",
+            "Sub Facto": "Additional Points | Education",
+            "Criterion": "Estudios en Canadá de 1 o dos años.",
+            "Single": "15",
+            "Married": "15"
+        },
+        {
+            "Facto": "Facto 4 | Additional Points",
+            "Sub Code": "4|AP1",
+            "UC": "111",
+            "Sub Facto": "Additional Points | Education",
+            "Criterion": "Estudios en Canada de al menos 3 años",
+            "Single": "30",
+            "Married": "30"
+        },
+        {
+            "Sub Facto": "Additional Points | Job Offer",
+            "Criterion": "Sin oferta de trabajo laboral.",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 4 | Additional Points",
+            "Sub Code": "4|AP2",
+            "UC": "112",
+            "Sub Facto": "Additional Points | Job Offer",
+            "Criterion": "Con oferta de trabajo laboral en un empleo Categoría NOC 00",
+            "Single": "200",
+            "Married": "200"
+        },
+        {
+            "Facto": "Facto 4 | Additional Points",
+            "Sub Code": "4|AP2",
+            "UC": "113",
+            "Sub Facto": "Additional Points | Job Offer",
+            "Criterion": "Con oferta de trabajo laboral en un empleo Categoría NOC 0, A o B",
+            "Single": "50",
+            "Married": "50"
+        },
+        {
+            "Sub Facto": "Additional Points | PNP",
+            "Criterion": "Sin Certificado de nominación Provincial (PNP Certificate)",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Facto": "Facto 4 | Additional Points",
+            "Sub Code": "4|AP3",
+            "UC": "114",
+            "Sub Facto": "Additional Points | PNP",
+            "Criterion": "Con Certificado de nominación Provincial PNP (PNP Certificate)",
+            "Single": "600",
+            "Married": "600"
+        },
+        {
+            "Sub Code": "4|AP3",
+            "UC": "114",
+            "Sub Facto": "Additional Points | Family Member in Canada",
+            "Criterion": "Sin familiar directo en Canadá",
+            "Single": "0",
+            "Married": "0"
+        },
+        {
+            "Sub Code": "4|AP3",
+            "UC": "114",
+            "Sub Facto": "Additional Points | Family Member in Canada",
+            "Criterion": "Hermano o Hermana que es Ciudadano Canadiense o Residente Permanente de Canadá",
+            "Single": "15",
+            "Married": "15"
+        }
+    ]
+}

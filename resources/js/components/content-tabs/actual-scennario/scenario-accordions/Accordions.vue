@@ -5,7 +5,7 @@
         <div
           class="card  shadow-lg mb-4 rounded"
           v-for="object in data"
-          v-show="maritialStatus === 'Single' ? object.factor.id != 5 : true"
+          v-show="maritialStatus === 'Single' ? object.factor.id != 3 : true"
         >
           <div class="card-header" id="headingOne">
             <div class="row">

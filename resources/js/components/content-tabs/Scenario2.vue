@@ -67,7 +67,7 @@
             <div
               class="card shadow-lg mb-4 rounded"
               v-for="object in data"
-              v-show="maritialStatusCopy === 'Single' ? object.factor.id != 5 : true"
+              v-show="maritialStatusCopy === 'Single' ? object.factor.id != 3 : true"
             >
               <div class="card-header" id="headingOne">
                 <div class="row">
@@ -259,9 +259,9 @@ export default {
       };
 
       //Limit sum for factor 3
-      if (factor === 3 || factor === 4) {
+      if (factor === 4 || factor === 5) {
         me.selectedSubfactor.selections.forEach((element, index) => {
-          if (element.factor === 3) {
+          if (element.factor === 4) {
             if (
               me.selectedSubfactor.selections[index].subfactor == 17 &&
               me.selectedSubfactor.selections[index - 1] &&
@@ -278,7 +278,7 @@ export default {
                   subfactor_id: 17,
                   selected: true,
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 17,
               };
             }
@@ -300,7 +300,7 @@ export default {
                   subfactor_id: 16,
                   selected: true,
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 16,
               };
             }
@@ -325,7 +325,7 @@ export default {
                   married: 0,
                   subfactor_id: 19,
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 19,
               };
             }
@@ -352,7 +352,7 @@ export default {
                   married: 0,
                   subfactor_id: 18,
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 18,
               };
             }
@@ -379,14 +379,14 @@ export default {
                   married: 0,
                   subfactor_id: 20,
                 },
-                factor: 3,
+                factor: 4,
                 subfactor: 20,
               };
             }
           }
 
           //Max 600
-          if (element.factor === 4) {
+          if (element.factor === 5) {
             if (
               me.selectedSubfactor.selections[index].subfactor == 21 &&
               me.selectedSubfactor.selections[index + 2] &&
@@ -401,7 +401,7 @@ export default {
                   married: 0,
                   subfactor_id: 21,
                 },
-                factor: 4,
+                factor: 5,
                 subfactor: 21,
               };
             }
@@ -420,7 +420,7 @@ export default {
                   married: 0,
                   subfactor_id: 22,
                 },
-                factor: 4,
+                factor: 5,
                 subfactor: 22,
               };
             }
@@ -437,7 +437,7 @@ export default {
                   married: 0,
                   subfactor_id: 24,
                 },
-                factor: 4,
+                factor: 5,
                 subfactor: 24,
               };
             }

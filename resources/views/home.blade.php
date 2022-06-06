@@ -32,13 +32,13 @@
         }
 
         .carousel-control-prev {
-            background-color: gray;
+            /* background-color: gray; */
             border-radius: 0 150px 150px 0;
             opacity: 35%:
         }
 
         .carousel-control-next {
-            background-color: gray;
+            /* background-color: gray; */
             border-radius: 150px 0 0 150px;
             opacity: 35%:
         }
@@ -81,18 +81,6 @@
             .popover .popover-body {
                 background-color: rgb(41, 41, 41);
             }
-
-            /*
-                        .container-fluid {
-                            background-color: black;
-                            opacity: 10%;
-                        } */
-
-            /*    .maindiv {
-                            padding-top: 25px;
-                            background-color: #72e74b;
-
-                        } */
 
         </style>
     @elseif (Auth::user() && Auth::user()->themme_layout === 1)
@@ -186,9 +174,11 @@
                 <h3 class="card-subtitle text-center">Calcula tus puntos Express entry</h3>
                 <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators3" data-slide-to="0" class=""></li>
+                        <li data-target="#carouselExampleIndicators3" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselExampleIndicators3" data-slide-to="1" class=""></li>
-                        <li data-target="#carouselExampleIndicators3" data-slide-to="2" class="active"></li>
+                        <li data-target="#carouselExampleIndicators3" data-slide-to="2" class=""></li>
+                        <li data-target="#carouselExampleIndicators3" data-slide-to="3" class=""></li>
+                        <li data-target="#carouselExampleIndicators3" data-slide-to="4" class=""></li>
                     </ol>
                     <div class="carousel-inner pt-4" role="listbox">
                         <div class="carousel-item active text-center">
