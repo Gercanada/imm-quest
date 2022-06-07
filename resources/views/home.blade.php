@@ -47,6 +47,7 @@
             /* opacity: 25%; */
             background-color: green;
             border-radius: 0 50px 0 50px;
+            max-height: 180px;
 
             padding-left: 10%;
             padding-right: 10%;
@@ -184,7 +185,7 @@
                         <div class="carousel-item active text-center">
                             <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Register.png"
                                 alt="First slide">
-                            <div class="carousel-caption d-none d-md-block">
+                            <div class="carousel-caption">
                                 <h3 class="text-white">
                                     {{ session()->get('applocate') == 'es' ? 'Registrate' : 'Sign Up' }}
                                 </h3>
@@ -197,7 +198,7 @@
                         <div class="carousel-item text-center">
                             <img class="img-fluid"
                                 src="/{{ env('ASSET_URL') }}images/slide-guide/ActualSituacion.png" alt="Second slide">
-                            <div class="carousel-caption d-none d-md-block">
+                            <div class="carousel-caption">
                                 <h3 class="text-white">
                                     {{ session()->get('applocate') == 'es' ? 'Calcula tu estado actual' : 'Calculate your current status' }}
                                 </h3>
@@ -210,7 +211,7 @@
                         <div class="carousel-item text-center ">
                             <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/CopyActual.png"
                                 alt="Third slide">
-                            <div class="carousel-caption d-none d-md-block">
+                            <div class="carousel-caption">
                                 <h3 class="text-white">
                                     {{ session()->get('applocate') == 'es' ? 'Simula otros posibles escenarios' : 'Simulate other possible scenarios' }}
                                 </h3>
@@ -224,7 +225,7 @@
                         <div class="carousel-item text-center ">
                             <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Summary.png"
                                 alt="Forth slide">
-                            <div class="carousel-caption d-none d-md-block">
+                            <div class="carousel-caption">
                                 <h3 class="text-white">
                                     {{ session()->get('applocate') == 'es' ? 'Mostrar resultados' : 'show results' }}
                                 </h3>
@@ -237,7 +238,7 @@
                         <div class="carousel-item text-center ">
                             <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Document.png"
                                 alt="Forth slide">
-                            <div class="carousel-caption d-none d-md-block">
+                            <div class="carousel-caption">
                                 <h3 class="text-white">
                                     {{ session()->get('applocate') == 'es' ? 'Imprime tus resultados' : 'print your results' }}
                                 </h3>
@@ -262,14 +263,34 @@
         </div>
         <div class="row">
             <div class="col-md-12 text-center ">
-                <div id="player" class="shadow-lg p-4 m-4"></div>
+                <div id="player" class="shadow-sm mt-4 p2 rounded col-sm-12 col-md-6"></div>
             </div>
         </div>
 
         <div class="row pt-4">
-            <div class="col-md-12 text-center shadow-lg p-4 m-4">
-                <a href="/register" class="btn btn-lg btn-success pm4 mt-4" type="button">
-                    {{ session()->get('applocate') == 'es' ? 'Registrate' : 'Sign Up' }} </a>
+            <div class="col-md-12 text-center shadow-lg p-4 m-4 btn-list">
+                {{-- <a href="/register" class="btn btn-lg btn-success pm4 mt-4" type="button">
+                    {{ session()->get('applocate') == 'es' ? 'Registrate' : 'Sign Up' }} </a> --}}
+                {{-- <li class="nav-item "> --}}
+                    <div class="btn-list">
+                        <a class="btn btn-lg btn-warning " href="/login" aria-haspopup="true">
+                            <span class="text-info d-inline-block text-center btn btn-outline-success">
+                                <i class="fas fa-key">
+                                    {{ session()->get('applocate') == 'en' ? 'Login' : 'Ingresar' }}
+                                </i>
+                            </span>
+                        </a>
+
+                        <a class="btn btn-lg btn-danger" href="/register" aria-haspopup="true">
+                            <span class=" text-success d-inline-block text-center btn btn-outline-info ">
+                                <i class="fas fa-user-plus">
+                                    {{ session()->get('applocate') == 'en' ? 'Register' : 'Registrarme' }} </i>
+                            </span>
+                        </a>
+                    </div>
+                {{-- </li>
+                <li class="nav-item ml-4"> --}}
+                {{-- </li> --}}
             </div>
         </div>
 

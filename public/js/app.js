@@ -2367,7 +2367,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getSituation: function getSituation(value) {
-      //   console.log("Summary");
       var me = this;
       me.summary = value;
     },
@@ -2375,15 +2374,12 @@ __webpack_require__.r(__webpack_exports__);
       this.Factors = value;
     },
     getFactsWSubfacts: function getFactsWSubfacts(value) {
-      //   console.log("Facts");
       this.factorsWithSubfactors = value;
     },
     getMaritialChanged: function getMaritialChanged(value) {
-      //   console.log("CONTENT");
       this.maritialStatusChanged = value;
     },
     getAdditionalScennarios: function getAdditionalScennarios(value) {
-      //   console.log("Extra scennarios");
       this.scennariosCopies = value;
     },
     getReloader: function getReloader(value) {
@@ -26259,7 +26255,7 @@ var render = function () {
                     "maritialStatus === 'Single' ? object.factor.id != 3 : true",
                 },
               ],
-              staticClass: "card  shadow-lg mb-4 rounded",
+              staticClass: "card shadow-lg mb-4 rounded",
             },
             [
               _c(
@@ -26337,7 +26333,7 @@ var render = function () {
                             [
                               _c("div", { staticClass: "col-lg-6 col-md-4" }, [
                                 _vm._v(
-                                  "\n                    " +
+                                  "\n                  " +
                                     _vm._s(subfactor.subfactor) +
                                     "\n                "
                                 ),
@@ -26361,7 +26357,6 @@ var render = function () {
                                     ],
                                     staticClass:
                                       "select2 form-control custom-select",
-                                    staticStyle: { width: "100%" },
                                     attrs: { id: "select2-search-hide" },
                                     on: {
                                       change: [
@@ -26402,6 +26397,10 @@ var render = function () {
                                           class: criterion.selected
                                             ? "bg-success"
                                             : "",
+                                          staticStyle: {
+                                            "overflow-wrap": "break-word",
+                                            "max-width": "60px",
+                                          },
                                           domProps: {
                                             value: {
                                               criterion: criterion,

@@ -3,7 +3,7 @@
     <div class="col-md-12 p-0">
       <div id="accordion" class="custom-accordion">
         <div
-          class="card  shadow-lg mb-4 rounded"
+          class="card shadow-lg mb-4 rounded"
           v-for="object in data"
           v-show="maritialStatus === 'Single' ? object.factor.id != 3 : true"
         >
@@ -53,13 +53,13 @@
                   v-for="(subfactor, index) in object.factor.subfactors"
                 >
                   <div class="col-lg-6 col-md-4">
-                      {{ subfactor.subfactor }}
+                    {{ subfactor.subfactor }}
                   </div>
                   <div class="col-lg-4 col-md-4">
                     <select
                       class="select2 form-control custom-select"
                       id="select2-search-hide"
-                      style="width: 100%"
+                      style=""
                       v-model="selectedSubfactor.selections[subfactor.id]"
                       @change="criteriaVal"
                     >
@@ -71,6 +71,7 @@
                           subfactor: subfactor.id,
                         }"
                         :class="criterion.selected ? 'bg-success' : ''"
+                        style="overflow-wrap: break-word; max-width: 60px"
                       >
                         <p>
                           {{ criterion.criterion }}

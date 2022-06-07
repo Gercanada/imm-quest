@@ -144,7 +144,6 @@ export default {
 
   methods: {
     getSituation(value) {
-      //   console.log("Summary");
       let me = this;
       me.summary = value;
     },
@@ -152,17 +151,14 @@ export default {
       this.Factors = value;
     },
     getFactsWSubfacts(value) {
-      //   console.log("Facts");
       this.factorsWithSubfactors = value;
     },
 
     getMaritialChanged(value) {
-      //   console.log("CONTENT");
       this.maritialStatusChanged = value;
     },
 
     getAdditionalScennarios(value) {
-      //   console.log("Extra scennarios");
       this.scennariosCopies = value;
     },
 
