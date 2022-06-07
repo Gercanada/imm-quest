@@ -10,10 +10,18 @@
       <i class="flag-icon flag-icon-ca"></i
     ></a>
     <div class="dropdown-menu dropdown-menu-right animated bounceInDown">
-      <a class="dropdown-item" @click="setLang('es')">
+      <a
+        class="dropdown-item"
+        @click="setLang('es')"
+        :class="lang === 'es' ? 'active' : ''"
+      >
         <i class="flag-icon flag-icon-es"></i> Español
       </a>
-      <a class="dropdown-item" @click="setLang('en')">
+      <a
+        class="dropdown-item"
+        @click="setLang('en')"
+        :class="lang === 'en' ? 'active' : ''"
+      >
         <i class="flag-icon flag-icon-ca"></i> English
       </a>
     </div>
@@ -21,21 +29,25 @@
 </template>
 <script>
 export default {
-  mounted() {
-    this.getLocation();
+  mounted() {},
+  data() {
+    return {
+      lang: null,
+    };
   },
   methods: {
-    getLocation() {
-      this.$lang.getLocale();
-      if (localStorage.getItem("locale")) {
-        this.$lang.setLocale(localStorage.getItem("locale"));
-      } else {
-        this.$lang.setLocale("en");
-      }
-      console.log(this.$lang.getLocale());
-    },
     setLang(val) {
-      this.$lang.setLocale(val);
+      console.log(val);
+      this.lang = val;
+      axios
+        .get("set-lang/" + val)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.table(error);
+        });
+      window.location.reload();
     },
   },
 };

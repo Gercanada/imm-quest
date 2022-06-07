@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="row pb-3 mb-2">
         <div class="col-md-8">
-          <h4 class="card-title">Sumario de puntos</h4>
+          <h4 class="card-title">{{ scoreSummary }}</h4>
         </div>
         <div class="col-md-4">
           <button
@@ -11,7 +11,7 @@
             type="button"
             @click="printSummary"
           >
-            <span class="btn-label"><i class="far fa-file-pdf"></i></span> Generar pdf
+            <span class="btn-label"><i class="far fa-file-pdf"></i></span> {{ makePdf }}
           </button>
         </div>
       </div>
@@ -27,7 +27,7 @@
           <thead>
             <tr>
               <th></th>
-              <th data-sortable="" data-width="auto">Escenario actual</th>
+              <th data-sortable="" data-width="auto">{{ actual }}</th>
               <th class="text-center" data-width="auto" v-for="sCopy in scennariosCopies">
                 {{ sCopy.name }}
               </th>
@@ -35,27 +35,24 @@
           </thead>
           <tbody>
             <tr>
-              <th><b>Estado civil</b></th>
-              <!-- <th><b>Maritial status</b></th> -->
-              <!--   {{
-                maritialStatusChanged
-              }} -->
+              <th>
+                <b>{{ mStatus }}</b>
+              </th>
               <th class="detail">
                 {{
                   maritialStatusChanged != null
                     ? maritialStatusChanged == "Married"
-                      ? "Casado"
-                      : "Soltero"
-                    : "Single"
+                      ? married
+                      : single
+                    : single
                 }}
               </th>
               <th v-for="sCopy1 in scennariosCopies">
-                {{ sCopy1.is_married == true ? "Casado" : "Soltero" }}
-                <!-- {{ sCopy1.is_married == true ? "Married" : "Single" }} -->
+                {{ sCopy1.is_married == true ? married : single }}
               </th>
             </tr>
             <tr>
-              <th>Total de puntos</th>
+              <th>{{ totalScore }}</th>
               <th class="text-right">{{ totalForFactor }}</th>
               <th class="text-right" v-for="sumS in sumScoreCopies.copies">
                 {{ sumS.total }}
@@ -100,6 +97,7 @@ export default {
     "maritialStatusChanged",
     "scennariosCopies",
     "reloadAt",
+    "language",
   ],
   watch: {
     FactorsWithScores: function () {
@@ -193,6 +191,13 @@ export default {
       f1ScoreSingle: 0,
       totalForFactor: 0,
       sumScoreCopies: [],
+      scoreSummary: this.language == "es" ? "Sumario de puntos" : "Score summary",
+      makePdf: this.language == "es" ? "Generar documento pdf" : "Generate pdf document",
+      actual: this.language == "es" ? "Escenario actual" : "Actual scennary",
+      mStatus: this.language == "es" ? "Estado civil" : "Maritial status",
+      single: this.language == "es" ? "Soltero" : "Single",
+      married: this.language == "es" ? "Casado" : "Married",
+      totalScore: this.language == "es" ? "Total de puntos" : "Total score",
     };
   },
   methods: {
@@ -206,7 +211,8 @@ export default {
       return newVal;
     },
 
-    async printSummary() {
+    printSummary() {
+      let me = this;
       let fileName = "";
       let response1 = null;
       function delay(time) {
@@ -219,8 +225,9 @@ export default {
           Swal.fire({
             type: "info",
             title:
-              "Se abrirá el documento en una nueva ventana." +
-              " Desde ahi lo puede descargar. Para volver a generarlo hay que volver a esta vista",
+              me.language == "es"
+                ? " Se abrirá el documento en una nueva ventana. Desde ahi lo puede descargar. Para volver a generarlo hay que volver a esta vista"
+                : "The document will open in a new window. From there you can download it. To regenerate it you have to return to this view",
           });
         })
         .catch((error) => {

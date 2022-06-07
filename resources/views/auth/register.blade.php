@@ -20,8 +20,8 @@
                                 @csrf
 
                                 <div class="form-group row">
-                                    <label for="name"
-                                        class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                    <label for="name" class="col-md-4 col-form-label text-md-right">
+                                        {{ session()->get('applocate') == 'en' ? 'Name' : 'Nombre (s)' }}</label>
 
                                     <div class="col-md-6">
                                         <input id="name" type="text"
@@ -37,8 +37,8 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="name"
-                                        class="col-md-4 col-form-label text-md-right">{{ __('Last name') }}</label>
+                                    <label for="name" class="col-md-4 col-form-label text-md-right">
+                                        {{ session()->get('applocate') == 'en' ? 'Last name' : 'Apellidos' }}</label>
 
                                     <div class="col-md-6">
                                         <input id="name" type="text"
@@ -55,8 +55,8 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="email"
-                                        class="col-md-4 col-form-label text-md-right">{{ __('User name') }}</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">
+                                        {{ session()->get('applocate') == 'en' ? 'User name' : 'Nombre de usuario' }}</label>
 
                                     <div class="col-md-6">
                                         <input id="user_name" type="text"
@@ -71,8 +71,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="email"
-                                        class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">
+                                        {{ session()->get('applocate') == 'en' ? 'E-Mail Address' : 'Correo electronico' }}</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email"
@@ -88,8 +88,8 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password"
-                                        class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">
+                                        {{ session()->get('applocate') == 'en' ? 'Password' : 'Contraseña' }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password" type="password"
@@ -106,7 +106,7 @@
 
                                 <div class="form-group row">
                                     <label for="password-confirm"
-                                        class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                        class="col-md-4 col-form-label text-md-right">{{ session()->get('applocate') == 'en' ? 'Confirm password' : 'Confirmar contraseña' }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control rounded"

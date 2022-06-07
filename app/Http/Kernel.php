@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Http\Middleware\Language;
 
 class Kernel extends HttpKernel
 {
@@ -43,6 +44,7 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            Language::class
         ],
     ];
 
@@ -71,6 +73,6 @@ class Kernel extends HttpKernel
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
 
-        "Language" => \App\Http\Middleware\Language::class
+        "Language" =>Language::class
     ];
 }

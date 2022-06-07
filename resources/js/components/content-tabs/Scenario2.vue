@@ -8,8 +8,7 @@
             type="button"
             @click="saveScennarioCopy"
           >
-            <span class="btn-label"> <i class="fas fa-save"></i></span> Guardar cambios en
-            escenario
+            <span class="btn-label"> <i class="fas fa-save"></i></span> {{ save }}
           </button>
         </div>
         <div class="col-md-3 align-self-end">
@@ -18,7 +17,7 @@
             type="button"
             @click="copyScennario()"
           >
-            <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
+            <span class="btn-label"> <i class="fas fa-copy"></i></span> {{ copy }}
           </button>
         </div>
         <div class="col-md-3 align-self-end">
@@ -27,8 +26,7 @@
             type="button"
             @click="deleteScennary(copyId)"
           >
-            <span class="btn-label"><i class="fas fa-trash-alt"></i></span> Eliminar
-            escenario
+            <span class="btn-label"><i class="fas fa-trash-alt"></i></span>{{ deleteSc }}
           </button>
         </div>
       </div>
@@ -45,7 +43,9 @@
               :checked="maritialStatusCopy == 'Single'"
               @change="changeStatus('Single')"
             />
-            <label class="form-check-label" :for="copyId + 'isSingleCopy'">Soltero</label>
+            <label class="form-check-label" :for="copyId + 'isSingleCopy'">{{
+              single
+            }}</label>
           </div>
           <div class="form-check form-check-inline">
             <input
@@ -56,7 +56,9 @@
               :checked="maritialStatusCopy == 'Married'"
               @change="changeStatus('Married')"
             />
-            <label class="form-check-label" :for="copyId + 'isMarriedCopy'">Casado</label>
+            <label class="form-check-label" :for="copyId + 'isMarriedCopy'">{{
+              married
+            }}</label>
           </div>
         </div>
       </div>
@@ -178,7 +180,7 @@
 </template>
 <script>
 export default {
-  props: ["body", "factors", "maritialSituation", "copyId", "scennarioName"],
+  props: ["body", "factors", "maritialSituation", "copyId", "scennarioName", "language"],
   data() {
     return {
       data: [],
@@ -196,6 +198,11 @@ export default {
       selectedSituation: [],
       singleSelectedSituation: [],
       marriedSelectedSituation: [],
+      single: this.language == "es" ? "Soltero" : "Single",
+      married: this.language == "es" ? "Casado" : "Married",
+      copy: this.language == "es" ? "Copiar escenario" : "Copy scennary",
+      save: this.language == "es" ? "Guardar cambios" : "Save changes",
+      deleteSc: this.language == "es" ? " Eliminar escenario" : "Delete this scennary",
     };
   },
   mounted() {
@@ -271,8 +278,8 @@ export default {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 106,
-                  criterion:
-                    "No tiene experiencia laboral en Canadá o no tiene carrera profesional o técnica.",
+                  //   criterion:
+                  //     "No tiene experiencia laboral en Canadá o no tiene carrera profesional o técnica.",
                   single: 0,
                   married: 0,
                   subfactor_id: 17,
@@ -293,8 +300,8 @@ export default {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 101,
-                  criterion:
-                    "No tiene el nivel de inglés mínimo para los puntos o solo estudio hasta preparatoria o menos.",
+                  //   criterion:
+                  //     "No tiene el nivel de inglés mínimo para los puntos o solo estudio hasta preparatoria o menos.",
                   single: 0,
                   married: 0,
                   subfactor_id: 16,
@@ -319,8 +326,8 @@ export default {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 116,
-                  criterion:
-                    "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                  //   criterion:
+                  //     "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
                   single: 0,
                   married: 0,
                   subfactor_id: 19,
@@ -346,8 +353,8 @@ export default {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 111,
-                  criterion:
-                    "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
+                  //   criterion:
+                  //     "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
                   single: 0,
                   married: 0,
                   subfactor_id: 18,
@@ -373,8 +380,8 @@ export default {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 116,
-                  criterion:
-                    "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                  //   criterion:
+                  //     "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
                   single: 0,
                   married: 0,
                   subfactor_id: 20,
@@ -396,7 +403,7 @@ export default {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 124,
-                  criterion: "Sin estudios en Canadá o menos de 1 año de duración.",
+                  //   criterion: "Sin estudios en Canadá o menos de 1 año de duración.",
                   single: 0,
                   married: 0,
                   subfactor_id: 21,
@@ -415,7 +422,7 @@ export default {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 127,
-                  criterion: "Sin oferta de trabajo laboral.",
+                  //   criterion: "Sin oferta de trabajo laboral.",
                   single: 0,
                   married: 0,
                   subfactor_id: 22,
@@ -432,7 +439,7 @@ export default {
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 132,
-                  criterion: "Sin familiar directo en Canadá",
+                  //   criterion: "Sin familiar directo en Canadá",
                   single: 0,
                   married: 0,
                   subfactor_id: 24,
@@ -607,7 +614,9 @@ export default {
       let scenario = null;
 
       Swal.fire({
-        title: "Guardar cambios en  " + me.scennarioName,
+        title:
+          (me.language == "es" ? "Guardar cambios en  " : "Save changes to") +
+          me.scennarioName,
         type: "warning",
         showDenyButton: true,
         showCancelButton: true,
@@ -628,11 +637,15 @@ export default {
               .then(function (response) {
                 Swal.fire({
                   type: "success",
-                  title: "Escenario guardado",
+                  title: me.language == "es" ? "Escenario guardado" : "Saved scennary",
                   text:
-                    "Se ha" + scenario == null
-                      ? "creado"
-                      : "actualizado" + "este escenario",
+                    me.language == "es"
+                      ? "Se ha" + scenario == null
+                        ? "creado"
+                        : "actualizado" + " este escenario"
+                      : "Was" + scenario == null
+                      ? "created"
+                      : "updated" + " This scennary",
                 });
                 me.$emit("CallReloader", Date.now());
                 window.location.reload();
@@ -641,7 +654,14 @@ export default {
                 console.table(error);
               });
           } else {
-            Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
+            Swal.fire({
+              type: "info",
+              title:
+                me.language == "es"
+                  ? "No será guardado. Debe ingresar un nombre"
+                  : "It will not be saved. You must enter a name",
+              timer: 3000,
+            });
           }
         })
         .catch(function (error) {
@@ -653,9 +673,14 @@ export default {
       /* Save scennario as copy of current on view */
       let me = this;
       Swal.fire({
-        title: "Guardar copia de  : " + me.scennarioName,
+        title:
+          (me.language == "es" ? "Guardar copia de  : " : "Save copy of: ") +
+          me.scennarioName,
         type: "warning",
-        text: "Ingrese nombre para la nueva copia ",
+        text:
+          me.language == "es"
+            ? "Ingrese nombre para la nueva copia"
+            : "Enter a name for the new copy",
         input: "text",
         showDenyButton: true,
         showCancelButton: true,
@@ -665,7 +690,10 @@ export default {
             if (!result.value) {
               Swal.fire({
                 type: "danger",
-                title: "Ingrese algo en el campo nombre",
+                title:
+                  me.language == "es"
+                    ? "Ingrese algo en el campo nombre"
+                    : "Enter something in the name field",
                 timer: 3000,
               });
             } else {
@@ -684,15 +712,24 @@ export default {
                 if (response.data == "has_max") {
                   Swal.fire({
                     type: "warning",
-                    title: "Limite de escenarios completo",
+                    title:  me.language == "es"
+                          ? "Limite de escenarios completo"
+                          : "Full Scenario Limit",
                     text:
-                      "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)",
+                       me.language == "es"
+                          ? "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)"
+                          : "You already have 3 scenarios, you can't create a new one unless you delete one(s)",
+                      timer: 3000,
                   });
                 } else {
                   Swal.fire({
                     type: "success",
-                    title: "Escenario guardado",
-                    text: "Se ha guardado su copia exitosamente ",
+                    title:  me.language == "es" ? "Escenario guardado" : "Saved Scenario",
+                      text:
+                        me.language == "es"
+                          ? "Se ha guardado su copia exitosamente "
+                          : "Your copy has been saved successfully",
+                      timer: 3000,
                   });
                   me.$emit("CallReloader", Date.now());
                   window.location.reload();
@@ -700,7 +737,7 @@ export default {
               });
             }
           } else {
-            Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
+            Swal.fire({ type: "info", title: me.language == "es" ? "No será guardado" : "Will not be saved", timer: 3000 });
           }
         })
         .catch(function (error) {
@@ -711,7 +748,7 @@ export default {
     deleteScennary(id) {
       let me = this;
       Swal.fire({
-        title: "Desea eliminar el escenario " + me.scennarioName + "?",
+        title:  (me.language == "es" ? "Desea eliminar el escenario ":"Really wish to delete " )+ me.scennarioName + "?",
         type: "warning",
         icon: "trash",
         showDenyButton: true,
@@ -724,8 +761,8 @@ export default {
           .then((response) => {
             Swal.fire({
               type: "success",
-              title: "Escenario eliminado",
-              text: "Se ha eliminado el escenario",
+              title: me.language == "es" ? "Escenario eliminado":"Deleted scennary",
+              text: me.language == "es" ? "Se ha eliminado el escenario":"Scennary was deleted",
             });
             me.$emit("CallReloader", Date.now());
             window.location.reload();

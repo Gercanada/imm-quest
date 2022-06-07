@@ -19,7 +19,7 @@
             <div>{{ $date }}</div>
         </div>
         <div id="project">
-            <div><span>Name</span>{{ $name }}</div>
+            <div><span> {{ session()->get('applocate') == 'es' ? 'Nombre' : 'Name' }} </span>{{ $name }}</div>
         </div>
     </header>
     <main>
@@ -30,14 +30,14 @@
                     {!! $scennarios !!}
                 </tr>
                 <tr>
-                    <th><b>Maritial status</b></th>
+                    <th><b> {{ session()->get('applocate') == 'es' ? 'Estado civil' : 'Maritial status' }} </b></th>
                     {!! $maritialSituations !!}
                 </tr>
             </thead>
             <tbody>
                 {!! $factors !!}
                 <tr>
-                    <th>Totals</th>
+                    <th>Total </th>
                     {!! $totals !!}
                 </tr>
 
@@ -197,7 +197,6 @@
         padding: 8px 0;
         text-align: center;
     }
-
 </style>
 
 </html>

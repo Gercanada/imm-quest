@@ -1,17 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/@babel/runtime/regenerator/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-
-/***/ }),
-
 /***/ "./node_modules/@eli5/vue-lang-js/dist/vue-lang-js.common.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@eli5/vue-lang-js/dist/vue-lang-js.common.js ***!
@@ -2237,6 +2226,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _content_tabs_Summary_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./content-tabs/Summary.vue */ "./resources/js/components/content-tabs/Summary.vue");
 /* harmony import */ var _content_tabs_actual_scennario_SituationA_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./content-tabs/actual-scennario/SituationA.vue */ "./resources/js/components/content-tabs/actual-scennario/SituationA.vue");
 /* harmony import */ var _content_tabs_Scenario2_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./content-tabs/Scenario2.vue */ "./resources/js/components/content-tabs/Scenario2.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
 //
 //
 //
@@ -2336,7 +2330,9 @@ __webpack_require__.r(__webpack_exports__);
     Scenario2: _content_tabs_Scenario2_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       email: "",
       name: "",
       last_name: "",
@@ -2351,17 +2347,24 @@ __webpack_require__.r(__webpack_exports__);
       scennariosCopies: [],
       factorsWithSubfactors: [],
       reloadAt: null,
-      authenticated: false
-    };
+      authenticated: false,
+      language: null
+    }, _defineProperty(_ref, "summary", "Summary"), _defineProperty(_ref, "actual", "Actual scennario"), _ref;
   },
   created: function created() {
     if (window.Laravel.user) {
+      this.language = window.Laravel.languaje;
       this.email = window.Laravel.user.email;
       this.name = window.Laravel.user.name;
       this.last_name = window.Laravel.user.last_name;
-      this.authenticated = true;
+      this.authenticated = true; //   this.language = window.Laravel.Languaje;
     } else {
       this.authenticated = false;
+    }
+
+    if (this.language === "es") {
+      this.summary = "Sumario";
+      this.actual = "Escenario actual";
     }
   },
   methods: {
@@ -2455,24 +2458,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    this.getLocation();
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      lang: null
+    };
   },
   methods: {
-    getLocation: function getLocation() {
-      this.$lang.getLocale();
-
-      if (localStorage.getItem("locale")) {
-        this.$lang.setLocale(localStorage.getItem("locale"));
-      } else {
-        this.$lang.setLocale("en");
-      }
-
-      console.log(this.$lang.getLocale());
-    },
     setLang: function setLang(val) {
-      this.$lang.setLocale(val);
+      console.log(val);
+      this.lang = val;
+      axios.get("set-lang/" + val).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.table(error);
+      });
+      window.location.reload();
     }
   }
 });
@@ -3089,8 +3099,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["body", "factors", "maritialSituation", "copyId", "scennarioName"],
+  props: ["body", "factors", "maritialSituation", "copyId", "scennarioName", "language"],
   data: function data() {
     return {
       data: [],
@@ -3107,7 +3119,12 @@ __webpack_require__.r(__webpack_exports__);
       arraySums: [],
       selectedSituation: [],
       singleSelectedSituation: [],
-      marriedSelectedSituation: []
+      marriedSelectedSituation: [],
+      single: this.language == "es" ? "Soltero" : "Single",
+      married: this.language == "es" ? "Casado" : "Married",
+      copy: this.language == "es" ? "Copiar escenario" : "Copy scennary",
+      save: this.language == "es" ? "Guardar cambios" : "Save changes",
+      deleteSc: this.language == "es" ? " Eliminar escenario" : "Delete this scennary"
     };
   },
   mounted: function mounted() {
@@ -3179,7 +3196,8 @@ __webpack_require__.r(__webpack_exports__);
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 106,
-                  criterion: "No tiene experiencia laboral en Canadá o no tiene carrera profesional o técnica.",
+                  //   criterion:
+                  //     "No tiene experiencia laboral en Canadá o no tiene carrera profesional o técnica.",
                   single: 0,
                   married: 0,
                   subfactor_id: 17,
@@ -3195,7 +3213,8 @@ __webpack_require__.r(__webpack_exports__);
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 101,
-                  criterion: "No tiene el nivel de inglés mínimo para los puntos o solo estudio hasta preparatoria o menos.",
+                  //   criterion:
+                  //     "No tiene el nivel de inglés mínimo para los puntos o solo estudio hasta preparatoria o menos.",
                   single: 0,
                   married: 0,
                   subfactor_id: 16,
@@ -3211,7 +3230,8 @@ __webpack_require__.r(__webpack_exports__);
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 116,
-                  criterion: "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                  //   criterion:
+                  //     "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
                   single: 0,
                   married: 0,
                   subfactor_id: 19
@@ -3226,7 +3246,8 @@ __webpack_require__.r(__webpack_exports__);
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 111,
-                  criterion: "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
+                  //   criterion:
+                  //     "No tiene el nivel de inglés mínimo para los puntos o no tiene experiencia laboral fuera de Canadá.",
                   single: 0,
                   married: 0,
                   subfactor_id: 18
@@ -3241,7 +3262,8 @@ __webpack_require__.r(__webpack_exports__);
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 116,
-                  criterion: "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
+                  //   criterion:
+                  //     "No tienen experiencia laboral en Canadá o no tiene experiencia laboral fuera de Canadá.",
                   single: 0,
                   married: 0,
                   subfactor_id: 20
@@ -3258,7 +3280,7 @@ __webpack_require__.r(__webpack_exports__);
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 124,
-                  criterion: "Sin estudios en Canadá o menos de 1 año de duración.",
+                  //   criterion: "Sin estudios en Canadá o menos de 1 año de duración.",
                   single: 0,
                   married: 0,
                   subfactor_id: 21
@@ -3272,7 +3294,7 @@ __webpack_require__.r(__webpack_exports__);
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 127,
-                  criterion: "Sin oferta de trabajo laboral.",
+                  //   criterion: "Sin oferta de trabajo laboral.",
                   single: 0,
                   married: 0,
                   subfactor_id: 22
@@ -3286,7 +3308,7 @@ __webpack_require__.r(__webpack_exports__);
               me.selectedSubfactor.selections[index] = {
                 criterion: {
                   id: 132,
-                  criterion: "Sin familiar directo en Canadá",
+                  //   criterion: "Sin familiar directo en Canadá",
                   single: 0,
                   married: 0,
                   subfactor_id: 24
@@ -3433,7 +3455,7 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       var scenario = null;
       Swal.fire({
-        title: "Guardar cambios en  " + me.scennarioName,
+        title: (me.language == "es" ? "Guardar cambios en  " : "Save changes to") + me.scennarioName,
         type: "warning",
         showDenyButton: true,
         showCancelButton: true
@@ -3448,8 +3470,8 @@ __webpack_require__.r(__webpack_exports__);
           axios.post("save-situation", request).then(function (response) {
             Swal.fire({
               type: "success",
-              title: "Escenario guardado",
-              text: "Se ha" + scenario == null ? "creado" : "actualizado" + "este escenario"
+              title: me.language == "es" ? "Escenario guardado" : "Saved scennary",
+              text: me.language == "es" ? "Se ha" + scenario == null ? "creado" : "actualizado" + " este escenario" : "Was" + scenario == null ? "created" : "updated" + " This scennary"
             });
             me.$emit("CallReloader", Date.now());
             window.location.reload();
@@ -3459,7 +3481,7 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           Swal.fire({
             type: "info",
-            title: "No será guardado",
+            title: me.language == "es" ? "No será guardado. Debe ingresar un nombre" : "It will not be saved. You must enter a name",
             timer: 3000
           });
         }
@@ -3471,9 +3493,9 @@ __webpack_require__.r(__webpack_exports__);
       /* Save scennario as copy of current on view */
       var me = this;
       Swal.fire({
-        title: "Guardar copia de  : " + me.scennarioName,
+        title: (me.language == "es" ? "Guardar copia de  : " : "Save copy of: ") + me.scennarioName,
         type: "warning",
-        text: "Ingrese nombre para la nueva copia ",
+        text: me.language == "es" ? "Ingrese nombre para la nueva copia" : "Enter a name for the new copy",
         input: "text",
         showDenyButton: true,
         showCancelButton: true
@@ -3482,7 +3504,7 @@ __webpack_require__.r(__webpack_exports__);
           if (!result.value) {
             Swal.fire({
               type: "danger",
-              title: "Ingrese algo en el campo nombre",
+              title: me.language == "es" ? "Ingrese algo en el campo nombre" : "Enter something in the name field",
               timer: 3000
             });
           } else {
@@ -3497,14 +3519,16 @@ __webpack_require__.r(__webpack_exports__);
               if (response.data == "has_max") {
                 Swal.fire({
                   type: "warning",
-                  title: "Limite de escenarios completo",
-                  text: "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)"
+                  title: me.language == "es" ? "Limite de escenarios completo" : "Full Scenario Limit",
+                  text: me.language == "es" ? "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)" : "You already have 3 scenarios, you can't create a new one unless you delete one(s)",
+                  timer: 3000
                 });
               } else {
                 Swal.fire({
                   type: "success",
-                  title: "Escenario guardado",
-                  text: "Se ha guardado su copia exitosamente "
+                  title: me.language == "es" ? "Escenario guardado" : "Saved Scenario",
+                  text: me.language == "es" ? "Se ha guardado su copia exitosamente " : "Your copy has been saved successfully",
+                  timer: 3000
                 });
                 me.$emit("CallReloader", Date.now());
                 window.location.reload();
@@ -3514,7 +3538,7 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           Swal.fire({
             type: "info",
-            title: "No será guardado",
+            title: me.language == "es" ? "No será guardado" : "Will not be saved",
             timer: 3000
           });
         }
@@ -3525,7 +3549,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteScennary: function deleteScennary(id) {
       var me = this;
       Swal.fire({
-        title: "Desea eliminar el escenario " + me.scennarioName + "?",
+        title: (me.language == "es" ? "Desea eliminar el escenario " : "Really wish to delete ") + me.scennarioName + "?",
         type: "warning",
         icon: "trash",
         showDenyButton: true,
@@ -3536,8 +3560,8 @@ __webpack_require__.r(__webpack_exports__);
         axios.post("/delete/" + id).then(function (response) {
           Swal.fire({
             type: "success",
-            title: "Escenario eliminado",
-            text: "Se ha eliminado el escenario"
+            title: me.language == "es" ? "Escenario eliminado" : "Deleted scennary",
+            text: me.language == "es" ? "Se ha eliminado el escenario" : "Scennary was deleted"
           });
           me.$emit("CallReloader", Date.now());
           window.location.reload();
@@ -3591,9 +3615,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies", "authenticated", "reloadAt"],
+  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies", "authenticated", "reloadAt", "language"],
   components: {
     SummaryTable: _SummaryTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -3612,14 +3637,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -3723,11 +3740,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies", "reloadAt"],
+  props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies", "reloadAt", "language"],
   watch: {
     FactorsWithScores: function FactorsWithScores() {
       var _this = this;
@@ -3823,7 +3837,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       f1ScoreMarried: 0,
       f1ScoreSingle: 0,
       totalForFactor: 0,
-      sumScoreCopies: []
+      sumScoreCopies: [],
+      scoreSummary: this.language == "es" ? "Sumario de puntos" : "Score summary",
+      makePdf: this.language == "es" ? "Generar documento pdf" : "Generate pdf document",
+      actual: this.language == "es" ? "Escenario actual" : "Actual scennary",
+      mStatus: this.language == "es" ? "Estado civil" : "Maritial status",
+      single: this.language == "es" ? "Soltero" : "Single",
+      married: this.language == "es" ? "Casado" : "Married",
+      totalScore: this.language == "es" ? "Total de puntos" : "Total score"
     };
   },
   methods: {
@@ -3841,47 +3862,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return newVal;
     },
     printSummary: function printSummary() {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var fileName, response1, delay;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                delay = function _delay(time) {
-                  return new Promise(function (resolve) {
-                    return setTimeout(resolve, time);
-                  });
-                };
+      var me = this;
+      var fileName = "";
+      var response1 = null;
 
-                fileName = "";
-                response1 = null;
-                axios.post("print-summary", {
-                  data: data
-                }).then(function (response) {
-                  response1 = response;
-                  Swal.fire({
-                    type: "info",
-                    title: "Se abrirá el documento en una nueva ventana." + " Desde ahi lo puede descargar. Para volver a generarlo hay que volver a esta vista"
-                  });
-                })["catch"](function (error) {
-                  console.table(error);
-                }).then(function () {
-                  fileName = response1.data;
-                  window.open("/open_pdf/" + fileName); //   console.table(response1);
-                });
-                delay(10000).then(function () {
-                  axios.get("delete_temp_file/" + fileName).then(function (response) {});
-                })["catch"](function (error) {
-                  console.table(error);
-                });
+      function delay(time) {
+        return new Promise(function (resolve) {
+          return setTimeout(resolve, time);
+        });
+      }
 
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+      axios.post("print-summary", {
+        data: data
+      }).then(function (response) {
+        response1 = response;
+        Swal.fire({
+          type: "info",
+          title: me.language == "es" ? " Se abrirá el documento en una nueva ventana. Desde ahi lo puede descargar. Para volver a generarlo hay que volver a esta vista" : "The document will open in a new window. From there you can download it. To regenerate it you have to return to this view"
+        });
+      })["catch"](function (error) {
+        console.table(error);
+      }).then(function () {
+        fileName = response1.data;
+        window.open("/open_pdf/" + fileName); //   console.table(response1);
+      });
+      delay(10000).then(function () {
+        axios.get("delete_temp_file/" + fileName).then(function (response) {});
+      })["catch"](function (error) {
+        console.table(error);
+      });
     }
   }
 });
@@ -3973,9 +3982,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["reloader", "authenticated"],
+  props: ["reloader", "authenticated", "language"],
   components: {
     Accordions: _actual_scennario_scenario_accordions_Accordions_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3987,11 +3997,16 @@ __webpack_require__.r(__webpack_exports__);
       userActualSituation: [],
       scores: [],
       Factors: [],
-      reloader2: null
+      reloader2: null,
+      single: this.language == "es" ? "Soltero" : "Single",
+      married: this.language == "es" ? "Casado" : "Married",
+      copy: this.language == "es" ? "Copiar escenario" : "Copy scennary",
+      save: this.language == "es" ? "Guardar situacion actual" : "Save actual situation"
     };
   },
   methods: {
     getUserData: function getUserData(value) {
+      //   alert(this.language);
       this.maritialStatus = value;
     },
     changeStatus: function changeStatus(value) {
@@ -4052,33 +4067,29 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       Swal.fire({
-        title: "Guardar Escenario actual ",
+        title: me.language == "es" ? "Guardar Escenario actual " : "Save actual scennario",
         type: "warning",
-        text: "Guardar Escenario actual. A partir de este escenario podra crear otros nuevos para comparar y etc.",
+        text: me.language == "es" ? "Guardar Escenario actual. A partir de este escenario podra crear otros nuevos para comparar y etc." : "Save Current Scenario. From this scenario you could create new ones to compare and etc.",
         showDenyButton: true,
         showCancelButton: true
       }).then(function (result) {
         if ("value" in result) {
           axios.post("save-situation", {
-            scenarioName: "Escenario actual",
+            scenarioName: me.language == "es" ? "Escenario actual" : "Actual scennary",
             actualSituation: me.userActualSituation,
             maritialStatus: me.maritialStatus
           }).then(function (response) {
             Swal.fire({
               type: "success",
-              title: "Escenario guardado",
-              text: "Se ha" + scenario == null ? "creado" : "actualizado" + " este escenario"
+              title: me.language == "es" ? "Escenario guardado" : "Saved Scennary",
+              text: me.language == "es" ? "Se ha" + scenario == null ? "creado" : "actualizado" + " este escenario" : "Was" + scenario == null ? "created" : "updated" + " This scennary"
             });
-            /*  let now = Date.now();
-             me.reloader2 = now;
-             me.$emit("reloader", now); */
-
-            window.location.reload(); // console.log(response);
+            window.location.reload();
           });
         } else {
           Swal.fire({
             type: "info",
-            title: "No será guardado. Debe ingresar un nombre",
+            title: me.language == "es" ? "No será guardado. Debe ingresar un nombre" : "It will not be saved. You must enter a name",
             timer: 3000
           });
         }
@@ -4092,8 +4103,8 @@ __webpack_require__.r(__webpack_exports__);
       if (!me.userActualSituation[2].length > 0) {
         Swal.fire({
           type: "warning",
-          title: "Nada para guardar",
-          text: "No ha hecho ningun cambio. No hay nada que guardar."
+          title: me.language == "es" ? "Nada para guardar" : "nothing to save",
+          text: me.language == "es" ? "No ha hecho ningun cambio. No hay nada que guardar." : "He hasn't made any changes. There is nothing to save."
         });
       } else {
         var scenario = null;
@@ -4106,9 +4117,9 @@ __webpack_require__.r(__webpack_exports__);
         }); //copy of
 
         Swal.fire({
-          title: "Guardar copia de Escenario actual como : ",
+          title: me.language == "es" ? "Guardar copia de Escenario actual como : " : "Save copy of Current Scenario as : ",
           type: "warning",
-          text: "Ingrese nombre para la nueva copia",
+          text: me.language == "es" ? "Ingrese nombre para la nueva copia" : "Enter a name for the new copy",
           input: "text",
           showDenyButton: true,
           showCancelButton: true
@@ -4117,7 +4128,7 @@ __webpack_require__.r(__webpack_exports__);
             if (!result.value) {
               Swal.fire({
                 type: "danger",
-                title: "Ingrese algo en el campo nombre",
+                title: me.language == "es" ? "Ingrese algo en el campo nombre" : "Enter something in the name field",
                 timer: 3000
               });
             } else {
@@ -4132,16 +4143,17 @@ __webpack_require__.r(__webpack_exports__);
                 if (response.data == "has_max") {
                   Swal.fire({
                     type: "warning",
-                    title: "Limite de escenarios completo",
-                    text: "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)"
+                    title: me.language == "es" ? "Limite de escenarios completo" : "Full Scenario Limit",
+                    text: me.language == "es" ? "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)" : "You already have 3 scenarios, you can't create a new one unless you delete one(s)",
+                    timer: 3000
                   });
                 } else {
                   Swal.fire({
                     type: "success",
-                    title: "Escenario guardado",
-                    text: "Se ha guardado su copia exitosamente "
+                    title: me.language == "es" ? "Escenario guardado" : "Saved Scenario",
+                    text: me.language == "es" ? "Se ha guardado su copia exitosamente " : "Your copy has been saved successfully",
+                    timer: 3000
                   });
-                  me.$emit("CallReloader", Date.now());
                   window.location.reload();
                 }
               });
@@ -4149,7 +4161,7 @@ __webpack_require__.r(__webpack_exports__);
           } else {
             Swal.fire({
               type: "info",
-              title: "No será guardado",
+              title: me.language == "es" ? "No será guardado" : "Will not be saved",
               timer: 3000
             });
           }
@@ -23102,770 +23114,6 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/regenerator-runtime/runtime.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime.js ***!
-  \*****************************************************/
-/***/ ((module) => {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var runtime = (function (exports) {
-  "use strict";
-
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  function define(obj, key, value) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-    return obj[key];
-  }
-  try {
-    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
-    define({}, "");
-  } catch (err) {
-    define = function(obj, key, value) {
-      return obj[key] = value;
-    };
-  }
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  exports.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  define(IteratorPrototype, iteratorSymbol, function () {
-    return this;
-  });
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = GeneratorFunctionPrototype;
-  define(Gp, "constructor", GeneratorFunctionPrototype);
-  define(GeneratorFunctionPrototype, "constructor", GeneratorFunction);
-  GeneratorFunction.displayName = define(
-    GeneratorFunctionPrototype,
-    toStringTagSymbol,
-    "GeneratorFunction"
-  );
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      define(prototype, method, function(arg) {
-        return this._invoke(method, arg);
-      });
-    });
-  }
-
-  exports.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  exports.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      define(genFun, toStringTagSymbol, "GeneratorFunction");
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  exports.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator, PromiseImpl) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return PromiseImpl.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return PromiseImpl.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration.
-          result.value = unwrapped;
-          resolve(result);
-        }, function(error) {
-          // If a rejected Promise was yielded, throw the rejection back
-          // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
-    return this;
-  });
-  exports.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    if (PromiseImpl === void 0) PromiseImpl = Promise;
-
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList),
-      PromiseImpl
-    );
-
-    return exports.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        // Note: ["return"] must be used for ES3 parsing compatibility.
-        if (delegate.iterator["return"]) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  define(Gp, toStringTagSymbol, "Generator");
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  define(Gp, iteratorSymbol, function() {
-    return this;
-  });
-
-  define(Gp, "toString", function() {
-    return "[object Generator]";
-  });
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  exports.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  exports.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-
-  // Regardless of whether this script is executing as a CommonJS module
-  // or not, return the runtime object so that we can declare the variable
-  // regeneratorRuntime in the outer scope, which allows this module to be
-  // injected easily by `bin/regenerator --include-runtime script.js`.
-  return exports;
-
-}(
-  // If this script is executing as a CommonJS module, use module.exports
-  // as the regeneratorRuntime namespace. Otherwise create a new empty
-  // object. Either way, the resulting object will be used to initialize
-  // the regeneratorRuntime variable at the top of this file.
-   true ? module.exports : 0
-));
-
-try {
-  regeneratorRuntime = runtime;
-} catch (accidentalStrictMode) {
-  // This module should not be running in strict mode, so the above
-  // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, in modern engines
-  // we can explicitly access globalThis. In older engines we can escape
-  // strict mode using a global Function call. This could conceivably fail
-  // if a Content Security Policy forbids using Function, but in that case
-  // the proper solution is to fix the accidental strict mode problem. If
-  // you've misconfigured your bundler to force strict mode and applied a
-  // CSP to forbid Function, and you're not willing to fix either of those
-  // problems, please detail your unique predicament in a GitHub issue.
-  if (typeof globalThis === "object") {
-    globalThis.regeneratorRuntime = runtime;
-  } else {
-    Function("r", "regeneratorRuntime = r")(runtime);
-  }
-}
-
-
-/***/ }),
-
 /***/ "./resources/css/vue_modal.css":
 /*!*************************************!*\
   !*** ./resources/css/vue_modal.css ***!
@@ -25191,9 +24439,53 @@ var render = function () {
                 "nav nav-tabs nav-justified nav-bordered mb-3 customtab",
             },
             [
-              _vm._m(0),
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link active",
+                    attrs: {
+                      href: "#Summary",
+                      "data-toggle": "tab",
+                      "aria-expanded": "false",
+                    },
+                  },
+                  [
+                    _c("i", {
+                      staticClass:
+                        "mdi mdi-home-variant d-lg-none d-block mr-1",
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "d-none d-lg-block" }, [
+                      _vm._v(_vm._s(_vm.summary)),
+                    ]),
+                  ]
+                ),
+              ]),
               _vm._v(" "),
-              _vm._m(1),
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    attrs: {
+                      href: "#Situation",
+                      "data-toggle": "tab",
+                      "aria-expanded": "true",
+                    },
+                  },
+                  [
+                    _c("i", {
+                      staticClass:
+                        "mdi mdi-account-circle d-lg-none d-block mr-1",
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "d-none d-lg-block" }, [
+                      _vm._v(_vm._s(_vm.actual)),
+                    ]),
+                  ]
+                ),
+              ]),
               _vm._v(" "),
               _vm._l(_vm.scennariosCopies, function (sCopy) {
                 return _c("li", { staticClass: "nav-item" }, [
@@ -25214,7 +24506,7 @@ var render = function () {
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "d-none d-lg-block" }, [
-                        _vm._v(_vm._s(_vm.$trans(sCopy.name))),
+                        _vm._v(_vm._s(sCopy.name)),
                       ]),
                     ]
                   ),
@@ -25244,6 +24536,7 @@ var render = function () {
                       maritialStatusChanged: _vm.maritialStatusChanged,
                       scennariosCopies: _vm.scennariosCopies,
                       authenticated: _vm.authenticated,
+                      language: _vm.language,
                       reloadAt: _vm.reloadAt,
                     },
                   }),
@@ -25256,7 +24549,10 @@ var render = function () {
                 { staticClass: "tab-pane", attrs: { id: "Situation" } },
                 [
                   _c("SituationA", {
-                    attrs: { authenticated: _vm.authenticated },
+                    attrs: {
+                      authenticated: _vm.authenticated,
+                      language: _vm.language,
+                    },
                     on: {
                       maritialChanged: _vm.getMaritialChanged,
                       selectedSituation: _vm.getSituation,
@@ -25285,6 +24581,7 @@ var render = function () {
                           ? copy.is_married
                           : 0,
                         scennarioName: copy.name,
+                        language: _vm.language,
                       },
                     }),
                   ],
@@ -25299,60 +24596,7 @@ var render = function () {
     ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-link active",
-          attrs: {
-            href: "#Summary",
-            "data-toggle": "tab",
-            "aria-expanded": "false",
-          },
-        },
-        [
-          _c("i", {
-            staticClass: "mdi mdi-home-variant d-lg-none d-block mr-1",
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "d-none d-lg-block" }, [_vm._v("Sumario")]),
-        ]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-link",
-          attrs: {
-            href: "#Situation",
-            "data-toggle": "tab",
-            "aria-expanded": "true",
-          },
-        },
-        [
-          _c("i", {
-            staticClass: "mdi mdi-account-circle d-lg-none d-block mr-1",
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "d-none d-lg-block" }, [
-            _vm._v("Escenario actual"),
-          ]),
-        ]
-      ),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -25395,6 +24639,7 @@ var render = function () {
             "a",
             {
               staticClass: "dropdown-item",
+              class: _vm.lang === "es" ? "active" : "",
               on: {
                 click: function ($event) {
                   return _vm.setLang("es")
@@ -25411,6 +24656,7 @@ var render = function () {
             "a",
             {
               staticClass: "dropdown-item",
+              class: _vm.lang === "en" ? "active" : "",
               on: {
                 click: function ($event) {
                   return _vm.setLang("en")
@@ -26108,10 +25354,7 @@ var render = function () {
               attrs: { type: "button" },
               on: { click: _vm.saveScennarioCopy },
             },
-            [
-              _vm._m(0),
-              _vm._v(" Guardar cambios en\n          escenario\n        "),
-            ]
+            [_vm._m(0), _vm._v(" " + _vm._s(_vm.save) + "\n        ")]
           ),
         ]),
         _vm._v(" "),
@@ -26127,7 +25370,7 @@ var render = function () {
                 },
               },
             },
-            [_vm._m(1), _vm._v(" Copiar ecenario\n        ")]
+            [_vm._m(1), _vm._v(" " + _vm._s(_vm.copy) + "\n        ")]
           ),
         ]),
         _vm._v(" "),
@@ -26143,7 +25386,7 @@ var render = function () {
                 },
               },
             },
-            [_vm._m(2), _vm._v(" Eliminar\n          escenario\n        ")]
+            [_vm._m(2), _vm._v(_vm._s(_vm.deleteSc) + "\n        ")]
           ),
         ]),
       ]),
@@ -26183,7 +25426,7 @@ var render = function () {
                     staticClass: "form-check-label",
                     attrs: { for: _vm.copyId + "isSingleCopy" },
                   },
-                  [_vm._v("Soltero")]
+                  [_vm._v(_vm._s(_vm.single))]
                 ),
               ]
             ),
@@ -26210,7 +25453,7 @@ var render = function () {
                   staticClass: "form-check-label",
                   attrs: { for: _vm.copyId + "isMarriedCopy" },
                 },
-                [_vm._v("Casado")]
+                [_vm._v(_vm._s(_vm.married))]
               ),
             ]),
           ]),
@@ -26557,6 +25800,7 @@ var render = function () {
                 scennariosCopies: _vm.scennariosCopies,
                 authenticated: _vm.authenticated,
                 reloadAt: _vm.reloadAt,
+                language: _vm.language,
               },
             })
           : _vm._e(),
@@ -26609,7 +25853,11 @@ var render = function () {
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-body" }, [
       _c("div", { staticClass: "row pb-3 mb-2" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("h4", { staticClass: "card-title" }, [
+            _vm._v(_vm._s(_vm.scoreSummary)),
+          ]),
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-4" }, [
           _c(
@@ -26619,7 +25867,7 @@ var render = function () {
               attrs: { type: "button" },
               on: { click: _vm.printSummary },
             },
-            [_vm._m(1), _vm._v(" Generar pdf\n        ")]
+            [_vm._m(0), _vm._v(" " + _vm._s(_vm.makePdf) + "\n        ")]
           ),
         ]),
       ]),
@@ -26645,7 +25893,7 @@ var render = function () {
                   _c(
                     "th",
                     { attrs: { "data-sortable": "", "data-width": "auto" } },
-                    [_vm._v("Escenario actual")]
+                    [_vm._v(_vm._s(_vm.actual))]
                   ),
                   _vm._v(" "),
                   _vm._l(_vm.scennariosCopies, function (sCopy) {
@@ -26675,7 +25923,7 @@ var render = function () {
                 _c(
                   "tr",
                   [
-                    _vm._m(2),
+                    _c("th", [_c("b", [_vm._v(_vm._s(_vm.mStatus))])]),
                     _vm._v(" "),
                     _c("th", { staticClass: "detail" }, [
                       _vm._v(
@@ -26683,9 +25931,9 @@ var render = function () {
                           _vm._s(
                             _vm.maritialStatusChanged != null
                               ? _vm.maritialStatusChanged == "Married"
-                                ? "Casado"
-                                : "Soltero"
-                              : "Single"
+                                ? _vm.married
+                                : _vm.single
+                              : _vm.single
                           ) +
                           "\n            "
                       ),
@@ -26696,9 +25944,11 @@ var render = function () {
                         _vm._v(
                           "\n              " +
                             _vm._s(
-                              sCopy1.is_married == true ? "Casado" : "Soltero"
+                              sCopy1.is_married == true
+                                ? _vm.married
+                                : _vm.single
                             ) +
-                            "\n              "
+                            "\n            "
                         ),
                       ])
                     }),
@@ -26709,7 +25959,7 @@ var render = function () {
                 _c(
                   "tr",
                   [
-                    _c("th", [_vm._v("Total de puntos")]),
+                    _c("th", [_vm._v(_vm._s(_vm.totalScore))]),
                     _vm._v(" "),
                     _c("th", { staticClass: "text-right" }, [
                       _vm._v(_vm._s(_vm.totalForFactor)),
@@ -26787,23 +26037,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-8" }, [
-      _c("h4", { staticClass: "card-title" }, [_vm._v("Sumario de puntos")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("span", { staticClass: "btn-label" }, [
       _c("i", { staticClass: "far fa-file-pdf" }),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("b", [_vm._v("Estado civil")])])
   },
 ]
 render._withStripped = true
@@ -26842,12 +26078,7 @@ var render = function () {
                     attrs: { type: "button" },
                     on: { click: _vm.saveSituation },
                   },
-                  [
-                    _vm._m(0),
-                    _vm._v(
-                      " Guardar\n            Escenario actual\n          "
-                    ),
-                  ]
+                  [_vm._m(0), _vm._v(_vm._s(_vm.save) + "\n          ")]
                 ),
               ])
             : _vm._e(),
@@ -26866,7 +26097,7 @@ var render = function () {
                       },
                     },
                   },
-                  [_vm._m(1), _vm._v(" Copiar ecenario\n          ")]
+                  [_vm._m(1), _vm._v(" " + _vm._s(_vm.copy) + "\n          ")]
                 ),
               ])
             : _vm._e(),
@@ -26911,7 +26142,7 @@ var render = function () {
                         staticClass: "form-check-label",
                         attrs: { for: "isSingle" },
                       },
-                      [_vm._v("Soltero")]
+                      [_vm._v(_vm._s(_vm.single))]
                     ),
                   ]
                 ),
@@ -26939,7 +26170,7 @@ var render = function () {
                       staticClass: "form-check-label",
                       attrs: { for: "isMarried" },
                     },
-                    [_vm._v("Casado")]
+                    [_vm._v(_vm._s(_vm.married))]
                   ),
                 ]),
               ]),
@@ -26951,6 +26182,7 @@ var render = function () {
               maritialStatus: _vm.maritialStatus,
               reloader2: _vm.reloader2,
               authenticated: _vm.authenticated,
+              language: _vm.language,
             },
             on: {
               sumScore: _vm.getScore,
@@ -39636,15 +38868,13 @@ Vue.component('content-component', (__webpack_require__(/*! ./components/Content
 Vue.component('user-component', (__webpack_require__(/*! ./components/UserComponent.vue */ "./resources/js/components/UserComponent.vue")["default"]));
 Vue.component('lang-component', (__webpack_require__(/*! ./components/LangComponent.vue */ "./resources/js/components/LangComponent.vue")["default"]));
 Vue.component('password-input', (__webpack_require__(/*! ./components/custom/PasswordInput.vue */ "./resources/js/components/custom/PasswordInput.vue")["default"]));
-Vue.use((_eli5_vue_lang_js__WEBPACK_IMPORTED_MODULE_0___default()), {
-  messages: (_vue_translations_js__WEBPACK_IMPORTED_MODULE_1___default()),
-  // Provide locale file
-  // locale: 'en', // Set locale
-  fallback: 'en' // Set fallback lacale
+/* Vue.use(VueLang, {
+    messages: translations, // Provide locale file
+    // locale: 'en', // Set locale
+    fallback: 'en' // Set fallbasck lacale
+}); */
 
-});
 var app = new Vue({
-  //el: '#app',
   el: '#main-wrapper',
   data: {
     menu: 0

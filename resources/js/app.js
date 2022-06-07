@@ -14,8 +14,6 @@ require('lang.js');
 window.Vue = require('vue').default;
 
 // get the data source
-
-
 Vue.component('change_themme', require('./components/ChangeThemmeComponent.vue').default);
 Vue.component('content-component', require('./components/Content.vue').default);
 Vue.component('user-component', require('./components/UserComponent.vue').default);
@@ -23,14 +21,13 @@ Vue.component('lang-component', require('./components/LangComponent.vue').defaul
 Vue.component('password-input', require('./components/custom/PasswordInput.vue').default);
 
 
-Vue.use(VueLang, {
+/* Vue.use(VueLang, {
     messages: translations, // Provide locale file
     // locale: 'en', // Set locale
-    fallback: 'en' // Set fallback lacale
-});
+    fallback: 'en' // Set fallbasck lacale
+}); */
 
 const app = new Vue({
-    //el: '#app',
     el: '#main-wrapper',
     data: {
         menu: 0

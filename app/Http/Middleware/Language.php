@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -17,8 +18,16 @@ class Language
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session()->has("lang_code")) {
-            App::setLocale(session()->get("lang_code"));
+        if (session('applocate')) {
+            $configLanguaje = config('languajes')[session('applocate')];
+            setlocale(LC_TIME, $configLanguaje[1] . 'utf8');
+            Carbon::setLocale(session('applocate'));
+            App::setLocale(session('applocate'));
+        } else {
+            session()->put('applocate', config('app.fallback_locale'));
+            setlocale(LC_TIME, 'es_ES.utf8');
+            Carbon::setLocale(session('applocate'));
+            App::setLocale(config('app.fallback_locale'));
         }
         return $next($request);
     }

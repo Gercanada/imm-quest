@@ -279,27 +279,21 @@ class FactorController extends Controller
 
 
 
-
-
     //////////////////
     public function factors(Request $request)/* get factors for  create accordions */
     {
         try {
             $scenarios = null;
-            // $selectQuery = null;
             $locale = App::getLocale() ? App::getLocale() : 'en';
-
-            $locale = 'en';
-
+            // $locale = 'en';
             // return $locale;
-
             $factors = Factor::where('factors.title', '!=', 'default')
                 ->with('subfactors')
                 // ->where('subfactors.subfactor', '!=', 'default')
                 ->with('subfactors.criteria')->get();
 
-
             $response = [];
+
             if ($locale == 'en') {
                 foreach ($factors as $factor) {
                     $subs = [];
@@ -328,8 +322,6 @@ class FactorController extends Controller
                     ]);
                 }
             }
-
-
 
             if ($locale == 'es') {
                 foreach ($factors as $factor) {
@@ -489,6 +481,8 @@ class FactorController extends Controller
     {
         try {
             $user = Auth::user();
+            $locale = App::getLocale() ? App::getLocale() : 'en';
+
             $factorsHtml = '';
             $scennariosHtml = '';
             $totals = '';
@@ -499,7 +493,21 @@ class FactorController extends Controller
 
             $scennarios = Scenario::Where('user_id', $user->id)->get();
 
-            $factors = Factor::where('factors.title', '!=', 'default')
+
+            $factorTitle = 'factors.title';
+            $subtitle = 'sub_title';
+            $single = "Single";
+            $married = "Married";
+
+            if ($locale === 'es') {
+                $factorTitle =  'factors.titulo';
+                $subtitle = 'sub_titulo';
+                $single = "Soltero";
+                $married = "Casado";
+            }
+
+
+            $factors = Factor::where($factorTitle, '!=', 'default')
                 ->with('subfactors')
                 ->with('subfactors.criteria')->get();
 
@@ -527,7 +535,7 @@ class FactorController extends Controller
                 $totalsForScennario = $scennarioSums;
 
                 $factorsHtml =  $factorsHtml  . "<tr>"
-                    . "<td>" .  $factor['title'] . ' ' . $factor['sub_title'] . "</td>"
+                    . "<td>" .  $factor['title'] . ' ' . $factor[$subtitle] . "</td>"
                     . $tdSum
                     . "</tr>";
             }
@@ -536,7 +544,7 @@ class FactorController extends Controller
                 $totals = $totals . "<th class='num-val totals'>" . $scennarioSum . "</th>";
             }
             foreach ($scennarios as $scennario) {
-                $married = $scennario['is_married'] == 1 ? 'Casado' : 'Soltero';
+                $married = $scennario['is_married'] == 1 ? $married : $single;
                 $scennariosHtml =  $scennariosHtml  . "<th>" .  $scennario['name'] . "</th>";
                 $scennarioMaritialSituationHtml =  $scennarioMaritialSituationHtml  . "<th>" . $married . "</th>";
             }

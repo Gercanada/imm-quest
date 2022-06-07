@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="card">
+      <!-- <h1 class="bg-success">{{ language }}</h1> -->
       <div class="card-header">
         <div class="row justify-content-end">
           <div class="col-md-3 align-self-end" v-if="authenticated">
@@ -9,8 +10,7 @@
               type="button"
               @click="saveSituation"
             >
-              <span class="btn-label"> <i class="fas fa-save"></i></span> Guardar
-              Escenario actual
+              <span class="btn-label"> <i class="fas fa-save"></i></span>{{ save }}
             </button>
           </div>
           <div class="col-md-3 align-self-end" v-if="authenticated">
@@ -19,7 +19,7 @@
               type="button"
               @click="copyScennario()"
             >
-              <span class="btn-label"> <i class="fas fa-copy"></i></span> Copiar ecenario
+              <span class="btn-label"> <i class="fas fa-copy"></i></span> {{ copy }}
             </button>
           </div>
         </div>
@@ -38,7 +38,7 @@
                 :checked="maritialStatus == 'Single'"
                 @change="changeStatus('Single')"
               />
-              <label class="form-check-label" for="isSingle">Soltero</label>
+              <label class="form-check-label" for="isSingle">{{ single }}</label>
             </div>
             <div class="form-check form-check-inline">
               <input
@@ -50,7 +50,7 @@
                 :checked="maritialStatus == 'Married'"
                 @change="changeStatus('Married')"
               />
-              <label class="form-check-label" for="isMarried">Casado</label>
+              <label class="form-check-label" for="isMarried">{{ married }}</label>
             </div>
           </div>
         </div>
@@ -65,6 +65,7 @@
           :maritialStatus="maritialStatus"
           :reloader2="reloader2"
           :authenticated="authenticated"
+          :language="language"
         />
       </div>
     </div>
@@ -74,7 +75,7 @@
 <script>
 import Accordions from "../actual-scennario/scenario-accordions/Accordions.vue";
 export default {
-  props: ["reloader", "authenticated"],
+  props: ["reloader", "authenticated", "language"],
   components: {
     Accordions,
   },
@@ -87,10 +88,15 @@ export default {
       scores: [],
       Factors: [],
       reloader2: null,
+      single: this.language == "es" ? "Soltero" : "Single",
+      married: this.language == "es" ? "Casado" : "Married",
+      copy: this.language == "es" ? "Copiar escenario" : "Copy scennary",
+      save: this.language == "es" ? "Guardar situacion actual" : "Save actual situation",
     };
   },
   methods: {
     getUserData(value) {
+      //   alert(this.language);
       this.maritialStatus = value;
     },
 
@@ -160,10 +166,13 @@ export default {
       }
 
       Swal.fire({
-        title: "Guardar Escenario actual ",
+        title:
+          me.language == "es" ? "Guardar Escenario actual " : "Save actual scennario",
         type: "warning",
         text:
-          "Guardar Escenario actual. A partir de este escenario podra crear otros nuevos para comparar y etc.",
+          me.language == "es"
+            ? "Guardar Escenario actual. A partir de este escenario podra crear otros nuevos para comparar y etc."
+            : "Save Current Scenario. From this scenario you could create new ones to compare and etc.",
         showDenyButton: true,
         showCancelButton: true,
       })
@@ -171,27 +180,35 @@ export default {
           if ("value" in result) {
             axios
               .post("save-situation", {
-                scenarioName: "Escenario actual",
+                scenarioName:
+                  me.language == "es" ? "Escenario actual" : "Actual scennary",
                 actualSituation: me.userActualSituation,
                 maritialStatus: me.maritialStatus,
               })
               .then(function (response) {
                 Swal.fire({
                   type: "success",
-                  title: "Escenario guardado",
+                  title: me.language == "es" ? "Escenario guardado" : "Saved Scennary",
                   text:
-                    "Se ha" + scenario == null
-                      ? "creado"
-                      : "actualizado" + " este escenario",
+                    me.language == "es"
+                      ? "Se ha" + scenario == null
+                        ? "creado"
+                        : "actualizado" + " este escenario"
+                      : "Was" + scenario == null
+                      ? "created"
+                      : "updated" + " This scennary",
                 });
-               /*  let now = Date.now();
-                me.reloader2 = now;
-                me.$emit("reloader", now); */
                 window.location.reload();
-                // console.log(response);
               });
           } else {
-            Swal.fire({ type: "info", title: "No será guardado. Debe ingresar un nombre", timer: 3000 });
+            Swal.fire({
+              type: "info",
+              title:
+                me.language == "es"
+                  ? "No será guardado. Debe ingresar un nombre"
+                  : "It will not be saved. You must enter a name",
+              timer: 3000,
+            });
           }
         })
         .catch(function (error) {
@@ -204,8 +221,11 @@ export default {
       if (!me.userActualSituation[2].length > 0) {
         Swal.fire({
           type: "warning",
-          title: "Nada para guardar",
-          text: "No ha hecho ningun cambio. No hay nada que guardar.",
+          title: me.language == "es" ? "Nada para guardar" : "nothing to save",
+          text:
+            me.language == "es"
+              ? "No ha hecho ningun cambio. No hay nada que guardar."
+              : "He hasn't made any changes. There is nothing to save.",
         });
       } else {
         let scenario = null;
@@ -218,9 +238,15 @@ export default {
         });
         //copy of
         Swal.fire({
-          title: "Guardar copia de Escenario actual como : ",
+          title:
+            me.language == "es"
+              ? "Guardar copia de Escenario actual como : "
+              : "Save copy of Current Scenario as : ",
           type: "warning",
-          text: "Ingrese nombre para la nueva copia",
+          text:
+            me.language == "es"
+              ? "Ingrese nombre para la nueva copia"
+              : "Enter a name for the new copy",
           input: "text",
           showDenyButton: true,
           showCancelButton: true,
@@ -230,7 +256,10 @@ export default {
               if (!result.value) {
                 Swal.fire({
                   type: "danger",
-                  title: "Ingrese algo en el campo nombre",
+                  title:
+                    me.language == "es"
+                      ? "Ingrese algo en el campo nombre"
+                      : "Enter something in the name field",
                   timer: 3000,
                 });
               } else {
@@ -242,27 +271,41 @@ export default {
                 };
 
                 axios.post("copy", request).then(function (response) {
-                //   console.log(response);
+                  //   console.log(response);
                   if (response.data == "has_max") {
                     Swal.fire({
                       type: "warning",
-                      title: "Limite de escenarios completo",
+                      title:
+                        me.language == "es"
+                          ? "Limite de escenarios completo"
+                          : "Full Scenario Limit",
                       text:
-                        "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)",
+                        me.language == "es"
+                          ? "Ya tiene 3 escenarios, No puede crear otro nuevo a menos que elimine alguno(s)"
+                          : "You already have 3 scenarios, you can't create a new one unless you delete one(s)",
+                      timer: 3000,
                     });
                   } else {
                     Swal.fire({
                       type: "success",
-                      title: "Escenario guardado",
-                      text: "Se ha guardado su copia exitosamente ",
+                      title:
+                        me.language == "es" ? "Escenario guardado" : "Saved Scenario",
+                      text:
+                        me.language == "es"
+                          ? "Se ha guardado su copia exitosamente "
+                          : "Your copy has been saved successfully",
+                      timer: 3000,
                     });
-                    me.$emit("CallReloader", Date.now());
                     window.location.reload();
                   }
                 });
               }
             } else {
-              Swal.fire({ type: "info", title: "No será guardado", timer: 3000 });
+              Swal.fire({
+                type: "info",
+                title: me.language == "es" ? "No será guardado" : "Will not be saved",
+                timer: 3000,
+              });
             }
           })
           .catch(function (error) {

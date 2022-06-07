@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html dir="ltr" {{-- lang="en" --}}>
 
 <head>
     <meta charset="utf-8">
@@ -63,7 +63,6 @@
             border-radius: 50%;
             animation: lds-ripple 1s cubic-bezier(0, .1, .5, 1) infinite;
         }
-
     </style>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -100,28 +99,22 @@
         {{-- @include('layouts.aside') --}}
 
         @if (!Auth::user())
-            {{-- @yield('content') --}}{{-- login view --}}
             @php
                 $user_auth_data = [
                     'isLoggedin' => false,
+                    'languaje' => session()->get('applocate'),
                 ];
             @endphp
         @endif
         {{-- @else --}}
         @if (Auth::user())
-            {{-- <header class="topbar">
-            @include('layouts.navbar')
-             </header> --}}
             @php
                 $user_auth_data = [
                     'isLoggedin' => true,
                     'user' => Auth::user(),
+                    'languaje' => session()->get('applocate'),
                 ];
             @endphp
-        @endif
-        {{-- aside --}}
-        @if (Auth::user())
-            {{-- @include('layouts.aside') --}}
         @endif
         {{-- body --}}
         <div class="page-wrapper ml-0">
@@ -136,7 +129,7 @@
                 © 2020 Admin Pro Admin by wrappixel.com
             </footer> --}}
         </div>
-          @include('layouts.footer')
+        @include('layouts.footer')
         {{-- @endif --}}
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
@@ -56,5 +57,14 @@ class Controller extends BaseController
         );
         array_push($errors, $obj);
         return Storage::put('json_logs.json', $errors);
+    }
+
+    public function lang($lang)
+    {
+        $langs = config('languajes');
+        if (array_key_exists($lang, $langs)) {
+            session()->put('applocate', $lang);
+        }
+        return back();
     }
 }

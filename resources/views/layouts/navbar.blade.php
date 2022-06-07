@@ -11,7 +11,8 @@
     <!-- This is the navigation menu -->
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto stylish-nav" style="display: inline-block">
-           {{--  <lang-component></lang-component> --}}
+            <lang-component></lang-component>
+            {{-- {{ session()->get('applocate') }} --}}
             @if (Auth::user())
                 <li class="nav-item d-md-block waves-effect waves-dark float-left">
                     <change_themme></change_themme>
@@ -69,14 +70,17 @@
                 <li class="nav-item float-left">
                     <a class="nav-link " href="/login" aria-haspopup="true">
                         <span class="text-info d-inline-block text-center btn btn-outline-success">
-                            <i class="fas fa-key"> Login</i>
+                            <i class="fas fa-key">
+                                {{ session()->get('applocate') == 'en' ? 'Login' : 'Ingresar' }}
+                            </i>
                         </span>
                     </a>
                 </li>
                 <li class="nav-item float-right ml-4">
                     <a class="nav-link " href="/register" aria-haspopup="true">
                         <span class=" text-info d-inline-block text-center btn btn-outline-info">
-                            <i class="fas fa-user-plus"> Register</i>
+                            <i class="fas fa-user-plus">
+                                {{ session()->get('applocate') == 'en' ? 'Register' : 'Registrarme' }} </i>
                         </span>
                     </a>
                 </li>

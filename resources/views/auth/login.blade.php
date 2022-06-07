@@ -56,7 +56,7 @@
                                         <div class="checkbox checkbox-info pt-0">
                                             <input class="material-inputs chk-col-indigot" id="checkbox-signup"
                                                 type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                            <label for="checkbox-signup"> Remember me </label>
+                                            <label for="checkbox-signup">{{ session()->get('applocate') =='en'?"Remember me":'Recuerdame'}}  </label>
                                         </div>
                                         {{-- <div class="ml-auto">
                                             @if (Route::has('password.request'))
@@ -75,7 +75,7 @@
                                     <div class="col-xs-12">
                                         <button
                                             class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
-                                            type="submit"><i class="fas  fa-key "> </i> Log In</button>
+                                            type="submit"><i class="fas  fa-key "> </i> {{ session()->get('applocate') =='en'?'Log In':'Ingresar'}} </button>
                                     </div>
                                 </div>
                             </form>

@@ -1,6 +1,5 @@
 <template>
   <div class="container-fluid">
-    <!-- {{ $trans("file.key") }} -->
     <div class="row">
       <div class="card">
         <div class="card-body">
@@ -14,7 +13,7 @@
                 class="nav-link active"
               >
                 <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
-                <span class="d-none d-lg-block">Sumario</span>
+                <span class="d-none d-lg-block">{{ summary }}</span>
               </a>
             </li>
             <li class="nav-item">
@@ -25,7 +24,7 @@
                 class="nav-link"
               >
                 <i class="mdi mdi-account-circle d-lg-none d-block mr-1"></i>
-                <span class="d-none d-lg-block">Escenario actual</span>
+                <span class="d-none d-lg-block">{{ actual }}</span>
               </a>
             </li>
             <li class="nav-item" v-for="sCopy in scennariosCopies">
@@ -36,13 +35,14 @@
                 class="nav-link"
               >
                 <i class="mdi mdi-playlist-plus d-lg-none d-block mr-1"></i>
-                <span class="d-none d-lg-block">{{ $trans(sCopy.name) }}</span>
+                <span class="d-none d-lg-block">{{ sCopy.name }}</span>
               </a>
             </li>
           </ul>
 
           <div class="tab-content" style="width: 100%">
             <div class="tab-pane show active" id="Summary">
+              <!-- <h1 class="bg-danger">{{ language }}</h1> -->
               <!-- Contains SumMMaryTable component -->
               <!-- Send values from thit tho his children -->
               <Summary
@@ -53,6 +53,7 @@
                 :maritialStatusChanged="maritialStatusChanged"
                 :scennariosCopies="scennariosCopies"
                 :authenticated="authenticated"
+                :language="language"
                 :reloadAt="reloadAt"
               />
             </div>
@@ -68,6 +69,7 @@
                 @factorsWithSubfactors="getFactsWSubfacts"
                 @reloader="getReloader"
                 :authenticated="authenticated"
+                :language="language"
               />
             </div>
             <div v-for="copy in scennariosCopies" :id="'copy' + copy.id" class="tab-pane">
@@ -78,6 +80,7 @@
                 :factors="factorsWithSubfactors"
                 :maritialSituation="copy.is_married ? copy.is_married : 0"
                 :scennarioName="copy.name"
+                :language="language"
               />
             </div>
           </div>
@@ -115,17 +118,27 @@ export default {
       factorsWithSubfactors: [],
       reloadAt: null,
       authenticated: false,
+      language: null,
+      summary: "Summary",
+      actual: "Actual scennario",
     };
   },
 
   created() {
     if (window.Laravel.user) {
+      this.language = window.Laravel.languaje;
       this.email = window.Laravel.user.email;
       this.name = window.Laravel.user.name;
       this.last_name = window.Laravel.user.last_name;
       this.authenticated = true;
+      //   this.language = window.Laravel.Languaje;
     } else {
       this.authenticated = false;
+    }
+
+    if (this.language === "es") {
+      this.summary = "Sumario";
+      this.actual = "Escenario actual";
     }
   },
 

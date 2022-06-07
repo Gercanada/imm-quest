@@ -22,6 +22,7 @@
         :scennariosCopies="scennariosCopies"
         :authenticated="authenticated"
         :reloadAt="reloadAt"
+        :language="language"
       />
     </div>
   </div>
@@ -38,6 +39,7 @@ export default {
     "scennariosCopies",
     "authenticated",
     "reloadAt",
+    "language",
   ],
   components: {
     SummaryTable,

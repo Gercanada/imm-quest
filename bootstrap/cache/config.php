@@ -7,8 +7,8 @@
     'url' => 'http://localhost:8000',
     'asset_url' => '',
     'timezone' => 'America/Mexico_City',
-    'locale' => 'en',
-    'fallback_locale' => 'en',
+    'locale' => 'es',
+    'fallback_locale' => 'es',
     'faker_locale' => 'en_US',
     'key' => 'base64:7t7KG7y3iaA2lS18UsHVqmOqtGhThXGo5tlA7NZjacw=',
     'cipher' => 'AES-256-CBC',
@@ -436,6 +436,19 @@
       'memory' => 1024,
       'threads' => 2,
       'time' => 2,
+    ),
+  ),
+  'languajes' => 
+  array (
+    'es' => 
+    array (
+      0 => 'Spanish',
+      1 => 'es_ES',
+    ),
+    'en' => 
+    array (
+      0 => 'English',
+      1 => 'en_EN',
     ),
   ),
   'logging' => 

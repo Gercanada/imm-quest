@@ -27,6 +27,7 @@
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "laravel-lang/lang": "^10.9",
         "laravel/breeze": "^1.4",
         "laravel/sail": "^1.14",
         "mockery/mockery": "^1.4.4",
