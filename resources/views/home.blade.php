@@ -58,7 +58,6 @@
             /* opacity: 100%; */
 
         }
-
     </style>
     @if (Auth::user() && Auth::user()->themme_layout === 0)
         {{-- dark --}}
@@ -81,7 +80,6 @@
             .popover .popover-body {
                 background-color: rgb(41, 41, 41);
             }
-
         </style>
     @elseif (Auth::user() && Auth::user()->themme_layout === 1)
         {{-- ligth --}}
@@ -107,7 +105,6 @@
                 background-color: white;
                 border-top: none
             }
-
         </style>
     @else
     @endif
@@ -170,8 +167,11 @@
         style="background:url(/{{ env('ASSET_URL') }}images/fondocanada.jpg) no-repeat center center fixed; background-size: cover;">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="card-title text-center">Bienvenido</h1>
-                <h3 class="card-subtitle text-center">Calcula tus puntos Express entry</h3>
+                <h1 class="card-title text-center">{{ session()->get('applocate') == 'es' ? 'Bienvenido' : 'Welcome' }}
+                </h1>
+                <h3 class="card-subtitle text-center">
+                    {{ session()->get('applocate') == 'es' ? 'Calcula tus puntos Express entry' : 'Calculate your Express entry points' }}
+                </h3>
                 <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators3" data-slide-to="0" class="active"></li>
@@ -182,42 +182,69 @@
                     </ol>
                     <div class="carousel-inner pt-4" role="listbox">
                         <div class="carousel-item active text-center">
-                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Register.png" alt="First slide">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Register.png"
+                                alt="First slide">
                             <div class="carousel-caption d-none d-md-block">
-                                <h3 class="text-white">Registrate</h3>
-                                <p>Crea un usuario para poder calcular y guardar tus resultados</p>
+                                <h3 class="text-white">
+                                    {{ session()->get('applocate') == 'es' ? 'Registrate' : 'Sign Up' }}
+                                </h3>
+                                <p> {{ session()->get('applocate') == 'es'
+                                    ? 'Crea un usuario para poder calcular y guardar tus resultados'
+                                    : 'Create a user to be able to calculate and save your results' }}
+                                </p>
                             </div>
                         </div>
                         <div class="carousel-item text-center">
-                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/ActualSituacion.png" alt="Second slide">
+                            <img class="img-fluid"
+                                src="/{{ env('ASSET_URL') }}images/slide-guide/ActualSituacion.png" alt="Second slide">
                             <div class="carousel-caption d-none d-md-block">
-                                <h3 class="text-white">Calcula tu estado actual</h3>
-                                <p>Calcula el puntaje que obtendrias en tu situacion actual para poder migrar</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item text-center ">
-                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/CopyActual.png" alt="Third slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3 class="text-white">Simula otros posibles escenarios</h3>
-                                <p>Copia tu escenario y calcula el puntaje que obtendrias para migrar en una situacion
-                                    diferente
+                                <h3 class="text-white">
+                                    {{ session()->get('applocate') == 'es' ? 'Calcula tu estado actual' : 'Calculate your current status' }}
+                                </h3>
+                                <p> {{ session()->get('applocate') == 'es'
+                                    ? 'Calcula el puntaje que obtendrias en tu situacion actual para poder migrar'
+                                    : 'Calculate the score you would get in your current situation to be able to migrate' }}
                                 </p>
                             </div>
                         </div>
                         <div class="carousel-item text-center ">
-                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Summary.png" alt="Forth slide">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/CopyActual.png"
+                                alt="Third slide">
                             <div class="carousel-caption d-none d-md-block">
-                                <h3 class="text-white">Mostrar  resultados</h3>
-                                <p>Muestra los puntos obtenidos en los distintos escntarios del usuario</p>
+                                <h3 class="text-white">
+                                    {{ session()->get('applocate') == 'es' ? 'Simula otros posibles escenarios' : 'Simulate other possible scenarios' }}
+                                </h3>
+                                <p>{{ session()->get('applocate') == 'es'
+                                    ? '  Copia tu escenario y calcula el puntaje que obtendrias para migrar en una situacion diferente'
+                                    : 'Copy your scenario and calculate the score you would get to migrate in a different situation' }}
+
+                                </p>
                             </div>
                         </div>
                         <div class="carousel-item text-center ">
-                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Document.png" alt="Forth slide">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Summary.png"
+                                alt="Forth slide">
                             <div class="carousel-caption d-none d-md-block">
-                                <h3 class="text-white">Imprime tus resultados</h3>
-                                <p>Genera e imprime un documento que contenga los resustados de tu situacion y los
-                                    escenarios
-                                    simulados</p>
+                                <h3 class="text-white">
+                                    {{ session()->get('applocate') == 'es' ? 'Mostrar resultados' : 'show results' }}
+                                </h3>
+                                <p> {{ session()->get('applocate') == 'es'
+                                    ? 'Muestra los puntos obtenidos en los distintos escntarios del usuario '
+                                    : 'Shows the points obtained in the different user scenarios' }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="carousel-item text-center ">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/Document.png"
+                                alt="Forth slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3 class="text-white">
+                                    {{ session()->get('applocate') == 'es' ? 'Imprime tus resultados' : 'print your results' }}
+                                </h3>
+                                <p>{{ session()->get('applocate') == 'es'
+                                    ? 'Genera e imprime un documento que contenga los resustados de tu situacion y los escenarios simulados'
+                                    : 'Generate and print a document containing the results of your situation and the simulated scenarios' }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -241,7 +268,7 @@
 
         <div class="row pt-4">
             <div class="col-md-12 text-center shadow-lg p-4 m-4">
-                <a href="/register" class="btn btn-lg btn-success pm4 mt-4" type="button">Registrate</a>
+                <a href="/register" class="btn btn-lg btn-success pm4 mt-4" type="button">   {{ session()->get('applocate') == 'es' ?'Registrate':"Sign Up"}} </a>
             </div>
         </div>
 
