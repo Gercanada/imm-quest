@@ -1501,7 +1501,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 10,
                 "criterion" => "SP - Less than a secondary school credential",
-                "single" => "",
+                "single" => null,
                 "married" => "0",
                 "criterio" => "Pareja Educación | Secundaria o menos",
                 "id" => 72
@@ -1509,7 +1509,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 10,
                 "criterion" => "SP - Secondary school credential",
-                "single" => "",
+                "single" => null,
                 "married" => "2",
                 "criterio" => "Pareja Educación | Preparatoria",
                 "id" => 73
@@ -1517,7 +1517,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 10,
                 "criterion" => "SP - 1 year post-secondary program credential",
-                "single" => "",
+                "single" => null,
                 "married" => "6",
                 "criterio" => "Pareja Educación | Carrera Profesional o técnica de 1 año de duración",
                 "id" => 74
@@ -1525,7 +1525,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 10,
                 "criterion" => "SP - 2 year post-secondary program credential",
-                "single" => "",
+                "single" => null,
                 "married" => "7",
                 "criterio" => "Pareja Educación | Carrera Profesional o técnica de 2 años de duración",
                 "id" => 75
@@ -1533,7 +1533,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 10,
                 "criterion" => "SP - 3 year or more post-secondary program credential",
-                "single" => "",
+                "single" => null,
                 "married" => "8",
                 "criterio" => "Pareja Educación | Carrera Profesional o técnica de 3 años de duración o más",
                 "id" => 76
@@ -1541,7 +1541,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 10,
                 "criterion" => "SP - 2 or more credentials & 1 being three years or more",
-                "single" => "",
+                "single" => null,
                 "married" => "9",
                 "criterio" => "Pareja Educación | 2 Carreras profesionales o técnicas (1 de al menos 3 años de duración=",
                 "id" => 77
@@ -1549,7 +1549,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 10,
                 "criterion" => "SP - Master or Doctoral Degree",
-                "single" => "",
+                "single" => null,
                 "married" => "10",
                 "criterio" => "Pareja Educación | Maestría o Doctoado",
                 "id" => 78
@@ -1557,7 +1557,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 11,
                 "criterion" => "SP Reading - CLB level 4 or less",
-                "single" => "",
+                "single" => null,
                 "married" => "0",
                 "criterio" => "Pareja Inglés Reading| CLB Nivel 4 o menos",
                 "id" => 79
@@ -1565,7 +1565,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 11,
                 "criterion" => "SP Reading - CLB level 5 or 6",
-                "single" => "",
+                "single" => null,
                 "married" => "1",
                 "criterio" => "Pareja Inglés Reading | CLB Nivel 5 o 6",
                 "id" => 80
@@ -1573,7 +1573,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 11,
                 "criterion" => "SP Reading - CLB level 7 or 8",
-                "single" => "",
+                "single" => null,
                 "married" => "3",
                 "criterio" => "Pareja Inglés Reading | CLB Nivel 7 o 8",
                 "id" => 81
@@ -1581,7 +1581,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 11,
                 "criterion" => "SP Reading - CLB level 9 or higher",
-                "single" => "",
+                "single" => null,
                 "married" => "5",
                 "criterio" => "Pareja Inglés Reading | CLB Nivel 9 o más",
                 "id" => 82
@@ -1589,7 +1589,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 12,
                 "criterion" => "SP Writing - CLB level 4 or less",
-                "single" => "",
+                "single" => null,
                 "married" => "0",
                 "criterio" => "Pareja Inglés Writing | CLB Nivel 4 o menos",
                 "id" => 83
@@ -1597,7 +1597,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 12,
                 "criterion" => "SP Writing - CLB level 5 or 6",
-                "single" => "",
+                "single" => null,
                 "married" => "1",
                 "criterio" => "Pareja Inglés Writing | CLB Nivel 5 o 6",
                 "id" => 84
@@ -1605,7 +1605,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 12,
                 "criterion" => "SP Writing - CLB level 7 or 8",
-                "single" => "",
+                "single" => null,
                 "married" => "3",
                 "criterio" => "Pareja Inglés Writing | CLB Nivel 7 o 8",
                 "id" => 85
@@ -1613,7 +1613,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 12,
                 "criterion" => "SP Writing - CLB level 9 or higher",
-                "single" => "",
+                "single" => null,
                 "married" => "5",
                 "criterio" => "Pareja Inglés Writing | CLB Nivel 9 o más",
                 "id" => 86
@@ -1621,7 +1621,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 13,
                 "criterion" => "SP Listening - CLB level 4 or less",
-                "single" => "",
+                "single" => null,
                 "married" => "0",
                 "criterio" => "Pareja Inglés Listening | CLB Nivel 4 o menos",
                 "id" => 87
@@ -1629,7 +1629,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 13,
                 "criterion" => "SP Listening - CLB level 5 or 6",
-                "single" => "",
+                "single" => null,
                 "married" => "1",
                 "criterio" => "Pareja Inglés Listening | CLB Nivel 5 o 6",
                 "id" => 88
@@ -1637,7 +1637,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 13,
                 "criterion" => "SP Listening - CLB level 7 or 8",
-                "single" => "",
+                "single" => null,
                 "married" => "3",
                 "criterio" => "Pareja Inglés Listening | CLB Nivel 7 o 8",
                 "id" => 89
@@ -1645,7 +1645,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 13,
                 "criterion" => "SP Listening - CLB level 9 or higher",
-                "single" => "",
+                "single" => null,
                 "married" => "5",
                 "criterio" => "Pareja Inglés Listening | CLB Nivel 9 o más",
                 "id" => 90
@@ -1653,7 +1653,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 14,
                 "criterion" => "SP Speaking - CLB level 4 or less",
-                "single" => "",
+                "single" => null,
                 "married" => "0",
                 "criterio" => "Pareja Inglés Speaking | CLB Nivel 4 o menos",
                 "id" => 91
@@ -1661,7 +1661,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 14,
                 "criterion" => "SP Speaking - CLB level 5 or 6",
-                "single" => "",
+                "single" => null,
                 "married" => "1",
                 "criterio" => "Pareja Inglés Speaking | CLB Nivel 5 o 6",
                 "id" => 92
@@ -1669,7 +1669,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 14,
                 "criterion" => "SP Speaking - CLB level 7 or 8",
-                "single" => "",
+                "single" => null,
                 "married" => "3",
                 "criterio" => "Pareja Inglés Speaking | CLB Nivel 7 o 8",
                 "id" => 93
@@ -1677,7 +1677,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 14,
                 "criterion" => "SP Speaking - CLB level 9 or higher",
-                "single" => "",
+                "single" => null,
                 "married" => "5",
                 "criterio" => "Pareja Inglés Speaking | CLB Nivel 9 o más",
                 "id" => 94
@@ -1685,7 +1685,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 15,
                 "criterion" => "SP - No work experience or less than one year ",
-                "single" => "",
+                "single" => null,
                 "married" => "0",
                 "criterio" => "Pareja Expeiencia Laboral en Canadá | Sin experiencia laboral en Canadá o menos de 1 año",
                 "id" => 95
@@ -1693,7 +1693,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 15,
                 "criterion" => "SP - 1  year of Canadian work experience",
-                "single" => "",
+                "single" => null,
                 "married" => "5",
                 "criterio" => "Pareja Expeiencia Laboral en Canadá | 1 año de experiencia laboral en Canadá",
                 "id" => 96
@@ -1701,7 +1701,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 15,
                 "criterion" => "SP - 2 years of Canadian work experience",
-                "single" => "",
+                "single" => null,
                 "married" => "7",
                 "criterio" => "Pareja Expeiencia Laboral en Canadá | 2 años de experiencia laboral en Canadá",
                 "id" => 97
@@ -1709,7 +1709,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 15,
                 "criterion" => "SP - 3 years of Canadian work experience",
-                "single" => "",
+                "single" => null,
                 "married" => "8",
                 "criterio" => "Pareja Expeiencia Laboral en Canadá | 3 años de experiencia laboral en Canadá",
                 "id" => 98
@@ -1717,7 +1717,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 15,
                 "criterion" => "SP - 4 years of Canadian work experience",
-                "single" => "",
+                "single" => null,
                 "married" => "9",
                 "criterio" => "Pareja Expeiencia Laboral en Canadá | 4 años de experiencia laboral en Canadá",
                 "id" => 99
@@ -1725,7 +1725,7 @@ class CriterionSeeder extends Seeder
             [
                 "subfactor_id" => 15,
                 "criterion" => "SP - 5 or more years of Canadian work experience",
-                "single" => "",
+                "single" => null,
                 "married" => "10",
                 "criterio" => "Pareja Expeiencia Laboral en Canadá | 5 o más años de experiencia laboral en Canadá",
                 "id" => 100
