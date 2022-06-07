@@ -44,7 +44,7 @@
                                 </div>
                             </li>
                             <li role="separator" class="dropdown-divider"></li>
-                            <li class="user-list"><a class="px-3 py-2" href="{{ route('profile') }}">
+                            <li @click="menu = 1" class="user-list"><a class="px-3 py-2" href="#">
 
                                     <span class="fa-stack">
                                         <i class="ti-settings fa-stack-2x fa-inverse"></i>

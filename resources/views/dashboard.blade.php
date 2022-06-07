@@ -23,7 +23,6 @@
             right: 0px;
             border-left-color: transparent;
         }
-
     </style>
     @if (Auth::user() && Auth::user()->themme_layout === 0)
         {{-- dark --}}
@@ -46,7 +45,6 @@
             .popover .popover-body {
                 background-color: rgb(41, 41, 41);
             }
-
         </style>
     @elseif (Auth::user() && Auth::user()->themme_layout === 1)
         {{-- ligth --}}
@@ -72,7 +70,6 @@
                 background-color: white;
                 border-top: none
             }
-
         </style>
     @else
     @endif
@@ -87,6 +84,13 @@
 @endsection
 
 @section('content')
-    <content-component />
+    <template v-if="menu==0">
+        <content-component />
+    </template>
+
+    <template v-if="menu==1">
+        <user-component>
+    </template>
+
     {{-- <main-component /> --}}
 @endsection

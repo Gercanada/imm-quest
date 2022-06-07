@@ -53,7 +53,7 @@ Route::middleware('Language')->group(function () {
 
         Route::get('/change-language/{lang}',  [UserController::class, 'changeLang']);
         //user
-        Route::get('/profile',  [UserController::class, 'profile'])->name('profile');
+        // Route::get('/profile',  [UserController::class, 'profile'])->name('profile');
 
         Route::get('/account',  [UserController::class, 'account']);
 
