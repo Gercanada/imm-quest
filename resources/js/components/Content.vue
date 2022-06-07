@@ -13,7 +13,7 @@
                 class="nav-link active"
               >
                 <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
-                <span class="d-none d-lg-block">{{ summary }}</span>
+                <span class="d-none d-lg-block">{{ summario }}</span>
               </a>
             </li>
             <li class="nav-item">
@@ -119,7 +119,7 @@ export default {
       reloadAt: null,
       authenticated: false,
       language: null,
-      summary: "Summary",
+      summario: "Summary",
       actual: "Actual scennario",
     };
   },

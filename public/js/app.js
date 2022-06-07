@@ -2226,8 +2226,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _content_tabs_Summary_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./content-tabs/Summary.vue */ "./resources/js/components/content-tabs/Summary.vue");
 /* harmony import */ var _content_tabs_actual_scennario_SituationA_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./content-tabs/actual-scennario/SituationA.vue */ "./resources/js/components/content-tabs/actual-scennario/SituationA.vue");
 /* harmony import */ var _content_tabs_Scenario2_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./content-tabs/Scenario2.vue */ "./resources/js/components/content-tabs/Scenario2.vue");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2330,9 +2328,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Scenario2: _content_tabs_Scenario2_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       email: "",
       name: "",
       last_name: "",
@@ -2348,8 +2344,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       factorsWithSubfactors: [],
       reloadAt: null,
       authenticated: false,
-      language: null
-    }, _defineProperty(_ref, "summary", "Summary"), _defineProperty(_ref, "actual", "Actual scennario"), _ref;
+      language: null,
+      summario: "Summary",
+      actual: "Actual scennario"
+    };
   },
   created: function created() {
     if (window.Laravel.user) {
@@ -24457,7 +24455,7 @@ var render = function () {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "d-none d-lg-block" }, [
-                      _vm._v(_vm._s(_vm.summary)),
+                      _vm._v(_vm._s(_vm.summario)),
                     ]),
                   ]
                 ),

@@ -268,7 +268,8 @@
 
         <div class="row pt-4">
             <div class="col-md-12 text-center shadow-lg p-4 m-4">
-                <a href="/register" class="btn btn-lg btn-success pm4 mt-4" type="button">   {{ session()->get('applocate') == 'es' ?'Registrate':"Sign Up"}} </a>
+                <a href="/register" class="btn btn-lg btn-success pm4 mt-4" type="button">
+                    {{ session()->get('applocate') == 'es' ? 'Registrate' : 'Sign Up' }} </a>
             </div>
         </div>
 
