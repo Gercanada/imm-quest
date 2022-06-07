@@ -15,7 +15,7 @@
         @click="setLang('es')"
         :class="lang === 'es' ? 'active' : ''"
       >
-        <i class="flag-icon flag-icon-es"></i> Español
+        <i class="flag-icon flag-icon-mx"></i> Español
       </a>
       <a
         class="dropdown-item"

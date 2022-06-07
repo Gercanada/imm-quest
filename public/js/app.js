@@ -24641,7 +24641,7 @@ var render = function () {
               },
             },
             [
-              _c("i", { staticClass: "flag-icon flag-icon-es" }),
+              _c("i", { staticClass: "flag-icon flag-icon-mx" }),
               _vm._v(" Español\n    "),
             ]
           ),
