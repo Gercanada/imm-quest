@@ -29,7 +29,6 @@ Route::get('/send_mail', function () { //test function only
     }
 });
 
-
 Route::middleware('Language')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('set-lang/{lang}', [Controller::class, 'lang']);
