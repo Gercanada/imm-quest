@@ -2452,14 +2452,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {},
   data: function data() {
@@ -24613,81 +24605,47 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "li",
-    {
-      staticClass:
-        "nav-item dropdown mr-4 d-md-block waves-effect waves-dark float-left",
-    },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "dropdown-menu dropdown-menu-right animated bounceInDown",
-        },
-        [
-          _c(
-            "a",
-            {
-              staticClass: "dropdown-item",
-              class: _vm.lang === "es" ? "active" : "",
-              on: {
-                click: function ($event) {
-                  return _vm.setLang("es")
-                },
-              },
-            },
-            [
-              _c("i", { staticClass: "flag-icon flag-icon-mx" }),
-              _vm._v(" Español\n    "),
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "dropdown-item",
-              class: _vm.lang === "en" ? "active" : "",
-              on: {
-                click: function ($event) {
-                  return _vm.setLang("en")
-                },
-              },
-            },
-            [
-              _c("i", { staticClass: "flag-icon flag-icon-ca" }),
-              _vm._v(" English\n    "),
-            ]
-          ),
-        ]
-      ),
-    ]
-  )
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
+  return _c("li", { staticClass: "nav-item dropdown float-right mr-2" }, [
+    _c(
       "a",
       {
-        staticClass:
-          "nav-link dropdown-toggle text-muted waves-effect waves-dark",
-        attrs: {
-          href: "",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false",
+        staticClass: "nav-item",
+        class: _vm.lang === "es" ? "active" : "",
+        attrs: { type: "button" },
+        on: {
+          click: function ($event) {
+            return _vm.setLang("es")
+          },
         },
       },
-      [_c("i", { staticClass: "flag-icon flag-icon-ca" })]
-    )
-  },
-]
+      [
+        _c("i", { staticClass: "flag-icon flag-icon-mx" }),
+        _vm._v(" Español\n  "),
+      ]
+    ),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        staticClass: "nav-item",
+        class: _vm.lang === "en" ? "active" : "",
+        attrs: { type: "button" },
+        on: {
+          click: function ($event) {
+            return _vm.setLang("en")
+          },
+        },
+      },
+      [
+        _c("i", { staticClass: "flag-icon flag-icon-ca" }),
+        _vm._v(" English\n  "),
+      ]
+    ),
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

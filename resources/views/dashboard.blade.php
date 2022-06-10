@@ -91,6 +91,4 @@
     <template v-if="menu==1">
         <user-component>
     </template>
-
-    {{-- <main-component /> --}}
 @endsection

@@ -10,14 +10,14 @@
     </a>
     <!-- This is the navigation menu -->
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto stylish-nav" style="display: inline-block">
+        <ul class="navbar-nav ml-auto stylish-nav  float-right" style="display: flex">
             <lang-component></lang-component>
             {{-- {{ session()->get('applocate') }} --}}
             @if (Auth::user())
-                <li class="nav-item d-md-block waves-effect waves-dark float-left">
+                <li class="nav-item d-md-block waves-effect waves-dark">
                     <change_themme></change_themme>
                 </li>
-                <li class="nav-item dropdown float-right mr-2">
+                <li class="nav-item dropdown mr-2">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <span class="round text-white d-inline-block text-center rounded-circle bg-success">
@@ -67,7 +67,7 @@
                     </div>
                 </li>
             @else
-                <li class="nav-item float-left">
+                <li class="nav-item">
                     <a class="nav-link " href="/login" aria-haspopup="true">
                         <span class="text-info d-inline-block text-center btn btn-outline-success">
                             <i class="fas fa-key">
@@ -76,7 +76,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item float-right ml-4">
+                <li class="nav-item ">
                     <a class="nav-link " href="/register" aria-haspopup="true">
                         <span class=" text-info d-inline-block text-center btn btn-outline-info">
                             <i class="fas fa-user-plus">

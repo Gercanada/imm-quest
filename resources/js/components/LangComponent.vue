@@ -1,30 +1,22 @@
 <template>
-  <li class="nav-item dropdown mr-4 d-md-block waves-effect waves-dark float-left">
+  <li class="nav-item dropdown float-right mr-2">
     <a
-      class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
-      href=""
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
+      type="button"
+      class="nav-item"
+      @click="setLang('es')"
+      :class="lang === 'es' ? 'active' : ''"
     >
-      <i class="flag-icon flag-icon-ca"></i
-    ></a>
-    <div class="dropdown-menu dropdown-menu-right animated bounceInDown">
-      <a
-        class="dropdown-item"
-        @click="setLang('es')"
-        :class="lang === 'es' ? 'active' : ''"
-      >
-        <i class="flag-icon flag-icon-mx"></i> Español
-      </a>
-      <a
-        class="dropdown-item"
-        @click="setLang('en')"
-        :class="lang === 'en' ? 'active' : ''"
-      >
-        <i class="flag-icon flag-icon-ca"></i> English
-      </a>
-    </div>
+      <i class="flag-icon flag-icon-mx"></i> Español
+    </a>
+    <br />
+    <a
+      type="button"
+      class="nav-item"
+      @click="setLang('en')"
+      :class="lang === 'en' ? 'active' : ''"
+    >
+      <i class="flag-icon flag-icon-ca"></i> English
+    </a>
   </li>
 </template>
 <script>
