@@ -18,14 +18,6 @@ use Illuminate\Support\Facades\App;
 
 class FactorController extends Controller
 {
-
-    public function changeLang($langcode)
-    {
-        App::setLocale($langcode);
-        session()->put("lang_code", $langcode);
-        return redirect()->back();
-    }
-
     public function dataFile()
     {
         return json_decode(file_get_contents(storage_path() . "/temp-data.json"), true);

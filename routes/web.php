@@ -34,7 +34,6 @@ Route::middleware('Language')->group(function () {
     Route::get('set-lang/{lang}', [Controller::class, 'lang']);
 
     Auth::routes();
-
     if (env('APP_ENV') === 'local') {
         Route::get('/tempdata', [FactorController::class, 'dataFile']); //returns a json response
         Route::get('/factors-table/{subfactor}', [FactorController::class, 'factorsTable']); //returns ajson response
@@ -45,31 +44,24 @@ Route::middleware('Language')->group(function () {
         Route::get('/translated/subfactors', [FactorController::class, 'translatedSubfactors']); //List subfactors for create seeders
     }
 
-    /*data for views*/
-    Route::get('/factors', [FactorController::class, 'factors']);
-
     Route::middleware('auth')->group(function () {
-
-        Route::get('/change-language/{lang}',  [UserController::class, 'changeLang']);
+        /*data for views*/
+        Route::get('/factors', [FactorController::class, 'factors']);
         //user
-        // Route::get('/profile',  [UserController::class, 'profile'])->name('profile');
-
         Route::get('/account',  [UserController::class, 'account']);
-
         Route::post('/account', [UserController::class, 'update']);
 
         Route::post('/new_password', [UserController::class, 'newPassword']);
         //User themme
         Route::get('/user_themme',  [UserController::class, 'getThemme']);
         Route::post('/user_themme', [UserController::class, 'setThemme']);
-        // Route::get('/user_themme', [UserController::class, 'changeThemme']);
 
         //Scenarios
-        Route::post('save-situation', [FactorController::class, 'saveScenario']);
-        Route::post('copy', [FactorController::class, 'copyScenario']);
-        Route::post('delete/{id}', [FactorController::class, 'deleteScennary']);
-        Route::post('print-summary', [FactorController::class, 'printSummary']);
-        Route::get('open_pdf/{fileName}', [FactorController::class, 'openPdf']);
+        Route::post('save-situation',             [FactorController::class, 'saveScenario']);
+        Route::post('copy',                       [FactorController::class, 'copyScenario']);
+        Route::post('delete/{id}',                [FactorController::class, 'deleteScennary']);
+        Route::post('print-summary',              [FactorController::class, 'printSummary']);
+        Route::get('open_pdf/{fileName}',         [FactorController::class, 'openPdf']);
         Route::get('delete_temp_file/{fileName}', [FactorController::class, 'deletePdf']);
 
         Route::any('{any}', function () {
