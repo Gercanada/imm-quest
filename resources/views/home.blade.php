@@ -120,7 +120,7 @@
         // 2. This code loads the IFrame Player API code asynchronously.
         var tag = document.createElement('script');
 
-        tag.src = "https://www.youtube.com/iframe_api";
+        // tag.src = "https://www.youtube.com/iframe_api";//!Mayo clinic
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -196,8 +196,8 @@
                             </div>
                         </div>
                         <div class="carousel-item text-center">
-                            <img class="img-fluid"
-                                src="/{{ env('ASSET_URL') }}images/slide-guide/ActualSituacion.png" alt="Second slide">
+                            <img class="img-fluid" src="/{{ env('ASSET_URL') }}images/slide-guide/ActualSituacion.png"
+                                alt="Second slide">
                             <div class="carousel-caption">
                                 <h3 class="text-white">
                                     {{ session()->get('applocate') == 'es' ? 'Calcula tu estado actual' : 'Calculate your current status' }}
@@ -272,22 +272,22 @@
                 {{-- <a href="/register" class="btn btn-lg btn-success pm4 mt-4" type="button">
                     {{ session()->get('applocate') == 'es' ? 'Registrate' : 'Sign Up' }} </a> --}}
                 {{-- <li class="nav-item "> --}}
-                    <div class="btn-list">
-                        <a class="btn btn-lg btn-warning " href="/login" aria-haspopup="true">
-                            <span class="text-info d-inline-block text-center btn btn-outline-success">
-                                <i class="fas fa-key">
-                                    {{ session()->get('applocate') == 'en' ? 'Login' : 'Ingresar' }}
-                                </i>
-                            </span>
-                        </a>
+                <div class="btn-list">
+                    <a class="btn btn-lg btn-warning " href="/login" aria-haspopup="true">
+                        <span class="text-info d-inline-block text-center btn btn-outline-success">
+                            <i class="fas fa-key">
+                                {{ session()->get('applocate') == 'en' ? 'Login' : 'Ingresar' }}
+                            </i>
+                        </span>
+                    </a>
 
-                        <a class="btn btn-lg btn-danger" href="/register" aria-haspopup="true">
-                            <span class=" text-success d-inline-block text-center btn btn-outline-info ">
-                                <i class="fas fa-user-plus">
-                                    {{ session()->get('applocate') == 'en' ? 'Register' : 'Registrarme' }} </i>
-                            </span>
-                        </a>
-                    </div>
+                    <a class="btn btn-lg btn-danger" href="/register" aria-haspopup="true">
+                        <span class=" text-success d-inline-block text-center btn btn-outline-info ">
+                            <i class="fas fa-user-plus">
+                                {{ session()->get('applocate') == 'en' ? 'Register' : 'Registrarme' }} </i>
+                        </span>
+                    </a>
+                </div>
                 {{-- </li>
                 <li class="nav-item ml-4"> --}}
                 {{-- </li> --}}
