@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 // use App\Http\Requests\StoreSituation;
+
+use App\Models\Criterion;
 use App\Models\Factor;
 use App\Models\Scenario;
+use App\Models\Subfactor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -136,7 +139,6 @@ class FactorController extends Controller
     public function translatedFactors()
     {
         $data =   $this->translatedFile();
-
         // return $data;
         $factArr = [];
         $en = $data['en'];
@@ -265,56 +267,19 @@ class FactorController extends Controller
         return $data;
     }
 
-
-
-
-
-
-
     //////////////////
     public function factors(Request $request)/* get factors for  create accordions */
     {
         try {
             $scenarios = null;
             $locale = App::getLocale() ? App::getLocale() : 'en';
-            // $locale = 'en';
-            // return $locale;
+
             $factors = Factor::where('factors.title', '!=', 'default')
                 ->with('subfactors')
                 // ->where('subfactors.subfactor', '!=', 'default')
                 ->with('subfactors.criteria')->get();
 
             $response = [];
-
-            if ($locale == 'en') {
-                foreach ($factors as $factor) {
-                    $subs = [];
-                    foreach ($factor['subfactors'] as $sub) {
-                        $criteria = [];
-                        foreach ($sub['criteria'] as $crit) {
-                            array_push($criteria, [
-                                'id' => $crit->id,
-                                'criterion' => $crit['criterion'],
-                                'married' => $crit['married'],
-                                'single' => $crit['single']
-                            ]);
-                        }
-                        array_push($subs, [
-                            'id' => $sub->id,
-                            'subfactor' => $sub['subfactor'],
-                            'factor_id' => $sub['factor_id'],
-                            'criteria' => $criteria
-                        ]);
-                    }
-                    array_push($response, [
-                        'id' => $factor['id'],
-                        'title' => $factor['title'],
-                        'sub_title' => $factor['sub_title'],
-                        'subfactors' => $subs
-                    ]);
-                }
-            }
-
             if ($locale == 'es') {
                 foreach ($factors as $factor) {
                     $subs = [];
@@ -343,8 +308,35 @@ class FactorController extends Controller
                         'subfactors' => $subs
                     ]);
                 }
+            } else {
+                // if ($locale == 'en')
+                foreach ($factors as $factor) {
+                    $subs = [];
+                    foreach ($factor['subfactors'] as $sub) {
+                        $criteria = [];
+                        foreach ($sub['criteria'] as $crit) {
+                            array_push($criteria, [
+                                'id' => $crit->id,
+                                'criterion' => $crit['criterion'],
+                                'married' => $crit['married'],
+                                'single' => $crit['single']
+                            ]);
+                        }
+                        array_push($subs, [
+                            'id' => $sub->id,
+                            'subfactor' => $sub['subfactor'],
+                            'factor_id' => $sub['factor_id'],
+                            'criteria' => $criteria
+                        ]);
+                    }
+                    array_push($response, [
+                        'id' => $factor['id'],
+                        'title' => $factor['title'],
+                        'sub_title' => $factor['sub_title'],
+                        'subfactors' => $subs
+                    ]);
+                }
             }
-
 
             /*    $factors = Factor::where('factors.title', '!=', 'default')
                 ->with('subfactors')
@@ -445,7 +437,9 @@ class FactorController extends Controller
                         'is_theactual' => false,
                         'name' => $request->scenarioName,
                         'is_married' => $maritial,
-                        'body' => $isActual == true ? json_encode($request->actualSituation[2]) : json_encode($request->actualSituation[1]),
+                        'body' => $isActual == true
+                            ? json_encode($request->actualSituation[2])
+                            : json_encode($request->actualSituation[1]),
                     ]
                 );
             }
@@ -480,7 +474,6 @@ class FactorController extends Controller
             $totals = '';
             $scennarioMaritialSituationHtml = '';
             $totalsForScennario = [];
-
             $fileName = $user->name . '_' . $user->last_name . '_summary.pdf';
 
             $scennarios = Scenario::Where('user_id', $user->id)->get();
@@ -501,43 +494,79 @@ class FactorController extends Controller
 
             $factors = Factor::where($factorTitle, '!=', 'default')
                 ->with('subfactors')
-                ->with('subfactors.criteria')->get();
+                ->with('subfactors.criteria')
+                ->get();
 
             foreach ($factors as $factor) {
-                $tdSum = '';
-                $same = $factor->id;
-                $scennarioSums = [];
+                $tdSum = ''; //html table
+                $scennarioSums = []; //values to sum
+                $tdSubFacts = '';
+                $subfactorName = '';
+                $criterionName = '';
                 foreach ($scennarios as $scennario) {
                     $toSum = [];
                     $toSumSC = [];
                     $body = json_decode($scennario['body']);
+                    $factArr = [];
+
                     if (is_array($body)) {
                         foreach ($body as $item) {
-                            if ($same ==  $factor['id']) {
-                                if ($item->factor === $factor['id']) {
-                                    array_push($toSum, $item->value);
-                                }
+                            $criterion = Criterion::where('id', $item->criterion)
+                                ->select($locale === 'es' ? 'criterio as criterion' : 'criterion')->first();
+                            $subfactor = Subfactor::where('id', $item->subfactor)
+                                ->select($locale === 'es' ? 'subfacto as subfactor' : 'subfactor')->first();
+
+                            if ($item->factor === $factor['id']) {
+                                array_push($factArr, [
+                                    'subfactor' => $subfactor['subfactor'],
+                                    'criterion' => $criterion['criterion'],
+                                    'value' => $item->value
+                                ]);
+
+                                array_push($toSum, $item->value);
                                 array_push($toSumSC, $item->value);
                             }
                         }
                     }
-                    $tdSum = $tdSum . "<td class='num-val '>" . array_sum($toSum) . "</td>";
+                    $i = 0;
+                    $keber = '';
+                    $critName = $criterion['criterion'];
+                    $subName = $subfactor['subfactor'];
+                    foreach ($factArr as $f) {
+                        $tdSubFacts = $tdSubFacts
+                            . "<tr>"
+                            . "<td class=''>" . $f['subfactor'] . "</td>"
+                            . "<td class=''>" . $f['criterion'] .  "</td>"
+                            . "<td class='num-val'>" . $f['value'] . "</td>"
+                            . "</tr>";
+                    }
+
+
+
+                    $tdSum = $tdSum . "<th  class='num-val totals'>" . array_sum($toSum) . "</th>";
                     array_push($scennarioSums, array_sum($toSumSC));
                 }
                 $totalsForScennario = $scennarioSums;
 
-                $factorsHtml =  $factorsHtml  . "<tr>"
-                    . "<td>" .  $factor['title'] . ' ' . $factor[$subtitle] . "</td>"
+                //?subfactors table
+                $factorsHtml =  $factorsHtml
+                    . "<tr>"
+                    . "<th class=''>" .  $factor['title'] . ' ' . $factor[$subtitle] . "</th>"
                     . $tdSum
+                    . $tdSubFacts
                     . "</tr>";
             }
-
             foreach ($totalsForScennario as $scennarioSum) {
                 $totals = $totals . "<th class='num-val totals'>" . $scennarioSum . "</th>";
             }
             foreach ($scennarios as $scennario) {
                 $married = $scennario['is_married'] == 1 ? $married : $single;
-                $scennariosHtml =  $scennariosHtml  . "<th>" .  $scennario['name'] . "</th>";
+                $scennariosHtml =  $scennariosHtml
+                    . "<th class='num-val>"
+                    . "</th>"
+                    . "<th>"
+                    .  $scennario['name']
+                    . "</th>";
                 $scennarioMaritialSituationHtml =  $scennarioMaritialSituationHtml  . "<th>" . $married . "</th>";
             }
 

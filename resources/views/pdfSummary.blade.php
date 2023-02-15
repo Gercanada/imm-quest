@@ -14,7 +14,6 @@
             {{-- <img src="logo.png"> --}}
         </div>
         <h1>Express entry</h1>
-
         <div id="company" class="clearfix">
             <div>{{ $date }}</div>
         </div>
@@ -26,7 +25,7 @@
         <table>
             <thead>
                 <tr>
-                    <th></th>
+                    <th><b> {{ session()->get('applocate') == 'es' ? 'Escenarios' : 'Scenarios' }} </b></th>
                     {!! $scennarios !!}
                 </tr>
                 <tr>
