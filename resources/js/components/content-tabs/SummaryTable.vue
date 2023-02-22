@@ -23,7 +23,6 @@
           class="table-striped table table-hover table-bordered"
           data-sort-order="default"
         >
-          <!-- -->
           <thead>
             <tr>
               <th></th>
