@@ -487,8 +487,6 @@ class FactorController extends Controller
             $fileName = $user->name . '_' . $user->last_name . '_summary.pdf';
 
             $scennarios = Scenario::Where('user_id', $user->id)->get();
-
-
             $factorTitle = 'factors.title';
             $subtitle = 'sub_title';
             $single = "Single";
@@ -514,25 +512,52 @@ class FactorController extends Controller
                 $title = null;
                 $column = '';
                 $critCols = [];
+                $more = [];
                 foreach ($scennarios as $scennario) {
-                    $toSum = [];
+                    $scRitVal = [];
                     $toSumSC = [];
+                    $toSum = [];
                     $body = json_decode($scennario['body']);
+
                     if (is_array($body)) {
                         foreach ($body as $item) {
                             $criterion = Criterion::where('id', $item->criterion)
-                                ->select($locale === 'es'
-                                    ? 'criterio as criterion'
-                                    : 'criterion')->first();
+                                ->select(
+                                    '*'
+                                    /*  $locale === 'es'
+                                        ? 'criterio as criterion'
+                                        : 'criterion',
+                                    'single',
+                                    'married' */
+                                )->first();
+
                             $subfactor = Subfactor::where('id', $item->subfactor)
-                                ->select($locale === 'es'
+                                ->select(/* $locale === 'es'
                                     ? 'subfacto as subfactor'
-                                    : 'subfactor')->first();
-                            !$title && $title = $criterion['criterion'];
+                                    : 'subfactor', 'id' */'*')->first();
+
+                            // !$title && $title = $criterion['criterion'];
 
                             if ($item->factor === $factor['id']) {
-                                array_push($toSum, $item->value);
-                                array_push($toSumSC, $item->value);
+
+                                $marriedVal = $scennario->is_married
+                                    ? $criterion->married :
+                                    $criterion->single;
+
+                                if (
+                                    $item->subfactor === $subfactor['id']
+                                    && $item->criterion === $criterion['id']
+                                ) {
+                                    array_push($scRitVal, $marriedVal);
+                                }
+                                /*   return [
+                                    'item' => $item,
+                                    'subfactor' => $subfactor,
+                                    'criterion' =>  $criterion
+                                ];
+ */
+                                array_push($toSum,  $marriedVal);
+                                array_push($toSumSC,  $marriedVal);
                                 $title = $subfactor['subfactor'];
                                 if (!in_array($title, $critCols)) {
                                     array_push($critCols, $title);
@@ -540,24 +565,57 @@ class FactorController extends Controller
                             }
                         }
                     }
+
                     $tdSum = $tdSum . "<th class='num-val '>" . array_sum($toSum) . "</th>";
                     array_push($scennarioSums, array_sum($toSumSC));
+                    $more[$scennario['id']] = $scRitVal;
+                }
+                $table = '';
+                $numRows = count(current($more));
+
+                for (
+                    $i = 0;
+                    $i < $numRows;
+                    $i++
+                ) {
+                    $table .= "<tr>";
+                    foreach ($more as $key => $values) {
+                        if (isset($values[$i])) {
+                            $table .= "<td  >{$values[$i]}</td>";
+                        } else {
+                            $table .= "<td class='totals' ></td>";
+                        }
+                    }
+                    $table .= "</tr>";
                 }
                 if (!in_array($critCols, $factCols)) {
                     array_push($factCols, $critCols);
                 }
                 // return $factCols;
-                $xRow = '';
+                $xRow = ''; //'<td style="border:solid red 1pt">';
                 foreach ($factCols[0] as $col) {
                     $xRow = $xRow
                         . '<tr>'
-                        . '<td>  '
+                        . "<td>"
                         . $col
-                        . ' </td>'
+                        . '</td>'
                         . '</tr>';
                 }
 
-                $criteriaTr = '';
+                $aa = "<tr  style='border:solid  aqua 1pt; width: 100%;'>"
+                    . "<td>"
+                    . "<table style = 'border:solid red 2pt;' >"
+                    .  $xRow
+                    . '</table>'
+                    . '</td>'
+                    . "<td  style='border:solid  aqua 1pt; width: 100%;'>"
+                    . "<table  style='border:solid  aqua 1pt; width: 100%;'>"
+                    . $table
+                    . '</table>'
+                    . '</td>'
+                    . '</tr>';
+
+
 
                 $totalsForScennario = $scennarioSums;
 
@@ -567,14 +625,10 @@ class FactorController extends Controller
                     . $factor[$subtitle] . "</th>"
                     . $tdSum
                     . "</tr>"
-                    . $xRow;
-
-                /*    . '<tr>'
-                    . '<td> key ' . $title . '</td>' . '<td> val ' . '</td>' .  '<td> val ' . '</td>' . '</tr>'
-                    . '<tr>' . '<td> key ' .  $title . '</td>' . '<td> val ' . '</td>' .  '<td> val ' . '</td>' . '</tr>'
-                    . '<tr>' . '<td> key ' .  $title . '</td>' . '<td> val ' . '</td>' . '<td> val ' . '</td>' .  '</tr>'; */
+                    . '<tr>'
+                    . $aa
+                    . '</tr>';
             }
-            // return $factCols;
 
             foreach ($totalsForScennario as $scennarioSum) {
                 $totals = $totals . "<th class='num-val totals'>" . $scennarioSum . "</th>";
@@ -588,6 +642,8 @@ class FactorController extends Controller
             /**
              * Data for fill file
              */
+
+            // return  $factorsHtml;
             $data = [
                 'fileName' => $fileName,
                 'name' => "$user->name $user->last_name",
@@ -597,7 +653,7 @@ class FactorController extends Controller
                 'maritialSituations' => $scennarioMaritialSituationHtml,
                 'totals' => $totals
             ];
-            $pdf = PDF::loadView('pdfSummary', $data); //->setPaper('a4', 'landscape');
+            $pdf = PDF::loadView('pdfSummary', $data)/* ->setPaper('a4', 'landscape') */;
             Storage::put('public/pdf/' . $fileName, $pdf->output());
             return response()->json($fileName, 200);
         } catch (Exception $e) {
