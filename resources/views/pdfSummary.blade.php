@@ -25,21 +25,21 @@
         <table>
             <thead>
                 <tr>
-                    <th><b> {{ session()->get('applocate') == 'es' ? 'Escenarios' : 'Scenarios' }} </b></th>
-                    {!! $scennarios !!}
+                    <th><b> {{ session()->get('applocate') == 'es' ? 'Escenarios' : 'Scenarios' }}
+                        </b></th>
+                    {!! $scennarios !!} {{-- names of scenarios --}}
                 </tr>
                 <tr>
                     <th><b> {{ session()->get('applocate') == 'es' ? 'Estado civil' : 'Maritial status' }} </b></th>
-                    {!! $maritialSituations !!}
+                    {!! $maritialSituations !!}{{-- Scenarios marital situations --}}
                 </tr>
             </thead>
             <tbody>
-                {!! $factors !!}
+                {!! $factors !!}{{-- Score table --}}
                 <tr>
                     <th>Total </th>
-                    {!! $totals !!}
+                    {!! $totals !!}{{-- Sums --}}
                 </tr>
-
             </tbody>
         </table>
         {{-- <div id="notices">
