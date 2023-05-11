@@ -21,4 +21,10 @@ class Scenario extends Model
         'body',
         'is_theactual'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
 }

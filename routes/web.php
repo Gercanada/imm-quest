@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,7 @@ Route::middleware('Language')->group(function () {
     Route::get('set-lang/{lang}', [Controller::class, 'lang']);
 
     Auth::routes();
+
     if (env('APP_ENV') === 'local') {
         Route::get('/tempdata', [FactorController::class, 'dataFile']); //returns a json response
         Route::get('/factors-table/{subfactor}', [FactorController::class, 'factorsTable']); //returns ajson response
@@ -63,6 +65,14 @@ Route::middleware('Language')->group(function () {
         Route::post('print-summary',              [FactorController::class, 'printSummary']);
         Route::get('open_pdf/{fileName}',         [FactorController::class, 'openPdf']);
         Route::get('delete_temp_file/{fileName}', [FactorController::class, 'deletePdf']);
+
+        //TODO Agregar rutas administrativas, para que un admin pueda ver las evaluaciones .
+        Route::middleware('admin')->group(function () {
+            Route::get('admin/scenarios/list', [AdminController::class, 'index']);
+            Route::get('admin/scenarios', [AdminController::class, 'loadView']);
+            // Route::group('admin', function () {
+            // });
+        });
 
         Route::any('{any}', function () {
             abort(404);

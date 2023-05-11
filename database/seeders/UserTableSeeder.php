@@ -20,7 +20,8 @@ class UserTableSeeder extends Seeder
             'last_name' => 'Goetia',
             'avatar' => 'https://lorempixel.com/200/200',
             'password' => bcrypt('password'),
-            'email' => 'goetia@gmail.com'
+            'email' => 'goetia@gmail.com',
+            'is_admin' => 1
         ]);
     }
 }
