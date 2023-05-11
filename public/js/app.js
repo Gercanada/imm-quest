@@ -2168,63 +2168,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2299,17 +2242,50 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         me.list = res.data;
         var name = me.list[0]["name"];
         var keys = Object.keys(me.list[0].body);
-        me.thead = me.thead + "<th>Name</th>";
-        me.thead = me.thead + "<th>Username</th>";
-        me.thead = me.thead + "<th>Married</th>";
-        me.thead = me.thead + "<th>Is actual</th>";
-        keys.forEach(function (key) {
-          me.thead = me.thead + "<th>" + key + "</th>"; // alert(me.list);
+        var theadTr1 = "";
+        theadTr1 = theadTr1 + "<th rowspan='2' colspan='1'>Name</th>";
+        theadTr1 = theadTr1 + "<th rowspan='2' colspan='1'>Username</th>";
+        theadTr1 = theadTr1 + "<th rowspan='2' colspan='1'>Married</th>";
+        theadTr1 = theadTr1 + "<th rowspan='2' colspan='1'>Is actual</th>";
+        var theadTr2 = "";
+        /*           let str1 = "hello";
+              let str2 = "world";
+               if (!str2.includes(str1)) {
+              str2 += " " + str1;
+              } */
 
-          me.list.forEach(function (element) {
-            me.tbody = me.tbody + "<td>" + Object.keys(element["body"][key]) + "</td>";
+        me.list.forEach(function (scenario) {
+          Object.keys(scenario["body"]).forEach(function (scKey) {
+            //!th1
+            var collspan = 1;
+            Object.keys(scenario["body"][scKey]).forEach(function (inKey) {
+              // !th2
+              var th = "<th>" + inKey + "</th>";
+
+              if (!theadTr2.includes(inKey)) {
+                collspan = collspan + 1;
+                theadTr2 += "<th>" + inKey + "</th>";
+              }
+            });
+            var th = "<th rowspan='1' colspan='" + collspan + "'>" + scKey + "</th>";
+
+            if (!theadTr1.includes(scKey)) {
+              //! set string if not included in string
+              theadTr1 += th;
+            }
           });
-        }); //   me.list.forEach((element) => {});
+        });
+        me.thead = "<tr>" + theadTr1 + "</tr>" + "<tr>" + theadTr2 + "</tr>";
+        console.log(me.thead); //   alert(theadTr2);
+
+        /*    keys.forEach((key) => {
+          me.thead = me.thead + "<th>" + key + "</th>";
+          me.list.forEach((element) => {
+            me.tbody =
+              me.tbody + "<td>" + Object.keys(element["body"][key]) + "</td>";
+          });
+        }); */
+        //   me.list.forEach((element) => {});
 
         console.log({
           keys: keys
@@ -24593,122 +24569,31 @@ var render = function () {
     _c("div", { staticClass: "card-body" }, [
       _c("div", { staticClass: "row pb-3 mb-2" }),
       _vm._v(" "),
-      _c("div", { staticClass: "bootstrap-table" }, [
-        _c(
-          "table",
-          {
-            staticClass: "table-striped table table-hover table-bordered",
-            attrs: {
-              "data-toggle": "table",
-              "data-mobile-responsive": "true",
-              "data-sort-order": "default",
+      _c(
+        "div",
+        {
+          staticClass: "bootstrap-table",
+          staticStyle: { "overflow-x": "auto" },
+        },
+        [
+          _c(
+            "table",
+            {
+              staticClass: "table-striped table table-hover table-bordered",
+              attrs: {
+                "data-toggle": "table",
+                "data-mobile-responsive": "true",
+                "data-sort-order": "default",
+              },
             },
-          },
-          [
-            _c("thead", [
-              _c(
-                "tr",
-                [
-                  _c("th", [_vm._v("Name")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("User name")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("Factors")]),
-                  _vm._v(" "),
-                  _vm._l(Object.keys(_vm.scenario["body"]), function (scKey) {
-                    return _c(
-                      "th",
-                      { key: scKey },
-                      _vm._l(
-                        Object.keys(_vm.scenario["body"][scKey]),
-                        function (aKey) {
-                          return _c("p", { key: aKey })
-                        }
-                      ),
-                      0
-                    )
-                  }),
-                  _c("th", [_vm._v(_vm._s(_vm.aKey))]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(
-                      "\n                  " +
-                        _vm._s(
-                          _vm.scenario["body"][_vm.scKey][_vm.aKey]["criterion"]
-                        ) +
-                        " |\n                  " +
-                        _vm._s(
-                          _vm.scenario["body"][_vm.scKey][_vm.aKey]["value"]
-                        ) +
-                        "\n                "
-                    ),
-                  ]),
-                ],
-                2
-              ),
-            ]),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.list, function (scenario, key) {
-                return _c(
-                  "tr",
-                  { key: key },
-                  [
-                    _c("td", [_vm._v(_vm._s(scenario["name"]))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(
-                            scenario["user"]["name"] +
-                              " " +
-                              scenario["user"]["last_name"]
-                          ) +
-                          "\n            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(Object.keys(scenario["body"]), function (scKey) {
-                      return _c(
-                        "td",
-                        { key: scKey },
-                        _vm._l(
-                          Object.keys(scenario["body"][scKey]),
-                          function (aKey) {
-                            return _c("tr", { key: aKey }, [
-                              _c("td", [
-                                _vm._v(_vm._s(scKey) + " | " + _vm._s(aKey)),
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  "\n                  " +
-                                    _vm._s(
-                                      scenario["body"][scKey][aKey]["criterion"]
-                                    ) +
-                                    " |\n                  " +
-                                    _vm._s(
-                                      scenario["body"][scKey][aKey]["value"]
-                                    ) +
-                                    "\n                "
-                                ),
-                              ]),
-                            ])
-                          }
-                        ),
-                        0
-                      )
-                    }),
-                  ],
-                  2
-                )
-              }),
-              0
-            ),
-          ]
-        ),
-      ]),
+            [
+              _c("thead", { domProps: { innerHTML: _vm._s(_vm.thead) } }),
+              _vm._v(" "),
+              _c("tbody"),
+            ]
+          ),
+        ]
+      ),
     ]),
   ])
 }
