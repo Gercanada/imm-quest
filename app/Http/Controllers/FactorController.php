@@ -478,6 +478,236 @@ class FactorController extends Controller
             $user = Auth::user();
             $locale = App::getLocale() ? App::getLocale() : 'en';
 
+            $scenarios = Scenario::Where('user_id', 2/* $user->id */)
+                ->With(['user' => function ($q) {
+                    $q->select(
+                        'id',
+                        'user_name',
+                        'email',
+                        'name',
+                        'last_name',
+                        'avatar'
+                    );
+                }])
+                ->select(
+                    'id',
+                    'name',
+                    'body',
+                    'is_married',
+                    'is_theactual',
+                    'created_at',
+                    'updated_at',
+                    'user_id',
+                )->get();
+
+
+            $index = 0;
+            foreach ($scenarios as $key => $scenario) {
+                $obj = [];
+
+                foreach (json_decode($scenario) as $k => $val) {
+                    if ($k === 'body') {
+                        // $arr = [];
+                        // dd($scenario['is_married']);
+                        $factors = [];
+                        foreach (json_decode($val) as $key => $val) {
+                            $fact = Factor::where('id', (int)$val->factor)->select(
+                                'id',
+                                'title',
+                                'titulo',
+                                'sub_title',
+                                'sub_titulo'
+                            )->first();
+                            if (!array_key_exists($fact['title'], $factors)) {
+                                $factors[$fact['title']] = [];
+                            }
+
+                            $selectSub = ['id', /* 'subfactor', 'subfacto', */ 'factor_id'];
+                            $locale === 'en' && $selectSub[] = 'subfactor AS subfactor';
+                            $locale === 'es' && $selectSub[] = 'subfacto AS subfactor';
+                            $subFact = Subfactor::where('id', (int)$val->subfactor)->select($selectSub)->first();
+                            if (array_key_exists($fact['title'], $factors) && !array_key_exists($subFact['subfactor'], $factors[$fact['title']])) {
+                                $factors[$fact['title']][$subFact['subfactor']] = [];
+                            }
+
+                            $selectCrit = ['id'];
+                            $scenario['is_married'] &&  $selectCrit[] = 'married AS value';
+                            !$scenario['is_married'] &&  $selectCrit[] = 'single AS value';
+                            $locale === 'en' && $selectCrit[] = 'criterion AS criterion';
+                            $locale === 'es' && $selectCrit[] = 'criterio AS criterion';
+
+                            $crit = Criterion::where('id', (int)$val->criterion)->select($selectCrit)
+                                ->where(function ($q) use ($scenario) {
+                                })
+                                ->first();
+
+                            if (
+                                array_key_exists($fact['title'], $factors)
+                                && array_key_exists($subFact['subfactor'], $factors[$fact['title']])
+                                && !array_key_exists($crit['criterion'], $factors[$fact['title']][$subFact['subfactor']])
+                            ) {
+                                $factors[$fact['title']][$subFact['subfactor']] = $crit;
+                            }
+                        }
+                        $obj[$k] = $factors; //json_decode($val);
+                    } else {
+                        $obj[$k] = $val;
+                    }
+                }
+                $scenarios[$index] = $obj;
+                $index = $index + 1;
+            }
+
+
+            $theadTr1 = '';
+            $theadTr2 = '';
+            $thead = '';
+            $tbody = '';
+            $order = ["user", "name", "is_married", "is_theactual"];
+
+            $theadTr1 .= "<th rowspan='2' colspan='1'>User name</th>" .
+                "<th rowspan='2' colspan='1'>Scenario name</th>"
+                . "<th rowspan='2' colspan='1'>Married</th>"
+                . "<th rowspan='2' colspan='1'>Is actual</th>";
+
+            foreach ($scenarios as $scenario) {
+                foreach (array_keys((array)$scenario['body']) as $scKey) {
+                    $collspan = 1;
+                    foreach (array_keys((array)$scenario['body'][$scKey]) as $inKey) {
+                        if (!str_contains($theadTr2, $inKey)) {
+                            $collspan += 1;
+                            $theadTr2 .= "<th>" . $inKey . "</th>";
+                            array_push($order, $inKey);
+                        }
+                    }
+                    if (!str_contains($theadTr1, $scKey)) {
+                        $th = "<th rowspan='1' colspan='"
+                            . $collspan
+                            . "'>"
+                            . $scKey
+                            . "</th>";
+                        //! set string if not included in string
+                        $theadTr1 .=  $th;
+                    }
+                }
+            }
+
+            $thead .= "<tr>" . $theadTr1 . "</tr>" . "<tr>" . $theadTr2 . "</tr>";
+
+            foreach ($scenarios as $scenario) {
+                $tds = "";
+                foreach ($order as $inKey) {
+                    if ($inKey === "user") {
+                        $tds .=
+                            "<td>" .
+                            $scenario[$inKey]->name .
+                            "  " .
+                            $scenario[$inKey]->last_name .
+                            "</td>";
+                    } else if ($inKey === "name") {
+                        $tds .= "<td>" . $scenario[$inKey] . "</td>";
+                    } else if (in_array($inKey, ["is_married", "is_theactual"])) {
+                        $tds .= "<td>" . $scenario[$inKey] . "</td>";
+                    } else if (!in_array($inKey, ["id", "created_at", "updated_at", "body", "user_id"])) {
+                        $val = "";
+                        foreach (array_values($scenario["body"]) as $factor) {
+                            foreach ($factor as $criterion => $criterionData) {
+                                if ($criterion === $inKey) {
+                                    $val =
+                                        "<p><b> Criterio:  </b>" .
+                                        $criterionData . $criterion .
+                                        "<br><b> Puntos: </b>" .
+                                        $criterionData->value .
+                                        "</p>";
+                                }
+                            }
+                        }
+                        $tds .= "<td>" . $val . "</td>";
+                    }
+                    $tbody .= "<tr>" . $tds . "</tr>";
+                }
+            }
+
+
+            $htmlStr =  '<div class="bootstrap-table" style="overflow-x: auto">
+            <table
+              data-toggle="table"
+              data-mobile-responsive="true"
+              class="table-striped table table-hover table-bordered"
+              data-sort-order="default"
+            >
+              <thead >' . $thead . '</thead>
+              <tbody>' . $tbody . '</tbody>
+            </table>
+          </div>';
+
+
+            $fileName = $user->name . '_' . $user->last_name . '_summary' . time() . '.pdf';
+            $pdf = App::make('dompdf.wrapper');
+            $pdf->loadHTML($htmlStr);
+            $pdf->setPaper('A4', 'landscape');
+            // dd($htmlStr);
+
+            Storage::put(
+                'public/pdf/' . $fileName,
+                $pdf->stream()
+            );
+            return response()->json($fileName, 200);            // Storage::put('public/pdf/' . $fileName, $pdf->output());
+
+            return 200;
+
+            $pdfContent = $pdf->output();
+            $response = response($pdfContent, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="documento.pdf"',
+            ]);
+            return $response;
+
+
+            $pdf = App::make('dompdf.wrapper');
+            $pdf->loadHTML($htmlStr);
+            /*   if ($request->orientation) {
+                $pdf->setPaper('A4', 'landscape');
+            } */
+            return $pdf->stream();
+            $pdfContent = $pdf->output();
+
+            return response()->json([
+                'pdf' => base64_encode($pdfContent)
+            ]);
+
+
+
+
+            $data = [
+                'fileName' => $fileName,
+                'name' => "$user->name $user->last_name",
+                'date' => date('Y/m/d'),
+                'factors' =>  $htmlStr,
+                /*  'scennarios' =>  $scennariosHtml,
+                'maritialSituations' => $scennarioMaritialSituationHtml, */
+                // 'totals' => $totals
+            ];
+            $pdf = PDF::loadView('pdfSummary',  $htmlStr)/* ->setPaper('a4', 'landscape') */;
+            Storage::put(
+                'public/pdf/' . $fileName,
+                $pdf->output()
+            );
+            return response()->json($fileName, 200);            // Storage::put('public/pdf/' . $fileName, $pdf->output());
+
+            // return response()->json($fileName, 200);
+        } catch (Exception $e) {
+            // $this->consoleWrite()->writeln($e->getMessage());
+            return response()->json($e);
+        }
+    }
+
+    public function oldPprintSummary()
+    {
+        try {
+            $user = Auth::user();
+            $locale = App::getLocale() ? App::getLocale() : 'en';
+
             $factorsHtml = '';
             $scennariosHtml = '';
             $totals = '';
@@ -494,9 +724,9 @@ class FactorController extends Controller
 
             if ($locale === 'es') {
                 $factorTitle =  'factors.titulo';
-                $subtitle = 'sub_titulo';
-                $single = "Soltero";
-                $married = "Casado";
+                $subtitle    = 'sub_titulo';
+                $single      = "Soltero";
+                $married     = "Casado";
             }
 
 
@@ -522,40 +752,31 @@ class FactorController extends Controller
                     if (is_array($body)) {
                         foreach ($body as $item) {
                             $criterion = Criterion::where('id', $item->criterion)
-                                ->select(
-                                    '*'
-                                    /*  $locale === 'es'
-                                        ? 'criterio as criterion'
-                                        : 'criterion',
-                                    'single',
-                                    'married' */
-                                )->first();
+                                ->select('*')
+                                ->first();
 
                             $subfactor = Subfactor::where('id', $item->subfactor)
-                                ->select(/* $locale === 'es'
-                                    ? 'subfacto as subfactor'
-                                    : 'subfactor', 'id' */'*')->first();
+                                ->select('*')
+                                ->first();
 
                             // !$title && $title = $criterion['criterion'];
-
                             if ($item->factor === $factor['id']) {
-
                                 $marriedVal = $scennario->is_married
                                     ? $criterion->married :
                                     $criterion->single;
-
                                 if (
                                     $item->subfactor === $subfactor['id']
                                     && $item->criterion === $criterion['id']
                                 ) {
                                     array_push($scRitVal, $marriedVal);
                                 }
-                                return [
+                                /*
+                                 return [
                                     'item' => $item,
                                     'subfactor' => $subfactor,
                                     'criterion' =>  $criterion
-                                ];
-
+                                  ];
+                                */
                                 array_push($toSum,  $marriedVal);
                                 array_push($toSumSC,  $marriedVal);
                                 $title = $subfactor['subfactor'];
@@ -643,7 +864,6 @@ class FactorController extends Controller
              * Data for fill file
              */
 
-            // return  $factorsHtml;
             $data = [
                 'fileName' => $fileName,
                 'name' => "$user->name $user->last_name",
@@ -653,11 +873,15 @@ class FactorController extends Controller
                 'maritialSituations' => $scennarioMaritialSituationHtml,
                 'totals' => $totals
             ];
+
             $pdf = PDF::loadView('pdfSummary', $data)/* ->setPaper('a4', 'landscape') */;
-            Storage::put('public/pdf/' . $fileName, $pdf->output());
+            Storage::put(
+                'public/pdf/' . $fileName,
+                $pdf->output()
+            );
             return response()->json($fileName, 200);
         } catch (Exception $e) {
-            // $this->consoleWrite()->writeln($e->getMessage());
+            $this->consoleWrite()->writeln($e->getMessage());
             return response()->json($e);
         }
     }
@@ -683,7 +907,7 @@ class FactorController extends Controller
         try {
             $filePath = "pdf/" . $fileName;
             Storage::disk('public')->delete($filePath);
-            return  response()->json("File deleted");
+            return response()->json("File deleted");
         } catch (Exception $e) {
             return response()->json($e->getMessage());
         }

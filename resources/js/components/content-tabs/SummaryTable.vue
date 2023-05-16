@@ -11,7 +11,8 @@
             type="button"
             @click="printSummary"
           >
-            <span class="btn-label"><i class="far fa-file-pdf"></i></span> {{ makePdf }}
+            <span class="btn-label"><i class="far fa-file-pdf"></i></span>
+            {{ makePdf }}
           </button>
         </div>
       </div>
@@ -27,7 +28,11 @@
             <tr>
               <th></th>
               <th data-sortable="" data-width="auto">{{ actual }}</th>
-              <th class="text-center" data-width="auto" v-for="sCopy in scennariosCopies">
+              <th
+                class="text-center"
+                data-width="auto"
+                v-for="sCopy in scennariosCopies"
+              >
                 {{ sCopy.name }}
               </th>
             </tr>
@@ -107,7 +112,8 @@ export default {
             [fact.id] in this.FactorsWithScores &&
             this.FactorsWithScores[fact.id]
             ? this.FactorsWithScores[fact.id][1].marriedSum
-            : [fact.id] in this.FactorsWithScores && this.FactorsWithScores[fact.id]
+            : [fact.id] in this.FactorsWithScores &&
+              this.FactorsWithScores[fact.id]
             ? this.FactorsWithScores[fact.id][0].singleSum
             : 0
         );
@@ -127,7 +133,8 @@ export default {
             [fact.id] in this.FactorsWithScores &&
             this.FactorsWithScores[fact.id]
             ? this.FactorsWithScores[fact.id][1].marriedSum
-            : [fact.id] in this.FactorsWithScores && this.FactorsWithScores[fact.id]
+            : [fact.id] in this.FactorsWithScores &&
+              this.FactorsWithScores[fact.id]
             ? this.FactorsWithScores[fact.id][0].singleSum
             : 0
         );
@@ -190,8 +197,12 @@ export default {
       f1ScoreSingle: 0,
       totalForFactor: 0,
       sumScoreCopies: [],
-      scoreSummary: this.language == "es" ? "Sumario de puntos" : "Score summary",
-      makePdf: this.language == "es" ? "Generar documento pdf" : "Generate pdf document",
+      scoreSummary:
+        this.language == "es" ? "Sumario de puntos" : "Score summary",
+      makePdf:
+        this.language == "es"
+          ? "Generar documento pdf"
+          : "Generate pdf document",
       actual: this.language == "es" ? "Escenario actual" : "Actual scennary",
       mStatus: this.language == "es" ? "Estado civil" : "Maritial status",
       single: this.language == "es" ? "Soltero" : "Single",
@@ -237,9 +248,11 @@ export default {
           window.open("/open_pdf/" + fileName);
           //   console.table(response1);
         });
-      delay(10000)
+      delay(10000) //!Delete then of download
         .then(() => {
-          axios.get("delete_temp_file/" + fileName).then(function (response) {});
+          axios
+            .get("delete_temp_file/" + fileName)
+            .then(function (response) {});
         })
         .catch((error) => {
           console.table(error);

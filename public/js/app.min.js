@@ -2263,52 +2263,32 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             var collspan = 1;
             Object.keys(scenario["body"][scKey]).forEach(function (inKey) {
               // !th2
-              var th = "<th>" + inKey + "</th>";
-
+              // const th = "<th>" + inKey + "</th>";
               if (!theadTr2.includes(inKey)) {
                 collspan = collspan + 1;
                 theadTr2 += "<th>" + inKey + "</th>";
                 order.push(inKey);
               }
             });
-            var th = "<th rowspan='1' colspan='" + collspan + "'>" + scKey + "</th>";
 
             if (!theadTr1.includes(scKey)) {
-              //! set string if not included in string
+              var th = "<th rowspan='1' colspan='" + collspan + "'>" + scKey + "</th>"; //! set string if not included in string
+
               theadTr1 += th;
             }
           });
         });
-        me.thead = "<tr>" + theadTr1 + "</tr>" + "<tr>" + theadTr2 + "</tr>"; //   console.log(me.thead);
-
+        me.thead = "<tr>" + theadTr1 + "</tr>" + "<tr>" + theadTr2 + "</tr>";
         me.list.forEach(function (scenario) {
           var tds = "";
           order.forEach(function (inKey) {
             if (inKey === "user") {
-              tds += "<td>" + scenario[inKey].name + "  " + scenario[inKey].last_name + "</td>"; // alert(JSON.stringify(scenario[inKey]));
+              tds += "<td>" + scenario[inKey].name + "  " + scenario[inKey].last_name + "</td>";
             } else if (inKey === "name") {
-              tds += "<td>" + scenario[inKey]
-              /* scenario.name */
-              + "</td>";
+              tds += "<td>" + scenario[inKey] + "</td>";
             } else if (["is_married", "is_theactual"].includes(inKey)) {
               tds += "<td>" + scenario[inKey] + "</td>";
-            }
-            /*  else if (inKey === "body") {
-            alert("here");
-            let val = "";
-            Object.values(scenario["body"]).forEach((factor) => {
-              console.log({ entries: Object.entries(factor) });
-              Object.entries(factor).forEach(
-                ([criterion, criterionData]) => {
-                  if (criterionData[criterion] === inKey) {
-                    val = criterionData.value;
-                  }
-                }
-              );
-            });
-            tds += "<td>" + val + "</td>";
-            } */
-            else if (!["id", "created_at", "updated_at", "body", "user_id"].includes(inKey)) {
+            } else if (!["id", "created_at", "updated_at", "body", "user_id"].includes(inKey)) {
               var val = "";
               Object.values(scenario["body"]).forEach(function (factor) {
                 console.log({
@@ -2319,135 +2299,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                       criterion = _ref2[0],
                       criterionData = _ref2[1];
 
-                  //   alert(JSON.stringify({ criterionData }));
-                  if (
-                  /* criterionData[criterion] */
-                  criterion === inKey) {
+                  if (criterion === inKey) {
                     val = "<p><b> Criterio:  </b>" + criterionData.criterion + "<br><b> Puntos: </b>" + criterionData.value + "</p>";
-                    /* val = criterionData
-                      ? JSON.stringify(criterionData)
-                      : "";  */
-
-                    /* criterionData.value; */
                   }
                 });
               });
               tds += "<td>" + val + "</td>";
             }
-            /*  {
-              tds += "<td>" + scenario[inKey] + "</td>";
-            } */
-
-          }); // console.log("<tr>" + tds + "</tr>");
-
+          });
           me.tbody += "<tr>" + tds + "</tr>";
         });
-        return;
-        me.list.forEach(function (scenario) {
-          var tds = ""; // const claves = [];
-          //   claves.push(key);
-
-          /*   Object.entries(scenario).forEach(([key, value]) => {
-            if (key === "user") {
-              console.log(value["name"]);
-              tds += "<td>" + value["name"] + " " + "</td>";
-            } else if (key === "name") {
-              tds += "<td>" + value.name + "</td>";
-            } else if (["is_married", "is_theactual"].includes(key)) {
-              tds += "<td> MUST BE BOOL" + value + "</td>";
-            } else if (
-              !["id", "created_at", "updated_at", "body", "user_id"].includes(
-                key
-              )
-            ) {
-              tds += "<td> ANOTHER" + value + "</td>";
-            }
-            console.log(key, value); // "a 5", "b 7", "c 9"
-          });
-          me.tbody += "<tr>" + tds + "</tr>"; */
-          // const order = ["user", "name", "is_married", "is_theactual"];
-
-          var aItds = "";
-          /*  order.forEach((key) => {
-            if (key === "user") {
-              console.log({ user: scenario[key] });
-              aItds +=
-                "<td>" +
-                scenario[key]["name"] +
-                " " +
-                scenario[key]["last_name"] +
-                " " +
-                "</td>";
-            } else if (key === "name") {
-              console.log({ name: scenario[key] });
-              aItds += "<td>" + scenario[key] + "</td>";
-            } else if (["is_married", "is_theactual"].includes(key)) {
-              aItds += "<td>" + scenario[key] + "</td>";
-            }  else if ("key" === "body") {
-             }  else if (
-              !["id", "created_at", "updated_at", "body", "user_id"].includes(
-                key
-              )
-            ) {
-              aItds += "<td> ANOTHER" + scenario[key] + "</td>";
-            }
-          }); */
-
-          /* const tr = "<tr>" + aItds + "</tr>";
-          me.tbody += tr; */
-          // console.log({ claves });
-
-          Object.entries(scenario).forEach(function (_ref3) {
-            var _ref4 = _slicedToArray(_ref3, 2),
-                key = _ref4[0],
-                value = _ref4[1];
-
-            if (key === "user") {
-              console.log(value["name"]);
-              aItds += "<td>" + value["name"] + " " + "</td>";
-            } else if (key === "name") {
-              aItds += "<td>" + value.name + "</td>";
-            } else if (["is_married", "is_theactual"].includes(key)) {
-              aItds += "<td>" + value + "</td>";
-            } else if (!["id", "created_at", "updated_at", "body", "user_id"].includes(key)) {
-              aItds += "<td>" + value + "</td>";
-            } else if (key === "body") {
-              for (var factorKey in value) {
-                if (value.hasOwnProperty(factorKey)) {
-                  var factor = value[factorKey];
-
-                  if (factor.hasOwnProperty("Edad")) {
-                    aItds += "<td>" + factor["Edad"]["value"] + "</td>";
-                  }
-
-                  if (factor.hasOwnProperty("Educación")) {
-                    aItds += "<td>" + factor["Educación"]["value"] + "</td>";
-                  }
-                }
-              }
-            }
-
-            console.log(key, value); // "a 5", "b 7", "c 9"
-          });
-          var tr = "<tr>" + aItds + "</tr>";
-          me.tbody += tr;
-        });
-        console.log({
-          tbody: me.tbody
-        }); //   alert(theadTr2);
-
-        /*    keys.forEach((key) => {
-          me.thead = me.thead + "<th>" + key + "</th>";
-          me.list.forEach((element) => {
-            me.tbody =
-              me.tbody + "<td>" + Object.keys(element["body"][key]) + "</td>";
-          });
-        }); */
-        //   me.list.forEach((element) => {});
-        //   console.log({ keys });
-        //   me.thead = "";
-
-        console.log(me.list);
       })["catch"](function (error) {
         console.error(error);
       });
@@ -4049,6 +3910,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["summary", "factors", "scores", "FactorsWithScores", "maritialStatusChanged", "scennariosCopies", "reloadAt", "language"],
   watch: {
@@ -4195,7 +4061,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         fileName = response1.data;
         window.open("/open_pdf/" + fileName); //   console.table(response1);
       });
-      delay(10000).then(function () {
+      delay(10000) //!Delete then of download
+      .then(function () {
         axios.get("delete_temp_file/" + fileName).then(function (response) {});
       })["catch"](function (error) {
         console.table(error);
@@ -5910,7 +5777,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ntable[data-v-322bc84a] {\r\n  height: auto;\r\n  overflow: auto;\r\n  position: relative;\n}\ntbody tr td p .right[data-v-322bc84a] {\r\n  text-align: right;\n}\ntbody tr td p .left[data-v-322bc84a] {\r\n  text-align: left;\n}\ntbody tr .rowName[data-v-322bc84a] {\r\n  text-align: left;\r\n  width: 40%;\r\n  min-width: 20%;\n}\n.card[data-v-322bc84a] {\r\n  height: 100%;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ntable[data-v-322bc84a] {\n  height: auto;\n  overflow: auto;\n  position: relative;\n}\ntbody tr td p .right[data-v-322bc84a] {\n  text-align: right;\n}\ntbody tr td p .left[data-v-322bc84a] {\n  text-align: left;\n}\ntbody tr .rowName[data-v-322bc84a] {\n  text-align: left;\n  width: 40%;\n  min-width: 20%;\n}\n.card[data-v-322bc84a] {\n  height: 100%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26269,7 +26136,10 @@ var render = function () {
               attrs: { type: "button" },
               on: { click: _vm.printSummary },
             },
-            [_vm._m(0), _vm._v(" " + _vm._s(_vm.makePdf) + "\n        ")]
+            [
+              _vm._m(0),
+              _vm._v("\n          " + _vm._s(_vm.makePdf) + "\n        "),
+            ]
           ),
         ]),
       ]),
