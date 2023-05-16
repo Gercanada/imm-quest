@@ -477,8 +477,7 @@ class FactorController extends Controller
         try {
             $user = Auth::user();
             $locale = App::getLocale() ? App::getLocale() : 'en';
-
-            $scenarios = Scenario::Where('user_id', 2/* $user->id */)
+            $scenarios = Scenario::Where('user_id', $user->id)
                 ->With(['user' => function ($q) {
                     $q->select(
                         'id',
@@ -504,11 +503,8 @@ class FactorController extends Controller
             $index = 0;
             foreach ($scenarios as $key => $scenario) {
                 $obj = [];
-
                 foreach (json_decode($scenario) as $k => $val) {
                     if ($k === 'body') {
-                        // $arr = [];
-                        // dd($scenario['is_married']);
                         $factors = [];
                         foreach (json_decode($val) as $key => $val) {
                             $fact = Factor::where('id', (int)$val->factor)->select(
@@ -522,7 +518,7 @@ class FactorController extends Controller
                                 $factors[$fact['title']] = [];
                             }
 
-                            $selectSub = ['id', /* 'subfactor', 'subfacto', */ 'factor_id'];
+                            $selectSub = ['id', 'factor_id'];
                             $locale === 'en' && $selectSub[] = 'subfactor AS subfactor';
                             $locale === 'es' && $selectSub[] = 'subfacto AS subfactor';
                             $subFact = Subfactor::where('id', (int)$val->subfactor)->select($selectSub)->first();
@@ -558,86 +554,131 @@ class FactorController extends Controller
                 $index = $index + 1;
             }
 
+            // $thead = '  <style>table, th, td {
+            //     border: 1px solid black;
+            //   }</style>';
 
-            $theadTr1 = '';
-            $theadTr2 = '';
-            $thead = '';
-            $tbody = '';
-            $order = ["user", "name", "is_married", "is_theactual"];
+            // $thead .= "<th colspan='1'>Factor</th><th colspan='1'>Subfactor</th>";
 
-            $theadTr1 .= "<th rowspan='2' colspan='1'>User name</th>" .
-                "<th rowspan='2' colspan='1'>Scenario name</th>"
-                . "<th rowspan='2' colspan='1'>Married</th>"
-                . "<th rowspan='2' colspan='1'>Is actual</th>";
-
-            foreach ($scenarios as $scenario) {
+            /* foreach ($scenarios as $scenario) {
+                $thead .= "<th rowspan='2' colspan='2'>" . $scenario['name'] . "</th>";
                 foreach (array_keys((array)$scenario['body']) as $scKey) {
-                    $collspan = 1;
-                    foreach (array_keys((array)$scenario['body'][$scKey]) as $inKey) {
-                        if (!str_contains($theadTr2, $inKey)) {
-                            $collspan += 1;
-                            $theadTr2 .= "<th>" . $inKey . "</th>";
-                            array_push($order, $inKey);
+                    $rowGroup = '';
+                    $rowspan = 1;
+                    foreach (((array)$scenario['body'][$scKey]) as $bKey => $bVal) {
+                        if (!str_contains($rowGroup, $bKey)) { //! criterion
+                            $rowGroup  .= '<tr><td style = "max-width: 180px;">' . $bKey . '</td>' .
+                                '<td style = "max-width: 210px; color:blue;">'
+                                . $bVal->criterion
+                                . '</td>'
+                                . '<td>'
+                                . $bVal->value
+                                . '</td>'
+                                . '</tr>';
+                            $rowspan += 1;
                         }
                     }
-                    if (!str_contains($theadTr1, $scKey)) {
-                        $th = "<th rowspan='1' colspan='"
-                            . $collspan
-                            . "'>"
-                            . $scKey
-                            . "</th>";
-                        //! set string if not included in string
-                        $theadTr1 .=  $th;
+                    if (!str_contains($nTbody, $scKey)) {  //! factor 1
+                        $nTbody .= '<tr><td rowspan=' . $rowspan . '>' . $scKey . '</td></tr>';
+                        $nTbody .= $rowGroup;
                     }
                 }
-            }
+            }*/
 
-            $thead .= "<tr>" . $theadTr1 . "</tr>" . "<tr>" . $theadTr2 . "</tr>";
+            /* foreach ($scenarios as $scenario) {
+                $thead .= "<th rowspan='2' colspan='2'>" . $scenario['name'] . "</th>";
+                foreach (array_keys((array)$scenario['body']) as $scKey) {
+                    $inRow = '';
+                    $rowspan = 1;
+                    foreach (((array)$scenario['body'][$scKey]) as $bKey => $bVal) {
+                        if (!str_contains($inRow, $bKey)) { // Verificar si el $bKey ya ha sido procesado
+                            $inRow  .= '<tr>' .
+                                '<td style="max-width: 180px;">' . $bKey . '</td>' .
+                                '<td style="max-width: 210px; color:blue;">'
+                                . $bVal->criterion
+                                . '</td>'
+                                . '<td>'
+                                . $bVal->value
+                                . '</td>'
+                                . '</tr>';
+                            $rowspan += 1;
+                        }
+                    }
+
+                    if (!str_contains($nTbody, $scKey)) { // Verificar si el $scKey ya ha sido procesado
+                        $nTbody .= '<tr><td rowspan=' . $rowspan . '>' . $scKey . '</td></tr>';
+                        $nTbody .= $inRow; // Concatenar las filas generadas al cuerpo de la tabla
+                    }
+                }
+                // $nTbody .= $nTbody;
+            }
+ */
+            $processedKeys = array();
+
+            $tableX = '';
 
             foreach ($scenarios as $scenario) {
-                $tds = "";
-                foreach ($order as $inKey) {
-                    if ($inKey === "user") {
-                        $tds .=
-                            "<td>" .
-                            $scenario[$inKey]->name .
-                            "  " .
-                            $scenario[$inKey]->last_name .
-                            "</td>";
-                    } else if ($inKey === "name") {
-                        $tds .= "<td>" . $scenario[$inKey] . "</td>";
-                    } else if (in_array($inKey, ["is_married", "is_theactual"])) {
-                        $tds .= "<td>" . $scenario[$inKey] . "</td>";
-                    } else if (!in_array($inKey, ["id", "created_at", "updated_at", "body", "user_id"])) {
-                        $val = "";
-                        foreach (array_values($scenario["body"]) as $factor) {
-                            foreach ($factor as $criterion => $criterionData) {
-                                if ($criterion === $inKey) {
-                                    $val =
-                                        "<p><b> Criterio:  </b>" .
-                                        $criterionData . $criterion .
-                                        "<br><b> Puntos: </b>" .
-                                        $criterionData->value .
-                                        "</p>";
-                                }
-                            }
-                        }
-                        $tds .= "<td>" . $val . "</td>";
+                // dd($scenario['is_married']);
+                // $thead .= "<th rowspan='2' colspan='2'>" . $scenario['name'] . "</th>";
+                $isMarried =  $scenario['is_married'] ? "Married" : "Single";
+                $sThead = "<th rowspan='2' colspan='2'>"
+                    . $scenario['name']
+                    . "</th>"
+                    .  "<th colspan='2'>" . $isMarried . "</th>";
+                $sBody = '';
+
+                foreach (array_keys((array)$scenario['body']) as $scKey) {
+                    $inRow = '';
+                    $rowspan = 1;
+
+                    foreach (((array)$scenario['body'][$scKey]) as $bKey => $bVal) {
+                        // if (!in_array($bKey, $processedKeys)) { // Verificar si el $bKey ya ha sido procesado
+                        $inRow .= '<tr>' .
+                            '<td style="max-width: 180px;">' . $bKey . '</td>' .
+                            '<td style="max-width: 210px; color:blue;">'
+                            . $bVal->criterion
+                            . '</td>'
+                            . '<td>'
+                            . $bVal->value
+                            . '</td>'
+                            . '</tr>';
+
+                        $processedKeys[] = $bKey; // Agregar $bKey al array de keys procesados
+                        $rowspan += 1;
+                        // }
                     }
+
+                    if (!str_contains($sBody, $scKey)) { // Verificar si el $scKey ya ha sido procesado
+                        $sBody .= '<tr><td rowspan=' . $rowspan . '>' . $scKey . '</td></tr>';
+                    }
+                    $sBody .= $inRow; // Concatenar las filas generadas al cuerpo de la tabla
                 }
-                $tbody .= "<tr>" . $tds . "</tr>";
+                $tableX .= '<table><thead>'
+                    . $sThead
+                    . '</thead>'
+                    . '<tbody>'
+                    . $sBody
+                    . '</tbody>'
+                    . '</table>';
+                // $sBody .= '<tr>'; // Agregar una nueva fila para el siguiente escenario
             }
 
 
-            $htmlStr =  '<div class="bootstrap-table" style="overflow-x: auto">
+            // $nTbody .= '</tr>'; // Cerrar la última fila
+
+            // dd($tableX);
+
+            $htmlStr =  '<style>table, th, td {
+                border: 1px solid black;
+              }</style>
+              <div class="bootstrap-table" style="overflow-x: auto">
             <table
               data-toggle="table"
               data-mobile-responsive="true"
               class="table-striped table table-hover table-bordered"
               data-sort-order="default"
             >
-              <thead >' . $thead . '</thead>
-              <tbody>' . $tbody . '</tbody>
+            ' . $tableX . '
             </table>
           </div>';
 
