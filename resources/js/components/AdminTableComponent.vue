@@ -123,7 +123,7 @@ export default {
               ) {
                 let val = "";
                 Object.values(scenario["body"]).forEach((factor) => {
-                  console.log({ entries: Object.entries(factor) });
+                //   console.log({ entries: Object.entries(factor) });
                   Object.entries(factor).forEach(
                     ([criterion, criterionData]) => {
                       if (criterion === inKey) {

@@ -624,8 +624,8 @@ class FactorController extends Controller
                         }
                         $tds .= "<td>" . $val . "</td>";
                     }
-                    $tbody .= "<tr>" . $tds . "</tr>";
                 }
+                $tbody .= "<tr>" . $tds . "</tr>";
             }
 
 
@@ -640,6 +640,8 @@ class FactorController extends Controller
               <tbody>' . $tbody . '</tbody>
             </table>
           </div>';
+
+            // dd($htmlStr);
 
 
             $fileName = $user->name . '_' . $user->last_name . '_summary' . time() . '.pdf';
