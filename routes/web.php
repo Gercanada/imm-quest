@@ -66,6 +66,8 @@ Route::middleware('Language')->group(function () {
         Route::get('open_pdf/{fileName}',         [FactorController::class, 'openPdf']);
         Route::get('delete_temp_file/{fileName}', [FactorController::class, 'deletePdf']);
 
+        Route::get('scenarios-preview', [FactorController::class, 'preview']);
+
         //TODO Agregar rutas administrativas, para que un admin pueda ver las evaluaciones .
         Route::middleware('admin')->group(function () {
             Route::get('admin/scenarios/list', [AdminController::class, 'index']);

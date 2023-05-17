@@ -621,12 +621,12 @@ class FactorController extends Controller
 
             foreach ($scenarios as $scenario) {
                 $isMarried =  $scenario['is_married'] ? "Married" : "Single";
-                $sThead = "<th>"
+                $sThead = '<th width="10">'
                     . $scenario['name']
-                    . "</th>"
-                    .  "<th>" . $isMarried . "</th><th></th><th></th>";
-                $sBody = '';
+                    . '</th>'
+                    .  '<th>' . $isMarried . '</th><th></th><th></th>';
 
+                $sBody = '';
                 foreach (array_keys((array)$scenario['body']) as $scKey) {
                     $inRow = '';
                     $rowspan = 1;
@@ -660,7 +660,7 @@ class FactorController extends Controller
                     . '<tbody>'
                     . $sBody
                     . '</tbody>'
-                    . '</table>';
+                    . '</table><br>';
                 // $sBody .= '<tr>'; // Agregar una nueva fila para el siguiente escenario
                 // break;
             }
@@ -690,7 +690,11 @@ class FactorController extends Controller
                 . '</main></body>
           </div>';
 
-            // dd($htmlStr);
+
+
+
+            // return $this->preview($htmlStr);
+            dd($htmlStr);
             $fileName = $user->name . '_' . $user->last_name . '_summary' . time() . '.pdf';
             $pdf = App::make('dompdf.wrapper');
 
@@ -947,6 +951,179 @@ class FactorController extends Controller
             return response()->file(storage_path($filePath));
         } catch (Exception $e) {
             return response()->json("$fileName not found :(");
+        }
+    }
+
+    public function  preview()
+    {
+        try {
+            $user = Auth::user();
+            $locale = App::getLocale() ? App::getLocale() : 'en';
+            $scenarios = Scenario::Where('user_id', $user->id)
+                ->With(['user' => function ($q) {
+                    $q->select(
+                        'id',
+                        'user_name',
+                        'email',
+                        'name',
+                        'last_name',
+                        'avatar'
+                    );
+                }])
+                ->select(
+                    'id',
+                    'name',
+                    'body',
+                    'is_married',
+                    'is_theactual',
+                    'created_at',
+                    'updated_at',
+                    'user_id',
+                )->get();
+
+
+            $index = 0;
+            foreach ($scenarios as $key => $scenario) {
+                $obj = [];
+                foreach (json_decode($scenario) as $k => $val) {
+                    if ($k === 'body') {
+                        $factors = [];
+                        foreach (json_decode($val) as $key => $val) {
+                            $fact = Factor::where('id', (int)$val->factor)->select(
+                                'id',
+                                'title',
+                                'titulo',
+                                'sub_title',
+                                'sub_titulo'
+                            )->first();
+                            if (!array_key_exists($fact['title'], $factors)) {
+                                $factors[$fact['title']] = [];
+                            }
+
+                            $selectSub = ['id', 'factor_id'];
+                            $locale === 'en' && $selectSub[] = 'subfactor AS subfactor';
+                            $locale === 'es' && $selectSub[] = 'subfacto AS subfactor';
+                            $subFact = Subfactor::where('id', (int)$val->subfactor)->select($selectSub)->first();
+                            if (array_key_exists($fact['title'], $factors) && !array_key_exists($subFact['subfactor'], $factors[$fact['title']])) {
+                                $factors[$fact['title']][$subFact['subfactor']] = [];
+                            }
+
+                            $selectCrit = ['id'];
+                            $scenario['is_married'] &&  $selectCrit[] = 'married AS value';
+                            !$scenario['is_married'] &&  $selectCrit[] = 'single AS value';
+                            $locale === 'en' && $selectCrit[] = 'criterion AS criterion';
+                            $locale === 'es' && $selectCrit[] = 'criterio AS criterion';
+
+                            $crit = Criterion::where('id', (int)$val->criterion)->select($selectCrit)
+                                ->where(function ($q) use ($scenario) {
+                                })
+                                ->first();
+
+                            if (
+                                array_key_exists($fact['title'], $factors)
+                                && array_key_exists($subFact['subfactor'], $factors[$fact['title']])
+                                && !array_key_exists($crit['criterion'], $factors[$fact['title']][$subFact['subfactor']])
+                            ) {
+                                $factors[$fact['title']][$subFact['subfactor']] = $crit;
+                            }
+                        }
+                        $obj[$k] = $factors; //json_decode($val);
+                    } else {
+                        $obj[$k] = $val;
+                    }
+                }
+                $scenarios[$index] = $obj;
+                $index = $index + 1;
+            }
+ $processedKeys = array();
+
+            $tableX = '';
+
+            foreach ($scenarios as $scenario) {
+                $isMarried =  $scenario['is_married'] ? "Married" : "Single";
+                $sThead = '<th width="10">'
+                    . $scenario['name']
+                    . '</th>'
+                    .  '<th>' . $isMarried . '</th><th></th><th></th>';
+
+                $sBody = '';
+                foreach (array_keys((array)$scenario['body']) as $scKey) {
+                    $inRow = '';
+                    $rowspan = 1;
+
+                    foreach (((array)$scenario['body'][$scKey]) as $bKey => $bVal) {
+                        // if (!in_array($bKey, $processedKeys)) { // Verificar si el $bKey ya ha sido procesado
+                        $inRow .= '<tr>' .
+                            '<td style="max-width: 150px;">' . $bKey . '</td>' .
+                            '<td style="max-width: 200px; color:blue;">'
+                            . $bVal->criterion
+                            . '</td>'
+                            . '<td>'
+                            . $bVal->value
+                            . '</td>'
+                            . '</tr>';
+
+                        $processedKeys[] = $bKey; // Agregar $bKey al array de keys procesados
+                        $rowspan += 1;
+                        // }
+                    }
+
+                    /* if (!str_contains($sBody, $scKey)) { // Verificar si el $scKey ya ha sido procesado
+                    } */
+                    $sBody .= '<td rowspan="' . $rowspan . '">' . $scKey . '</td>';
+
+                    $sBody .= $inRow; // Concatenar las filas generadas al cuerpo de la tabla
+                }
+                $tableX .= '<table><thead><tr>'
+                    . $sThead
+                    . '</thead></tr>'
+                    . '<tbody>'
+                    . $sBody
+                    . '</tbody>'
+                    . '</table><br>';
+                // $sBody .= '<tr>'; // Agregar una nueva fila para el siguiente escenario
+                // break;
+            }
+
+            $htmlStr =  '<!DOCTYPE html>
+            <html lang="en">
+            <head>
+            <meta charset="utf-8">
+                    <style>
+                        body {
+                            text-align: center;
+                        }
+                        table {
+                            margin: 0 auto;
+                            border-collapse: collapse;
+                        }
+                        th, td {
+                            padding: 10px;
+                            border: 1px solid black;
+                        }
+                    </style>
+                </head>
+              <body>
+              <main>
+              <div class="bootstrap-table" style="overflow-x: auto">'
+                . $tableX
+                . '</main></body>
+          </div>';
+
+          return view('sumary-preview')->with('html', $htmlStr);
+        /*   return  redirect()->route('sumary-preview')->with('html', $htmlStr);
+            return response()->json(['data' => $htmlStr], 200);
+            return view('sumary-preview', compact('html'));
+            return view('sumary-preview', compact('html')); */
+        } catch (Exception $e) {
+            return response()->json(
+                [
+                    'message' => $e->getMessage(),
+                    'method' => __CLASS__ . ' -> ' . __FUNCTION__,
+                    'line' => $e->getLine()
+                ],
+                500
+            );
         }
     }
 

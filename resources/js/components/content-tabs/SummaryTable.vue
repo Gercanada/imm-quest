@@ -231,7 +231,7 @@ export default {
       axios
         .post("print-summary", { data })
         .then(function (response) {
-          response1 = response;
+          response1 = response.data;
           Swal.fire({
             type: "info",
             title:
@@ -244,8 +244,10 @@ export default {
           console.table(error);
         })
         .then(() => {
-          fileName = response1.data;
-          window.open("/open_pdf/" + fileName);
+        //   console.log(response1.data);
+          //   fileName = response1.data;
+          window.open("scenarios-preview");
+          //   window.open("/open_pdf/" + fileName);
           //   console.table(response1);
         });
       delay(10000) //!Delete then of download
