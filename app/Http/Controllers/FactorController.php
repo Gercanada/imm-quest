@@ -11,6 +11,7 @@ use App\Models\Subfactor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Dompdf\Dompdf;
 use Exception;
 
 
@@ -613,18 +614,17 @@ class FactorController extends Controller
                 // $nTbody .= $nTbody;
             }
  */
+
             $processedKeys = array();
 
             $tableX = '';
 
             foreach ($scenarios as $scenario) {
-                // dd($scenario['is_married']);
-                // $thead .= "<th rowspan='2' colspan='2'>" . $scenario['name'] . "</th>";
                 $isMarried =  $scenario['is_married'] ? "Married" : "Single";
-                $sThead = "<th rowspan='2' colspan='2'>"
+                $sThead = "<th>"
                     . $scenario['name']
                     . "</th>"
-                    .  "<th colspan='2'>" . $isMarried . "</th>";
+                    .  "<th>" . $isMarried . "</th><th></th><th></th>";
                 $sBody = '';
 
                 foreach (array_keys((array)$scenario['body']) as $scKey) {
@@ -634,8 +634,8 @@ class FactorController extends Controller
                     foreach (((array)$scenario['body'][$scKey]) as $bKey => $bVal) {
                         // if (!in_array($bKey, $processedKeys)) { // Verificar si el $bKey ya ha sido procesado
                         $inRow .= '<tr>' .
-                            '<td style="max-width: 180px;">' . $bKey . '</td>' .
-                            '<td style="max-width: 210px; color:blue;">'
+                            '<td style="max-width: 150px;">' . $bKey . '</td>' .
+                            '<td style="max-width: 200px; color:blue;">'
                             . $bVal->criterion
                             . '</td>'
                             . '<td>'
@@ -648,52 +648,60 @@ class FactorController extends Controller
                         // }
                     }
 
-                    if (!str_contains($sBody, $scKey)) { // Verificar si el $scKey ya ha sido procesado
-                        $sBody .= '<tr><td rowspan=' . $rowspan . '>' . $scKey . '</td></tr>';
-                    }
+                    /* if (!str_contains($sBody, $scKey)) { // Verificar si el $scKey ya ha sido procesado
+                    } */
+                    $sBody .= '<td rowspan="' . $rowspan . '">' . $scKey . '</td>';
+
                     $sBody .= $inRow; // Concatenar las filas generadas al cuerpo de la tabla
                 }
-                $tableX .= '<table><thead>'
+                $tableX .= '<table><thead><tr>'
                     . $sThead
-                    . '</thead>'
+                    . '</thead></tr>'
                     . '<tbody>'
                     . $sBody
                     . '</tbody>'
                     . '</table>';
                 // $sBody .= '<tr>'; // Agregar una nueva fila para el siguiente escenario
+                // break;
             }
 
-
-            // $nTbody .= '</tr>'; // Cerrar la última fila
-
-            // dd($tableX);
-
-            $htmlStr =  '<style>table, th, td {
-                border: 1px solid black;
-              }</style>
-              <div class="bootstrap-table" style="overflow-x: auto">
-            <table
-              data-toggle="table"
-              data-mobile-responsive="true"
-              class="table-striped table table-hover table-bordered"
-              data-sort-order="default"
-            >
-            ' . $tableX . '
-            </table>
+            $htmlStr =  '<!DOCTYPE html>
+            <html lang="en">
+            <head>
+            <meta charset="utf-8">
+                    <style>
+                        body {
+                            text-align: center;
+                        }
+                        table {
+                            margin: 0 auto;
+                            border-collapse: collapse;
+                        }
+                        th, td {
+                            padding: 10px;
+                            border: 1px solid black;
+                        }
+                    </style>
+                </head>
+              <body>
+              <main>
+              <div class="bootstrap-table" style="overflow-x: auto">'
+                . $tableX
+                . '</main></body>
           </div>';
 
             // dd($htmlStr);
-
-
             $fileName = $user->name . '_' . $user->last_name . '_summary' . time() . '.pdf';
             $pdf = App::make('dompdf.wrapper');
-            $pdf->loadHTML($htmlStr);
-            $pdf->setPaper('A4', 'landscape');
-            // dd($htmlStr);
+
+            // $pdf = PDF::loadView('pdfSummary', $data)/* ->setPaper('a4', 'landscape') */;
+            $pdf->loadHTML(strval($htmlStr));
+            // $pdf->loadHTML("");
+            // $pdf->setPaper('A4', 'landscape');
 
             Storage::put(
                 'public/pdf/' . $fileName,
-                $pdf->stream()
+                $pdf->output()
             );
             return response()->json($fileName, 200);            // Storage::put('public/pdf/' . $fileName, $pdf->output());
 

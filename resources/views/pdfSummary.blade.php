@@ -22,26 +22,7 @@
         </div>
     </header>
     <main>
-        <table>
-            <thead>
-                <tr>
-                    <th><b> {{ session()->get('applocate') == 'es' ? 'Escenarios' : 'Scenarios' }}
-                        </b></th>
-                    {!! $scennarios !!} {{-- names of scenarios --}}
-                </tr>
-                <tr>
-                    <th><b> {{ session()->get('applocate') == 'es' ? 'Estado civil' : 'Maritial status' }} </b></th>
-                    {!! $maritialSituations !!}{{-- Scenarios marital situations --}}
-                </tr>
-            </thead>
-            <tbody>
-                {!! $factors !!}{{-- Score table --}}
-                <tr>
-                    <th>Total </th>
-                    {!! $totals !!}{{-- Sums --}}
-                </tr>
-            </tbody>
-        </table>
+        {{ $html }}
         {{-- <div id="notices">
             <div>NOTICE:</div>
             <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
